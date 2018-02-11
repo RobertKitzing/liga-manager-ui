@@ -300,7 +300,7 @@ export class Client {
      * Find all seasons
      * @return List of seasons
      */
-    season(): Observable<void> {
+    season(): Observable<any> {
         let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -319,10 +319,10 @@ export class Client {
                 try {
                     return this.processSeason(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<any>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<any>><any>Observable.throw(response_);
         });
     }
 
