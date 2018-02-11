@@ -1,7 +1,7 @@
 import { Client } from './../api/openopi';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { environment } from '@env/environment';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-table',
@@ -11,8 +11,11 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 export class TableComponent implements OnInit, AfterViewInit {
 
   version: string = environment.version;
-  displayedColumns = ['number', 'team_id', 'matches', 'wins', 'draws', 'losses', 'goals', 'goals_diff', 'points'];
-  rankingDataSource: MatTableDataSource<Ranking>;
+  displayedColumns = ['number',
+                      'team_id',
+                      'matches',
+                      'wins', 'draws', 'losses', 'scored_goals', 'conceded_goals', 'goals_diff', 'points'];
+  rankingDataSource: MatTableDataSource<void>;
   seasons: any = [
     {id: 'test', name: '2017'},
     {id: 'test', name: '2018'},
@@ -25,13 +28,12 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor(private apiClient: Client) { }
 
   ngOnInit() {
-    // this.apiClient.season().subscribe(
-    //   (season) => {
-    //     console.log(season);
-    //     this.seasons = season;
-    //   }
-    // );
-
+    this.apiClient.season().subscribe(
+      (season) => {
+        console.log(season);
+        this.seasons = season;
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -42,19 +44,25 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.loadRanking(event.value);
   }
 
+  sortData(sort: Sort) {
+    console.log(sort);
+    this.rankingDataSource.sort = this.sort;
+  }
+
   loadRanking(season: string) {
-    this.apiClient.ranking(season).subscribe(
-      (ranking) => {
-        console.log(ranking);
-        this.rankingDataSource = new MatTableDataSource(RANKING_DATA);
-        this.rankingDataSource.sort = this.sort;
-      },
-      (error) => {
-        console.log(error);
-        this.rankingDataSource = new MatTableDataSource(RANKING_DATA);
-        this.rankingDataSource.sort = this.sort;
-      }
-    );
+
+    //this.rankingDataSource = new MatTableDataSource(RANKING_DATA);
+
+    // this.apiClient.ranking(season).subscribe(
+    //   (ranking) => {
+    //     console.log(ranking);
+    //     this.rankingDataSource = new MatTableDataSource(ranking);
+    //     this.rankingDataSource.sort = this.sort;
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 }
 
@@ -95,8 +103,8 @@ const RANKING_DATA: Ranking[] = [
     'wins': 0,
     'draws': 0,
     'losses': 0,
-    'scored_goals': 0,
-    'conceded_goals': 0,
+    'scored_goals': 50,
+    'conceded_goals': 10,
     'points': 0
   },
   {
@@ -108,7 +116,7 @@ const RANKING_DATA: Ranking[] = [
     'wins': 0,
     'draws': 0,
     'losses': 0,
-    'scored_goals': 0,
+    'scored_goals': 10,
     'conceded_goals': 0,
     'points': 0
   },
@@ -122,7 +130,7 @@ const RANKING_DATA: Ranking[] = [
     'draws': 0,
     'losses': 0,
     'scored_goals': 0,
-    'conceded_goals': 0,
+    'conceded_goals': 10,
     'points': 0
   },
   {
