@@ -15,7 +15,7 @@ export class TableComponent implements OnInit, AfterViewInit {
                       'team_id',
                       'matches',
                       'wins', 'draws', 'losses', 'scored_goals', 'conceded_goals', 'goals_diff', 'points'];
-  rankingDataSource: MatTableDataSource<void>;
+  rankingDataSource: MatTableDataSource<Ranking>;
   seasons: any = [
     {id: 'test', name: '2017'},
     {id: 'test', name: '2018'},
@@ -28,12 +28,13 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor(private apiClient: Client) { }
 
   ngOnInit() {
-    this.apiClient.season().subscribe(
-      (season) => {
-        console.log(season);
-        this.seasons = season;
-      }
-    );
+    // this.apiClient.season().subscribe(
+    //   (season) => {
+    //     console.log(season);
+    //     this.seasons = season;
+    //   }
+    // );
+    this.loadRanking('dsa');
   }
 
   ngAfterViewInit() {
@@ -51,7 +52,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   loadRanking(season: string) {
 
-    //this.rankingDataSource = new MatTableDataSource(RANKING_DATA);
+    this.rankingDataSource = new MatTableDataSource(RANKING_DATA);
 
     // this.apiClient.ranking(season).subscribe(
     //   (ranking) => {
@@ -163,7 +164,7 @@ const RANKING_DATA: Ranking[] = [
     'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
     'team_id': 'f7e9d84c-a42e-4999-98cb-3c4ee584bdb1',
     'sort_index': 0,
-    'number': 0,
+    'number': 10,
     'matches': 0,
     'wins': 0,
     'draws': 0,
