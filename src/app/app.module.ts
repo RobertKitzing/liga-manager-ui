@@ -1,3 +1,4 @@
+import { MatchplanModule } from './matchplan/matchplan.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Client, API_BASE_URL } from './api/openopi';
 
@@ -39,7 +40,8 @@ import { AppRoutingModule } from './app-routing.module';
     LoginModule,
     TableModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatchplanModule
   ],
   declarations: [AppComponent],
   providers: [

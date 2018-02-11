@@ -11,7 +11,7 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const proxyConfig = [
   {
     context: '/api',
-    pathRewrite: { '^/api': '' },
+    pathRewrite: { '^/api': 'http://soccer.skilled-by-nature.de' },
     target: 'https://api.chucknorris.io',
     changeOrigin: true,
     secure: false
