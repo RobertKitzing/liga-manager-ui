@@ -11,8 +11,8 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 export class TableComponent implements OnInit, AfterViewInit {
 
   version: string = environment.version;
-  displayedColumns = ['rank', 'teamname', 'gamecount', 'wins', 'draws', 'losses', 'goals', 'goals_diff', 'points'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns = ['rank', 'team_id', 'matches', 'wins', 'draws', 'losses', 'goals', 'goals_diff', 'points'];
+  dataSource = new MatTableDataSource(RANKING_DATA);
   seasons: any;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -20,12 +20,12 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor(private apiClient: Client) { }
 
   ngOnInit() {
-    this.apiClient.season().subscribe(
-      (season) => {
-        console.log(season);
-        this.seasons = season;
-      }
-    );
+    // this.apiClient.season().subscribe(
+    //   (season) => {
+    //     console.log(season);
+    //     this.seasons = season;
+    //   }
+    // );
 
   }
 
@@ -34,32 +34,123 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 }
 
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Ranking {
+  season_id: string;
+  team_id: string;
+  sort_index: number;
+  number: number;
+  matches: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  scored_goals: number;
+  conceded_goals: number;
+  points: number;
 }
 
-const ELEMENT_DATA: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+const RANKING_DATA: Ranking[] = [
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': '07d24dfa-1c67-4780-99c4-92a5bed3c038',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': '51856913-540b-43f2-a80a-5d05fd1b08c4',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': '8e973313-d269-4f49-9244-20fb73a09e60',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': '9011242b-017c-40b6-b5d1-0b48de5f9eb5',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': 'a58d9202-8bc4-4471-887c-79f66e9599d3',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': 'c6583519-ff6f-40d0-b103-ebbb61557399',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': 'f7e9d84c-a42e-4999-98cb-3c4ee584bdb1',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  },
+  {
+    'season_id': '138873d5-dfb0-4dbc-8c5d-2545da2d1e16',
+    'team_id': 'fbe2ee48-9bb2-47e8-8fb4-1454b503cab4',
+    'sort_index': 0,
+    'number': 0,
+    'matches': 0,
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'scored_goals': 0,
+    'conceded_goals': 0,
+    'points': 0
+  }
 ];

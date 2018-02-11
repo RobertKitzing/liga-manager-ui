@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field *ngIf="seasons">
   <mat-select placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}">
     <mat-option *ngFor="let season of seasons" [value]="season.id">
       {{ season.name }}
@@ -12,54 +12,54 @@
     <!-- Position Column -->
     <ng-container matColumnDef="rank">
       <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.rank}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="teamname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>TEAM_NAME</mat-header-cell>
+    <ng-container matColumnDef="team_id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TEAM_NAME' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
 
     <!-- Weight Column -->
-    <ng-container matColumnDef="gamecount">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>GAME_COUNT</mat-header-cell>
+    <ng-container matColumnDef="matches">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_COUNT' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="wins">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>GAME_WINS</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_WINS' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="draws">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>GAME_DRAWS</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_DRAWS' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="losses">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>GAME_LOSSES</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_LOSSES' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="goals">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>GOALS</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="goals_diff">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>GOALS_DIFF</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_DIFF' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef mat-sort-header translate>POINTS</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'POINTS' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
     </ng-container>
 

@@ -38,6 +38,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MatSortModule,
 } from '@angular/material';
 
 @NgModule({
@@ -75,6 +76,7 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatNativeDateModule,
+    MatSortModule
   ]
 })
 export class MaterialModule { }
