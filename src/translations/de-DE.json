@@ -20,5 +20,6 @@
   "GAME_LOSSES":"v",
   "GOALS":"Tore",
   "GOALS_DIFF":"Diff",
-  "POINTS":"Punkte"
+  "POINTS":"Punkte",
+  "SEASON_PLACEHOLDER": "Saison auswählen"
 }
