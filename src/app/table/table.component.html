@@ -6,7 +6,7 @@
   </mat-select>
 </mat-form-field>
 
-<div class="container example-container mat-elevation-z8" *ngIf="rankingDataSource">
+<div class="container example-container mat-elevation-z8" *ngIf="rankingDataSource && teams">
   <mat-table #table [dataSource]="rankingDataSource" matSort (matSortChange)="sortData($event)">
 
     <ng-container matColumnDef="number">
@@ -15,8 +15,8 @@
     </ng-container>
 
     <ng-container matColumnDef="team_id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TEAM_NAME' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.team_id}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>{{ 'TEAM_NAME' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ getTeamNameByID(element.team_id)}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="matches">

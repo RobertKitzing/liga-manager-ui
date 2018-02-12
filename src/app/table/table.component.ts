@@ -1,4 +1,4 @@
-import { Client, Season, Ranking } from './../api/openopi';
+import { Client, Season, Ranking, Team } from './../api/openopi';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
@@ -19,6 +19,7 @@ export class TableComponent implements OnInit, AfterViewInit {
                       'wins', 'draws', 'losses', 'scored_goals', 'conceded_goals', 'goals_diff', 'points'];
   rankingDataSource: MatTableDataSource<Position[]>;
   seasons: Season[];
+  teams: Team[];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -42,11 +43,26 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   selectedSeasonChanged(event: any) {
     this.loadRanking(event.value);
+    this.loadTeams(event.value);
   }
 
   sortData(sort: Sort) {
     console.log(sort);
     this.rankingDataSource.sort = this.sort;
+  }
+
+  loadTeams(season: string) {
+    this.apiClient.teamAll(season).subscribe(
+      (teams: Team[]) => {
+        console.log(teams);
+        this.teams = teams;
+      }
+    )
+  }
+
+  getTeamNameByID(id: string): string {
+    const t: Team = this.teams.find(t => t.id == id)
+    return t.name;
   }
 
   loadRanking(season: string) {

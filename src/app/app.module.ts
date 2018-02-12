@@ -39,9 +39,9 @@ import { AppRoutingModule } from './app-routing.module';
     AboutModule,
     LoginModule,
     TableModule,
+    MatchplanModule,
     AppRoutingModule,
-    HttpClientModule,
-    MatchplanModule
+    HttpClientModule
   ],
   declarations: [AppComponent],
   providers: [
@@ -51,7 +51,7 @@ import { AppRoutingModule } from './app-routing.module';
     Client,
     {
       provide: API_BASE_URL,
-      useValue: 'http://soccer.skilled-by-nature.de'
+      useValue: 'https://soccer-api.skilled-by-nature.de'
     }
   ],
   bootstrap: [AppComponent]
