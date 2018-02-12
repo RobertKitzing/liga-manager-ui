@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env/environment';
-import { Client, Season, Match, Team, Body3 } from '@app/api/openopi';
+import { Client, Season, Match, Team, Body3, SeasonState } from '@app/api/openopi';
+import { Logger } from '@app/core';
+
+const log = new Logger('Matchplan');
 
 @Component({
   selector: 'app-matchplan',
@@ -22,11 +25,11 @@ export class MatchplanComponent implements OnInit {
   ngOnInit() {
     this.apiClient.seasonAll().subscribe(
       (seasons: Season[]) => {
-        console.log(seasons);
-        this.seasons = seasons;
+        log.debug(seasons);
+        this.seasons = seasons.filter(s => s.state === SeasonState.Progress);
       },
       (error: any) => {
-        console.log(error);
+        log.debug(error);
       }
     );
   }
@@ -34,7 +37,7 @@ export class MatchplanComponent implements OnInit {
   loadTeams(season: string) {
     this.apiClient.teamAll(season).subscribe(
       (teams: Team[]) => {
-        console.log(teams);
+        log.debug(teams);
         this.teams = teams;
       }
     )
@@ -56,7 +59,7 @@ export class MatchplanComponent implements OnInit {
     res.home_score = t.home_score;
     this.apiClient.result(match, res).subscribe(
       (res: any) => {
-        console.log(res);
+        log.debug(res);
       }
     )
   }
@@ -73,10 +76,10 @@ export class MatchplanComponent implements OnInit {
   }
 
   loadMatches() {
-    console.log(this.season);
+    log.debug(this.season);
     this.apiClient.matchesAll(this.season, this.matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
-        console.log(matches);
+        log.debug(matches);
         this.matches = matches;
       }
     )

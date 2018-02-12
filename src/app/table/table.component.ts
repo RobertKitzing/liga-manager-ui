@@ -1,4 +1,4 @@
-import { Client, Season, Ranking, Team } from './../api/openopi';
+import { Client, Season, Ranking, Team, SeasonState } from './../api/openopi';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
@@ -29,7 +29,8 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.apiClient.seasonAll().subscribe(
         (seasons: Season[]) => {
             console.log(seasons);
-            this.seasons = seasons;
+            this.seasons = seasons.filter(s => s.state === SeasonState.Progress);
+            console.log(seasons);
       },
       (error: any) => {
         console.log(error);

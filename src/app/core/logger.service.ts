@@ -65,7 +65,7 @@ export class Logger {
    * Sets logging level to LogLevel.Warning.
    */
   static enableProductionMode() {
-    Logger.level = LogLevel.Warning;
+    Logger.level = LogLevel.Debug;
   }
 
   constructor(private source?: string) { }

@@ -1,7 +1,7 @@
 <mat-form-field *ngIf="seasons">
   <mat-select placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
     <mat-option *ngFor="let season of seasons" [value]="season.id">
-      {{ season.name }} | {{season.state}}
+      {{ season.name }}
     </mat-option>
   </mat-select>
 </mat-form-field>
