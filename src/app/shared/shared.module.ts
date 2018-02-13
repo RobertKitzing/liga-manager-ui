@@ -4,6 +4,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { SeasonService } from '@app/service/season.service';
 
 @NgModule({
   imports: [
@@ -16,6 +18,9 @@ import { LoaderComponent } from './loader/loader.component';
   ],
   exports: [
     LoaderComponent
+  ],
+  providers: [
+    SeasonService
   ]
 })
 export class SharedModule { }

@@ -1,3 +1,4 @@
+import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env/environment';
@@ -17,21 +18,14 @@ export class MatchplanComponent implements OnInit {
   seasons: Season[];
   matches: Match[];
   teams: Team[];
-  matchDay: number = 1;
+  matchDay = 1;
   season: string;
 
-  constructor(private apiClient: Client) { }
+  constructor(private apiClient: Client,
+              private seasonService: SeasonService) { }
 
   ngOnInit() {
-    this.apiClient.seasonAll().subscribe(
-      (seasons: Season[]) => {
-        log.debug(seasons);
-        this.seasons = seasons.filter(s => s.state === SeasonState.Progress);
-      },
-      (error: any) => {
-        log.debug(error);
-      }
-    );
+    this.seasons = this.seasonService.getSeasons(SeasonState.Progress);
   }
 
   loadTeams(season: string) {
