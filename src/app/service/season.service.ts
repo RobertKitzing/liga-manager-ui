@@ -17,7 +17,7 @@ export class SeasonService {
     constructor(private apiClient: Client) {
     }
 
-    private loadSeasons() {
+    public init() {
 
         log.debug('SeasonService');
         this.apiClient.seasonAll().subscribe(
@@ -32,9 +32,7 @@ export class SeasonService {
     }
 
     getSeasons(state: SeasonState | null | undefined): Season[] {
-        if (!this.seasons) {
-            this.loadSeasons();
-        }
+        
         const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
         log.debug(filterd);
         return state ? filterd : this.seasons;

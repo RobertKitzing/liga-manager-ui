@@ -4,6 +4,9 @@ import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
+import { Logger } from '@app/core';
+
+const log = new Logger('Table');
 
 @Component({
   selector: 'app-table',
@@ -28,12 +31,12 @@ export class TableComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.apiClient.seasonAll().subscribe(
         (seasons: Season[]) => {
-            console.log(seasons);
+            log.debug(seasons);
             this.seasons = seasons.filter(s => s.state === SeasonState.Progress);
-            console.log(seasons);
+            log.debug(seasons);
       },
       (error: any) => {
-        console.log(error);
+        log.debug(error);
       }
     );
   }
@@ -48,35 +51,34 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   sortData(sort: Sort) {
-    console.log(sort);
+    log.debug(sort);
     this.rankingDataSource.sort = this.sort;
   }
 
   loadTeams(season: string) {
-    this.teams = null;
     this.apiClient.teamAll(season).subscribe(
       (teams: Team[]) => {
-        console.log(teams);
+        log.debug(teams);
         this.teams = teams;
       }
-    );
+    )
   }
 
   getTeamNameByID(id: string): string {
-    const team: Team = this.teams.find(t => t.id === id);
-    return team.name;
+    const t: Team = this.teams.find(t => t.id == id)
+    return t.name;
   }
 
   loadRanking(season: string) {
-    this.rankingDataSource = null;
+
     this.apiClient.ranking(season).subscribe(
       (ranking: any) => {
-        console.log(ranking);
+        log.debug(ranking);
         this.rankingDataSource = new MatTableDataSource(ranking.positions);
         this.rankingDataSource.sort = this.sort;
       },
       (error: any) => {
-        console.log(error);
+        log.debug(error);
       }
     );
   }

@@ -10,6 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService } from '@app/core';
+import { SeasonService } from '@app/service/season.service';
 
 const log = new Logger('App');
 
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
               private keyboard: Keyboard,
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
-              private i18nService: I18nService) { }
+              private i18nService: I18nService,
+              private seasonService: SeasonService) { }
 
   ngOnInit() {
     // Setup logger
@@ -40,7 +42,8 @@ export class AppComponent implements OnInit {
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
-
+    this.seasonService.init();
+    
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
 
     // Change page title on navigation or language change, based on route data
