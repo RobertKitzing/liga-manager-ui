@@ -1,3 +1,5 @@
+<app-loader [isLoading]="!seasons && !matches" size="1.5"></app-loader>
+
 <mat-form-field *ngIf="seasons">
   <mat-select placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)" [ngModel]="season">
     <mat-option *ngFor="let season of seasons" [value]="season.id">
@@ -7,7 +9,7 @@
 </mat-form-field>
 
 <mat-form-field>
-  <mat-select placeholder="Spieltag" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
+  <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
     <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day" >
       {{ day }}
     </mat-option>
@@ -26,14 +28,14 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-form-field>
-        <input matInput type="number" placeholder="home_score" ngModel="match.home_score" #home_score (change)="saveScore(match.id, 'home_score', home_score.value)">
+        <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" ngModel="match.home_score" #home_score />
       </mat-form-field>
   
       <mat-form-field>
-        <input matInput type="number" placeholder="guest_score" ngModel="match.guest_score" #guest_score (change)="saveScore(match.id, 'guest_score', guest_score.value)">
+        <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" ngModel="match.guest_score" #guest_score />
       </mat-form-field>
 
-      <button mat-button (click)="saveResult(match.id)">Speichern</button>
+      <button mat-button (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
     </mat-expansion-panel>
   </mat-accordion>
   

@@ -1,3 +1,4 @@
+import { SharedModule } from '@app/shared';
 import { MatchplanComponent } from './matchplan.component';
 import { MatchplanRoutingModule } from './matchplan-routing.module';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,7 @@ import { MaterialModule } from '@app/material.module';
     TranslateModule,
     FlexLayoutModule,
     MaterialModule,
+    SharedModule,
     MatchplanRoutingModule
   ],
   declarations: [

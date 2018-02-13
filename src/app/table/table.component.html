@@ -1,65 +1,67 @@
-<mat-form-field *ngIf="seasons">
-  <mat-select placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
-    <mat-option *ngFor="let season of seasons" [value]="season.id">
-      {{ season.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="container">
+  <mat-form-field *ngIf="seasons">
+    <mat-select placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+      <mat-option *ngFor="let season of seasons" [value]="season.id">
+        {{ season.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<div class="container example-container mat-elevation-z8" *ngIf="rankingDataSource && teams">
-  <mat-table #table [dataSource]="rankingDataSource" matSort (matSortChange)="sortData($event)">
+  <div class="container example-container mat-elevation-z8" *ngIf="rankingDataSource && teams">
+    <mat-table #table [dataSource]="rankingDataSource" matSort (matSortChange)="sortData($event)">
 
-    <ng-container matColumnDef="number">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.number}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="number">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.number}} </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="team_id">
-      <mat-header-cell *matHeaderCellDef>{{ 'TEAM_NAME' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ getTeamNameByID(element.team_id)}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="team_id">
+        <mat-header-cell *matHeaderCellDef>{{ 'TEAM_NAME' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ getTeamNameByID(element.team_id)}} </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="matches">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_COUNT' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.matches}} </mat-cell>
-    </ng-container>
-    
-    <ng-container matColumnDef="wins">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_WINS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.wins}} </mat-cell>
-    </ng-container>
-    
-    <ng-container matColumnDef="draws">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_DRAWS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.draws}} </mat-cell>
-    </ng-container>
-    
-    <ng-container matColumnDef="losses">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_LOSSES' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.losses}} </mat-cell>
-    </ng-container>
-    
-    <ng-container matColumnDef="scored_goals">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_SCORED' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" style="text-align:right"> {{element.scored_goals}}:</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="matches">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_COUNT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.matches}} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="wins">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_WINS' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.wins}} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="draws">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_DRAWS' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.draws}} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="losses">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GAME_LOSSES' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.losses}} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="scored_goals">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_SCORED' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element" style="text-align:right"> {{element.scored_goals}}:</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="conceded_goals">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_CONCEDED' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" style="text-align:left">{{element.conceded_goals}}</mat-cell>
-    </ng-container>
-    
-    <ng-container matColumnDef="goals_diff">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_DIFF' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.scored_goals - element.conceded_goals}} </mat-cell>
-    </ng-container>
-    
-    <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'POINTS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.points}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="conceded_goals">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_CONCEDED' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element" style="text-align:left">{{element.conceded_goals}}</mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="goals_diff">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'GOALS_DIFF' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.scored_goals - element.conceded_goals}} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="points">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'POINTS' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.points}} </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
 </div>

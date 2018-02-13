@@ -24,5 +24,8 @@
   "GOALS_DIFF":"Diff",
   "POINTS":"Points",
   "SEASON_PLACEHOLDER": "Choose Season",
-  "Matchplan": "Matchplan"
+  "Matchplan": "Matchplan",
+  "MATCHDAY_PLACEHOLDER": "Matchday",
+  "HOME_SCORE_PLACEHOLDER": "Home",
+  "GUEST_SCORE_PLACEHOLDER": "Guest"
 }

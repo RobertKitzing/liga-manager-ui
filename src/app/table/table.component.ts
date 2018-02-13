@@ -53,21 +53,22 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   loadTeams(season: string) {
+    this.teams = null;
     this.apiClient.teamAll(season).subscribe(
       (teams: Team[]) => {
         console.log(teams);
         this.teams = teams;
       }
-    )
+    );
   }
 
   getTeamNameByID(id: string): string {
-    const t: Team = this.teams.find(t => t.id == id)
-    return t.name;
+    const team: Team = this.teams.find(t => t.id === id);
+    return team.name;
   }
 
   loadRanking(season: string) {
-
+    this.rankingDataSource = null;
     this.apiClient.ranking(season).subscribe(
       (ranking: any) => {
         console.log(ranking);

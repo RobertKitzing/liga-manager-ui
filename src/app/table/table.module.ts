@@ -15,7 +15,8 @@ import { MatTableModule } from '@angular/material';
     TranslateModule,
     FlexLayoutModule,
     MaterialModule,
-    TableRoutingModule
+    TableRoutingModule,
+    SharedModule
   ],
   declarations: [
     TableComponent

@@ -92,6 +92,7 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="500" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
+    <preference name="cordova-custom-config-autorestore" value="false" />
     <plugin name="cordova-custom-config" spec="^5.0.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.1" />
