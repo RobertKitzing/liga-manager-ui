@@ -13,6 +13,7 @@ export class SeasonService {
 
     season = new Subject<Season>();
     seasons: Season[];
+    selectedSeason: Season;
 
     constructor(private apiClient: Client) {
     }
@@ -30,15 +31,22 @@ export class SeasonService {
             }
         );
     }
+    getSelectedSeason(): Season {
+        return <Season>JSON.parse(localStorage.getItem('SELECTED_SEASON')) || new Season();
+    }
 
     getSeasons(state: SeasonState | null | undefined): Season[] {
-        
-        const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
-        log.debug(filterd);
-        return state ? filterd : this.seasons;
+        if (this.seasons) {
+            const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
+            log.debug(filterd);
+            return state ? filterd : this.seasons;
+        }
     }
 
     selectSeason(seasonID: string): void {
-        this.season.next(this.seasons.find(x => x.id === seasonID));
+        const s = this.seasons.find(x => x.id === seasonID);
+        this.season.next(s);
+        this.selectedSeason = s;
+        localStorage.setItem('SELECTED_SEASON', JSON.stringify(s));
     }
 }

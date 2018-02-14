@@ -1,9 +1,10 @@
 import { SeasonService } from '@app/service/season.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { Client, Season, Match, Team, Body3, SeasonState } from '@app/api/openopi';
 import { Logger } from '@app/core';
+import { Subscription } from 'rxjs/Subscription';
 
 const log = new Logger('Matchplan');
 
@@ -12,24 +13,39 @@ const log = new Logger('Matchplan');
   templateUrl: './matchplan.component.html',
   styleUrls: ['./matchplan.component.scss']
 })
-export class MatchplanComponent implements OnInit {
+export class MatchplanComponent implements OnInit, OnDestroy  {
 
   version: string = environment.version;
   seasons: Season[];
+  seasonsSub: Subscription;
   matches: Match[];
   teams: Team[];
   matchDay = 1;
-  season: string;
+  season: Season;
 
   constructor(private apiClient: Client,
               private seasonService: SeasonService) { }
 
   ngOnInit() {
-    this.seasons = this.seasonService.getSeasons(SeasonState.Progress);
+    this.seasonsSub = this.seasonService.season.subscribe(
+      (season) => {
+        log.debug(season);
+        this.season = season;
+        this.loadTeams();
+        this.loadMatches();
+      }
+    );
+    this.season = this.seasonService.getSelectedSeason();
+    this.seasons = this.seasonService.getSeasons(SeasonState.Progress) || new Array<Season>();
+    log.debug(this.season);
   }
 
-  loadTeams(season: string) {
-    this.apiClient.teamAll(season).subscribe(
+  ngOnDestroy() {
+    this.seasonsSub.unsubscribe();
+  }
+
+  loadTeams() {
+    this.apiClient.teamAll(this.season.id).subscribe(
       (teams: Team[]) => {
         log.debug(teams);
         this.teams = teams;
@@ -67,15 +83,14 @@ export class MatchplanComponent implements OnInit {
   }
 
   selectedSeasonChanged(event: any) {
-    this.season = event.value;
-    this.loadMatches();
-    this.loadTeams(event.value);
+    const seasonID = event.value;
+    this.seasonService.selectSeason(seasonID);
   }
 
   loadMatches() {
     this.matches = null;
     log.debug(this.season);
-    this.apiClient.matchesAll(this.season, this.matchDay, null, null, null).subscribe(
+    this.apiClient.matchesAll(this.season.id, this.matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
         log.debug(matches);
         this.matches = matches;
