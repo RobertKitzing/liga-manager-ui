@@ -21,25 +21,36 @@ export class SeasonService {
     public init() {
 
         log.debug('SeasonService');
-        this.apiClient.seasonAll().subscribe(
-            (seasons: Season[]) => {
-                log.debug(seasons);
-                this.seasons = seasons;
-            },
-            (error: any) => {
-                log.debug(error);
-            }
-        );
+
     }
     getSelectedSeason(): Season {
         return <Season>JSON.parse(localStorage.getItem('SELECTED_SEASON')) || new Season();
     }
 
-    getSeasons(state: SeasonState | null | undefined): Season[] {
-        if (this.seasons) {
-            const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
-            log.debug(filterd);
-            return state ? filterd : this.seasons;
+    async getSeasons(state: SeasonState | null | undefined): Promise<Season[]> {
+        log.debug('getSteason');
+        if (!this.seasons) {
+            log.debug('Penis');
+            return new Promise<Season[]>(
+                resolve => {
+                    this.apiClient.seasonAll().subscribe(
+                        (seasons: Season[]) => {
+                            log.debug(seasons);
+                            this.seasons = seasons;
+                            resolve(seasons);
+                        },
+                        (error: any) => {
+                            log.debug(error);
+                        }
+                    );
+                }
+            );
+            // const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
+            // log.debug(filterd);
+            // return state ? filterd : this.seasons;
+        } else {
+            log.debug('Vagina');
+            return this.seasons;
         }
     }
 

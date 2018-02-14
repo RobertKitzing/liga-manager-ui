@@ -26,7 +26,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   constructor(private apiClient: Client,
               private seasonService: SeasonService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
         log.debug(season);
@@ -36,8 +36,11 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
       }
     );
     this.season = this.seasonService.getSelectedSeason();
-    this.seasons = this.seasonService.getSeasons(SeasonState.Progress) || new Array<Season>();
-    log.debug(this.season);
+    this.seasons = await this.seasonService.getSeasons(SeasonState.Progress);
+    if (this.season) {
+      this.loadTeams();
+      this.loadMatches();
+    }
   }
 
   ngOnDestroy() {
@@ -96,5 +99,9 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         this.matches = matches;
       }
     );
+  }
+
+  seasonCompare(c1: any, c2: any) {
+    return c1 && c2 && c1.id === c2.id;
   }
 }

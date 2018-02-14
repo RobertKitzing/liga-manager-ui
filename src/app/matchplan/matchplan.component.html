@@ -1,6 +1,6 @@
 <div *ngIf="seasons">
   <mat-form-field>
-    <mat-select placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)" [ngModel]="season">
+    <mat-select [compareWith]="seasonCompare" [(value)]="season.id"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
       <mat-option *ngFor="let season of seasons" [value]="season.id">
         {{ season.name }}
       </mat-option>

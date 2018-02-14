@@ -34,22 +34,28 @@ export class TableComponent implements OnInit, OnDestroy {
               private seasonService: SeasonService) {
               }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.season = this.seasonService.getSelectedSeason();
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
         log.debug(season);
         this.season = season;
-        this.loadTeams();
-        this.loadRanking();
+        this.loadData();
       }
     );
-    this.seasons = this.seasonService.getSeasons(SeasonState.Progress);
-    log.debug(this.season);
+    this.seasons = await this.seasonService.getSeasons(SeasonState.Progress);
+    if (this.season) {
+      this.loadData();
+    }
   }
 
   ngOnDestroy() {
     this.seasonsSub.unsubscribe();
+  }
+
+  loadData() {
+    this.loadTeams();
+    this.loadRanking();
   }
 
   selectedSeasonChanged(event: any) {
@@ -87,5 +93,9 @@ export class TableComponent implements OnInit, OnDestroy {
         log.debug(error);
       }
     );
+  }
+
+  seasonCompare(c1: any, c2: any) {
+    return c1 && c2 && c1.id === c2.id;
   }
 }
