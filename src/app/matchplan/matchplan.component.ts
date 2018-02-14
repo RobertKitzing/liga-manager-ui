@@ -85,9 +85,9 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     this.loadMatches();
   }
 
-  selectedSeasonChanged(event: any) {
-    const seasonID = event.value;
-    this.seasonService.selectSeason(seasonID);
+  selectedSeasonChanged(s: Season) {
+    log.debug(s);
+    this.seasonService.selectSeason(s);
   }
 
   loadMatches() {
@@ -101,7 +101,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     );
   }
 
-  seasonCompare(c1: any, c2: any) {
+  seasonCompare(c1: Season, c2: Season) {
     return c1 && c2 && c1.id === c2.id;
   }
 }

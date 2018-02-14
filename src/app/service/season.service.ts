@@ -24,40 +24,39 @@ export class SeasonService {
 
     }
     getSelectedSeason(): Season {
-        return <Season>JSON.parse(localStorage.getItem('SELECTED_SEASON')) || new Season();
+        return <Season>JSON.parse(localStorage.getItem('SELECTED_SEASON'));
     }
 
     async getSeasons(state: SeasonState | null | undefined): Promise<Season[]> {
         log.debug('getSteason');
         if (!this.seasons) {
-            log.debug('Penis');
             return new Promise<Season[]>(
                 resolve => {
                     this.apiClient.seasonAll().subscribe(
                         (seasons: Season[]) => {
                             log.debug(seasons);
                             this.seasons = seasons;
-                            resolve(seasons);
+                            const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
+                            log.debug(filterd);
+                            resolve(state ? filterd : this.seasons);
                         },
                         (error: any) => {
                             log.debug(error);
+                            resolve(null);
                         }
                     );
                 }
             );
-            // const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
-            // log.debug(filterd);
-            // return state ? filterd : this.seasons;
         } else {
-            log.debug('Vagina');
-            return this.seasons;
+            const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
+            log.debug(filterd);
+            return state ? filterd : this.seasons;
         }
     }
 
-    selectSeason(seasonID: string): void {
-        const s = this.seasons.find(x => x.id === seasonID);
-        this.season.next(s);
-        this.selectedSeason = s;
-        localStorage.setItem('SELECTED_SEASON', JSON.stringify(s));
+    selectSeason(season: Season): void {
+        this.season.next(season);
+        this.selectedSeason = season;
+        localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
     }
 }
