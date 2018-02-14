@@ -1,0 +1,1 @@
+export const SELECTED_SEASON = 'SELECTED_SEASON';

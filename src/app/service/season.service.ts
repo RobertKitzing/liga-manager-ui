@@ -1,3 +1,4 @@
+import { SELECTED_SEASON } from './../constanst';
 import { Subject } from 'rxjs/Subject';
 import { Logger } from 'app/core/logger.service';
 import { Season } from '@app/api/openopi';
@@ -18,13 +19,8 @@ export class SeasonService {
     constructor(private apiClient: Client) {
     }
 
-    public init() {
-
-        log.debug('SeasonService');
-
-    }
     getSelectedSeason(): Season {
-        return <Season>JSON.parse(localStorage.getItem('SELECTED_SEASON'));
+        return <Season>JSON.parse(localStorage.getItem(SELECTED_SEASON));
     }
 
     async getSeasons(state: SeasonState | null | undefined): Promise<Season[]> {
@@ -57,6 +53,6 @@ export class SeasonService {
     selectSeason(season: Season): void {
         this.season.next(season);
         this.selectedSeason = season;
-        localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
+        localStorage.setItem(SELECTED_SEASON, JSON.stringify(season));
     }
 }

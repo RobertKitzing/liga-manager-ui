@@ -42,8 +42,7 @@ export class AppComponent implements OnInit {
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
-    this.seasonService.init();
-    
+
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
 
     // Change page title on navigation or language change, based on route data
