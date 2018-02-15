@@ -2,7 +2,7 @@ import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { environment } from '@env/environment';
-import { Client, Season, Match, Team, Body3, SeasonState } from '@app/api/openopi';
+import { Client, Season, Match, Team, Body3, SeasonState } from '@app/api/openapi';
 import { Logger } from '@app/core';
 import { Subscription } from 'rxjs/Subscription';
 

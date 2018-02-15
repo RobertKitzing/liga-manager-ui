@@ -1,8 +1,8 @@
 import { SELECTED_SEASON } from './../constanst';
 import { Subject } from 'rxjs/Subject';
 import { Logger } from 'app/core/logger.service';
-import { Season } from '@app/api/openopi';
-import { SeasonState, Client } from './../api/openopi';
+import { Season } from '@app/api/openapi';
+import { SeasonState, Client } from './../api/openapi';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
