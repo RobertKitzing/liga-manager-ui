@@ -19,7 +19,6 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   seasons: Season[];
   seasonsSub: Subscription;
   matches: Match[];
-  teams: Team[];
   matchDay = 1;
   season: Season;
 
@@ -31,14 +30,12 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
       (season) => {
         log.debug(season);
         this.season = season;
-        this.loadTeams();
         this.loadMatches();
       }
     );
     this.season = this.seasonService.getSelectedSeason();
     this.seasons = await this.seasonService.getSeasons(SeasonState.Progress);
     if (this.season) {
-      this.loadTeams();
       this.loadMatches();
     }
   }
@@ -47,23 +44,9 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     this.seasonsSub.unsubscribe();
   }
 
-  loadTeams() {
-    this.apiClient.teamAll(this.season.id).subscribe(
-      (teams: Team[]) => {
-        log.debug(teams);
-        this.teams = teams;
-      }
-    );
-  }
-
   saveScore(match: string, team: string, score: string) {
     const t: Match = this.matches.find(m => m.id === match);
     t[team] = Number.parseInt(score);
-  }
-
-  getTeamNameByID(id: string): string {
-    const team: Team = this.teams.find(t => t.id === id);
-    return team.name;
   }
 
   saveResult(match: string, home: string, guest: string) {

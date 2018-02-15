@@ -25,7 +25,6 @@ export class TableComponent implements OnInit, OnDestroy {
   rankingDataSource: MatTableDataSource<Position[]>;
   seasons: Season[] = new Array<Season>();
   seasonsSub: Subscription = new Subscription();
-  teams: Team[];
   season: Season;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -54,7 +53,6 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.loadTeams();
     this.loadRanking();
   }
 
@@ -67,22 +65,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this.rankingDataSource.sort = this.sort;
   }
 
-  loadTeams() {
-    this.apiClient.teamAll(this.season.id).subscribe(
-      (teams: Team[]) => {
-        log.debug(teams);
-        this.teams = teams;
-      }
-    );
-  }
-
-  getTeamNameByID(id: string): string {
-    const team: Team = this.teams.find(t => t.id === id);
-    return team.name;
-  }
-
   loadRanking() {
-
     this.apiClient.ranking(this.season.id).subscribe(
       (ranking: any) => {
         log.debug(ranking);

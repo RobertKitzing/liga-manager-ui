@@ -1,10 +1,14 @@
+.container {
+  text-align: center;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
 .example-container {
   display: flex;
   flex-direction: column;
   min-width: 300px;
   overflow: auto;
-  height: 90%;
-  justify-content: center;
 }
 
 .mat-table {
