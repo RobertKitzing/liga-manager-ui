@@ -1,4 +1,4 @@
-<div class="container" *ngIf="seasons">
+<div class="example-container" *ngIf="seasons">
   <mat-form-field>
     <mat-select [compareWith]="seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
       <mat-option *ngFor="let season of seasons" [value]="season">

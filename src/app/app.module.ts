@@ -1,6 +1,6 @@
 import { MatchplanModule } from './matchplan/matchplan.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Client, API_BASE_URL } from './api/openopi';
+import { Client, API_BASE_URL } from './api/openapi';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
