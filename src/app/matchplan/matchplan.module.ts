@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@app/material.module';
+import { MatDividerModule } from '@angular/material';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { MaterialModule } from '@app/material.module';
     FlexLayoutModule,
     MaterialModule,
     SharedModule,
-    MatchplanRoutingModule
+    MatchplanRoutingModule,
+    MatDividerModule
   ],
   declarations: [
     MatchplanComponent

@@ -40,7 +40,6 @@
       "useGetBaseUrlMethod": false,
       "baseUrlTokenName": "API_BASE_URL",
       "queryNullValue": "",
-      "serviceHost": "soccer.skilled-by-nature.de",
       "output": "./src/app/api/openapi.ts"
     }
   }

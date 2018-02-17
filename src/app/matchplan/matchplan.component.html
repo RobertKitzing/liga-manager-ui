@@ -1,12 +1,16 @@
-<div *ngIf="seasons" class="container">
-  <mat-form-field id="seasonchooser" style="margin-right: 20px;">
-    <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
-      <mat-option *ngFor="let season of seasons" [value]="season">
-        {{ season.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
+<div class="container">
+  <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
+  <div *ngIf="!seasonService.isLoadingSeasons">
+    <mat-form-field id="seasonchooser" style="margin-right: 20px;">
+      <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+        <mat-option *ngFor="let season of seasons" [value]="season">
+          {{ season.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-divider [vertical]="true"></mat-divider>  
+  <mat-form-field style="margin-left: 20px;">
     <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
       <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day">
         {{ day }}
@@ -14,6 +18,8 @@
     </mat-select>
   </mat-form-field>
 </div>
+<div class="container">
+  <app-loader [isLoading]="isLoadingMatches" size="1.5"></app-loader>
   <div class="mat-elevation-z8" *ngIf="matches">
     <mat-accordion>
       <mat-expansion-panel *ngFor="let match of matches">
@@ -38,5 +44,5 @@
         <button mat-button (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
       </mat-expansion-panel>
     </mat-accordion>
-
   </div>
+</div>

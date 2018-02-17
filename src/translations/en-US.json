@@ -28,5 +28,9 @@
   "Matchplan": "Matchplan",
   "MATCHDAY_PLACEHOLDER": "Matchday",
   "HOME_SCORE_PLACEHOLDER": "Home",
-  "GUEST_SCORE_PLACEHOLDER": "Guest"
+  "GUEST_SCORE_PLACEHOLDER": "Guest",
+  "CREATE_SEASON": "Create Season",
+  "SEASON_NAME": "Name of Season",
+  "NEXT": "next",
+  "BACK": "back"
 }

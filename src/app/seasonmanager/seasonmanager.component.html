@@ -1,1 +1,45 @@
-SeasonManager
+<div class="container">
+    <mat-card class="season-create">
+        <mat-card-header>
+            <mat-card-title translate>CREATE_SEASON</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper" (selectionChange)="createSeasonStepperChanged($event)">
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate }}</ng-template>
+                    <mat-form-field>
+                        <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperNext [disabled]="!firstFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
+                    </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>TEAMS</ng-template>
+                    <app-loader [isLoading]="isLoadingAllTeams" size="1.5"></app-loader>
+                    <div *ngIf="allTeams">
+                        <div *ngFor="let team of allTeams">
+                            {{team.name}}
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>{{ 'BACK' | translate }}</button>
+                        <button mat-button matStepperNext>{{ 'NEXT' | translate }}</button>
+                    </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Done</ng-template>
+                    You are now done.
+                    <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </mat-card-content>
+    </mat-card>
+</div>

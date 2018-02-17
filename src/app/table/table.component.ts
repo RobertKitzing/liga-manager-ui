@@ -27,10 +27,13 @@ export class TableComponent implements OnInit, OnDestroy {
   seasonsSub: Subscription = new Subscription();
   season: Season;
 
+  isLoadingSeasons: boolean;
+  isLoadingRanking: boolean;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private apiClient: Client,
-              private seasonService: SeasonService) {
+              public seasonService: SeasonService) {
               }
 
   async ngOnInit() {
@@ -39,21 +42,20 @@ export class TableComponent implements OnInit, OnDestroy {
       (season) => {
         log.debug(season);
         this.season = season;
-        this.loadData();
+        this.loadRanking();
+      },
+      (error) => {
+        log.error(error);
       }
     );
     this.seasons = await this.seasonService.getSeasons(SeasonState.Progress);
     if (this.season) {
-      this.loadData();
+      this.loadRanking();
     }
   }
 
   ngOnDestroy() {
     this.seasonsSub.unsubscribe();
-  }
-
-  loadData() {
-    this.loadRanking();
   }
 
   selectedSeasonChanged(event: any) {
@@ -66,6 +68,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   loadRanking() {
+    this.isLoadingRanking = true;
     this.apiClient.ranking(this.season.id).subscribe(
       (ranking: any) => {
         log.debug(ranking);
@@ -74,6 +77,9 @@ export class TableComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         log.debug(error);
+      },
+      () => {
+        this.isLoadingRanking = false;
       }
     );
   }

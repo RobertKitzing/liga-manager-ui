@@ -16,8 +16,10 @@ export class SeasonService {
     season = new Subject<Season>();
     seasons: Season[];
     selectedSeason: Season;
+    public isLoadingSeasons: boolean;
 
     teams: Team[];
+    public isLoadingTeams: boolean;
 
     constructor(private apiClient: Client) {
     }
@@ -28,10 +30,17 @@ export class SeasonService {
     }
 
     loadTeams(season: Season) {
+        this.isLoadingTeams = true;
         this.apiClient.teamAll(season.id).subscribe(
           (teams: Team[]) => {
             log.debug(teams);
             this.teams = teams;
+          },
+          (error) => {
+              log.error(error);
+          },
+          () => {
+              this.isLoadingTeams = false;
           }
         );
     }
@@ -52,6 +61,7 @@ export class SeasonService {
     }
 
     async getSeasons(state: SeasonState | null | undefined): Promise<Season[]> {
+        this.isLoadingSeasons = true;
         if (!this.seasons) {
             log.debug('getSteasonFromServer');
             return new Promise<Season[]>(
@@ -67,6 +77,9 @@ export class SeasonService {
                         (error: any) => {
                             log.debug(error);
                             resolve(null);
+                        },
+                        () => {
+                            this.isLoadingSeasons = false;
                         }
                     );
                 }
@@ -75,6 +88,7 @@ export class SeasonService {
             log.debug('getSteasonFromCache');
             const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
             log.debug(filterd);
+            this.isLoadingSeasons = false;
             return state ? filterd : this.seasons;
         }
     }

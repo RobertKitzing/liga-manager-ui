@@ -1,14 +1,18 @@
-<div class="container" *ngIf="seasons">
-  <mat-form-field>
-    <mat-select [compareWith]="seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
-      <mat-option *ngFor="let season of seasons" [value]="season">
-        {{ season.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="container">
+  <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
+  <div *ngIf="!seasonService.isLoadingSeasons">
+    <mat-form-field>
+      <mat-select [compareWith]="seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+        <mat-option *ngFor="let season of seasons" [value]="season">
+          {{ season.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
-<div class="container example-container mat-elevation-z8" *ngIf="rankingDataSource">
-  <mat-table #table [dataSource]="rankingDataSource" matSort (matSortChange)="sortData($event)">
+<div class="container example-container mat-elevation-z8">
+  <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
+  <mat-table #table [dataSource]="rankingDataSource" matSort (matSortChange)="sortData($event)" *ngIf="rankingDataSource">
 
     <ng-container matColumnDef="number">
       <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
