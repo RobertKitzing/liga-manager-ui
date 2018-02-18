@@ -25,7 +25,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   isLoadingMatches: boolean;
 
   constructor(private apiClient: Client,
-              private seasonService: SeasonService) { }
+              public seasonService: SeasonService) { }
 
   async ngOnInit() {
     this.seasonsSub = this.seasonService.season.subscribe(
