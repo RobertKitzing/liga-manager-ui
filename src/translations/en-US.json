@@ -29,7 +29,7 @@
   "MATCHDAY_PLACEHOLDER": "Matchday",
   "HOME_SCORE_PLACEHOLDER": "Home",
   "GUEST_SCORE_PLACEHOLDER": "Guest",
-  "CREATE_SEASON": "Create Season",
+  "CREATE_SEASON": "Create Season {{seasonName}}",
   "SEASON_NAME": "Name of Season",
   "NEXT": "next",
   "BACK": "back",
@@ -37,5 +37,7 @@
   "SELECTED_TEAMS": "Chosen Teams",
   "TEAMS": "Teams",
   "START_SEASON": "Start Season",
-  "OVERVIEW": "Overview"
+  "OVERVIEW": "Overview",
+  "MATCHDAYS": "Matchdays",
+  "CALCULATE_MATCHDAYS": "Randomize Matchdays"
 }

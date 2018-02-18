@@ -1,13 +1,13 @@
 <div class="container">
     <mat-card class="season-create">
         <mat-card-header>
-            <mat-card-title translate>CREATE_SEASON</mat-card-title>
+            <mat-card-title>{{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper" (selectionChange)="createSeasonStepperChanged($event)">
                 <mat-step [stepControl]="createSeasonFormGroup" editable="false">
                     <form [formGroup]="createSeasonFormGroup">
-                    <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate }}</ng-template>
+                    <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</ng-template>
                     <mat-form-field>
                         <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
                     </mat-form-field>
@@ -36,9 +36,11 @@
                                 <mat-grid-tile-header>
                                     <h2 translate>SELECTED_TEAMS</h2>
                                 </mat-grid-tile-header>
-                                <div *ngFor="let team of selectedTeams">
-                                    {{team.name}}
-                                </div>
+                                <ul>
+                                    <li *ngFor="let team of selectedTeams">
+                                        {{team.name}}
+                                    </li>
+                                </ul>
                             </mat-grid-tile>
                         </mat-grid-list>
                         <div>
@@ -56,7 +58,7 @@
                                 {{'SEASON_NAME' | translate}}
                             </td>
                             <td>
-                                {{newSeasonName.value}}
+                                <p>{{newSeasonName.value}}</p>
                             </td>
                         </tr>
                         <tr>
@@ -64,11 +66,20 @@
                                 {{'TEAMS' | translate}}
                             </td>
                             <td>
-                                <ul>
-                                    <li *ngFor="let team of selectedTeams">
-                                        {{team.name}}
-                                    </li>
-                                </ul>
+                                <p *ngFor="let team of selectedTeams">
+                                    {{team.name}} <br>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ 'MATCHDAYS' | translate}}
+                            </td>
+                            <td>
+                                <p>TBA.</p>
+                            </td>
+                            <td>
+                                <button mat-button>{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
                             </td>
                         </tr>
                     </table>
@@ -96,9 +107,9 @@
                         </mat-grid-tile>
                     </mat-grid-list> -->
                     <div>
-                        <button mat-button matStepperBack>{{ 'BACK' | translate }}</button>
                         <span fxFlex></span>
                         <button mat-button (click)="startSeason()">{{ 'START_SEASON' | translate}}</button>
+                        <span fxFlex></span>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>
