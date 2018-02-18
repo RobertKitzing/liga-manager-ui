@@ -18,9 +18,11 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   version: string = environment.version;
   seasons: Season[];
   seasonsSub: Subscription;
+  season: Season;
+
   matches: Match[];
   matchDay = 1;
-  season: Season;
+  isLoadingMatches: boolean;
 
   constructor(private apiClient: Client,
               private seasonService: SeasonService) { }
@@ -75,11 +77,18 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
 
   loadMatches() {
     this.matches = null;
+    this.isLoadingMatches = true;
     log.debug(this.season);
     this.apiClient.matchesAll(this.season.id, this.matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
         log.debug(matches);
         this.matches = matches;
+      },
+      (error) => {
+        log.error(error);
+      },
+      () => {
+        this.isLoadingMatches = false;
       }
     );
   }

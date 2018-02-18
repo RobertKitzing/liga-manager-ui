@@ -1,5 +1,6 @@
-<div *ngIf="seasons" class="container">
-  <mat-form-field id="seasonchooser" style="margin-right: 20px;">
+<div class="container">
+  <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
+  <mat-form-field id="seasonchooser" style="margin-right: 20px;" *ngIf="seasons">
     <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
       <mat-option *ngFor="let season of seasons" [value]="season">
         {{ season.name }}
@@ -14,6 +15,8 @@
     </mat-select>
   </mat-form-field>
 </div>
+<div class="container">
+  <app-loader [isLoading]="isLoadingMatches" size="1.5"></app-loader>
   <div class="mat-elevation-z8" *ngIf="matches">
     <mat-accordion>
       <mat-expansion-panel *ngFor="let match of matches">
@@ -38,5 +41,5 @@
         <button mat-button (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
       </mat-expansion-panel>
     </mat-accordion>
-
   </div>
+</div>
