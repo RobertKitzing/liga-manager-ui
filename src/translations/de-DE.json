@@ -38,5 +38,7 @@
   "START_SEASON": "Saison starten",
   "OVERVIEW": "Übersicht",
   "MATCHDAYS": "Spieltage",
-  "CALCULATE_MATCHDAYS": "Spieltage auswürfeln"
+  "CALCULATE_MATCHDAYS": "Spieltage auswürfeln",
+  "ADD_ALL": "alle",
+  "REMOVE_ALL": "keine"
 }

@@ -39,5 +39,7 @@
   "START_SEASON": "Start Season",
   "OVERVIEW": "Overview",
   "MATCHDAYS": "Matchdays",
-  "CALCULATE_MATCHDAYS": "Randomize Matchdays"
+  "CALCULATE_MATCHDAYS": "Randomize Matchdays",
+  "ADD_ALL": "all",
+  "REMOVE_ALL": "remove all"
 }

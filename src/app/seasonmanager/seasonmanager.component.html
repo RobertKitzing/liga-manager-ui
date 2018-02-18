@@ -1,94 +1,96 @@
 <div class="container">
-    <mat-card class="season-create">
-        <mat-card-header>
-            <mat-card-title>{{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-vertical-stepper [linear]="isLinear" #stepper="matVerticalStepper" (selectionChange)="createSeasonStepperChanged($event)">
-                <mat-step [stepControl]="createSeasonFormGroup" editable="false">
-                    <form [formGroup]="createSeasonFormGroup">
-                    <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</ng-template>
-                    <div fxLayout
-                         fxLayoutGap="10px"
-                         fxLayoutAlign="left"
-                         fxLayout="column">
-                        <div>
-                            <mat-form-field>
-                                <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <button mat-raised-button color="primary" matStepperNext [disabled]="!createSeasonFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
-                    </form>
-                </mat-step>
-                <mat-step [stepControl]="selectTeamsFormGroup" editable="true">
-                    <form [formGroup]="selectTeamsFormGroup">
-                        <ng-template matStepLabel>{{ 'TEAMS' | translate }}</ng-template>
-                        <div fxLayout
-                             fxLayoutGap="30px"
-                             fxLayoutAlign="left"
-                             fxLayout.xs="column">
-                           <div fxLayout="column">
-                                <h2 translate>ALL_TEAMS</h2>
-                                <app-loader [isLoading]="isLoadingAllTeams" size="1.5"></app-loader>
-                                <div *ngIf="allTeams">
-                                    <div *ngFor="let team of allTeams">
-                                        <mat-checkbox [checked]="isSelectedTeam(team.id)" (change)="handleTeam($event)" [value]="team">{{team.name}}</mat-checkbox>
-                                    </div>
-                                </div>
-                            </div>
-                            <div fxLayout="column">
-                                <h2 translate>SELECTED_TEAMS</h2>
-                                <ul>
-                                    <li *ngFor="let team of selectedTeams">
-                                        {{team.name}}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <button style="margin-top: 30px;" [disabled]="selectedTeams.length < 2" mat-raised-button color="primary" matStepperNext>{{ 'NEXT' | translate }}</button>
-                    </form>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>{{ 'START_SEASON' | translate }}</ng-template>
-                    <h2 translate>OVERVIEW</h2>
-                    <div fxLayout
-                        fxLayoutGap="30px"
+    <div>
+        <h1>{{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</h1>
+    </div>
+    <div>
+        <mat-vertical-stepper [linear]="isLinear" #stepper="matVerticalStepper" (selectionChange)="createSeasonStepperChanged($event)">
+            <mat-step [stepControl]="createSeasonFormGroup" editable="false">
+                <form [formGroup]="createSeasonFormGroup">
+                <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</ng-template>
+                <div fxLayout
+                        fxLayoutGap="10px"
                         fxLayoutAlign="left"
                         fxLayout="column">
-                        <div>
-                            <div>
-                                {{'SEASON_NAME' | translate}}
-                            </div>
-                            <div>
-                                {{newSeasonName.value}}
+                    <div>
+                        <mat-form-field>
+                            <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-raised-button color="primary" matStepperNext [disabled]="!createSeasonFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="selectTeamsFormGroup" editable="true">
+                <form [formGroup]="selectTeamsFormGroup">
+                    <ng-template matStepLabel>{{ 'TEAMS' | translate }}</ng-template>
+                    <div fxLayout
+                            fxLayoutGap="30px"
+                            fxLayoutAlign="left"
+                            fxLayout.xs="column">
+                        <div fxLayout="column">
+                            <h2 translate>ALL_TEAMS</h2>
+                            <app-loader [isLoading]="isLoadingAllTeams" size="1.5"></app-loader>
+                            <div *ngIf="allTeams">
+                                <div *ngFor="let team of allTeams">
+                                    <mat-checkbox [checked]="isSelectedTeam(team.id)" (change)="handleTeam($event)" [value]="team">{{team.name}}</mat-checkbox>
+                                </div>
+                                <div fxLayout="row" style="margin-top:30px;">
+                                    <button style="margin-right:15px;" mat-raised-button color="primary" (click)="addAllTeams()">{{ 'ADD_ALL' | translate}}</button>
+                                    <button style="margin-left:15px;" mat-raised-button color="primary" (click)="removeAllTeams()">{{ 'REMOVE_ALL' | translate}}</button>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div>
-                                {{'TEAMS' | translate}}
-                            </div>
-                            <div *ngFor="let team of selectedTeams">
-                                {{team.name}}
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                {{ 'MATCHDAYS' | translate}}
-                            </div>
-                            <div>
-                                <p>TBA.</p>
-                            </div>
-                            <div>
-                                <button mat-raised-button color="primary">{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
-                            </div>
-                        </div>
-                        <div>
-                            <button mat-raised-button color="primary" (click)="startSeason()">{{ 'START_SEASON' | translate}}</button>
+                        <div fxLayout="column">
+                            <h2 translate>SELECTED_TEAMS</h2>
+                            <ul>
+                                <li *ngFor="let team of selectedTeams">
+                                    {{team.name}}
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </mat-step>
-            </mat-vertical-stepper>
-        </mat-card-content>
-    </mat-card>
+                    <button style="margin-top: 30px;" [disabled]="selectedTeams.length < 2" mat-raised-button color="primary" matStepperNext>{{ 'NEXT' | translate }}</button>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>{{ 'START_SEASON' | translate }}</ng-template>
+                <h2 translate>OVERVIEW</h2>
+                <div fxLayout
+                    fxLayoutGap="30px"
+                    fxLayoutAlign="left"
+                    fxLayout="column">
+                    <div>
+                        <div>
+                            {{'SEASON_NAME' | translate}}
+                        </div>
+                        <div>
+                            {{newSeasonName.value}}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            {{'TEAMS' | translate}}
+                        </div>
+                        <div *ngFor="let team of selectedTeams">
+                            {{team.name}}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            {{ 'MATCHDAYS' | translate}}
+                        </div>
+                        <div>
+                            <p>TBA.</p>
+                        </div>
+                        <div>
+                            <button mat-raised-button color="primary">{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-raised-button color="primary" (click)="startSeason()">{{ 'START_SEASON' | translate}}</button>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
 </div>

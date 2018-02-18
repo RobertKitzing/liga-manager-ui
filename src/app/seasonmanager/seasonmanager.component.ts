@@ -61,8 +61,16 @@ export class SeasonManagerComponent implements OnInit {
     );
   }
 
+  addAllTeams() {
+    this.selectedTeams = this.allTeams;
+  }
+
+  removeAllTeams() {
+    this.selectedTeams = new Array<Team>();
+  }
+
   isSelectedTeam(id: string) {
-    return this.selectedTeams.findIndex(t => t.id == id) !== -1;
+    return this.selectedTeams.findIndex(t => t.id === id) !== -1;
   }
 
   createSeason(name: string) {

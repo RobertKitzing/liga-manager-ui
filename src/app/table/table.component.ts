@@ -20,8 +20,14 @@ export class TableComponent implements OnInit, OnDestroy {
   version: string = environment.version;
   displayedColumns = ['number',
                       'team_id',
-                      'matches',
-                      'wins', 'draws', 'losses', 'scored_goals', 'conceded_goals', 'goals_diff', 'points'];
+                      //'matches',
+                      // 'wins',
+                      // 'draws',
+                      // 'losses',
+                      // 'scored_goals',
+                      // 'conceded_goals',
+                      // 'goals_diff',
+                      'points'];
   rankingDataSource: MatTableDataSource<Position[]>;
   seasons: Season[] = new Array<Season>();
   seasonsSub: Subscription = new Subscription();
