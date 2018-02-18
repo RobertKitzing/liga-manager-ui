@@ -61,6 +61,10 @@ export class SeasonManagerComponent implements OnInit {
     );
   }
 
+  isSelectedTeam(id: string) {
+    return this.selectedTeams.findIndex(t => t.id == id) !== -1;
+  }
+
   createSeason(name: string) {
     const opt: Body5 = new Body5();
     opt.name = name;
@@ -78,12 +82,13 @@ export class SeasonManagerComponent implements OnInit {
   }
 
   handleTeam(event: MatCheckboxChange) {
-    log.debug(event);
     const team: any = event.source.value;
+    log.debug(team);
+    log.debug(this.selectedTeams);
     if (event.checked) {
       this.selectedTeams.push(<Team> team);
     } else {
-      this.selectedTeams = this.selectedTeams.filter(t => t !== <Team> team);
+      this.selectedTeams = this.selectedTeams.filter(t => t.id !== team.id);
     }
     this.selectedTeams = this.selectedTeams.sort((t1, t2) => {
       if (t1.name > t2.name) {
@@ -99,5 +104,13 @@ export class SeasonManagerComponent implements OnInit {
 
   addTeamsToSeason() {
     // this.apiClient.
+  }
+
+  getSelectedTeamsAsStringList(): string {
+    return this.selectedTeams.map(t=> t.name).join();
+  }
+
+  startSeason() {
+
   }
 }
