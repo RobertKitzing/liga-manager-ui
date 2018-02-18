@@ -4,115 +4,91 @@
             <mat-card-title>{{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper" (selectionChange)="createSeasonStepperChanged($event)">
+            <mat-vertical-stepper [linear]="isLinear" #stepper="matVerticalStepper" (selectionChange)="createSeasonStepperChanged($event)">
                 <mat-step [stepControl]="createSeasonFormGroup" editable="false">
                     <form [formGroup]="createSeasonFormGroup">
                     <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</ng-template>
-                    <mat-form-field>
-                        <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
-                    </mat-form-field>
-                    <div>
-                        <span fxFlex></span>
-                        <button mat-button matStepperNext [disabled]="!createSeasonFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
+                    <div fxLayout
+                         fxLayoutGap="10px"
+                         fxLayoutAlign="left"
+                         fxLayout="column">
+                        <div>
+                            <mat-form-field>
+                                <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
+                            </mat-form-field>
+                        </div>
                     </div>
+                    <button mat-raised-button color="primary" matStepperNext [disabled]="!createSeasonFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="selectTeamsFormGroup" editable="true">
                     <form [formGroup]="selectTeamsFormGroup">
                         <ng-template matStepLabel>{{ 'TEAMS' | translate }}</ng-template>
-                        <mat-grid-list cols="2" rowHeight="4:2">
-                            <mat-grid-tile>
-                                <mat-grid-tile-header>
-                                    <h2 translate>ALL_TEAMS</h2>
-                                </mat-grid-tile-header>
+                        <div fxLayout
+                             fxLayoutGap="30px"
+                             fxLayoutAlign="left"
+                             fxLayout.xs="column">
+                           <div fxLayout="column">
+                                <h2 translate>ALL_TEAMS</h2>
                                 <app-loader [isLoading]="isLoadingAllTeams" size="1.5"></app-loader>
                                 <div *ngIf="allTeams">
                                     <div *ngFor="let team of allTeams">
                                         <mat-checkbox [checked]="isSelectedTeam(team.id)" (change)="handleTeam($event)" [value]="team">{{team.name}}</mat-checkbox>
                                     </div>
                                 </div>
-                            </mat-grid-tile>                             
-                            <mat-grid-tile>
-                                <mat-grid-tile-header>
-                                    <h2 translate>SELECTED_TEAMS</h2>
-                                </mat-grid-tile-header>
+                            </div>
+                            <div fxLayout="column">
+                                <h2 translate>SELECTED_TEAMS</h2>
                                 <ul>
                                     <li *ngFor="let team of selectedTeams">
                                         {{team.name}}
                                     </li>
                                 </ul>
-                            </mat-grid-tile>
-                        </mat-grid-list>
-                        <div>
-                            <span fxFlex></span>
-                            <button [disabled]="selectedTeams.length < 2" mat-button matStepperNext>{{ 'NEXT' | translate }}</button>
+                            </div>
                         </div>
+                        <button style="margin-top: 30px;" [disabled]="selectedTeams.length < 2" mat-raised-button color="primary" matStepperNext>{{ 'NEXT' | translate }}</button>
                     </form>
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel>{{ 'START_SEASON' | translate }}</ng-template>
-                    <h2 class="mat-grid-tile-header" translate>OVERVIEW</h2>
-                    <table>
-                        <tr>
-                            <td>
+                    <h2 translate>OVERVIEW</h2>
+                    <div fxLayout
+                        fxLayoutGap="30px"
+                        fxLayoutAlign="left"
+                        fxLayout="column">
+                        <div>
+                            <div>
                                 {{'SEASON_NAME' | translate}}
-                            </td>
-                            <td>
-                                <p>{{newSeasonName.value}}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div>
+                                {{newSeasonName.value}}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
                                 {{'TEAMS' | translate}}
-                            </td>
-                            <td>
-                                <p *ngFor="let team of selectedTeams">
-                                    {{team.name}} <br>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                            </div>
+                            <div *ngFor="let team of selectedTeams">
+                                {{team.name}}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
                                 {{ 'MATCHDAYS' | translate}}
-                            </td>
-                            <td>
+                            </div>
+                            <div>
                                 <p>TBA.</p>
-                            </td>
-                            <td>
-                                <button mat-button>{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
-                            </td>
-                        </tr>
-                    </table>
-                    <!-- <mat-grid-list cols="2" rowHeight="40px">
-                        <mat-grid-tile [colspan]="2">
-                            <mat-grid-tile-header>
-                                
-                            </mat-grid-tile-header>
-                        </mat-grid-tile>
-                        <mat-grid-tile>
-                            {{'SEASON_NAME' | translate}}
-                        </mat-grid-tile>
-                        <mat-grid-tile>
-                            {{newSeasonName.value}}
-                        </mat-grid-tile>
-                        <mat-grid-tile>
-                            {{'TEAMS' | translate}}
-                        </mat-grid-tile>
-                        <mat-grid-tile>
-                            <ul>
-                                <li *ngFor="let team of selectedTeams">
-                                    {{team.name}}
-                                </li>
-                            </ul>
-                        </mat-grid-tile>
-                    </mat-grid-list> -->
-                    <div>
-                        <span fxFlex></span>
-                        <button mat-button (click)="startSeason()">{{ 'START_SEASON' | translate}}</button>
-                        <span fxFlex></span>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary">{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
+                            </div>
+                        </div>
+                        <div>
+                            <button mat-raised-button color="primary" (click)="startSeason()">{{ 'START_SEASON' | translate}}</button>
+                        </div>
                     </div>
                 </mat-step>
-            </mat-horizontal-stepper>
+            </mat-vertical-stepper>
         </mat-card-content>
     </mat-card>
 </div>
