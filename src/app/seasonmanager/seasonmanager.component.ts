@@ -3,7 +3,7 @@ import { SeasonService } from '@app/service/season.service';
 import { Client, Season, Ranking, Team, SeasonState, Body5 } from './../api/openapi';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
-import { MatTableDataSource, MatSort, Sort } from '@angular/material';
+import { MatTableDataSource, MatSort, Sort, MatCheckboxChange } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
 import { Logger } from '@app/core';
@@ -20,11 +20,12 @@ const log = new Logger('Seasonmanager');
 export class SeasonManagerComponent implements OnInit {
 
   // tslint:disable-next-line:no-inferrable-types
-  isLinear: boolean = true;
+  isLinear: boolean = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
   allTeams: Team[];
+  selectedTeams: Team[] = new Array<Team>();
   isLoadingAllTeams: boolean;
 
   constructor(private apiClient: Client,
@@ -77,5 +78,29 @@ export class SeasonManagerComponent implements OnInit {
         log.debug('finally');
       }
     );
+  }
+
+  handleTeam(event: MatCheckboxChange) {
+    log.debug(event);
+    const team: any = event.source.value;
+    if (event.checked) {
+      this.selectedTeams.push(<Team> team);
+    } else {
+      this.selectedTeams = this.selectedTeams.filter(t => t !== <Team> team);
+    }
+    this.selectedTeams = this.selectedTeams.sort((t1, t2) => {
+      if (t1.name > t2.name) {
+          return 1;
+      }
+      if (t1.name < t2.name) {
+          return -1;
+      }
+      return 0;
+    });
+    log.debug(this.selectedTeams);
+  }
+
+  addTeamsToSeason() {
+    // this.apiClient.
   }
 }

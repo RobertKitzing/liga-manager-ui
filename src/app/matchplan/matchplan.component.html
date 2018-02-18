@@ -9,7 +9,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <mat-divider [vertical]="true"></mat-divider>  
+  <mat-divider [vertical]="true"></mat-divider>
   <mat-form-field style="margin-left: 20px;">
     <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
       <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day">
