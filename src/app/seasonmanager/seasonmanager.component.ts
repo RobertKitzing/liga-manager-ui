@@ -19,6 +19,8 @@ const log = new Logger('Seasonmanager');
 })
 export class SeasonManagerComponent implements OnInit {
 
+  // tslint:disable-next-line:no-inferrable-types
+  isLinear: boolean = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 

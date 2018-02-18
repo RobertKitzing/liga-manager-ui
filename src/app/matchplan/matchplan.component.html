@@ -1,12 +1,14 @@
 <div class="container">
   <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
-  <mat-form-field id="seasonchooser" style="margin-right: 20px;" *ngIf="seasons">
-    <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
-      <mat-option *ngFor="let season of seasons" [value]="season">
-        {{ season.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div *ngIf="!seasonService.isLoadingSeasons">
+    <mat-form-field id="seasonchooser" style="margin-right: 20px;">
+      <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+        <mat-option *ngFor="let season of seasons" [value]="season">
+          {{ season.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <mat-divider [vertical]="true"></mat-divider>  
   <mat-form-field style="margin-left: 20px;">
     <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">

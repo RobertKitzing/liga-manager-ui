@@ -1,12 +1,14 @@
 <div class="container">
   <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
-  <mat-form-field *ngIf="seasons">
-    <mat-select [compareWith]="seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
-      <mat-option *ngFor="let season of seasons" [value]="season">
-        {{ season.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div *ngIf="!seasonService.isLoadingSeasons">
+    <mat-form-field>
+      <mat-select [compareWith]="seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+        <mat-option *ngFor="let season of seasons" [value]="season">
+          {{ season.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 <div class="container example-container mat-elevation-z8">
   <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
