@@ -1,7 +1,11 @@
-<div class="container">
+<div class="container"
+     fxLayout
+     fxLayoutGap="10px"
+     fxLayoutAlign="center"
+     fxLayout.xs="column">
   <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
   <div *ngIf="!seasonService.isLoadingSeasons">
-    <mat-form-field id="seasonchooser" style="margin-right: 20px;">
+    <mat-form-field id="seasonchooser">
       <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
         <mat-option *ngFor="let season of seasons" [value]="season">
           {{ season.name }}
@@ -10,13 +14,15 @@
     </mat-form-field>
   </div>
   <mat-divider [vertical]="true"></mat-divider>
-  <mat-form-field style="margin-left: 20px;">
-    <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
-      <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day">
-        {{ day }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
+        <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day">
+          {{ day }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 <div class="container">
   <app-loader [isLoading]="isLoadingMatches" size="1.5"></app-loader>
@@ -27,18 +33,16 @@
           <mat-panel-title>
             {{ seasonService.getTeamNameByID(match.home_team_id) }} - {{ seasonService.getTeamNameByID(match.guest_team_id) }}
           </mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description style="white-space: nowrap">
             {{ match.home_score }} : {{ match.guest_score }}
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-form-field>
-          <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" ngModel="match.home_score" #home_score
-          />
+          <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" ngModel="match.home_score" #home_score />
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" ngModel="match.guest_score" #guest_score
-          />
+          <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" ngModel="match.guest_score" #guest_score />
         </mat-form-field>
 
         <button mat-button (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>

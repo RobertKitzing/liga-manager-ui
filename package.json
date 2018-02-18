@@ -6,6 +6,7 @@
     "ng": "ng",
     "build": "npm run env -s && ng build --prod",
     "build:app": "npm run cordova:clean && npm run cordova:prepare && npm run cordova:build",
+    "build:Deploy": "npm run build && npm run deploy",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
@@ -22,8 +23,7 @@
     "generate": "ng generate",
     "api-spec-converter": "api-spec-converter https://soccer-api.skilled-by-nature.de/openapi.json --from=openapi_3 --to=swagger_2 > swagger.json",
     "nswag": "api-spec-converter && nswag run ligamanagerapi.nswag",
-    "deploy": "node deploy",
-    "deployNDeploy": "npm run build && npm run deploy"
+    "deploy": "node deploy"
   },
   "dependencies": {
     "@angular/animations": "^5.2.0",
