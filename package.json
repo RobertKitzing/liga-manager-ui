@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "npm run env -s && ng build --prod",
+    "build:app": "npm run cordova:clean && npm run cordova:prepare && npm run cordova:build",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
