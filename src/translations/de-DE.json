@@ -27,5 +27,9 @@
   "Matchplan": "Spielplan",
   "MATCHDAY_PLACEHOLDER": "Spieltag",
   "HOME_SCORE_PLACEHOLDER": "Heim",
-  "GUEST_SCORE_PLACEHOLDER": "Gast"
+  "GUEST_SCORE_PLACEHOLDER": "Gast",
+  "CREATE_SEASON": "Saison erstellen",
+  "SEASON_NAME": "Name der Saison",
+  "NEXT": "weiter",
+  "BACK": "zurück"
 }

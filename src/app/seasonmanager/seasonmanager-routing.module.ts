@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Route, extract } from '@app/core';
 
 const routes: Routes = Route.withShell([
-  { path: 'seasonmanager', component: SeasonManagerComponent, data: { title: extract('Table') } }
+  { path: 'seasonmanager', component: SeasonManagerComponent, data: { title: extract('SeasonManager') } }
 ]);
 
 @NgModule({
