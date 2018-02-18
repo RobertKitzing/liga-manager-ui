@@ -3,17 +3,10 @@
   display: flex;
   justify-content: center;
 }
-.example-container {
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
 
 .mat-table {
-  overflow: auto;
-  height: 75vh;
+  width: 100%;
 }
-
 .mat-header-cell.mat-sort-header-sorted {
   color: black;
 }

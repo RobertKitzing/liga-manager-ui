@@ -20,7 +20,8 @@ export class TableComponent implements OnInit, OnDestroy {
   version: string = environment.version;
   displayedColumns = ['number',
                       'team_id',
-                      //'matches',
+                      'matches',
+                      'matches_results',
                       // 'wins',
                       // 'draws',
                       // 'losses',

@@ -11,13 +11,13 @@
     </mat-form-field>
   </div>
 </div>
-<div class="container example-container mat-elevation-z8">
+<div class="container mat-elevation-z8">
   <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
   <mat-table #table [dataSource]="rankingDataSource" *ngIf="rankingDataSource">
 
     <ng-container matColumnDef="number">
-      <mat-header-cell *matHeaderCellDef fxFlex="15">#</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="15"> {{element.number}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef fxFlex="nogrow" style="margin-right:15px">#</mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="nogrow" style="margin-right:15px"> {{element.number}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="team_id">
@@ -30,9 +30,9 @@
       <mat-cell *matCellDef="let element"> {{element.matches}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="wins">
-      <mat-header-cell *matHeaderCellDef >{{ 'GAME_WINS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.wins}} </mat-cell>
+    <ng-container matColumnDef="matches_results">
+      <mat-header-cell *matHeaderCellDef >{{ 'GAMES' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.wins}}:{{element.draws}}:{{element.losses}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="draws">
@@ -61,8 +61,8 @@
     </ng-container>
 
     <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef fxFlex="25" style="word-wrap:break-word">{{ 'POINTS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="25"> {{element.points}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>{{ 'POINTS' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.points}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
