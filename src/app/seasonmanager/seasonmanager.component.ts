@@ -19,10 +19,9 @@ const log = new Logger('Seasonmanager');
 })
 export class SeasonManagerComponent implements OnInit {
 
-  // tslint:disable-next-line:no-inferrable-types
-  isLinear: boolean = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  isLinear: boolean = true;
+  createSeasonFormGroup: FormGroup;
+  selectTeamsFormGroup: FormGroup;
 
   allTeams: Team[];
   selectedTeams: Team[] = new Array<Team>();
@@ -33,16 +32,14 @@ export class SeasonManagerComponent implements OnInit {
               private _formBuilder: FormBuilder) {
               }
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
+    this.createSeasonFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+    this.selectTeamsFormGroup = this._formBuilder.group({
     });
   }
 
   createSeasonStepperChanged(event: StepperSelectionEvent) {
-    log.debug(event);
     switch (event.selectedIndex) {
       case 1:
         this.loadAllTeams();

@@ -5,21 +5,22 @@
         </mat-card-header>
         <mat-card-content>
             <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper" (selectionChange)="createSeasonStepperChanged($event)">
-                <mat-step [stepControl]="firstFormGroup">
-                    <form [formGroup]="firstFormGroup">
+                <mat-step [stepControl]="createSeasonFormGroup" editable="false">
+                    <form [formGroup]="createSeasonFormGroup">
                     <ng-template matStepLabel> {{ 'CREATE_SEASON' | translate }}</ng-template>
                     <mat-form-field>
                         <input #newSeasonName matInput placeholder="{{ 'SEASON_NAME' | translate }}" formControlName="firstCtrl" required />
                     </mat-form-field>
                     <div>
-                        <button mat-button matStepperNext [disabled]="!firstFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
+                        <span fxFlex></span>
+                        <button mat-button matStepperNext [disabled]="!createSeasonFormGroup.valid" (click)="createSeason(newSeasonName.value)">{{ 'NEXT' | translate }}</button>
                     </div>
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup">
-                    <form [formGroup]="secondFormGroup">
-                        <ng-template matStepLabel>TEAMS</ng-template>
-                        <mat-grid-list cols="3">
+                <mat-step [stepControl]="selectTeamsFormGroup" editable="true">
+                    <form [formGroup]="selectTeamsFormGroup">
+                        <ng-template matStepLabel>{{ 'TEAMS' | translate }}</ng-template>
+                        <mat-grid-list cols="2" rowHeight="4:3">
                             <mat-grid-tile>
                                 <mat-grid-tile-header>
                                     <h2 translate>ALL_TEAMS</h2>
@@ -30,10 +31,7 @@
                                         <mat-checkbox (change)="handleTeam($event)" [value]="team">{{team.name}}</mat-checkbox>
                                     </div>
                                 </div>
-                            </mat-grid-tile>
-                            <mat-grid-tile>
-                                <mat-divider [vertical]="true"></mat-divider>                                
-                            </mat-grid-tile>
+                            </mat-grid-tile>                             
                             <mat-grid-tile>
                                 <mat-grid-tile-header>
                                     <h2 translate>SELECTED_TEAMS</h2>
@@ -46,16 +44,18 @@
                             </mat-grid-tile>
                         </mat-grid-list>
                         <div>
-                            <button [disabled]="selectedTeams.length < 2" mat-button matStepperNext (change)="addTeamsToSeason()">{{ 'NEXT' | translate }}</button>
+                            <span fxFlex></span>
+                            <button [disabled]="selectedTeams.length < 2" mat-button matStepperNext>{{ 'NEXT' | translate }}</button>
                         </div>
                     </form>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel>Done</ng-template>
+                    <ng-template matStepLabel>{{ 'START_SEASON' | translate }}</ng-template>
                     You are now done.
                     <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button (click)="stepper.reset()">Reset</button>
+                        <button mat-button matStepperBack>{{ 'BACK' | translate }}</button>
+                        <span fxFlex></span>
+                        <button mat-button (click)="startSeason()">{{ 'START_SEASON' | translate}}</button>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>

@@ -31,5 +31,9 @@
   "CREATE_SEASON": "Saison erstellen",
   "SEASON_NAME": "Name der Saison",
   "NEXT": "weiter",
-  "BACK": "zurück"
+  "BACK": "zurück",
+  "ALL_TEAMS": "Alle Mannschaften",
+  "SELECTED_TEAMS": "Ausgewählte Mannschaften",
+  "TEAMS": "Manschaften",
+  "START_SEASON": "Saison starten"
 }
