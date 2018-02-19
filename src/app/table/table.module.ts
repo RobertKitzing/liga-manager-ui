@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { MatTableModule } from '@angular/material';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { MatTableModule } from '@angular/material';
     FlexLayoutModule,
     MaterialModule,
     TableRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxDatatableModule
   ],
   declarations: [
     TableComponent

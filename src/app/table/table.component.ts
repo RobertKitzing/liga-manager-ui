@@ -12,24 +12,26 @@ const log = new Logger('Table');
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
+  templateUrl: './table.ngx.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
 
   version: string = environment.version;
-  displayedColumns = ['number',
-                      'team_id',
-                      'matches',
-                      'matches_results',
+  displayedColumns = [
+                      { prop: 'number' },
+                      { prop: 'team_id' },
+                      { prop: 'matches' },
+                      { prop: 'matches_results' },
                       // 'wins',
                       // 'draws',
                       // 'losses',
                       // 'scored_goals',
                       // 'conceded_goals',
                       // 'goals_diff',
-                      'points'];
-  rankingDataSource: MatTableDataSource<Position[]>;
+                      { prop: 'points' }
+                     ];
+  ranking: Position[];
   seasons: Season[] = new Array<Season>();
   seasonsSub: Subscription = new Subscription();
   season: Season;
@@ -69,18 +71,12 @@ export class TableComponent implements OnInit, OnDestroy {
     this.seasonService.selectSeason(event.value);
   }
 
-  sortData(sort: Sort) {
-    log.debug(sort);
-    this.rankingDataSource.sort = this.sort;
-  }
-
   loadRanking() {
     this.isLoadingRanking = true;
     this.apiClient.ranking(this.season.id).subscribe(
       (ranking: any) => {
         log.debug(ranking);
-        this.rankingDataSource = new MatTableDataSource(ranking.positions);
-        this.rankingDataSource.sort = this.sort;
+        this.ranking = ranking.positions;
       },
       (error: any) => {
         log.debug(error);

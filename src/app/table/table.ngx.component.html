@@ -1,0 +1,64 @@
+<div class="container" fxLayout="column">
+    <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
+    <div *ngIf="!seasonService.isLoadingSeasons" fxLayout fxLayoutAlign="center">
+        <mat-form-field>
+            <mat-select [compareWith]="seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+                <mat-option *ngFor="let season of seasons" [value]="season">
+                    {{ season.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
+        <ngx-datatable *ngIf="ranking"
+            [columns]="displayedColumns"
+            [rows]="ranking">
+
+            <ngx-datatable-column name="number">
+                <ng-template ngx-datatable-header-template>
+                    <span>#</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{ row.number }}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="team_id">
+                <ng-template ngx-datatable-header-template>
+                    <span>{{ 'TEAM_NAME' | translate }}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{ seasonService.getTeamNameByID(row.team_id) }}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="matches">
+                <ng-template ngx-datatable-header-template>
+                    <span>{{ 'GAME_COUNT' | translate }}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{ row.matches }}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="matches_results">
+                <ng-template ngx-datatable-header-template>
+                    <span>{{ 'GAMES' | translate }}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{ row.wins}}:{{row.draws}}:{{row.losses}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+            
+            <ngx-datatable-column name="points">
+                <ng-template ngx-datatable-header-template>
+                    <span>{{ 'POINTS' | translate }}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span>{{row.points}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>
