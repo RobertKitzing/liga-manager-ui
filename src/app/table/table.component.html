@@ -16,72 +16,138 @@
   <mat-table #table [dataSource]="rankingDataSource" *ngIf="rankingDataSource">
 
     <ng-container matColumnDef="number">
-      <mat-header-cell *matHeaderCellDef fxFlex="20px">#</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="20px"> {{element.number}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.number}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="team_id">
-      <mat-header-cell *matHeaderCellDef fxFlex="200px">{{ 'TEAM_NAME' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="200px"> {{ seasonService.getTeamNameByID(element.team_id)}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>
+        <div>
+          {{ 'TEAM_NAME' | translate }}
+        </div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div>
+          {{ seasonService.getTeamNameByID(element.team_id)}}
+        </div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="matches">
-      <mat-header-cell *matHeaderCellDef fxFlex="7ch">
-        <div *ngIf="state !== 'xs'">
+      <mat-header-cell *matHeaderCellDef>
+        <div>
           {{ 'GAME_COUNT' | translate }}
         </div>
       </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="7ch">
-          <div *ngIf="state !== 'xs'">
-            {{element.matches}}
-          </div>
+      <mat-cell *matCellDef="let element">
+        <div>
+          {{element.matches}}
+        </div>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="wins">
-      <mat-header-cell *matHeaderCellDef fxFlex="2.5ch">
-        <div *ngIf="state !== 'xs'">
+      <mat-header-cell *matHeaderCellDef>
+        <div fxHide.xs>
           {{ 'GAME_WINS' | translate }}
-        </div>
+        </div>  
       </mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="2.5ch">
-          <div *ngIf="state !== 'xs'">
-            {{element.wins}}
-          </div>  
-        </mat-cell>
+      <mat-cell *matCellDef="let element">
+        <div fxHide.xs>
+          {{element.wins}}
+        </div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="draws">
-      <mat-header-cell *matHeaderCellDef fxFlex="2.5ch">{{ 'GAME_DRAWS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="2.5ch"> {{element.draws}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>
+        <div fxHide.xs>
+          {{ 'GAME_DRAWS' | translate }}
+        </div> 
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div fxHide.xs>
+          {{element.draws}}
+        </div>   
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="losses">
-      <mat-header-cell *matHeaderCellDef fxFlex="2.5ch">{{ 'GAME_LOSSES' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="2.5ch"> {{element.losses}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>
+        <div fxHide.xs>
+          {{ 'GAME_LOSSES' | translate }}
+        </div>         
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div fxHide.xs>
+          {{element.losses}}
+        </div>         
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="scored_goals">
-      <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: flex-end;" fxFlex="7.5ch">{{ 'GOALS_SCORED' | translate }}:</mat-header-cell>
-      <mat-cell *matCellDef="let element" style="display: flex;justify-content: flex-end;" fxFlex="7.5ch"> {{element.scored_goals}}:</mat-cell>
+      <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: flex-end;">
+        <div fxHide.xs>
+          {{ 'GOALS_SCORED' | translate }}:
+        </div>   
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" style="display: flex;justify-content: flex-end;">
+        <div fxHide.xs>
+          {{element.scored_goals}}:
+        </div>   
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="conceded_goals">
-      <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: flex-start;" fxFlex="7.5ch">{{ 'GOALS_CONCEDED' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" style="display: flex;justify-content: flex-start;" fxFlex="7.5ch">{{element.conceded_goals}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef style="display: flex;justify-content: flex-start;">
+        <div fxHide.xs>
+          {{ 'GOALS_CONCEDED' | translate }}
+        </div>   
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" style="display: flex;justify-content: flex-start;">
+        <div fxHide.xs>
+          {{element.conceded_goals}}
+        </div>         
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="goals_diff">
-      <mat-header-cell *matHeaderCellDef fxFlex="6.5ch">{{ 'GOALS_DIFF' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="6.5ch"> {{element.scored_goals - element.conceded_goals}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>
+        <div fxHide.xs>
+          {{ 'GOALS_DIFF' | translate }}
+        </div>         
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div fxHide.xs>
+          {{element.scored_goals - element.conceded_goals}}
+        </div>   
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="points">
-      <mat-header-cell *matHeaderCellDef fxFlex="7.5ch">{{ 'POINTS' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxFlex="7.5ch"> {{element.points}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef>
+        <div>         
+          {{ 'POINTS' | translate }}
+        </div>         
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div>
+          {{element.points}}
+        </div>         
+      </mat-cell>
     </ng-container>
 
+    <!-- <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="element-row" 
+            [class.expanded]="expandedElement == row"
+            (click)="expandedElement = row">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+            [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+            style="overflow: hidden"> 
+    </mat-row>
   </mat-table>
 </div>
