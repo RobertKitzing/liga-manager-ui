@@ -1,3 +1,4 @@
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
 import { Client, Season, Ranking, Team, SeasonState } from './../api/openapi';
@@ -21,13 +22,12 @@ export class TableComponent implements OnInit, OnDestroy {
   displayedColumns = ['number',
                       'team_id',
                       'matches',
-                      'matches_results',
-                      // 'wins',
-                      // 'draws',
-                      // 'losses',
-                      // 'scored_goals',
-                      // 'conceded_goals',
-                      // 'goals_diff',
+                      'wins',
+                      'draws',
+                      'losses',
+                      'scored_goals',
+                      'conceded_goals',
+                      'goals_diff',
                       'points'];
   rankingDataSource: MatTableDataSource<Position[]>;
   seasons: Season[] = new Array<Season>();
@@ -38,9 +38,15 @@ export class TableComponent implements OnInit, OnDestroy {
   isLoadingRanking: boolean;
 
   @ViewChild(MatSort) sort: MatSort;
-
+  public state: string = '';
   constructor(private apiClient: Client,
-              public seasonService: SeasonService) {
+              public seasonService: SeasonService,
+              public media: ObservableMedia) {
+                media.asObservable()
+                .subscribe((change: MediaChange) => {
+                  this.state = change.mqAlias;
+                  log.debug(this.state);
+                });
               }
 
   async ngOnInit() {
