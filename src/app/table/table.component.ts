@@ -22,13 +22,12 @@ export class TableComponent implements OnInit, OnDestroy {
                       { prop: 'number' },
                       { prop: 'team_id' },
                       { prop: 'matches' },
-                      { prop: 'matches_results' },
-                      // 'wins',
-                      // 'draws',
-                      // 'losses',
-                      // 'scored_goals',
-                      // 'conceded_goals',
-                      // 'goals_diff',
+                      { prop: 'wins' },
+                      { prop: 'draws' },
+                      { prop: 'losses' },
+                      { prop: 'scored_goals' },
+                      { prop: 'conceded_goals' },
+                      { prop: 'goals_diff' },
                       { prop: 'points' }
                      ];
   ranking: Position[];
