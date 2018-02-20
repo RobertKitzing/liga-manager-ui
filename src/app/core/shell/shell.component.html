@@ -1,5 +1,5 @@
 <div fxFlex>
-  <mat-sidenav-container fxFill>
+  <mat-sidenav-container fxFill fullscreen>
     <mat-sidenav #sidenav mode="over" ngClass.gt-sm="has-border">
       <nav>
         <mat-list>
@@ -27,9 +27,9 @@
         </mat-list>
       </nav>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-drawer-container>
       <app-header [sidenav]="sidenav"></app-header>
       <router-outlet></router-outlet>
-    </mat-sidenav-content>
+    </mat-drawer-container>
   </mat-sidenav-container>
 </div>

@@ -27,18 +27,17 @@
 }
 
 .mat-sidenav,
-.mat-drawer-content,
+.mat-drawer-container,
 // Force style down to child components
 // See https://angular.io/guide/component-styles#deep
 :host ::ng-deep .mat-drawer-backdrop {
   top: 64px;
   bottom: 0;
-  height: 100vh;
 }
 
 @media ($mat-xsmall) {
   .mat-sidenav,
-  .mat-drawer-content,
+  .mat-drawer-container,
   :host ::ng-deep .mat-drawer-backdrop {
     top: 56px;
   }

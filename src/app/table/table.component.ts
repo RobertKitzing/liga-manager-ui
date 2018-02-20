@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
-import { Client, Season, Ranking, Team, SeasonState } from './../api/openapi';
+import { Client, Season, Ranking, Team, SeasonState, Ranking_position } from './../api/openapi';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
@@ -109,7 +109,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   onDetailClick(row: any) {
-    this.expandedElement = row.team_id;
+    this.expandedElement = row;
     log.debug(row);
   }
 
@@ -129,14 +129,9 @@ export class TableComponent implements OnInit, OnDestroy {
   loadRanking() {
     this.isLoadingRanking = true;
     this.apiClient.ranking(this.season.id).subscribe(
-      (ranking: any) => {
+      (ranking: Ranking) => {
         log.debug(ranking);
-        const det: any = new Array<any>();
-        ranking.positions.forEach((e: Position) => {
-          det.push(e, {detailRow: true, e});
-        });
-        log.debug(det);
-        this.rankingDataSource = new RankingDataSource(det);
+        this.rankingDataSource = new RankingDataSource(ranking.positions);
         this.rankingDataSource.sort = this.sort;
       },
       (error: any) => {
@@ -153,8 +148,8 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 }
 
-class RankingDataSource extends MatTableDataSource<Position> {
-  constructor(ranking: Position[]) {
+class RankingDataSource extends MatTableDataSource<Ranking_position> {
+  constructor(ranking: Ranking_position[]) {
     super(ranking);
   }
 }

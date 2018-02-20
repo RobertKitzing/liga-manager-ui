@@ -136,25 +136,25 @@
         </div>         
       </mat-cell>
     </ng-container>
-
+<!-- 
     <ng-container matColumnDef="expandedDetail">
       <mat-cell *matCellDef="let element"> 
         <div>
           PENIS
         </div>
       </mat-cell>
-    </ng-container>
-    <!-- <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+    </ng-container> -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <!-- <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"
             matRipple 
             class="element-row"
-            [class.expanded]="expandedElement == row.team_id"
+            [class.expanded]="expandedElement == row"
             (click)="onDetailClick(row)"></mat-row>
     <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
-            [@detailExpand]="row.team_id == expandedElement ? 'expanded' : 'collapsed'"
+            [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"
             style="overflow: hidden"> 
-    </mat-row>
+    </mat-row> -->
   </mat-table>
 </div>
