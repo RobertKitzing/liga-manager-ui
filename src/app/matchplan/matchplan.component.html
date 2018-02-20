@@ -31,7 +31,7 @@
       <mat-expansion-panel *ngFor="let match of matches">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{ seasonService.getTeamNameByID(match.home_team_id) }} - {{ seasonService.getTeamNameByID(match.guest_team_id) }}
+            {{ seasonService.getTeamNameByID(match.home_team_id)}} - {{ seasonService.getTeamNameByID(match.guest_team_id) }}
           </mat-panel-title>
           <mat-panel-description style="white-space: nowrap">
             {{ match.home_score }} : {{ match.guest_score }}

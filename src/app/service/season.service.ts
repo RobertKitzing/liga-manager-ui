@@ -25,6 +25,9 @@ export class SeasonService {
     }
 
     getTeamNameByID(id: string): string {
+        if (!this.teams) {
+            this.loadTeams(this.selectedSeason);
+        }
         const team: Team = this.teams.find(t => t.id === id);
         return team.name;
     }
@@ -35,6 +38,7 @@ export class SeasonService {
             (resovle) => {
                 this.apiClient.teamAll(season.id).subscribe(
                     (teams: Team[]) => {
+                        this.teams = teams;
                         resovle(teams);
                     },
                     (error) => {

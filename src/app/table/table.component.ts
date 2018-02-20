@@ -56,7 +56,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   expandedElement: any;
 
-  rankingDataSource: RankingDataSource;
+  rankingDataSource: MatTableDataSource<Ranking_position>;
   seasons: Season[] = new Array<Season>();
   seasonsSub: Subscription = new Subscription();
   season: Season;
@@ -91,6 +91,14 @@ export class TableComponent implements OnInit, OnDestroy {
   isExpansionDetailRow = (i: any, row: any) => row.hasOwnProperty('detailRow');
 
   async ngOnInit() {
+    if (this.media.isActive('xs')) {
+      this.displayedColumns = this.xsColumns;
+    } else if (this.media.isActive('sm')) {
+      this.displayedColumns = this.smColumns;
+    } else {
+      this.displayedColumns = this.allColumns;
+    }
+
     this.season = this.seasonService.getSelectedSeason();
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
@@ -131,7 +139,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this.apiClient.ranking(this.season.id).subscribe(
       (ranking: Ranking) => {
         log.debug(ranking);
-        this.rankingDataSource = new RankingDataSource(ranking.positions);
+        this.rankingDataSource = new MatTableDataSource(ranking.positions);
         this.rankingDataSource.sort = this.sort;
       },
       (error: any) => {
@@ -145,11 +153,5 @@ export class TableComponent implements OnInit, OnDestroy {
 
   seasonCompare(c1: Season, c2: Season) {
     return c1 && c2 && c1.id === c2.id;
-  }
-}
-
-class RankingDataSource extends MatTableDataSource<Ranking_position> {
-  constructor(ranking: Ranking_position[]) {
-    super(ranking);
   }
 }
