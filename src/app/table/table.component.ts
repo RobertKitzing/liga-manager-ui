@@ -69,6 +69,7 @@ export class TableComponent implements OnInit, OnDestroy {
   constructor(private apiClient: Client,
               public seasonService: SeasonService,
               public media: ObservableMedia) {
+                this.expandedElement = null;
                 media.asObservable()
                 .subscribe((change: MediaChange) => {
                   switch (change.mqAlias) {
@@ -107,6 +108,11 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
+  onDetailClick(row: any) {
+    this.expandedElement = row.team_id;
+    log.debug(row);
+  }
+
   ngOnDestroy() {
     this.seasonsSub.unsubscribe();
   }
@@ -124,7 +130,13 @@ export class TableComponent implements OnInit, OnDestroy {
     this.isLoadingRanking = true;
     this.apiClient.ranking(this.season.id).subscribe(
       (ranking: any) => {
-        this.rankingDataSource = new RankingDataSource(ranking.positions);
+        log.debug(ranking);
+        const det: any = new Array<any>();
+        ranking.positions.forEach((e: Position) => {
+          det.push(e, {detailRow: true, e});
+        });
+        log.debug(det);
+        this.rankingDataSource = new RankingDataSource(det);
         this.rankingDataSource.sort = this.sort;
       },
       (error: any) => {
