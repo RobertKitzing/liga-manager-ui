@@ -2,7 +2,7 @@
   "runtime": "Default",
   "swaggerGenerator": {
     "fromSwagger": {
-      "json": "./swagger.json"
+      "url": "https://soccer-api.skilled-by-nature.de/swagger.json"
     }
   },
   "codeGenerators": {

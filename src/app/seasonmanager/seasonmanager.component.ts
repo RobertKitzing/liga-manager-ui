@@ -1,6 +1,7 @@
+import { Match } from '@app/api/openapi';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
-import { Client, Season, Ranking, Team, SeasonState, Body5 } from './../api/openapi';
+import { Client, Season, Ranking, Team, SeasonState, Body5, Identifier } from './../api/openapi';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort, MatCheckboxChange } from '@angular/material';
@@ -27,6 +28,10 @@ export class SeasonManagerComponent implements OnInit {
   selectedTeams: Team[] = new Array<Team>();
   isLoadingAllTeams: boolean;
 
+  newSeasonID: Identifier;
+
+  newSeasonMatches: Match[];
+
   constructor(private apiClient: Client,
               private seasonService: SeasonService,
               private _formBuilder: FormBuilder) {
@@ -41,14 +46,21 @@ export class SeasonManagerComponent implements OnInit {
 
   createSeasonStepperChanged(event: StepperSelectionEvent) {
     switch (event.selectedIndex) {
-      case 1:
+      case 1: {
         this.loadAllTeams();
+        break;
+      }
+      case 2: {
+        this.addTeamsToSeason();
+        break;
+      }
+
     }
   }
 
   loadAllTeams() {
     this.isLoadingAllTeams = true;
-    this.apiClient.team().subscribe(
+    this.apiClient.team3().subscribe(
       (teams) => {
         this.allTeams = teams;
       },
@@ -77,7 +89,8 @@ export class SeasonManagerComponent implements OnInit {
     const opt: Body5 = new Body5();
     opt.name = name;
     this.apiClient.season(opt).subscribe(
-      () => {
+      (id: Identifier) => {
+        this.newSeasonID = id;
         log.debug('sucess');
       },
       (error) => {
@@ -111,14 +124,34 @@ export class SeasonManagerComponent implements OnInit {
   }
 
   addTeamsToSeason() {
-    // this.apiClient.
+    this.selectedTeams.forEach((value, index) => {
+      this.apiClient.team(this.newSeasonID.id, value.id).toPromise().catch();
+    });
   }
 
   getSelectedTeamsAsStringList(): string {
-    return this.selectedTeams.map(t=> t.name).join();
+    return this.selectedTeams.map(t => t.name).join();
   }
 
+  createMatches() {
+    this.apiClient.matches(this.newSeasonID.id).toPromise().catch();
+    this.apiClient.matchesAll(this.newSeasonID.id, 1, null, null, null).subscribe(
+      (matches: Match[]) => {
+        log.debug(matches);
+        this.newSeasonMatches = matches;
+      },
+      (error) => {
+        log.error(error);
+      },
+      () => {
+      }
+    );
+  }
   startSeason() {
+    this.apiClient.start(this.newSeasonID.id).subscribe(
+      () => {
 
+      }
+    );
   }
 }

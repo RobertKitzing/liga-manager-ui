@@ -22,7 +22,7 @@
     "cordova": "cordova",
     "generate": "ng generate",
     "api-spec-converter": "api-spec-converter https://soccer-api.skilled-by-nature.de/openapi.json --from=openapi_3 --to=swagger_2 > swagger.json",
-    "nswag": "api-spec-converter && nswag run ligamanagerapi.nswag",
+    "nswag": "nswag run ligamanagerapi.nswag",
     "deploy": "node deploy"
   },
   "dependencies": {
