@@ -6,7 +6,7 @@
   <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
   <div *ngIf="!seasonService.isLoadingSeasons">
     <mat-form-field id="seasonchooser">
-      <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged($event)">
+      <mat-select [compareWith]="seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged(season)">
         <mat-option *ngFor="let season of seasons" [value]="season">
           {{ season.name }}
         </mat-option>
@@ -17,8 +17,8 @@
   <div>
     <mat-form-field>
       <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged($event)" [ngModel]="matchDay">
-        <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day">
-          {{ day }}
+        <mat-option *ngFor="let day of matchdays" [value]="day">
+          {{ day == 0 ? 'Alle' : day }}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -23,6 +23,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   matches: Match[];
   matchDay = 1;
   isLoadingMatches: boolean;
+  matchdays: number[] = new Array<number>();
 
   constructor(private apiClient: Client,
               public seasonService: SeasonService) { }
@@ -33,6 +34,9 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         log.debug(season);
         this.season = season;
         this.loadMatches();
+        for (let i = 0; i < this.seasonService.matchDayCount - 1; i++) {
+          this.matchdays.push(i);
+        }
       }
     );
     this.season = this.seasonService.getSelectedSeason();

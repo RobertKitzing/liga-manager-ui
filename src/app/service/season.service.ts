@@ -18,25 +18,34 @@ export class SeasonService {
     selectedSeason: Season;
     public isLoadingSeasons: boolean;
 
-    teams: Team[];
+    private teams: Team[];
     public isLoadingTeams: boolean;
 
     constructor(private apiClient: Client) {
     }
 
+    get matchDayCount(): number {
+        if (!this.teams) {
+            this.loadTeams();
+        }
+        const n = this.teams.length;
+        return (n - 1) * (n - 2);
+    }
+
     getTeamNameByID(id: string): string {
         if (!this.teams) {
-            this.loadTeams(this.selectedSeason);
+            this.loadTeams();
         }
         const team: Team = this.teams.find(t => t.id === id);
         return team.name;
     }
 
-    async loadTeams(season: Season): Promise<Team[]> {
+    async loadTeams(): Promise<Team[]> {
         this.isLoadingTeams = true;
+        log.debug(this.selectedSeason);
         return new Promise<Team[]>(
             (resovle) => {
-                this.apiClient.teamAll(season.id).subscribe(
+                this.apiClient.teamAll(this.selectedSeason.id).subscribe(
                     (teams: Team[]) => {
                         this.teams = teams;
                         resovle(teams);
@@ -56,7 +65,7 @@ export class SeasonService {
     async selectSeason(season: Season) {
         this.season.next(season);
         this.selectedSeason = season;
-        this.teams = await this.loadTeams(season);
+        this.teams = await this.loadTeams();
         localStorage.setItem(SELECTED_SEASON, JSON.stringify(season));
     }
 
