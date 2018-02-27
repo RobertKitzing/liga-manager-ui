@@ -13,7 +13,7 @@
 </div>
 <div class="container mat-elevation-z8">
   <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
-  <mat-table #table [dataSource]="rankingDataSource" *ngIf="rankingDataSource">
+  <mat-table #table [dataSource]="rankingDataSource" *ngIf="rankingDataSource && !seasonService.isLoadingTeams">
 
     <ng-container matColumnDef="number">
       <mat-header-cell *matHeaderCellDef>#</mat-header-cell>

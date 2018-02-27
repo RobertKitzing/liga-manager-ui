@@ -34,9 +34,6 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         log.debug(season);
         this.season = season;
         this.loadMatches();
-        for (let i = 0; i < this.seasonService.matchDayCount - 1; i++) {
-          this.matchdays.push(i);
-        }
       }
     );
     this.season = this.seasonService.getSelectedSeason();
@@ -69,23 +66,20 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     );
   }
 
-  selectedMatchDayChanged(event: any) {
-    this.matchDay = event.value;
+  selectedMatchDayChanged() {
     this.loadMatches();
   }
 
   selectedSeasonChanged(s: Season) {
-    log.debug(s);
     this.seasonService.selectSeason(s);
   }
 
   loadMatches() {
     this.matches = null;
     this.isLoadingMatches = true;
-    log.debug(this.season);
+    log.debug(this.matchDay);
     this.apiClient.matchesAll(this.season.id, this.matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
-        log.debug(matches);
         this.matches = matches;
       },
       (error) => {

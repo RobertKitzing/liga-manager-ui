@@ -18,36 +18,29 @@ export class SeasonService {
     selectedSeason: Season;
     public isLoadingSeasons: boolean;
 
-    private teams: Team[];
+    private teams: Team[] = new Array<Team>();
     public isLoadingTeams: boolean;
 
     constructor(private apiClient: Client) {
     }
 
-    get matchDayCount(): number {
-        if (!this.teams) {
-            this.loadTeams();
-        }
-        const n = this.teams.length;
-        return (n - 1) * (n - 2);
-    }
+    public matchDayCount: number;
 
     getTeamNameByID(id: string): string {
-        if (!this.teams) {
-            this.loadTeams();
-        }
         const team: Team = this.teams.find(t => t.id === id);
         return team.name;
     }
 
     async loadTeams(): Promise<Team[]> {
         this.isLoadingTeams = true;
-        log.debug(this.selectedSeason);
         return new Promise<Team[]>(
             (resovle) => {
                 this.apiClient.teamAll(this.selectedSeason.id).subscribe(
                     (teams: Team[]) => {
                         this.teams = teams;
+                        const n = this.teams.length;
+                        this.matchDayCount = (Math.pow(n, 2) - n);
+                        log.debug("teams:", this.teams);
                         resovle(teams);
                     },
                     (error) => {
@@ -85,10 +78,8 @@ export class SeasonService {
                 resolve => {
                     this.apiClient.seasonAll().subscribe(
                         (seasons: Season[]) => {
-                            log.debug(seasons);
                             this.seasons = seasons;
                             const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
-                            log.debug(filterd);
                             resolve(state ? filterd : this.seasons);
                         },
                         (error: any) => {
