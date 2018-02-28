@@ -19,6 +19,7 @@
   "GAME_WINS":"g",
   "GAME_DRAWS":"u",
   "GAME_LOSSES":"v",
+  "GOALS": "Tore",
   "GOALS_SCORED":"Tore",
   "GOALS_CONCEDED":"Tore",
   "GOALS_DIFF":"Diff",

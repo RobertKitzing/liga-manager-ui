@@ -1,4 +1,4 @@
-import { Ranking } from './../api/openapi';
+import { Ranking, Ranking_position } from './../api/openapi';
 import { Component, Input, OnInit } from '@angular/core';
 @Component({
     selector: 'app-inline-message',
@@ -12,7 +12,7 @@ import { Component, Input, OnInit } from '@angular/core';
     `]
 })
 export class DetailRowComponent implements OnInit {
-    @Input() ranking: Ranking;
+    @Input() ranking: Ranking_position;
     ngOnInit() {
         console.log(this.ranking);
     }

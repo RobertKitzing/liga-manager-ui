@@ -107,8 +107,8 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
-  expandRow(index: number, row: Ranking) {
-    if (this.media.isActive('lg')) {
+  expandRow(index: number, row: Ranking_position) {
+    if (this.media.isActive('lg') || this.media.isActive('md')) {
       return;
     }
     this.containers.forEach((item) => {

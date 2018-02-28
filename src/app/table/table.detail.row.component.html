@@ -1,20 +1,17 @@
-<div fxLayout>
+<div fxLayout
+     fxLayoutAlign="center"
+     fxLayoutGap="10px">
     <div>
-        {{ranking.scored_goals}}:{{ranking.conceded_goals}}
-    </div>
-    <div>
+        {{ 'GAME_COUNT' | translate}}
         {{ranking.wins}}:{{ranking.draws}}:{{ranking.losses}}
     </div>
-    <div>
-        {{ranking.scored_goals}}
+    <div fxHide.sm>
+        {{ 'GOALS' | translate}}:
+        {{ranking.scored_goals}}:{{ranking.conceded_goals}}
+        ({{ranking.scored_goals - ranking.conceded_goals}})
     </div>
-    <div>
-        {{ranking.scored_goals}}
-    </div>
-    <div>
-        {{ranking.scored_goals}}
-    </div>
-    <div>
-        {{ranking.scored_goals}}
+    <div fxHide fxShow.sm>
+        {{ 'GOALS' | translate}}:
+        {{ranking.scored_goals - ranking.conceded_goals}}
     </div>
 </div>
