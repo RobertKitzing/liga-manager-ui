@@ -37,15 +37,10 @@ export class SeasonService {
             (resovle) => {
                 this.apiClient.teamAll(this.selectedSeason.id).subscribe(
                     (teams: Team[]) => {
-                        this.teams = teams;
-                        const n = this.teams.length;
-                        this.matchDayCount = (Math.pow(n, 2) - n);
-                        log.debug("teams:", this.teams);
                         resovle(teams);
                     },
                     (error) => {
                         log.error(error);
-                        resovle(null);
                     },
                     () => {
                         this.isLoadingTeams = false;

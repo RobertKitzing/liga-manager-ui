@@ -1,9 +1,10 @@
+import { DetailRowComponent } from './table.detail.row.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
 import { Client, Season, Ranking, Team, SeasonState, Ranking_position } from './../api/openapi';
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy, ViewContainerRef, ComponentFactory, ComponentFactoryResolver, ViewChildren, QueryList, ComponentRef } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -16,18 +17,9 @@ const log = new Logger('Table');
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
-
-  version: string = environment.version;
 
   allColumns = ['number',
                 'team_id',
@@ -60,16 +52,17 @@ export class TableComponent implements OnInit, OnDestroy {
   seasons: Season[] = new Array<Season>();
   seasonsSub: Subscription = new Subscription();
   season: Season;
-
-  isLoadingSeasons: boolean;
   isLoadingRanking: boolean;
 
   @ViewChild(MatSort) sort: MatSort;
+  expandedRow: number;
+  @ViewChildren('tableRow', { read: ViewContainerRef }) containers: QueryList<ViewContainerRef>;
 
   constructor(private apiClient: Client,
               public seasonService: SeasonService,
-              public media: ObservableMedia) {
-                this.expandedElement = null;
+              public media: ObservableMedia,
+              private resolver: ComponentFactoryResolver) {
+
                 media.asObservable()
                 .subscribe((change: MediaChange) => {
                   switch (change.mqAlias) {
@@ -87,8 +80,6 @@ export class TableComponent implements OnInit, OnDestroy {
                   }
                 });
               }
-
-  isExpansionDetailRow = (i: any, row: any) => row.hasOwnProperty('detailRow');
 
   async ngOnInit() {
     if (this.media.isActive('xs')) {
@@ -116,9 +107,23 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDetailClick(row: any) {
-    this.expandedElement = row;
-    log.debug(row);
+  expandRow(index: number, row: Ranking) {
+    if (this.media.isActive('lg')) {
+      return;
+    }
+    this.containers.forEach((item) => {
+      item.clear();
+    });
+    if (this.expandedRow === index) {
+      this.expandedRow = null;
+      log.debug('null');
+    } else {
+      log.debug('yes');
+      const container = this.containers.toArray()[index];
+      const factory: ComponentFactory<DetailRowComponent> = this.resolver.resolveComponentFactory(DetailRowComponent);
+      const detailRow: ComponentRef<DetailRowComponent> = container.createComponent(factory);
+      detailRow.instance.ranking = row;
+    }
   }
 
   ngOnDestroy() {

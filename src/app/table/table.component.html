@@ -137,16 +137,14 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="expandedDetail">
-      <mat-cell *matCellDef="let element"> 
-        <div>
-          PENIS
-        </div>
-      </mat-cell>
-    </ng-container>
-    <!-- <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let index=index;let row; columns: displayedColumns;"
+             (click)="expandRow(index, row)"
+             #tableRow
+             matRipple
+             class="element-row"></mat-row>
+
+    <!-- <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"
             matRipple 
             class="element-row"
@@ -155,6 +153,6 @@
     <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
             [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"
             style="overflow: hidden"> 
-    </mat-row>
+    </mat-row> -->
   </mat-table>
 </div>

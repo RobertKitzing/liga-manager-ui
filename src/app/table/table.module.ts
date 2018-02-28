@@ -1,3 +1,4 @@
+import { DetailRowComponent } from './table.detail.row.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -22,8 +23,12 @@ import { TranslateModule } from '@ngx-translate/core';
     TableRoutingModule,
     TranslateModule,
   ],
+  entryComponents: [
+    DetailRowComponent
+  ],
   declarations: [
-    TableComponent
+    TableComponent,
+    DetailRowComponent
   ]
 })
 export class TableModule { }
