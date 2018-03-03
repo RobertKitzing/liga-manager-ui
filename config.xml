@@ -14,9 +14,10 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <preference name="android-minSdkVersion" value="16" />
+        <preference name="android-minSdkVersion" value="19" />
         <preference name="android-manifest/application/activity/@android:theme" value="@android:style/Theme.DeviceDefault" />
         <hook src="node_modules/@ngx-rocket/scripts/hooks/after_prepare/copy-android-resources.js" type="after_prepare" />
+        <preference name="Orientation" value="fullSensor" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -82,7 +83,7 @@
     </feature>
     <preference name="Fullscreen" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="Orientation" value="portrait" />
+    <preference name="Orientation" value="all" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarStyle" value="default" />
     <preference name="AutoHideSplashScreen" value="false" />
