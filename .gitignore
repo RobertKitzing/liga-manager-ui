@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 /www
+/res 
+/store
 
 # Dependencies
 /node_modules
