@@ -21,7 +21,6 @@
     "cordova:clean": "ngx-scripts clean",
     "cordova": "cordova",
     "generate": "ng generate",
-    "api-spec-converter": "api-spec-converter https://soccer-api.skilled-by-nature.de/openapi.json --from=openapi_3 --to=swagger_2 > swagger.json",
     "nswag": "nswag run ligamanagerapi.nswag",
     "deploy": "node deploy"
   },
@@ -44,7 +43,6 @@
     "@ionic-native/splash-screen": "^4.0.0",
     "@ionic-native/status-bar": "^4.0.0",
     "@ngx-translate/core": "^9.0.1",
-    "api-spec-converter": "^2.6.2",
     "cordova-android": "^7.0.0",
     "cordova-ios": "^4.5.4",
     "cordova-plugin-device": "^2.0.1",
