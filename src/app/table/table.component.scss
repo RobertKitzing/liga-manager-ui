@@ -3,3 +3,28 @@
   display: flex;
   justify-content: center;
 }
+
+.mat-table {
+  width: 100%;
+  text-align: center;
+}
+
+.mat-header-cell.mat-sort-header-sorted {
+  color: black;
+}
+
+.element-row {
+  position: relative;
+}
+
+.element-row:not(.expanded) {
+  cursor: pointer;
+}
+
+.element-row:not(.expanded):hover {
+  background: #f5f5f5;
+}
+
+.element-row.expanded {
+  border-bottom-color: transparent;
+}

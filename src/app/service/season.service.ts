@@ -18,44 +18,49 @@ export class SeasonService {
     selectedSeason: Season;
     public isLoadingSeasons: boolean;
 
-    teams: Team[];
+    private teams: Team[] = new Array<Team>();
     public isLoadingTeams: boolean;
 
     constructor(private apiClient: Client) {
     }
+
+    public matchDayCount: number;
 
     getTeamNameByID(id: string): string {
         const team: Team = this.teams.find(t => t.id === id);
         return team.name;
     }
 
-    loadTeams(season: Season) {
+    async loadTeams(): Promise<Team[]> {
         this.isLoadingTeams = true;
-        this.apiClient.teamAll(season.id).subscribe(
-          (teams: Team[]) => {
-            log.debug(teams);
-            this.teams = teams;
-          },
-          (error) => {
-              log.error(error);
-          },
-          () => {
-              this.isLoadingTeams = false;
-          }
+        return new Promise<Team[]>(
+            (resovle) => {
+                this.apiClient.teamAll(this.selectedSeason.id).subscribe(
+                    (teams: Team[]) => {
+                        resovle(teams);
+                    },
+                    (error) => {
+                        log.error(error);
+                    },
+                    () => {
+                        this.isLoadingTeams = false;
+                    }
+                );
+            }
         );
     }
 
-    selectSeason(season: Season): void {
+    async selectSeason(season: Season) {
         this.season.next(season);
         this.selectedSeason = season;
-        this.loadTeams(season);
+        this.teams = await this.loadTeams();
         localStorage.setItem(SELECTED_SEASON, JSON.stringify(season));
     }
 
     getSelectedSeason(): Season {
         this.selectedSeason = <Season>JSON.parse(localStorage.getItem(SELECTED_SEASON));
         if (this.selectedSeason) {
-            this.loadTeams(this.selectedSeason);
+            this.selectSeason(this.selectedSeason);
         }
         return this.selectedSeason;
     }
@@ -68,10 +73,8 @@ export class SeasonService {
                 resolve => {
                     this.apiClient.seasonAll().subscribe(
                         (seasons: Season[]) => {
-                            log.debug(seasons);
                             this.seasons = seasons;
                             const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
-                            log.debug(filterd);
                             resolve(state ? filterd : this.seasons);
                         },
                         (error: any) => {

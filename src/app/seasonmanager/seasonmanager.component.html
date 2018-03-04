@@ -80,10 +80,10 @@
                             {{ 'MATCHDAYS' | translate}}
                         </div>
                         <div>
-                            <p>TBA.</p>
+                            <p *ngFor="let match of newSeasonMatches">{{ match.home_team_id }} - {{ match.guest_team_id }}</p>
                         </div>
                         <div>
-                            <button mat-raised-button color="primary">{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
+                            <button mat-raised-button color="primary" (click)="createMatches()">{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
                         </div>
                     </div>
                     <div>

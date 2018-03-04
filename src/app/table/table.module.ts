@@ -1,27 +1,34 @@
-import { SharedModule } from '@app/shared';
+import { DetailRowComponent } from './table.detail.row.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { CdkTableModule } from '@angular/cdk/table';
-import { TableRoutingModule } from './table-routing.module';
-import { TableComponent } from './table.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTableModule, MatRippleModule } from '@angular/material';
 import { MaterialModule } from '@app/material.module';
-import { MatTableModule } from '@angular/material';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgModule } from '@angular/core';
+import { SharedModule } from '@app/shared';
+import { TableComponent } from './table.component';
+import { TableRoutingModule } from './table-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
     CommonModule,
-    TranslateModule,
     FlexLayoutModule,
     MaterialModule,
-    TableRoutingModule,
     SharedModule,
-    NgxDatatableModule
+    TableRoutingModule,
+    TranslateModule,
+  ],
+  entryComponents: [
+    DetailRowComponent
   ],
   declarations: [
-    TableComponent
+    TableComponent,
+    DetailRowComponent
   ]
 })
 export class TableModule { }

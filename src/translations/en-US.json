@@ -20,6 +20,7 @@
   "GAME_WINS":"w",
   "GAME_DRAWS":"d",
   "GAME_LOSSES":"l",
+  "GOALS": "Goals",
   "GOALS_SCORED":"Goals",
   "GOALS_CONCEDED":"Goals",
   "GOALS_DIFF":"Diff",

@@ -64,7 +64,7 @@ export interface IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    pitch(body?: Body4 | null | undefined): Observable<void>;
+    pitch(body?: Body4 | null | undefined): Observable<Identifier>;
     /**
      * Delete a single pitch
      * @id pitch id
@@ -87,7 +87,7 @@ export interface IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    season(body?: Body5 | null | undefined): Observable<void>;
+    season(body?: Body5 | null | undefined): Observable<Identifier>;
     /**
      * Delete a single season
      * @id ID of season
@@ -135,28 +135,42 @@ export interface IClient {
      */
     teamAll(id: string): Observable<Team[]>;
     /**
+     * Add a team to a season
+     * @season_id ID of season
+     * @team_id ID of team
+     * @return Operation successful
+     */
+    team(season_id: string, team_id: string): Observable<void>;
+    /**
+     * Remove a team from a season
+     * @season_id ID of season
+     * @team_id ID of team
+     * @return Operation successful
+     */
+    team2(season_id: string, team_id: string): Observable<void>;
+    /**
      * Finds all teams
      * @return list of teams
      */
-    team(): Observable<Team[]>;
+    team3(): Observable<Team[]>;
     /**
      * Creates a new team
      * @body (optional) 
      * @return Operation successful
      */
-    team2(body?: Body6 | null | undefined): Observable<void>;
+    team4(body?: Body6 | null | undefined): Observable<Identifier>;
     /**
      * Delete a single team by id
      * @id ID of team
      * @return Deletion successful
      */
-    team3(id: string): Observable<void>;
+    team5(id: string): Observable<void>;
     /**
      * Finds a single team by id
      * @id ID of team
      * @return Single team
      */
-    team4(id: string): Observable<Team>;
+    team6(id: string): Observable<Team>;
     /**
      * Renames a single team
      * @id ID of team
@@ -523,7 +537,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    pitch(body?: Body4 | null | undefined): Observable<void> {
+    pitch(body?: Body4 | null | undefined): Observable<Identifier> {
         let url_ = this.baseUrl + "/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -535,6 +549,7 @@ export class Client implements IClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -545,30 +560,37 @@ export class Client implements IClient {
                 try {
                     return this.processPitch(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<Identifier>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<Identifier>><any>Observable.throw(response_);
         });
     }
 
-    protected processPitch(response: HttpResponseBase): Observable<void> {
+    protected processPitch(response: HttpResponseBase): Observable<Identifier> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 204) {
+        if (status === 200) {
             return blobToText(responseBlob).flatMap(_responseText => {
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Identifier.fromJS(resultData200) : new Identifier();
+            return Observable.of(result200);
+            });
+        } else if (status === 400) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).flatMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<Identifier>(<any>null);
     }
 
     /**
@@ -747,7 +769,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    season(body?: Body5 | null | undefined): Observable<void> {
+    season(body?: Body5 | null | undefined): Observable<Identifier> {
         let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -759,6 +781,7 @@ export class Client implements IClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -769,30 +792,37 @@ export class Client implements IClient {
                 try {
                     return this.processSeason(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<Identifier>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<Identifier>><any>Observable.throw(response_);
         });
     }
 
-    protected processSeason(response: HttpResponseBase): Observable<void> {
+    protected processSeason(response: HttpResponseBase): Observable<Identifier> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 204) {
+        if (status === 200) {
             return blobToText(responseBlob).flatMap(_responseText => {
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Identifier.fromJS(resultData200) : new Identifier();
+            return Observable.of(result200);
+            });
+        } else if (status === 400) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
             });
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).flatMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<Identifier>(<any>null);
     }
 
     /**
@@ -1215,10 +1245,140 @@ export class Client implements IClient {
     }
 
     /**
+     * Add a team to a season
+     * @season_id ID of season
+     * @team_id ID of team
+     * @return Operation successful
+     */
+    team(season_id: string, team_id: string): Observable<void> {
+        let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
+        if (season_id === undefined || season_id === null)
+            throw new Error("The parameter 'season_id' must be defined.");
+        url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
+        if (team_id === undefined || team_id === null)
+            throw new Error("The parameter 'team_id' must be defined.");
+        url_ = url_.replace("{team_id}", encodeURIComponent("" + team_id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).flatMap((response_ : any) => {
+            return this.processTeam(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTeam(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processTeam(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return Observable.of<void>(<any>null);
+            });
+        } else if (status === 400) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status === 404) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * Remove a team from a season
+     * @season_id ID of season
+     * @team_id ID of team
+     * @return Operation successful
+     */
+    team2(season_id: string, team_id: string): Observable<void> {
+        let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
+        if (season_id === undefined || season_id === null)
+            throw new Error("The parameter 'season_id' must be defined.");
+        url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
+        if (team_id === undefined || team_id === null)
+            throw new Error("The parameter 'team_id' must be defined.");
+        url_ = url_.replace("{team_id}", encodeURIComponent("" + team_id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("delete", url_, options_).flatMap((response_ : any) => {
+            return this.processTeam2(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTeam2(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processTeam2(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return Observable.of<void>(<any>null);
+            });
+        } else if (status === 400) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status === 404) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
      * Finds all teams
      * @return list of teams
      */
-    team(): Observable<Team[]> {
+    team3(): Observable<Team[]> {
         let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1232,11 +1392,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam(response_);
+            return this.processTeam3(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam(<any>response_);
+                    return this.processTeam3(<any>response_);
                 } catch (e) {
                     return <Observable<Team[]>><any>Observable.throw(e);
                 }
@@ -1245,7 +1405,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam(response: HttpResponseBase): Observable<Team[]> {
+    protected processTeam3(response: HttpResponseBase): Observable<Team[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1276,7 +1436,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    team2(body?: Body6 | null | undefined): Observable<void> {
+    team4(body?: Body6 | null | undefined): Observable<Identifier> {
         let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1288,33 +1448,37 @@ export class Client implements IClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam2(response_);
+            return this.processTeam4(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam2(<any>response_);
+                    return this.processTeam4(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<Identifier>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<Identifier>><any>Observable.throw(response_);
         });
     }
 
-    protected processTeam2(response: HttpResponseBase): Observable<void> {
+    protected processTeam4(response: HttpResponseBase): Observable<Identifier> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 204) {
+        if (status === 200) {
             return blobToText(responseBlob).flatMap(_responseText => {
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Identifier.fromJS(resultData200) : new Identifier();
+            return Observable.of(result200);
             });
         } else if (status === 400) {
             return blobToText(responseBlob).flatMap(_responseText => {
@@ -1325,7 +1489,7 @@ export class Client implements IClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<Identifier>(<any>null);
     }
 
     /**
@@ -1333,7 +1497,7 @@ export class Client implements IClient {
      * @id ID of team
      * @return Deletion successful
      */
-    team3(id: string): Observable<void> {
+    team5(id: string): Observable<void> {
         let url_ = this.baseUrl + "/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1349,11 +1513,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("delete", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam3(response_);
+            return this.processTeam5(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam3(<any>response_);
+                    return this.processTeam5(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1362,7 +1526,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam3(response: HttpResponseBase): Observable<void> {
+    protected processTeam5(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1386,7 +1550,7 @@ export class Client implements IClient {
      * @id ID of team
      * @return Single team
      */
-    team4(id: string): Observable<Team> {
+    team6(id: string): Observable<Team> {
         let url_ = this.baseUrl + "/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1403,11 +1567,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam4(response_);
+            return this.processTeam6(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam4(<any>response_);
+                    return this.processTeam6(<any>response_);
                 } catch (e) {
                     return <Observable<Team>><any>Observable.throw(e);
                 }
@@ -1416,7 +1580,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam4(response: HttpResponseBase): Observable<Team> {
+    protected processTeam6(response: HttpResponseBase): Observable<Team> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1494,6 +1658,42 @@ export class Client implements IClient {
         }
         return Observable.of<void>(<any>null);
     }
+}
+
+export class Identifier implements IIdentifier {
+    id?: string | undefined;
+
+    constructor(data?: IIdentifier) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Identifier {
+        data = typeof data === 'object' ? data : {};
+        let result = new Identifier();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IIdentifier {
+    id?: string | undefined;
 }
 
 export class Match implements IMatch {

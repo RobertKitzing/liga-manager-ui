@@ -1,0 +1,17 @@
+<div fxLayout
+     fxLayoutAlign="center"
+     fxLayoutGap="10px">
+    <div>
+        {{ 'GAME_COUNT' | translate}}
+        {{ranking.wins}}:{{ranking.draws}}:{{ranking.losses}}
+    </div>
+    <div fxHide.sm>
+        {{ 'GOALS' | translate}}:
+        {{ranking.scored_goals}}:{{ranking.conceded_goals}}
+        ({{ranking.scored_goals - ranking.conceded_goals}})
+    </div>
+    <div fxHide fxShow.sm>
+        {{ 'GOALS_DIFF' | translate}}:
+        {{ranking.scored_goals - ranking.conceded_goals}}
+    </div>
+</div>
