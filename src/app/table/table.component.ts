@@ -4,7 +4,18 @@ import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
 import { Client, Season, Ranking, Team, SeasonState, Ranking_position } from './../api/openapi';
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy, ViewContainerRef, ComponentFactory, ComponentFactoryResolver, ViewChildren, QueryList, ComponentRef } from '@angular/core';
+import { Component,
+         OnInit,
+         ViewChild,
+         AfterViewInit,
+         OnDestroy,
+         ViewContainerRef,
+         ComponentFactory,
+         ComponentFactoryResolver,
+         ViewChildren,
+         QueryList,
+         ComponentRef
+       } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -16,7 +27,7 @@ const log = new Logger('Table');
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.ngx.component.html',
+  templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
@@ -111,9 +122,11 @@ export class TableComponent implements OnInit, OnDestroy {
     if (this.media.isActive('lg') || this.media.isActive('md')) {
       return;
     }
-    this.containers.forEach((item) => {
-      item.clear();
-    });
+    if (!this.expandedRow) {
+      this.containers.forEach((item) => {
+        item.clear();
+      });
+    }
     if (this.expandedRow === index) {
       this.expandedRow = null;
       log.debug('null');
@@ -134,12 +147,18 @@ export class TableComponent implements OnInit, OnDestroy {
     this.seasonService.selectSeason(event.value);
   }
 
+  sortData(sort: Sort) {
+    log.debug(sort);
+    this.rankingDataSource.sort = this.sort;
+  }
+
   loadRanking() {
     this.isLoadingRanking = true;
     this.apiClient.ranking(this.season.id).subscribe(
       (ranking: Ranking) => {
         log.debug(ranking);
-        this.ranking = ranking.positions;
+        this.rankingDataSource = new MatTableDataSource(ranking.positions);
+        this.rankingDataSource.sort = this.sort;
       },
       (error: any) => {
         log.debug(error);
