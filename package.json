@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "npm run env -s && ng build --prod",
-    "build:app": "npm run build && cordova build --device --release && npm run copy:app",
+    "build:app": "npm run build && cordova build --device --debug && npm run copy:app",
     "build:deploy": "npm run build && npm run deploy",
     "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
@@ -23,7 +23,7 @@
     "generate": "ng generate",
     "nswag": "nswag run ligamanagerapi.nswag",
     "deploy": "node deploy",
-    "copy:app" : "cpx platforms/android/app/build/outputs/apk/release/*.apk dist"
+    "copy:app": "cpx platforms/android/app/build/outputs/apk/release/*.apk dist"
   },
   "dependencies": {
     "@angular/animations": "^5.2.0",
@@ -87,6 +87,7 @@
     "karma-junit-reporter": "^1.2.0",
     "protractor": "~5.2.2",
     "puppeteer": "^1.0.0",
+    "rimraf": "^2.6.2",
     "stylelint": "~8.4.0",
     "stylelint-config-recommended-scss": "~3.0.0",
     "stylelint-config-standard": "~18.0.0",
