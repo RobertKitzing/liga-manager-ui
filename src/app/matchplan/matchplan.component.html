@@ -17,8 +17,8 @@
   <div>
     <mat-form-field *ngIf="!seasonService.isLoadingTeams">
       <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged()" [(ngModel)]="matchDay">
-        <mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10]" [value]="day">
-          {{ day == 0 ? 'Alle' : day }}
+        <mat-option *ngFor="let day of matchDayCounter" [value]="day">
+          {{ day }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -43,12 +43,12 @@
              fxLayout.xs="column">
           <div>
             <mat-form-field>
-              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" ngModel="match.home_score" #home_score />
+              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" #home_score />
             </mat-form-field>
           </div>
           <div>
             <mat-form-field>
-              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" ngModel="match.guest_score" #guest_score />
+              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" #guest_score />
             </mat-form-field>
           </div>
           <div>

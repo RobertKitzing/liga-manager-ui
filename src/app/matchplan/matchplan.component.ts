@@ -23,7 +23,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   matches: Match[];
   matchDay = 1;
   isLoadingMatches: boolean;
-  matchdays: number[] = new Array<number>();
+  matchDayCounter: number[] = new Array<number>();
 
   constructor(private apiClient: Client,
               public seasonService: SeasonService) { }
@@ -33,10 +33,20 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
       (season) => {
         log.debug(season);
         this.season = season;
+        this.matchDayCounter = new Array();
+        for (let i = 1; i <= season.match_day_count; i++) {
+          this.matchDayCounter.push(i);
+        }
         this.loadMatches();
       }
     );
     this.season = this.seasonService.getSelectedSeason();
+    if (this.season) {
+      this.matchDayCounter = new Array();
+      for (let i = 1; i <= this.season.match_day_count; i++) {
+        this.matchDayCounter.push(i);
+      }
+    }
     this.seasons = await this.seasonService.getSeasons(SeasonState.Progress);
     if (this.season) {
       this.loadMatches();
