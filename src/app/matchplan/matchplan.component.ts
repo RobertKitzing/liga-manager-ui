@@ -57,7 +57,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     const result: Body3 = new Body3;
     result.home_score = Number.parseInt(home);
     result.guest_score = Number.parseInt(guest);
-    this.apiClient.result(match, result).subscribe(
+    this.apiClient.submitMatchResult(match, result).subscribe(
       (res: any) => {
         log.debug(res);
         t.home_score = result.home_score ;
@@ -78,7 +78,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     this.matches = null;
     this.isLoadingMatches = true;
     log.debug(this.matchDay);
-    this.apiClient.matchesAll(this.season.id, this.matchDay, null, null, null).subscribe(
+    this.apiClient.getMatchCollection(this.season.id, this.matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
         this.matches = matches;
       },

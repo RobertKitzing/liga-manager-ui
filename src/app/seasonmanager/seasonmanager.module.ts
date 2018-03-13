@@ -21,7 +21,8 @@ import { SeasonManagerRoutingModule } from '@app/seasonmanager/seasonmanager-rou
     SharedModule,
     MatStepperModule,
     ReactiveFormsModule,
-    MatDividerModule
+    MatDividerModule,
+    MaterialModule
   ],
   declarations: [
     SeasonManagerComponent

@@ -29,8 +29,10 @@ export class SeasonManagerComponent implements OnInit {
   isLoadingAllTeams: boolean;
 
   newSeasonID: Identifier;
-
   newSeasonMatches: Match[];
+
+  public newSeasonMatchDayCount: number;
+  public matchDayCounter: number[];
 
   constructor(private apiClient: Client,
               private seasonService: SeasonService,
@@ -60,7 +62,7 @@ export class SeasonManagerComponent implements OnInit {
 
   loadAllTeams() {
     this.isLoadingAllTeams = true;
-    this.apiClient.team3().subscribe(
+    this.apiClient.getTeamCollection().subscribe(
       (teams) => {
         this.allTeams = teams;
       },
@@ -88,7 +90,7 @@ export class SeasonManagerComponent implements OnInit {
   createSeason(name: string) {
     const opt: Body5 = new Body5();
     opt.name = name;
-    this.apiClient.season(opt).subscribe(
+    this.apiClient.createSeason(opt).subscribe(
       (id: Identifier) => {
         this.newSeasonID = id;
         log.debug('sucess');
@@ -125,7 +127,7 @@ export class SeasonManagerComponent implements OnInit {
 
   addTeamsToSeason() {
     this.selectedTeams.forEach((value, index) => {
-      this.apiClient.team(this.newSeasonID.id, value.id).toPromise().catch();
+      this.apiClient.addTeamToSeason(this.newSeasonID.id, value.id).toPromise().catch();
     });
   }
 
@@ -133,9 +135,30 @@ export class SeasonManagerComponent implements OnInit {
     return this.selectedTeams.map(t => t.name).join();
   }
 
+  getTeamNameByID(id: string): string {
+    const team: Team = this.selectedTeams.find(t => t.id === id);
+    return team.name;
+  }
+
   createMatches() {
-    this.apiClient.matches(this.newSeasonID.id).toPromise().catch();
-    this.apiClient.matchesAll(this.newSeasonID.id, 1, null, null, null).subscribe(
+    this.apiClient.createMatches(this.newSeasonID.id).subscribe(
+      () => {
+        this.apiClient.getSeason(this.newSeasonID.id).subscribe(
+          (res) => {
+            this.newSeasonMatchDayCount = res.match_day_count;
+            this.matchDayCounter = new Array();
+            for (let i = 1; i <= res.match_day_count; i++) {
+              this.matchDayCounter.push(i);
+            }
+          }
+        );
+      }
+    );
+  }
+
+  getMatches(matchDay: any) {
+    log.debug(matchDay);
+    this.apiClient.getMatchCollection(this.newSeasonID.id, matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
         log.debug(matches);
         this.newSeasonMatches = matches;
@@ -147,10 +170,11 @@ export class SeasonManagerComponent implements OnInit {
       }
     );
   }
-  startSeason() {
-    this.apiClient.start(this.newSeasonID.id).subscribe(
-      () => {
 
+  startSeason() {
+    this.apiClient.startSeason(this.newSeasonID.id).subscribe(
+      () => {
+        alert('Season startet');
       }
     );
   }

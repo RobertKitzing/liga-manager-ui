@@ -154,7 +154,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   loadRanking() {
     this.isLoadingRanking = true;
-    this.apiClient.ranking(this.season.id).subscribe(
+    this.apiClient.getRanking(this.season.id).subscribe(
       (ranking: Ranking) => {
         log.debug(ranking);
         this.rankingDataSource = new MatTableDataSource(ranking.positions);

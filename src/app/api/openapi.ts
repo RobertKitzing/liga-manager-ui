@@ -26,80 +26,80 @@ export interface IClient {
      * @id match id
      * @return Contains a single match object
      */
-    match(id: string): Observable<Match>;
+    getMatch(id: string): Observable<Match>;
     /**
      * Cancel a match
      * @id match id
      * @return Operation successful
      */
-    cancellation(id: string): Observable<void>;
+    cancelMatch(id: string): Observable<void>;
     /**
      * Schedule a match
      * @id match id
      * @body (optional) 
      * @return Operation successful
      */
-    kickoff(id: string, body?: Body | null | undefined): Observable<void>;
+    scheduleMatch(id: string, body?: Body | null | undefined): Observable<void>;
     /**
      * Locate a match on a pitch
      * @id match id
      * @body (optional) 
      * @return Operation successful
      */
-    location(id: string, body?: Body2 | null | undefined): Observable<void>;
+    locateMatch(id: string, body?: Body2 | null | undefined): Observable<void>;
     /**
      * Submit a matches result
      * @id match id
      * @body (optional) 
      * @return Operation successful
      */
-    result(id: string, body?: Body3 | null | undefined): Observable<void>;
+    submitMatchResult(id: string, body?: Body3 | null | undefined): Observable<void>;
     /**
      * Find all pitches
      * @return Array of pitches
      */
-    pitchAll(): Observable<Pitch[]>;
+    getPitchCollection(): Observable<Pitch[]>;
     /**
      * Creates a new pitch
      * @body (optional) 
      * @return Operation successful
      */
-    pitch(body?: Body4 | null | undefined): Observable<Identifier>;
+    createPitch(body?: Body4 | null | undefined): Observable<Identifier>;
     /**
      * Delete a single pitch
      * @id pitch id
      * @return Deletion successful
      */
-    pitch2(id: string): Observable<void>;
+    deletePitch(id: string): Observable<void>;
     /**
      * Find a single pitch by id
      * @id pitch id
      * @return Contains a single pitch object
      */
-    pitch3(id: string): Observable<Pitch>;
+    getPitch(id: string): Observable<Pitch>;
     /**
      * Find all seasons
      * @return List of seasons
      */
-    seasonAll(): Observable<Season[]>;
+    getSeasonCollection(): Observable<Season[]>;
     /**
      * Create a new season
      * @body (optional) 
      * @return Operation successful
      */
-    season(body?: Body5 | null | undefined): Observable<Identifier>;
+    createSeason(body?: Body5 | null | undefined): Observable<Identifier>;
     /**
      * Delete a single season
      * @id ID of season
      * @return Deletion successful
      */
-    season2(id: string): Observable<void>;
+    deleteSeason(id: string): Observable<void>;
     /**
      * Finds a single season
      * @id ID of season
      * @return Contains a single season object
      */
-    season3(id: string): Observable<Season>;
+    getSeason(id: string): Observable<Season>;
     /**
      * Find matches
      * @id ID of season
@@ -109,74 +109,74 @@ export interface IClient {
      * @to (optional) 
      * @return Array of matches
      */
-    matchesAll(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]>;
+    getMatchCollection(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]>;
     /**
      * Creates matches for a given season
      * @id ID of season
      * @return Operation successful
      */
-    matches(id: string): Observable<void>;
+    createMatches(id: string): Observable<void>;
     /**
      * Returns the current season ranking
      * @id ID of season
      * @return Current season ranking
      */
-    ranking(id: string): Observable<Ranking>;
+    getRanking(id: string): Observable<Ranking>;
     /**
      * Starts a season
      * @id ID of season
      * @return Season has been successfully started
      */
-    start(id: string): Observable<void>;
+    startSeason(id: string): Observable<void>;
     /**
      * Find all teams related to a single season
      * @id ID of season
      * @return Array of teams related to the season
      */
-    teamAll(id: string): Observable<Team[]>;
+    getTeamsInSeason(id: string): Observable<Team[]>;
     /**
      * Add a team to a season
      * @season_id ID of season
      * @team_id ID of team
      * @return Operation successful
      */
-    team(season_id: string, team_id: string): Observable<void>;
+    addTeamToSeason(season_id: string, team_id: string): Observable<void>;
     /**
      * Remove a team from a season
      * @season_id ID of season
      * @team_id ID of team
      * @return Operation successful
      */
-    team2(season_id: string, team_id: string): Observable<void>;
+    removeTeamFromSeason(season_id: string, team_id: string): Observable<void>;
     /**
      * Finds all teams
      * @return list of teams
      */
-    team3(): Observable<Team[]>;
+    getTeamCollection(): Observable<Team[]>;
     /**
      * Creates a new team
      * @body (optional) 
      * @return Operation successful
      */
-    team4(body?: Body6 | null | undefined): Observable<Identifier>;
+    createTeam(body?: Body6 | null | undefined): Observable<Identifier>;
     /**
      * Delete a single team by id
      * @id ID of team
      * @return Deletion successful
      */
-    team5(id: string): Observable<void>;
+    deleteTeam(id: string): Observable<void>;
     /**
      * Finds a single team by id
      * @id ID of team
      * @return Single team
      */
-    team6(id: string): Observable<Team>;
+    getTeam(id: string): Observable<Team>;
     /**
      * Renames a single team
      * @id ID of team
      * @return Team has been successfully renamed
      */
-    rename(id: string): Observable<void>;
+    renameTeam(id: string): Observable<void>;
 }
 
 @Injectable()
@@ -195,7 +195,7 @@ export class Client implements IClient {
      * @id match id
      * @return Contains a single match object
      */
-    match(id: string): Observable<Match> {
+    getMatch(id: string): Observable<Match> {
         let url_ = this.baseUrl + "/match/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -212,11 +212,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processMatch(response_);
+            return this.processGetMatch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processMatch(<any>response_);
+                    return this.processGetMatch(<any>response_);
                 } catch (e) {
                     return <Observable<Match>><any>Observable.throw(e);
                 }
@@ -225,7 +225,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processMatch(response: HttpResponseBase): Observable<Match> {
+    protected processGetMatch(response: HttpResponseBase): Observable<Match> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -256,7 +256,7 @@ export class Client implements IClient {
      * @id match id
      * @return Operation successful
      */
-    cancellation(id: string): Observable<void> {
+    cancelMatch(id: string): Observable<void> {
         let url_ = this.baseUrl + "/match/{id}/cancellation";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -272,11 +272,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processCancellation(response_);
+            return this.processCancelMatch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCancellation(<any>response_);
+                    return this.processCancelMatch(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -285,7 +285,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processCancellation(response: HttpResponseBase): Observable<void> {
+    protected processCancelMatch(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -310,7 +310,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    kickoff(id: string, body?: Body | null | undefined): Observable<void> {
+    scheduleMatch(id: string, body?: Body | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/match/{id}/kickoff";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -329,11 +329,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processKickoff(response_);
+            return this.processScheduleMatch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processKickoff(<any>response_);
+                    return this.processScheduleMatch(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -342,7 +342,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processKickoff(response: HttpResponseBase): Observable<void> {
+    protected processScheduleMatch(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -367,7 +367,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    location(id: string, body?: Body2 | null | undefined): Observable<void> {
+    locateMatch(id: string, body?: Body2 | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/match/{id}/location";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -386,11 +386,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processLocation(response_);
+            return this.processLocateMatch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processLocation(<any>response_);
+                    return this.processLocateMatch(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -399,7 +399,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processLocation(response: HttpResponseBase): Observable<void> {
+    protected processLocateMatch(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -424,7 +424,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    result(id: string, body?: Body3 | null | undefined): Observable<void> {
+    submitMatchResult(id: string, body?: Body3 | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/match/{id}/result";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -443,11 +443,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processResult(response_);
+            return this.processSubmitMatchResult(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processResult(<any>response_);
+                    return this.processSubmitMatchResult(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -456,7 +456,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processResult(response: HttpResponseBase): Observable<void> {
+    protected processSubmitMatchResult(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -479,7 +479,7 @@ export class Client implements IClient {
      * Find all pitches
      * @return Array of pitches
      */
-    pitchAll(): Observable<Pitch[]> {
+    getPitchCollection(): Observable<Pitch[]> {
         let url_ = this.baseUrl + "/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -493,11 +493,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processPitchAll(response_);
+            return this.processGetPitchCollection(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPitchAll(<any>response_);
+                    return this.processGetPitchCollection(<any>response_);
                 } catch (e) {
                     return <Observable<Pitch[]>><any>Observable.throw(e);
                 }
@@ -506,7 +506,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processPitchAll(response: HttpResponseBase): Observable<Pitch[]> {
+    protected processGetPitchCollection(response: HttpResponseBase): Observable<Pitch[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -537,7 +537,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    pitch(body?: Body4 | null | undefined): Observable<Identifier> {
+    createPitch(body?: Body4 | null | undefined): Observable<Identifier> {
         let url_ = this.baseUrl + "/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -554,11 +554,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processPitch(response_);
+            return this.processCreatePitch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPitch(<any>response_);
+                    return this.processCreatePitch(<any>response_);
                 } catch (e) {
                     return <Observable<Identifier>><any>Observable.throw(e);
                 }
@@ -567,7 +567,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processPitch(response: HttpResponseBase): Observable<Identifier> {
+    protected processCreatePitch(response: HttpResponseBase): Observable<Identifier> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -598,7 +598,7 @@ export class Client implements IClient {
      * @id pitch id
      * @return Deletion successful
      */
-    pitch2(id: string): Observable<void> {
+    deletePitch(id: string): Observable<void> {
         let url_ = this.baseUrl + "/pitch/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -614,11 +614,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("delete", url_, options_).flatMap((response_ : any) => {
-            return this.processPitch2(response_);
+            return this.processDeletePitch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPitch2(<any>response_);
+                    return this.processDeletePitch(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -627,7 +627,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processPitch2(response: HttpResponseBase): Observable<void> {
+    protected processDeletePitch(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -651,7 +651,7 @@ export class Client implements IClient {
      * @id pitch id
      * @return Contains a single pitch object
      */
-    pitch3(id: string): Observable<Pitch> {
+    getPitch(id: string): Observable<Pitch> {
         let url_ = this.baseUrl + "/pitch/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -668,11 +668,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processPitch3(response_);
+            return this.processGetPitch(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPitch3(<any>response_);
+                    return this.processGetPitch(<any>response_);
                 } catch (e) {
                     return <Observable<Pitch>><any>Observable.throw(e);
                 }
@@ -681,7 +681,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processPitch3(response: HttpResponseBase): Observable<Pitch> {
+    protected processGetPitch(response: HttpResponseBase): Observable<Pitch> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -711,7 +711,7 @@ export class Client implements IClient {
      * Find all seasons
      * @return List of seasons
      */
-    seasonAll(): Observable<Season[]> {
+    getSeasonCollection(): Observable<Season[]> {
         let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -725,11 +725,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processSeasonAll(response_);
+            return this.processGetSeasonCollection(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processSeasonAll(<any>response_);
+                    return this.processGetSeasonCollection(<any>response_);
                 } catch (e) {
                     return <Observable<Season[]>><any>Observable.throw(e);
                 }
@@ -738,7 +738,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processSeasonAll(response: HttpResponseBase): Observable<Season[]> {
+    protected processGetSeasonCollection(response: HttpResponseBase): Observable<Season[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -769,7 +769,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    season(body?: Body5 | null | undefined): Observable<Identifier> {
+    createSeason(body?: Body5 | null | undefined): Observable<Identifier> {
         let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -786,11 +786,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processSeason(response_);
+            return this.processCreateSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processSeason(<any>response_);
+                    return this.processCreateSeason(<any>response_);
                 } catch (e) {
                     return <Observable<Identifier>><any>Observable.throw(e);
                 }
@@ -799,7 +799,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processSeason(response: HttpResponseBase): Observable<Identifier> {
+    protected processCreateSeason(response: HttpResponseBase): Observable<Identifier> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -830,7 +830,7 @@ export class Client implements IClient {
      * @id ID of season
      * @return Deletion successful
      */
-    season2(id: string): Observable<void> {
+    deleteSeason(id: string): Observable<void> {
         let url_ = this.baseUrl + "/season/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -846,11 +846,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("delete", url_, options_).flatMap((response_ : any) => {
-            return this.processSeason2(response_);
+            return this.processDeleteSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processSeason2(<any>response_);
+                    return this.processDeleteSeason(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -859,7 +859,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processSeason2(response: HttpResponseBase): Observable<void> {
+    protected processDeleteSeason(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -883,7 +883,7 @@ export class Client implements IClient {
      * @id ID of season
      * @return Contains a single season object
      */
-    season3(id: string): Observable<Season> {
+    getSeason(id: string): Observable<Season> {
         let url_ = this.baseUrl + "/season/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -900,11 +900,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processSeason3(response_);
+            return this.processGetSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processSeason3(<any>response_);
+                    return this.processGetSeason(<any>response_);
                 } catch (e) {
                     return <Observable<Season>><any>Observable.throw(e);
                 }
@@ -913,7 +913,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processSeason3(response: HttpResponseBase): Observable<Season> {
+    protected processGetSeason(response: HttpResponseBase): Observable<Season> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -948,7 +948,7 @@ export class Client implements IClient {
      * @to (optional) 
      * @return Array of matches
      */
-    matchesAll(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]> {
+    getMatchCollection(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]> {
         let url_ = this.baseUrl + "/season/{id}/matches?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -973,11 +973,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processMatchesAll(response_);
+            return this.processGetMatchCollection(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processMatchesAll(<any>response_);
+                    return this.processGetMatchCollection(<any>response_);
                 } catch (e) {
                     return <Observable<Match[]>><any>Observable.throw(e);
                 }
@@ -986,7 +986,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processMatchesAll(response: HttpResponseBase): Observable<Match[]> {
+    protected processGetMatchCollection(response: HttpResponseBase): Observable<Match[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1017,7 +1017,7 @@ export class Client implements IClient {
      * @id ID of season
      * @return Operation successful
      */
-    matches(id: string): Observable<void> {
+    createMatches(id: string): Observable<void> {
         let url_ = this.baseUrl + "/season/{id}/matches";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1033,11 +1033,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processMatches(response_);
+            return this.processCreateMatches(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processMatches(<any>response_);
+                    return this.processCreateMatches(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1046,7 +1046,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processMatches(response: HttpResponseBase): Observable<void> {
+    protected processCreateMatches(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1070,7 +1070,7 @@ export class Client implements IClient {
      * @id ID of season
      * @return Current season ranking
      */
-    ranking(id: string): Observable<Ranking> {
+    getRanking(id: string): Observable<Ranking> {
         let url_ = this.baseUrl + "/season/{id}/ranking";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1087,11 +1087,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processRanking(response_);
+            return this.processGetRanking(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRanking(<any>response_);
+                    return this.processGetRanking(<any>response_);
                 } catch (e) {
                     return <Observable<Ranking>><any>Observable.throw(e);
                 }
@@ -1100,7 +1100,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processRanking(response: HttpResponseBase): Observable<Ranking> {
+    protected processGetRanking(response: HttpResponseBase): Observable<Ranking> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1127,7 +1127,7 @@ export class Client implements IClient {
      * @id ID of season
      * @return Season has been successfully started
      */
-    start(id: string): Observable<void> {
+    startSeason(id: string): Observable<void> {
         let url_ = this.baseUrl + "/season/{id}/start";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1143,11 +1143,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processStart(response_);
+            return this.processStartSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processStart(<any>response_);
+                    return this.processStartSeason(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1156,7 +1156,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processStart(response: HttpResponseBase): Observable<void> {
+    protected processStartSeason(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1188,7 +1188,7 @@ export class Client implements IClient {
      * @id ID of season
      * @return Array of teams related to the season
      */
-    teamAll(id: string): Observable<Team[]> {
+    getTeamsInSeason(id: string): Observable<Team[]> {
         let url_ = this.baseUrl + "/season/{id}/team";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1205,11 +1205,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processTeamAll(response_);
+            return this.processGetTeamsInSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeamAll(<any>response_);
+                    return this.processGetTeamsInSeason(<any>response_);
                 } catch (e) {
                     return <Observable<Team[]>><any>Observable.throw(e);
                 }
@@ -1218,7 +1218,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeamAll(response: HttpResponseBase): Observable<Team[]> {
+    protected processGetTeamsInSeason(response: HttpResponseBase): Observable<Team[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1250,7 +1250,7 @@ export class Client implements IClient {
      * @team_id ID of team
      * @return Operation successful
      */
-    team(season_id: string, team_id: string): Observable<void> {
+    addTeamToSeason(season_id: string, team_id: string): Observable<void> {
         let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
         if (season_id === undefined || season_id === null)
             throw new Error("The parameter 'season_id' must be defined.");
@@ -1269,11 +1269,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("put", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam(response_);
+            return this.processAddTeamToSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam(<any>response_);
+                    return this.processAddTeamToSeason(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1282,7 +1282,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam(response: HttpResponseBase): Observable<void> {
+    protected processAddTeamToSeason(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1315,7 +1315,7 @@ export class Client implements IClient {
      * @team_id ID of team
      * @return Operation successful
      */
-    team2(season_id: string, team_id: string): Observable<void> {
+    removeTeamFromSeason(season_id: string, team_id: string): Observable<void> {
         let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
         if (season_id === undefined || season_id === null)
             throw new Error("The parameter 'season_id' must be defined.");
@@ -1334,11 +1334,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("delete", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam2(response_);
+            return this.processRemoveTeamFromSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam2(<any>response_);
+                    return this.processRemoveTeamFromSeason(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1347,7 +1347,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam2(response: HttpResponseBase): Observable<void> {
+    protected processRemoveTeamFromSeason(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1378,7 +1378,7 @@ export class Client implements IClient {
      * Finds all teams
      * @return list of teams
      */
-    team3(): Observable<Team[]> {
+    getTeamCollection(): Observable<Team[]> {
         let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1392,11 +1392,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam3(response_);
+            return this.processGetTeamCollection(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam3(<any>response_);
+                    return this.processGetTeamCollection(<any>response_);
                 } catch (e) {
                     return <Observable<Team[]>><any>Observable.throw(e);
                 }
@@ -1405,7 +1405,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam3(response: HttpResponseBase): Observable<Team[]> {
+    protected processGetTeamCollection(response: HttpResponseBase): Observable<Team[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1436,7 +1436,7 @@ export class Client implements IClient {
      * @body (optional) 
      * @return Operation successful
      */
-    team4(body?: Body6 | null | undefined): Observable<Identifier> {
+    createTeam(body?: Body6 | null | undefined): Observable<Identifier> {
         let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1453,11 +1453,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam4(response_);
+            return this.processCreateTeam(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam4(<any>response_);
+                    return this.processCreateTeam(<any>response_);
                 } catch (e) {
                     return <Observable<Identifier>><any>Observable.throw(e);
                 }
@@ -1466,7 +1466,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam4(response: HttpResponseBase): Observable<Identifier> {
+    protected processCreateTeam(response: HttpResponseBase): Observable<Identifier> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1497,7 +1497,7 @@ export class Client implements IClient {
      * @id ID of team
      * @return Deletion successful
      */
-    team5(id: string): Observable<void> {
+    deleteTeam(id: string): Observable<void> {
         let url_ = this.baseUrl + "/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1513,11 +1513,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("delete", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam5(response_);
+            return this.processDeleteTeam(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam5(<any>response_);
+                    return this.processDeleteTeam(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1526,7 +1526,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam5(response: HttpResponseBase): Observable<void> {
+    protected processDeleteTeam(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1550,7 +1550,7 @@ export class Client implements IClient {
      * @id ID of team
      * @return Single team
      */
-    team6(id: string): Observable<Team> {
+    getTeam(id: string): Observable<Team> {
         let url_ = this.baseUrl + "/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1567,11 +1567,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processTeam6(response_);
+            return this.processGetTeam(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processTeam6(<any>response_);
+                    return this.processGetTeam(<any>response_);
                 } catch (e) {
                     return <Observable<Team>><any>Observable.throw(e);
                 }
@@ -1580,7 +1580,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processTeam6(response: HttpResponseBase): Observable<Team> {
+    protected processGetTeam(response: HttpResponseBase): Observable<Team> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1607,7 +1607,7 @@ export class Client implements IClient {
      * @id ID of team
      * @return Team has been successfully renamed
      */
-    rename(id: string): Observable<void> {
+    renameTeam(id: string): Observable<void> {
         let url_ = this.baseUrl + "/team/{id}/rename";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1623,11 +1623,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processRename(response_);
+            return this.processRenameTeam(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRename(<any>response_);
+                    return this.processRenameTeam(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1636,7 +1636,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processRename(response: HttpResponseBase): Observable<void> {
+    protected processRenameTeam(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1944,6 +1944,8 @@ export class Season implements ISeason {
     id?: string | undefined;
     name?: string | undefined;
     state?: SeasonState | undefined;
+    match_day_count?: number | undefined;
+    team_count?: number | undefined;
 
     constructor(data?: ISeason) {
         if (data) {
@@ -1959,6 +1961,8 @@ export class Season implements ISeason {
             this.id = data["id"];
             this.name = data["name"];
             this.state = data["state"];
+            this.match_day_count = data["match_day_count"];
+            this.team_count = data["team_count"];
         }
     }
 
@@ -1974,6 +1978,8 @@ export class Season implements ISeason {
         data["id"] = this.id;
         data["name"] = this.name;
         data["state"] = this.state;
+        data["match_day_count"] = this.match_day_count;
+        data["team_count"] = this.team_count;
         return data; 
     }
 }
@@ -1982,6 +1988,8 @@ export interface ISeason {
     id?: string | undefined;
     name?: string | undefined;
     state?: SeasonState | undefined;
+    match_day_count?: number | undefined;
+    team_count?: number | undefined;
 }
 
 export class Team implements ITeam {

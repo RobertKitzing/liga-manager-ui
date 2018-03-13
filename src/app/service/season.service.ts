@@ -35,7 +35,7 @@ export class SeasonService {
         this.isLoadingTeams = true;
         return new Promise<Team[]>(
             (resovle) => {
-                this.apiClient.teamAll(this.selectedSeason.id).subscribe(
+                this.apiClient.getTeamsInSeason(this.selectedSeason.id).subscribe(
                     (teams: Team[]) => {
                         resovle(teams);
                     },
@@ -71,7 +71,7 @@ export class SeasonService {
             log.debug('getSteasonFromServer');
             return new Promise<Season[]>(
                 resolve => {
-                    this.apiClient.seasonAll().subscribe(
+                    this.apiClient.getSeasonCollection().subscribe(
                         (seasons: Season[]) => {
                             this.seasons = seasons;
                             const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);

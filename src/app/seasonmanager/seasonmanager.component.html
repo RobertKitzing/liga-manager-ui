@@ -80,7 +80,12 @@
                             {{ 'MATCHDAYS' | translate}}
                         </div>
                         <div>
-                            <p *ngFor="let match of newSeasonMatches">{{ match.home_team_id }} - {{ match.guest_team_id }}</p>
+                            <p *ngFor="let match of newSeasonMatches">{{getTeamNameByID(match.home_team_id) }} - {{ getTeamNameByID(match.guest_team_id) }}</p>
+                        </div>
+                        <div>
+                            <div>
+                                <button mat-raised-button *ngFor="let matchDay of matchDayCounter" (click)="getMatches(matchDay)">{{matchDay}}</button>
+                            </div>
                         </div>
                         <div>
                             <button mat-raised-button color="primary" (click)="createMatches()">{{ 'CALCULATE_MATCHDAYS' | translate }}</button>
