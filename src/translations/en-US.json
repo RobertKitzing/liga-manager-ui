@@ -42,5 +42,8 @@
   "MATCHDAYS": "Matchdays",
   "CALCULATE_MATCHDAYS": "Randomize Matchdays",
   "ADD_ALL": "all",
-  "REMOVE_ALL": "remove all"
+  "REMOVE_ALL": "remove all",
+  "NEW_TEAM_PLACEHOLDER": "Create a new Team",
+  "NEW_TEAM_CREATED": "Team {{name}} created",
+  "CREATE_TEAM_BUTTON": "create"
 }

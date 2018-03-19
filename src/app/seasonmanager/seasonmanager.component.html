@@ -23,7 +23,7 @@
             <mat-step [stepControl]="selectTeamsFormGroup" editable="true">
                 <form [formGroup]="selectTeamsFormGroup">
                     <ng-template matStepLabel>{{ 'TEAMS' | translate }}</ng-template>
-                    <div fxLayout
+                    <div    fxLayout
                             fxLayoutGap="30px"
                             fxLayoutAlign="left"
                             fxLayout.xs="column">
@@ -33,6 +33,12 @@
                             <div *ngIf="allTeams">
                                 <div *ngFor="let team of allTeams">
                                     <mat-checkbox [checked]="isSelectedTeam(team.id)" (change)="handleTeam($event)" [value]="team">{{team.name}}</mat-checkbox>
+                                </div>
+                                <div fxLayout="row" style="margin-top:30px;">
+                                    <mat-form-field style="margin-right:15px;">
+                                        <input #newTeam matInput placeholder="{{ 'NEW_TEAM_PLACEHOLDER' | translate }}" (keyup.enter)="addNewTeam(newTeam.value)">
+                                    </mat-form-field>
+                                    <button style="margin-left:15px;" mat-raised-button color="primary" (click)="addNewTeam(newTeam.value)">{{ 'CREATE_TEAM_BUTTON' | translate}}</button>
                                 </div>
                                 <div fxLayout="row" style="margin-top:30px;">
                                     <button style="margin-right:15px;" mat-raised-button color="primary" (click)="addAllTeams()">{{ 'ADD_ALL' | translate}}</button>

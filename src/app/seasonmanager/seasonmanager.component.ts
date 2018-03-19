@@ -1,15 +1,16 @@
-import { Match } from '@app/api/openapi';
+import { Match, Body6 } from '@app/api/openapi';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
 import { Client, Season, Ranking, Team, SeasonState, Body5, Identifier } from './../api/openapi';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
-import { MatTableDataSource, MatSort, Sort, MatCheckboxChange } from '@angular/material';
+import { MatTableDataSource, MatSort, Sort, MatCheckboxChange, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
 import { Logger } from '@app/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { TranslateService } from '@ngx-translate/core';
 
 const log = new Logger('Seasonmanager');
 
@@ -30,13 +31,16 @@ export class SeasonManagerComponent implements OnInit {
 
   newSeasonID: Identifier;
   newSeasonMatches: Match[];
+  newTeamName: string;
 
   public newSeasonMatchDayCount: number;
   public matchDayCounter: number[];
 
   constructor(private apiClient: Client,
               private seasonService: SeasonService,
-              private _formBuilder: FormBuilder) {
+              private _formBuilder: FormBuilder,
+              private snackBar: MatSnackBar,
+              private translateService: TranslateService) {
               }
   ngOnInit() {
     this.createSeasonFormGroup = this._formBuilder.group({
@@ -64,7 +68,7 @@ export class SeasonManagerComponent implements OnInit {
     this.isLoadingAllTeams = true;
     this.apiClient.getTeamCollection().subscribe(
       (teams) => {
-        this.allTeams = teams;
+        this.allTeams = teams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1: 1));
       },
       (error) => {
         log.error(error);
@@ -113,15 +117,7 @@ export class SeasonManagerComponent implements OnInit {
     } else {
       this.selectedTeams = this.selectedTeams.filter(t => t.id !== team.id);
     }
-    this.selectedTeams = this.selectedTeams.sort((t1, t2) => {
-      if (t1.name > t2.name) {
-          return 1;
-      }
-      if (t1.name < t2.name) {
-          return -1;
-      }
-      return 0;
-    });
+    this.selectedTeams = this.selectedTeams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1: 1));
     log.debug(this.selectedTeams);
   }
 
@@ -145,6 +141,7 @@ export class SeasonManagerComponent implements OnInit {
       () => {
         this.apiClient.getSeason(this.newSeasonID.id).subscribe(
           (res) => {
+            this.newSeasonMatchDayCount = res.match_day_count;
             this.newSeasonMatchDayCount = res.match_day_count;
             this.matchDayCounter = new Array();
             for (let i = 1; i <= res.match_day_count; i++) {
@@ -177,5 +174,20 @@ export class SeasonManagerComponent implements OnInit {
         alert('Season startet');
       }
     );
+  }
+
+  addNewTeam(teamName: string) {
+    if (teamName) {
+      const createTeamParams: Body6 = new Body6();
+      createTeamParams.name = teamName;
+      this.apiClient.createTeam(createTeamParams).subscribe(
+        () => {
+          this.snackBar.open(this.translateService.instant('NEW_TEAM_CREATED', {name: teamName}),'', {
+            duration: 500,
+          });
+          this.loadAllTeams();
+        }
+      )
+    }
   }
 }

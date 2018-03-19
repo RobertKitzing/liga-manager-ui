@@ -41,5 +41,8 @@
   "MATCHDAYS": "Spieltage",
   "CALCULATE_MATCHDAYS": "Spieltage auswürfeln",
   "ADD_ALL": "alle",
-  "REMOVE_ALL": "keine"
+  "REMOVE_ALL": "keine",
+  "NEW_TEAM_PLACEHOLDER": "Neues Team anlegen",
+  "NEW_TEAM_CREATED": "Team {{name}} angelegt",
+  "CREATE_TEAM_BUTTON": "anlegen"
 }
