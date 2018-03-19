@@ -1,14 +1,11 @@
 .container {
   text-align: center;
   padding: 1em;
+  height: 60vh;
 }
 
 .logo {
-  width: 150px;
   margin: 0 auto;
-}
-
-q {
-  font-style: italic;
-  quotes: "« " " »";
+  width: auto;
+  height: 100%;
 }
