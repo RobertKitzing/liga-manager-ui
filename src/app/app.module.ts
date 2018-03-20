@@ -1,3 +1,4 @@
+import { TournamentModule } from './tournament/tournament.module';
 import { SeasonManagerModule } from './seasonmanager/seasonmanager.module';
 import { MatchplanModule } from './matchplan/matchplan.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -42,8 +43,9 @@ import { AppRoutingModule } from './app-routing.module';
     TableModule,
     MatchplanModule,
     SeasonManagerModule,
+    TournamentModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   declarations: [AppComponent],
   providers: [

@@ -91,6 +91,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     this.apiClient.getMatchCollection(this.season.id, this.matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
         this.matches = matches;
+        log.debug(matches);
       },
       (error) => {
         log.error(error);

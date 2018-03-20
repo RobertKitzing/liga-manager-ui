@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
@@ -11,7 +12,8 @@ import { SeasonService } from '@app/service/season.service';
   imports: [
     FlexLayoutModule,
     MaterialModule,
-    CommonModule
+    CommonModule,
+    AngularFontAwesomeModule
   ],
   declarations: [
     LoaderComponent

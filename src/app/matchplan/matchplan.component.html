@@ -24,10 +24,44 @@
     </mat-form-field>
   </div>
 </div>
-<div class="container">
+<div class="container-fluid">
   <app-loader [isLoading]="isLoadingMatches && seasonService.isLoadingTeams" size="1.5"></app-loader>
-  <div class="mat-elevation-z8" *ngIf="matches && !seasonService.isLoadingTeams">
-    <mat-accordion>
+  <div class="container-fluid mat-elevation-z4" *ngIf="matches && !seasonService.isLoadingTeams">
+    <div class="row" *ngFor="let match of matches">
+      <div class="teamname col-3">
+          {{ seasonService.getTeamNameByID(match.home_team_id)}}
+      </div>
+      <div class="col-1">
+        -
+      </div>
+      <div class="teamname col-3">
+          {{ seasonService.getTeamNameByID(match.guest_team_id) }}
+      </div>
+      <div class="col-1">
+          <mat-form-field *ngIf="true">
+              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" #home_score />
+          </mat-form-field>
+          <p *ngIf="true">
+            {{ match.home_score }}
+          </p>
+      </div>
+      <div class="col-1">
+          :
+      </div>
+      <div class="col-1">
+          <mat-form-field *ngIf="true">
+              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" #guest_score />
+            </mat-form-field>
+          <p *ngIf="false">
+            {{ match.guest_score }}
+          </p>
+      </div>
+      <div class="col-1">
+          <i *ngIf="true" class="fa fa-edit"></i>
+          <button *ngIf="false" mat-raised-button color="primary" (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
+      </div>
+    </div>
+    <!-- <mat-accordion>
       <mat-expansion-panel *ngFor="let match of matches">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -56,6 +90,6 @@
           </div>
         </div>
       </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
   </div>
 </div>

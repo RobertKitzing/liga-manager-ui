@@ -4,7 +4,7 @@
 3. Pokalmodus
 4. Login/Logout
 5. Guards anpassen (ausbauen)
-5. Spieleeintragen nur wenn gültiges Token
+    1. Spieleeintragen nur wenn gültiges Token
 6. Wilde Liga Logos einbauen
     1. done
 7. Link auf Forum

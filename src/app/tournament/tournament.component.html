@@ -1,0 +1,42 @@
+<div class="container">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let match of matches">
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                <div class="row">
+                    <div class="col-md-5">
+                        match.home_team_id
+                    </div>
+                    <div class="col-md-2">
+                        -
+                    </div>
+                    <div class="col-md-2">
+                        match.guest_team_id
+                    </div>
+                </div>
+            </mat-panel-title>
+            <mat-panel-description style="white-space: nowrap">
+                {{ match.home_score }} : {{ match.guest_score }}
+            </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout
+                fxLayoutGap="10px"
+                fxLayoutAlign="center"
+                fxLayout.xs="column">
+            <div>
+                <mat-form-field>
+                <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" #home_score />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" #guest_score />
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
+            </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

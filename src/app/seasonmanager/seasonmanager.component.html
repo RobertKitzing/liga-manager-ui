@@ -2,7 +2,7 @@
     <div>
         <h1>{{ 'CREATE_SEASON' | translate:{seasonName: newSeasonName.value} }}</h1>
     </div>
-    <div>
+    <div class="createseason">
         <mat-vertical-stepper [linear]="isLinear" #stepper="matVerticalStepper" (selectionChange)="createSeasonStepperChanged($event)">
             <mat-step [stepControl]="createSeasonFormGroup" editable="false">
                 <form [formGroup]="createSeasonFormGroup">
