@@ -13,16 +13,15 @@
   text-align: center;
 }
 
-.col {
-  margin-bottom: 15px;
-}
-
 .teamname {
   max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-div {
-  text-align: center;
-  line-height: 42px;
+
+.row {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  width: 100%;
 }

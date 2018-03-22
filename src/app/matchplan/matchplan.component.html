@@ -26,83 +26,49 @@
 </div>
 <div class="container-fluid">
   <app-loader [isLoading]="isLoadingMatches && seasonService.isLoadingTeams" size="1.5"></app-loader>
-  <div class="container-fluid" *ngIf="matches && !seasonService.isLoadingTeams">
-    <div class="mat-elevation-z5" *ngFor="let match of matches" style="margin-bottom: 10px;">
+  <div *ngIf="matches && !seasonService.isLoadingTeams">
+    <div class="mat-elevation-z5 container" *ngFor="let match of matches" style="margin-bottom: 10px;">
       <div class="row">
-        <div class="teamname col-2 col-md-3">
+        <div class="col col-3 teamname" style="text-align:right">
             {{ seasonService.getTeamNameByID(match.home_team_id)}}
         </div>
-        <div class="col-1">
+        <div class="col col-1" style="max-width: 2ch;">
           -
         </div>
-        <div class="teamname col-2 col-md-3">
+        <div class="col col-3 teamname" style="text-align:left">
             {{ seasonService.getTeamNameByID(match.guest_team_id) }}
         </div>
-        <div class="col-1">
+        <div class="col col-1">
           &nbsp;
         </div>
-        <div class="col-1">
-            <p>
-              {{ match.home_score }}
-            </p>
+        <div class="col col-1">
+            <div *ngIf="editMatch !== match.id; else edithome" style="text-align:right">{{ match.home_score }}</div>
+            <ng-template #edithome>
+              <mat-form-field style="width:100%;">
+                  <input matInput type="number" min="0" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score"/>
+              </mat-form-field>
+            </ng-template>
         </div>
-        <div class="col-1">
+        <div class="col col-1" style="max-width: 2ch;">
             :
         </div>
-        <div class="col-1">
-            <p>
-              {{ match.guest_score }}
-            </p>
+        <div class="col col-1">
+            <div *ngIf="editMatch !== match.id; else editguest" style="text-align:left">{{ match.home_score }}</div>
+            <ng-template #editguest>
+              <mat-form-field style="width:100%;">
+                  <input matInput type="number" min="0" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score"/>
+              </mat-form-field>
+            </ng-template>
         </div>
-        <div class="col-1">
-            <i *ngIf="editMatch !== match.id" class="fa fa-edit" (click)="editMatch = match.id" style="cursor: pointer;"></i>        
-        </div>
-      </div>
-      <div class="row" *ngIf="editMatch === match.id">
-        <div class="col">
-          <mat-form-field>
-              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score"/>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score"/>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <button mat-raised-button color="primary" (click)="saveResult(match.id, match.home_score, match.guest_score)">Speichern</button>  
+        <div class="col col-1">
+            <div *ngIf="editMatch !== match.id; else savebutton">
+              <i *ngIf="editMatch !== match.id" class="fa fa-edit" (click)="editMatch = match.id" style="cursor: pointer;"></i>        
+            </div>
+            <ng-template #savebutton>
+                <button mat-raised-button style="width: 100%;" color="primary" (click)="saveResult(match.id, match.home_score, match.guest_score)">Speichern</button>  
+            </ng-template>
         </div>
       </div>
     </div>
-    <!-- <mat-accordion>
-      <mat-expansion-panel *ngFor="let match of matches">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ seasonService.getTeamNameByID(match.home_team_id)}} - {{ seasonService.getTeamNameByID(match.guest_team_id) }}
-          </mat-panel-title>
-          <mat-panel-description style="white-space: nowrap">
-            {{ match.home_score }} : {{ match.guest_score }}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div fxLayout
-             fxLayoutGap="10px"
-             fxLayoutAlign="center"
-             fxLayout.xs="column">
-          <div>
-            <mat-form-field>
-              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" #home_score />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field>
-              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" #guest_score />
-            </mat-form-field>
-          </div>
-          <div>
-            <button mat-raised-button color="primary" (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion> -->
   </div>
 </div>
