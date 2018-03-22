@@ -7,7 +7,7 @@
     "build": "npm run env -s && ng build --prod",
     "build:app": "npm run build && cordova build --device --debug && npm run copy:app",
     "build:deploy": "npm run build && npm run deploy",
-    "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
+    "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js --host 0.0.0.0",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
     "test:ci": "npm run lint -s && ng test --single-run --code-coverage",
