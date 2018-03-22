@@ -27,38 +27,51 @@
 <div class="container-fluid">
   <app-loader [isLoading]="isLoadingMatches && seasonService.isLoadingTeams" size="1.5"></app-loader>
   <div class="container-fluid" *ngIf="matches && !seasonService.isLoadingTeams">
-    <div class="row mat-elevation-z5" *ngFor="let match of matches" style="margin-bottom: 10px;">
-      <div class="teamname col-3">
-          {{ seasonService.getTeamNameByID(match.home_team_id)}}
+    <div class="mat-elevation-z5" *ngFor="let match of matches" style="margin-bottom: 10px;">
+      <div class="row">
+        <div class="teamname col-2 col-md-3">
+            {{ seasonService.getTeamNameByID(match.home_team_id)}}
+        </div>
+        <div class="col-1">
+          -
+        </div>
+        <div class="teamname col-2 col-md-3">
+            {{ seasonService.getTeamNameByID(match.guest_team_id) }}
+        </div>
+        <div class="col-1">
+          &nbsp;
+        </div>
+        <div class="col-1">
+            <p>
+              {{ match.home_score }}
+            </p>
+        </div>
+        <div class="col-1">
+            :
+        </div>
+        <div class="col-1">
+            <p>
+              {{ match.guest_score }}
+            </p>
+        </div>
+        <div class="col-1">
+            <i *ngIf="editMatch !== match.id" class="fa fa-edit" (click)="editMatch = match.id" style="cursor: pointer;"></i>        
+        </div>
       </div>
-      <div class="col-1">
-        -
-      </div>
-      <div class="teamname col-3">
-          {{ seasonService.getTeamNameByID(match.guest_team_id) }}
-      </div>
-      <div class="col-1">
-          <!-- <mat-form-field *ngIf="true">
-              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" #home_score />
-          </mat-form-field> -->
-          <p *ngIf="true">
-            {{ match.home_score }}
-          </p>
-      </div>
-      <div class="col-1">
-          :
-      </div>
-      <div class="col-1">
-          <!-- <mat-form-field *ngIf="true">
-              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" #guest_score />
-            </mat-form-field> -->
-          <p *ngIf="false">
-            {{ match.guest_score }}
-          </p>
-      </div>
-      <div class="col-1">
-          <i *ngIf="true" class="fa fa-edit"></i>
-          <!-- <button *ngIf="false" mat-raised-button color="primary" (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button> -->
+      <div class="row" *ngIf="editMatch === match.id">
+        <div class="col">
+          <mat-form-field>
+              <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score"/>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+              <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score"/>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <button mat-raised-button color="primary" (click)="saveResult(match.id, match.home_score, match.guest_score)">Speichern</button>  
+        </div>
       </div>
     </div>
     <!-- <mat-accordion>

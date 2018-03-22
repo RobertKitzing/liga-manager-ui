@@ -25,6 +25,8 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   isLoadingMatches: boolean;
   matchDayCounter: number[] = new Array<number>();
 
+  editMatch: string;
+
   constructor(private apiClient: Client,
               public seasonService: SeasonService) { }
 
@@ -63,6 +65,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   }
 
   saveResult(match: string, home: string, guest: string) {
+    log.debug(home);
     const t: Match = this.matches.find(m => m.id === match);
     const result: Body3 = new Body3;
     result.home_score = Number.parseInt(home);
@@ -72,6 +75,12 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         log.debug(res);
         t.home_score = result.home_score ;
         t.guest_score = result.guest_score;
+      },
+      (error) => {
+
+      },
+      () => {
+        delete this.editMatch;
       }
     );
   }

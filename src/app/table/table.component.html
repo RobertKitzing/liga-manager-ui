@@ -11,7 +11,7 @@
     </mat-form-field>
   </div>
 </div>
-<div class="container mat-elevation-z8">
+<div class="container-fluid mat-elevation-z8">
   <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
   <mat-table #table [dataSource]="rankingDataSource" *ngIf="rankingDataSource && !seasonService.isLoadingTeams">
 
