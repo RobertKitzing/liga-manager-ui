@@ -1,27 +1,22 @@
-.container {
+.box {
   text-align: center;
   padding: 1rem;
   display: flex;
   justify-content: center;
 }
 
-.mat-icon {
-  vertical-align: middle;
-}
-
 .mat-select {
   text-align: center;
 }
 
-.teamname {
-  max-width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+// .teamname {
+//   max-width: 250px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
 
 .row {
   display: flex;
   align-items: center;
-  height: 80px;
-  width: 100%;
+  height: 3.6em;
 }
