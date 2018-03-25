@@ -1,3 +1,7 @@
+.cont {
+  height: 100%;
+  overflow: auto;
+}
 .box {
   text-align: center;
   padding: 1rem;
@@ -9,14 +13,13 @@
   text-align: center;
 }
 
-// .teamname {
-//   max-width: 250px;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-// }
-
 .row {
   display: flex;
   align-items: center;
   height: 3.6em;
+}
+
+.matches {
+  
+  // height: 76vh;
 }

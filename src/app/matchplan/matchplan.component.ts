@@ -20,7 +20,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   seasonsSub: Subscription;
   season: Season;
 
-  matches: Match[];
+  matches: Match[][];
   matchDay = 1;
   isLoadingMatches: boolean;
   matchDayCounter: number[] = new Array<number>();
@@ -36,7 +36,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         log.debug(season);
         this.season = season;
         this.matchDayCounter = new Array();
-        for (let i = 1; i <= season.match_day_count; i++) {
+        for (let i = 0; i <= season.match_day_count; i++) {
           this.matchDayCounter.push(i);
         }
         this.loadMatches();
@@ -45,7 +45,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     this.season = this.seasonService.getSelectedSeason();
     if (this.season) {
       this.matchDayCounter = new Array();
-      for (let i = 1; i <= this.season.match_day_count; i++) {
+      for (let i = 0; i <= this.season.match_day_count; i++) {
         this.matchDayCounter.push(i);
       }
     }
@@ -59,14 +59,11 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     this.seasonsSub.unsubscribe();
   }
 
-  saveScore(match: string, team: string, score: string) {
-    const t: Match = this.matches.find(m => m.id === match);
-    t[team] = Number.parseInt(score);
-  }
-
   saveResult(match: string, home: string, guest: string) {
-    log.debug(home);
-    const t: Match = this.matches.find(m => m.id === match);
+    log.debug(this.matches);
+    const reduced: Match[] = this.matches.reduce((prev, curr) => prev.concat(curr));
+    log.debug(reduced);
+    const t: Match = reduced.find(m => m.id === match);
     const result: Body3 = new Body3;
     result.home_score = Number.parseInt(home);
     result.guest_score = Number.parseInt(guest);
@@ -94,21 +91,41 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   }
 
   loadMatches() {
-    this.matches = null;
     this.isLoadingMatches = true;
+    this.matches = new Array<Match[]>();
+    log.debug(this.matches);
     log.debug(this.matchDay);
-    this.apiClient.getMatchCollection(this.season.id, this.matchDay, null, null, null).subscribe(
-      (matches: Match[]) => {
-        this.matches = matches;
-        log.debug(matches);
-      },
-      (error) => {
-        log.error(error);
-      },
-      () => {
-        this.isLoadingMatches = false;
+    if ( this.matchDay === 0) {
+      for (let i = 1; i <= this.season.match_day_count; i++) {
+        this.apiClient.getMatchCollection(this.season.id, i, null, null, null).subscribe(
+          (matches: Match[]) => {
+            this.matches[i - 1] = matches;
+            log.debug('index', i);
+            log.debug(this.matches);
+          },
+          (error) => {
+            log.error(error);
+          },
+          () => {
+            this.isLoadingMatches = false;
+          }
+        );
       }
-    );
+    } else {
+      this.apiClient.getMatchCollection(this.season.id, this.matchDay, null, null, null).subscribe(
+        (matches: Match[]) => {
+          this.matches = new Array<Match[]>();
+          this.matches.push(matches);
+          log.debug(this.matches);
+        },
+        (error) => {
+          log.error(error);
+        },
+        () => {
+          this.isLoadingMatches = false;
+        }
+      );
+    }
   }
 
   seasonCompare(c1: Season, c2: Season) {
