@@ -20,12 +20,8 @@ export class SeasonService {
     constructor(private apiClient: Client) {
     }
 
-    public matchDayCount: number;
-
-    async selectSeason(season: Season) {
-        this.season.next(season);
-        this.selectedSeason = season;
-        localStorage.setItem(SELECTED_SEASON, JSON.stringify(season));
+    resetSeasons() {
+        this.seasons = null;
     }
 
     getSelectedSeason(): Season {
@@ -34,6 +30,12 @@ export class SeasonService {
             this.selectSeason(this.selectedSeason);
         }
         return this.selectedSeason;
+    }
+
+    async selectSeason(season: Season) {
+        this.season.next(season);
+        this.selectedSeason = season;
+        localStorage.setItem(SELECTED_SEASON, JSON.stringify(season));
     }
 
     async getSeasons(state: SeasonState | null | undefined): Promise<Season[]> {

@@ -90,6 +90,7 @@ export class SeasonManagerComponent implements OnInit {
       (id: Identifier) => {
         this.newSeasonID = id;
         log.debug('sucess');
+        this.seasonService.resetSeasons();
       },
       (error) => {
         log.error(error);
