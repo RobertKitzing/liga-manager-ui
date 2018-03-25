@@ -97,7 +97,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     log.debug(this.matchDay);
     if ( this.matchDay === 0) {
       for (let i = 1; i <= this.season.match_day_count; i++) {
-        this.apiClient.getMatchCollection(this.season.id, i, null, null, null).subscribe(
+        this.apiClient.getMatchesInSeason(this.season.id, i, null, null, null).subscribe(
           (matches: Match[]) => {
             this.matches[i - 1] = matches;
             log.debug('index', i);
@@ -112,7 +112,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         );
       }
     } else {
-      this.apiClient.getMatchCollection(this.season.id, this.matchDay, null, null, null).subscribe(
+      this.apiClient.getMatchesInSeason(this.season.id, this.matchDay, null, null, null).subscribe(
         (matches: Match[]) => {
           this.matches = new Array<Match[]>();
           this.matches.push(matches);

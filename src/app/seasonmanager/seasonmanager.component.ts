@@ -66,7 +66,7 @@ export class SeasonManagerComponent implements OnInit {
 
   loadAllTeams() {
     this.isLoadingAllTeams = true;
-    this.apiClient.getTeamCollection().subscribe(
+    this.apiClient.getAllTeams().subscribe(
       (teams) => {
         this.allTeams = teams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1: 1));
       },
@@ -155,7 +155,7 @@ export class SeasonManagerComponent implements OnInit {
 
   getMatches(matchDay: any) {
     log.debug(matchDay);
-    this.apiClient.getMatchCollection(this.newSeasonID.id, matchDay, null, null, null).subscribe(
+    this.apiClient.getMatchesInSeason(this.newSeasonID.id, matchDay, null, null, null).subscribe(
       (matches: Match[]) => {
         log.debug(matches);
         this.newSeasonMatches = matches;

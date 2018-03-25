@@ -58,7 +58,7 @@ export interface IClient {
      * Find all pitches
      * @return Array of pitches
      */
-    getPitchCollection(): Observable<Pitch[]>;
+    getAllPitches(): Observable<Pitch[]>;
     /**
      * Creates a new pitch
      * @body (optional) 
@@ -81,7 +81,7 @@ export interface IClient {
      * Find all seasons
      * @return List of seasons
      */
-    getSeasonCollection(): Observable<Season[]>;
+    getAllSeasons(): Observable<Season[]>;
     /**
      * Create a new season
      * @body (optional) 
@@ -109,7 +109,7 @@ export interface IClient {
      * @to (optional) 
      * @return Array of matches
      */
-    getMatchCollection(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]>;
+    getMatchesInSeason(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]>;
     /**
      * Creates matches for a given season
      * @id ID of season
@@ -152,7 +152,7 @@ export interface IClient {
      * Finds all teams
      * @return list of teams
      */
-    getTeamCollection(): Observable<Team[]>;
+    getAllTeams(): Observable<Team[]>;
     /**
      * Creates a new team
      * @body (optional) 
@@ -177,6 +177,43 @@ export interface IClient {
      * @return Team has been successfully renamed
      */
     renameTeam(id: string): Observable<void>;
+    /**
+     * @return List of tournaments
+     */
+    getAllTournaments(): Observable<Tournament[]>;
+    /**
+     * @body (optional) 
+     * @return Operation successful
+     */
+    createTournament(body?: Body7 | null | undefined): Observable<Identifier>;
+    /**
+     * @id ID of tournament
+     * @return Single tournament
+     */
+    getTournament(id: string): Observable<Tournament>;
+    /**
+     * @id ID of tournament
+     * @round Number identifying the tournament round
+     * @body (optional) 
+     * @return Operation successful
+     */
+    setRound(id: string, round: number, body?: Team_id_tuple[] | null | undefined): Observable<void>;
+    /**
+     * @id ID of tournament
+     * @return Array of matches
+     */
+    getMatchesInTournament(id: string): Observable<Match[]>;
+    /**
+     * Retrieve the authenticated user
+     * @return The authenticated user as object
+     */
+    getAuthenticatedUser(): Observable<User>;
+    /**
+     * Change the authenticated user's password
+     * @body (optional) 
+     * @return Operation successful
+     */
+    changePassword(body?: Body8 | null | undefined): Observable<void>;
 }
 
 @Injectable()
@@ -479,7 +516,7 @@ export class Client implements IClient {
      * Find all pitches
      * @return Array of pitches
      */
-    getPitchCollection(): Observable<Pitch[]> {
+    getAllPitches(): Observable<Pitch[]> {
         let url_ = this.baseUrl + "/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -493,11 +530,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processGetPitchCollection(response_);
+            return this.processGetAllPitches(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetPitchCollection(<any>response_);
+                    return this.processGetAllPitches(<any>response_);
                 } catch (e) {
                     return <Observable<Pitch[]>><any>Observable.throw(e);
                 }
@@ -506,7 +543,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processGetPitchCollection(response: HttpResponseBase): Observable<Pitch[]> {
+    protected processGetAllPitches(response: HttpResponseBase): Observable<Pitch[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -711,7 +748,7 @@ export class Client implements IClient {
      * Find all seasons
      * @return List of seasons
      */
-    getSeasonCollection(): Observable<Season[]> {
+    getAllSeasons(): Observable<Season[]> {
         let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -725,11 +762,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processGetSeasonCollection(response_);
+            return this.processGetAllSeasons(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSeasonCollection(<any>response_);
+                    return this.processGetAllSeasons(<any>response_);
                 } catch (e) {
                     return <Observable<Season[]>><any>Observable.throw(e);
                 }
@@ -738,7 +775,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processGetSeasonCollection(response: HttpResponseBase): Observable<Season[]> {
+    protected processGetAllSeasons(response: HttpResponseBase): Observable<Season[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -948,7 +985,7 @@ export class Client implements IClient {
      * @to (optional) 
      * @return Array of matches
      */
-    getMatchCollection(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]> {
+    getMatchesInSeason(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]> {
         let url_ = this.baseUrl + "/season/{id}/matches?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -973,11 +1010,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processGetMatchCollection(response_);
+            return this.processGetMatchesInSeason(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetMatchCollection(<any>response_);
+                    return this.processGetMatchesInSeason(<any>response_);
                 } catch (e) {
                     return <Observable<Match[]>><any>Observable.throw(e);
                 }
@@ -986,7 +1023,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processGetMatchCollection(response: HttpResponseBase): Observable<Match[]> {
+    protected processGetMatchesInSeason(response: HttpResponseBase): Observable<Match[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1378,7 +1415,7 @@ export class Client implements IClient {
      * Finds all teams
      * @return list of teams
      */
-    getTeamCollection(): Observable<Team[]> {
+    getAllTeams(): Observable<Team[]> {
         let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1392,11 +1429,11 @@ export class Client implements IClient {
         };
 
         return this.http.request("get", url_, options_).flatMap((response_ : any) => {
-            return this.processGetTeamCollection(response_);
+            return this.processGetAllTeams(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetTeamCollection(<any>response_);
+                    return this.processGetAllTeams(<any>response_);
                 } catch (e) {
                     return <Observable<Team[]>><any>Observable.throw(e);
                 }
@@ -1405,7 +1442,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processGetTeamCollection(response: HttpResponseBase): Observable<Team[]> {
+    protected processGetAllTeams(response: HttpResponseBase): Observable<Team[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1648,6 +1685,420 @@ export class Client implements IClient {
             return Observable.of<void>(<any>null);
             });
         } else if (status === 404) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return List of tournaments
+     */
+    getAllTournaments(): Observable<Tournament[]> {
+        let url_ = this.baseUrl + "/tournament";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).flatMap((response_ : any) => {
+            return this.processGetAllTournaments(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllTournaments(<any>response_);
+                } catch (e) {
+                    return <Observable<Tournament[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Tournament[]>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAllTournaments(response: HttpResponseBase): Observable<Tournament[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(Tournament.fromJS(item));
+            }
+            return Observable.of(result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<Tournament[]>(<any>null);
+    }
+
+    /**
+     * @body (optional) 
+     * @return Operation successful
+     */
+    createTournament(body?: Body7 | null | undefined): Observable<Identifier> {
+        let url_ = this.baseUrl + "/tournament";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).flatMap((response_ : any) => {
+            return this.processCreateTournament(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateTournament(<any>response_);
+                } catch (e) {
+                    return <Observable<Identifier>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Identifier>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processCreateTournament(response: HttpResponseBase): Observable<Identifier> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Identifier.fromJS(resultData200) : new Identifier();
+            return Observable.of(result200);
+            });
+        } else if (status === 400) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<Identifier>(<any>null);
+    }
+
+    /**
+     * @id ID of tournament
+     * @return Single tournament
+     */
+    getTournament(id: string): Observable<Tournament> {
+        let url_ = this.baseUrl + "/tournament/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).flatMap((response_ : any) => {
+            return this.processGetTournament(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTournament(<any>response_);
+                } catch (e) {
+                    return <Observable<Tournament>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Tournament>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetTournament(response: HttpResponseBase): Observable<Tournament> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Tournament.fromJS(resultData200) : new Tournament();
+            return Observable.of(result200);
+            });
+        } else if (status === 404) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<Tournament>(<any>null);
+    }
+
+    /**
+     * @id ID of tournament
+     * @round Number identifying the tournament round
+     * @body (optional) 
+     * @return Operation successful
+     */
+    setRound(id: string, round: number, body?: Team_id_tuple[] | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/tournament/{id}/round/{round}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        if (round === undefined || round === null)
+            throw new Error("The parameter 'round' must be defined.");
+        url_ = url_.replace("{round}", encodeURIComponent("" + round)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).flatMap((response_ : any) => {
+            return this.processSetRound(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSetRound(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processSetRound(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return Observable.of<void>(<any>null);
+            });
+        } else if (status === 404) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @id ID of tournament
+     * @return Array of matches
+     */
+    getMatchesInTournament(id: string): Observable<Match[]> {
+        let url_ = this.baseUrl + "/tournament/{id}/matches";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).flatMap((response_ : any) => {
+            return this.processGetMatchesInTournament(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMatchesInTournament(<any>response_);
+                } catch (e) {
+                    return <Observable<Match[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<Match[]>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetMatchesInTournament(response: HttpResponseBase): Observable<Match[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(Match.fromJS(item));
+            }
+            return Observable.of(result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<Match[]>(<any>null);
+    }
+
+    /**
+     * Retrieve the authenticated user
+     * @return The authenticated user as object
+     */
+    getAuthenticatedUser(): Observable<User> {
+        let url_ = this.baseUrl + "/user/me";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).flatMap((response_ : any) => {
+            return this.processGetAuthenticatedUser(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAuthenticatedUser(<any>response_);
+                } catch (e) {
+                    return <Observable<User>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<User>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAuthenticatedUser(response: HttpResponseBase): Observable<User> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? User.fromJS(resultData200) : new User();
+            return Observable.of(result200);
+            });
+        } else if (status === 401) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<User>(<any>null);
+    }
+
+    /**
+     * Change the authenticated user's password
+     * @body (optional) 
+     * @return Operation successful
+     */
+    changePassword(body?: Body8 | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/user/me/password";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).flatMap((response_ : any) => {
+            return this.processChangePassword(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processChangePassword(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processChangePassword(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return Observable.of<void>(<any>null);
+            });
+        } else if (status === 401) {
             return blobToText(responseBlob).flatMap(_responseText => {
             return throwException("A server error occurred.", status, _responseText, _headers);
             });
@@ -1992,6 +2443,50 @@ export interface ISeason {
     team_count?: number | undefined;
 }
 
+export class Tournament implements ITournament {
+    id?: string | undefined;
+    name?: string | undefined;
+    rounds?: number | undefined;
+
+    constructor(data?: ITournament) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.name = data["name"];
+            this.rounds = data["rounds"];
+        }
+    }
+
+    static fromJS(data: any): Tournament {
+        data = typeof data === 'object' ? data : {};
+        let result = new Tournament();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["rounds"] = this.rounds;
+        return data; 
+    }
+}
+
+export interface ITournament {
+    id?: string | undefined;
+    name?: string | undefined;
+    rounds?: number | undefined;
+}
+
 export class Team implements ITeam {
     created_at?: Date | undefined;
     id?: string | undefined;
@@ -2034,6 +2529,86 @@ export interface ITeam {
     created_at?: Date | undefined;
     id?: string | undefined;
     name?: string | undefined;
+}
+
+export class Team_id_tuple implements ITeam_id_tuple {
+    home_team_id?: string | undefined;
+    guest_team_id?: string | undefined;
+
+    constructor(data?: ITeam_id_tuple) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.home_team_id = data["home_team_id"];
+            this.guest_team_id = data["guest_team_id"];
+        }
+    }
+
+    static fromJS(data: any): Team_id_tuple {
+        data = typeof data === 'object' ? data : {};
+        let result = new Team_id_tuple();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["home_team_id"] = this.home_team_id;
+        data["guest_team_id"] = this.guest_team_id;
+        return data; 
+    }
+}
+
+export interface ITeam_id_tuple {
+    home_team_id?: string | undefined;
+    guest_team_id?: string | undefined;
+}
+
+export class User implements IUser {
+    id?: string | undefined;
+    email?: string | undefined;
+
+    constructor(data?: IUser) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.email = data["email"];
+        }
+    }
+
+    static fromJS(data: any): User {
+        data = typeof data === 'object' ? data : {};
+        let result = new User();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["email"] = this.email;
+        return data; 
+    }
+}
+
+export interface IUser {
+    id?: string | undefined;
+    email?: string | undefined;
 }
 
 export class Body implements IBody {
@@ -2254,6 +2829,82 @@ export class Body6 implements IBody6 {
 
 export interface IBody6 {
     name: string;
+}
+
+export class Body7 implements IBody7 {
+    name: string;
+
+    constructor(data?: IBody7) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): Body7 {
+        data = typeof data === 'object' ? data : {};
+        let result = new Body7();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface IBody7 {
+    name: string;
+}
+
+export class Body8 implements IBody8 {
+    current_password: string;
+    new_password: string;
+
+    constructor(data?: IBody8) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.current_password = data["current_password"];
+            this.new_password = data["new_password"];
+        }
+    }
+
+    static fromJS(data: any): Body8 {
+        data = typeof data === 'object' ? data : {};
+        let result = new Body8();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["current_password"] = this.current_password;
+        data["new_password"] = this.new_password;
+        return data; 
+    }
+}
+
+export interface IBody8 {
+    current_password: string;
+    new_password: string;
 }
 
 export enum SeasonState {

@@ -71,7 +71,7 @@ export class SeasonService {
             log.debug('getSteasonFromServer');
             return new Promise<Season[]>(
                 resolve => {
-                    this.apiClient.getSeasonCollection().subscribe(
+                    this.apiClient.getAllSeasons().subscribe(
                         (seasons: Season[]) => {
                             this.seasons = seasons;
                             const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
