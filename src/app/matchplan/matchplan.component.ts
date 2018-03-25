@@ -1,8 +1,9 @@
+import { TeamService } from './../service/team.service';
 import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { environment } from '@env/environment';
-import { Client, Season, Match, Team, Body3, SeasonState } from '@app/api/openapi';
+import { Client, Season, Match, Body3, SeasonState } from '@app/api/openapi';
 import { Logger } from '@app/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -28,7 +29,8 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   editMatch: string;
 
   constructor(private apiClient: Client,
-              public seasonService: SeasonService) { }
+              public seasonService: SeasonService,
+              public teamService: TeamService) { }
 
   async ngOnInit() {
     this.seasonsSub = this.seasonService.season.subscribe(

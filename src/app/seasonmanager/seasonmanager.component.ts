@@ -1,3 +1,4 @@
+import { TeamService } from './../service/team.service';
 import { Match, Body6 } from '@app/api/openapi';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
@@ -40,7 +41,8 @@ export class SeasonManagerComponent implements OnInit {
               private seasonService: SeasonService,
               private _formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
-              private translateService: TranslateService) {
+              private translateService: TranslateService,
+              public teamService: TeamService) {
               }
   ngOnInit() {
     this.createSeasonFormGroup = this._formBuilder.group({
@@ -64,19 +66,9 @@ export class SeasonManagerComponent implements OnInit {
     }
   }
 
-  loadAllTeams() {
-    this.isLoadingAllTeams = true;
-    this.apiClient.getAllTeams().subscribe(
-      (teams) => {
-        this.allTeams = teams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1: 1));
-      },
-      (error) => {
-        log.error(error);
-      },
-      () => {
-        this.isLoadingAllTeams = false;
-      }
-    );
+  async loadAllTeams() {
+    const teams = await this.teamService.loadTeams();
+    this.allTeams = teams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1 : 1));
   }
 
   addAllTeams() {
@@ -131,11 +123,6 @@ export class SeasonManagerComponent implements OnInit {
     return this.selectedTeams.map(t => t.name).join();
   }
 
-  getTeamNameByID(id: string): string {
-    const team: Team = this.selectedTeams.find(t => t.id === id);
-    return team.name;
-  }
-
   createMatches() {
     this.apiClient.createMatches(this.newSeasonID.id).subscribe(
       () => {
@@ -178,16 +165,17 @@ export class SeasonManagerComponent implements OnInit {
 
   addNewTeam(teamName: string) {
     if (teamName) {
+      this.teamService.resetTeams();
       const createTeamParams: Body6 = new Body6();
       createTeamParams.name = teamName;
       this.apiClient.createTeam(createTeamParams).subscribe(
         () => {
-          this.snackBar.open(this.translateService.instant('NEW_TEAM_CREATED', {name: teamName}),'', {
+          this.snackBar.open(this.translateService.instant('NEW_TEAM_CREATED', {name: teamName}), '', {
             duration: 500,
           });
           this.loadAllTeams();
         }
-      )
+      );
     }
   }
 }

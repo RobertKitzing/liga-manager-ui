@@ -29,7 +29,7 @@
                             fxLayout.xs="column">
                         <div fxLayout="column">
                             <h2 translate>ALL_TEAMS</h2>
-                            <app-loader [isLoading]="isLoadingAllTeams" size="1.5"></app-loader>
+                            <app-loader [isLoading]="teamService.isLoadingTeams" size="1.5"></app-loader>
                             <div *ngIf="allTeams">
                                 <div *ngFor="let team of allTeams">
                                     <mat-checkbox [checked]="isSelectedTeam(team.id)" (change)="handleTeam($event)" [value]="team">{{team.name}}</mat-checkbox>
@@ -86,7 +86,7 @@
                             {{ 'MATCHDAYS' | translate}}
                         </div>
                         <div>
-                            <p *ngFor="let match of newSeasonMatches">{{getTeamNameByID(match.home_team_id) }} - {{ getTeamNameByID(match.guest_team_id) }}</p>
+                            <p *ngFor="let match of newSeasonMatches">{{teamService.getTeamNameByID(match.home_team_id) }} - {{ teamService.getTeamNameByID(match.guest_team_id) }}</p>
                         </div>
                         <div>
                             <div>

@@ -1,4 +1,3 @@
-import { Team } from './../api/openapi';
 import { SELECTED_SEASON } from './../constanst';
 import { Subject } from 'rxjs/Subject';
 import { Logger } from 'app/core/logger.service';
@@ -18,42 +17,14 @@ export class SeasonService {
     selectedSeason: Season;
     public isLoadingSeasons: boolean;
 
-    private teams: Team[] = new Array<Team>();
-    public isLoadingTeams: boolean;
-
     constructor(private apiClient: Client) {
     }
 
     public matchDayCount: number;
 
-    getTeamNameByID(id: string): string {
-        const team: Team = this.teams.find(t => t.id === id);
-        return team.name;
-    }
-
-    async loadTeams(): Promise<Team[]> {
-        this.isLoadingTeams = true;
-        return new Promise<Team[]>(
-            (resovle) => {
-                this.apiClient.getTeamsInSeason(this.selectedSeason.id).subscribe(
-                    (teams: Team[]) => {
-                        resovle(teams);
-                    },
-                    (error) => {
-                        log.error(error);
-                    },
-                    () => {
-                        this.isLoadingTeams = false;
-                    }
-                );
-            }
-        );
-    }
-
     async selectSeason(season: Season) {
         this.season.next(season);
         this.selectedSeason = season;
-        this.teams = await this.loadTeams();
         localStorage.setItem(SELECTED_SEASON, JSON.stringify(season));
     }
 
@@ -68,7 +39,6 @@ export class SeasonService {
     async getSeasons(state: SeasonState | null | undefined): Promise<Season[]> {
         this.isLoadingSeasons = true;
         if (!this.seasons) {
-            log.debug('getSteasonFromServer');
             return new Promise<Season[]>(
                 resolve => {
                     this.apiClient.getAllSeasons().subscribe(
@@ -88,9 +58,7 @@ export class SeasonService {
                 }
             );
         } else {
-            log.debug('getSteasonFromCache');
             const filterd: Season[] = this.seasons.filter(s => s.state === SeasonState.Progress);
-            log.debug(filterd);
             this.isLoadingSeasons = false;
             return state ? filterd : this.seasons;
         }

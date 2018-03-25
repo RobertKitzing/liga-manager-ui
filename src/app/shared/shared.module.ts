@@ -1,3 +1,4 @@
+import { TeamService } from './../service/team.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -22,7 +23,8 @@ import { SeasonService } from '@app/service/season.service';
     LoaderComponent
   ],
   providers: [
-    SeasonService
+    SeasonService,
+    TeamService
   ]
 })
 export class SharedModule { }

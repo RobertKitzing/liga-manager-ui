@@ -1,9 +1,10 @@
+import { TeamService } from './../service/team.service';
 import { DetailRowComponent } from './table.detail.row.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
-import { Client, Season, Ranking, Team, SeasonState, Ranking_position } from './../api/openapi';
+import { Client, Season, Ranking, SeasonState, Ranking_position } from './../api/openapi';
 import { Component,
          OnInit,
          ViewChild,
@@ -72,7 +73,8 @@ export class TableComponent implements OnInit, OnDestroy {
   constructor(private apiClient: Client,
               public seasonService: SeasonService,
               public media: ObservableMedia,
-              private resolver: ComponentFactoryResolver) {
+              private resolver: ComponentFactoryResolver,
+              public teamService: TeamService) {
 
                 media.asObservable()
                 .subscribe((change: MediaChange) => {
