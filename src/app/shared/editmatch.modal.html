@@ -1,0 +1,38 @@
+<app-loader [isLoading]="!match" size="1.5"></app-loader>
+<div *ngIf="match">
+    <h2 mat-dialog-title>
+        {{ teamService.getTeamNameByID(match.home_team_id)}} - {{ teamService.getTeamNameByID(match.guest_team_id)}}
+    </h2>
+    <mat-dialog-content class="container">
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field style="width: 100%;">
+                        <input matInput type="number" min="0" max="99" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" required/>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field style="width: 100%;">
+                        <input matInput type="number" min="0" max="99" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" required/>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field style="width:100%">
+                    <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER' | translate }}" [(ngModel)]="match.kickoff"/>
+                    <mat-datepicker-toggle matSuffix [for]="kickoffDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #kickoffDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field style="width:100%">
+                    <input matInput type="time" [(ngModel)]="kickoffTime" />
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>{{ 'CANCEL' | translate}}</button>
+        <button mat-button (click)="onSaveClicked()">{{ 'SAVE' | translate }}</button>
+    </mat-dialog-actions>
+</div>

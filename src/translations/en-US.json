@@ -1,4 +1,8 @@
 {
+  "SEASON_START_DATE_PLACEHOLDER": "Start date",
+  "KICKOFF_DATE_PLACEHOLDER": "Kickoff",
+  "CANCEL": "cancel",
+  "SAVE": "save",
   "ALL": "All",
   "APP_NAME": "LigaManager",
   "SeasonManager": "Liga Manager",

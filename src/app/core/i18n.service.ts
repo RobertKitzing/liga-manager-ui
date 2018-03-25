@@ -5,6 +5,7 @@ import { includes } from 'lodash';
 import { Logger } from './logger.service';
 import * as enUS from '../../translations/en-US.json';
 import * as deDe from '../../translations/de-DE.json';
+import { DateAdapter } from '@angular/material';
 
 const log = new Logger('I18nService');
 const languageKey = 'language';
@@ -43,7 +44,9 @@ export class I18nService {
     this.language = '';
 
     this.translateService.onLangChange
-      .subscribe((event: LangChangeEvent) => { localStorage.setItem(languageKey, event.lang); });
+      .subscribe((event: LangChangeEvent) => {
+        localStorage.setItem(languageKey, event.lang);
+      });
   }
 
   /**

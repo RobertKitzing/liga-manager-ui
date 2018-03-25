@@ -1,11 +1,14 @@
+import { EditMatchDialogComponent } from './../shared/editmatch.modal';
+import { SubmitMatchResultBody } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { environment } from '@env/environment';
-import { Client, Season, Match, Body3, SeasonState } from '@app/api/openapi';
+import { Client, Season, Match, SeasonState } from '@app/api/openapi';
 import { Logger } from '@app/core';
 import { Subscription } from 'rxjs/Subscription';
+import { MatDialog } from '@angular/material';
 
 const log = new Logger('Matchplan');
 
@@ -30,7 +33,8 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
 
   constructor(private apiClient: Client,
               public seasonService: SeasonService,
-              public teamService: TeamService) { }
+              public teamService: TeamService,
+              public dialog: MatDialog) { }
 
   async ngOnInit() {
     this.seasonsSub = this.seasonService.season.subscribe(
@@ -57,31 +61,32 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     }
   }
 
-  ngOnDestroy() {
-    this.seasonsSub.unsubscribe();
+  openEditDialog(matchId: string) {
+    const dialogRef = this.dialog.open(EditMatchDialogComponent, {
+      data: { matchId: matchId }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.updateSingleMatch(result.matchId);
+        }
+    });
   }
 
-  saveResult(match: string, home: string, guest: string) {
-    log.debug(this.matches);
-    const reduced: Match[] = this.matches.reduce((prev, curr) => prev.concat(curr));
-    log.debug(reduced);
-    const t: Match = reduced.find(m => m.id === match);
-    const result: Body3 = new Body3;
-    result.home_score = Number.parseInt(home);
-    result.guest_score = Number.parseInt(guest);
-    this.apiClient.submitMatchResult(match, result).subscribe(
-      (res: any) => {
-        log.debug(res);
-        t.home_score = result.home_score ;
-        t.guest_score = result.guest_score;
-      },
-      (error) => {
-
-      },
-      () => {
-        delete this.editMatch;
+  updateSingleMatch(matchId: string)  {
+    this.apiClient.getMatch(matchId).subscribe(
+      (match) => {
+        const index = this.matches[match.match_day - 1].findIndex(t => t.id === matchId);
+        if (index !== -1) {
+          this.matches[match.match_day - 1][index] = match;
+        }
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.seasonsSub.unsubscribe();
   }
 
   selectedMatchDayChanged() {
@@ -95,8 +100,6 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   loadMatches() {
     this.isLoadingMatches = true;
     this.matches = new Array<Match[]>();
-    log.debug(this.matches);
-    log.debug(this.matchDay);
     if ( this.matchDay === 0) {
       for (let i = 1; i <= this.season.match_day_count; i++) {
         this.apiClient.getMatchesInSeason(this.season.id, i, null, null, null).subscribe(
@@ -116,9 +119,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     } else {
       this.apiClient.getMatchesInSeason(this.season.id, this.matchDay, null, null, null).subscribe(
         (matches: Match[]) => {
-          this.matches = new Array<Match[]>();
           this.matches.push(matches);
-          log.debug(this.matches);
         },
         (error) => {
           log.error(error);

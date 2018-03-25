@@ -1,8 +1,17 @@
+import { Match } from '@app/api/openapi';
 import { TeamService } from './../service/team.service';
-import { Match, Body6 } from '@app/api/openapi';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
-import { Client, Season, Ranking, Team, SeasonState, Body5, Identifier } from './../api/openapi';
+import { Client,
+         Season,
+         Ranking,
+         Team,
+         SeasonState,
+         Identifier,
+         CreateSeasonBody,
+         CreateTeamBody,
+         CreateMatchesBody
+       } from './../api/openapi';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort, MatCheckboxChange, MatSnackBar } from '@angular/material';
@@ -34,21 +43,22 @@ export class SeasonManagerComponent implements OnInit {
   newSeasonMatches: Match[];
   newTeamName: string;
 
+  public seasonStartDate: Date;
   public newSeasonMatchDayCount: number;
   public matchDayCounter: number[];
 
   constructor(private apiClient: Client,
               private seasonService: SeasonService,
-              private _formBuilder: FormBuilder,
+              private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private translateService: TranslateService,
               public teamService: TeamService) {
               }
   ngOnInit() {
-    this.createSeasonFormGroup = this._formBuilder.group({
+    this.createSeasonFormGroup = this.formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
-    this.selectTeamsFormGroup = this._formBuilder.group({
+    this.selectTeamsFormGroup = this.formBuilder.group({
     });
   }
 
@@ -84,7 +94,7 @@ export class SeasonManagerComponent implements OnInit {
   }
 
   createSeason(name: string) {
-    const opt: Body5 = new Body5();
+    const opt: CreateSeasonBody = new CreateSeasonBody();
     opt.name = name;
     this.apiClient.createSeason(opt).subscribe(
       (id: Identifier) => {
@@ -110,13 +120,20 @@ export class SeasonManagerComponent implements OnInit {
     } else {
       this.selectedTeams = this.selectedTeams.filter(t => t.id !== team.id);
     }
-    this.selectedTeams = this.selectedTeams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1: 1));
+    this.selectedTeams = this.selectedTeams.sort((t1, t2) => (t1.name.toLowerCase() < t2.name.toLowerCase() ? -1 : 1));
     log.debug(this.selectedTeams);
   }
 
   addTeamsToSeason() {
     this.selectedTeams.forEach((value, index) => {
-      this.apiClient.addTeamToSeason(this.newSeasonID.id, value.id).toPromise().catch();
+      this.apiClient.addTeamToSeason(this.newSeasonID.id, value.id).subscribe(
+        () => {
+
+        },
+        (error) => {
+          log.error(error);
+        }
+      );
     });
   }
 
@@ -125,16 +142,19 @@ export class SeasonManagerComponent implements OnInit {
   }
 
   createMatches() {
-    this.apiClient.createMatches(this.newSeasonID.id).subscribe(
+    log.debug(this.seasonStartDate);
+    const params: CreateMatchesBody = new CreateMatchesBody();
+    params.start_at = this.seasonStartDate;
+    this.apiClient.createMatches(this.newSeasonID.id, params).subscribe(
       () => {
         this.apiClient.getSeason(this.newSeasonID.id).subscribe(
           (res) => {
-            this.newSeasonMatchDayCount = res.match_day_count;
             this.newSeasonMatchDayCount = res.match_day_count;
             this.matchDayCounter = new Array();
             for (let i = 1; i <= res.match_day_count; i++) {
               this.matchDayCounter.push(i);
             }
+            this.getMatches(1);
           }
         );
       }
@@ -167,7 +187,7 @@ export class SeasonManagerComponent implements OnInit {
   addNewTeam(teamName: string) {
     if (teamName) {
       this.teamService.resetTeams();
-      const createTeamParams: Body6 = new Body6();
+      const createTeamParams: CreateTeamBody = new CreateTeamBody();
       createTeamParams.name = teamName;
       this.apiClient.createTeam(createTeamParams).subscribe(
         () => {

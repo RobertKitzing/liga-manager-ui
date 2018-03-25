@@ -36,24 +36,24 @@ export interface IClient {
     /**
      * Schedule a match
      * @id match id
-     * @body (optional) 
+     * @scheduleMatchBody (optional) 
      * @return Operation successful
      */
-    scheduleMatch(id: string, body?: Body | null | undefined): Observable<void>;
+    scheduleMatch(id: string, scheduleMatchBody?: ScheduleMatchBody | null | undefined): Observable<void>;
     /**
      * Locate a match on a pitch
      * @id match id
-     * @body (optional) 
+     * @locateMatchBody (optional) 
      * @return Operation successful
      */
-    locateMatch(id: string, body?: Body2 | null | undefined): Observable<void>;
+    locateMatch(id: string, locateMatchBody?: LocateMatchBody | null | undefined): Observable<void>;
     /**
      * Submit a matches result
      * @id match id
-     * @body (optional) 
+     * @submitMatchResultBody (optional) 
      * @return Operation successful
      */
-    submitMatchResult(id: string, body?: Body3 | null | undefined): Observable<void>;
+    submitMatchResult(id: string, submitMatchResultBody?: SubmitMatchResultBody | null | undefined): Observable<void>;
     /**
      * Find all pitches
      * @return Array of pitches
@@ -61,10 +61,10 @@ export interface IClient {
     getAllPitches(): Observable<Pitch[]>;
     /**
      * Creates a new pitch
-     * @body (optional) 
+     * @createPitchBody (optional) 
      * @return Operation successful
      */
-    createPitch(body?: Body4 | null | undefined): Observable<Identifier>;
+    createPitch(createPitchBody?: CreatePitchBody | null | undefined): Observable<Identifier>;
     /**
      * Delete a single pitch
      * @id pitch id
@@ -84,10 +84,10 @@ export interface IClient {
     getAllSeasons(): Observable<Season[]>;
     /**
      * Create a new season
-     * @body (optional) 
+     * @createSeasonBody (optional) 
      * @return Operation successful
      */
-    createSeason(body?: Body5 | null | undefined): Observable<Identifier>;
+    createSeason(createSeasonBody?: CreateSeasonBody | null | undefined): Observable<Identifier>;
     /**
      * Delete a single season
      * @id ID of season
@@ -113,9 +113,10 @@ export interface IClient {
     /**
      * Creates matches for a given season
      * @id ID of season
+     * @createMatchesBody (optional) 
      * @return Operation successful
      */
-    createMatches(id: string): Observable<void>;
+    createMatches(id: string, createMatchesBody?: CreateMatchesBody | null | undefined): Observable<void>;
     /**
      * Returns the current season ranking
      * @id ID of season
@@ -155,10 +156,10 @@ export interface IClient {
     getAllTeams(): Observable<Team[]>;
     /**
      * Creates a new team
-     * @body (optional) 
+     * @createTeamBody (optional) 
      * @return Operation successful
      */
-    createTeam(body?: Body6 | null | undefined): Observable<Identifier>;
+    createTeam(createTeamBody?: CreateTeamBody | null | undefined): Observable<Identifier>;
     /**
      * Delete a single team by id
      * @id ID of team
@@ -182,10 +183,10 @@ export interface IClient {
      */
     getAllTournaments(): Observable<Tournament[]>;
     /**
-     * @body (optional) 
+     * @createTournamentBody (optional) 
      * @return Operation successful
      */
-    createTournament(body?: Body7 | null | undefined): Observable<Identifier>;
+    createTournament(createTournamentBody?: CreateTournamentBody | null | undefined): Observable<Identifier>;
     /**
      * @id ID of tournament
      * @return Single tournament
@@ -194,10 +195,10 @@ export interface IClient {
     /**
      * @id ID of tournament
      * @round Number identifying the tournament round
-     * @body (optional) 
+     * @setRoundBody (optional) 
      * @return Operation successful
      */
-    setRound(id: string, round: number, body?: Team_id_tuple[] | null | undefined): Observable<void>;
+    setRound(id: string, round: number, setRoundBody?: Team_id_tuple[] | null | undefined): Observable<void>;
     /**
      * @id ID of tournament
      * @return Array of matches
@@ -210,10 +211,10 @@ export interface IClient {
     getAuthenticatedUser(): Observable<User>;
     /**
      * Change the authenticated user's password
-     * @body (optional) 
+     * @changePasswordBody (optional) 
      * @return Operation successful
      */
-    changePassword(body?: Body8 | null | undefined): Observable<void>;
+    changePassword(changePasswordBody?: ChangePasswordBody | null | undefined): Observable<void>;
 }
 
 @Injectable()
@@ -233,7 +234,7 @@ export class Client implements IClient {
      * @return Contains a single match object
      */
     getMatch(id: string): Observable<Match> {
-        let url_ = this.baseUrl + "/match/{id}";
+        let url_ = this.baseUrl + "/api/match/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -294,7 +295,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     cancelMatch(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/match/{id}/cancellation";
+        let url_ = this.baseUrl + "/api/match/{id}/cancellation";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -344,17 +345,17 @@ export class Client implements IClient {
     /**
      * Schedule a match
      * @id match id
-     * @body (optional) 
+     * @scheduleMatchBody (optional) 
      * @return Operation successful
      */
-    scheduleMatch(id: string, body?: Body | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/match/{id}/kickoff";
+    scheduleMatch(id: string, scheduleMatchBody?: ScheduleMatchBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/match/{id}/kickoff";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(scheduleMatchBody);
 
         let options_ : any = {
             body: content_,
@@ -401,17 +402,17 @@ export class Client implements IClient {
     /**
      * Locate a match on a pitch
      * @id match id
-     * @body (optional) 
+     * @locateMatchBody (optional) 
      * @return Operation successful
      */
-    locateMatch(id: string, body?: Body2 | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/match/{id}/location";
+    locateMatch(id: string, locateMatchBody?: LocateMatchBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/match/{id}/location";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(locateMatchBody);
 
         let options_ : any = {
             body: content_,
@@ -458,17 +459,17 @@ export class Client implements IClient {
     /**
      * Submit a matches result
      * @id match id
-     * @body (optional) 
+     * @submitMatchResultBody (optional) 
      * @return Operation successful
      */
-    submitMatchResult(id: string, body?: Body3 | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/match/{id}/result";
+    submitMatchResult(id: string, submitMatchResultBody?: SubmitMatchResultBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/match/{id}/result";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(submitMatchResultBody);
 
         let options_ : any = {
             body: content_,
@@ -517,7 +518,7 @@ export class Client implements IClient {
      * @return Array of pitches
      */
     getAllPitches(): Observable<Pitch[]> {
-        let url_ = this.baseUrl + "/pitch";
+        let url_ = this.baseUrl + "/api/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -571,14 +572,14 @@ export class Client implements IClient {
 
     /**
      * Creates a new pitch
-     * @body (optional) 
+     * @createPitchBody (optional) 
      * @return Operation successful
      */
-    createPitch(body?: Body4 | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/pitch";
+    createPitch(createPitchBody?: CreatePitchBody | null | undefined): Observable<Identifier> {
+        let url_ = this.baseUrl + "/api/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(createPitchBody);
 
         let options_ : any = {
             body: content_,
@@ -636,7 +637,7 @@ export class Client implements IClient {
      * @return Deletion successful
      */
     deletePitch(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/pitch/{id}";
+        let url_ = this.baseUrl + "/api/pitch/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -689,7 +690,7 @@ export class Client implements IClient {
      * @return Contains a single pitch object
      */
     getPitch(id: string): Observable<Pitch> {
-        let url_ = this.baseUrl + "/pitch/{id}";
+        let url_ = this.baseUrl + "/api/pitch/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -749,7 +750,7 @@ export class Client implements IClient {
      * @return List of seasons
      */
     getAllSeasons(): Observable<Season[]> {
-        let url_ = this.baseUrl + "/season";
+        let url_ = this.baseUrl + "/api/season";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -803,14 +804,14 @@ export class Client implements IClient {
 
     /**
      * Create a new season
-     * @body (optional) 
+     * @createSeasonBody (optional) 
      * @return Operation successful
      */
-    createSeason(body?: Body5 | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/season";
+    createSeason(createSeasonBody?: CreateSeasonBody | null | undefined): Observable<Identifier> {
+        let url_ = this.baseUrl + "/api/season";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(createSeasonBody);
 
         let options_ : any = {
             body: content_,
@@ -868,7 +869,7 @@ export class Client implements IClient {
      * @return Deletion successful
      */
     deleteSeason(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/season/{id}";
+        let url_ = this.baseUrl + "/api/season/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -921,7 +922,7 @@ export class Client implements IClient {
      * @return Contains a single season object
      */
     getSeason(id: string): Observable<Season> {
-        let url_ = this.baseUrl + "/season/{id}";
+        let url_ = this.baseUrl + "/api/season/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -986,7 +987,7 @@ export class Client implements IClient {
      * @return Array of matches
      */
     getMatchesInSeason(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]> {
-        let url_ = this.baseUrl + "/season/{id}/matches?";
+        let url_ = this.baseUrl + "/api/season/{id}/matches?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1052,16 +1053,20 @@ export class Client implements IClient {
     /**
      * Creates matches for a given season
      * @id ID of season
+     * @createMatchesBody (optional) 
      * @return Operation successful
      */
-    createMatches(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/season/{id}/matches";
+    createMatches(id: string, createMatchesBody?: CreateMatchesBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/season/{id}/matches";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(createMatchesBody);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
@@ -1108,7 +1113,7 @@ export class Client implements IClient {
      * @return Current season ranking
      */
     getRanking(id: string): Observable<Ranking> {
-        let url_ = this.baseUrl + "/season/{id}/ranking";
+        let url_ = this.baseUrl + "/api/season/{id}/ranking";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1165,7 +1170,7 @@ export class Client implements IClient {
      * @return Season has been successfully started
      */
     startSeason(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/season/{id}/start";
+        let url_ = this.baseUrl + "/api/season/{id}/start";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1226,7 +1231,7 @@ export class Client implements IClient {
      * @return Array of teams related to the season
      */
     getTeamsInSeason(id: string): Observable<Team[]> {
-        let url_ = this.baseUrl + "/season/{id}/team";
+        let url_ = this.baseUrl + "/api/season/{id}/team";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1288,7 +1293,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     addTeamToSeason(season_id: string, team_id: string): Observable<void> {
-        let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
+        let url_ = this.baseUrl + "/api/season/{season_id}/team/{team_id}";
         if (season_id === undefined || season_id === null)
             throw new Error("The parameter 'season_id' must be defined.");
         url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
@@ -1353,7 +1358,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     removeTeamFromSeason(season_id: string, team_id: string): Observable<void> {
-        let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
+        let url_ = this.baseUrl + "/api/season/{season_id}/team/{team_id}";
         if (season_id === undefined || season_id === null)
             throw new Error("The parameter 'season_id' must be defined.");
         url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
@@ -1416,7 +1421,7 @@ export class Client implements IClient {
      * @return list of teams
      */
     getAllTeams(): Observable<Team[]> {
-        let url_ = this.baseUrl + "/team";
+        let url_ = this.baseUrl + "/api/team";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1470,14 +1475,14 @@ export class Client implements IClient {
 
     /**
      * Creates a new team
-     * @body (optional) 
+     * @createTeamBody (optional) 
      * @return Operation successful
      */
-    createTeam(body?: Body6 | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/team";
+    createTeam(createTeamBody?: CreateTeamBody | null | undefined): Observable<Identifier> {
+        let url_ = this.baseUrl + "/api/team";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(createTeamBody);
 
         let options_ : any = {
             body: content_,
@@ -1535,7 +1540,7 @@ export class Client implements IClient {
      * @return Deletion successful
      */
     deleteTeam(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/team/{id}";
+        let url_ = this.baseUrl + "/api/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1588,7 +1593,7 @@ export class Client implements IClient {
      * @return Single team
      */
     getTeam(id: string): Observable<Team> {
-        let url_ = this.baseUrl + "/team/{id}";
+        let url_ = this.baseUrl + "/api/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1645,7 +1650,7 @@ export class Client implements IClient {
      * @return Team has been successfully renamed
      */
     renameTeam(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/team/{id}/rename";
+        let url_ = this.baseUrl + "/api/team/{id}/rename";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1700,7 +1705,7 @@ export class Client implements IClient {
      * @return List of tournaments
      */
     getAllTournaments(): Observable<Tournament[]> {
-        let url_ = this.baseUrl + "/tournament";
+        let url_ = this.baseUrl + "/api/tournament";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1753,14 +1758,14 @@ export class Client implements IClient {
     }
 
     /**
-     * @body (optional) 
+     * @createTournamentBody (optional) 
      * @return Operation successful
      */
-    createTournament(body?: Body7 | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/tournament";
+    createTournament(createTournamentBody?: CreateTournamentBody | null | undefined): Observable<Identifier> {
+        let url_ = this.baseUrl + "/api/tournament";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(createTournamentBody);
 
         let options_ : any = {
             body: content_,
@@ -1817,7 +1822,7 @@ export class Client implements IClient {
      * @return Single tournament
      */
     getTournament(id: string): Observable<Tournament> {
-        let url_ = this.baseUrl + "/tournament/{id}";
+        let url_ = this.baseUrl + "/api/tournament/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1875,11 +1880,11 @@ export class Client implements IClient {
     /**
      * @id ID of tournament
      * @round Number identifying the tournament round
-     * @body (optional) 
+     * @setRoundBody (optional) 
      * @return Operation successful
      */
-    setRound(id: string, round: number, body?: Team_id_tuple[] | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/tournament/{id}/round/{round}";
+    setRound(id: string, round: number, setRoundBody?: Team_id_tuple[] | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/tournament/{id}/round/{round}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1888,7 +1893,7 @@ export class Client implements IClient {
         url_ = url_.replace("{round}", encodeURIComponent("" + round)); 
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(setRoundBody);
 
         let options_ : any = {
             body: content_,
@@ -1941,7 +1946,7 @@ export class Client implements IClient {
      * @return Array of matches
      */
     getMatchesInTournament(id: string): Observable<Match[]> {
-        let url_ = this.baseUrl + "/tournament/{id}/matches";
+        let url_ = this.baseUrl + "/api/tournament/{id}/matches";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -2001,7 +2006,7 @@ export class Client implements IClient {
      * @return The authenticated user as object
      */
     getAuthenticatedUser(): Observable<User> {
-        let url_ = this.baseUrl + "/user/me";
+        let url_ = this.baseUrl + "/api/user/me";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2055,14 +2060,14 @@ export class Client implements IClient {
 
     /**
      * Change the authenticated user's password
-     * @body (optional) 
+     * @changePasswordBody (optional) 
      * @return Operation successful
      */
-    changePassword(body?: Body8 | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/user/me/password";
+    changePassword(changePasswordBody?: ChangePasswordBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/user/me/password";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
+        const content_ = JSON.stringify(changePasswordBody);
 
         let options_ : any = {
             body: content_,
@@ -2154,8 +2159,10 @@ export class Match implements IMatch {
     home_score?: number | undefined;
     home_team_id?: string | undefined;
     id?: string | undefined;
+    kickoff?: Date | undefined;
     match_day?: number | undefined;
     pitch_id?: string | undefined;
+    planned_for?: Date | undefined;
     season_id?: string | undefined;
 
     constructor(data?: IMatch) {
@@ -2175,8 +2182,10 @@ export class Match implements IMatch {
             this.home_score = data["home_score"];
             this.home_team_id = data["home_team_id"];
             this.id = data["id"];
+            this.kickoff = data["kickoff"] ? new Date(data["kickoff"].toString()) : <any>undefined;
             this.match_day = data["match_day"];
             this.pitch_id = data["pitch_id"];
+            this.planned_for = data["planned_for"] ? new Date(data["planned_for"].toString()) : <any>undefined;
             this.season_id = data["season_id"];
         }
     }
@@ -2196,8 +2205,10 @@ export class Match implements IMatch {
         data["home_score"] = this.home_score;
         data["home_team_id"] = this.home_team_id;
         data["id"] = this.id;
+        data["kickoff"] = this.kickoff ? this.kickoff.toISOString() : <any>undefined;
         data["match_day"] = this.match_day;
         data["pitch_id"] = this.pitch_id;
+        data["planned_for"] = this.planned_for ? formatDate(this.planned_for) : <any>undefined;
         data["season_id"] = this.season_id;
         return data; 
     }
@@ -2210,8 +2221,10 @@ export interface IMatch {
     home_score?: number | undefined;
     home_team_id?: string | undefined;
     id?: string | undefined;
+    kickoff?: Date | undefined;
     match_day?: number | undefined;
     pitch_id?: string | undefined;
+    planned_for?: Date | undefined;
     season_id?: string | undefined;
 }
 
@@ -2611,10 +2624,10 @@ export interface IUser {
     email?: string | undefined;
 }
 
-export class Body implements IBody {
+export class ScheduleMatchBody implements IScheduleMatchBody {
     kickoff: Date;
 
-    constructor(data?: IBody) {
+    constructor(data?: IScheduleMatchBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2629,9 +2642,9 @@ export class Body implements IBody {
         }
     }
 
-    static fromJS(data: any): Body {
+    static fromJS(data: any): ScheduleMatchBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body();
+        let result = new ScheduleMatchBody();
         result.init(data);
         return result;
     }
@@ -2643,14 +2656,14 @@ export class Body implements IBody {
     }
 }
 
-export interface IBody {
+export interface IScheduleMatchBody {
     kickoff: Date;
 }
 
-export class Body2 implements IBody2 {
+export class LocateMatchBody implements ILocateMatchBody {
     pitch_id: string;
 
-    constructor(data?: IBody2) {
+    constructor(data?: ILocateMatchBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2665,9 +2678,9 @@ export class Body2 implements IBody2 {
         }
     }
 
-    static fromJS(data: any): Body2 {
+    static fromJS(data: any): LocateMatchBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body2();
+        let result = new LocateMatchBody();
         result.init(data);
         return result;
     }
@@ -2679,15 +2692,15 @@ export class Body2 implements IBody2 {
     }
 }
 
-export interface IBody2 {
+export interface ILocateMatchBody {
     pitch_id: string;
 }
 
-export class Body3 implements IBody3 {
+export class SubmitMatchResultBody implements ISubmitMatchResultBody {
     guest_score: number;
     home_score: number;
 
-    constructor(data?: IBody3) {
+    constructor(data?: ISubmitMatchResultBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2703,9 +2716,9 @@ export class Body3 implements IBody3 {
         }
     }
 
-    static fromJS(data: any): Body3 {
+    static fromJS(data: any): SubmitMatchResultBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body3();
+        let result = new SubmitMatchResultBody();
         result.init(data);
         return result;
     }
@@ -2718,15 +2731,15 @@ export class Body3 implements IBody3 {
     }
 }
 
-export interface IBody3 {
+export interface ISubmitMatchResultBody {
     guest_score: number;
     home_score: number;
 }
 
-export class Body4 implements IBody4 {
+export class CreatePitchBody implements ICreatePitchBody {
     label: string;
 
-    constructor(data?: IBody4) {
+    constructor(data?: ICreatePitchBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2741,9 +2754,9 @@ export class Body4 implements IBody4 {
         }
     }
 
-    static fromJS(data: any): Body4 {
+    static fromJS(data: any): CreatePitchBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body4();
+        let result = new CreatePitchBody();
         result.init(data);
         return result;
     }
@@ -2755,14 +2768,14 @@ export class Body4 implements IBody4 {
     }
 }
 
-export interface IBody4 {
+export interface ICreatePitchBody {
     label: string;
 }
 
-export class Body5 implements IBody5 {
+export class CreateSeasonBody implements ICreateSeasonBody {
     name: string;
 
-    constructor(data?: IBody5) {
+    constructor(data?: ICreateSeasonBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2777,9 +2790,9 @@ export class Body5 implements IBody5 {
         }
     }
 
-    static fromJS(data: any): Body5 {
+    static fromJS(data: any): CreateSeasonBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body5();
+        let result = new CreateSeasonBody();
         result.init(data);
         return result;
     }
@@ -2791,14 +2804,50 @@ export class Body5 implements IBody5 {
     }
 }
 
-export interface IBody5 {
+export interface ICreateSeasonBody {
     name: string;
 }
 
-export class Body6 implements IBody6 {
+export class CreateMatchesBody implements ICreateMatchesBody {
+    start_at: Date;
+
+    constructor(data?: ICreateMatchesBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.start_at = data["start_at"] ? new Date(data["start_at"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): CreateMatchesBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateMatchesBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["start_at"] = this.start_at ? formatDate(this.start_at) : <any>undefined;
+        return data; 
+    }
+}
+
+export interface ICreateMatchesBody {
+    start_at: Date;
+}
+
+export class CreateTeamBody implements ICreateTeamBody {
     name: string;
 
-    constructor(data?: IBody6) {
+    constructor(data?: ICreateTeamBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2813,9 +2862,9 @@ export class Body6 implements IBody6 {
         }
     }
 
-    static fromJS(data: any): Body6 {
+    static fromJS(data: any): CreateTeamBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body6();
+        let result = new CreateTeamBody();
         result.init(data);
         return result;
     }
@@ -2827,14 +2876,14 @@ export class Body6 implements IBody6 {
     }
 }
 
-export interface IBody6 {
+export interface ICreateTeamBody {
     name: string;
 }
 
-export class Body7 implements IBody7 {
+export class CreateTournamentBody implements ICreateTournamentBody {
     name: string;
 
-    constructor(data?: IBody7) {
+    constructor(data?: ICreateTournamentBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2849,9 +2898,9 @@ export class Body7 implements IBody7 {
         }
     }
 
-    static fromJS(data: any): Body7 {
+    static fromJS(data: any): CreateTournamentBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body7();
+        let result = new CreateTournamentBody();
         result.init(data);
         return result;
     }
@@ -2863,15 +2912,14 @@ export class Body7 implements IBody7 {
     }
 }
 
-export interface IBody7 {
+export interface ICreateTournamentBody {
     name: string;
 }
 
-export class Body8 implements IBody8 {
-    current_password: string;
+export class ChangePasswordBody implements IChangePasswordBody {
     new_password: string;
 
-    constructor(data?: IBody8) {
+    constructor(data?: IChangePasswordBody) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2882,28 +2930,25 @@ export class Body8 implements IBody8 {
 
     init(data?: any) {
         if (data) {
-            this.current_password = data["current_password"];
             this.new_password = data["new_password"];
         }
     }
 
-    static fromJS(data: any): Body8 {
+    static fromJS(data: any): ChangePasswordBody {
         data = typeof data === 'object' ? data : {};
-        let result = new Body8();
+        let result = new ChangePasswordBody();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["current_password"] = this.current_password;
         data["new_password"] = this.new_password;
         return data; 
     }
 }
 
-export interface IBody8 {
-    current_password: string;
+export interface IChangePasswordBody {
     new_password: string;
 }
 
@@ -2911,6 +2956,12 @@ export enum SeasonState {
     Preparation = <any>"preparation", 
     Progress = <any>"progress", 
     Ended = <any>"ended", 
+}
+
+function formatDate(d: Date) {
+    return d.getFullYear() + '-' + 
+        (d.getMonth() < 9 ? ('0' + (d.getMonth()+1)) : (d.getMonth()+1)) + '-' +
+        (d.getDate() < 10 ? ('0' + d.getDate()) : d.getDate());
 }
 
 export class SwaggerException extends Error {

@@ -1,3 +1,6 @@
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { EditMatchDialogComponent } from './editmatch.modal';
 import { TeamService } from './../service/team.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,18 +12,26 @@ import { LoaderComponent } from './loader/loader.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SeasonService } from '@app/service/season.service';
 
+
 @NgModule({
   imports: [
     FlexLayoutModule,
     MaterialModule,
     CommonModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    TranslateModule,
+    FormsModule
+  ],
+  entryComponents: [
+    EditMatchDialogComponent
   ],
   declarations: [
-    LoaderComponent
+    LoaderComponent,
+    EditMatchDialogComponent
   ],
   exports: [
-    LoaderComponent
+    LoaderComponent,
+    EditMatchDialogComponent
   ],
   providers: [
     SeasonService,
