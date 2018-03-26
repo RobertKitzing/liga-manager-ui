@@ -83,4 +83,7 @@ export class I18nService {
     return this.translateService.currentLang;
   }
 
+  get language2Char(): string {
+    return this.translateService.currentLang.split('-')[0];
+  }
 }

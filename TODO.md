@@ -9,3 +9,6 @@
     1. done
 7. Link auf Forum
 8. Home -> Matchplan
+
+
+Pokalspieltage beim Spielplan berücksichtigen

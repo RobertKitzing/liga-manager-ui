@@ -1,3 +1,4 @@
+import { I18nService } from './../core/i18n.service';
 import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { SubmitMatchResultBody } from './../api/openapi';
 import { TeamService } from './../service/team.service';
@@ -34,6 +35,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   constructor(private apiClient: Client,
               public seasonService: SeasonService,
               public teamService: TeamService,
+              public i18Service: I18nService,
               public dialog: MatDialog) { }
 
   async ngOnInit() {
@@ -105,8 +107,6 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         this.apiClient.getMatchesInSeason(this.season.id, i, null, null, null).subscribe(
           (matches: Match[]) => {
             this.matches[i - 1] = matches;
-            log.debug('index', i);
-            log.debug(this.matches);
           },
           (error) => {
             log.error(error);
@@ -119,7 +119,9 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     } else {
       this.apiClient.getMatchesInSeason(this.season.id, this.matchDay, null, null, null).subscribe(
         (matches: Match[]) => {
+          this.matches = new Array<Match[]>();
           this.matches.push(matches);
+          log.debug(matches);
         },
         (error) => {
           log.error(error);

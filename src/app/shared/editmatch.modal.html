@@ -7,26 +7,35 @@
         <div class="row">
             <div class="col-6">
                 <mat-form-field style="width: 100%;">
-                        <input matInput type="number" min="0" max="99" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" required/>
+                        <input matInput type="number" min="0" max="99" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score"/>
                 </mat-form-field>
             </div>
             <div class="col-6">
                 <mat-form-field style="width: 100%;">
-                        <input matInput type="number" min="0" max="99" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" required/>
+                        <input matInput type="number" min="0" max="99" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score"/>
                 </mat-form-field>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
                 <mat-form-field style="width:100%">
-                    <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER' | translate }}" [(ngModel)]="match.kickoff"/>
+                    <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER' | translate }}" [(ngModel)]="match.kickoff"
+                           (dateChange)="onDateChanged()"/>
                     <mat-datepicker-toggle matSuffix [for]="kickoffDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #kickoffDatePicker></mat-datepicker>
                 </mat-form-field>
+                <p *ngIf="match.kickoff">
+                {{ match.kickoff }}
+                {{ match.kickoff.toUTCString() }}
+                </p>
+                <p *ngIf="match.planned_for">
+                {{ match.planned_for }} <br />
+                {{ match.planned_for.toUTCString() }}
+                </p>
             </div>
             <div class="col-6">
-                <mat-form-field style="width:100%">
-                    <input matInput type="time" [(ngModel)]="kickoffTime" />
+                <mat-form-field style="width:100%;">
+                    <input matInput type="time" [(ngModel)]="kickoffTime" (change)="setKickoffTime()" style="text-align: center;"/>
                 </mat-form-field>
             </div>
         </div>
