@@ -11,6 +11,7 @@ const log = new Logger('EditMatchDialogComponent');
 @Component({
     selector: 'app-edit-match-modal',
     templateUrl: 'editmatch.modal.html',
+    styleUrls: ['editmatch.modal.scss']
   })
   export class EditMatchDialogComponent implements OnInit {
 
@@ -50,9 +51,11 @@ const log = new Logger('EditMatchDialogComponent');
         this.match.kickoff.setUTCMinutes(parseFloat(time[1]));
       }
     }
+
     onDateChanged() {
       this.setKickoffTime();
     }
+
     async onSaveClicked() {
       const result: SubmitMatchResultBody = new SubmitMatchResultBody;
       result.home_score = this.match.home_score;

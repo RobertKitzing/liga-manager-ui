@@ -25,17 +25,17 @@
                     <mat-datepicker #kickoffDatePicker></mat-datepicker>
                 </mat-form-field>
                 <p *ngIf="match.kickoff">
-                {{ match.kickoff }}
-                {{ match.kickoff.toUTCString() }}
+                KickoffServerLocal: {{ match.kickoff }} <br />
+                KickoffServerUTC: {{ match.kickoff.toUTCString() }}
                 </p>
                 <p *ngIf="match.planned_for">
-                {{ match.planned_for }} <br />
-                {{ match.planned_for.toUTCString() }}
+                PlannedLocal: {{ match.planned_for }} <br />
+                PlannedUTC: {{ match.planned_for.toUTCString() }}
                 </p>
             </div>
             <div class="col-6">
                 <mat-form-field style="width:100%;">
-                    <input matInput type="time" [(ngModel)]="kickoffTime" (change)="setKickoffTime()" style="text-align: center;"/>
+                    <input matInput type="time" [(ngModel)]="kickoffTime" (change)="setKickoffTime()"/>
                 </mat-form-field>
             </div>
         </div>

@@ -11,6 +11,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { environment } from '@env/environment';
 import { Logger, I18nService } from '@app/core';
 import { SeasonService } from '@app/service/season.service';
+import { registerLocaleData } from '@angular/common';
+import de from '@angular/common/locales/de';
+registerLocaleData(de);
 
 const log = new Logger('App');
 
