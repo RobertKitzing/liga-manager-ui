@@ -52,8 +52,11 @@ const log = new Logger('EditMatchDialogComponent');
       }
     }
 
-    onDateChanged() {
-      this.setKickoffTime();
+    onDateChanged(event: any) {
+      if (this.match.kickoff) {
+        this.match.kickoff.setDate(this.match.kickoff.getDate() + 1);
+        this.setKickoffTime();
+      }
     }
 
     async onSaveClicked() {
@@ -63,7 +66,7 @@ const log = new Logger('EditMatchDialogComponent');
       await this.apiClient.submitMatchResult(this.match.id, result).toPromise();
       if (this.match.kickoff) {
         const date: ScheduleMatchBody = new ScheduleMatchBody();
-        date.kickoff = this.match.kickoff;
+        date.kickoff = new Date(this.match.kickoff.toUTCString());
         await this.apiClient.scheduleMatch(this.match.id, date).toPromise();
       }
       this.dialogRef.close({matchId: this.match.id});

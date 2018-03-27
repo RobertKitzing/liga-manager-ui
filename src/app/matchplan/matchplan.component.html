@@ -52,11 +52,13 @@
         </div>
         <div class="row">
           <div class="col" style="text-align:center;">
-            <p *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</p>
-            <p *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</p>
+            <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</i>
+            <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
+            <i class="fa fa-calendar"></i>
           </div>
           <div class="col">
             <p> {{ match.pitch_id }}</p>
+            <i class="fa fa-map-marker-alt"></i>
           </div>
           <div class="col">
               <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>

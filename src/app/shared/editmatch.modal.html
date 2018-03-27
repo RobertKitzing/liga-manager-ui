@@ -20,18 +20,10 @@
             <div class="col-6">
                 <mat-form-field style="width:100%">
                     <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER' | translate }}" [(ngModel)]="match.kickoff"
-                           (dateChange)="onDateChanged()"/>
+                           (dateChange)="onDateChanged($event)"/>
                     <mat-datepicker-toggle matSuffix [for]="kickoffDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #kickoffDatePicker></mat-datepicker>
+                    <mat-datepicker #kickoffDatePicker [touchUi]="true"></mat-datepicker>
                 </mat-form-field>
-                <p *ngIf="match.kickoff">
-                KickoffServerLocal: {{ match.kickoff }} <br />
-                KickoffServerUTC: {{ match.kickoff.toUTCString() }}
-                </p>
-                <p *ngIf="match.planned_for">
-                PlannedLocal: {{ match.planned_for }} <br />
-                PlannedUTC: {{ match.planned_for.toUTCString() }}
-                </p>
             </div>
             <div class="col-6">
                 <mat-form-field style="width:100%;">

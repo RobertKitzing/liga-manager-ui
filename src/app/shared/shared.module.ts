@@ -11,6 +11,7 @@ import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SeasonService } from '@app/service/season.service';
+import { MatNativeDateModule } from '@angular/material';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SeasonService } from '@app/service/season.service';
   ],
   providers: [
     SeasonService,
-    TeamService
+    TeamService,
+    MatNativeDateModule
   ]
 })
 export class SharedModule { }
