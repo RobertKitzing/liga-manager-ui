@@ -79,10 +79,18 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   updateSingleMatch(matchId: string)  {
     this.apiClient.getMatch(matchId).subscribe(
       (match) => {
-        const index = this.matches[match.match_day - 1].findIndex(t => t.id === matchId);
-        if (index !== -1) {
-          this.matches[match.match_day - 1][index] = match;
+        const index: number = 0;
+        for (let i = 0; i < this.matches.length; i++) {
+          const j: number = this.matches[i].findIndex(x => x.id === matchId);
+          if (j !== -1) {
+            this.matches[i][j] = match;
+            break;
+          }
         }
+        // const index = this.matches[match.match_day - 1].findIndex(t => t.id === matchId);
+        // if (index !== -1) {
+        //   this.matches[match.match_day - 1][index] = match;
+        // }
       }
     );
   }

@@ -60,11 +60,14 @@ const log = new Logger('EditMatchDialogComponent');
     }
 
     async onSaveClicked() {
-      const result: SubmitMatchResultBody = new SubmitMatchResultBody;
-      result.home_score = this.match.home_score;
-      result.guest_score = this.match.guest_score;
-      await this.apiClient.submitMatchResult(this.match.id, result).toPromise();
-      if (this.match.kickoff) {
+      if (this.match.guest_score && this.match.home_score) {
+        const result: SubmitMatchResultBody = new SubmitMatchResultBody;
+        result.home_score = this.match.home_score;
+        result.guest_score = this.match.guest_score;
+        await this.apiClient.submitMatchResult(this.match.id, result).toPromise();
+      }
+
+      if (this.match.kickoff && this.kickoffTime) {
         const date: ScheduleMatchBody = new ScheduleMatchBody();
         date.kickoff = new Date(this.match.kickoff.toUTCString());
         await this.apiClient.scheduleMatch(this.match.id, date).toPromise();

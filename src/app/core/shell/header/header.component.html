@@ -32,14 +32,20 @@
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">
     <mat-icon>language</mat-icon>
   </button>
-  <mat-menu #languageMenu="matMenu">
-    <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
-        {{language}}
-      </button>
-  </mat-menu>
-  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+  <span *ngIf="authenticationService.isAuthenticated()">
+      {{ authenticationService.credentials.username }}
+    </span>
+  <button mat-icon-button routerLink="/login" *ngIf="!authenticationService.isAuthenticated()">
+      {{ 'LOGIN' | translate }}
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="authenticationService.isAuthenticated()">
     <mat-icon>person</mat-icon>
   </button>
+  <mat-menu #languageMenu="matMenu">
+      <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
+          {{language}}
+        </button>
+    </mat-menu>
   <mat-menu #userMenu="matMenu">
     <mat-list>
       <mat-list-item>

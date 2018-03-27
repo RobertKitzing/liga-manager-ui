@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private titleService: Title,
-              private authenticationService: AuthenticationService,
+              public authenticationService: AuthenticationService,
               private i18nService: I18nService) { }
 
   ngOnInit() { }
@@ -27,8 +27,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout();
   }
 
   get currentLanguage(): string {

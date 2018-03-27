@@ -35,7 +35,7 @@
       {{ 'MATCHDAY_PLACEHOLDER' | translate }} {{ (i + 1) }}
     </div>
     <div [ngClass]="{'card-body': matchDay === 0}" *ngFor="let match of matchList">
-      <div class="card">
+      <div class="card container">
         <div class="row">
           <div class="col" style="text-align: right;">
               {{ teamService.getTeamNameByID(match.home_team_id)}}

@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Client, API_BASE_URL } from './../../api/openapi';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
@@ -25,7 +27,9 @@ export class AuthenticationService {
 
   private _credentials: Credentials | null;
 
-  constructor() {
+  constructor(private apiClient: Client,
+              private httpClient: HttpClient,
+              @Inject(API_BASE_URL) private baseUrl: string) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -38,7 +42,20 @@ export class AuthenticationService {
    * @return {Observable<Credentials>} The user credentials.
    */
   login(context: LoginContext): Observable<Credentials> {
-    // Replace by proper authentication call
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
+    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    this.httpClient.get(this.baseUrl + '/api/user/me', { headers: headers, observe: 'response' }).subscribe(
+      (response) => {
+          console.log(response);
+          const keys = response.headers.keys();
+          const headerss = keys.map(key =>
+            `${key}: ${response.headers.get(key)}`);
+            console.log(headerss);
+    }, err => {
+       console.log('User authentication failed!');
+    });
+
     const data = {
       username: context.username,
       token: '123456'
@@ -71,6 +88,10 @@ export class AuthenticationService {
    */
   get credentials(): Credentials | null {
     return this._credentials;
+  }
+
+  public getAccessToken(): string {
+    return this._credentials.token;
   }
 
   /**
