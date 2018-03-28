@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Client, API_BASE_URL } from './../../api/openapi';
 import { Injectable, Inject } from '@angular/core';
@@ -36,35 +37,26 @@ export class AuthenticationService {
     }
   }
 
-  /**
-   * Authenticates the user.
-   * @param {LoginContext} context The login parameters.
-   * @return {Observable<Credentials>} The user credentials.
-   */
-  login(context: LoginContext): Observable<Credentials> {
-    let headers = new HttpHeaders();
-    let token: string;
-    headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this.httpClient.get(this.baseUrl + '/api/user/me', { headers: headers, observe: 'response' }).subscribe(
-      (response) => {
-          const keys = response.headers.keys();
-          const respHeaders = keys.map(key =>
-            `${key}: ${response.headers.get(key)}`);
-          token = respHeaders['xtoken'];
-          console.log(respHeaders);
-    }, err => {
-       console.log('User authentication failed!');
-       this.logout();
-    });
-
-    const data = {
-      username: context.username,
-      // tslint:disable-next-line:max-line-length
-      token: token ? token : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkN2JkODMyNS1kNjllLTQ3MDUtODg1MC1iNTEwNzI5YTM5OGQiLCJpYXQiOiIyMDE4LTAzLTI4VDE4OjMzOjQ0KzAyOjAwIn0.3-CqDg_YTXtVlIhi1vKYDCTnPE6ttP94lvmHXC7tOvQ'
-    };
-    this.setCredentials(data, context.remember);
-    return of(data);
+  async loginAsync(context: LoginContext): Promise<boolean> {
+    return new Promise<boolean>(
+      (resolve) => {
+        let headers = new HttpHeaders();
+        headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
+        headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        this.httpClient.get(this.baseUrl + '/api/user/me', { headers: headers, observe: 'response' }).subscribe(
+          (response) => {
+              console.log(response);
+              const data = {
+                username: response.body['email'],
+                token: response.headers.get('x-token')
+              };
+              this.setCredentials(data, context.remember);
+              resolve(true);
+        }, err => {
+           this.logout();
+           resolve(false);
+        });
+      });
   }
 
   /**
@@ -81,7 +73,7 @@ export class AuthenticationService {
    * Checks is the user is authenticated.
    * @return {boolean} True if the user is authenticated.
    */
-  isAuthenticated(): boolean {
+  get isAuthenticated(): boolean {
     return !!this.credentials;
   }
 
@@ -93,8 +85,8 @@ export class AuthenticationService {
     return this._credentials;
   }
 
-  public getAccessToken(): string {
-    return this._credentials.token;
+  public getAccessToken(): string | null {
+    return this._credentials ? this._credentials.token : null;
   }
 
   /**
@@ -117,7 +109,7 @@ export class AuthenticationService {
   }
 
   public isUserInTeam(teamId: string[]) {
-    console.log(teamId);
+    console.log(teamId, this.isAuthenticated);
     return this.isAuthenticated;
   }
 }

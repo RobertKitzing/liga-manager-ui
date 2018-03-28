@@ -1,3 +1,4 @@
+import { MatDialogRef } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -16,11 +17,11 @@ const log = new Logger('Login');
 export class LoginComponent implements OnInit {
 
   version: string = environment.version;
-  error: string;
+  error: boolean;
   loginForm: FormGroup;
   isLoading = false;
 
-  constructor(private router: Router,
+  constructor(public dialogRef: MatDialogRef<LoginComponent>,
               private formBuilder: FormBuilder,
               private i18nService: I18nService,
               private authenticationService: AuthenticationService) {
@@ -29,20 +30,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
-  login() {
+  async login() {
     this.isLoading = true;
-    this.authenticationService.login(this.loginForm.value)
-      .pipe(finalize(() => {
-        this.loginForm.markAsPristine();
-        this.isLoading = false;
-      }))
-      .subscribe(credentials => {
-        log.debug(`${credentials.username} successfully logged in`);
-        this.router.navigate(['/'], { replaceUrl: true });
-      }, error => {
-        log.debug(`Login error: ${error}`);
-        this.error = error;
-      });
+    if ( await this.authenticationService.loginAsync(this.loginForm.value)) {
+      this.loginForm.markAsPristine();
+      this.isLoading = false;
+      this.dialogRef.close();
+    } else {
+      this.isLoading = false;
+      this.error = true;
+    }
   }
 
   setLanguage(language: string) {

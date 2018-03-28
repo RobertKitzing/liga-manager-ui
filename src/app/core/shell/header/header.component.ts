@@ -1,7 +1,8 @@
+import { LoginComponent } from './../../../login/login.component';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatDialog } from '@angular/material';
 
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { I18nService } from '../../i18n.service';
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router,
               private titleService: Title,
               public authenticationService: AuthenticationService,
-              private i18nService: I18nService) { }
+              private i18nService: I18nService,
+              public dialog: MatDialog) { }
 
   ngOnInit() { }
 
@@ -47,4 +49,7 @@ export class HeaderComponent implements OnInit {
     return this.titleService.getTitle();
   }
 
+  openLoginDialog() {
+    const dialogRef = this.dialog.open(LoginComponent);
+  }
 }

@@ -120,7 +120,7 @@ export class TableComponent implements OnInit, OnDestroy {
     }
     this.apiClient.getAuthenticatedUser().subscribe(
       (user) => {
-        console.log(user);
+        log.debug(user);
       }
     );
   }

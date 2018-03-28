@@ -14,6 +14,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DetailRowComponent implements OnInit {
     @Input() ranking: Ranking_position;
     ngOnInit() {
-        console.log(this.ranking);
+        
     }
 }

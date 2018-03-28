@@ -29,23 +29,23 @@
     </button>
   </div>
   <span fxFlex></span>
-  <span *ngIf="authenticationService.isAuthenticated()">
+  <span *ngIf="authenticationService.isAuthenticated">
       {{ authenticationService.credentials.username }}
-    </span>
-  <button mat-icon-button routerLink="/login" *ngIf="!authenticationService.isAuthenticated()">
+  </span>
+  <button mat-button (click)="openLoginDialog()" *ngIf="!authenticationService.isAuthenticated">
       {{ 'LOGIN' | translate }}
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="authenticationService.isAuthenticated()">
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="authenticationService.isAuthenticated">
     <mat-icon>person</mat-icon>
   </button>
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">
       <mat-icon>language</mat-icon>
-    </button>
+  </button>
   <mat-menu #languageMenu="matMenu">
-      <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
-          {{language}}
-        </button>
-    </mat-menu>
+    <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
+      {{language}}
+    </button>
+  </mat-menu>
   <mat-menu #userMenu="matMenu">
     <mat-list>
       <mat-list-item>

@@ -14,11 +14,13 @@
   margin: 0;
 }
 
-.login-container,
 .mat-form-field {
   width: 100%;
 }
 
+container {
+  padding: 15px;
+}
 .login-error {
   color: mat-color($app-warn);
 }

@@ -1,4 +1,5 @@
-import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchDialogComponent } from './editmatch.modal';
 import { TeamService } from './../service/team.service';
@@ -21,7 +22,10 @@ import { MatNativeDateModule } from '@angular/material';
     CommonModule,
     AngularFontAwesomeModule,
     TranslateModule,
-    FormsModule
+    FormsModule,
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     EditMatchDialogComponent
@@ -32,7 +36,10 @@ import { MatNativeDateModule } from '@angular/material';
   ],
   exports: [
     LoaderComponent,
-    EditMatchDialogComponent
+    EditMatchDialogComponent,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     SeasonService,

@@ -1,3 +1,5 @@
+import { SharedModule } from '@app/shared';
+import { LoginComponent } from './../login/login.component';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
@@ -28,11 +30,19 @@ export function createHttpService(backend: ConnectionBackend,
     TranslateModule,
     FlexLayoutModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    SharedModule
+    // BrowserModule,
+    // FormsModule,
+    // ReactiveFormsModule
+  ],
+  entryComponents: [
+    LoginComponent
   ],
   declarations: [
     HeaderComponent,
-    ShellComponent
+    ShellComponent,
+    LoginComponent
   ],
   providers: [
     AuthenticationService,
@@ -48,6 +58,9 @@ export function createHttpService(backend: ConnectionBackend,
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy
     }
+  ],
+  exports:[
+    LoginComponent
   ]
 })
 export class CoreModule {
