@@ -1,7 +1,8 @@
+import { AuthInterceptor } from './core/authentication/authentication.interceptor';
 import { TournamentModule } from './tournament/tournament.module';
 import { SeasonManagerModule } from './seasonmanager/seasonmanager.module';
 import { MatchplanModule } from './matchplan/matchplan.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Client, API_BASE_URL } from './api/openapi';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -56,7 +57,12 @@ import { AppRoutingModule } from './app-routing.module';
     {
       provide: API_BASE_URL,
       useValue: 'https://soccer-api.skilled-by-nature.de'
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+  }
   ],
   bootstrap: [AppComponent]
 })

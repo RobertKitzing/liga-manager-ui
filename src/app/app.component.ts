@@ -1,3 +1,4 @@
+import { AuthenticationService } from './core/authentication/authentication.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit {
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
               private i18nService: I18nService,
-              private seasonService: SeasonService) { }
+              private seasonService: SeasonService,
+              private authService: AuthenticationService) { }
 
   ngOnInit() {
     // Setup logger
@@ -42,6 +44,8 @@ export class AppComponent implements OnInit {
     }
 
     log.debug('init');
+
+    log.debug('credentials', this.authService.credentials);
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);

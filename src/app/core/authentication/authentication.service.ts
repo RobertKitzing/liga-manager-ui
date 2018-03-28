@@ -43,22 +43,25 @@ export class AuthenticationService {
    */
   login(context: LoginContext): Observable<Credentials> {
     let headers = new HttpHeaders();
+    let token: string;
     headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
     this.httpClient.get(this.baseUrl + '/api/user/me', { headers: headers, observe: 'response' }).subscribe(
       (response) => {
-          console.log(response);
           const keys = response.headers.keys();
-          const headerss = keys.map(key =>
+          const respHeaders = keys.map(key =>
             `${key}: ${response.headers.get(key)}`);
-            console.log(headerss);
+          token = respHeaders['xtoken'];
+          console.log(respHeaders);
     }, err => {
        console.log('User authentication failed!');
+       this.logout();
     });
 
     const data = {
       username: context.username,
-      token: '123456'
+      // tslint:disable-next-line:max-line-length
+      token: token ? token : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkN2JkODMyNS1kNjllLTQ3MDUtODg1MC1iNTEwNzI5YTM5OGQiLCJpYXQiOiIyMDE4LTAzLTI4VDE4OjMzOjQ0KzAyOjAwIn0.3-CqDg_YTXtVlIhi1vKYDCTnPE6ttP94lvmHXC7tOvQ'
     };
     this.setCredentials(data, context.remember);
     return of(data);
