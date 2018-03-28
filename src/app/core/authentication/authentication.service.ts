@@ -117,6 +117,9 @@ export class AuthenticationService {
           (user) => {
             this.user = user;
             resolve(user);
+        },
+        (error) => {
+          resolve(null);
         });
       });
   }

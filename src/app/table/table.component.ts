@@ -118,11 +118,6 @@ export class TableComponent implements OnInit, OnDestroy {
     if (this.season) {
       this.loadRanking();
     }
-    this.apiClient.getAuthenticatedUser().subscribe(
-      (user) => {
-        log.debug(user);
-      }
-    );
   }
 
   expandRow(index: number, row: Ranking_position) {
