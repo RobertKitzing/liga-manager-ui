@@ -138,7 +138,6 @@ export class TableComponent implements OnInit, OnDestroy {
       this.expandedRow = null;
       log.debug('null');
     } else {
-      log.debug('yes');
       const container = this.containers.toArray()[index];
       const factory: ComponentFactory<DetailRowComponent> = this.resolver.resolveComponentFactory(DetailRowComponent);
       const detailRow: ComponentRef<DetailRowComponent> = container.createComponent(factory);

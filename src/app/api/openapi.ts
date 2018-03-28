@@ -2587,6 +2587,7 @@ export interface ITeam_id_tuple {
 export class User implements IUser {
     id?: string | undefined;
     email?: string | undefined;
+    teams?: string[] | undefined;
 
     constructor(data?: IUser) {
         if (data) {
@@ -2601,6 +2602,11 @@ export class User implements IUser {
         if (data) {
             this.id = data["id"];
             this.email = data["email"];
+            if (data["teams"] && data["teams"].constructor === Array) {
+                this.teams = [];
+                for (let item of data["teams"])
+                    this.teams.push(item);
+            }
         }
     }
 
@@ -2615,6 +2621,11 @@ export class User implements IUser {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["email"] = this.email;
+        if (this.teams && this.teams.constructor === Array) {
+            data["teams"] = [];
+            for (let item of this.teams)
+                data["teams"].push(item);
+        }
         return data; 
     }
 }
@@ -2622,6 +2633,7 @@ export class User implements IUser {
 export interface IUser {
     id?: string | undefined;
     email?: string | undefined;
+    teams?: string[] | undefined;
 }
 
 export class ScheduleMatchBody implements IScheduleMatchBody {

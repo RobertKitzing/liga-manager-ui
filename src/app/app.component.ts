@@ -45,7 +45,9 @@ export class AppComponent implements OnInit {
 
     log.debug('init');
 
-    log.debug('credentials', this.authService.credentials);
+    if (this.authService.isAuthenticated) {
+      this.authService.loadUser();
+    }
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);

@@ -1,7 +1,7 @@
 <div class="container card">
   <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
     <div class="row">
-      <div class="col" style="margin: 2rem;">
+      <div class="col">
         <div class="login-error" [hidden]="!error || isLoading" translate>
           Username or password incorrect.
         </div>

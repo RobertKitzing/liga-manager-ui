@@ -1,6 +1,6 @@
 import { async } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Client, API_BASE_URL } from './../../api/openapi';
+import { Client, API_BASE_URL, User } from './../../api/openapi';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -27,6 +27,7 @@ const credentialsKey = 'credentials';
 export class AuthenticationService {
 
   private _credentials: Credentials | null;
+  private user: User;
 
   constructor(private apiClient: Client,
               private httpClient: HttpClient,
@@ -44,13 +45,14 @@ export class AuthenticationService {
         headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
         headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.httpClient.get(this.baseUrl + '/api/user/me', { headers: headers, observe: 'response' }).subscribe(
-          (response) => {
+          async(response) => {
               console.log(response);
               const data = {
                 username: response.body['email'],
                 token: response.headers.get('x-token')
               };
               this.setCredentials(data, context.remember);
+              this.user = <User>response.body;
               resolve(true);
         }, err => {
            this.logout();
@@ -108,8 +110,18 @@ export class AuthenticationService {
     }
   }
 
-  public isUserInTeam(teamId: string[]) {
-    console.log(teamId, this.isAuthenticated);
-    return this.isAuthenticated;
+  async loadUser(): Promise<User> {
+    return new Promise<User>(
+      (resolve) => {
+        this.apiClient.getAuthenticatedUser().subscribe(
+          (user) => {
+            this.user = user;
+            resolve(user);
+        });
+      });
+  }
+
+  public isUserInTeam(teamId: string): boolean {
+    return this.isAuthenticated && this.user.teams.indexOf(teamId) !== -1;
   }
 }
