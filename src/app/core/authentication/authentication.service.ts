@@ -127,4 +127,8 @@ export class AuthenticationService {
   public isUserInTeam(teamId: string): boolean {
     return this.isAuthenticated && this.user.teams.indexOf(teamId) !== -1;
   }
+
+  public get isAdminUser(): boolean {
+    return this.isAuthenticated && this.credentials.username === 'user3';
+  }
 }

@@ -17,25 +17,25 @@
     <button mat-button routerLink="/matchplan" routerLinkActive="active">
       <span translate>Matchplan</span>
     </button>
-    <button mat-button routerLink="/seasonmanager" routerLinkActive="active">
+    <button mat-button routerLink="/seasonmanager" routerLinkActive="active" *ngIf="authService.isAdminUser">
       <span translate>SeasonManager</span>
     </button>
     <button mat-button routerLink="/about" routerLinkActive="active">
       <i class="fa fa-question-circle"></i>
       <span translate>About</span>
     </button>
-    <button mat-button routerLink="/tournament" routerLinkActive="active">
+    <!-- <button mat-button routerLink="/tournament" routerLinkActive="active">
       <span translate>Tournament</span>
-    </button>
+    </button> -->
   </div>
   <span fxFlex></span>
-  <span *ngIf="authenticationService.isAuthenticated">
-      {{ authenticationService.credentials.username }}
+  <span *ngIf="authService.isAuthenticated">
+      {{ authService.credentials.username }}
   </span>
-  <button mat-button (click)="openLoginDialog()" *ngIf="!authenticationService.isAuthenticated">
+  <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
       {{ 'LOGIN' | translate }}
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="authenticationService.isAuthenticated">
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
     <mat-icon>person</mat-icon>
   </button>
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">

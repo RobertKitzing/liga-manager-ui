@@ -1,3 +1,4 @@
+import { AuthenticationService } from '../authentication/authentication.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';
@@ -12,7 +13,7 @@ export class ShellComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
-  constructor(private media: ObservableMedia) { }
+  constructor(private media: ObservableMedia, public authService: AuthenticationService) { }
 
   ngOnInit() {
     // Automatically close side menu on screens > sm breakpoint

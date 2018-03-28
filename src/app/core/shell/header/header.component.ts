@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private titleService: Title,
-              public authenticationService: AuthenticationService,
+              public authService: AuthenticationService,
               private i18nService: I18nService,
               public dialog: MatDialog) { }
 
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout();
+    this.authService.logout();
   }
 
   get currentLanguage(): string {
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get username(): string {
-    const credentials = this.authenticationService.credentials;
+    const credentials = this.authService.credentials;
     return credentials ? credentials.username : null;
   }
 
