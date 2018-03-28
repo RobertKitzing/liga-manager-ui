@@ -7,7 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { Client, Season, Match, SeasonState } from '@app/api/openapi';
-import { Logger } from '@app/core';
+import { Logger, AuthenticationService } from '@app/core';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 
@@ -36,7 +36,8 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
               public seasonService: SeasonService,
               public teamService: TeamService,
               public i18Service: I18nService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public authService: AuthenticationService) { }
 
   async ngOnInit() {
     this.seasonsSub = this.seasonService.season.subscribe(
@@ -87,10 +88,6 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
             break;
           }
         }
-        // const index = this.matches[match.match_day - 1].findIndex(t => t.id === matchId);
-        // if (index !== -1) {
-        //   this.matches[match.match_day - 1][index] = match;
-        // }
       }
     );
   }

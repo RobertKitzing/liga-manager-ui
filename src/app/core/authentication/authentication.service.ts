@@ -116,4 +116,8 @@ export class AuthenticationService {
     }
   }
 
+  public isUserInTeam(teamId: string[]) {
+    console.log(teamId);
+    return this.isAuthenticated;
+  }
 }

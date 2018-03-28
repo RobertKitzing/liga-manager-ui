@@ -60,36 +60,9 @@
             <p> {{ match.pitch_id }}</p>
             <i class="fa fa-map-marker-alt"></i>
           </div>
-          <div class="col">
+          <div class="col pull-right" *ngIf="authService.isUserInTeam([match.home_team_id, match.guest_team_id])">
               <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
           </div>
-          <!-- <div class="col" style="text-align:right">
-              <div *ngIf="editMatch !== match.id; else edithome">{{ match.home_score }}</div>
-              <ng-template #edithome>
-                <mat-form-field style="max-width:7ch;">
-                    <input matInput type="number" min="0" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score"/>
-                </mat-form-field>
-              </ng-template>
-          </div>
-          <div class="col col-1" style="max-width: 2ch;text-aling: center;">
-              :
-          </div>
-          <div class="col" style="text-align:left">
-              <div *ngIf="editMatch !== match.id; else editguest">{{ match.guest_score }}</div>
-              <ng-template #editguest>
-                <mat-form-field style="max-width:7ch;">
-                    <input matInput type="number" min="0" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score"/>
-                </mat-form-field>
-              </ng-template>
-          </div> -->
-          <!-- <div class="col col-2">
-              <div *ngIf="editMatch !== match.id; else savebutton">
-                <i *ngIf="editMatch !== match.id" class="fa fa-edit fa-2x" (click)="editMatch = match.id" style="cursor: pointer;"></i>     
-              </div>
-              <ng-template #savebutton>
-                <i class="fa fa-save fa-2x" (click)="saveResult(match.id, match.home_score, match.guest_score)" style="cursor: pointer;"></i>
-              </ng-template>
-          </div> -->
         </div>
       </div>
     </div>
