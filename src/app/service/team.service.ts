@@ -20,6 +20,11 @@ export class TeamService {
     resetTeams() {
         this.teams = null;
     }
+
+    getAllTeams(): Team[] {
+        return this.teams;
+    }
+
     async loadTeams(): Promise<Team[]> {
         this.isLoadingTeams = true;
         if (!this.teams) {

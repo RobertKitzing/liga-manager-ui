@@ -3,10 +3,12 @@ import { TeamService } from './../service/team.service';
 import { MatDialog } from '@angular/material';
 import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { AuthenticationService } from './../core/authentication/authentication.service';
-import { Tournament, Client } from './../api/openapi';
+import { Tournament, Client, Team } from './../api/openapi';
 import { SeasonService } from '@app/service/season.service';
 import { Match } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
+import { Logger } from '@app/core';
+const log = new Logger('TournamentComponent');
 
 @Component({
   selector: 'app-tournament',
@@ -18,9 +20,12 @@ export class TournamentComponent implements OnInit {
   tournament: Tournament;
   tournaments: Tournament[];
   isLoadingTournaments: boolean;
+  rounds: number[];
   matches: Match[];
   isLoadingMatches: boolean;
   matchDay = 1;
+  editMode: boolean = true;
+  teams: Team[];
 
   constructor(public authService: AuthenticationService,
               public dialog: MatDialog,
@@ -34,9 +39,15 @@ export class TournamentComponent implements OnInit {
         this.tournaments = tournaments;
       }
     );
+    this.teams = this.teamService.getAllTeams();
   }
 
   selectedTournamentChanged(tournament: Tournament) {
+    this.rounds = new Array<number>();
+    log.debug(tournament);
+    for (let r = tournament.rounds; r >= 0; r--) {
+      this.rounds.push(r + 1);
+    }
     this.apiClient.getMatchesInTournament(tournament.id).subscribe(
       (matches) => {
         this.matches = matches;
@@ -70,5 +81,10 @@ export class TournamentComponent implements OnInit {
           }
       }
     );
+  }
+
+  addTeam(round: number) {
+    const match: Match = new Match();
+    this.matches.push(match);
   }
 }

@@ -1,4 +1,6 @@
 {
+  "ROUND": "Round",
+  "EDIT": "edit",
   "LOGIN": "Login",
   "SEASON_START_DATE_PLACEHOLDER": "Start date",
   "KICKOFF_DATE_PLACEHOLDER": "Kickoff",
