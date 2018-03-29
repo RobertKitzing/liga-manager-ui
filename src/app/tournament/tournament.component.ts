@@ -85,6 +85,23 @@ export class TournamentComponent implements OnInit {
 
   addTeam(round: number) {
     const match: Match = new Match();
+    match.id = Math.random().toString();
     this.matches.push(match);
+  }
+
+  removeMatch(matchId: string) {
+    this.matches = this.matches.filter(m => m.id !== matchId);
+  }
+
+  setHomeTeam(matchId: string, teamId: string) {
+    const match: Match = this.matches.find(m => m.id === matchId);
+    log.debug(match);
+    match.home_team_id = teamId;
+  }
+
+  setGuestTeam(matchId: string, teamId: string) {
+    const match: Match = this.matches.find(m => m.id === matchId);
+    match.guest_team_id = teamId;
+    log.debug(match);
   }
 }

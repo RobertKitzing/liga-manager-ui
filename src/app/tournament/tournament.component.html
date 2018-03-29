@@ -26,33 +26,38 @@
         </div>
         <div class="card-body">
             <div *ngFor="let match of matches">
+                <button mat-icon-button class="pull-left" *ngIf="editMode" (click)="removeMatch(match.id)">
+                    <i class="fa fa-minus"></i>
+                </button>
                 <div class="row">
                     <div class="col" style="text-align: right;">
-                        <mat-form-field *ngIf="!match.home_team_id">
-                            <mat-select>
+                        <span *ngIf="match.home_team_id">
+                            {{ teamService.getTeamNameByID(match.home_team_id)}}
+                        </span>
+                        <br />
+                        <mat-form-field *ngIf="editMode">
+                            <mat-select #home (change)="setHomeTeam(match.id, home.value)">
                                 <mat-option *ngFor="let team of teamService.getAllTeams()" [value]="team.id">
                                     {{team.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <span *ngIf="match.home_team_id">
-                            {{ teamService.getTeamNameByID(match.home_team_id)}}
-                        </span>
                     </div>
                     <div class="col" style="max-width: 2ch;text-align: center;">
                         -
                     </div>
                     <div class="col" style="text-align: left;">
-                        <mat-form-field *ngIf="!match.guest_team_id">
-                            <mat-select>
+                        <span *ngIf="match.guest_team_id">
+                            {{ teamService.getTeamNameByID(match.guest_team_id) }}
+                        </span>
+                        <br />
+                        <mat-form-field *ngIf="editMode">
+                            <mat-select #guest (change)="setGuestTeam(match.id, guest.value)">
                                 <mat-option *ngFor="let team of teamService.getAllTeams()" [value]="team.id">
                                     {{team.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <span *ngIf="match.guest_team_id">
-                            {{ teamService.getTeamNameByID(match.guest_team_id) }}
-                        </span>
                     </div>
                     <div class="col">
                         {{ match.home_score }} : {{ match.guest_score }}
