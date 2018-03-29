@@ -20,8 +20,8 @@ export class TournamentComponent implements OnInit {
   tournament: Tournament;
   tournaments: Tournament[];
   isLoadingTournaments: boolean;
-  rounds: number[];
-  matches: Match[][];
+  rounds: number[] = new Array<number>();
+  matches: Match[];
   isLoadingMatches: boolean;
   matchDay = 1;
   editMode: boolean = true;
@@ -44,19 +44,13 @@ export class TournamentComponent implements OnInit {
 
   selectedTournamentChanged(tournament: Tournament) {
     this.rounds = new Array<number>();
-    this.matches = new Array<Match[]>();
+    this.matches = new Array<Match>();
     for (let r = tournament.rounds; r >= 0; r--) {
       this.rounds.push(r + 1);
     }
     this.apiClient.getMatchesInTournament(tournament.id).subscribe(
       (matches) => {
-        matches.forEach(
-          (match) => {
-            if (!this.matches[match.match_day - 1]) {
-              this.matches[match.match_day - 1] = new Array<Match>();
-            }
-            this.matches[match.match_day - 1].push(match);
-          });
+        this.matches = matches;
       }
     );
   }
@@ -81,10 +75,9 @@ export class TournamentComponent implements OnInit {
   updateSingleMatch(matchId: string)  {
     this.apiClient.getMatch(matchId).subscribe(
       (match) => {
-          const j: number = this.matches.findIndex(x => x.id === matchId);
-          if (j !== -1) {
-            this.matches[j] = match;
-          }
+          // if (j !== -1) {
+          //   this.matches[j] = match;
+          // }
       }
     );
   }
@@ -103,14 +96,14 @@ export class TournamentComponent implements OnInit {
     const match: Match = new Match();
     match.match_day = round;
     match.id = Math.random().toString();
-    this.matches[round].push(match);
+    this.matches.push(match);
   }
 
-  removeMatch(matchId: string) {
+  removeMatch(matchId: string, round: number) {
     this.matches = this.matches.filter(m => m.id !== matchId);
   }
 
-  setHomeTeam(matchId: string, teamId: string) {
+  setHomeTeam(matchId: string, teamId: string, round: number) {
     const match: Match = this.matches.find(m => m.id === matchId);
     log.debug(match);
     match.home_team_id = teamId;
@@ -120,5 +113,9 @@ export class TournamentComponent implements OnInit {
     const match: Match = this.matches.find(m => m.id === matchId);
     match.guest_team_id = teamId;
     log.debug(match);
+  }
+
+  getMatchesInRound(round: number): Match[] {
+    return this.matches.filter(m => m.match_day === round);
   }
 }
