@@ -7,20 +7,18 @@ import { AuthenticationService } from './authentication.service';
 const log = new Logger('AuthenticationGuard');
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class IsAdminGuard implements CanActivate {
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) { }
 
   canActivate(): boolean {
-    return true;
-    // if (this.authenticationService.isAuthenticated()) {
-    //   return true;
-    // }
-
-    // log.debug('Not authenticated, redirecting...');
-    // this.router.navigate(['/login'], { replaceUrl: true });
-    // return false;
+    if (this.authenticationService.isAdminUser) {
+      return true;
+    } else {
+      this.router.navigateByUrl('/');
+      return false;
+    }
   }
 
 }

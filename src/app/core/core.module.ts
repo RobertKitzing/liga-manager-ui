@@ -1,3 +1,4 @@
+import { IsAdminGuard } from './authentication/isadmin.guard';
 import { SharedModule } from '@app/shared';
 import { LoginComponent } from './../login/login.component';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
@@ -12,7 +13,6 @@ import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './shell/header/header.component';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { AuthenticationService } from './authentication/authentication.service';
-import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
@@ -32,9 +32,6 @@ export function createHttpService(backend: ConnectionBackend,
     MaterialModule,
     RouterModule,
     SharedModule
-    // BrowserModule,
-    // FormsModule,
-    // ReactiveFormsModule
   ],
   entryComponents: [
     LoginComponent
@@ -46,7 +43,7 @@ export function createHttpService(backend: ConnectionBackend,
   ],
   providers: [
     AuthenticationService,
-    AuthenticationGuard,
+    IsAdminGuard,
     I18nService,
     HttpCacheService,
     {
@@ -59,7 +56,7 @@ export function createHttpService(backend: ConnectionBackend,
       useClass: RouteReusableStrategy
     }
   ],
-  exports:[
+  exports: [
     LoginComponent
   ]
 })

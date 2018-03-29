@@ -1,3 +1,4 @@
+import { IsAdminGuard } from './../core/authentication/isadmin.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -26,6 +27,9 @@ import { SeasonManagerRoutingModule } from '@app/seasonmanager/seasonmanager-rou
   ],
   declarations: [
     SeasonManagerComponent
+  ],
+  providers: [
+    IsAdminGuard
   ]
 })
 export class SeasonManagerModule { }
