@@ -1,42 +1,67 @@
-<div class="container">
-    <mat-accordion>
-        <mat-expansion-panel *ngFor="let match of matches">
-            <mat-expansion-panel-header>
-            <mat-panel-title>
-                <div class="row">
-                    <div class="col-md-5">
-                        match.home_team_id
+<div class="cont">
+    <div class="box" fxLayout fxLayoutGap="10px" fxLayoutAlign="center" fxLayout.xs="column">
+        <app-loader [isLoading]="isLoadingTournaments" size="1.5"></app-loader>
+        <div *ngIf="!isLoadingTournaments">
+            <mat-form-field id="seasonchooser">
+                <mat-select [compareWith]="tournamentCompare" [(value)]="tournament" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedTournamentChanged(tournament)">
+                    <mat-option *ngFor="let tournament of tournaments" [value]="tournament">
+                        {{ tournament.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- <mat-divider [vertical]="true"></mat-divider>
+        <div>
+            <mat-form-field *ngIf="!teamService.isLoadingTeams">
+                <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged()" [(ngModel)]="matchDay">
+                    <mat-option *ngFor="let day of matchDayCounter" [value]="day">
+                        <div *ngIf="day === 0; else match">{{ 'ALL' | translate }}</div>
+                        <ng-template #match>
+                            {{ day }}
+                        </ng-template>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div> -->    
+    <div class="container matches" *ngIf="matches && !teamService.isLoadingTeams">
+        <app-loader [isLoading]="isLoadingMatches && teamService.isLoadingTeams" size="1.5"></app-loader>
+        <div class="card" *ngFor="let matchList of matches, let i = index">
+            <div class="card-header" *ngIf="matchDay === 0">
+                {{ 'MATCHDAY_PLACEHOLDER' | translate }} {{ (i + 1) }}
+            </div>
+            <div [ngClass]="{'card-body': matchDay === 0}" *ngFor="let match of matchList">
+                <div class="card container">
+                    <div class="row">
+                        <div class="col" style="text-align: right;">
+                            {{ teamService.getTeamNameByID(match.home_team_id)}}
+                        </div>
+                        <div class="col" style="max-width: 2ch;text-align: center;">
+                            -
+                        </div>
+                        <div class="col" style="text-align: left;">
+                            {{ teamService.getTeamNameByID(match.guest_team_id) }}
+                        </div>
+                        <div class="col">
+                            {{ match.home_score }} : {{ match.guest_score }}
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        match.guest_team_id
+                    <div class="row">
+                        <div class="col" style="text-align:center;">
+                            <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</i>
+                            <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <div class="col">
+                            <p> {{ match.pitch_id }}</p>
+                            <i class="fa fa-map-marker-alt"></i>
+                        </div>
+                        <div class="col pull-right" *ngIf="authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
+                            <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
+                        </div>
                     </div>
                 </div>
-            </mat-panel-title>
-            <mat-panel-description style="white-space: nowrap">
-                {{ match.home_score }} : {{ match.guest_score }}
-            </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div fxLayout
-                fxLayoutGap="10px"
-                fxLayoutAlign="center"
-                fxLayout.xs="column">
-            <div>
-                <mat-form-field>
-                <input matInput type="number" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score" #home_score />
-                </mat-form-field>
             </div>
-            <div>
-                <mat-form-field>
-                <input matInput type="number" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score" #guest_score />
-                </mat-form-field>
-            </div>
-            <div>
-                <button mat-raised-button color="primary" (click)="saveResult(match.id, home_score.value, guest_score.value)">Speichern</button>
-            </div>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+        </div>
+    </div>
 </div>

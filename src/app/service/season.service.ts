@@ -65,4 +65,7 @@ export class SeasonService {
             return state ? filterd : this.seasons;
         }
     }
+    seasonCompare(c1: Season, c2: Season) {
+        return c1 && c2 && c1.name === c2.name;
+    }
 }
