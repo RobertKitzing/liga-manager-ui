@@ -1,5 +1,6 @@
 {
-  "ADD_MATCH": "add Match",
+  "PITCH": "Pitch",
+  "ADD_MATCH": "add Matches",
   "ADD_ROUND": "add Round",
   "REMOVE_MATCH": "remove Match",
   "REMOVE_ROUND": "remove Round",

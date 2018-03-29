@@ -1,10 +1,13 @@
+import { Observable } from 'rxjs/Observable';
 import { I18nService } from '@app/core';
-import { SubmitMatchResultBody, ScheduleMatchBody } from './../api/openapi';
+import { SubmitMatchResultBody, ScheduleMatchBody, Pitch } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { Client, Match } from '@app/api/openapi';
 import { Logger } from './../core/logger.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, DateAdapter } from '@angular/material';
+import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 
 const log = new Logger('EditMatchDialogComponent');
 
@@ -14,6 +17,10 @@ const log = new Logger('EditMatchDialogComponent');
     styleUrls: ['editmatch.modal.scss']
   })
   export class EditMatchDialogComponent implements OnInit {
+
+    stateCtrl: FormControl = new FormControl();
+    filteredPitches: Observable<Pitch[] | Promise<Pitch[]>>;
+    pitches: Pitch[];
 
     public match: Match;
     public kickoffTime: string;
@@ -25,10 +32,37 @@ const log = new Logger('EditMatchDialogComponent');
       private adapter: DateAdapter<any>,
       public i18Service: I18nService,
       @Inject(MAT_DIALOG_DATA) public data: any) {
-        this.adapter.setLocale(this.i18Service.language2Char);
     }
 
-    ngOnInit() {
+    filterPitches(searchTerm: string) {
+      log.debug(searchTerm);
+      return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+    }
+
+    async loadPitches(): Promise<Pitch[]> {
+      return new Promise<Pitch[]>(
+        (resolve) => {
+          this.apiClient.getAllPitches().subscribe(
+                (pitches) => {
+                  console.log(pitches);
+                  resolve(pitches);
+                },
+                (error) => {
+                  resolve(null);
+                }
+              );
+        }
+      );
+    }
+
+    async ngOnInit() {
+      this.adapter.setLocale(this.i18Service.language2Char);
+      this.pitches = await this.loadPitches();
+      this.filteredPitches = this.stateCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map((pitch) => pitch ? this.filterPitches(pitch) : this.pitches.slice())
+      );
       this.apiClient.getMatch(this.data.matchId).subscribe(
         (match) => {
           this.match = match;
@@ -74,4 +108,5 @@ const log = new Logger('EditMatchDialogComponent');
       }
       this.dialogRef.close({matchId: this.match.id});
     }
+    
 }

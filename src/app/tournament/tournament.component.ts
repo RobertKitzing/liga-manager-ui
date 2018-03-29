@@ -1,3 +1,4 @@
+import { AddMatchComponent } from './tournament.addmatch.dialog';
 import { I18nService } from './../core/i18n.service';
 import { TeamService } from './../service/team.service';
 import { MatDialog } from '@angular/material';
@@ -24,7 +25,7 @@ export class TournamentComponent implements OnInit {
   matches: Match[];
   isLoadingMatches: boolean;
   matchDay = 1;
-  editMode: boolean = true;
+  editMode: boolean;
   teams: Team[];
 
   constructor(public authService: AuthenticationService,
@@ -34,9 +35,12 @@ export class TournamentComponent implements OnInit {
               public i18Service: I18nService) { }
 
   ngOnInit() {
+    this.isLoadingTournaments = true;
     this.apiClient.getAllTournaments().subscribe(
       (tournaments) => {
         this.tournaments = tournaments;
+        log.debug(tournaments);
+        this.isLoadingTournaments = false;
       }
     );
     this.teams = this.teamService.getAllTeams();
@@ -45,12 +49,19 @@ export class TournamentComponent implements OnInit {
   selectedTournamentChanged(tournament: Tournament) {
     this.rounds = new Array<number>();
     this.matches = new Array<Match>();
-    for (let r = tournament.rounds; r >= 0; r--) {
+    this.tournament = tournament;
+    for (let r = 0; r < tournament.rounds; r++) {
       this.rounds.push(r + 1);
     }
-    this.apiClient.getMatchesInTournament(tournament.id).subscribe(
+    this.loadMatches(tournament.id);
+  }
+
+  loadMatches(tournamenId: string) {
+    log.debug(tournamenId);
+    this.apiClient.getMatchesInTournament(tournamenId).subscribe(
       (matches) => {
         this.matches = matches;
+        log.debug(matches);
       }
     );
   }
@@ -92,11 +103,15 @@ export class TournamentComponent implements OnInit {
   }
 
   addMatch(round: number) {
-    log.debug(round);
-    const match: Match = new Match();
-    match.match_day = round;
-    match.id = Math.random().toString();
-    this.matches.push(match);
+    const dialogRef = this.dialog.open(AddMatchComponent, {
+        data: { round: round, tournamentId: this.tournament.id}
+      });
+      dialogRef.afterClosed().subscribe(
+        (result) => {
+          if (result) {
+            this.loadMatches(this.tournament.id);
+          }
+      });
   }
 
   removeMatch(matchId: string, round: number) {

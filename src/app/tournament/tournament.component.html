@@ -23,7 +23,7 @@
     <button mat-button class="pull-right" *ngIf="editMode && rounds" (click)="addRound()">
         {{ 'ADD_ROUND' | translate }} <i class="fa fa-plus"></i>
     </button>
-    <div class="container card" *ngFor="let round of rounds.reverse()">
+    <div class="container card" *ngFor="let round of rounds">
         <div class="card-header">
             {{'ROUND' | translate}} {{round | roundpipe}}
             <button mat-button class="pull-right" *ngIf="editMode" (click)="addMatch(round)">
@@ -31,39 +31,16 @@
             </button>
         </div>
         <div class="card-body">
-            <div *ngFor="let match of getMatchesInRound(round)">
-                <button mat-button class="pull-left" *ngIf="editMode" (click)="removeMatch(match.id, round)">
-                    {{ 'REMOVE_MATCH' | translate }} <i class="fa fa-minus"></i>
-                </button>
+            <div class="card" *ngFor="let match of getMatchesInRound(round)">
                 <div class="row">
                     <div class="col" style="text-align: right;">
-                        <span *ngIf="match.home_team_id">
-                            {{ teamService.getTeamNameByID(match.home_team_id)}}
-                        </span>
-                        <br />
-                        <mat-form-field *ngIf="editMode">
-                            <mat-select #home (change)="setHomeTeam(match.id, home.value)">
-                                <mat-option *ngFor="let team of teamService.getAllTeams()" [value]="team.id">
-                                    {{team.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        {{ teamService.getTeamNameByID(match.home_team_id)}}
                     </div>
                     <div class="col" style="max-width: 2ch;text-align: center;">
                         -
                     </div>
                     <div class="col" style="text-align: left;">
-                        <span *ngIf="match.guest_team_id">
-                            {{ teamService.getTeamNameByID(match.guest_team_id) }}
-                        </span>
-                        <br />
-                        <mat-form-field *ngIf="editMode">
-                            <mat-select #guest (change)="setGuestTeam(match.id, guest.value)">
-                                <mat-option *ngFor="let team of teamService.getAllTeams()" [value]="team.id">
-                                    {{team.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        {{ teamService.getTeamNameByID(match.guest_team_id) }}
                     </div>
                     <div class="col">
                         {{ match.home_score }} : {{ match.guest_score }}
@@ -79,66 +56,18 @@
                         <p> {{ match.pitch_id }}</p>
                         <i class="fa fa-map-marker-alt"></i>
                     </div>
-                    <div class="col pull-right" *ngIf="authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
+                    <button mat-icon-button class="col pull-right" *ngIf="authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
                         <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button mat-button class="pull-right" *ngIf="editMode" (click)="removeMatch(match.id, round)">
+                            {{ 'REMOVE_MATCH' | translate }} <i class="fa fa-minus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- <mat-divider [vertical]="true"></mat-divider>
-        <div>
-            <mat-form-field *ngIf="!teamService.isLoadingTeams">
-                <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged()" [(ngModel)]="matchDay">
-                    <mat-option *ngFor="let day of matchDayCounter" [value]="day">
-                        <div *ngIf="day === 0; else match">{{ 'ALL' | translate }}</div>
-                        <ng-template #match>
-                            {{ day }}
-                        </ng-template>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </div> -->
-<!-- <div class="container matches" *ngIf="matches && !teamService.isLoadingTeams">
-        <app-loader [isLoading]="isLoadingMatches && teamService.isLoadingTeams" size="1.5"></app-loader>
-        <div class="card" *ngFor="let matchList of matches, let i = index">
-            <div class="card-header" *ngIf="matchDay === 0">
-                {{ 'MATCHDAY_PLACEHOLDER' | translate }} {{ (i + 1) }}
-            </div>
-            <div [ngClass]="{'card-body': matchDay === 0}" *ngFor="let match of matchList">
-                <div class="card container">
-                    <div class="row">
-                        <div class="col" style="text-align: right;">
-                            {{ teamService.getTeamNameByID(match.home_team_id)}}
-                        </div>
-                        <div class="col" style="max-width: 2ch;text-align: center;">
-                            -
-                        </div>
-                        <div class="col" style="text-align: left;">
-                            {{ teamService.getTeamNameByID(match.guest_team_id) }}
-                        </div>
-                        <div class="col">
-                            {{ match.home_score }} : {{ match.guest_score }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col" style="text-align:center;">
-                            <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</i>
-                            <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <div class="col">
-                            <p> {{ match.pitch_id }}</p>
-                            <i class="fa fa-map-marker-alt"></i>
-                        </div>
-                        <div class="col pull-right" *ngIf="authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
-                            <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

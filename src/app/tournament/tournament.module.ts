@@ -1,3 +1,4 @@
+import { AddMatchComponent } from './tournament.addmatch.dialog';
 import { FormsModule } from '@angular/forms';
 import { TournamentComponent } from '@app/tournament/tournament.component';
 import { TournamentRoutingModule } from './tournament-routing.module';
@@ -25,8 +26,15 @@ import { TranslateModule } from '@ngx-translate/core';
     TournamentRoutingModule,
     TranslateModule,
   ],
+  entryComponents: [
+    AddMatchComponent
+  ],
   declarations: [
-    TournamentComponent
+    TournamentComponent,
+    AddMatchComponent
+  ],
+  exports: [
+    AddMatchComponent
   ]
 })
 export class TournamentModule { }

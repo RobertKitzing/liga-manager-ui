@@ -1,5 +1,6 @@
 {
-  "ADD_MATCH": "Spiel hinzufügen",
+  "PITCH": "Spielort",
+  "ADD_MATCH": "Spiele hinzufügen",
   "ADD_ROUND": "Runde hinzufügen",
   "REMOVE_MATCH": "Spiel entfernen",
   "REMOVE_ROUND": "Runde entfernen",
