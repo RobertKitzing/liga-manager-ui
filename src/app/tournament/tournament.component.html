@@ -17,17 +17,23 @@
             </mat-form-field>
         </div>
     </div>
+    <button mat-button class="pull-left" *ngIf="editMode && rounds" (click)="removeRound()">
+        {{ 'REMOVE_ROUND' | translate }} <i class="fa fa-minus"></i>
+    </button>
+    <button mat-button class="pull-right" *ngIf="editMode && rounds" (click)="addRound()">
+        {{ 'ADD_ROUND' | translate }} <i class="fa fa-plus"></i>
+    </button>
     <div class="container card" *ngIf="rounds">
-        <div class="card-header" *ngFor="let round of rounds">
+        <div class="card-header" *ngFor="let round of rounds.reverse()">
             {{'ROUND' | translate}} {{round}}
-            <button mat-icon-button class="pull-right" *ngIf="editMode" (click)="addTeam(round)">
-                <i class="fa fa-plus"></i>
+            <button mat-button class="pull-right" *ngIf="editMode" (click)="addMatch(round)">
+                {{ 'ADD_MATCH' | translate }} <i class="fa fa-plus"></i>
             </button>
         </div>
         <div class="card-body">
             <div *ngFor="let match of matches">
-                <button mat-icon-button class="pull-left" *ngIf="editMode" (click)="removeMatch(match.id)">
-                    <i class="fa fa-minus"></i>
+                <button mat-button class="pull-left" *ngIf="editMode" (click)="removeMatch(match.id, round)">
+                    {{ 'REMOVE_MATCH' | translate }} <i class="fa fa-minus"></i>
                 </button>
                 <div class="row">
                     <div class="col" style="text-align: right;">

@@ -21,7 +21,7 @@ export class TournamentComponent implements OnInit {
   tournaments: Tournament[];
   isLoadingTournaments: boolean;
   rounds: number[];
-  matches: Match[];
+  matches: Match[][];
   isLoadingMatches: boolean;
   matchDay = 1;
   editMode: boolean = true;
@@ -44,13 +44,19 @@ export class TournamentComponent implements OnInit {
 
   selectedTournamentChanged(tournament: Tournament) {
     this.rounds = new Array<number>();
-    log.debug(tournament);
+    this.matches = new Array<Match[]>();
     for (let r = tournament.rounds; r >= 0; r--) {
       this.rounds.push(r + 1);
     }
     this.apiClient.getMatchesInTournament(tournament.id).subscribe(
       (matches) => {
-        this.matches = matches;
+        matches.forEach(
+          (match) => {
+            if (!this.matches[match.match_day - 1]) {
+              this.matches[match.match_day - 1] = new Array<Match>();
+            }
+            this.matches[match.match_day - 1].push(match);
+          });
       }
     );
   }
@@ -83,10 +89,21 @@ export class TournamentComponent implements OnInit {
     );
   }
 
-  addTeam(round: number) {
+  addRound() {
+    this.rounds.push(this.rounds.length + 1);
+    log.debug(this.rounds);
+  }
+
+  removeRound() {
+    this.rounds.splice(this.rounds.length - 1, 1);
+  }
+
+  addMatch(round: number) {
+    log.debug(round);
     const match: Match = new Match();
+    match.match_day = round;
     match.id = Math.random().toString();
-    this.matches.push(match);
+    this.matches[round].push(match);
   }
 
   removeMatch(matchId: string) {

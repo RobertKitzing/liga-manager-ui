@@ -1,4 +1,8 @@
 {
+  "ADD_MATCH": "Spiel hinzufügen",
+  "ADD_ROUND": "Runde hinzufügen",
+  "REMOVE_MATCH": "Spiel entfernen",
+  "REMOVE_ROUND": "Runde entfernen",
   "ROUND": "Runde",
   "EDIT": "Bearbeiten",
   "LOGIN": "Anmelden",

@@ -1,4 +1,8 @@
 {
+  "ADD_MATCH": "add Match",
+  "ADD_ROUND": "add Round",
+  "REMOVE_MATCH": "remove Match",
+  "REMOVE_ROUND": "remove Round",
   "ROUND": "Round",
   "EDIT": "edit",
   "LOGIN": "Login",
