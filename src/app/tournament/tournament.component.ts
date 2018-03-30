@@ -4,7 +4,7 @@ import { TeamService } from './../service/team.service';
 import { MatDialog } from '@angular/material';
 import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { AuthenticationService } from './../core/authentication/authentication.service';
-import { Tournament, Client, Team, CreateTournamentBody } from './../api/openapi';
+import { Tournament, Client, Team, CreateTournamentBody, Pitch } from './../api/openapi';
 import { SeasonService } from '@app/service/season.service';
 import { Match } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
@@ -28,6 +28,7 @@ export class TournamentComponent implements OnInit {
   editMode: boolean;
   teams: Team[];
   newTournament: string;
+  pitches: Pitch[];
 
   constructor(public authService: AuthenticationService,
               public dialog: MatDialog,
@@ -35,9 +36,10 @@ export class TournamentComponent implements OnInit {
               public teamService: TeamService,
               public i18Service: I18nService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadTournaments();
     this.teams = this.teamService.getAllTeams();
+    this.pitches = await this.loadPitches();
   }
 
   loadTournaments() {
@@ -79,9 +81,6 @@ export class TournamentComponent implements OnInit {
     return c1 && c2 && c1.name === c2.name;
   }
 
-  test() {
-    log.debug('test');
-  }
   openEditDialog(matchId: string) {
     log.debug(matchId);
     const dialogRef = this.dialog.open(EditMatchDialogComponent, {
@@ -99,9 +98,10 @@ export class TournamentComponent implements OnInit {
   updateSingleMatch(matchId: string)  {
     this.apiClient.getMatch(matchId).subscribe(
       (match) => {
-          // if (j !== -1) {
-          //   this.matches[j] = match;
-          // }
+          const index = this.matches.findIndex(m => m.id === matchId);
+          if (index !== -1) {
+            this.matches[index] = match;
+          }
       }
     );
   }
@@ -155,5 +155,24 @@ export class TournamentComponent implements OnInit {
         this.loadTournaments();
       }
     );
+  }
+
+  async loadPitches(): Promise<Pitch[]> {
+    return new Promise<Pitch[]>(
+      (resolve) => {
+        this.apiClient.getAllPitches().subscribe(
+          (pitches) => {
+            resolve(pitches);
+          },
+          (error) => {
+            resolve(null);
+          }
+        );
+      }
+    );
+  }
+
+  getPitchLabel(pitchId: string): string {
+    return this.pitches ? this.pitches.find(p => p.id === pitchId).label : null;
   }
 }

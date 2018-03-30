@@ -18,25 +18,28 @@
         </div>
         <mat-divider [vertical]="true"></mat-divider>
         <div *ngIf="authService.isAdminUser">
-          <mat-form-field>
-            <input matInput [(ngModel)]="newTournament" placeholder="{{ 'NEW_TOURNAMENT' | translate }}"/>
-          </mat-form-field>
-          <button mat-icon-button (click)="addTournament()">
-              <i class="fa fa-plus"></i>
-          </button>
+            <mat-form-field>
+                <input matInput [(ngModel)]="newTournament" placeholder="{{ 'NEW_TOURNAMENT' | translate }}" />
+            </mat-form-field>
+            <button mat-icon-button (click)="addTournament()">
+                <i class="fa fa-plus"></i>
+            </button>
         </div>
     </div>
     <button mat-button class="pull-left" *ngIf="editMode && rounds" (click)="removeRound()">
-        {{ 'REMOVE_ROUND' | translate }} <i class="fa fa-minus"></i>
+        {{ 'REMOVE_ROUND' | translate }}
+        <i class="fa fa-minus"></i>
     </button>
     <button mat-button class="pull-right" *ngIf="editMode && rounds" (click)="addRound()">
-        {{ 'ADD_ROUND' | translate }} <i class="fa fa-plus"></i>
+        {{ 'ADD_ROUND' | translate }}
+        <i class="fa fa-plus"></i>
     </button>
     <div class="container card" *ngFor="let round of rounds">
         <div class="card-header">
             {{'ROUND' | translate}} {{round | roundpipe}}
             <button mat-button class="pull-right" *ngIf="editMode" (click)="addMatch(round)">
-                {{ 'CREATE_ROUND' | translate }} <i class="fa fa-plus"></i>
+                {{ 'CREATE_ROUND' | translate }}
+                <i class="fa fa-plus"></i>
             </button>
         </div>
         <div class="card-body">
@@ -61,9 +64,9 @@
                         <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <div class="col">
-                        <p> {{ match.pitch_id }}</p>
-                        <i class="fa fa-map-marker-alt"></i>
+                    <div class="col" *ngIf="match.pitch_id">
+                        {{ getPitchLabel(match.pitch_id) }}
+                        <i class="fa fa-map-marker"></i>
                     </div>
                     <div class="col pull-right" *ngIf="editMode || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
                         <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
@@ -72,7 +75,8 @@
                 <div class="row">
                     <div class="col">
                         <button mat-button class="pull-right" *ngIf="editMode" (click)="removeMatch(match.id, round)">
-                            {{ 'REMOVE_MATCH' | translate }} <i class="fa fa-minus"></i>
+                            {{ 'REMOVE_MATCH' | translate }}
+                            <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
