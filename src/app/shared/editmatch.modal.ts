@@ -81,14 +81,19 @@ const log = new Logger('EditMatchDialogComponent');
     }
 
     createNewPitch() {
-      const body: CreatePitchBody = new CreatePitchBody();
-      body.label = this.pitchLabel;
-      this.apiClient.createPitch(body).subscribe(
-        (pitchId) => {
-          log.debug(pitchId);
-          this.pitchId = pitchId.id;
-        }
-      );
+      // const body: CreatePitchBody = new CreatePitchBody();
+      // body.label = this.pitchLabel;
+      // this.apiClient.createPitch(body).subscribe(
+      //   (pitchId) => {
+      //     log.debug(pitchId);
+      //     this.pitchId = pitchId.id;
+      //   }
+      // );
+      const pitch: Pitch = new Pitch();
+      pitch.label = this.pitchLabel;
+      pitch.id = Math.random().toString();
+      this.pitches.push(pitch);
+      log.debug(this.pitches);
     }
 
     setKickoffTime() {
@@ -121,5 +126,4 @@ const log = new Logger('EditMatchDialogComponent');
       }
       this.dialogRef.close({matchId: this.match.id});
     }
-    
 }

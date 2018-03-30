@@ -36,11 +36,11 @@
         <div class="row">
             <div class="col">
                 <mat-form-field>
-                    <mat-option [(ngModel)]="match.pitch_id">
-                        <mat-select *ngFor="let pitch of pitches" [value]="pitch.id">
+                    <mat-select [(value)]="match.pitch_id">
+                        <mat-option *ngFor="let pitch of pitches" [value]="pitch.id">
                             {{pitch.label}}
-                        </mat-select>
-                    </mat-option>
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="pitchLabel" />
@@ -52,7 +52,7 @@
                         </mat-option>
                     </mat-autocomplete> -->
                 </mat-form-field>
-                <button mat-icon-button (click)="createNewPitch()">
+                <button mat-button (click)="createNewPitch()">
                     {{ 'CREATE_PITCH' | translate}} <i class="fa fa-plus"></i>
                 </button>
             </div>
