@@ -33,7 +33,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row" *ngIf="match.pitch_id">
+        <div class="row" *ngIf="pitch">
             <div class="col-10">
                 {{ pitch.label}}
             </div>
@@ -45,7 +45,7 @@
                 <mat-form-field style="width: 100%;">
                     <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="pitch"
                            [matAutocomplete]="pitchAutoComplete" [formControl]="stateCtrl"/>
-                    <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
+                    <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch" (optionSelected)="onPitchSelect(pitch)">
                         <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
                             <span>{{ pitch.label }}</span>
                         </mat-option>

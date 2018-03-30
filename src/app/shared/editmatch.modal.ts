@@ -21,8 +21,6 @@ const log = new Logger('EditMatchDialogComponent');
     stateCtrl: FormControl = new FormControl();
     filteredPitches: Observable<Pitch[]>;
     pitches: Pitch[];
-    pitchLabel: string;
-    pitchId: string;
     pitch: Pitch;
 
     public match: Match;
@@ -53,6 +51,10 @@ const log = new Logger('EditMatchDialogComponent');
       );
     }
 
+    onPitchSelect(pitch: Pitch) {
+      this.pitch = pitch;
+      log.debug(pitch);
+    }
 
     filterPitches(searchTerm: string): Pitch[] {
       return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
@@ -102,11 +104,6 @@ const log = new Logger('EditMatchDialogComponent');
       //     this.pitchId = pitchId.id;
       //   }
       // );
-      const pitch: Pitch = new Pitch();
-      pitch.label = this.pitchLabel;
-      pitch.id = Math.random().toString();
-      this.pitches.push(pitch);
-      log.debug(this.pitches);
     }
 
     setKickoffTime() {
@@ -138,7 +135,7 @@ const log = new Logger('EditMatchDialogComponent');
         await this.apiClient.scheduleMatch(this.match.id, date).toPromise();
       }
 
-      if (this.pitchId) {
+      if (this.pitch) {
         const body: LocateMatchBody = new LocateMatchBody();
         body.pitch_id = this.pitch.id;
         await this.apiClient.locateMatch(this.match.id, body).toPromise();

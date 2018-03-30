@@ -1,6 +1,6 @@
 import { I18nService } from './../core/i18n.service';
 import { EditMatchDialogComponent } from './../shared/editmatch.modal';
-import { SubmitMatchResultBody } from './../api/openapi';
+import { SubmitMatchResultBody, Pitch } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -18,7 +18,7 @@ const log = new Logger('Matchplan');
   templateUrl: './matchplan.component.html',
   styleUrls: ['./matchplan.component.scss']
 })
-export class MatchplanComponent implements OnInit, OnDestroy  {
+export class MatchplanComponent implements OnInit, OnDestroy {
 
   version: string = environment.version;
   seasons: Season[];
@@ -31,13 +31,14 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   matchDayCounter: number[] = new Array<number>();
 
   editMatch: string;
+  pitches: Pitch[];
 
   constructor(private apiClient: Client,
-              public seasonService: SeasonService,
-              public teamService: TeamService,
-              public i18Service: I18nService,
-              public dialog: MatDialog,
-              public authService: AuthenticationService) { }
+    public seasonService: SeasonService,
+    public teamService: TeamService,
+    public i18Service: I18nService,
+    public dialog: MatDialog,
+    public authService: AuthenticationService) { }
 
   async ngOnInit() {
     this.seasonsSub = this.seasonService.season.subscribe(
@@ -62,6 +63,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
     if (this.season) {
       this.loadMatches();
     }
+    this.pitches = await this.loadPitches();
   }
 
   openEditDialog(matchId: string) {
@@ -74,10 +76,10 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         if (result) {
           this.updateSingleMatch(result.matchId);
         }
-    });
+      });
   }
 
-  updateSingleMatch(matchId: string)  {
+  updateSingleMatch(matchId: string) {
     this.apiClient.getMatch(matchId).subscribe(
       (match) => {
         const index: number = 0;
@@ -107,7 +109,7 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
   loadMatches() {
     this.isLoadingMatches = true;
     this.matches = new Array<Match[]>();
-    if ( this.matchDay === 0) {
+    if (this.matchDay === 0) {
       for (let i = 1; i <= this.season.match_day_count; i++) {
         this.apiClient.getMatchesInSeason(this.season.id, i, null, null, null).subscribe(
           (matches: Match[]) => {
@@ -136,5 +138,24 @@ export class MatchplanComponent implements OnInit, OnDestroy  {
         }
       );
     }
+  }
+
+  async loadPitches(): Promise<Pitch[]> {
+    return new Promise<Pitch[]>(
+      (resolve) => {
+        this.apiClient.getAllPitches().subscribe(
+          (pitches) => {
+            resolve(pitches);
+          },
+          (error) => {
+            resolve(null);
+          }
+        );
+      }
+    );
+  }
+
+  getPitchLabel(pitchId: string): string {
+    return this.pitches ? this.pitches.find(p => p.id === pitchId).label : null;
   }
 }
