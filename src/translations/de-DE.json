@@ -1,4 +1,7 @@
 {
+  "START_ROUND": "Runde starten",
+  "CREATE_ROUND":"Runde erstellen",
+  "NEW_TOURNAMENT": "Neuer Pokal",
   "PITCH": "Spielort",
   "ADD_MATCH": "Spiele hinzufügen",
   "ADD_ROUND": "Runde hinzufügen",

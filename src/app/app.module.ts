@@ -57,7 +57,7 @@ import { AppRoutingModule } from './app-routing.module';
     Client,
     {
       provide: API_BASE_URL,
-      useValue: 'https://soccer-api.skilled-by-nature.de'
+      useValue: 'http://localhost'
     },
     {
       provide: HTTP_INTERCEPTORS,

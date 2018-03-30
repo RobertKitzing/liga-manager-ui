@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col">
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="{{ 'PITCH' | translate }}" />
+                    <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="pitchLabel" />
                     <!-- <mat-autocomplete #pitch>
                         [matAutocomplete]="pitch" [formControl]="stateCtrl"
                         <mat-option *ngFor="let pitch of pitches | async" [value]="state.name">
@@ -45,6 +45,9 @@
                         </mat-option>
                     </mat-autocomplete> -->
                 </mat-form-field>
+                <button mat-icon-button (click)="createNewPitch()">
+                    <i class="fa fa-plus"></i>
+                </button>
             </div>
         </div>
     </mat-dialog-content>

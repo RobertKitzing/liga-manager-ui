@@ -1,5 +1,5 @@
 import { Team_id_tuple } from './../api/openapi';
-import { Client } from '@app/api/openapi';
+import { Client, Team } from '@app/api/openapi';
 import { TeamService } from './../service/team.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -20,6 +20,7 @@ export class AddMatchComponent implements OnInit {
     guestTeamId: string;
 
     teams: Team_id_tuple[] = new Array<Team_id_tuple>();
+    teamList: Team[];
 
     constructor(
         public dialogRef: MatDialogRef<AddMatchComponent>,
@@ -27,10 +28,14 @@ export class AddMatchComponent implements OnInit {
         private apiClient: Client,
         @Inject(MAT_DIALOG_DATA) public data: AddMatchData) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.teamList = this.teamService.getAllTeams();
+     }
 
     addTeam() {
         this.teams.push(<Team_id_tuple>{home_team_id: this.homeTeamId, guest_team_id: this.guestTeamId});
+        this.teamList = this.teamList.filter(t => t.id !== this.homeTeamId);
+        this.teamList = this.teamList.filter(t => t.id !== this.guestTeamId);
         delete this.homeTeamId;
         delete this.guestTeamId;
     }

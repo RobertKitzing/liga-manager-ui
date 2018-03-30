@@ -19,14 +19,14 @@
         <div class="col">
             <mat-form-field>
                 <mat-select #home placeholder="{{ 'HOME_SCORE_PLACEHOLDER' | translate}}" required [(ngModel)]="homeTeamId">
-                    <mat-option *ngFor="let team of teamService.getAllTeams()" [value]="team.id">
+                    <mat-option *ngFor="let team of teamList" [value]="team.id">
                         {{team.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
                 <mat-select #guest placeholder="{{ 'GUEST_SCORE_PLACEHOLDER' | translate}}" required [(ngModel)]="guestTeamId">
-                    <mat-option *ngFor="let team of teamService.getAllTeams()" [value]="team.id">
+                    <mat-option *ngFor="let team of teamList" [value]="team.id">
                         {{team.name}}
                     </mat-option>
                 </mat-select>
@@ -36,7 +36,11 @@
             <i class="fa fa-plus"></i>
         </button>
     </div>
-    <button mat-button (click)="createMatch()">
-        {{ 'ADD_MATCH' | translate }}
-    </button>
+    <div class="row">
+        <div class="col-12">
+            <button mat-button (click)="createMatch()">
+                {{ 'START_ROUND' | translate }}
+            </button>
+        </div>
+    </div>
 </div>

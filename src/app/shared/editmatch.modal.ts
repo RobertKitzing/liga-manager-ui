@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { I18nService } from '@app/core';
-import { SubmitMatchResultBody, ScheduleMatchBody, Pitch } from './../api/openapi';
+import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { Client, Match } from '@app/api/openapi';
 import { Logger } from './../core/logger.service';
@@ -21,6 +21,8 @@ const log = new Logger('EditMatchDialogComponent');
     stateCtrl: FormControl = new FormControl();
     filteredPitches: Observable<Pitch[] | Promise<Pitch[]>>;
     pitches: Pitch[];
+    pitchLabel: string;
+    pitchId: string;
 
     public match: Match;
     public kickoffTime: string;
@@ -74,6 +76,17 @@ const log = new Logger('EditMatchDialogComponent');
             this.kickoffTime = match.kickoff.getHours().toString().padStart(2, '0') + ':' +
                                match.kickoff.getMinutes().toString().padStart(2, '0');
           }
+        }
+      );
+    }
+
+    createNewPitch() {
+      const body: CreatePitchBody = new CreatePitchBody();
+      body.label = this.pitchLabel;
+      this.apiClient.createPitch(body).subscribe(
+        (pitchId) => {
+          log.debug(pitchId);
+          this.pitchId = pitchId.id;
         }
       );
     }

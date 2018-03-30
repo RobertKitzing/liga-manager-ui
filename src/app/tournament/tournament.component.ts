@@ -4,7 +4,7 @@ import { TeamService } from './../service/team.service';
 import { MatDialog } from '@angular/material';
 import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { AuthenticationService } from './../core/authentication/authentication.service';
-import { Tournament, Client, Team } from './../api/openapi';
+import { Tournament, Client, Team, CreateTournamentBody } from './../api/openapi';
 import { SeasonService } from '@app/service/season.service';
 import { Match } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
@@ -27,6 +27,7 @@ export class TournamentComponent implements OnInit {
   matchDay = 1;
   editMode: boolean;
   teams: Team[];
+  newTournament: string;
 
   constructor(public authService: AuthenticationService,
               public dialog: MatDialog,
@@ -35,15 +36,23 @@ export class TournamentComponent implements OnInit {
               public i18Service: I18nService) { }
 
   ngOnInit() {
+    this.loadTournaments();
+    this.teams = this.teamService.getAllTeams();
+  }
+
+  loadTournaments() {
     this.isLoadingTournaments = true;
     this.apiClient.getAllTournaments().subscribe(
       (tournaments) => {
         this.tournaments = tournaments;
-        log.debug(tournaments);
+      },
+      (error) => {
+
+      },
+      () => {
         this.isLoadingTournaments = false;
       }
     );
-    this.teams = this.teamService.getAllTeams();
   }
 
   selectedTournamentChanged(tournament: Tournament) {
@@ -70,7 +79,11 @@ export class TournamentComponent implements OnInit {
     return c1 && c2 && c1.name === c2.name;
   }
 
+  test() {
+    log.debug('test');
+  }
   openEditDialog(matchId: string) {
+    log.debug(matchId);
     const dialogRef = this.dialog.open(EditMatchDialogComponent, {
       data: { matchId: matchId }
     });
@@ -132,5 +145,15 @@ export class TournamentComponent implements OnInit {
 
   getMatchesInRound(round: number): Match[] {
     return this.matches.filter(m => m.match_day === round);
+  }
+
+  addTournament() {
+    const body: CreateTournamentBody = new CreateTournamentBody();
+    body.name = this.newTournament;
+    this.apiClient.createTournament(body).subscribe(
+      () => {
+        this.loadTournaments();
+      }
+    );
   }
 }
