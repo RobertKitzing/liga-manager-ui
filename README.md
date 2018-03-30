@@ -6,3 +6,19 @@
 
 # Client Generation
  npm run nswag
+
+ # webserver Config
+
+ simply route request to index.html (spa config)
+
+     location / {
+        root /var/www;
+        try_files $uri $uri/ /index.html;
+    }
+nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ui/www:/var/www
