@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { I18nService } from '@app/core';
-import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody } from './../api/openapi';
+import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody, LocateMatchBody } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { Client, Match } from '@app/api/openapi';
 import { Logger } from './../core/logger.service';
@@ -19,10 +19,11 @@ const log = new Logger('EditMatchDialogComponent');
   export class EditMatchDialogComponent implements OnInit {
 
     stateCtrl: FormControl = new FormControl();
-    filteredPitches: Observable<Pitch[] | Promise<Pitch[]>>;
+    filteredPitches: Observable<Pitch[]>;
     pitches: Pitch[];
     pitchLabel: string;
     pitchId: string;
+    pitch: Pitch;
 
     public match: Match;
     public kickoffTime: string;
@@ -34,11 +35,6 @@ const log = new Logger('EditMatchDialogComponent');
       private adapter: DateAdapter<any>,
       public i18Service: I18nService,
       @Inject(MAT_DIALOG_DATA) public data: any) {
-    }
-
-    filterPitches(searchTerm: string) {
-      log.debug(searchTerm);
-      return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
 
     async loadPitches(): Promise<Pitch[]> {
@@ -57,12 +53,18 @@ const log = new Logger('EditMatchDialogComponent');
       );
     }
 
+
+    filterPitches(searchTerm: string): Pitch[] {
+      return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+    }
+
     async ngOnInit() {
       this.adapter.setLocale(this.i18Service.language2Char);
       this.pitches = await this.loadPitches();
       this.filteredPitches = this.stateCtrl.valueChanges
       .pipe(
-        startWith(''),
+        startWith<string | Pitch>(''),
+        map(value => typeof value === 'string' ? value : value.label),
         map((pitch) => pitch ? this.filterPitches(pitch) : this.pitches.slice())
       );
       this.apiClient.getMatch(this.data.matchId).subscribe(
@@ -76,8 +78,19 @@ const log = new Logger('EditMatchDialogComponent');
             this.kickoffTime = match.kickoff.getHours().toString().padStart(2, '0') + ':' +
                                match.kickoff.getMinutes().toString().padStart(2, '0');
           }
+          if (match.pitch_id) {
+            this.apiClient.getPitch(match.pitch_id).subscribe(
+              (pitch) => {
+                this.pitch = pitch;
+              }
+            );
+          }
         }
       );
+    }
+
+    displayPitch(pitch?: Pitch): string | undefined {
+      return pitch ? pitch.label : undefined;
     }
 
     createNewPitch() {
@@ -123,6 +136,12 @@ const log = new Logger('EditMatchDialogComponent');
         const date: ScheduleMatchBody = new ScheduleMatchBody();
         date.kickoff = new Date(this.match.kickoff.toUTCString());
         await this.apiClient.scheduleMatch(this.match.id, date).toPromise();
+      }
+
+      if (this.pitchId) {
+        const body: LocateMatchBody = new LocateMatchBody();
+        body.pitch_id = this.pitch.id;
+        await this.apiClient.locateMatch(this.match.id, body).toPromise();
       }
       this.dialogRef.close({matchId: this.match.id});
     }

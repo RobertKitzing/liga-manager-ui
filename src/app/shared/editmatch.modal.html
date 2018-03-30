@@ -33,28 +33,27 @@
                 </mat-form-field>
             </div>
         </div>
+        <div class="row" *ngIf="match.pitch_id">
+            <div class="col-10">
+                {{ pitch.label}}
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
         <div class="row">
             <div class="col">
-                <mat-form-field>
-                    <mat-select [(value)]="match.pitch_id">
-                        <mat-option *ngFor="let pitch of pitches" [value]="pitch.id">
-                            {{pitch.label}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
                 <mat-form-field style="width: 100%;">
-                    <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="pitchLabel" />
-                    <!-- <mat-autocomplete #pitch>
-                        [matAutocomplete]="pitch" [formControl]="stateCtrl"
-                        <mat-option *ngFor="let pitch of pitches | async" [value]="state.name">
-                            <span>{{ state.name }}</span> |
-                            <small>Population: {{state.population}}</small>
+                    <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="pitch"
+                           [matAutocomplete]="pitchAutoComplete" [formControl]="stateCtrl"/>
+                    <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
+                        <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
+                            <span>{{ pitch.label }}</span>
                         </mat-option>
-                    </mat-autocomplete> -->
+                    </mat-autocomplete>
                 </mat-form-field>
-                <button mat-button (click)="createNewPitch()">
+                <!-- <button mat-button (click)="createNewPitch()" *ngIf="filteredPitches">
                     {{ 'CREATE_PITCH' | translate}} <i class="fa fa-plus"></i>
-                </button>
+                </button> -->
             </div>
         </div>
     </mat-dialog-content>
