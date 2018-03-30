@@ -16,10 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-    CommonModule,
     FlexLayoutModule,
     MaterialModule,
     SharedModule,

@@ -65,9 +65,9 @@
                         <p> {{ match.pitch_id }}</p>
                         <i class="fa fa-map-marker-alt"></i>
                     </div>
-                    <button mat-icon-button class="col pull-right" *ngIf="editMode || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
+                    <div class="col pull-right" *ngIf="editMode || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
                         <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
-                    </button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
