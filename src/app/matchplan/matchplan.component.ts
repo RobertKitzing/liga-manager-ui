@@ -155,7 +155,7 @@ export class MatchplanComponent implements OnInit, OnDestroy {
     );
   }
 
-  getPitchLabel(pitchId: string): string {
-    return this.pitches ? this.pitches.find(p => p.id === pitchId).label : null;
+  getPitch(pitchId: string): Pitch {
+    return this.pitches.find(p => p.id === pitchId);
   }
 }

@@ -1,17 +1,17 @@
 <app-loader [isLoading]="!match" size="1.5"></app-loader>
-<div *ngIf="match">
+<div *ngIf="match" class="container">
     <h2 mat-dialog-title>
         {{ teamService.getTeamNameByID(match.home_team_id)}} - {{ teamService.getTeamNameByID(match.guest_team_id)}}
     </h2>
     <mat-dialog-content class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-sm-6">
                 <mat-form-field style="width: 100%;">
                     <input matInput type="number" min="0" max="99" placeholder="{{'HOME_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.home_score"
                     />
                 </mat-form-field>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-sm-6">
                 <mat-form-field style="width: 100%;">
                     <input matInput type="number" min="0" max="99" placeholder="{{'GUEST_SCORE_PLACEHOLDER' | translate}}" [(ngModel)]="match.guest_score"
                     />
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-sm-6">
                 <mat-form-field style="width:100%">
                     <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER' | translate }}" [(ngModel)]="match.kickoff"
                         (dateChange)="onDateChanged($event)" />
@@ -27,7 +27,7 @@
                     <mat-datepicker #kickoffDatePicker [touchUi]="true"></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-sm-6">
                 <mat-form-field style="width:100%;">
                     <input matInput type="time" [(ngModel)]="kickoffTime" (change)="setKickoffTime()" />
                 </mat-form-field>
@@ -58,7 +58,15 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button mat-dialog-close>{{ 'CANCEL' | translate}}</button>
-        <button mat-button (click)="onSaveClicked()">{{ 'SAVE' | translate }}</button>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <button mat-button mat-dialog-close>{{ 'CANCEL' | translate}}</button>
+                </div>
+                <div class="col">
+                    <button mat-button (click)="onSaveClicked()">{{ 'SAVE' | translate }}</button>
+                </div>
+            </div>
+        </div>
     </mat-dialog-actions>
 </div>

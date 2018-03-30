@@ -56,9 +56,11 @@
             <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
             <i class="fa fa-calendar"></i>
           </div>
-          <div class="col" *ngIf="match.pitch_id">
-            {{ getPitchLabel(match.pitch_id) }}
-            <i class="fa fa-map-marker"></i>
+          <div class="col" *ngIf="pitches && match.pitch_id">
+            <a href="https://www.google.com/maps/?q={{getPitch(match.pitch_id).location_latitude}},{{getPitch(match.pitch_id).location_longitude}}" target="_blank" style="cursor: pointer;">
+              {{ getPitch(match.pitch_id).label }}
+              <i class="fa fa-map-marker"></i>
+            </a>
           </div>
           <div class="col pull-right" *ngIf="authService.isAdminUser || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
               <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
