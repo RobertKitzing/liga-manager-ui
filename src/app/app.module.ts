@@ -7,7 +7,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { Client, API_BASE_URL } from './api/openapi';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, InjectionToken } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -26,6 +26,7 @@ import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
 import { TableModule } from './table/table.module';
 import { AppRoutingModule } from './app-routing.module';
+export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_KEY');
 
 @NgModule({
   imports: [
@@ -63,7 +64,11 @@ import { AppRoutingModule } from './app-routing.module';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-  }
+    },
+    {
+      provide: GOOGLE_MAPS_API_KEY,
+      useValue: 'AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0'
+    }
   ],
   bootstrap: [AppComponent]
 })

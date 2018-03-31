@@ -1,3 +1,4 @@
+import { GOOGLE_MAPS_API_KEY } from './../app.module';
 import { Observable } from 'rxjs/Observable';
 import { I18nService } from '@app/core';
 import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody, LocateMatchBody } from './../api/openapi';
@@ -11,6 +12,9 @@ import { startWith, map } from 'rxjs/operators';
 
 const log = new Logger('EditMatchDialogComponent');
 
+export interface EditMatchdata {
+  matchId: string;
+}
 @Component({
     selector: 'app-edit-match-modal',
     templateUrl: 'editmatch.modal.html',
@@ -22,7 +26,7 @@ const log = new Logger('EditMatchDialogComponent');
     filteredPitches: Observable<Pitch[]>;
     pitches: Pitch[];
     pitch: Pitch;
-
+    showCreateNewPitch: boolean;
     public match: Match;
     public kickoffTime: string;
 
@@ -32,7 +36,8 @@ const log = new Logger('EditMatchDialogComponent');
       public teamService: TeamService,
       private adapter: DateAdapter<any>,
       public i18Service: I18nService,
-      @Inject(MAT_DIALOG_DATA) public data: any) {
+      @Inject(MAT_DIALOG_DATA) public data: EditMatchdata,
+      @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
     }
 
     async loadPitches(): Promise<Pitch[]> {

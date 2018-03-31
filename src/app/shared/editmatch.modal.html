@@ -58,9 +58,18 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <!-- <button mat-button (click)="createNewPitch()" *ngIf="filteredPitches">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="text-align:center;">
+                <button mat-button (click)="showCreateNewPitch = !showCreateNewPitch">
                     {{ 'CREATE_PITCH' | translate}} <i class="fa fa-plus"></i>
-                </button> -->
+                </button>
+            </div>
+        </div>
+        <div class="row" *ngIf="showCreateNewPitch">
+            <div class="col">
+                Test
             </div>
         </div>
     </mat-dialog-content>
