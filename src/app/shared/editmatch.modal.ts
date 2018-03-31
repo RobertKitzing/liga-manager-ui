@@ -45,11 +45,6 @@ export interface EditMatchdata {
     }
 
     async ngOnInit() {
-      this.geocoder.geocode({ 'address': 'Bremen'},
-      (result) => {
-        log.debug(result);
-      }
-    );
       this.adapter.setLocale(this.i18Service.language2Char);
       this.pitches = await this.loadPitches();
       this.filteredPitches = this.stateCtrl.valueChanges
@@ -111,6 +106,12 @@ export interface EditMatchdata {
     }
 
     createNewPitch() {
+      this.geocoder.geocode({ 'address': 'Bremen'},
+      (result, status) => {
+        log.debug(result);
+        log.debug(status);
+      }
+      );
       // const body: CreatePitchBody = new CreatePitchBody();
       // body.label = this.pitchLabel;
       // this.apiClient.createPitch(body).subscribe(
