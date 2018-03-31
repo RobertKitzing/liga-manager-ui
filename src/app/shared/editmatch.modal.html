@@ -69,7 +69,9 @@
         </div>
         <div class="row" *ngIf="showCreateNewPitch">
             <div class="col">
-                Test
+                <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="{{ 'ADRESS' | translate }}" [(ngModel)]="adressSearch"/>
+                </mat-form-field>
             </div>
         </div>
     </mat-dialog-content>

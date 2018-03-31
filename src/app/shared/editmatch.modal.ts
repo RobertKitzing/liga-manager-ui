@@ -9,6 +9,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, DateAdapter } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { } from '@types/googlemaps';
 
 const log = new Logger('EditMatchDialogComponent');
 
@@ -22,6 +23,8 @@ export interface EditMatchdata {
   })
   export class EditMatchDialogComponent implements OnInit {
 
+    geocoder = new google.maps.Geocoder();
+
     stateCtrl: FormControl = new FormControl();
     filteredPitches: Observable<Pitch[]>;
     pitches: Pitch[];
@@ -29,6 +32,7 @@ export interface EditMatchdata {
     showCreateNewPitch: boolean;
     public match: Match;
     public kickoffTime: string;
+    adressSearch: string;
 
     constructor(
       public dialogRef: MatDialogRef<EditMatchDialogComponent>,
@@ -40,32 +44,12 @@ export interface EditMatchdata {
       @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
     }
 
-    async loadPitches(): Promise<Pitch[]> {
-      return new Promise<Pitch[]>(
-        (resolve) => {
-          this.apiClient.getAllPitches().subscribe(
-                (pitches) => {
-                  console.log(pitches);
-                  resolve(pitches);
-                },
-                (error) => {
-                  resolve(null);
-                }
-              );
-        }
-      );
-    }
-
-    onPitchSelect(pitch: Pitch) {
-      this.pitch = pitch;
-      log.debug(pitch);
-    }
-
-    filterPitches(searchTerm: string): Pitch[] {
-      return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
-    }
-
     async ngOnInit() {
+      this.geocoder.geocode({ 'address': 'Bremen'},
+      (result) => {
+        log.debug(result);
+      }
+    );
       this.adapter.setLocale(this.i18Service.language2Char);
       this.pitches = await this.loadPitches();
       this.filteredPitches = this.stateCtrl.valueChanges
@@ -95,6 +79,32 @@ export interface EditMatchdata {
         }
       );
     }
+
+    async loadPitches(): Promise<Pitch[]> {
+      return new Promise<Pitch[]>(
+        (resolve) => {
+          this.apiClient.getAllPitches().subscribe(
+                (pitches) => {
+                  console.log(pitches);
+                  resolve(pitches);
+                },
+                (error) => {
+                  resolve(null);
+                }
+              );
+        }
+      );
+    }
+
+    onPitchSelect(pitch: Pitch) {
+      this.pitch = pitch;
+      log.debug(pitch);
+    }
+
+    filterPitches(searchTerm: string): Pitch[] {
+      return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+    }
+
 
     displayPitch(pitch?: Pitch): string | undefined {
       return pitch ? pitch.label : undefined;
