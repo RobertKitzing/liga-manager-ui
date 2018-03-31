@@ -1,9 +1,10 @@
+import { GOOGLE_MAPS_API_KEY } from './../app.module';
 import { I18nService } from './../core/i18n.service';
 import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { SubmitMatchResultBody, Pitch } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { SeasonService } from '@app/service/season.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { Client, Season, Match, SeasonState } from '@app/api/openapi';
@@ -38,9 +39,11 @@ export class MatchplanComponent implements OnInit, OnDestroy {
     public teamService: TeamService,
     public i18Service: I18nService,
     public dialog: MatDialog,
-    public authService: AuthenticationService) { }
+    public authService: AuthenticationService,
+    @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) { }
 
   async ngOnInit() {
+    this.loadGoogleMapsScript();
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
         log.debug(season);
@@ -64,6 +67,13 @@ export class MatchplanComponent implements OnInit, OnDestroy {
       this.loadMatches();
     }
     this.pitches = await this.loadPitches();
+  }
+
+  loadGoogleMapsScript() {
+    const tag = document.createElement('script');
+    tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.mapsApiKey;
+    tag.type = 'text/javascript';
+    document.body.appendChild(tag);
   }
 
   updateSingleMatch(matchId: string) {

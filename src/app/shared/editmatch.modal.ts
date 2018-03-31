@@ -40,11 +40,11 @@ export interface EditMatchdata {
       public teamService: TeamService,
       private adapter: DateAdapter<any>,
       public i18Service: I18nService,
-      @Inject(MAT_DIALOG_DATA) public data: EditMatchdata,
-      @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
+      @Inject(MAT_DIALOG_DATA) public data: EditMatchdata) {
     }
 
     async ngOnInit() {
+      
       this.adapter.setLocale(this.i18Service.language2Char);
       this.pitches = await this.loadPitches();
       this.filteredPitches = this.stateCtrl.valueChanges
