@@ -71,7 +71,7 @@ export class MatchplanComponent implements OnInit, OnDestroy {
 
   loadGoogleMapsScript() {
     const tag = document.createElement('script');
-    tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.mapsApiKey;
+    tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.mapsApiKey + '&libraries=places';
     tag.type = 'text/javascript';
     document.body.appendChild(tag);
   }

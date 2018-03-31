@@ -18,6 +18,7 @@
                 </mat-form-field>
             </div>
         </div>
+        <mat-divider></mat-divider>
         <div class="row">
             <div class="col-12 col-sm-6">
                 <mat-form-field style="width:100%">
@@ -62,7 +63,7 @@
         </div>
         <div class="row">
             <div class="col" style="text-align:center;">
-                <button mat-button (click)="createNewPitch();">
+                <button mat-button (click)="onShowCreateNewPitch()">
                     {{ 'CREATE_PITCH' | translate}} <i class="fa fa-plus"></i>
                 </button>
             </div>
@@ -70,7 +71,7 @@
         <div class="row" *ngIf="showCreateNewPitch">
             <div class="col">
                 <mat-form-field style="width: 100%;">
-                        <input matInput placeholder="{{ 'ADRESS' | translate }}" [(ngModel)]="adressSearch"/>
+                    <input #adressAutoComplete matInput placeholder="{{ 'ADRESS' | translate }}" [(ngModel)]="adressSearch" (change)="searchAdress()"/>
                 </mat-form-field>
             </div>
         </div>
