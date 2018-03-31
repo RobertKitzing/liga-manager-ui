@@ -34,10 +34,17 @@
             </div>
         </div>
         <div class="row" *ngIf="pitch">
-            <div class="col-10">
-                {{ pitch.label}}
-            </div>
-            <div class="col-2">
+            <div class="col-12" style="text-align: center;">
+                <div *ngIf="!pitch.id">
+                    {{ 'NO_PTICH_SET' | translate }}
+                </div>
+                <div *ngIf="pitch.id">
+                    <a href="https://www.google.com/maps/?q={{pitch.location_latitude}},{{pitch.location_longitude}}"
+                        target="_blank" style="cursor: pointer;">
+                        {{ pitch.label }}
+                        <i class="fa fa-map-marker"></i>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="row">

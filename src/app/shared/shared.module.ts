@@ -1,3 +1,4 @@
+import { MatchComponent } from './match.component';
 import { RoundPipe } from './round.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +35,8 @@ import { MatNativeDateModule } from '@angular/material';
   declarations: [
     LoaderComponent,
     EditMatchDialogComponent,
-    RoundPipe
+    RoundPipe,
+    MatchComponent
   ],
   exports: [
     LoaderComponent,
@@ -42,7 +44,8 @@ import { MatNativeDateModule } from '@angular/material';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RoundPipe
+    RoundPipe,
+    MatchComponent
   ],
   providers: [
     SeasonService,

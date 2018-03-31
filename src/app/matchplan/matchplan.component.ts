@@ -66,19 +66,6 @@ export class MatchplanComponent implements OnInit, OnDestroy {
     this.pitches = await this.loadPitches();
   }
 
-  openEditDialog(matchId: string) {
-    const dialogRef = this.dialog.open(EditMatchDialogComponent, {
-      data: { matchId: matchId }
-    });
-
-    dialogRef.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.updateSingleMatch(result.matchId);
-        }
-      });
-  }
-
   updateSingleMatch(matchId: string) {
     this.apiClient.getMatch(matchId).subscribe(
       (match) => {
@@ -153,9 +140,5 @@ export class MatchplanComponent implements OnInit, OnDestroy {
         );
       }
     );
-  }
-
-  getPitch(pitchId: string): Pitch {
-    return this.pitches.find(p => p.id === pitchId);
   }
 }

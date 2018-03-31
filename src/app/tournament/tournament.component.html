@@ -44,42 +44,7 @@
         </div>
         <div class="card-body">
             <div class="card" *ngFor="let match of getMatchesInRound(round)">
-                <div class="row">
-                    <div class="col" style="text-align: right;">
-                        {{ teamService.getTeamNameByID(match.home_team_id)}}
-                    </div>
-                    <div class="col" style="max-width: 2ch;text-align: center;">
-                        -
-                    </div>
-                    <div class="col" style="text-align: left;">
-                        {{ teamService.getTeamNameByID(match.guest_team_id) }}
-                    </div>
-                    <div class="col">
-                        {{ match.home_score }} : {{ match.guest_score }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col" style="text-align:center;">
-                        <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</i>
-                        <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                    <div class="col" *ngIf="match.pitch_id">
-                        {{ getPitchLabel(match.pitch_id) }}
-                        <i class="fa fa-map-marker"></i>
-                    </div>
-                    <div class="col pull-right" *ngIf="editMode || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
-                        <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button mat-button class="pull-right" *ngIf="editMode" (click)="removeMatch(match.id, round)">
-                            {{ 'REMOVE_MATCH' | translate }}
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
+                <app-match [match]="match" [pitches]="pitches"></app-match>
             </div>
         </div>
     </div>
