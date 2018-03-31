@@ -61,6 +61,7 @@
                 </mat-form-field>
             </div>
         </div>
+        <mat-divider></mat-divider>
         <div class="row">
             <div class="col" style="text-align:center;">
                 <button mat-button (click)="showCreateNewPitch = !showCreateNewPitch">
@@ -90,7 +91,7 @@
                         </mat-form-field>
                         <div>
                         <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Create</button>
+                        <button mat-button matStepperNext (click)="createNewPitch()">Create</button>
                         </div>
                     </form>
                 </mat-step>

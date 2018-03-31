@@ -70,26 +70,35 @@ export class MatchplanComponent implements OnInit, OnDestroy {
   }
 
   loadGoogleMapsScript() {
-    const tag = document.createElement('script');
-    tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.mapsApiKey + '&libraries=places';
-    tag.type = 'text/javascript';
-    document.body.appendChild(tag);
+    const googleMapsJS = document.getElementById('googelmapsscript');
+    if (!googleMapsJS) {
+      const tag = document.createElement('script');
+      tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.mapsApiKey + '&libraries=places';
+      tag.type = 'text/javascript';
+      tag.id = 'googelmapsscript';
+      document.body.appendChild(tag);
+    }
   }
 
-  updateSingleMatch(matchId: string) {
-    this.apiClient.getMatch(matchId).subscribe(
-      (match) => {
-        const index: number = 0;
-        for (let i = 0; i < this.matches.length; i++) {
-          const j: number = this.matches[i].findIndex(x => x.id === matchId);
-          if (j !== -1) {
-            this.matches[i][j] = match;
-            break;
-          }
-        }
-      }
-    );
+  async reloadPitches(event: boolean) {
+    if (event) {
+      this.pitches = await this.loadPitches();
+    }
   }
+  // updateSingleMatch(matchId: string) {
+  //   this.apiClient.getMatch(matchId).subscribe(
+  //     (match) => {
+  //       const index: number = 0;
+  //       for (let i = 0; i < this.matches.length; i++) {
+  //         const j: number = this.matches[i].findIndex(x => x.id === matchId);
+  //         if (j !== -1) {
+  //           this.matches[i][j] = match;
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   );
+  // }
 
   ngOnDestroy() {
     this.seasonsSub.unsubscribe();

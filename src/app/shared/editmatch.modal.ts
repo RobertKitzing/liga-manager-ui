@@ -34,7 +34,7 @@ export class EditMatchDialogComponent implements OnInit {
   public kickoffTime: string;
   adressSearch: string;
 
-  newPitch: Pitch;
+  newPitch: Pitch = new Pitch();
   newPitchLabelFormGroup: FormGroup;
   newPitchPlaceFormGroup: FormGroup;
 
@@ -48,7 +48,8 @@ export class EditMatchDialogComponent implements OnInit {
     public i18Service: I18nService,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: EditMatchdata) {
+    @Inject(MAT_DIALOG_DATA) public data: EditMatchdata,
+    @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
   }
 
   async ngOnInit() {
@@ -121,15 +122,22 @@ export class EditMatchDialogComponent implements OnInit {
   }
 
   createNewPitch() {
-    // const body: CreatePitchBody = new CreatePitchBody();
-    // body.label = this.newPitch.label;
-    // body.
-    // this.apiClient.createPitch(body).subscribe(
-    //   (pitchId) => {
-    //     log.debug(pitchId);
-    //     this.pitchId = pitchId.id;
-    //   }
-    // );
+    const body: CreatePitchBody = new CreatePitchBody();
+    body.label = this.newPitch.label;
+    body.location_latitude = this.newPitch.location_latitude;
+    body.location_longitude = this.newPitch.location_longitude;
+    this.apiClient.createPitch(body).subscribe(
+      async (pitchId) => {
+        this.match.pitch_id = pitchId.id;
+        this.pitches = await this.loadPitches();
+        this.apiClient.getPitch(pitchId.id).subscribe(
+          (pitch) => {
+            this.pitch = pitch;
+            this.showCreateNewPitch = false;
+          }
+        );
+      }
+    );
   }
 
   onShowCreateNewPitch() {
@@ -140,6 +148,8 @@ export class EditMatchDialogComponent implements OnInit {
       const place = this.places.getPlace();
       log.debug(place.geometry.location.lat());
       log.debug(place.geometry.location.lng());
+      this.newPitch.location_latitude = place.geometry.location.lat();
+      this.newPitch.location_longitude = place.geometry.location.lng();
     });
   }
 

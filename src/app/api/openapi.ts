@@ -505,6 +505,10 @@ export class Client implements IClient {
             return blobToText(responseBlob).flatMap(_responseText => {
             return Observable.of<void>(<any>null);
             });
+        } else if (status === 403) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).flatMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -2750,6 +2754,8 @@ export interface ISubmitMatchResultBody {
 
 export class CreatePitchBody implements ICreatePitchBody {
     label: string;
+    location_latitude: number;
+    location_longitude: number;
 
     constructor(data?: ICreatePitchBody) {
         if (data) {
@@ -2763,6 +2769,8 @@ export class CreatePitchBody implements ICreatePitchBody {
     init(data?: any) {
         if (data) {
             this.label = data["label"];
+            this.location_latitude = data["location_latitude"];
+            this.location_longitude = data["location_longitude"];
         }
     }
 
@@ -2776,12 +2784,16 @@ export class CreatePitchBody implements ICreatePitchBody {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["label"] = this.label;
+        data["location_latitude"] = this.location_latitude;
+        data["location_longitude"] = this.location_longitude;
         return data; 
     }
 }
 
 export interface ICreatePitchBody {
     label: string;
+    location_latitude: number;
+    location_longitude: number;
 }
 
 export class CreateSeasonBody implements ICreateSeasonBody {

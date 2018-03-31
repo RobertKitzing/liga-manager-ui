@@ -35,7 +35,7 @@
       {{ 'MATCHDAY_PLACEHOLDER' | translate }} {{ (i + 1) }}
     </div>
     <div [ngClass]="{'card-body': matchDay === 0}" *ngFor="let match of matchList">
-      <app-match [match]="match" [pitches]="pitches"></app-match>
+      <app-match [match]="match" [pitches]="pitches" (pitchAdded)="reloadPitches($event)"></app-match>
     </div>
   </div>
 </div>
