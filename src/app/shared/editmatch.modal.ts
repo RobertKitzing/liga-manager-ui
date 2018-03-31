@@ -7,7 +7,7 @@ import { Client, Match } from '@app/api/openapi';
 import { Logger } from './../core/logger.service';
 import { Component, Inject, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, DateAdapter } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { } from '@types/googlemaps';
 
@@ -34,6 +34,9 @@ export class EditMatchDialogComponent implements OnInit {
   public kickoffTime: string;
   adressSearch: string;
 
+  newPitch: Pitch;
+  newPitchLabelFormGroup: FormGroup;
+  newPitchPlaceFormGroup: FormGroup;
 
   @ViewChild('adressAutoComplete') adressAutoComplete: any;
 
@@ -44,10 +47,18 @@ export class EditMatchDialogComponent implements OnInit {
     private adapter: DateAdapter<any>,
     public i18Service: I18nService,
     private cdRef: ChangeDetectorRef,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: EditMatchdata) {
   }
 
   async ngOnInit() {
+
+    this.newPitchLabelFormGroup = this.formBuilder.group({
+      newpitchlabel: ['', Validators.required]
+    });
+    this.newPitchPlaceFormGroup = this.formBuilder.group({
+      newpitchplace: ['', Validators.required]
+    });
 
     this.adapter.setLocale(this.i18Service.language2Char);
     this.pitches = await this.loadPitches();
@@ -111,7 +122,8 @@ export class EditMatchDialogComponent implements OnInit {
 
   createNewPitch() {
     // const body: CreatePitchBody = new CreatePitchBody();
-    // body.label = this.pitchLabel;
+    // body.label = this.newPitch.label;
+    // body.
     // this.apiClient.createPitch(body).subscribe(
     //   (pitchId) => {
     //     log.debug(pitchId);
@@ -121,17 +133,14 @@ export class EditMatchDialogComponent implements OnInit {
   }
 
   onShowCreateNewPitch() {
-    this.showCreateNewPitch = !this.showCreateNewPitch;
-    if (this.showCreateNewPitch) {
-      this.cdRef.detectChanges();
-      log.debug(this.adressAutoComplete);
-      this.places = new google.maps.places.Autocomplete(this.adressAutoComplete.nativeElement);
-      this.places.addListener('place_changed', () => {
-        const place = this.places.getPlace();
-        log.debug(place.geometry.location.lat());
-        log.debug(place.geometry.location.lng());
-      });
-    }
+    this.cdRef.detectChanges();
+    log.debug(this.adressAutoComplete);
+    this.places = new google.maps.places.Autocomplete(this.adressAutoComplete.nativeElement);
+    this.places.addListener('place_changed', () => {
+      const place = this.places.getPlace();
+      log.debug(place.geometry.location.lat());
+      log.debug(place.geometry.location.lng());
+    });
   }
 
   searchAdress() {

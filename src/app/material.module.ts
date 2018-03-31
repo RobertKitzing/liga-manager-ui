@@ -1,4 +1,4 @@
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatStepperModule } from '@angular/material';
 /*
  * This module imports and re-exports all Angular Material modules for convenience,
  * so only 1 module import is needed in your feature modules.
@@ -76,7 +76,8 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatNativeDateModule,
-    MatSortModule
+    MatSortModule,
+    MatStepperModule
   ]
 })
 export class MaterialModule { }

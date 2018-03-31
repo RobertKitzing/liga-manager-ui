@@ -63,17 +63,38 @@
         </div>
         <div class="row">
             <div class="col" style="text-align:center;">
-                <button mat-button (click)="onShowCreateNewPitch()">
+                <button mat-button (click)="showCreateNewPitch = !showCreateNewPitch">
                     {{ 'CREATE_PITCH' | translate}} <i class="fa fa-plus"></i>
                 </button>
             </div>
         </div>
         <div class="row" *ngIf="showCreateNewPitch">
-            <div class="col">
-                <mat-form-field style="width: 100%;">
-                    <input #adressAutoComplete matInput placeholder="{{ 'ADRESS' | translate }}" [(ngModel)]="adressSearch" (change)="searchAdress()"/>
-                </mat-form-field>
-            </div>
+            <mat-horizontal-stepper>
+                <mat-step [stepControl]="newPitchLabelFormGroup">
+                    <form [formGroup]="newPitchLabelFormGroup">
+                        <ng-template matStepLabel>Pitch Label</ng-template>
+                        <mat-form-field>
+                            <input matInput placeholder="Pitch Label" formControlName="newpitchlabel" [(ngModel)]="newPitch.label" required />
+                        </mat-form-field>
+                        <div>
+                        <button mat-button matStepperNext (click)="onShowCreateNewPitch()">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="newPitchPlaceFormGroup">
+                    <form [formGroup]="newPitchPlaceFormGroup">
+                        <ng-template matStepLabel>Ort angeben</ng-template>
+                        <mat-form-field style="width: 100%;">
+                            <input #adressAutoComplete matInput placeholder="{{ 'ADRESS' | translate }}" [(ngModel)]="adressSearch" (change)="searchAdress()"
+                                   formControlName="newpitchplace"  required/>
+                        </mat-form-field>
+                        <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Create</button>
+                        </div>
+                    </form>
+                </mat-step>
+            </mat-horizontal-stepper>
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
