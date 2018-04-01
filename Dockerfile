@@ -1,4 +1,4 @@
-FROM node AS b
+FROM node as node
 
 WORKDIR /app
 
