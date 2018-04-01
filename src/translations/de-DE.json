@@ -1,5 +1,6 @@
 {
-  "ADRESS": "Addresse",
+  "NEW_PITCH_LABEL": "Name des Spielortes",
+  "NEW_PITCH_ADRESS": "Addresse",
   "NO_PTICH_SET": "Kein Spielort",
   "CREATE_PITCH": "Spielort anlegen",
   "START_ROUND": "Runde starten",

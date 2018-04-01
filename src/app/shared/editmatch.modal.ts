@@ -116,28 +116,29 @@ export class EditMatchDialogComponent implements OnInit {
     return this.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
   }
 
-
   displayPitch(pitch?: Pitch): string | undefined {
     return pitch ? pitch.label : undefined;
   }
 
   createNewPitch() {
-    const body: CreatePitchBody = new CreatePitchBody();
-    body.label = this.newPitch.label;
-    body.location_latitude = this.newPitch.location_latitude;
-    body.location_longitude = this.newPitch.location_longitude;
-    this.apiClient.createPitch(body).subscribe(
-      async (pitchId) => {
-        this.match.pitch_id = pitchId.id;
-        this.pitches = await this.loadPitches();
-        this.apiClient.getPitch(pitchId.id).subscribe(
-          (pitch) => {
-            this.pitch = pitch;
-            this.showCreateNewPitch = false;
-          }
-        );
-      }
-    );
+    if (this.newPitch.location_latitude && this.newPitch.location_longitude) {
+      const body: CreatePitchBody = new CreatePitchBody();
+      body.label = this.newPitch.label;
+      body.location_latitude = this.newPitch.location_latitude;
+      body.location_longitude = this.newPitch.location_longitude;
+      this.apiClient.createPitch(body).subscribe(
+        async (pitchId) => {
+          this.match.pitch_id = pitchId.id;
+          this.pitches = await this.loadPitches();
+          this.apiClient.getPitch(pitchId.id).subscribe(
+            (pitch) => {
+              this.pitch = pitch;
+              this.showCreateNewPitch = false;
+            }
+          );
+        }
+      );
+    }
   }
 
   onShowCreateNewPitch() {
@@ -146,21 +147,9 @@ export class EditMatchDialogComponent implements OnInit {
     this.places = new google.maps.places.Autocomplete(this.adressAutoComplete.nativeElement);
     this.places.addListener('place_changed', () => {
       const place = this.places.getPlace();
-      log.debug(place.geometry.location.lat());
-      log.debug(place.geometry.location.lng());
       this.newPitch.location_latitude = place.geometry.location.lat();
       this.newPitch.location_longitude = place.geometry.location.lng();
     });
-  }
-
-  searchAdress() {
-
-    // this.geocoder.geocode({ 'address': this.adressSearch},
-    //   (result, status) => {
-    //     log.debug(result);
-    //     log.debug(status);
-    //   }
-    // );
   }
 
   setKickoffTime() {

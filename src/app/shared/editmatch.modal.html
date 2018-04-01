@@ -73,25 +73,25 @@
             <mat-horizontal-stepper>
                 <mat-step [stepControl]="newPitchLabelFormGroup">
                     <form [formGroup]="newPitchLabelFormGroup">
-                        <ng-template matStepLabel>Pitch Label</ng-template>
+                        <ng-template matStepLabel>{{ 'NEW_PITCH_LABEL' | translate }}</ng-template>
                         <mat-form-field>
                             <input matInput placeholder="Pitch Label" formControlName="newpitchlabel" [(ngModel)]="newPitch.label" required />
                         </mat-form-field>
                         <div>
-                        <button mat-button matStepperNext (click)="onShowCreateNewPitch()">Next</button>
+                        <button mat-button matStepperNext (click)="onShowCreateNewPitch()" [disabled]="!newPitchLabelFormGroup.valid">{{'NEXT' | translate}}</button>
                         </div>
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="newPitchPlaceFormGroup">
                     <form [formGroup]="newPitchPlaceFormGroup">
-                        <ng-template matStepLabel>Ort angeben</ng-template>
+                        <ng-template matStepLabel>{{ 'NEW_PITCH_ADRESS' | translate}}</ng-template>
                         <mat-form-field style="width: 100%;">
-                            <input #adressAutoComplete matInput placeholder="{{ 'ADRESS' | translate }}" [(ngModel)]="adressSearch" (change)="searchAdress()"
+                            <input #adressAutoComplete matInput placeholder="{{ 'NEW_PITCH_ADRESS' | translate }}" [(ngModel)]="adressSearch"
                                    formControlName="newpitchplace"  required/>
                         </mat-form-field>
                         <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext (click)="createNewPitch()">Create</button>
+                        <button mat-button matStepperPrevious>{{'BACK' | translate}}</button>
+                        <button mat-button matStepperNext (click)="createNewPitch()" [disabled]="!newPitchPlaceFormGroup.valid">{{'CREATE_PITCH' | translate}}</button>
                         </div>
                     </form>
                 </mat-step>

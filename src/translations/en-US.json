@@ -1,5 +1,6 @@
 {
-  "ADRESS": "Adress",
+  "NEW_PITCH_LABEL": "Name off the Pitch",
+  "NEW_PITCH_ADRESS": "Adress",
   "NO_PTICH_SET": "No Pitch",
   "CREATE_PITCH": "Create Pitch",
   "START_ROUND": "Runde starten",
