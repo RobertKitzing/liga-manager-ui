@@ -58,7 +58,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     Client,
     {
       provide: API_BASE_URL,
-      useValue: 'http://localhost'
+      useValue: environment.serverUrl
     },
     {
       provide: HTTP_INTERCEPTORS,

@@ -4,8 +4,8 @@ import env from './.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'https://api.chucknorris.io',
-  defaultLanguage: 'en-US',
+  serverUrl: 'https://manager.wildeligabremen.de',
+  defaultLanguage: 'de-DE',
   supportedLanguages: [
     'en-US',
     'de-DE'
