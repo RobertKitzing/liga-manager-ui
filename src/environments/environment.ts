@@ -5,7 +5,6 @@
 
 export const environment = {
   production: false,
-  version: '(dev)',
   serverUrl: 'http://localhost',
   defaultLanguage: 'en-US',
   supportedLanguages: [

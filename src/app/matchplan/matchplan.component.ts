@@ -21,7 +21,6 @@ const log = new Logger('Matchplan');
 })
 export class MatchplanComponent implements OnInit, OnDestroy {
 
-  version: string = environment.version;
   seasons: Season[];
   seasonsSub: Subscription;
   season: Season;

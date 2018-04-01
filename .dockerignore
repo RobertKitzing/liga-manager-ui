@@ -1,0 +1,11 @@
+node_modules
+dist
+docker
+docs
+e2e
+model
+platforms
+plugins
+res
+store
+www
