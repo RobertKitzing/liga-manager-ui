@@ -1,6 +1,6 @@
-FROM node
+FROM node as node
 
-RUN mkdir app
+RUN mkdir /app
 
 WORKDIR /app
 
@@ -13,6 +13,8 @@ COPY ./ /app/
 ARG env=prod
 
 RUN npm run build -- --prod --environment $env
+
+FROM nginx
 
 COPY --from=node /app/www/ /var/www/ui
 
