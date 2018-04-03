@@ -129,6 +129,7 @@ export class AuthenticationService {
   }
 
   public get isAdminUser(): boolean {
+    // TODO: Admin user aus Claim oder sowas
     return this.isAuthenticated && this.credentials.username === 'user3';
   }
 }

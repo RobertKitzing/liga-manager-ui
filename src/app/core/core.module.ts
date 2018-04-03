@@ -1,6 +1,6 @@
+import { LoginModule } from './../login/login.module';
 import { IsAdminGuard } from './authentication/isadmin.guard';
 import { SharedModule } from '@app/shared';
-import { LoginComponent } from './../login/login.component';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
@@ -14,14 +14,6 @@ import { HeaderComponent } from './shell/header/header.component';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { AuthenticationService } from './authentication/authentication.service';
 import { I18nService } from './i18n.service';
-import { HttpService } from './http/http.service';
-import { HttpCacheService } from './http/http-cache.service';
-
-export function createHttpService(backend: ConnectionBackend,
-                                  defaultOptions: RequestOptions,
-                                  httpCacheService: HttpCacheService) {
-  return new HttpService(backend, defaultOptions, httpCacheService);
-}
 
 @NgModule({
   imports: [
@@ -31,33 +23,24 @@ export function createHttpService(backend: ConnectionBackend,
     FlexLayoutModule,
     MaterialModule,
     RouterModule,
+    LoginModule,
     SharedModule
-  ],
-  entryComponents: [
-    LoginComponent
   ],
   declarations: [
     HeaderComponent,
     ShellComponent,
-    LoginComponent
   ],
   providers: [
     AuthenticationService,
     IsAdminGuard,
     I18nService,
-    HttpCacheService,
-    {
-      provide: Http,
-      deps: [XHRBackend, RequestOptions, HttpCacheService],
-      useFactory: createHttpService
-    },
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy
     }
   ],
   exports: [
-    LoginComponent
+    LoginModule
   ]
 })
 export class CoreModule {

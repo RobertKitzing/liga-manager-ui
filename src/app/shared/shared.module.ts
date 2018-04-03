@@ -48,7 +48,8 @@ import { ErrorComponent } from '@app/shared/error/error.component';
     ReactiveFormsModule,
     RoundPipe,
     ErrorComponent,
-    MatchComponent
+    MatchComponent,
+    TranslateModule
   ],
   providers: [
     SeasonService,

@@ -1,4 +1,3 @@
-import { LoginComponent } from './../../../login/login.component';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
@@ -6,6 +5,7 @@ import { MatSidenav, MatDialog } from '@angular/material';
 
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { I18nService } from '../../i18n.service';
+import { LoginComponent } from '@app/login/login.component';
 
 @Component({
   selector: 'app-header',
