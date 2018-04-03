@@ -77,8 +77,11 @@
                         <mat-form-field>
                             <input matInput placeholder="Pitch Label" formControlName="newpitchlabel" [(ngModel)]="newPitch.label" required />
                         </mat-form-field>
+                        <span matTooltip="{{ 'UNIQUE_NAME_PITCH_TOOLTIP' | translate }}">
+                            <i class="fa fa-info"></i>
+                        </span>
                         <div>
-                        <button mat-button matStepperNext (click)="onShowCreateNewPitch()" [disabled]="!newPitchLabelFormGroup.valid">{{'NEXT' | translate}}</button>
+                            <button mat-button matStepperNext (click)="onShowCreateNewPitch()" [disabled]="!newPitchLabelFormGroup.valid">{{'NEXT' | translate}}</button>
                         </div>
                     </form>
                 </mat-step>

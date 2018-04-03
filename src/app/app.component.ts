@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       Logger.enableProductionMode();
     }
 
-    log.debug('init');
+    this.loadGoogleMapsScript();
 
     if (this.authService.isAuthenticated) {
       this.authService.loadUser();
@@ -77,6 +77,17 @@ export class AppComponent implements OnInit {
     document.addEventListener('deviceready', () => {
       this.zone.run(() => this.onCordovaReady());
     }, false);
+  }
+
+  loadGoogleMapsScript() {
+    const googleMapsJS = document.getElementById('googelmapsscript');
+    if (!googleMapsJS) {
+      const tag = document.createElement('script');
+      tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.googleMapsApiKey + '&libraries=places';
+      tag.type = 'text/javascript';
+      tag.id = 'googelmapsscript';
+      document.body.appendChild(tag);
+    }
   }
 
   private onCordovaReady() {

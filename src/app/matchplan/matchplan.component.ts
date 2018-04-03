@@ -38,11 +38,9 @@ export class MatchplanComponent implements OnInit, OnDestroy {
     public teamService: TeamService,
     public i18Service: I18nService,
     public dialog: MatDialog,
-    public authService: AuthenticationService,
-    @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) { }
+    public authService: AuthenticationService) { }
 
   async ngOnInit() {
-    this.loadGoogleMapsScript();
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
         log.debug(season);
@@ -66,17 +64,6 @@ export class MatchplanComponent implements OnInit, OnDestroy {
       this.loadMatches();
     }
     this.pitches = await this.loadPitches();
-  }
-
-  loadGoogleMapsScript() {
-    const googleMapsJS = document.getElementById('googelmapsscript');
-    if (!googleMapsJS) {
-      const tag = document.createElement('script');
-      tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.mapsApiKey + '&libraries=places';
-      tag.type = 'text/javascript';
-      tag.id = 'googelmapsscript';
-      document.body.appendChild(tag);
-    }
   }
 
   async reloadPitches(event: boolean) {

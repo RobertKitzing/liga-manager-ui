@@ -67,7 +67,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     },
     {
       provide: GOOGLE_MAPS_API_KEY,
-      useValue: 'AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0'
+      useValue: environment.googleMapsApiKey
     }
   ],
   bootstrap: [AppComponent]

@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   serverUrl: 'http://localhost',
-  defaultLanguage: 'en-US',
+  defaultLanguage: 'de-DE',
+  googleMapsApiKey: 'AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0',
   supportedLanguages: [
     'en-US',
     'de-DE'
