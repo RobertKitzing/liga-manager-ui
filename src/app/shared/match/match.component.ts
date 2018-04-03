@@ -1,10 +1,10 @@
 import { Subject } from 'rxjs/Subject';
-import { AuthenticationService } from './../core/authentication/authentication.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { MatDialog } from '@angular/material';
-import { EditMatchDialogComponent } from './editmatch.modal';
-import { I18nService } from './../core/i18n.service';
-import { TeamService } from './../service/team.service';
-import { Match, Pitch, Client } from './../api/openapi';
+import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.modal';
+import { I18nService } from '@app/core/i18n.service';
+import { TeamService } from '@app/service/team.service';
+import { Match, Pitch, Client } from '@app/api/openapi';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({

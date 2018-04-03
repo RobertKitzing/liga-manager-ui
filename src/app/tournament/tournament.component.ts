@@ -2,7 +2,6 @@ import { AddMatchComponent } from './tournament.addmatch.dialog';
 import { I18nService } from './../core/i18n.service';
 import { TeamService } from './../service/team.service';
 import { MatDialog } from '@angular/material';
-import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { AuthenticationService } from './../core/authentication/authentication.service';
 import { Tournament, Client, Team, CreateTournamentBody, Pitch } from './../api/openapi';
 import { SeasonService } from '@app/service/season.service';
@@ -79,31 +78,6 @@ export class TournamentComponent implements OnInit {
 
   tournamentCompare(c1: Tournament, c2: Tournament) {
     return c1 && c2 && c1.name === c2.name;
-  }
-
-  openEditDialog(matchId: string) {
-    log.debug(matchId);
-    const dialogRef = this.dialog.open(EditMatchDialogComponent, {
-      data: { matchId: matchId }
-    });
-
-    dialogRef.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.updateSingleMatch(result.matchId);
-        }
-    });
-  }
-
-  updateSingleMatch(matchId: string)  {
-    this.apiClient.getMatch(matchId).subscribe(
-      (match) => {
-          const index = this.matches.findIndex(m => m.id === matchId);
-          if (index !== -1) {
-            this.matches[index] = match;
-          }
-      }
-    );
   }
 
   addRound() {

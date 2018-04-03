@@ -1,10 +1,9 @@
-import { GOOGLE_MAPS_API_KEY } from './../app.module';
+import { GOOGLE_MAPS_API_KEY } from '@app/app.module';
 import { Observable } from 'rxjs/Observable';
-import { I18nService } from '@app/core';
-import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody, LocateMatchBody } from './../api/openapi';
-import { TeamService } from './../service/team.service';
+import { I18nService, Logger } from '@app/core';
+import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody, LocateMatchBody } from '@app/api/openapi';
+import { TeamService } from '@app/service/team.service';
 import { Client, Match } from '@app/api/openapi';
-import { Logger } from './../core/logger.service';
 import { Component, Inject, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, DateAdapter } from '@angular/material';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';

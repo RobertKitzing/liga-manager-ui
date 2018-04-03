@@ -65,6 +65,7 @@ export class TableComponent implements OnInit, OnDestroy {
   seasonsSub: Subscription = new Subscription();
   season: Season;
   isLoadingRanking: boolean;
+  errorLoadingRanking: boolean;
 
   @ViewChild(MatSort) sort: MatSort;
   expandedRow: number;
@@ -106,7 +107,6 @@ export class TableComponent implements OnInit, OnDestroy {
     this.season = this.seasonService.getSelectedSeason();
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
-        log.debug(season);
         this.season = season;
         this.loadRanking();
       },
@@ -155,6 +155,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   loadRanking() {
     this.isLoadingRanking = true;
+    this.errorLoadingRanking = false;
     this.apiClient.getRanking(this.season.id).subscribe(
       (ranking: Ranking) => {
         log.debug(ranking);
@@ -163,6 +164,7 @@ export class TableComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         log.debug(error);
+        this.errorLoadingRanking = true;
       },
       () => {
         this.isLoadingRanking = false;

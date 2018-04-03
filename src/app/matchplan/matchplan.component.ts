@@ -1,11 +1,9 @@
 import { GOOGLE_MAPS_API_KEY } from './../app.module';
 import { I18nService } from './../core/i18n.service';
-import { EditMatchDialogComponent } from './../shared/editmatch.modal';
 import { SubmitMatchResultBody, Pitch } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-
 import { environment } from '@env/environment';
 import { Client, Season, Match, SeasonState } from '@app/api/openapi';
 import { Logger, AuthenticationService } from '@app/core';
@@ -71,20 +69,6 @@ export class MatchplanComponent implements OnInit, OnDestroy {
       this.pitches = await this.loadPitches();
     }
   }
-  // updateSingleMatch(matchId: string) {
-  //   this.apiClient.getMatch(matchId).subscribe(
-  //     (match) => {
-  //       const index: number = 0;
-  //       for (let i = 0; i < this.matches.length; i++) {
-  //         const j: number = this.matches[i].findIndex(x => x.id === matchId);
-  //         if (j !== -1) {
-  //           this.matches[i][j] = match;
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   );
-  // }
 
   ngOnDestroy() {
     this.seasonsSub.unsubscribe();

@@ -1,9 +1,9 @@
-import { MatchComponent } from './match.component';
-import { RoundPipe } from './round.pipe';
+import { MatchComponent } from './match/match.component';
+import { RoundPipe } from './pipes/round.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { EditMatchDialogComponent } from './editmatch.modal';
+import { EditMatchDialogComponent } from './editmatch/editmatch.modal';
 import { TeamService } from './../service/team.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
