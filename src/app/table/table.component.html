@@ -12,10 +12,8 @@
   </div>
 </div>
 <div class="container-fluid mat-elevation-z8">
-  <app-loader [isLoading]="isLoadingRanking" size="1.5"></app-loader>
-  <div *ngIf="errorLoadingRanking">
-    {{ 'ERROR_LOADING_RANKING' | translate}}
-  </div>
+  <app-loader [isLoading]="isLoadingRanking" size="4" style="text-align:center;"></app-loader>
+  <app-error *ngIf="errorLoadingRanking" errorMsg="{{ 'ERROR_LOADING_RANKING' | translate }}"></app-error>
   <mat-table #table [dataSource]="rankingDataSource" *ngIf="rankingDataSource && !teamService.isLoadingTeams">
 
     <ng-container matColumnDef="number">

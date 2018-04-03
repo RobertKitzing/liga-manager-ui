@@ -15,6 +15,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SeasonService } from '@app/service/season.service';
 import { MatNativeDateModule } from '@angular/material';
+import { ErrorComponent } from '@app/shared/error/error.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MatNativeDateModule } from '@angular/material';
     LoaderComponent,
     EditMatchDialogComponent,
     RoundPipe,
-    MatchComponent
+    MatchComponent,
+    ErrorComponent
   ],
   exports: [
     LoaderComponent,
@@ -45,6 +47,7 @@ import { MatNativeDateModule } from '@angular/material';
     FormsModule,
     ReactiveFormsModule,
     RoundPipe,
+    ErrorComponent,
     MatchComponent
   ],
   providers: [
