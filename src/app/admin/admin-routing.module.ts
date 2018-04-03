@@ -1,3 +1,4 @@
+import { SeasonManagerComponent } from './seasonmanager/seasonmanager.component';
 import { AdminComponent } from './admin.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';

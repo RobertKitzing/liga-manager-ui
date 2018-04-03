@@ -17,15 +17,15 @@
     <button mat-button routerLink="/matchplan" routerLinkActive="active">
       <span translate>Matchplan</span>
     </button>
-    <button mat-button routerLink="/seasonmanager" routerLinkActive="active" *ngIf="authService.isAdminUser">
-      <span translate>SeasonManager</span>
-    </button>
     <button mat-button routerLink="/tournament" routerLinkActive="active">
       <span translate>Tournament</span>
     </button>
     <button mat-button routerLink="/about" routerLinkActive="active">
       <i class="fa fa-question-circle"></i>
       <span translate>About</span>
+    </button>
+    <button mat-button routerLink="/admin" routerLinkActive="active" *ngIf="authService.isAdminUser">
+      <span translate>Admin</span>
     </button>
   </div>
   <span fxFlex></span>

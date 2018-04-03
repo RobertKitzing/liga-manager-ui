@@ -1,8 +1,8 @@
-import { Match } from '@app/api/openapi';
-import { TeamService } from './../service/team.service';
+import { TeamService } from '@app/service/team.service';
 import { Subscription } from 'rxjs/Subscription';
 import { SeasonService } from '@app/service/season.service';
 import { Client,
+         Match,
          Season,
          Ranking,
          Team,
@@ -11,7 +11,7 @@ import { Client,
          CreateSeasonBody,
          CreateTeamBody,
          CreateMatchesBody
-       } from './../api/openapi';
+       } from '@app/api/openapi';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort, MatCheckboxChange, MatSnackBar } from '@angular/material';

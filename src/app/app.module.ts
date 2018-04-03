@@ -1,7 +1,6 @@
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './core/authentication/authentication.interceptor';
 import { TournamentModule } from './tournament/tournament.module';
-import { SeasonManagerModule } from './seasonmanager/seasonmanager.module';
 import { MatchplanModule } from './matchplan/matchplan.module';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Client, API_BASE_URL } from './api/openapi';
@@ -44,7 +43,6 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     AboutModule,
     TableModule,
     MatchplanModule,
-    SeasonManagerModule,
     TournamentModule,
     AdminModule,
     AppRoutingModule,

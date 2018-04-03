@@ -15,10 +15,6 @@
           <a mat-list-item routerLink="/matchplan" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>Matchplan</span>
           </a>
-          <mat-divider *ngIf="authService.isAdminUser"></mat-divider>
-          <a mat-list-item routerLink="/seasonmanager" routerLinkActive="active" (click)="sidenav.close()" *ngIf="authService.isAdminUser">
-            <span translate>SeasonManager</span>
-          </a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/tournament" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>Tournament</span>
@@ -28,6 +24,9 @@
             <span translate>About</span>
           </a>
           <mat-divider></mat-divider>
+          <a mat-list-item routerLink="/admin" routerLinkActive="active" (click)="sidenav.close()" *ngIf="authService.isAdminUser">
+            <span translate>Admin</span>
+          </a>
         </mat-list>
       </nav>
     </mat-sidenav>

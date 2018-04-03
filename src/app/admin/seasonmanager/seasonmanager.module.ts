@@ -1,4 +1,4 @@
-import { IsAdminGuard } from './../core/authentication/isadmin.guard';
+import { IsAdminGuard } from '@app/core/authentication/isadmin.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -8,8 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { MatTableModule, MatStepperModule, MatDividerModule } from '@angular/material';
-import { SeasonManagerComponent } from '@app/seasonmanager/seasonmanager.component';
-import { SeasonManagerRoutingModule } from '@app/seasonmanager/seasonmanager-routing.module';
+import { SeasonManagerComponent } from '@app/admin/seasonmanager/seasonmanager.component';
 
 @NgModule({
   imports: [
@@ -18,7 +17,6 @@ import { SeasonManagerRoutingModule } from '@app/seasonmanager/seasonmanager-rou
     TranslateModule,
     FlexLayoutModule,
     MaterialModule,
-    SeasonManagerRoutingModule,
     SharedModule,
     MatStepperModule,
     ReactiveFormsModule,
@@ -30,6 +28,9 @@ import { SeasonManagerRoutingModule } from '@app/seasonmanager/seasonmanager-rou
   ],
   providers: [
     IsAdminGuard
+  ],
+  exports: [
+    SeasonManagerComponent
   ]
 })
 export class SeasonManagerModule { }
