@@ -50,7 +50,6 @@ export class SeasonService {
                             resolve(state ? filterd : this.seasons);
                         },
                         (error: any) => {
-                            log.debug(error);
                             resolve(null);
                         },
                         () => {

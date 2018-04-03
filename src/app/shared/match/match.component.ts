@@ -1,3 +1,5 @@
+import { Logger } from './../../core/logger.service';
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subject } from 'rxjs/Subject';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { MatDialog } from '@angular/material';
@@ -7,6 +9,7 @@ import { TeamService } from '@app/service/team.service';
 import { Match, Pitch, Client } from '@app/api/openapi';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+const log = new Logger('MatchComponent');
 @Component({
     selector: 'app-match',
     templateUrl: 'match.component.html',
@@ -24,8 +27,14 @@ export class MatchComponent implements OnInit {
         public teamService: TeamService,
         public i18Service: I18nService,
         public dialog: MatDialog,
-        public authService: AuthenticationService
-    ) { }
+        public authService: AuthenticationService,
+        media: ObservableMedia
+    ) {
+        media.asObservable()
+        .subscribe((change: MediaChange) => {
+            log.debug(change);
+        });
+     }
 
     ngOnInit() { }
 

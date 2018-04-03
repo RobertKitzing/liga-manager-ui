@@ -1,32 +1,37 @@
 <div class="card container">
     <div class="row">
-        <div class="col" style="text-align: right;">
-            {{ teamService.getTeamNameByID(match.home_team_id)}}
+        <div class="col-12 col-sm-10">
+            <div class="row">
+                <div class="col" style="text-align: right;">
+                    {{ teamService.getTeamNameByID(match.home_team_id)}}
+                </div>
+                <div class="col" style="max-width: 2ch;text-align: center;">
+                    -
+                </div>
+                <div class="col" style="text-align: left;">
+                    {{ teamService.getTeamNameByID(match.guest_team_id) }}
+                </div>
+                <div class="col">
+                    {{ match.home_score }} : {{ match.guest_score }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="text-align:center;">
+                    <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</i>
+                    <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <div class="col" *ngIf="pitches && match.pitch_id">
+                    <a href="https://www.google.com/maps/?q={{getPitch(match.pitch_id).location_latitude}},{{getPitch(match.pitch_id).location_longitude}}"
+                        target="_blank" style="cursor: pointer;">
+                        {{ getPitch(match.pitch_id).label }}
+                        <i class="fa fa-map-marker"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col" style="max-width: 2ch;text-align: center;">
-            -
-        </div>
-        <div class="col" style="text-align: left;">
-            {{ teamService.getTeamNameByID(match.guest_team_id) }}
-        </div>
-        <div class="col">
-            {{ match.home_score }} : {{ match.guest_score }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col" style="text-align:center;">
-            <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.language2Char }}</i>
-            <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.language2Char}}</i>
-            <i class="fa fa-calendar"></i>
-        </div>
-        <div class="col" *ngIf="pitches && match.pitch_id">
-            <a href="https://www.google.com/maps/?q={{getPitch(match.pitch_id).location_latitude}},{{getPitch(match.pitch_id).location_longitude}}"
-                target="_blank" style="cursor: pointer;">
-                {{ getPitch(match.pitch_id).label }}
-                <i class="fa fa-map-marker"></i>
-            </a>
-        </div>
-        <div class="col pull-right" *ngIf="authService.isAdminUser || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)">
+        <div class="col-12 col-sm-2" *ngIf="authService.isAdminUser || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)"
+             style="text-align: center">
             <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
         </div>
     </div>
