@@ -1,4 +1,5 @@
 {
+  "Admin": "Adminbereich",
   "API_NOTFOUND": "Sorry Internet ist kaputt :(",
   "ERROR_LOADING_RANKING": "Leider keine Tabelle gefunden :(",
   "UNIQUE_NAME_PITCH_TOOLTIP": "Bitte einen eindeutigen Namen für den Spielort angeben",
