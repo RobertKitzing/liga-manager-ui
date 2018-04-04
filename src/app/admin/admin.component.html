@@ -1,1 +1,55 @@
-<app-seasonmanager></app-seasonmanager>
+<div class="container">
+    <mat-tab-group>
+        <mat-tab label="{{ 'SeasonManager' | translate}}">
+            <app-seasonmanager></app-seasonmanager>
+        </mat-tab>
+        <mat-tab label="{{ 'USER_MANAGMENT' | translate }}">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'ADD_USER' | translate }}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field>
+                                <input matInput placeholder="{{ 'Username' | translate }}" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field>
+                                <input matInput placeholder="{{ 'Password' | translate }}" type="password"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field>
+                                <input matInput placeholder="{{ 'Password_Repeat' | translate }}" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field>
+                                <mat-select #home placeholder="{{ 'PLACEHOLDER_TEAM' | translate}}" [(ngModel)]="userTeamList" multiple>
+                                    <mat-option *ngFor="let team of teamList" [value]="team.id">
+                                        {{team.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button mat-icon-button>
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

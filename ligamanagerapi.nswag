@@ -2,7 +2,7 @@
   "runtime": "Default",
   "swaggerGenerator": {
     "fromSwagger": {
-      "url": "https://soccer-api.skilled-by-nature.de/swagger.json"
+      "url": "../liga-manager-api/public/swagger.json"
     }
   },
   "codeGenerators": {
