@@ -1,6 +1,6 @@
 import { async } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Client, API_BASE_URL, User } from './../../api/openapi';
+import { Client, User } from './../../api/openapi';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -30,8 +30,7 @@ export class AuthenticationService {
   private user: User;
 
   constructor(private apiClient: Client,
-              private httpClient: HttpClient,
-              @Inject(API_BASE_URL) private baseUrl: string) {
+              private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -44,7 +43,7 @@ export class AuthenticationService {
         let headers = new HttpHeaders();
         headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
         headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        this.httpClient.get(this.baseUrl + '/api/user/me', { headers: headers, observe: 'response' }).subscribe(
+        this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
           async(response) => {
               console.log(response);
               const data = {
