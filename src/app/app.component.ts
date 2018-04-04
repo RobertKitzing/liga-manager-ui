@@ -1,3 +1,4 @@
+import { SocketService, Message } from './service/websocket.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
@@ -17,6 +18,10 @@ import de from '@angular/common/locales/de';
 registerLocaleData(de);
 
 const log = new Logger('App');
+export enum Event {
+  CONNECT = 'connect',
+  DISCONNECT = 'disconnect'
+}
 
 @Component({
   selector: 'app-root',
@@ -24,6 +29,9 @@ const log = new Logger('App');
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  ioConnection: any;
+  messages: Message[] = [];
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -35,7 +43,8 @@ export class AppComponent implements OnInit {
               private splashScreen: SplashScreen,
               private i18nService: I18nService,
               private seasonService: SeasonService,
-              private authService: AuthenticationService) { }
+              private authService: AuthenticationService,
+              private socketService: SocketService) { }
 
   ngOnInit() {
     // Setup logger
@@ -79,6 +88,24 @@ export class AppComponent implements OnInit {
     }, false);
   }
 
+  private initIoConnection(): void {
+    this.socketService.initSocket();
+
+    this.ioConnection = this.socketService.onMessage()
+      .subscribe((message: Message) => {
+        this.messages.push(message);
+      });
+
+    this.socketService.onEvent(Event.CONNECT)
+      .subscribe(() => {
+        console.log('connected');
+      });
+
+    this.socketService.onEvent(Event.DISCONNECT)
+      .subscribe(() => {
+        console.log('disconnected');
+      });
+  }
   loadGoogleMapsScript() {
     const googleMapsJS = document.getElementById('googelmapsscript');
     if (!googleMapsJS) {
