@@ -22,6 +22,9 @@ export class TeamService {
     }
 
     getAllTeams(): Team[] {
+        if (!this.teams) {
+            this.loadTeams();
+        }
         return this.teams;
     }
 

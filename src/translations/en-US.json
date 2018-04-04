@@ -1,4 +1,6 @@
 {
+  "ADD_USER": "Add User",
+  "USER_MANAGMENT": "Usermangment",
   "CONTACT": "Contact",
   "Admin": "Adminarea",
   "API_NOTFOUND": "Sorry, Internet is down :(",
@@ -33,6 +35,7 @@
   "Login": "Login",
   "Logout": "Logout",
   "Password": "Password",
+  "Password_Repeat": "Confirm passwort",
   "Password is required": "Password is required",
   "Username": "Username",
   "Username is required": "Username is required",

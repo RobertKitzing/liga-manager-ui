@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="row" *ngIf="showCreateNewPitch">
-            <mat-horizontal-stepper>
+            <mat-horizontal-stepper [linear]="true">
                 <mat-step [stepControl]="newPitchLabelFormGroup">
                     <form [formGroup]="newPitchLabelFormGroup">
                         <ng-template matStepLabel>{{ 'NEW_PITCH_LABEL' | translate }}</ng-template>

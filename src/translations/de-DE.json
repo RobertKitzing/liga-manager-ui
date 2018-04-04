@@ -1,4 +1,6 @@
 {
+  "ADD_USER": "Benutzer hinzufügen",
+  "USER_MANAGMENT": "Nutzerverwaltung",
   "CONTACT": "Kontakt",
   "Admin": "Adminbereich",
   "API_NOTFOUND": "Sorry Internet ist kaputt :(",
@@ -33,6 +35,7 @@
   "Login": "Anmelden",
   "Logout": "Abmelden",
   "Password": "Passwort",
+  "Password_Repeat": "Passwort wdh.",
   "Password is required": "Passwort ist erforderlich",
   "Username": "Benutzername",
   "Username is required": "Benutzername ist erforderlich",
