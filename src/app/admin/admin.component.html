@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <input matInput placeholder="{{ 'Password' | translate }}" />
+                                <input matInput placeholder="{{ 'Password' | translate }}" type="password"/>
                             </mat-form-field>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <mat-select #home placeholder="{{ 'PLACEHOLDER_TEAM' | translate}}" [(ngModel)]="userTeamList" multiple (change)="test()">
+                                <mat-select #home placeholder="{{ 'PLACEHOLDER_TEAM' | translate}}" [(ngModel)]="userTeamList" multiple>
                                     <mat-option *ngFor="let team of teamList" [value]="team.id">
                                         {{team.name}}
                                     </mat-option>
