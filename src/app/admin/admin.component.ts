@@ -1,7 +1,9 @@
+import { Logger } from '@app/core';
 import { TeamService } from '@app/service/team.service';
 import { Team } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
 
+const log = new Logger('AdminComponent');
 @Component({
     selector: 'app-admin',
     templateUrl: 'admin.component.html',
