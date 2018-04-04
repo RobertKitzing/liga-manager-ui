@@ -17,8 +17,8 @@ export interface EditMatchdata {
 }
 @Component({
   selector: 'app-edit-match-modal',
-  templateUrl: 'editmatch.modal.html',
-  styleUrls: ['editmatch.modal.scss']
+  templateUrl: 'editmatch.dialog.component.html',
+  styleUrls: ['editmatch.dialog.component.scss']
 })
 export class EditMatchDialogComponent implements OnInit {
 

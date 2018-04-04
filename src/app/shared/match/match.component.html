@@ -3,13 +3,45 @@
         <div class="col-12 col-sm-10">
             <div class="row">
                 <div class="col" style="text-align: right;">
-                    {{ teamService.getTeamNameByID(match.home_team_id)}}
+                    <i class="fa fa-address-card"
+                        style="cursor: pointer;" 
+                        [popover]="contactTemplate"
+                        popoverTitle="{{ 'CONTACT' | translate }}"
+                        triggers="click"
+                        [outsideClick]="true">
+                    </i>
+                    {{ teamService.getTeamNameByID(match.home_team_id)}}            
                 </div>
                 <div class="col" style="max-width: 2ch;text-align: center;">
                     -
                 </div>
                 <div class="col" style="text-align: left;">
                     {{ teamService.getTeamNameByID(match.guest_team_id) }}
+                    <i class="fa fa-address-card"
+                       style="cursor: pointer;" 
+                       [popover]="contactTemplate"
+                       popoverTitle="{{ 'CONTACT' | translate }}"
+                       triggers="click"
+                       [outsideClick]="true">
+                    </i>
+                    <ng-template #contactTemplate>
+                        <div class="row">
+                            <div class="col-1">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="col">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="col">
+                                
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
                 <div class="col">
                     {{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}

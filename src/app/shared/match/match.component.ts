@@ -3,7 +3,7 @@ import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subject } from 'rxjs/Subject';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { MatDialog } from '@angular/material';
-import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.modal';
+import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.dialog.component';
 import { I18nService } from '@app/core/i18n.service';
 import { TeamService } from '@app/service/team.service';
 import { Match, Pitch, Client } from '@app/api/openapi';

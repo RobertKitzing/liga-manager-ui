@@ -1,9 +1,9 @@
+import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.dialog.component';
 import { MatchComponent } from './match/match.component';
 import { RoundPipe } from './pipes/round.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { EditMatchDialogComponent } from './editmatch/editmatch.modal';
 import { TeamService } from './../service/team.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SeasonService } from '@app/service/season.service';
 import { MatNativeDateModule } from '@angular/material';
 import { ErrorComponent } from '@app/shared/error/error.component';
-
+import { PopoverModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -27,22 +27,21 @@ import { ErrorComponent } from '@app/shared/error/error.component';
     TranslateModule,
     FormsModule,
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PopoverModule.forRoot()
   ],
   entryComponents: [
     EditMatchDialogComponent
   ],
   declarations: [
-    LoaderComponent,
     EditMatchDialogComponent,
+    LoaderComponent,
     RoundPipe,
     MatchComponent,
     ErrorComponent
   ],
   exports: [
     LoaderComponent,
-    EditMatchDialogComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
