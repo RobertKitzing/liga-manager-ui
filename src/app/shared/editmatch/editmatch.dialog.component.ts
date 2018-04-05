@@ -1,3 +1,4 @@
+import { MatchService } from './../../service/match.service';
 import { GOOGLE_MAPS_API_KEY } from '@app/app.module';
 import { Observable } from 'rxjs/Observable';
 import { I18nService, Logger } from '@app/core';
@@ -47,12 +48,12 @@ export class EditMatchDialogComponent implements OnInit {
     public i18Service: I18nService,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
+    private matchService: MatchService,
     @Inject(MAT_DIALOG_DATA) public data: EditMatchdata,
     @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
   }
 
   async ngOnInit() {
-
     this.newPitchLabelFormGroup = this.formBuilder.group({
       newpitchlabel: ['', Validators.required]
     });
@@ -71,6 +72,7 @@ export class EditMatchDialogComponent implements OnInit {
     this.apiClient.getMatch(this.data.matchId).subscribe(
       (match) => {
         this.match = match;
+        this.matchService.messages.next(this.match.id);
         if (match.kickoff) {
           log.debug(match.kickoff.getHours());
           log.debug(match.kickoff.getUTCHours());

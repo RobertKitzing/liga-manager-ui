@@ -1,4 +1,5 @@
-import { SocketService, Message } from './service/websocket.service';
+import { MatchService } from './service/match.service';
+import { WebsocketService } from './service/websocket.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
@@ -30,21 +31,21 @@ export enum Event {
 })
 export class AppComponent implements OnInit {
 
-  ioConnection: any;
-  messages: Message[] = [];
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private zone: NgZone,
+    private keyboard: Keyboard,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private i18nService: I18nService,
+    private seasonService: SeasonService,
+    private authService: AuthenticationService,
+  ) {
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private zone: NgZone,
-              private keyboard: Keyboard,
-              private statusBar: StatusBar,
-              private splashScreen: SplashScreen,
-              private i18nService: I18nService,
-              private seasonService: SeasonService,
-              private authService: AuthenticationService,
-              private socketService: SocketService) { }
+  }
 
   ngOnInit() {
     // Setup logger
@@ -66,15 +67,15 @@ export class AppComponent implements OnInit {
     // Change page title on navigation or language change, based on route data
     merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
-        map(() => {
-          let route = this.activatedRoute;
-          while (route.firstChild) {
-            route = route.firstChild;
-          }
-          return route;
-        }),
-        filter(route => route.outlet === 'primary'),
-        mergeMap(route => route.data)
+      map(() => {
+        let route = this.activatedRoute;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
+        return route;
+      }),
+      filter(route => route.outlet === 'primary'),
+      mergeMap(route => route.data)
       )
       .subscribe(event => {
         const title = event['title'];
@@ -88,24 +89,6 @@ export class AppComponent implements OnInit {
     }, false);
   }
 
-  private initIoConnection(): void {
-    this.socketService.initSocket();
-
-    this.ioConnection = this.socketService.onMessage()
-      .subscribe((message: Message) => {
-        this.messages.push(message);
-      });
-
-    this.socketService.onEvent(Event.CONNECT)
-      .subscribe(() => {
-        console.log('connected');
-      });
-
-    this.socketService.onEvent(Event.DISCONNECT)
-      .subscribe(() => {
-        console.log('disconnected');
-      });
-  }
   loadGoogleMapsScript() {
     const googleMapsJS = document.getElementById('googelmapsscript');
     if (!googleMapsJS) {

@@ -1,3 +1,4 @@
+import { MatchService } from './../../service/match.service';
 import { Logger } from './../../core/logger.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subject } from 'rxjs/Subject';
@@ -28,12 +29,18 @@ export class MatchComponent implements OnInit {
         public i18Service: I18nService,
         public dialog: MatDialog,
         public authService: AuthenticationService,
+        private matchService: MatchService,
         media: ObservableMedia
     ) {
         media.asObservable()
         .subscribe((change: MediaChange) => {
             log.debug(change);
         });
+        this.matchService.messages.subscribe(
+            (res) => {
+                log.debug(res);
+            }
+        );
      }
 
     ngOnInit() { }

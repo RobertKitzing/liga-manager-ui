@@ -1,4 +1,5 @@
-import { SocketService } from './service/websocket.service';
+import { MatchService } from './service/match.service';
+import { WebsocketService } from './service/websocket.service';
 import { AuthInterceptor } from './core/authentication/authentication.interceptor';
 import { TournamentModule } from './tournament/tournament.module';
 import { MatchplanModule } from './matchplan/matchplan.module';
@@ -53,7 +54,8 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     AppComponent
   ],
   providers: [
-    SocketService,
+    WebsocketService,
+    MatchService,
     Keyboard,
     StatusBar,
     SplashScreen,

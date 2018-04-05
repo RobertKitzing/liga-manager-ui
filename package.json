@@ -46,6 +46,7 @@
     "@ionic-native/status-bar": "^4.0.0",
     "@ngx-translate/core": "^9.0.1",
     "@types/googlemaps": "^3.30.8",
+    "@types/socket.io-client": "^1.4.32",
     "amazing-time-picker": "^1.5.3",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.0.0",
