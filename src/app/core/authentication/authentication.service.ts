@@ -1,6 +1,6 @@
 import { async } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Client, User } from './../../api/openapi';
+import { Client, User, UserRole } from './../../api/openapi';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -129,6 +129,6 @@ export class AuthenticationService {
 
   public get isAdminUser(): boolean {
     // TODO: Admin user aus Claim oder sowas
-    return this.isAuthenticated && this.credentials.username === 'user3';
+    return this.isAuthenticated && this.user && this.user.role === UserRole.Admin;
   }
 }

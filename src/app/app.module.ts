@@ -2,7 +2,7 @@ import { AuthInterceptor } from './core/authentication/authentication.intercepto
 import { TournamentModule } from './tournament/tournament.module';
 import { MatchplanModule } from './matchplan/matchplan.module';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Client } from './api/openapi';
+import { Client, API_BASE_URL } from './api/openapi';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, InjectionToken } from '@angular/core';
@@ -60,6 +60,10 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    {
+      provide: API_BASE_URL,
+      useValue: '/api'
     },
     {
       provide: GOOGLE_MAPS_API_KEY,

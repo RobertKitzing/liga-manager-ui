@@ -205,6 +205,12 @@ export interface IClient {
      */
     getMatchesInTournament(id: string): Observable<Match[]>;
     /**
+     * Create a user
+     * @createUserBody (optional) 
+     * @return Operation successful
+     */
+    createUser(createUserBody?: CreateUserBody | null | undefined): Observable<void>;
+    /**
      * Retrieve the authenticated user
      * @return The authenticated user as object
      */
@@ -234,7 +240,7 @@ export class Client implements IClient {
      * @return Contains a single match object
      */
     getMatch(id: string): Observable<Match> {
-        let url_ = this.baseUrl + "/api/match/{id}";
+        let url_ = this.baseUrl + "/match/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -295,7 +301,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     cancelMatch(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/match/{id}/cancellation";
+        let url_ = this.baseUrl + "/match/{id}/cancellation";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -349,7 +355,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     scheduleMatch(id: string, scheduleMatchBody?: ScheduleMatchBody | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/match/{id}/kickoff";
+        let url_ = this.baseUrl + "/match/{id}/kickoff";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -406,7 +412,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     locateMatch(id: string, locateMatchBody?: LocateMatchBody | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/match/{id}/location";
+        let url_ = this.baseUrl + "/match/{id}/location";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -463,7 +469,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     submitMatchResult(id: string, submitMatchResultBody?: SubmitMatchResultBody | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/match/{id}/result";
+        let url_ = this.baseUrl + "/match/{id}/result";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -522,7 +528,7 @@ export class Client implements IClient {
      * @return Array of pitches
      */
     getAllPitches(): Observable<Pitch[]> {
-        let url_ = this.baseUrl + "/api/pitch";
+        let url_ = this.baseUrl + "/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -580,7 +586,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     createPitch(createPitchBody?: CreatePitchBody | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/api/pitch";
+        let url_ = this.baseUrl + "/pitch";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(createPitchBody);
@@ -641,7 +647,7 @@ export class Client implements IClient {
      * @return Deletion successful
      */
     deletePitch(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/pitch/{id}";
+        let url_ = this.baseUrl + "/pitch/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -694,7 +700,7 @@ export class Client implements IClient {
      * @return Contains a single pitch object
      */
     getPitch(id: string): Observable<Pitch> {
-        let url_ = this.baseUrl + "/api/pitch/{id}";
+        let url_ = this.baseUrl + "/pitch/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -754,7 +760,7 @@ export class Client implements IClient {
      * @return List of seasons
      */
     getAllSeasons(): Observable<Season[]> {
-        let url_ = this.baseUrl + "/api/season";
+        let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -812,7 +818,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     createSeason(createSeasonBody?: CreateSeasonBody | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/api/season";
+        let url_ = this.baseUrl + "/season";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(createSeasonBody);
@@ -873,7 +879,7 @@ export class Client implements IClient {
      * @return Deletion successful
      */
     deleteSeason(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/season/{id}";
+        let url_ = this.baseUrl + "/season/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -926,7 +932,7 @@ export class Client implements IClient {
      * @return Contains a single season object
      */
     getSeason(id: string): Observable<Season> {
-        let url_ = this.baseUrl + "/api/season/{id}";
+        let url_ = this.baseUrl + "/season/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -991,7 +997,7 @@ export class Client implements IClient {
      * @return Array of matches
      */
     getMatchesInSeason(id: string, match_day?: number | null | undefined, team_id?: string | null | undefined, from?: string | null | undefined, to?: string | null | undefined): Observable<Match[]> {
-        let url_ = this.baseUrl + "/api/season/{id}/matches?";
+        let url_ = this.baseUrl + "/season/{id}/matches?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1061,7 +1067,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     createMatches(id: string, createMatchesBody?: CreateMatchesBody | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/season/{id}/matches";
+        let url_ = this.baseUrl + "/season/{id}/matches";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1117,7 +1123,7 @@ export class Client implements IClient {
      * @return Current season ranking
      */
     getRanking(id: string): Observable<Ranking> {
-        let url_ = this.baseUrl + "/api/season/{id}/ranking";
+        let url_ = this.baseUrl + "/season/{id}/ranking";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1174,7 +1180,7 @@ export class Client implements IClient {
      * @return Season has been successfully started
      */
     startSeason(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/season/{id}/start";
+        let url_ = this.baseUrl + "/season/{id}/start";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1235,7 +1241,7 @@ export class Client implements IClient {
      * @return Array of teams related to the season
      */
     getTeamsInSeason(id: string): Observable<Team[]> {
-        let url_ = this.baseUrl + "/api/season/{id}/team";
+        let url_ = this.baseUrl + "/season/{id}/team";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1297,7 +1303,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     addTeamToSeason(season_id: string, team_id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/season/{season_id}/team/{team_id}";
+        let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
         if (season_id === undefined || season_id === null)
             throw new Error("The parameter 'season_id' must be defined.");
         url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
@@ -1362,7 +1368,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     removeTeamFromSeason(season_id: string, team_id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/season/{season_id}/team/{team_id}";
+        let url_ = this.baseUrl + "/season/{season_id}/team/{team_id}";
         if (season_id === undefined || season_id === null)
             throw new Error("The parameter 'season_id' must be defined.");
         url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
@@ -1425,7 +1431,7 @@ export class Client implements IClient {
      * @return list of teams
      */
     getAllTeams(): Observable<Team[]> {
-        let url_ = this.baseUrl + "/api/team";
+        let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1483,7 +1489,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     createTeam(createTeamBody?: CreateTeamBody | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/api/team";
+        let url_ = this.baseUrl + "/team";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(createTeamBody);
@@ -1544,7 +1550,7 @@ export class Client implements IClient {
      * @return Deletion successful
      */
     deleteTeam(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/team/{id}";
+        let url_ = this.baseUrl + "/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1597,7 +1603,7 @@ export class Client implements IClient {
      * @return Single team
      */
     getTeam(id: string): Observable<Team> {
-        let url_ = this.baseUrl + "/api/team/{id}";
+        let url_ = this.baseUrl + "/team/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1654,7 +1660,7 @@ export class Client implements IClient {
      * @return Team has been successfully renamed
      */
     renameTeam(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/team/{id}/rename";
+        let url_ = this.baseUrl + "/team/{id}/rename";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1709,7 +1715,7 @@ export class Client implements IClient {
      * @return List of tournaments
      */
     getAllTournaments(): Observable<Tournament[]> {
-        let url_ = this.baseUrl + "/api/tournament";
+        let url_ = this.baseUrl + "/tournament";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1766,7 +1772,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     createTournament(createTournamentBody?: CreateTournamentBody | null | undefined): Observable<Identifier> {
-        let url_ = this.baseUrl + "/api/tournament";
+        let url_ = this.baseUrl + "/tournament";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(createTournamentBody);
@@ -1826,7 +1832,7 @@ export class Client implements IClient {
      * @return Single tournament
      */
     getTournament(id: string): Observable<Tournament> {
-        let url_ = this.baseUrl + "/api/tournament/{id}";
+        let url_ = this.baseUrl + "/tournament/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1888,7 +1894,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     setRound(id: string, round: number, setRoundBody?: Team_id_tuple[] | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/tournament/{id}/round/{round}";
+        let url_ = this.baseUrl + "/tournament/{id}/round/{round}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -1950,7 +1956,7 @@ export class Client implements IClient {
      * @return Array of matches
      */
     getMatchesInTournament(id: string): Observable<Match[]> {
-        let url_ = this.baseUrl + "/api/tournament/{id}/matches";
+        let url_ = this.baseUrl + "/tournament/{id}/matches";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -2006,11 +2012,68 @@ export class Client implements IClient {
     }
 
     /**
+     * Create a user
+     * @createUserBody (optional) 
+     * @return Operation successful
+     */
+    createUser(createUserBody?: CreateUserBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/user";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(createUserBody);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).flatMap((response_ : any) => {
+            return this.processCreateUser(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateUser(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processCreateUser(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return Observable.of<void>(<any>null);
+            });
+        } else if (status === 400) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
      * Retrieve the authenticated user
      * @return The authenticated user as object
      */
     getAuthenticatedUser(): Observable<User> {
-        let url_ = this.baseUrl + "/api/user/me";
+        let url_ = this.baseUrl + "/user/me";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2068,7 +2131,7 @@ export class Client implements IClient {
      * @return Operation successful
      */
     changePassword(changePasswordBody?: ChangePasswordBody | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/user/me/password";
+        let url_ = this.baseUrl + "/user/me/password";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(changePasswordBody);
@@ -2592,6 +2655,9 @@ export class User implements IUser {
     id?: string | undefined;
     email?: string | undefined;
     teams?: string[] | undefined;
+    role?: UserRole | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
 
     constructor(data?: IUser) {
         if (data) {
@@ -2611,6 +2677,9 @@ export class User implements IUser {
                 for (let item of data["teams"])
                     this.teams.push(item);
             }
+            this.role = data["role"];
+            this.first_name = data["first_name"];
+            this.last_name = data["last_name"];
         }
     }
 
@@ -2630,6 +2699,9 @@ export class User implements IUser {
             for (let item of this.teams)
                 data["teams"].push(item);
         }
+        data["role"] = this.role;
+        data["first_name"] = this.first_name;
+        data["last_name"] = this.last_name;
         return data; 
     }
 }
@@ -2638,6 +2710,9 @@ export interface IUser {
     id?: string | undefined;
     email?: string | undefined;
     teams?: string[] | undefined;
+    role?: UserRole | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
 }
 
 export class ScheduleMatchBody implements IScheduleMatchBody {
@@ -2940,6 +3015,70 @@ export interface ICreateTournamentBody {
     name: string;
 }
 
+export class CreateUserBody implements ICreateUserBody {
+    email?: string | undefined;
+    password?: string | undefined;
+    teams?: string[] | undefined;
+    role?: CreateUserBodyRole | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
+
+    constructor(data?: ICreateUserBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.email = data["email"];
+            this.password = data["password"];
+            if (data["teams"] && data["teams"].constructor === Array) {
+                this.teams = [];
+                for (let item of data["teams"])
+                    this.teams.push(item);
+            }
+            this.role = data["role"];
+            this.first_name = data["first_name"];
+            this.last_name = data["last_name"];
+        }
+    }
+
+    static fromJS(data: any): CreateUserBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateUserBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["password"] = this.password;
+        if (this.teams && this.teams.constructor === Array) {
+            data["teams"] = [];
+            for (let item of this.teams)
+                data["teams"].push(item);
+        }
+        data["role"] = this.role;
+        data["first_name"] = this.first_name;
+        data["last_name"] = this.last_name;
+        return data; 
+    }
+}
+
+export interface ICreateUserBody {
+    email?: string | undefined;
+    password?: string | undefined;
+    teams?: string[] | undefined;
+    role?: CreateUserBodyRole | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
+}
+
 export class ChangePasswordBody implements IChangePasswordBody {
     new_password: string;
 
@@ -2980,6 +3119,16 @@ export enum SeasonState {
     Preparation = <any>"preparation", 
     Progress = <any>"progress", 
     Ended = <any>"ended", 
+}
+
+export enum UserRole {
+    Admin = <any>"admin", 
+    Team_manager = <any>"team_manager", 
+}
+
+export enum CreateUserBodyRole {
+    Admin = <any>"admin", 
+    Team_manager = <any>"team_manager", 
 }
 
 function formatDate(d: Date) {

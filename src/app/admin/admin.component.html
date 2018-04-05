@@ -12,28 +12,42 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <input matInput placeholder="{{ 'Username' | translate }}" />
+                                <input matInput placeholder="{{ 'Username' | translate }}" [(ngModel)]="newUserName" />
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <input matInput placeholder="{{ 'Password' | translate }}" type="password"/>
+                                <input matInput placeholder="{{ 'VORNAME' | translate }}" [(ngModel)]="newVorname" />
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput placeholder="{{ 'NACHNAME' | translate }}" [(ngModel)]="newNachname" />
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <input matInput placeholder="{{ 'Password_Repeat' | translate }}" />
+                                <input matInput placeholder="{{ 'Password' | translate }}" [(ngModel)]="newPassword"/>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <mat-select #home placeholder="{{ 'PLACEHOLDER_TEAM' | translate}}" [(ngModel)]="userTeamList" multiple>
+                                <mat-select #home placeholder="{{ 'ROLLE' | translate}}" [(ngModel)]="userRole" multiple>
+                                    <mat-option *ngFor="let role of CreateUserBodyRole" [value]="role">
+                                        {{role}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field>
+                                <mat-select #home placeholder="{{ 'TEAM_NAME' | translate}}" [(ngModel)]="userTeamList" multiple>
                                     <mat-option *ngFor="let team of teamList" [value]="team.id">
                                         {{team.name}}
                                     </mat-option>
@@ -43,7 +57,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button mat-icon-button>
+                            <button mat-icon-button (click)="createUser()">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
