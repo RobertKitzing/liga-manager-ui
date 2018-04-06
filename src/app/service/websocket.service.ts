@@ -20,7 +20,8 @@ export class WebsocketService {
     private inputStream: QueueingSubject<string> = new QueueingSubject<string>();
     public messages: Observable<string>;
 
-    matchUpdate: Subject<string> = new Subject<string>();
+    matchUpdated: Subject<string> = new Subject<string>();
+    pitchAdded: Subject<string> = new Subject<string>();
 
     constructor() {
         this.messages = websocketConnect(
@@ -31,8 +32,11 @@ export class WebsocketService {
         this.messages.retryWhen(errors => errors.delay(1000)).subscribe(
             (message) => {
                 const data = JSON.parse(message);
-                if (data.type = 'matchUpdate') {
-                    this.matchUpdate.next(data.data);
+                if (data.type = 'matchUpdated') {
+                    this.matchUpdated.next(data.data);
+                }
+                if (data.type = 'pitchAdded') {
+                    this.pitchAdded.next(data.data);
                 }
             }
         );

@@ -49,7 +49,6 @@ export class AddMatchComponent implements OnInit {
             () => {
                 this.dialogRef.close(true);
             }, (error) => {
-                console.log(error);
                 this.dialogRef.close(false);
             }
         );

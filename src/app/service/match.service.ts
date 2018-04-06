@@ -11,7 +11,7 @@ export class MatchService {
     public matchId: Subject<string> = new Subject<string>();
 
     constructor(private wsService: WebsocketService) {
-        this.wsService.matchUpdate.subscribe(
+        this.wsService.matchUpdated.subscribe(
             (matchId) => {
                 this.matchId.next(matchId);
             }
@@ -19,6 +19,6 @@ export class MatchService {
     }
 
     updateMatch(matchId: string) {
-        this.wsService.send({type: 'matchUpdate', data: matchId});
+        this.wsService.send({type: 'matchUpdated', data: matchId});
     }
 }

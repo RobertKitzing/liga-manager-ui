@@ -1,3 +1,4 @@
+import { WebsocketService } from './../../service/websocket.service';
 import { MatchService } from './../../service/match.service';
 import { GOOGLE_MAPS_API_KEY } from '@app/app.module';
 import { Observable } from 'rxjs/Observable';
@@ -49,6 +50,7 @@ export class EditMatchDialogComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private matchService: MatchService,
+    private webSocketService: WebsocketService,
     @Inject(MAT_DIALOG_DATA) public data: EditMatchdata,
     @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
   }
@@ -96,7 +98,6 @@ export class EditMatchDialogComponent implements OnInit {
       (resolve) => {
         this.apiClient.getAllPitches().subscribe(
           (pitches) => {
-            console.log(pitches);
             resolve(pitches);
           },
           (error) => {
@@ -134,6 +135,7 @@ export class EditMatchDialogComponent implements OnInit {
             (pitch) => {
               this.pitch = pitch;
               this.showCreateNewPitch = false;
+              this.webSocketService.send({type: 'pitchAdded', data: pitch.id});
             }
           );
         }
