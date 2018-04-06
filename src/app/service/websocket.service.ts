@@ -1,41 +1,46 @@
-import { Observer } from 'rxjs/Observer';
-import { Subject } from 'rxjs/Subject';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { MatchService } from './match.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Injectable } from '@angular/core';
+import { QueueingSubject } from 'queueing-subject';
+import websocketConnect, { Connection } from 'rxjs-websockets';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/delay';
 
-const CHAT_URL = 'ws://localhost:8080';
+const SERVER_URL = 'ws://localhost:9898';
+const input = new QueueingSubject<string>();
+const { messages, connectionStatus } = websocketConnect(SERVER_URL, input);
+
+
 @Injectable()
 export class WebsocketService {
-    constructor() { }
 
-    private subject: Subject<MessageEvent>;
+    private inputStream: QueueingSubject<string> = new QueueingSubject<string>();
+    public messages: Observable<string>;
 
-    public connect(): Subject<MessageEvent> {
-        if (!this.subject) {
-            this.subject = this.create(CHAT_URL);
-            console.log('Successfully connected: ' + CHAT_URL);
-        }
-        return this.subject;
-    }
+    matchUpdate: Subject<string> = new Subject<string>();
 
-    private create(url: string): Subject<MessageEvent> {
-        let ws = new WebSocket(url);
+    constructor() {
+        this.messages = websocketConnect(
+            SERVER_URL,
+            this.inputStream
+        ).messages.share();
 
-        let observable = Observable.create(
-            (obs: Observer<MessageEvent>) => {
-                ws.onmessage = obs.next.bind(obs);
-                ws.onerror = obs.error.bind(obs);
-                ws.onclose = obs.complete.bind(obs);
-                return ws.close.bind(ws);
-            });
-        let observer = {
-            next: (data: Object) => {
-                if (ws.readyState === WebSocket.OPEN) {
-                    ws.send(JSON.stringify(data));
+        this.messages.retryWhen(errors => errors.delay(1000)).subscribe(
+            (message) => {
+                const data = JSON.parse(message);
+                if (data.type = 'matchUpdate') {
+                    this.matchUpdate.next(data.data);
                 }
             }
-        };
-        return Subject.create(observer, observable);
+        );
+     }
+
+    send(data: any) {
+        const str = JSON.stringify(data);
+        this.inputStream.next(str);
     }
 
 }

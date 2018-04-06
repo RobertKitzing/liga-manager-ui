@@ -72,7 +72,6 @@ export class EditMatchDialogComponent implements OnInit {
     this.apiClient.getMatch(this.data.matchId).subscribe(
       (match) => {
         this.match = match;
-        this.matchService.messages.next(this.match.id);
         if (match.kickoff) {
           log.debug(match.kickoff.getHours());
           log.debug(match.kickoff.getUTCHours());

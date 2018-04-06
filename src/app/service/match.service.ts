@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Logger } from '@app/core';
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
@@ -6,14 +7,18 @@ import { WebsocketService } from './websocket.service';
 const log = new Logger('MatchService');
 @Injectable()
 export class MatchService {
-    public messages: Subject<string>;
 
-    constructor(wsService: WebsocketService) {
-        this.messages = <Subject<string>>wsService
-            .connect()
-            .map((response: MessageEvent): string => {
-                log.debug(response);
-                return response.data;
-            });
+    public matchId: Subject<string> = new Subject<string>();
+
+    constructor(private wsService: WebsocketService) {
+        this.wsService.matchUpdate.subscribe(
+            (matchId) => {
+                this.matchId.next(matchId);
+            }
+        );
+    }
+
+    updateMatch(matchId: string) {
+        this.wsService.send({type: 'matchUpdate', data: matchId});
     }
 }
