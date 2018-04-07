@@ -9,9 +9,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/delay';
 
-const SERVER_URL = 'ws://localhost:9898';
-const input = new QueueingSubject<string>();
-const { messages, connectionStatus } = websocketConnect(SERVER_URL, input);
+const SERVER_PORT: number = 9898;
 
 
 @Injectable()
@@ -24,8 +22,9 @@ export class WebsocketService {
     pitchAdded: Subject<string> = new Subject<string>();
 
     constructor() {
+        const url: string = `ws://${window.location.hostname}:${SERVER_PORT}`;
         this.messages = websocketConnect(
-            SERVER_URL,
+            url,
             this.inputStream
         ).messages.share();
 

@@ -38,7 +38,6 @@ export class MatchComponent implements OnInit {
      }
 
     ngOnInit() {
-        log.debug(this.match.id);
         this.wsSubscription = this.matchService.matchId.subscribe(
             (res) => {
                 if (res === this.match.id) {
@@ -46,7 +45,6 @@ export class MatchComponent implements OnInit {
                 }
             }
         );
-        log.debug(this.wsSubscription);
      }
 
     getPitch(pitchId: string): Pitch {
@@ -69,7 +67,6 @@ export class MatchComponent implements OnInit {
     }
 
     updateMatch() {
-        log.debug('updateMatch');
         this.apiClient.getMatch(this.match.id).subscribe(
             (match) => {
                 this.match = match;
