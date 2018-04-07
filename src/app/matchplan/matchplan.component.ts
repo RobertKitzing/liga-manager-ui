@@ -1,3 +1,4 @@
+import { WebsocketService } from '@app/service/websocket.service';
 import { GOOGLE_MAPS_API_KEY } from './../app.module';
 import { I18nService } from './../core/i18n.service';
 import { SubmitMatchResultBody, Pitch } from './../api/openapi';
@@ -36,9 +37,16 @@ export class MatchplanComponent implements OnInit, OnDestroy {
     public teamService: TeamService,
     public i18Service: I18nService,
     public dialog: MatDialog,
-    public authService: AuthenticationService) { }
+    public authService: AuthenticationService,
+    public webSocketService: WebsocketService) { }
 
   async ngOnInit() {
+    this.webSocketService.pitchAdded.subscribe(
+      (pitchId) => {
+        this.reloadPitches(true);
+      }
+    );
+
     this.seasonsSub = this.seasonService.season.subscribe(
       (season) => {
         log.debug(season);

@@ -1,3 +1,5 @@
+import { WebsocketService } from './../../service/websocket.service';
+import { MatchService } from './../../service/match.service';
 import { GOOGLE_MAPS_API_KEY } from '@app/app.module';
 import { Observable } from 'rxjs/Observable';
 import { I18nService, Logger } from '@app/core';
@@ -47,12 +49,13 @@ export class EditMatchDialogComponent implements OnInit {
     public i18Service: I18nService,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
+    private matchService: MatchService,
+    private webSocketService: WebsocketService,
     @Inject(MAT_DIALOG_DATA) public data: EditMatchdata,
     @Inject(GOOGLE_MAPS_API_KEY) public mapsApiKey: string) {
   }
 
   async ngOnInit() {
-
     this.newPitchLabelFormGroup = this.formBuilder.group({
       newpitchlabel: ['', Validators.required]
     });
@@ -95,7 +98,6 @@ export class EditMatchDialogComponent implements OnInit {
       (resolve) => {
         this.apiClient.getAllPitches().subscribe(
           (pitches) => {
-            console.log(pitches);
             resolve(pitches);
           },
           (error) => {
@@ -133,6 +135,7 @@ export class EditMatchDialogComponent implements OnInit {
             (pitch) => {
               this.pitch = pitch;
               this.showCreateNewPitch = false;
+              this.webSocketService.send({type: 'pitchAdded', data: pitch.id});
             }
           );
         }

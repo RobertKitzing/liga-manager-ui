@@ -45,7 +45,6 @@ export class AuthenticationService {
         headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
           async(response) => {
-              console.log(response);
               const data = {
                 username: response.body['email'],
                 token: response.headers.get('x-token')

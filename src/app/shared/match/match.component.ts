@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs/Subscription';
+import { MatchService } from './../../service/match.service';
 import { Logger } from './../../core/logger.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subject } from 'rxjs/Subject';
@@ -8,6 +10,7 @@ import { I18nService } from '@app/core/i18n.service';
 import { TeamService } from '@app/service/team.service';
 import { Match, Pitch, Client } from '@app/api/openapi';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { WebsocketService } from '@app/service/websocket.service';
 
 const log = new Logger('MatchComponent');
 @Component({
@@ -22,21 +25,27 @@ export class MatchComponent implements OnInit {
     @Input() pitches: Pitch[];
     @Output() pitchAdded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    wsSubscription: Subscription;
+
     constructor(
         private apiClient: Client,
         public teamService: TeamService,
         public i18Service: I18nService,
         public dialog: MatDialog,
         public authService: AuthenticationService,
-        media: ObservableMedia
+        private matchService: MatchService
     ) {
-        media.asObservable()
-        .subscribe((change: MediaChange) => {
-            log.debug(change);
-        });
      }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.wsSubscription = this.matchService.matchId.subscribe(
+            (res) => {
+                if (res === this.match.id) {
+                    this.updateMatch();
+                }
+            }
+        );
+     }
 
     getPitch(pitchId: string): Pitch {
         return this.pitches.find(p => p.id === pitchId) || new Pitch();
@@ -52,6 +61,7 @@ export class MatchComponent implements OnInit {
                 if (result) {
                     this.updateMatch();
                     this.pitchAdded.emit(true);
+                    this.matchService.updateMatch(matchId);
                 }
             });
     }
