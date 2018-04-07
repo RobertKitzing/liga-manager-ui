@@ -36,9 +36,12 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <mat-select #home placeholder="{{ 'ROLLE' | translate}}" [(ngModel)]="userRole" multiple>
-                                    <mat-option *ngFor="let role of CreateUserBodyRole" [value]="role">
-                                        {{role}}
+                                <mat-select #home placeholder="{{ 'Role' | translate}}" [(ngModel)]="userRole">
+                                    <mat-option [value]="CreateUserBodyRole.Admin">
+                                        {{CreateUserBodyRole.Admin}}
+                                    </mat-option>
+                                    <mat-option [value]="CreateUserBodyRole.Team_manager">
+                                        {{CreateUserBodyRole.Team_manager}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -47,8 +50,9 @@
                     <div class="row">
                         <div class="col">
                             <mat-form-field>
-                                <mat-select #home placeholder="{{ 'TEAM_NAME' | translate}}" [(ngModel)]="userTeamList" multiple>
-                                    <mat-option *ngFor="let team of teamList" [value]="team.id">
+                                <mat-select #home placeholder="{{ 'TEAM_NAME' | translate}}" [(ngModel)]="userTeamList" multiple
+                                (selectionChange)="onChangeTeamSelect($event)">
+                                    <mat-option *ngFor="let team of teamList" [value]="team.id" >
                                         {{team.name}}
                                     </mat-option>
                                 </mat-select>

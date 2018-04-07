@@ -75,10 +75,7 @@ export class EditMatchDialogComponent implements OnInit {
       (match) => {
         this.match = match;
         if (match.kickoff) {
-          log.debug(match.kickoff.getHours());
-          log.debug(match.kickoff.getUTCHours());
           const utcTime: Date = new Date(match.kickoff.toUTCString());
-          log.debug(utcTime);
           this.kickoffTime = match.kickoff.getHours().toString().padStart(2, '0') + ':' +
             match.kickoff.getMinutes().toString().padStart(2, '0');
         }
@@ -110,7 +107,6 @@ export class EditMatchDialogComponent implements OnInit {
 
   onPitchSelect(pitch: Pitch) {
     this.pitch = pitch;
-    log.debug(pitch);
   }
 
   filterPitches(searchTerm: string): Pitch[] {
@@ -145,7 +141,6 @@ export class EditMatchDialogComponent implements OnInit {
 
   onShowCreateNewPitch() {
     this.cdRef.detectChanges();
-    log.debug(this.adressAutoComplete);
     this.places = new google.maps.places.Autocomplete(this.adressAutoComplete.nativeElement);
     this.places.addListener('place_changed', () => {
       const place = this.places.getPlace();

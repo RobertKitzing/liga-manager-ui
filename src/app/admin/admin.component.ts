@@ -3,6 +3,7 @@ import { Logger } from '@app/core';
 import { TeamService } from '@app/service/team.service';
 import { Team, Client } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material';
 
 const log = new Logger('AdminComponent');
 @Component({
@@ -14,7 +15,7 @@ const log = new Logger('AdminComponent');
 export class AdminComponent implements OnInit {
 
     teamList: Team[];
-    userTeamList: Team[];
+    userTeamList: string[] = new Array<string>();
     newUserName: string;
     newPassword: string;
 
@@ -31,13 +32,16 @@ export class AdminComponent implements OnInit {
         this.teamList = await this.teamService.loadTeams();
     }
 
+    onChangeTeamSelect(event: MatSelectChange) {
+        this.userTeamList = event.value;
+    }
+
     createUser() {
-        console.log(this.userTeamList.map(t => t.id));
         const body = new CreateUserBody();
 
         body.email = this.newUserName;
         body.password = this.newPassword;
-        body.teams = this.userTeamList.map(t => t.id);
+        body.teams = this.userTeamList;
         body.first_name = this.newVorname;
         body.last_name = this.newNachname;
         body.role = CreateUserBodyRole.Team_manager;
