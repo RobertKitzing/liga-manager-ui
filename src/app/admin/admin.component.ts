@@ -1,3 +1,4 @@
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { CreateUserBody, CreateUserBodyRole } from './../api/openapi';
 import { Logger } from '@app/core';
 import { TeamService } from '@app/service/team.service';
@@ -25,11 +26,28 @@ export class AdminComponent implements OnInit {
 
     CreateUserBodyRole = CreateUserBodyRole;
 
+    // createUserForm: FormGroup;
+    email: FormControl;
+    firstName: FormControl;
+    lastName: FormControl;
+    password: FormControl;
+
     constructor(public teamService: TeamService,
-                private apiClient: Client) { }
+                private apiClient: Client) {
+                    this.email = new FormControl('', [Validators.required, Validators.email]);
+                    this.firstName = new FormControl('', [Validators.required]);
+                    this.lastName = new FormControl('', [Validators.required]);
+                    this.password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+                 }
 
     async ngOnInit() {
         this.teamList = await this.teamService.loadTeams();
+        // this.createUserForm = new FormGroup({
+        //     email: new FormControl('', [Validators.required, Validators.email]),
+        //     firstName: new FormControl('', [Validators.required]),
+        //     lastName: new FormControl('', [Validators.required]),
+        //     password: new FormControl('', [Validators.required, Validators.minLength(6)])
+        // });
     }
 
     onChangeTeamSelect(event: MatSelectChange) {
