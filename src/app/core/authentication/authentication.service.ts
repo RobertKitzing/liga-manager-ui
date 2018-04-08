@@ -41,7 +41,7 @@ export class AuthenticationService {
     return new Promise<boolean>(
       (resolve) => {
         let headers = new HttpHeaders();
-        headers = headers.append('Authorization', 'Basic ' + btoa(context.username + ':' + context.password));
+        headers = headers.append('Authorization', 'Basic ' + btoa(context.username.toLowerCase() + ':' + context.password));
         headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
           async(response) => {

@@ -57,7 +57,7 @@ export class AdminComponent implements OnInit {
     createUser() {
         const body = new CreateUserBody();
 
-        body.email = this.newUserName;
+        body.email = this.newUserName.toLowerCase();
         body.password = this.newPassword;
         body.teams = this.userTeamList;
         body.first_name = this.newVorname;

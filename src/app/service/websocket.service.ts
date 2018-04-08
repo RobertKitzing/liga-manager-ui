@@ -11,7 +11,6 @@ import 'rxjs/add/operator/delay';
 
 const SERVER_PORT: number = 9898;
 
-
 @Injectable()
 export class WebsocketService {
 
@@ -22,7 +21,7 @@ export class WebsocketService {
     pitchAdded: Subject<string> = new Subject<string>();
 
     constructor() {
-        const url: string = `ws://${window.location.hostname}:${SERVER_PORT}`;
+        const url: string = `wss://${window.location.hostname}/ws`;
         this.messages = websocketConnect(
             url,
             this.inputStream
