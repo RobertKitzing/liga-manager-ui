@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { MatchService } from './service/match.service';
 import { WebsocketService } from './service/websocket.service';
 import { AuthInterceptor } from './core/authentication/authentication.interceptor';
@@ -67,7 +68,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     },
     {
       provide: API_BASE_URL,
-      useValue: '/api'
+      useValue: environment.serverUrl
     },
     {
       provide: GOOGLE_MAPS_API_KEY,

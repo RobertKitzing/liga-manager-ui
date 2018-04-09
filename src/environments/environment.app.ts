@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    serverUrl: 'http://manager.wildeligabremen.de',
+    serverUrl: 'https://manager.wildeligabremen.de/api',
     defaultLanguage: 'de-DE',
     googleMapsApiKey: 'AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0',
     supportedLanguages: [
