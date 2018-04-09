@@ -1,4 +1,3 @@
-import { environment } from './../environments/environment';
 import { MatchService } from './service/match.service';
 import { WebsocketService } from './service/websocket.service';
 import { AuthInterceptor } from './core/authentication/authentication.interceptor';
