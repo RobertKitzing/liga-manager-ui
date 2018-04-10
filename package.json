@@ -44,6 +44,7 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "@angular/service-worker": "^5.2.0",
+    "@covalent/text-editor": "^1.0.0",
     "@ionic-native/core": "^4.0.0",
     "@ionic-native/keyboard": "^4.0.0",
     "@ionic-native/splash-screen": "^4.0.0",

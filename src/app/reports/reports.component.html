@@ -1,0 +1,8 @@
+<div class="container" *ngIf="match">
+    <div class="row">
+        <h1>{{ teamService.getTeamNameByID(match.home_team_id)}} - {{ teamService.getTeamNameByID(match.guest_team_id) }}</h1>
+    </div>
+    <div class="row">
+        <td-text-editor [(value)]="reportContent" [options]="options"></td-text-editor>
+    </div>
+</div>

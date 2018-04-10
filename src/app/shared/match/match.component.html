@@ -67,4 +67,9 @@
             <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <button mat-button [routerLink]="['/reports']" [queryParams]="{ matchId: match.id}">Reports</button>
+        </div>
+    </div>
 </div>

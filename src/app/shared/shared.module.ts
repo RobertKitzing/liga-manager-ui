@@ -17,10 +17,12 @@ import { SeasonService } from '@app/service/season.service';
 import { MatNativeDateModule } from '@angular/material';
 import { ErrorComponent } from '@app/shared/error/error.component';
 import { PopoverModule } from 'ngx-bootstrap';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     FlexLayoutModule,
+    RouterModule,
     MaterialModule,
     CommonModule,
     AngularFontAwesomeModule,
@@ -53,7 +55,8 @@ import { PopoverModule } from 'ngx-bootstrap';
   providers: [
     SeasonService,
     TeamService,
-    MatNativeDateModule
+    MatNativeDateModule,
+    RouterModule
   ]
 })
 export class SharedModule { }

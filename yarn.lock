@@ -250,6 +250,13 @@
     typescript "2.4.1"
     yargs "8.0.2"
 
+"@covalent/text-editor@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@covalent/text-editor/-/text-editor-1.0.0.tgz#716f5c327c264452db244617a01c9596346d4a97"
+  dependencies:
+    simplemde "^1.11.2"
+    tslib "^1.7.1"
+
 "@ionic-native/core@^4.0.0":
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-4.5.3.tgz#bd0fd39e7257ded4c55c3062bb73c9741a2263bc"
@@ -1723,6 +1730,16 @@ codelyzer@^4.1.0:
     semver-dsl "^1.0.1"
     source-map "^0.5.6"
     sprintf-js "^1.0.3"
+
+codemirror-spell-checker@*:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/codemirror-spell-checker/-/codemirror-spell-checker-1.1.2.tgz#1c660f9089483ccb5113b9ba9ca19c3f4993371e"
+  dependencies:
+    typo-js "*"
+
+codemirror@*:
+  version "5.36.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.36.0.tgz#1172ad9dc298056c06e0b34e5ccd23825ca15b40"
 
 collapse-white-space@^1.0.2:
   version "1.0.3"
@@ -5536,6 +5553,10 @@ markdown-table@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.1.tgz#4b3dd3a133d1518b8ef0dbc709bf2a1b4824bc8c"
 
+marked@*:
+  version "0.3.19"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
+
 marked@^0.3.7:
   version "0.3.12"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.12.tgz#7cf25ff2252632f3fe2406bde258e94eee927519"
@@ -8261,6 +8282,14 @@ simple-plist@^0.2.1:
     bplist-parser "0.1.1"
     plist "2.0.1"
 
+simplemde@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/simplemde/-/simplemde-1.11.2.tgz#a23a35d978d2c40ef07dec008c92f070d8e080e3"
+  dependencies:
+    codemirror "*"
+    codemirror-spell-checker "*"
+    marked "*"
+
 slack-node@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/slack-node/-/slack-node-0.2.0.tgz#de4b8dddaa8b793f61dbd2938104fdabf37dfa30"
@@ -9208,6 +9237,10 @@ typescript@~2.5.3:
 typescript@~2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
+
+typo-js@*:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/typo-js/-/typo-js-1.0.3.tgz#54d8ebc7949f1a7810908b6002c6841526c99d5a"
 
 uglify-es@^3.3.4:
   version "3.3.10"
