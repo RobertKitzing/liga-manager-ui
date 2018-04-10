@@ -1,8 +1,31 @@
 <div class="container" *ngIf="match">
     <div class="row">
-        <h1>{{ teamService.getTeamNameByID(match.home_team_id)}} - {{ teamService.getTeamNameByID(match.guest_team_id) }}</h1>
+        <div class="col">
+            <div class="pull-right" *ngIf="authService.isAdminUser">
+                <mat-slide-toggle [color]="'warn'" [(ngModel)]="editMode">
+                    {{ 'EDIT' | translate }}
+                </mat-slide-toggle>
+            </div>
+        </div>
     </div>
     <div class="row">
-        <td-text-editor [(value)]="reportContent" [options]="options"></td-text-editor>
+        <div class="col-12" style="text-align: center">
+            <h1>{{ teamService.getTeamNameByID(match.home_team_id)}} - {{ teamService.getTeamNameByID(match.guest_team_id) }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <md-editor name="Content"
+            [(ngModel)]="reportContent"
+            [mode]="mode"
+            [height]="'75vh'"
+            [options]="options"
+            (change)="sendReport()"></md-editor>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="pull-right" mat-button (click)="sendReport()">Speichern</button>
+        </div>
     </div>
 </div>

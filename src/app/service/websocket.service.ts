@@ -8,9 +8,14 @@ import websocketConnect, { Connection } from 'rxjs-websockets';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/delay';
+import { environment } from '@env/environment';
 
 const SERVER_PORT: number = 9898;
 
+export interface WebSocketMessage {
+    type: string;
+    data: any;
+}
 @Injectable()
 export class WebsocketService {
 
@@ -19,9 +24,10 @@ export class WebsocketService {
 
     matchUpdated: Subject<string> = new Subject<string>();
     pitchAdded: Subject<string> = new Subject<string>();
+    reportSent: Subject<any> = new Subject<any>();
 
     constructor() {
-        const url: string = `wss://${window.location.hostname}/ws`;
+        const url: string = environment.wsServerUrl;
         this.messages = websocketConnect(
             url,
             this.inputStream
@@ -29,18 +35,27 @@ export class WebsocketService {
 
         this.messages.retryWhen(errors => errors.delay(1000)).subscribe(
             (message) => {
-                const data = JSON.parse(message);
-                if (data.type = 'matchUpdated') {
-                    this.matchUpdated.next(data.data);
-                }
-                if (data.type = 'pitchAdded') {
-                    this.pitchAdded.next(data.data);
+                try {
+                    const msg: WebSocketMessage = JSON.parse(message);
+                    switch (msg.type) {
+                        case 'matchUpdated':
+                            this.matchUpdated.next(msg.data);
+                            break;
+                        case 'pitchAdded':
+                            this.pitchAdded.next(msg.data);
+                            break;
+                        case 'reportSent':
+                            this.reportSent.next(msg.data);
+                            break;
+                    }
+                } catch {
+                    console.error('Error parsing WS Message');
                 }
             }
         );
      }
 
-    send(data: any) {
+    send(data: WebSocketMessage) {
         const str = JSON.stringify(data);
         this.inputStream.next(str);
     }

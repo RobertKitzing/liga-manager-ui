@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   serverUrl: '/api',
+  wsServerUrl: 'ws://localhost:9898',
   defaultLanguage: 'de-DE',
   googleMapsApiKey: 'AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0',
   supportedLanguages: [
