@@ -1,4 +1,3 @@
-import { environment } from './../environments/environment';
 import { MatchService } from './service/match.service';
 import { WebsocketService } from './service/websocket.service';
 import { AuthInterceptor } from './core/authentication/authentication.interceptor';
@@ -29,6 +28,8 @@ import { TableModule } from './table/table.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from '@app/admin/admin.module';
 import { LoginModule } from '@app/login/login.module';
+import { ChangePasswordModule } from '@app/login/changepassword/changepassword.module';
+
 export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_KEY');
 
 @NgModule({
@@ -48,6 +49,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     MatchplanModule,
     TournamentModule,
     AdminModule,
+    ChangePasswordModule,
     AppRoutingModule,
     HttpClientModule
   ],

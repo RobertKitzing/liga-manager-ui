@@ -165,7 +165,7 @@ export class EditMatchDialogComponent implements OnInit {
   }
 
   async onSaveClicked() {
-    if (this.match.guest_score && this.match.home_score) {
+    if (this.areScoresValid() ) {
       const result: SubmitMatchResultBody = new SubmitMatchResultBody;
       result.home_score = this.match.home_score;
       result.guest_score = this.match.guest_score;
@@ -184,5 +184,10 @@ export class EditMatchDialogComponent implements OnInit {
       await this.apiClient.locateMatch(this.match.id, body).toPromise();
     }
     this.dialogRef.close({ matchId: this.match.id });
+  }
+
+  private areScoresValid() {
+    return (this.match.guest_score || this.match.guest_score === 0) &&
+           (this.match.home_score || this.match.home_score === 0);
   }
 }

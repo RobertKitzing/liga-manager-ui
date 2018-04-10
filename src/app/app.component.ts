@@ -87,6 +87,11 @@ export class AppComponent implements OnInit {
     document.addEventListener('deviceready', () => {
       this.zone.run(() => this.onCordovaReady());
     }, false);
+
+    if (this.authService.credentials && (!this.authService.credentials.firstName || !this.authService.credentials.lastName)) {
+      // bugfix für ältere logins
+      this.authService.logout();
+    }
   }
 
   loadGoogleMapsScript() {

@@ -1,4 +1,6 @@
 {
+  "ENTER_VALID_PASSWORD": "Mindesten 6 Zeichen und vorest keine Sonderzeichen/umlaute",
+  "CHANGE_PASSWORD": "Kennwort ändern",
   "ADD_USER": "Benutzer hinzufügen",
   "USER_MANAGMENT": "Nutzerverwaltung",
   "CONTACT": "Kontakt",

@@ -6,6 +6,7 @@ import { MatSidenav, MatDialog } from '@angular/material';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { I18nService } from '../../i18n.service';
 import { LoginComponent } from '@app/login/login.component';
+import { ChangePasswordComponent } from '@app/login/changepassword/changepassword.component';
 
 @Component({
   selector: 'app-header',
@@ -51,5 +52,16 @@ export class HeaderComponent implements OnInit {
 
   openLoginDialog() {
     const dialogRef = this.dialog.open(LoginComponent);
+  }
+
+  openChangePasswordDialog() {
+    const dialogRef = this.dialog.open(ChangePasswordComponent);
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.authService.logout();
+        }
+      }
+    );
   }
 }

@@ -4,10 +4,13 @@ import { Client, User, UserRole } from './../../api/openapi';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { Base64 } from 'js-base64';
 
 export interface Credentials {
   // Customize received credentials here
   username: string;
+  firstName: string;
+  lastName: string;
   token: string;
 }
 
@@ -41,12 +44,15 @@ export class AuthenticationService {
     return new Promise<boolean>(
       (resolve) => {
         let headers = new HttpHeaders();
-        headers = headers.append('Authorization', 'Basic ' + btoa(context.username.toLowerCase() + ':' + context.password));
-        headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
+        headers = headers.append('Authorization', 'Basic ' + passBase64);
+        headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
         this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
           async(response) => {
               const data = {
                 username: response.body['email'],
+                firstName: response.body['first_name'],
+                lastName: response.body['last_name'],
                 token: response.headers.get('x-token')
               };
               this.setCredentials(data, context.remember);
@@ -127,7 +133,6 @@ export class AuthenticationService {
   }
 
   public get isAdminUser(): boolean {
-    // TODO: Admin user aus Claim oder sowas
     return this.isAuthenticated && this.user && this.user.role === UserRole.Admin;
   }
 }

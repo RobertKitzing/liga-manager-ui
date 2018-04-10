@@ -37,7 +37,10 @@ export class AdminComponent implements OnInit {
                     this.email = new FormControl('', [Validators.required, Validators.email]);
                     this.firstName = new FormControl('', [Validators.required]);
                     this.lastName = new FormControl('', [Validators.required]);
-                    this.password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+                    this.password = new FormControl('', [
+                        Validators.required,
+                        Validators.minLength(6)
+                    ]);
                  }
 
     async ngOnInit() {

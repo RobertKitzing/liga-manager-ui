@@ -35,7 +35,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <mat-form-field>
+                            <mat-form-field style="width: 100%">
                                 <input matInput placeholder="{{ 'Password' | translate }}" [(ngModel)]="newPassword"
                                        [formControl]="password" required />
                                 <mat-error *ngIf="password.invalid">{{ 'ENTER_VALID_PASSWORD' | translate}}</mat-error>
