@@ -12,12 +12,15 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthenticationService) {
     }
 
-    public intercept( req: HttpRequest<any>,
-                      next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(req: HttpRequest<any>,
+        next: HttpHandler): Observable<HttpEvent<any>> {
+
+        if (req.headers.get('Authorization')) {
+            return next.handle(req);
+        }
 
         if (this.authService.isAuthenticated) {
-            log.debug(this.authService.isAuthenticated);
-            return next.handle( req.clone({
+            return next.handle(req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + this.authService.getAccessToken())
             }));
         }

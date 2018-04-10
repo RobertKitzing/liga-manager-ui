@@ -27,8 +27,9 @@ import { AppComponent } from './app.component';
 import { TableModule } from './table/table.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from '@app/admin/admin.module';
-import { LoginModule } from '@app/login/login.module';
-import { ChangePasswordModule } from '@app/login/changepassword/changepassword.module';
+import { LoginModule } from '@app/account/login.module';
+import { ChangePasswordModule } from '@app/account/changepassword/changepassword.module';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_KEY');
 
@@ -49,6 +50,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     MatchplanModule,
     TournamentModule,
     AdminModule,
+    AlertModule.forRoot(),
     ChangePasswordModule,
     AppRoutingModule,
     HttpClientModule

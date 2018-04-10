@@ -1,5 +1,8 @@
 {
-  "ENTER_VALID_PASSWORD": "Mindesten 6 Zeichen und vorest keine Sonderzeichen/umlaute",
+  "CHANGE_PASSWORD_ERROR": "Das hat leider nicht geklappt, sry!",
+  "CURRENT_PASSWORD_WRONG": "Falsches altes Passwort",
+  "PLACEHOLDER_NEW_PASSWORD": "Neues Passwort",
+  "ENTER_VALID_PASSWORD": "Mindesten 6 Zeichen",
   "CHANGE_PASSWORD": "Kennwort ändern",
   "ADD_USER": "Benutzer hinzufügen",
   "USER_MANAGMENT": "Nutzerverwaltung",

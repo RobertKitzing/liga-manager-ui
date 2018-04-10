@@ -33,7 +33,7 @@ export class AuthenticationService {
   private user: User;
 
   constructor(private apiClient: Client,
-              private httpClient: HttpClient) {
+    private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -48,23 +48,38 @@ export class AuthenticationService {
         headers = headers.append('Authorization', 'Basic ' + passBase64);
         headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
         this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
-          async(response) => {
-              const data = {
-                username: response.body['email'],
-                firstName: response.body['first_name'],
-                lastName: response.body['last_name'],
-                token: response.headers.get('x-token')
-              };
-              this.setCredentials(data, context.remember);
-              this.user = <User>response.body;
-              resolve(true);
-        }, err => {
-           this.logout();
-           resolve(false);
-        });
+          (response) => {
+            const data = {
+              username: response.body['email'],
+              firstName: response.body['first_name'],
+              lastName: response.body['last_name'],
+              token: response.headers.get('x-token')
+            };
+            this.setCredentials(data, context.remember);
+            this.user = <User>response.body;
+            resolve(true);
+          }, err => {
+            resolve(false);
+          });
       });
   }
 
+  async checkPassword(password: string): Promise<boolean> {
+    return new Promise<boolean>(
+      (resolve) => {
+        let headers = new HttpHeaders();
+        const passBase64 = Base64.encode(this.credentials.username.toLowerCase() + ':' + password);
+        headers = headers.append('Authorization', 'Basic ' + passBase64);
+        headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        this.httpClient.get('/api/user/me', { headers: headers }).subscribe(
+          async (response) => {
+            resolve(true);
+          }, err => {
+            resolve(false);
+          });
+      }
+    );
+  }
   /**
    * Logs out the user and clear credentials.
    * @return {Observable<boolean>} True if the user was logged out successfully.
@@ -121,10 +136,10 @@ export class AuthenticationService {
           (user) => {
             this.user = user;
             resolve(user);
-        },
-        (error) => {
-          resolve(null);
-        });
+          },
+          (error) => {
+            resolve(null);
+          });
       });
   }
 

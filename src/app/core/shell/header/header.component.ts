@@ -5,8 +5,8 @@ import { MatSidenav, MatDialog } from '@angular/material';
 
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { I18nService } from '../../i18n.service';
-import { LoginComponent } from '@app/login/login.component';
-import { ChangePasswordComponent } from '@app/login/changepassword/changepassword.component';
+import { LoginComponent } from '@app/account/login.component';
+import { ChangePasswordComponent } from '@app/account/changepassword/changepassword.component';
 
 @Component({
   selector: 'app-header',

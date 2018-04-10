@@ -1,4 +1,4 @@
-import { LoginModule } from './../login/login.module';
+import { LoginModule } from './../account/login.module';
 import { IsAdminGuard } from './authentication/isadmin.guard';
 import { SharedModule } from '@app/shared';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
@@ -14,6 +14,7 @@ import { HeaderComponent } from './shell/header/header.component';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { AuthenticationService } from './authentication/authentication.service';
 import { I18nService } from './i18n.service';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { I18nService } from './i18n.service';
     FlexLayoutModule,
     MaterialModule,
     RouterModule,
+    AlertModule,
     LoginModule,
     SharedModule
   ],
@@ -40,7 +42,8 @@ import { I18nService } from './i18n.service';
     }
   ],
   exports: [
-    LoginModule
+    LoginModule,
+    AlertModule
   ]
 })
 export class CoreModule {
