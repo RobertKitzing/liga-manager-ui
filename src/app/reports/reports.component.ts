@@ -4,16 +4,35 @@ import { Match, Client } from '@app/api/openapi';
 import { TeamService } from '@app/service/team.service';
 import { AuthenticationService } from '@app/core';
 import { WebsocketService } from '@app/service/websocket.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-reports',
-    templateUrl: 'reports.component.html'
+    templateUrl: 'reports.component.html',
+    styleUrls: ['reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
 
-    reportContent: string;
+    private _reportContent: string;
+
+    get reportContent(): string {
+        if (this.editMode) {
+            return this._reportContent;
+        }
+        return this.publish ? this._reportContent : '';
+    }
+
+    set reportContent(value: string) {
+        this._reportContent = value;
+    }
+
+    autoSave: boolean = true;
+    autoSaveTimer: number = 10000;
+
     match: Match;
     editMode: boolean;
+    publish: boolean = false;
+
     get mode(): string {
         return this.editMode ?  'editor' : 'preview';
     }
@@ -22,7 +41,8 @@ export class ReportsComponent implements OnInit {
         public teamService: TeamService,
         public authService: AuthenticationService,
         private wsService: WebsocketService,
-        private api: Client) { }
+        private api: Client,
+        private snackBar: MatSnackBar) { }
 
     async ngOnInit() {
         this.wsService.reportSent.subscribe(
@@ -30,6 +50,7 @@ export class ReportsComponent implements OnInit {
                 console.log(report);
                 if (report) {
                     this.reportContent = report.content;
+                    this.publish = report.publish;
                 }
             }
         );
@@ -46,7 +67,19 @@ export class ReportsComponent implements OnInit {
     }
 
     sendReport() {
-        console.log('saveReport');
-        this.wsService.send({ type: 'saveReport', data: { matchId: this.match.id, content: this.reportContent}});
+        this.wsService.send({ type: 'saveReport', data: {
+            matchId: this.match.id,
+            content: this.reportContent,
+            publish: this.publish}});
+
+            this.snackBar.open('saved', '', {
+                duration: 800,
+              });
+    }
+
+    editModeChanged() {
+        if (this.editMode) {
+            this.getReport(this.match.id);
+        }
     }
 }

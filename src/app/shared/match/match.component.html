@@ -61,15 +61,16 @@
                     </a>
                 </div>
             </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+                <div class="col">
+                    <button class="pull-right" mat-button [routerLink]="['/reports']" [queryParams]="{ matchId: match.id}">{{ 'REPORTS' | translate }}</button>
+                </div>
+            </div>
         </div>
         <div class="col-12 col-sm-2" *ngIf="authService.isAdminUser || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)"
              style="text-align: center">
             <i class="fa fa-edit fa-2x" (click)="openEditDialog(match.id)" style="cursor: pointer;"></i>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <button mat-button [routerLink]="['/reports']" [queryParams]="{ matchId: match.id}">Reports</button>
         </div>
     </div>
 </div>

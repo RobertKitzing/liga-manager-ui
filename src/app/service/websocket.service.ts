@@ -57,6 +57,7 @@ export class WebsocketService {
 
     send(data: WebSocketMessage) {
         const str = JSON.stringify(data);
+        console.log(str);
         this.inputStream.next(str);
     }
 

@@ -1,8 +1,8 @@
-<div class="container" *ngIf="match">
+<div [ngClass]="{ 'container': !editMode, 'containter-fluid': editMode}" *ngIf="match && !teamService.isLoadingTeams">
     <div class="row">
         <div class="col">
             <div class="pull-right" *ngIf="authService.isAdminUser">
-                <mat-slide-toggle [color]="'warn'" [(ngModel)]="editMode">
+                <mat-slide-toggle [color]="'warn'" [(ngModel)]="editMode" (change)="editModeChanged()">
                     {{ 'EDIT' | translate }}
                 </mat-slide-toggle>
             </div>
@@ -19,13 +19,21 @@
             [(ngModel)]="reportContent"
             [mode]="mode"
             [height]="'75vh'"
-            [options]="options"
-            (change)="sendReport()"></md-editor>
+            [options]="options"></md-editor>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="editMode">
+        <div class="offset-7 col">
+            <mat-checkbox class="pull-right" [(ngModel)]="publish">{{ 'PUBLISH' | translate }}</mat-checkbox>
+        </div>
+        <!-- <div class="col">
+            <mat-checkbox class="pull-right" [(ngModel)]="autoSave">{{ 'AUTOSAVE' | translate}}</mat-checkbox>
+        </div> -->
         <div class="col">
-            <button class="pull-right" mat-button (click)="sendReport()">Speichern</button>
+            <button class="pull-right" color="primary" mat-raised-button (click)="sendReport()">Speichern</button>
+        </div>
+        <div class="col offset-1">
+
         </div>
     </div>
 </div>

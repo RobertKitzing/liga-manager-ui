@@ -1,4 +1,7 @@
 {
+  "AUTOSAVE": "auto save every {{sec}} s",
+  "PUBLISH": "publish",
+  "REPORTS": "Report",
   "CHANGE_PASSWORD_ERROR": "Didn't do it!",
   "CURRENT_PASSWORD_WRONG": "Wrong old Password",
   "PLACEHOLDER_NEW_PASSWORD": "New Password",
