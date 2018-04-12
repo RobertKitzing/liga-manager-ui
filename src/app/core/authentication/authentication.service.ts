@@ -1,6 +1,6 @@
 import { async } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Client, User, UserRole } from './../../api/openapi';
+import { Client, User, UserRole, ChangePasswordBody } from './../../api/openapi';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -64,15 +64,17 @@ export class AuthenticationService {
       });
   }
 
-  async checkPassword(password: string): Promise<boolean> {
+  async changePassword(oldPassword: string, newPassword: string): Promise<boolean> {
     return new Promise<boolean>(
       (resolve) => {
         let headers = new HttpHeaders();
-        const passBase64 = Base64.encode(this.credentials.username.toLowerCase() + ':' + password);
+        const passBase64 = Base64.encode(this.credentials.username.toLowerCase() + ':' + oldPassword);
         headers = headers.append('Authorization', 'Basic ' + passBase64);
-        headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-        this.httpClient.get('/api/user/me', { headers: headers }).subscribe(
-          async (response) => {
+        headers = headers.append('Content-Type', 'application/json; charset=utf-8');
+        const body = new ChangePasswordBody();
+        body.new_password = newPassword;
+        this.httpClient.put('/api/user/me/password', JSON.stringify(body), {headers: headers }).subscribe(
+          (response) => {
             resolve(true);
           }, err => {
             resolve(false);

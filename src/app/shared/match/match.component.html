@@ -61,8 +61,8 @@
                     </a>
                 </div>
             </div>
-            <mat-divider></mat-divider>
-            <div class="row">
+            <mat-divider *ngIf="authService.isAdminUser"></mat-divider>
+            <div class="row" *ngIf="authService.isAdminUser">
                 <div class="col">
                     <button class="pull-right" mat-button [routerLink]="['/reports']" [queryParams]="{ matchId: match.id}">{{ 'REPORTS' | translate }}</button>
                 </div>

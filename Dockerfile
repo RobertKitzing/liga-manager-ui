@@ -1,21 +1,21 @@
-FROM node as node
+# FROM node as node
 
-RUN mkdir /app
+# RUN mkdir /app
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY package.json /app
+# COPY ./www /app/www
 
-RUN npm install
+# RUN npm install
 
-COPY ./ /app/
+# COPY ./ /app/
 
-ARG env=prod
+# ARG env=prod
 
-RUN npm run build -- --prod --environment $env
+# RUN npm run build -- --prod --environment $env
 
 FROM nginx
 
-COPY --from=node /app/www/ /var/www/ui
+COPY ./www/ /var/www/ui
 
 COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
