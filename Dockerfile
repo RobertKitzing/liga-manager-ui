@@ -16,6 +16,6 @@
 
 FROM nginx
 
-COPY ./www/ /var/www/ui
+COPY ./www /var/www/ui
 
 COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf

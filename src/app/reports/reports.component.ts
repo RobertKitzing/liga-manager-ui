@@ -47,7 +47,6 @@ export class ReportsComponent implements OnInit {
     async ngOnInit() {
         this.wsService.reportSent.subscribe(
             (report) => {
-                console.log(report);
                 if (report) {
                     this.reportContent = report.content;
                     this.publish = report.publish;

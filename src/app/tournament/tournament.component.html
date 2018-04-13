@@ -16,7 +16,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <mat-divider [vertical]="true"></mat-divider>
+        <mat-divider [vertical]="true" *ngIf="authService.isAdminUser"></mat-divider>
         <div *ngIf="authService.isAdminUser">
             <mat-form-field>
                 <input matInput [(ngModel)]="newTournament" placeholder="{{ 'NEW_TOURNAMENT' | translate }}" />
