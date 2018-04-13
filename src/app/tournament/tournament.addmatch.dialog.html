@@ -37,7 +37,15 @@
         </button>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col">
+            <mat-form-field style="width:100%">
+                <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER' | translate }}" [(ngModel)]="newRoundPlanDate"
+                    (dateChange)="onDateChanged($event)" />
+                <mat-datepicker-toggle matSuffix [for]="kickoffDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #kickoffDatePicker [touchUi]="true"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col">
             <button mat-button (click)="createMatch()">
                 {{ 'START_ROUND' | translate }}
             </button>

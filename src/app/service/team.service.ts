@@ -1,4 +1,4 @@
-import { Team } from './../api/openapi';
+import { Team, CreateTeamBody } from './../api/openapi';
 import { Client } from '@app/api/openapi';
 import { Injectable } from '@angular/core';
 
@@ -26,6 +26,27 @@ export class TeamService {
             this.loadTeams();
         }
         return this.teams;
+    }
+
+    async addNewTeam(teamName: string): Promise<boolean> {
+        return new Promise<boolean>(
+            (resolve) => {
+                if (!teamName) {
+                    resolve(false);
+                }
+                this.resetTeams();
+                const createTeamParams: CreateTeamBody = new CreateTeamBody();
+                createTeamParams.name = teamName;
+                this.apiClient.createTeam(createTeamParams).subscribe(
+                    () => {
+                        resolve(true);
+                    },
+                    (error) => {
+                        resolve(false);
+                    }
+                );
+            }
+        );
     }
 
     async loadTeams(): Promise<Team[]> {

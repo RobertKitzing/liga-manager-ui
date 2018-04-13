@@ -8,6 +8,8 @@ import { NgModule } from '@angular/core';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from '@app/admin/admin-routing.module';
 import { MatTabsModule, MatFormFieldModule } from '@angular/material';
+import { AddTeamComponent } from './teammanager/addteam.component';
+import { TeamManagerComponent } from './teammanager/teammanager.component';
 
 @NgModule({
     imports: [
@@ -20,7 +22,9 @@ import { MatTabsModule, MatFormFieldModule } from '@angular/material';
     ],
     exports: [],
     declarations: [
-        AdminComponent
+        AdminComponent,
+        AddTeamComponent,
+        TeamManagerComponent
     ],
     providers: [],
 })
