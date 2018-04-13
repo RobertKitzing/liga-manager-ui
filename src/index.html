@@ -1,15 +1,22 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>LigaManager</title>
-  <base href="./"/>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-  <meta name="msapplication-tap-highlight" content="no"/>
-  <meta name="theme-color" content="#4e8ef7"/>
-  <link rel="manifest" href="manifest.json"/>
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <base href="./" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="theme-color" content="#4e8ef7" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/agate.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/ace/1.2.8/ace.js"></script>
+  <script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 </head>
+
 <body>
   <!--[if lt IE 10]>
   <p>
@@ -24,10 +31,11 @@
   </noscript>
   <!-- Include Cordova script only when needed -->
   <script>
-    if (!/^http/.test(location.protocol)|/^localhost:8080/.test(location.host)) {
+    if (!/^http/.test(location.protocol) | /^localhost:8080/.test(location.host)) {
       document.write('<script src="cordova.js"><\/script>');
     }
   </script>
   <app-root></app-root>
 </body>
+
 </html>

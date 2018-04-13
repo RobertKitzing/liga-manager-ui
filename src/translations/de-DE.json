@@ -1,4 +1,7 @@
 {
+  "AUTOSAVE": "automatisch speichern alle {{sec}} s",
+  "PUBLISH": "Veröffentlichen",
+  "REPORTS": "Spielbericht",
   "CHANGE_PASSWORD_ERROR": "Das hat leider nicht geklappt, sry!",
   "CURRENT_PASSWORD_WRONG": "Falsches altes Passwort",
   "PLACEHOLDER_NEW_PASSWORD": "Neues Passwort",

@@ -10,9 +10,7 @@
       "assets": [
         "assets",
         "favicon.ico",
-        "manifest.json",
-        "robots.txt",
-        ".htaccess"
+        "manifest.json"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -61,6 +59,9 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {},
+    "build": {
+      "showCircularDependencies": false
+    }
   }
 }

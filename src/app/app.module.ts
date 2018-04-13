@@ -30,7 +30,7 @@ import { AdminModule } from '@app/admin/admin.module';
 import { LoginModule } from '@app/account/login.module';
 import { ChangePasswordModule } from '@app/account/changepassword/changepassword.module';
 import { AlertModule } from 'ngx-bootstrap/alert';
-
+import { ReportModule } from '@app/reports/reports.module';
 export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_KEY');
 
 @NgModule({
@@ -41,6 +41,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     HttpModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule,
+    ReportModule,
     MaterialModule,
     CoreModule,
     SharedModule,

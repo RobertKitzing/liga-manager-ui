@@ -33,19 +33,10 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     async changePassword() {
-
-        if (await this.authService.checkPassword(this.oldPassword)) {
+        if (await this.authService.changePassword(this.oldPassword, this.newPassword)) {
             this.oldPasswordError = false;
-            const body = new ChangePasswordBody();
-            body.new_password = this.newPassword;
-            this.api.changePassword(body).subscribe(
-                () => {
-                    this.dialogRef.close(true);
-                },
-                (error) => {
-                    this.newPasswordError = true;
-                }
-            );
+            this.authService.logout();
+            this.dialogRef.close();
         } else {
             this.oldPasswordError = true;
         }

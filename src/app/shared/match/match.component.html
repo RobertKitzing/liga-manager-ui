@@ -61,6 +61,12 @@
                     </a>
                 </div>
             </div>
+            <mat-divider *ngIf="authService.isAdminUser"></mat-divider>
+            <div class="row" *ngIf="authService.isAdminUser">
+                <div class="col">
+                    <button class="pull-right" mat-button [routerLink]="['/reports']" [queryParams]="{ matchId: match.id}">{{ 'REPORTS' | translate }}</button>
+                </div>
+            </div>
         </div>
         <div class="col-12 col-sm-2" *ngIf="authService.isAdminUser || authService.isUserInTeam(match.home_team_id) || authService.isUserInTeam(match.guest_team_id)"
              style="text-align: center">
