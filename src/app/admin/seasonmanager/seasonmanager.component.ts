@@ -93,22 +93,31 @@ export class SeasonManagerComponent implements OnInit {
     return this.selectedTeams.findIndex(t => t.id === id) !== -1;
   }
 
-  createSeason(name: string) {
-    const opt: CreateSeasonBody = new CreateSeasonBody();
-    opt.name = name;
-    this.apiClient.createSeason(opt).subscribe(
-      (id: Identifier) => {
-        this.newSeasonID = id;
-        log.debug('sucess');
-        this.seasonService.resetSeasons();
-      },
+  async createSeason(name: string) {
+    this.seasonService.createSeason(name).then(
+      (id) => {
+          this.newSeasonID = id;
+      }
+    ).catch(
       (error) => {
         log.error(error);
-      },
-      () => {
-        log.debug('finally');
       }
     );
+    // const opt: CreateSeasonBody = new CreateSeasonBody();
+    // opt.name = name;
+    // this.apiClient.createSeason(opt).subscribe(
+    //   (id: Identifier) => {
+    //     this.newSeasonID = id;
+    //     log.debug('sucess');
+    //     this.seasonService.resetSeasons();
+    //   },
+    //   (error) => {
+    //     log.error(error);
+    //   },
+    //   () => {
+    //     log.debug('finally');
+    //   }
+    // );
   }
 
   handleTeam(event: MatCheckboxChange) {

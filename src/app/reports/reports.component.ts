@@ -5,6 +5,7 @@ import { TeamService } from '@app/service/team.service';
 import { AuthenticationService } from '@app/core';
 import { WebsocketService } from '@app/service/websocket.service';
 import { MatSnackBar } from '@angular/material';
+import { MatchService } from '@app/service/match.service';
 
 @Component({
     selector: 'app-reports',
@@ -41,6 +42,7 @@ export class ReportsComponent implements OnInit {
         public teamService: TeamService,
         public authService: AuthenticationService,
         private wsService: WebsocketService,
+        private matchService: MatchService,
         private api: Client,
         private snackBar: MatSnackBar) { }
 
@@ -56,7 +58,7 @@ export class ReportsComponent implements OnInit {
         this.route.queryParams.subscribe(
             async (params) => {
                 this.getReport(params.matchId);
-                this.match = await this.api.getMatch(params.matchId).toPromise();
+                this.match = await this.matchService.getMatch(params.matchId);
             }
         );
     }

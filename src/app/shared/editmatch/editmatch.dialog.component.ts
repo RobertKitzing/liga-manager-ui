@@ -67,24 +67,27 @@ export class EditMatchDialogComponent implements OnInit {
     this.pitches = await this.loadPitches();
     this.filteredPitches = this.stateCtrl.valueChanges
       .pipe(
-      startWith<string | Pitch>(''),
-      map(value => typeof value === 'string' ? value : value.label),
-      map((pitch) => pitch ? this.filterPitches(pitch) : this.pitches.slice())
+        startWith<string | Pitch>(''),
+        map(value => typeof value === 'string' ? value : value.label),
+        map((pitch) => pitch ? this.filterPitches(pitch) : this.pitches.slice())
       );
-    this.apiClient.getMatch(this.data.matchId).subscribe(
+
+    this.matchService.getMatch(this.data.matchId).then(
       (match) => {
         this.match = match;
         if (match.kickoff) {
-          const utcTime: Date = new Date(match.kickoff.toUTCString());
-          this.kickoffTime = match.kickoff.getHours().toString().padStart(2, '0') + ':' +
-            match.kickoff.getMinutes().toString().padStart(2, '0');
-        }
-        if (match.pitch_id) {
-          this.apiClient.getPitch(match.pitch_id).subscribe(
-            (pitch) => {
-              this.pitch = pitch;
-            }
-          );
+          if (match.kickoff) {
+            const utcTime: Date = new Date(match.kickoff.toUTCString());
+            this.kickoffTime = match.kickoff.getHours().toString().padStart(2, '0') + ':' +
+              match.kickoff.getMinutes().toString().padStart(2, '0');
+          }
+          if (match.pitch_id) {
+            this.apiClient.getPitch(match.pitch_id).subscribe(
+              (pitch) => {
+                this.pitch = pitch;
+              }
+            );
+          }
         }
       }
     );
@@ -131,7 +134,7 @@ export class EditMatchDialogComponent implements OnInit {
             (pitch) => {
               this.pitch = pitch;
               this.showCreateNewPitch = false;
-              this.webSocketService.send({type: 'pitchAdded', data: pitch.id});
+              this.webSocketService.send({ type: 'pitchAdded', data: pitch.id });
             }
           );
         }
@@ -165,11 +168,11 @@ export class EditMatchDialogComponent implements OnInit {
   }
 
   async onSaveClicked() {
-    if (this.areScoresValid() ) {
+    if (this.areScoresValid()) {
       const result: SubmitMatchResultBody = new SubmitMatchResultBody;
       result.home_score = this.match.home_score;
       result.guest_score = this.match.guest_score;
-      await this.apiClient.submitMatchResult(this.match.id, result).toPromise();
+      await this.matchService.submitMatchResult(this.match.id, result);
     }
 
     if (this.match.kickoff && this.kickoffTime) {
@@ -188,6 +191,6 @@ export class EditMatchDialogComponent implements OnInit {
 
   private areScoresValid() {
     return (this.match.guest_score || this.match.guest_score === 0) &&
-           (this.match.home_score || this.match.home_score === 0);
+      (this.match.home_score || this.match.home_score === 0);
   }
 }

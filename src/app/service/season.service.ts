@@ -1,11 +1,12 @@
 import { SELECTED_SEASON } from './../constanst';
 import { Subject } from 'rxjs/Subject';
 import { Logger } from 'app/core/logger.service';
-import { Season } from '@app/api/openapi';
+import { Season, CreateSeasonBody, Identifier } from '@app/api/openapi';
 import { SeasonState, Client } from './../api/openapi';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 const log = new Logger('SeasonService');
 
@@ -64,7 +65,29 @@ export class SeasonService {
             return state ? filterd : this.seasons;
         }
     }
+
     seasonCompare(c1: Season, c2: Season) {
         return c1 && c2 && c1.name === c2.name;
+    }
+
+    async createSeason(name: string): Promise<Identifier | null> {
+
+        return new Promise<Identifier>(
+            (resolve) => {
+                const opt: CreateSeasonBody = new CreateSeasonBody();
+                opt.name = name;
+                this.apiClient.createSeason(opt).subscribe(
+                  (id: Identifier) => {
+                    this.resetSeasons();
+                    resolve(id);
+                  }
+                //   ,
+                //   (error) => {
+                //     log.error(error);
+                //     resolve(null);
+                //   }
+                );
+            }
+        );
     }
 }

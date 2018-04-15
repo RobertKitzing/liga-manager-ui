@@ -32,16 +32,18 @@ export class AdminComponent implements OnInit {
     lastName: FormControl;
     password: FormControl;
 
-    constructor(public teamService: TeamService,
-                private apiClient: Client) {
-                    this.email = new FormControl('', [Validators.required, Validators.email]);
-                    this.firstName = new FormControl('', [Validators.required]);
-                    this.lastName = new FormControl('', [Validators.required]);
-                    this.password = new FormControl('', [
-                        Validators.required,
-                        Validators.minLength(6)
-                    ]);
-                 }
+    constructor(
+        public teamService: TeamService,
+        private apiClient: Client) {
+
+        this.email = new FormControl('', [Validators.required, Validators.email]);
+        this.firstName = new FormControl('', [Validators.required]);
+        this.lastName = new FormControl('', [Validators.required]);
+        this.password = new FormControl('', [
+            Validators.required,
+            Validators.minLength(6)
+        ]);
+    }
 
     async ngOnInit() {
         this.teamList = await this.teamService.loadTeams();

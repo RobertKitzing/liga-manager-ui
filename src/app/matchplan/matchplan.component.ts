@@ -43,7 +43,7 @@ export class MatchplanComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.webSocketService.pitchAdded.subscribe(
       (pitchId) => {
-        this.reloadPitches(true);
+        this.reloadPitches();
       }
     );
 
@@ -72,10 +72,8 @@ export class MatchplanComponent implements OnInit, OnDestroy {
     this.pitches = await this.loadPitches();
   }
 
-  async reloadPitches(event: boolean) {
-    if (event) {
-      this.pitches = await this.loadPitches();
-    }
+  async reloadPitches() {
+    this.pitches = await this.loadPitches();
   }
 
   ngOnDestroy() {

@@ -28,7 +28,6 @@ export class MatchComponent implements OnInit {
     wsSubscription: Subscription;
 
     constructor(
-        private apiClient: Client,
         public teamService: TeamService,
         public i18Service: I18nService,
         public dialog: MatDialog,
@@ -66,11 +65,7 @@ export class MatchComponent implements OnInit {
             });
     }
 
-    updateMatch() {
-        this.apiClient.getMatch(this.match.id).subscribe(
-            (match) => {
-                this.match = match;
-            }
-        );
+    async updateMatch() {
+        this.match = await this.matchService.getMatch(this.match.id);
     }
 }

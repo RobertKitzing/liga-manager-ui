@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
-import { Client, ChangePasswordBody } from '@app/api/openapi';
 import { MatDialogRef } from '@angular/material';
 import { AuthenticationService } from '@app/core';
 
@@ -18,9 +17,9 @@ export class ChangePasswordComponent implements OnInit {
     newPassword: string;
     oldPassword: string;
 
-    constructor(private api: Client,
-                private authService: AuthenticationService,
-                public dialogRef: MatDialogRef<ChangePasswordComponent>) { }
+    constructor(
+        private authService: AuthenticationService,
+        public dialogRef: MatDialogRef<ChangePasswordComponent>) { }
 
     ngOnInit() {
         this.password = new FormControl('', [
