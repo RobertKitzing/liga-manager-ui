@@ -31,6 +31,7 @@ import { LoginModule } from '@app/account/login.module';
 import { ChangePasswordModule } from '@app/account/changepassword/changepassword.module';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ReportModule } from '@app/reports/reports.module';
+import { TeamAdminModule } from '@app/teamadmin/teamadmin.module';
 export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_KEY');
 
 @NgModule({
@@ -38,6 +39,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     BrowserModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     FormsModule,
+    TeamAdminModule,
     HttpModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule,

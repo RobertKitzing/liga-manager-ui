@@ -23,6 +23,10 @@
           <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>About</span>
           </a>
+          <mat-divider *ngIf="authService.isAuthenticated"></mat-divider>
+          <a mat-list-item routerLink="/teamadmin" routerLinkActive="active" (click)="sidenav.close()" *ngIf="authService.isAuthenticated">
+            <span translate>TeamAdmin</span>
+          </a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/admin" routerLinkActive="active" (click)="sidenav.close()" *ngIf="authService.isAdminUser">
             <span translate>Admin</span>

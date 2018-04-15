@@ -7,9 +7,10 @@ import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { environment } from '@env/environment';
 import { Client, Season, Match, SeasonState } from '@app/api/openapi';
-import { Logger, AuthenticationService } from '@app/core';
+import { Logger } from '@app/core';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
+import { AuthenticationService } from '@app/service/authentication.service';
 
 const log = new Logger('Matchplan');
 

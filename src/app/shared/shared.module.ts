@@ -50,6 +50,7 @@ import { RouterModule } from '@angular/router';
     RoundPipe,
     ErrorComponent,
     MatchComponent,
+    MaterialModule,
     TranslateModule
   ],
   providers: [

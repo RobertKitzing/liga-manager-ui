@@ -33,7 +33,7 @@ export class WebsocketService {
             this.inputStream
         ).messages.share();
 
-        this.messages.retryWhen(errors => errors.delay(1000)).subscribe(
+        this.messages.retryWhen(errors => errors.delay(60000)).subscribe(
             (message) => {
                 try {
                     const msg: WebSocketMessage = JSON.parse(message);

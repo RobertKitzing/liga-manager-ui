@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Match, Client } from '@app/api/openapi';
 import { TeamService } from '@app/service/team.service';
-import { AuthenticationService } from '@app/core';
 import { WebsocketService } from '@app/service/websocket.service';
 import { MatSnackBar } from '@angular/material';
 import { MatchService } from '@app/service/match.service';
+import { AuthenticationService } from '@app/service/authentication.service';
 
 @Component({
     selector: 'app-reports',

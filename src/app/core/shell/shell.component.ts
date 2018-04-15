@@ -1,4 +1,4 @@
-import { AuthenticationService } from '../authentication/authentication.service';
+import { AuthenticationService } from '@app/service/authentication.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';

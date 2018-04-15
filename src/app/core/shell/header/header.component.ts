@@ -2,8 +2,7 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSidenav, MatDialog } from '@angular/material';
-
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationService } from '@app/service/authentication.service';
 import { I18nService } from '../../i18n.service';
 import { LoginComponent } from '@app/account/login.component';
 import { ChangePasswordComponent } from '@app/account/changepassword/changepassword.component';

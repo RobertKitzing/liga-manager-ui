@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ 'CONTACT' | translate}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Wird als Kontakt Person neben eurem Team angezeigt!</h6>
+            <div class="card-text">
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" [(ngModel)]="firstName" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'LAST_NAME' | translate }}" [(ngModel)]="lastName"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <input matInput  placeholder="{{ 'MAIL' | translate }}" [(ngModel)]="mail"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <input matInput  placeholder="{{ 'PHONE' | translate }}" [(ngModel)]="phone" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,12 +2,12 @@ import { AddMatchComponent } from './tournament.addmatch.dialog';
 import { I18nService } from './../core/i18n.service';
 import { TeamService } from './../service/team.service';
 import { MatDialog } from '@angular/material';
-import { AuthenticationService } from './../core/authentication/authentication.service';
 import { Tournament, Client, Team, CreateTournamentBody, Pitch } from './../api/openapi';
 import { SeasonService } from '@app/service/season.service';
 import { Match } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@app/core';
+import { AuthenticationService } from '@app/service/authentication.service';
 const log = new Logger('TournamentComponent');
 
 @Component({

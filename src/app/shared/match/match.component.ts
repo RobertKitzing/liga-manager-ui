@@ -3,7 +3,7 @@ import { MatchService } from './../../service/match.service';
 import { Logger } from './../../core/logger.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subject } from 'rxjs/Subject';
-import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { AuthenticationService } from '@app/service/authentication.service';
 import { MatDialog } from '@angular/material';
 import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.dialog.component';
 import { I18nService } from '@app/core/i18n.service';

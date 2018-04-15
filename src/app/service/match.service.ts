@@ -13,12 +13,10 @@ export class MatchService {
     private inputStream: QueueingSubject<string> = new QueueingSubject<string>();
     public matchId: Subject<string> = new Subject<string>();
 
-    public matchUpdated: Observable<string>;
-
     constructor(
         private wsService: WebsocketService,
         private apiClient: Client) {
-        this.matchUpdated.subscribe(
+        this.matchId.subscribe(
             (matchId) => {
                 this.matchId.next(matchId);
             }

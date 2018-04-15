@@ -1,4 +1,9 @@
 {
+  "MAIL": "Email",
+  "PHONE": "Telefon",
+  "LAST_NAME": "Nachname",
+  "FIRST_NAME": "Vorname",
+  "TeamAdmin": "Teambereich",
   "AUTOSAVE": "automatisch speichern alle {{sec}} s",
   "PUBLISH": "Veröffentlichen",
   "REPORTS": "Spielbericht",

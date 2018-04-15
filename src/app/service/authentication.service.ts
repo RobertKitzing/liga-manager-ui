@@ -1,6 +1,6 @@
 import { async } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Client, User, UserRole, ChangePasswordBody } from './../../api/openapi';
+import { Client, User, UserRole, ChangePasswordBody } from '@app/api/openapi';
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -46,7 +46,6 @@ export class AuthenticationService {
         let headers = new HttpHeaders();
         const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
         headers = headers.append('Authorization', 'Basic ' + passBase64);
-        headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
         this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
           (response) => {
             const data = {
@@ -140,6 +139,7 @@ export class AuthenticationService {
             resolve(user);
           },
           (error) => {
+            this.logout();
             resolve(null);
           });
       });

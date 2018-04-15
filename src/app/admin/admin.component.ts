@@ -1,8 +1,7 @@
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { CreateUserBody, CreateUserBodyRole } from './../api/openapi';
 import { Logger } from '@app/core';
 import { TeamService } from '@app/service/team.service';
-import { Team, Client } from '@app/api/openapi';
+import { Team, Client, CreateUserBody, CreateUserBodyRole } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 

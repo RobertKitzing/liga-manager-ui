@@ -1,6 +1,5 @@
 import { MatchService } from './service/match.service';
 import { WebsocketService } from './service/websocket.service';
-import { AuthenticationService } from './core/authentication/authentication.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -16,6 +15,7 @@ import { Logger, I18nService } from '@app/core';
 import { SeasonService } from '@app/service/season.service';
 import { registerLocaleData } from '@angular/common';
 import de from '@angular/common/locales/de';
+import { AuthenticationService } from '@app/service/authentication.service';
 registerLocaleData(de);
 
 const log = new Logger('App');
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     this.loadGoogleMapsScript();
 
     if (this.authService.isAuthenticated) {
-      this.authService.loadUser();
+      await this.authService.loadUser();
     }
 
     // Setup translations
