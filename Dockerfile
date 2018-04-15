@@ -1,4 +1,4 @@
 FROM alpine
-RUN mkdir /app
-COPY www /app/www
-WORKDIR /app
+RUN mkdir -p /var/www/ui
+COPY www /var/www/ui
+VOLUME /var/www/ui
