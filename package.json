@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
-    "build:app": "npm run build -- --prod --environment app && cordova build --device --debug && npm run copy:app",
+    "build:app": "npm run build -- --prod --environment app",
+    "app:build":  "cordova build --device --debug && npm run copy:app",
     "build:deploy": "npm run build && npm run deploy",
     "build:docker": "npm run build -- --prod --environment prod && docker build -t 'robertkitzing/liga-manager-ui:0.3' .",
     "docker:push": "docker push robertkitzing/liga-manager-ui:0.3",

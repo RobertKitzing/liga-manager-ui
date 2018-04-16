@@ -41,6 +41,7 @@ before_install:
 script:
 - yarn install
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./travis/build-android.sh && ./travis/package-android.sh ; fi
+- yarn run build:app
 env:
   global:
   - JAVA_HOME=/usr/lib/jvm/java-8-oracle
