@@ -1,38 +1,94 @@
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ 'CONTACT' | translate}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Wird als Kontakt Person neben eurem Team angezeigt!</h6>
-            <div class="card-text">
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" [(ngModel)]="firstName" />
-                        </mat-form-field>
+<div class="container" *ngIf="user">
+    <mat-tab-group>
+        <mat-tab *ngFor="let teamId of user.teams" label="{{teamService.getTeamNameByID(teamId)}}">
+            <mat-tab-group>
+                <mat-tab label="{{ 'CONTACT' | translate}}">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Wird als Kontakt Person neben dem Team angezeigt!</h5>
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" #firstname/>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname/>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'MAIL' | translate }}" #mail [formControl]="emailFormControl" #mail/>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'PHONE' | translate }}" #phone/>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <button mat-button (click)="saveContact(teamId, firstname.value, lastname.value, mail.value, phone.value)">
+                                            {{ 'SAVE' | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-tab>
+    </mat-tab-group>
+
+    <!-- <mat-tab-group> <div class="card text-center" *ngFor="let teamId of user.teams">
+            <mat-tab label="{{ 'CONTACT' | translate}}">
+                <div class="card-body">
+                    <h5 class="card-title">Wird als Kontakt Person neben dem Team angezeigt!</h5>
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field>
+                                    <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" [(ngModel)]="firstName" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field>
+                                    <input matInput placeholder="{{ 'LAST_NAME' | translate }}" [(ngModel)]="lastName"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field>
+                                    <input matInput
+                                           placeholder="{{ 'MAIL' | translate }}"
+                                           #mail
+                                           [formControl]="emailFormControl"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field>
+                                    <input matInput  placeholder="{{ 'PHONE' | translate }}" [(ngModel)]="phone" />
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput placeholder="{{ 'LAST_NAME' | translate }}" [(ngModel)]="lastName"/>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput  placeholder="{{ 'MAIL' | translate }}" [(ngModel)]="mail"/>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput  placeholder="{{ 'PHONE' | translate }}" [(ngModel)]="phone" />
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div> -->
 </div>
