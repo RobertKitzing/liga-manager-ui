@@ -48,7 +48,7 @@ env:
 deploy:
   provider: debug
   file_glob: true
-  file: output/*
+  file: dist/*
   skip_cleanup: true
   overwrite: true
   on:
