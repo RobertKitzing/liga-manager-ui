@@ -27,6 +27,12 @@ export class MatchComponent implements OnInit {
 
     wsSubscription: Subscription;
 
+    get canEditMatch(): boolean {
+        return this.authService.isAdminUser ||
+        this.authService.isUserInTeam(this.match.home_team_id) ||
+        this.authService.isUserInTeam(this.match.guest_team_id);
+    }
+    
     constructor(
         public teamService: TeamService,
         public i18Service: I18nService,
