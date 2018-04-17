@@ -37,11 +37,11 @@ cache:
 before_install:
 - export LANG=en_US.UTF-8
 - nvm install 8
-- yarn global add ionic cordova
+- yarn global add ionic cordova splashicon-generator
 script:
 - yarn install
 - yarn run cordova:prepare
-- yarn run app:gensplash
+- splashicon-generator
 - yarn run build:app
 - yarn run cordova:build
 env:
