@@ -41,6 +41,8 @@ before_install:
 script:
 - yarn install
 - yarn run build:app
+- cordova:prepare
+- cordova:build
 env:
   global:
   - JAVA_HOME=/usr/lib/jvm/java-8-oracle

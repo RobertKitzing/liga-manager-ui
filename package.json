@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
-    "build:app": "npm run build -- --prod --environment app && cordova build --device --debug",
+    "build:app": "npm run build -- --prod --environment app",
     "build:deploy": "npm run build && npm run deploy",
     "build:docker": "npm run build -- --prod --environment prod && docker build -t 'robertkitzing/liga-manager-ui:0.3' .",
     "docker:push": "docker push robertkitzing/liga-manager-ui:0.3",
@@ -27,7 +27,8 @@
     "generate": "ng generate",
     "nswag": "nswag run ligamanagerapi.nswag",
     "deploy": "node deploy",
-    "copy:app": "cpx platforms/android/app/build/outputs/apk/debug/*.apk dist"
+    "copy:app": "cpx platforms/android/app/build/outputs/apk/debug/*.apk dist",
+    "splashicon-generator": "splashicon-generator"
   },
   "dependencies": {
     "@angular/animations": "^5.2.3",
