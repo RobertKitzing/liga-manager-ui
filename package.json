@@ -28,7 +28,8 @@
     "generate": "ng generate",
     "nswag": "nswag run ligamanagerapi.nswag",
     "deploy": "node deploy",
-    "copy:app": "cpx platforms/android/app/build/outputs/apk/debug/*.apk dist"
+    "copy:app": "cpx platforms/android/app/build/outputs/apk/debug/*.apk dist",
+    "splashicon-generator": "splashicon-generator"
   },
   "dependencies": {
     "@angular/animations": "^5.2.3",
