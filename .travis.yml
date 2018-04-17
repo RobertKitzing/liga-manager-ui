@@ -40,8 +40,9 @@ before_install:
 - yarn global add ionic cordova splashicon-generator
 script:
 - yarn install
-- yarn run cordova:prepare
 - splashicon-generator
+- yarn run cordova:prepare
+- yarn install
 - yarn run build:app
 - yarn run cordova:build
 env:
