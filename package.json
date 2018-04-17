@@ -11,6 +11,7 @@
     "docker:push": "docker push robertkitzing/liga-manager-ui:0.3",
     "docker:deploy": "npm run build:docker && npm run docker:push",
     "app:gensplash": "splashicon-generator",
+    "app:build":  "cordova build --device --debug",
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json --watch",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
@@ -27,8 +28,7 @@
     "generate": "ng generate",
     "nswag": "nswag run ligamanagerapi.nswag",
     "deploy": "node deploy",
-    "copy:app": "cpx platforms/android/app/build/outputs/apk/debug/*.apk dist",
-    "splashicon-generator": "splashicon-generator"
+    "copy:app": "cpx platforms/android/app/build/outputs/apk/debug/*.apk dist"
   },
   "dependencies": {
     "@angular/animations": "^5.2.3",
