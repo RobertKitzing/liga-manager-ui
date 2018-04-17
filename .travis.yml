@@ -40,10 +40,10 @@ before_install:
 - yarn global add ionic cordova
 script:
 - yarn install
-- yarn run build:app
+- yarn run cordova:prepare
 - yarn run app:gensplash
-- cordova platform add android
-- yarn run app:build
+- yarn run build:app
+- yarn run cordova:build
 env:
   global:
   - JAVA_HOME=/usr/lib/jvm/java-8-oracle

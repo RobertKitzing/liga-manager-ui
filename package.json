@@ -22,7 +22,7 @@
     "env": "ngx-scripts env npm_package_version",
     "cordova:prepare": "ngx-scripts cordova prepare",
     "cordova:run": "ngx-scripts cordova run",
-    "cordova:build": "ngx-scripts cordova build --device --release --copy dist",
+    "cordova:build": "ngx-scripts cordova build --device --debug --copy dist",
     "cordova:clean": "ngx-scripts clean",
     "cordova": "cordova",
     "generate": "ng generate",
