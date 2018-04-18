@@ -17,7 +17,7 @@ install:
   - yarn install
   - yarn global add cordova splashicon-generator
 
-build:
+script:
   - splashicon-generator
   - yarn run build:app
   - cordova prepare
