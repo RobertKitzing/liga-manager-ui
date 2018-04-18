@@ -1,6 +1,15 @@
-language: node_js
-node_js:
-  - "node"
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - "node"
+    - language: android
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - android-25
+          - build-tools-25.0.3
 sudo: required
 before_install: # if "install" is overridden
   # Repo for Yarn
@@ -20,5 +29,5 @@ install:
 script:
   - splashicon-generator
   - yarn run build:app
-  - cordova prepare
-  - cordova build --device --debug --copy dist
+  - yarn run cordova:prepare
+  - yarn run cordova:build
