@@ -25,7 +25,6 @@ before_cache:
 - rm -rf $HOME/.gradle/caches/3.5/fileHashes/
 - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache: 
- - yarn:true
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
