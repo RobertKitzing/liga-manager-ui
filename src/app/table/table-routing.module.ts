@@ -2,11 +2,11 @@ import { TableComponent } from './table.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '@app/core';
+import { extract } from '@app/core';
 
-const routes: Routes = Route.withShell([
+const routes: Routes = [
   { path: 'table', component: TableComponent, data: { title: extract('Table') } }
-]);
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

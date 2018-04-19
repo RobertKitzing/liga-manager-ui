@@ -1,13 +1,9 @@
-<div class="cont">
-<div class="box"
-     fxLayout
-     fxLayoutGap="10px"
-     fxLayoutAlign="center"
-     fxLayout.xs="column">
+<div class="container" fxLayout fxLayoutGap="10px" fxLayoutAlign="center" fxLayout.xs="column">
   <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
   <div *ngIf="!seasonService.isLoadingSeasons">
     <mat-form-field id="seasonchooser">
-      <mat-select [compareWith]="seasonService.seasonCompare" [(value)]="season"  placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}" (selectionChange)="selectedSeasonChanged(season)">
+      <mat-select [compareWith]="seasonService.seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}"
+        (selectionChange)="selectedSeasonChanged(season)">
         <mat-option *ngFor="let season of seasons" [value]="season">
           {{ season.name }}
         </mat-option>
@@ -38,5 +34,4 @@
       <app-match [match]="match" [pitches]="pitches" (pitchAdded)="reloadPitches($event)"></app-match>
     </div>
   </div>
-</div>
 </div>

@@ -2,11 +2,11 @@ import { TournamentComponent } from '@app/tournament/tournament.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '@app/core';
+import { extract } from '@app/core';
 
-const routes: Routes = Route.withShell([
+const routes: Routes = [
   { path: 'tournament', component: TournamentComponent, data: { title: extract('Tournament') } }
-]);
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -16,6 +16,9 @@ import { SeasonService } from '@app/service/season.service';
 import { registerLocaleData } from '@angular/common';
 import de from '@angular/common/locales/de';
 import { AuthenticationService } from '@app/service/authentication.service';
+import { MatDialog } from '@angular/material';
+import { LoginComponent } from '@app/account/login.component';
+import { ChangePasswordComponent } from '@app/account/changepassword/changepassword.component';
 registerLocaleData(de);
 
 const log = new Logger('App');
@@ -42,7 +45,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private i18nService: I18nService,
     private seasonService: SeasonService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
+    private dialog: MatDialog
   ) {
 
   }
@@ -67,15 +71,15 @@ export class AppComponent implements OnInit {
     // Change page title on navigation or language change, based on route data
     merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
-      map(() => {
-        let route = this.activatedRoute;
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        return route;
-      }),
-      filter(route => route.outlet === 'primary'),
-      mergeMap(route => route.data)
+        map(() => {
+          let route = this.activatedRoute;
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+          return route;
+        }),
+        filter(route => route.outlet === 'primary'),
+        mergeMap(route => route.data)
       )
       .subscribe(event => {
         const title = event['title'];
@@ -112,5 +116,39 @@ export class AppComponent implements OnInit {
       this.splashScreen.hide();
     }
   }
+  setLanguage(language: string) {
+    this.i18nService.language = language;
+  }
 
+  get username(): string {
+    const credentials = this.authService.credentials;
+    return credentials ? credentials.username : null;
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  get currentLanguage(): string {
+    return this.i18nService.language;
+  }
+
+  get languages(): string[] {
+    return this.i18nService.supportedLanguages;
+  }
+
+  openLoginDialog() {
+    const dialogRef = this.dialog.open(LoginComponent);
+  }
+
+  openChangePasswordDialog() {
+    const dialogRef = this.dialog.open(ChangePasswordComponent);
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.authService.logout();
+        }
+      }
+    );
+  }
 }

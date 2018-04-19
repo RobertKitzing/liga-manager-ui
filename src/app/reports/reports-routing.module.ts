@@ -4,10 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { Route, extract } from '@app/core';
 import { ReportsComponent } from './reports.component';
 
-const routes: Routes = Route.withShell([
+const routes: Routes = [
     { path: 'reports', component: ReportsComponent },
     { path: 'reports:/matchId', component: ReportsComponent }
-]);
+];
 
 @NgModule({
     imports: [ RouterModule.forChild(routes) ],

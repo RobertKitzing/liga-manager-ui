@@ -1,1 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a class="navbar-brand" href="#" translate>APP_NAME</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home" routerLinkActive="active" translate>
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/table" routerLinkActive="active" translate>
+                    Table
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/matchplan" routerLinkActive="active" translate>
+                    Matchplan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/tournament" routerLinkActive="active" translate>
+                    Tournament
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about" routerLinkActive="active" translate>
+                    About
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="authService.isAuthenticated">
+                <a class="nav-link" routerLink="/teamadmin" routerLinkActive="active" translate>
+                    TeamAdmin
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="authService.isAdminUser">
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active" translate>
+                    Admin
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-text pull-right">
+        <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
+            {{ 'LOGIN' | translate }}
+        </button>
+        <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
+            {{ authService.credentials.firstName[0] }}.{{ authService.credentials.lastName[0] }}
+            <mat-icon>person</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+            <mat-icon>language</mat-icon>
+        </button>
+    </div>
+</nav>
+
 <router-outlet></router-outlet>
+
+<mat-menu #languageMenu="matMenu">
+    <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
+        {{language}}
+    </button>
+</mat-menu>
+<mat-menu #userMenu="matMenu">
+    <mat-list>
+        <mat-list-item>
+            <span translate>Logged in as</span>&nbsp;
+            <b>{{username}}</b>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'CHANGE_PASSWORD' | translate }}</button>
+        <mat-divider></mat-divider>
+    </mat-list>
+    <button mat-menu-item (click)="logout()" translate>Logout</button>
+</mat-menu>
