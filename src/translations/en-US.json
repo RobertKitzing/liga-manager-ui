@@ -1,4 +1,5 @@
 {
+  "CLOSE": "close",
   "TeamAdmin": "Teamarea",
   "AUTOSAVE": "auto save every {{sec}} s",
   "PUBLISH": "publish",

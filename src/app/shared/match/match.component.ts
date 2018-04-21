@@ -8,9 +8,10 @@ import { MatDialog } from '@angular/material';
 import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.dialog.component';
 import { I18nService } from '@app/core/i18n.service';
 import { TeamService } from '@app/service/team.service';
-import { Match, Pitch, Client } from '@app/api/openapi';
+import { Match, Pitch, Client, Team, Contact_person } from '@app/api/openapi';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { WebsocketService } from '@app/service/websocket.service';
+import { ContactDialogComponent, ContactPersonViewModel } from '@app/shared/contact/contact.dialog.component';
 
 const log = new Logger('MatchComponent');
 @Component({
@@ -26,13 +27,15 @@ export class MatchComponent implements OnInit {
     @Output() pitchAdded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     wsSubscription: Subscription;
+    homeTeam: Team;
+    guestTeam: Team;
 
     get canEditMatch(): boolean {
         return this.authService.isAdminUser ||
-        this.authService.isUserInTeam(this.match.home_team_id) ||
-        this.authService.isUserInTeam(this.match.guest_team_id);
+            this.authService.isUserInTeam(this.match.home_team_id) ||
+            this.authService.isUserInTeam(this.match.guest_team_id);
     }
-    
+
     constructor(
         public teamService: TeamService,
         public i18Service: I18nService,
@@ -40,7 +43,7 @@ export class MatchComponent implements OnInit {
         public authService: AuthenticationService,
         private matchService: MatchService
     ) {
-     }
+    }
 
     ngOnInit() {
         this.wsSubscription = this.matchService.matchId.subscribe(
@@ -50,7 +53,10 @@ export class MatchComponent implements OnInit {
                 }
             }
         );
-     }
+        this.homeTeam = this.teamService.getTeamByID(this.match.home_team_id);
+        this.guestTeam = this.teamService.getTeamByID(this.match.guest_team_id);
+        log.debug(this.homeTeam);
+    }
 
     getPitch(pitchId: string): Pitch {
         return this.pitches.find(p => p.id === pitchId) || new Pitch();
@@ -69,6 +75,21 @@ export class MatchComponent implements OnInit {
                     this.matchService.updateMatch(matchId);
                 }
             });
+    }
+
+    openContactModal() {
+        const contacts = new Array<ContactPersonViewModel>();
+        const home: ContactPersonViewModel = {
+            title: this.teamService.getTeamNameByID(this.homeTeam.id),
+            contact: this.homeTeam.contact
+        };
+        const guest: ContactPersonViewModel = {
+            title: this.teamService.getTeamNameByID(this.guestTeam.id),
+            contact: this.guestTeam.contact
+        };
+        contacts.push(home);
+        contacts.push(guest);
+        this.dialog.open(ContactDialogComponent, {data: contacts} );
     }
 
     async updateMatch() {

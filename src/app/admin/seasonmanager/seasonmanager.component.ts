@@ -189,6 +189,9 @@ export class SeasonManagerComponent implements OnInit {
     this.apiClient.startSeason(this.newSeasonID.id).subscribe(
       () => {
         alert('Season startet');
+      },
+      (error) => {
+        log.error(error);
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Team, CreateTeamBody } from './../api/openapi';
+import { Team, CreateTeamBody, Contact_person } from './../api/openapi';
 import { Client } from '@app/api/openapi';
 import { Injectable } from '@angular/core';
 
@@ -15,6 +15,21 @@ export class TeamService {
     getTeamNameByID(id: string): string {
         const team: Team = this.teams.find(t => t.id === id);
         return team.name;
+    }
+
+    getTeamByID(id: string): Team {
+        const team: Team = this.teams.find(t => t.id === id);
+        return team;
+    }
+
+    getTeamContactByID(id: string): Contact_person {
+        const team: Team = this.teams.find(t => t.id === id);
+        const emptyContact = new Contact_person();
+        emptyContact.email = '';
+        emptyContact.first_name = '';
+        emptyContact.last_name = '';
+        emptyContact.phone = '';
+        return team.contact || emptyContact;
     }
 
     resetTeams() {

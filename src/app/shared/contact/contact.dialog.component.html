@@ -1,0 +1,36 @@
+<div class="card" *ngFor="let contact of data">
+    <div class="card-body">
+        <h5 class="card-title">
+            {{ contact.title }}
+        </h5>
+        <div class="card-text">
+            <div class="row">
+                <div class="col-1">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="col" *ngIf="contact.contact">
+                    {{contact.contact.first_name}} {{contact.contact.last_name}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <i class="fa fa-phone"></i>
+                </div>
+                <div class="col" *ngIf="contact.contact">
+                    <a href="tel:{{contact.contact.phone}}">{{contact.contact.phone}}</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <i class="fa fa-envelope"></i>
+                </div>
+                <div class="col" *ngIf="contact.contact">
+                    <a href="mailto:{{contact.contact.email}}">{{contact.contact.email}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <button mat-button class="card-link" (click)="dialogRef.close()">{{ 'CLOSE' | translate }}</button>
+</div>

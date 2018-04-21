@@ -1,27 +1,30 @@
-<div class="container" fxLayout fxLayoutGap="10px" fxLayoutAlign="center" fxLayout.xs="column">
-  <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
-  <div *ngIf="!seasonService.isLoadingSeasons">
-    <mat-form-field id="seasonchooser">
-      <mat-select [compareWith]="seasonService.seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}"
-        (selectionChange)="selectedSeasonChanged(season)">
-        <mat-option *ngFor="let season of seasons" [value]="season">
-          {{ season.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <mat-divider [vertical]="true"></mat-divider>
-  <div>
-    <mat-form-field *ngIf="!teamService.isLoadingTeams">
-      <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged()" [(ngModel)]="matchDay">
-        <mat-option *ngFor="let day of matchDayCounter" [value]="day">
-          <div *ngIf="day === 0; else match">{{ 'ALL' | translate }}</div>
-          <ng-template #match>
-            {{ day }}
-          </ng-template>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <app-loader [isLoading]="seasonService.isLoadingSeasons" size="1.5"></app-loader>
+      <div *ngIf="!seasonService.isLoadingSeasons">
+        <mat-form-field id="seasonchooser">
+          <mat-select [compareWith]="seasonService.seasonCompare" [(value)]="season" placeholder="{{ 'SEASON_PLACEHOLDER' | translate}}"
+            (selectionChange)="selectedSeasonChanged(season)">
+            <mat-option *ngFor="let season of seasons" [value]="season">
+              {{ season.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col">
+      <mat-form-field *ngIf="!teamService.isLoadingTeams && season">
+        <mat-select placeholder="{{ 'MATCHDAY_PLACEHOLDER' | translate}}" (selectionChange)="selectedMatchDayChanged()" [(ngModel)]="matchDay">
+          <mat-option *ngFor="let day of matchDayCounter" [value]="day">
+            <div *ngIf="day === 0; else match">{{ 'ALL' | translate }}</div>
+            <ng-template #match>
+              {{ day }}
+            </ng-template>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 </div>
 <div class="container matches" *ngIf="matches && !teamService.isLoadingTeams">

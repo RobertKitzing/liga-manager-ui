@@ -78,6 +78,13 @@ export interface IClient {
      */
     getPitch(id: string): Observable<Pitch>;
     /**
+     * Updates the contact person of a pitch
+     * @id ID of pitch
+     * @updatePitchContactBody (optional) 
+     * @return Pitch contact has been modified successfully
+     */
+    updatePitchContact(id: string, updatePitchContactBody?: Contact_person | null | undefined): Observable<void>;
+    /**
      * Find all seasons
      * @return List of seasons
      */
@@ -173,11 +180,12 @@ export interface IClient {
      */
     getTeam(id: string): Observable<Team>;
     /**
-     * Renames a single team
+     * Updates the contact person of team
      * @id ID of team
-     * @return Team has been successfully renamed
+     * @updateTeamContactBody (optional) 
+     * @return Team contact has been modified successfully
      */
-    renameTeam(id: string): Observable<void>;
+    updateTeamContact(id: string, updateTeamContactBody?: Contact_person | null | undefined): Observable<void>;
     /**
      * @return List of tournaments
      */
@@ -753,6 +761,67 @@ export class Client implements IClient {
             });
         }
         return Observable.of<Pitch>(<any>null);
+    }
+
+    /**
+     * Updates the contact person of a pitch
+     * @id ID of pitch
+     * @updatePitchContactBody (optional) 
+     * @return Pitch contact has been modified successfully
+     */
+    updatePitchContact(id: string, updatePitchContactBody?: Contact_person | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/pitch/{id}/contact";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(updatePitchContactBody);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).flatMap((response_ : any) => {
+            return this.processUpdatePitchContact(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdatePitchContact(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdatePitchContact(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return Observable.of<void>(<any>null);
+            });
+        } else if (status === 404) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).flatMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Observable.of<void>(<any>null);
     }
 
     /**
@@ -1655,18 +1724,22 @@ export class Client implements IClient {
     }
 
     /**
-     * Renames a single team
+     * Updates the contact person of team
      * @id ID of team
-     * @return Team has been successfully renamed
+     * @updateTeamContactBody (optional) 
+     * @return Team contact has been modified successfully
      */
-    renameTeam(id: string): Observable<void> {
-        let url_ = this.baseUrl + "/team/{id}/rename";
+    updateTeamContact(id: string, updateTeamContactBody?: Contact_person | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/team/{id}/contact";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(updateTeamContactBody);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
@@ -1674,12 +1747,12 @@ export class Client implements IClient {
             })
         };
 
-        return this.http.request("post", url_, options_).flatMap((response_ : any) => {
-            return this.processRenameTeam(response_);
+        return this.http.request("put", url_, options_).flatMap((response_ : any) => {
+            return this.processUpdateTeamContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRenameTeam(<any>response_);
+                    return this.processUpdateTeamContact(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>Observable.throw(e);
                 }
@@ -1688,7 +1761,7 @@ export class Client implements IClient {
         });
     }
 
-    protected processRenameTeam(response: HttpResponseBase): Observable<void> {
+    protected processUpdateTeamContact(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1902,7 +1975,7 @@ export class Client implements IClient {
             throw new Error("The parameter 'round' must be defined.");
         url_ = url_.replace("{round}", encodeURIComponent("" + round)); 
         url_ = url_.replace(/[?&]$/, "");
-        console.log(setRoundBody);
+
         const content_ = JSON.stringify(setRoundBody);
 
         let options_ : any = {
@@ -2300,6 +2373,7 @@ export class Pitch implements IPitch {
     label?: string | undefined;
     location_latitude?: number | undefined;
     location_longitude?: number | undefined;
+    contact?: Contact_person | undefined;
 
     constructor(data?: IPitch) {
         if (data) {
@@ -2316,6 +2390,7 @@ export class Pitch implements IPitch {
             this.label = data["label"];
             this.location_latitude = data["location_latitude"];
             this.location_longitude = data["location_longitude"];
+            this.contact = data["contact"] ? Contact_person.fromJS(data["contact"]) : <any>undefined;
         }
     }
 
@@ -2332,6 +2407,7 @@ export class Pitch implements IPitch {
         data["label"] = this.label;
         data["location_latitude"] = this.location_latitude;
         data["location_longitude"] = this.location_longitude;
+        data["contact"] = this.contact ? this.contact.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -2341,6 +2417,7 @@ export interface IPitch {
     label?: string | undefined;
     location_latitude?: number | undefined;
     location_longitude?: number | undefined;
+    contact?: Contact_person | undefined;
 }
 
 export class Ranking implements IRanking {
@@ -2571,6 +2648,7 @@ export class Team implements ITeam {
     created_at?: Date | undefined;
     id?: string | undefined;
     name?: string | undefined;
+    contact?: Contact_person | undefined;
 
     constructor(data?: ITeam) {
         if (data) {
@@ -2586,6 +2664,7 @@ export class Team implements ITeam {
             this.created_at = data["created_at"] ? new Date(data["created_at"].toString()) : <any>undefined;
             this.id = data["id"];
             this.name = data["name"];
+            this.contact = data["contact"] ? Contact_person.fromJS(data["contact"]) : <any>undefined;
         }
     }
 
@@ -2601,6 +2680,7 @@ export class Team implements ITeam {
         data["created_at"] = this.created_at ? this.created_at.toISOString() : <any>undefined;
         data["id"] = this.id;
         data["name"] = this.name;
+        data["contact"] = this.contact ? this.contact.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -2609,6 +2689,7 @@ export interface ITeam {
     created_at?: Date | undefined;
     id?: string | undefined;
     name?: string | undefined;
+    contact?: Contact_person | undefined;
 }
 
 export class User implements IUser {
@@ -2673,6 +2754,54 @@ export interface IUser {
     role?: UserRole | undefined;
     first_name?: string | undefined;
     last_name?: string | undefined;
+}
+
+export class Contact_person implements IContact_person {
+    first_name?: string | undefined;
+    last_name?: string | undefined;
+    phone?: string | undefined;
+    email?: string | undefined;
+
+    constructor(data?: IContact_person) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.first_name = data["first_name"];
+            this.last_name = data["last_name"];
+            this.phone = data["phone"];
+            this.email = data["email"];
+        }
+    }
+
+    static fromJS(data: any): Contact_person {
+        data = typeof data === 'object' ? data : {};
+        let result = new Contact_person();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["first_name"] = this.first_name;
+        data["last_name"] = this.last_name;
+        data["phone"] = this.phone;
+        data["email"] = this.email;
+        return data; 
+    }
+}
+
+export interface IContact_person {
+    first_name?: string | undefined;
+    last_name?: string | undefined;
+    phone?: string | undefined;
+    email?: string | undefined;
 }
 
 export class ScheduleMatchBody implements IScheduleMatchBody {

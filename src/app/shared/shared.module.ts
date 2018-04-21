@@ -18,6 +18,7 @@ import { MatNativeDateModule } from '@angular/material';
 import { ErrorComponent } from '@app/shared/error/error.component';
 import { PopoverModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
+import { ContactDialogComponent } from './contact/contact.dialog.component';
 
 @NgModule({
   imports: [
@@ -33,10 +34,12 @@ import { RouterModule } from '@angular/router';
     PopoverModule.forRoot()
   ],
   entryComponents: [
-    EditMatchDialogComponent
+    EditMatchDialogComponent,
+    ContactDialogComponent
   ],
   declarations: [
     EditMatchDialogComponent,
+    ContactDialogComponent,
     LoaderComponent,
     RoundPipe,
     MatchComponent,
