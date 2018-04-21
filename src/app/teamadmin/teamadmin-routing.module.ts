@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route, extract } from '@app/core';
 import { TeamAdminComponent } from './teamadmin.comonent';
+import { extract } from '@app/service/i18n.service';
 
 const routes: Routes = [
   { path: 'teamadmin', component: TeamAdminComponent, data: { title: extract('TeamAdmin') } }

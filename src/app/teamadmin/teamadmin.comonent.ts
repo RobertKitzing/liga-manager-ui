@@ -3,7 +3,7 @@ import { TeamService } from '@app/service/team.service';
 import { AuthenticationService } from '@app/service/authentication.service';
 import { User, Client, Contact_person } from '@app/api/openapi';
 import { FormControl, Validators } from '@angular/forms';
-import { Logger } from '@app/core/logger.service';
+import { Logger } from '@app/service/logger.service';
 
 const log = new Logger('TeamAdminComponent');
 @Component({

@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs/Observable';
-import { Logger } from '@app/core';
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 import { WebsocketService } from './websocket.service';
 import { QueueingSubject } from 'queueing-subject/lib';
 import { Match, Client, SubmitMatchResultBody } from '@app/api/openapi';
+import { Logger } from '@app/service/logger.service';
 
 const log = new Logger('MatchService');
+
 @Injectable()
 export class MatchService {
 

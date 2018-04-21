@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { Logger } from './../logger.service';
+import { Logger } from '@app/service/logger.service';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { AuthenticationService } from '@app/service/authentication.service';

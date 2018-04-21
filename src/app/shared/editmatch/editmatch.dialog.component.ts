@@ -2,7 +2,7 @@ import { WebsocketService } from './../../service/websocket.service';
 import { MatchService } from './../../service/match.service';
 import { GOOGLE_MAPS_API_KEY } from '@app/app.module';
 import { Observable } from 'rxjs/Observable';
-import { I18nService, Logger } from '@app/core';
+import { Logger } from '@app/service/logger.service';
 import { SubmitMatchResultBody, ScheduleMatchBody, Pitch, CreatePitchBody, LocateMatchBody } from '@app/api/openapi';
 import { TeamService } from '@app/service/team.service';
 import { Client, Match } from '@app/api/openapi';
@@ -11,6 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, DateAdapter } from '@angular/material';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { } from '@types/googlemaps';
+import { I18nService } from '@app/service/i18n.service';
 
 const log = new Logger('EditMatchDialogComponent');
 

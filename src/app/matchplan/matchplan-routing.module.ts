@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { extract } from '@app/core';
 import { MatchplanComponent } from './matchplan.component';
+import { extract } from '@app/service/i18n.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'matchplan', pathMatch: 'full' },

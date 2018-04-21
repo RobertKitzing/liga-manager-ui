@@ -1,5 +1,5 @@
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Logger } from '@app/core';
+import { Logger } from '@app/service/logger.service';
 import { TeamService } from '@app/service/team.service';
 import { Team, Client, CreateUserBody, CreateUserBodyRole } from '@app/api/openapi';
 import { Component, OnInit } from '@angular/core';

@@ -1,6 +1,6 @@
 import { SELECTED_SEASON } from './../constanst';
 import { Subject } from 'rxjs/Subject';
-import { Logger } from 'app/core/logger.service';
+import { Logger } from '@app/service/logger.service';
 import { Season, CreateSeasonBody, Identifier } from '@app/api/openapi';
 import { SeasonState, Client } from './../api/openapi';
 import { Injectable } from '@angular/core';

@@ -2,8 +2,8 @@ import { SeasonManagerComponent } from './seasonmanager/seasonmanager.component'
 import { AdminComponent } from './admin.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { extract, IsAdminGuard } from '@app/core';
+import { IsAdminGuard } from '@app/core/authentication/isadmin.guard';
+import { extract } from '@app/service/i18n.service';
 
 const routes: Routes = [
     {

@@ -11,7 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { environment } from '@env/environment';
-import { Logger, I18nService } from '@app/core';
+import { Logger } from '@app/service/logger.service';
 import { SeasonService } from '@app/service/season.service';
 import { registerLocaleData } from '@angular/common';
 import de from '@angular/common/locales/de';
@@ -19,6 +19,7 @@ import { AuthenticationService } from '@app/service/authentication.service';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '@app/account/login.component';
 import { ChangePasswordComponent } from '@app/account/changepassword/changepassword.component';
+import { I18nService } from '@app/service/i18n.service';
 registerLocaleData(de);
 
 const log = new Logger('App');

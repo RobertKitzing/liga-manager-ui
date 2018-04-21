@@ -21,7 +21,7 @@ import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
-import { Logger } from '@app/core';
+import { Logger } from '@app/service/logger.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 const log = new Logger('Table');

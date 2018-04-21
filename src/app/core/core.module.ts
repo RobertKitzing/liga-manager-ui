@@ -9,12 +9,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 
-import { ShellComponent } from './shell/shell.component';
-import { HeaderComponent } from './shell/header/header.component';
-import { RouteReusableStrategy } from './route-reusable-strategy';
-import { I18nService } from './i18n.service';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { AuthenticationService } from '@app/service/authentication.service';
+import { I18nService } from '@app/service/i18n.service';
 
 @NgModule({
   imports: [
@@ -28,18 +25,10 @@ import { AuthenticationService } from '@app/service/authentication.service';
     LoginModule,
     SharedModule
   ],
-  declarations: [
-    HeaderComponent,
-    ShellComponent,
-  ],
   providers: [
     AuthenticationService,
     IsAdminGuard,
-    I18nService,
-    {
-      provide: RouteReuseStrategy,
-      useClass: RouteReusableStrategy
-    }
+    I18nService
   ],
   exports: [
     LoginModule,

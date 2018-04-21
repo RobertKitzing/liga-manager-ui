@@ -1,16 +1,16 @@
 import { WebsocketService } from '@app/service/websocket.service';
 import { GOOGLE_MAPS_API_KEY } from './../app.module';
-import { I18nService } from './../core/i18n.service';
 import { SubmitMatchResultBody, Pitch } from './../api/openapi';
 import { TeamService } from './../service/team.service';
 import { SeasonService } from '@app/service/season.service';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { environment } from '@env/environment';
 import { Client, Season, Match, SeasonState } from '@app/api/openapi';
-import { Logger } from '@app/core';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 import { AuthenticationService } from '@app/service/authentication.service';
+import { Logger } from '@app/service/logger.service';
+import { I18nService } from '@app/service/i18n.service';
 
 const log = new Logger('Matchplan');
 

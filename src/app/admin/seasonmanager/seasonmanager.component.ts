@@ -17,10 +17,10 @@ import { environment } from '@env/environment';
 import { MatTableDataSource, MatSort, Sort, MatCheckboxChange, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
-import { Logger } from '@app/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { TranslateService } from '@ngx-translate/core';
+import { Logger } from '@app/service/logger.service';
 
 const log = new Logger('Seasonmanager');
 

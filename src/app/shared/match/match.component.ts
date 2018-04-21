@@ -1,12 +1,12 @@
 import { Subscription } from 'rxjs/Subscription';
 import { MatchService } from './../../service/match.service';
-import { Logger } from './../../core/logger.service';
+import { Logger } from '@app/service/logger.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { Subject } from 'rxjs/Subject';
 import { AuthenticationService } from '@app/service/authentication.service';
 import { MatDialog } from '@angular/material';
 import { EditMatchDialogComponent } from '@app/shared/editmatch/editmatch.dialog.component';
-import { I18nService } from '@app/core/i18n.service';
+import { I18nService } from '@app/service/i18n.service';
 import { TeamService } from '@app/service/team.service';
 import { Match, Pitch, Client, Team, Contact_person } from '@app/api/openapi';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
