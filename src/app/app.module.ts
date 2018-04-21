@@ -32,6 +32,7 @@ import { ChangePasswordModule } from '@app/account/changepassword/changepassword
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ReportModule } from '@app/reports/reports.module';
 import { TeamAdminModule } from '@app/teamadmin/teamadmin.module';
+import { CollapseModule } from 'ngx-bootstrap';
 export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_KEY');
 
 @NgModule({
@@ -48,6 +49,7 @@ export const GOOGLE_MAPS_API_KEY = new InjectionToken<string>('GOOGLE_MAPS_API_K
     CoreModule,
     SharedModule,
     HomeModule,
+    CollapseModule.forRoot(),
     AboutModule,
     TableModule,
     MatchplanModule,

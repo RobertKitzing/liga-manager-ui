@@ -27,10 +27,11 @@ export class WebsocketService {
     reportSent: Subject<any> = new Subject<any>();
 
     constructor() {
-        const url: string = environment.wsServerUrl;
         this.messages = websocketConnect(
-            url,
-            this.inputStream
+            environment.wsServerUrl,
+            this.inputStream,
+            null,
+            (url, protocols) => new WebSocket(url, protocols)
         ).messages.share();
 
         this.messages.retryWhen(errors => errors.delay(60000)).subscribe(
@@ -56,6 +57,7 @@ export class WebsocketService {
      }
 
     send(data: WebSocketMessage) {
+        data['token'] = '123456';
         const str = JSON.stringify(data);
         this.inputStream.next(str);
     }

@@ -35,6 +35,8 @@ export enum Event {
 })
 export class AppComponent implements OnInit {
 
+  isCollapsed: boolean = true;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,

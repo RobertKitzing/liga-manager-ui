@@ -1,11 +1,15 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" translate>APP_NAME</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
+    <button class="navbar-toggler"
+        type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-controls="collapsibleNavbar"
+        aria-expanded="false" aria-label="Toggle navigation"
+        (click)="isCollapsed = !isCollapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+    <a class="navbrand d-flex flex-fill" routerLink="/home" translate>
+        <img class="logo" src="assets/wildeliga_bremen_nobg.png" alt="{{ 'APP_NAME' | translate }}" />
+    </a>
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
+        <ul class="navbar-nav" (click)="isCollapsed = !isCollapsed">
             <li class="nav-item">
                 <a class="nav-link" routerLink="/home" routerLinkActive="active" translate>
                     Home
@@ -43,7 +47,7 @@
             </li>
         </ul>
     </div>
-    <div class="navbar-text pull-right">
+    <div class="navbar-text text-right">
         <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
             {{ 'LOGIN' | translate }}
         </button>
@@ -56,8 +60,9 @@
         </button>
     </div>
 </nav>
-
-<router-outlet></router-outlet>
+<main role="main" class="container">
+    <router-outlet></router-outlet>
+</main>
 
 <mat-menu #languageMenu="matMenu">
     <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
