@@ -37,6 +37,7 @@ export class TeamAdminComponent implements OnInit {
       this.api.updateTeamContact(teamId, body).subscribe(
         () => {
           alert('saved');
+          this.teamService.resetTeams();
         }
       );
     }

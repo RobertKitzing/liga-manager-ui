@@ -3,26 +3,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '@app/material.module';
-import { TableComponent } from './table.component';
+import { SeasonManagerComponent } from '@app/admin/seasonmanager/seasonmanager.component';
+import { SeasonManagerModule } from '@app/admin/seasonmanager/seasonmanager.module';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('SeasonManagerComponent', () => {
+  let component: SeasonManagerComponent;
+  let fixture: ComponentFixture<SeasonManagerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
-          BrowserAnimationsModule,
-          FlexLayoutModule,
-          MaterialModule
-        ],
-        declarations: [TableComponent]
+          SeasonManagerModule
+        ]
       })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(SeasonManagerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
