@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SeasonService } from './services/season.service';
 import { Season, SeasonState } from '../api';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,18 @@ import { MatSelectChange } from '@angular/material/select';
 export class AppComponent implements OnInit {
 
   seasons: Season[];
+  @ViewChild('seasonSelect') seasonSelect: MatSelect;
 
   constructor(public seasonService: SeasonService) {
   }
 
   async ngOnInit() {
-    this.seasons = await this.seasonService.loadSeasons();
+    this.seasons = await this.seasonService.loadSeasons(SeasonState.Progress);
+    this.seasonService.currentSeasonId.subscribe(
+      (seasonId) => {
+        this.seasonSelect.value = seasonId;
+      }
+    );
   }
 
   currentSeasonChanged(event: MatSelectChange) {

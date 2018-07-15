@@ -13,8 +13,8 @@ export class TableComponent implements OnInit {
   
   constructor(private seasonService: SeasonService, private api: Client) {
     this.seasonService.currentSeasonId.subscribe(
-      (seasonId) => {
-        this.api.getRanking(seasonId).subscribe(
+      (season) => {
+        this.api.getRanking(season.id).subscribe(
           (ranking) => {
             this.ranking = ranking;
           },

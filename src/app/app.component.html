@@ -21,8 +21,8 @@
       <span class="spacer"></span>
       <div>
         <mat-form-field>
-          <mat-select [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
-            <mat-option *ngFor="let season of seasons" [value]="season.id">
+          <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
+            <mat-option *ngFor="let season of seasons" [value]="season">
               {{ season.name }}
             </mat-option>
           </mat-select>

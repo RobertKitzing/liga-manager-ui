@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client, SeasonState, Season } from 'src/api/liga-manager-api';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +8,15 @@ import { Subject } from 'rxjs';
 export class SeasonService {
 
   isLoadingSeasons: boolean;
-  currentSeasonId: Subject<string> = new Subject<string>();
+  currentSeasonId: BehaviorSubject<Season> = new BehaviorSubject<Season>(JSON.parse(localStorage.getItem('SELECTED_SEASON')));
 
-  constructor(private apiClient: Client) { }
+  constructor(private apiClient: Client) {
+    this.currentSeasonId.subscribe(
+      (season) => {
+        localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
+      }
+    );
+  }
 
   public async loadSeasons(state?: SeasonState | null): Promise<Season[]> {
     this.isLoadingSeasons = true;
