@@ -4594,6 +4594,10 @@ npm-run-path@^2.0.0:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
+nswag@^11.17.21:
+  version "11.17.21"
+  resolved "https://registry.yarnpkg.com/nswag/-/nswag-11.17.21.tgz#60fb92d820f25218ee2db3c2ac3af2fd6f9bfa3f"
+
 nth-check@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-1.0.1.tgz#9929acdf628fc2c41098deab82ac580cf149aae4"

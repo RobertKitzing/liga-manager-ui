@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './components/menu/menu.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MenuComponent } from './components/menu/menu.component';
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    HttpClientModule,
     MaterialModule,
     AppRoutingModule
   ],

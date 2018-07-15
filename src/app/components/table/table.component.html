@@ -1,6 +1,4 @@
-<table class="table table-striped table-hover"
-  data-fixed-columns="true"
-  data-fixed-number="2">
+<table class="table table-striped table-hover" *ngIf="ranking">
   <thead class="">
     <tr>
       <th class="col-1">#</th>
@@ -13,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let pos of table">
+    <ng-container *ngFor="let pos of ranking.positions">
       <tr>
         <td>{{ pos.number }}</td>
         <td>{{ pos.team_id }}</td>

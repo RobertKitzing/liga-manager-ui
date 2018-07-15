@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Ranking_position } from 'src/api';
+import { Ranking, Client } from 'src/api';
+import { SeasonService } from '../../services/season.service';
 
 @Component({
   selector: 'app-table',
@@ -8,24 +9,25 @@ import { Ranking_position } from 'src/api';
 })
 export class TableComponent implements OnInit {
 
-  public table: Ranking_position[];
+  public ranking: Ranking;
+  
+  constructor(private seasonService: SeasonService, private api: Client) {
+    this.seasonService.currentSeasonId.subscribe(
+      (seasonId) => {
+        this.api.getRanking(seasonId).subscribe(
+          (ranking) => {
+            this.ranking = ranking;
+          },
+          (error) => {
+            console.error(error);
+            delete this.ranking;
+          },
+          () => {
 
-  constructor() {
-    this.table = new Array<Ranking_position>();
-    for (let i = 0; i < 18; i++) {
-      const rp = new Ranking_position();
-      rp.conceded_goals = 3;
-      rp.draws = 1;
-      rp.losses = 3;
-      rp.matches = 20;
-      rp.number = i;
-      rp.points = 30;
-      rp.scored_goals = 10;
-      rp.sort_index = 1;
-      rp.wins = 12;
-      rp.team_id = 'Vibrator Moskovskaya' + i;
-      this.table.push(rp);
-    }
+          }
+        );
+      }
+    );
   }
 
   ngOnInit() {

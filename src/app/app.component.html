@@ -1,7 +1,7 @@
 <div style="height: 100vh;">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <img class="logo" src="assets/wildeliga_bremen_nobg.png"/>
+      <img class="logo" src="assets/wildeliga_bremen_nobg.png" />
       <div fxShow="true" fxHide.lt-md="true">
         <app-menu></app-menu>
       </div>
@@ -10,10 +10,25 @@
         <span class="example-spacer"></span>
         <a (click)="sidenav.toggle()" mat-button>
           <i class="material-icons">
-              menu
+            menu
           </i>
         </a>
       </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-toolbar color="secondary">
+    <mat-toolbar-row>
+      <span class="spacer"></span>
+      <div>
+        <mat-form-field>
+          <mat-select [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
+            <mat-option *ngFor="let season of seasons" [value]="season.id">
+              {{ season.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <span class="spacer"></span>
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-sidenav-container fxFlexFill>

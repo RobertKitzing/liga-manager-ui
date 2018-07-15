@@ -17,7 +17,7 @@
       "dom"
     ],
     "paths": {
-      "@api": ["api"],
+      "@api": ["api/*"],
       "@app/*": ["app/*"],
       "@env/*": ["environments/*"]
     }

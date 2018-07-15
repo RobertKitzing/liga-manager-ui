@@ -1,0 +1,48 @@
+{
+  "runtime": "Default",
+  "swaggerGenerator": {
+    "fromSwagger": {
+      "url": "../liga-manager-api/public/swagger.json"
+    }
+  },
+  "codeGenerators": {
+    "swaggerToTypeScriptClient": {
+      "className": "{controller}Client",
+      "moduleName": "",
+      "namespace": "",
+      "typeScriptVersion": 2.0,
+      "template": "Angular",
+      "promiseType": "Promise",
+      "httpClass": "HttpClient",
+      "injectionTokenType": "InjectionToken",
+      "dateTimeType": "Date",
+      "nullValue": "Undefined",
+      "generateClientClasses": true,
+      "generateClientInterfaces": true,
+      "generateOptionalParameters": true,
+      "wrapDtoExceptions": false,
+      "wrapResponses": false,
+      "generateResponseClasses": true,
+      "responseClass": "SwaggerResponse",
+      "useTransformOptionsMethod": false,
+      "useTransformResultMethod": false,
+      "generateDtoTypes": true,
+      "operationGenerationMode": "MultipleClientsFromOperationId",
+      "markOptionalProperties": true,
+      "generateCloneMethod": false,
+      "typeStyle": "Class",
+      "generateDefaultValues": true,
+      "excludedTypeNames": [],
+      "handleReferences": false,
+      "generateConstructorInterface": true,
+      "convertConstructorInterfaceData": false,
+      "importRequiredTypes": true,
+      "useGetBaseUrlMethod": false,
+      "baseUrlTokenName": "API_BASE_URL",
+      "queryNullValue": "",
+      "rxJsVersion": "6.0",
+      "useSingletonProvider": true,
+      "output": "./src/api/liga-manager-api.ts"
+    }
+  }
+}
