@@ -1,0 +1,28 @@
+<table class="table table-striped table-hover"
+  data-fixed-columns="true"
+  data-fixed-number="2">
+  <thead class="">
+    <tr>
+      <th class="col-1">#</th>
+      <th class="col-6">Team</th>
+      <th class="col-1">Games</th>
+      <th class="col-1">w:d:l</th>
+      <th class="col-1">Goals:Goals</th>
+      <th class="col-1">Diff</th>
+      <th class="col-1">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let pos of table">
+      <tr>
+        <td>{{ pos.number }}</td>
+        <td>{{ pos.team_id }}</td>
+        <td>{{ pos.matches }}</td>
+        <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>
+        <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }}</td>
+        <td>{{ pos.scored_goals - pos.conceded_goals }}</td>
+        <td>{{ pos.points }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

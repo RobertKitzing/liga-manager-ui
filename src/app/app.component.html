@@ -1,0 +1,30 @@
+<div style="height: 100vh;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <img class="logo" src="assets/wildeliga_bremen_nobg.png"/>
+      <div fxShow="true" fxHide.lt-md="true">
+        <app-menu></app-menu>
+      </div>
+      <span class="spacer"></span>
+      <div fxShow="true" fxHide.gt-sm="true">
+        <span class="example-spacer"></span>
+        <a (click)="sidenav.toggle()" mat-button>
+          <i class="material-icons">
+              menu
+          </i>
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav fxLayout="column" position="end">
+      <div fxLayout="column">
+        <a (click)="sidenav.toggle()" href="#" mat-button>Close</a>
+        <app-menu fxLayout="column"></app-menu>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
