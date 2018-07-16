@@ -6,6 +6,13 @@
         <app-menu></app-menu>
       </div>
       <span class="spacer"></span>
+      <mat-form-field>
+        <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
+          <mat-option *ngFor="let season of seasons" [value]="season">
+            {{ season.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div fxShow="true" fxHide.gt-sm="true">
         <span class="example-spacer"></span>
         <a (click)="sidenav.toggle()" mat-button>
@@ -16,25 +23,19 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <mat-toolbar color="secondary">
+  <!-- <mat-toolbar color="secondary">
     <mat-toolbar-row>
       <span class="spacer"></span>
       <div>
-        <mat-form-field>
-          <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
-            <mat-option *ngFor="let season of seasons" [value]="season">
-              {{ season.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+       
       </div>
       <span class="spacer"></span>
     </mat-toolbar-row>
-  </mat-toolbar>
+  </mat-toolbar> -->
   <mat-sidenav-container fxFlexFill>
     <mat-sidenav #sidenav fxLayout="column" position="end">
       <div fxLayout="column">
-        <a (click)="sidenav.toggle()" href="#" mat-button>Close</a>
+        <a (click)="sidenav.toggle()" mat-button>Close</a>
         <app-menu fxLayout="column"></app-menu>
       </div>
     </mat-sidenav>
