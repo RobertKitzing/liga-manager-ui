@@ -8,10 +8,10 @@ import { BehaviorSubject } from 'rxjs';
 export class SeasonService {
 
   isLoadingSeasons: boolean;
-  currentSeasonId: BehaviorSubject<Season> = new BehaviorSubject<Season>(JSON.parse(localStorage.getItem('SELECTED_SEASON')));
+  currentSeason: BehaviorSubject<Season> = new BehaviorSubject<Season>(JSON.parse(localStorage.getItem('SELECTED_SEASON')));
 
   constructor(private apiClient: Client) {
-    this.currentSeasonId.subscribe(
+    this.currentSeason.subscribe(
       (season) => {
         localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
       }

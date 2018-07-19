@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.seasons = await this.seasonService.loadSeasons();
     await this.teamService.loadTeams();
-    this.seasonService.currentSeasonId.subscribe(
+    this.seasonService.currentSeason.subscribe(
       (seasonId) => {
         this.seasonSelect.value = seasonId;
       }
@@ -30,6 +30,6 @@ export class AppComponent implements OnInit {
   }
 
   currentSeasonChanged(event: MatSelectChange) {
-    this.seasonService.currentSeasonId.next(event.value);
+    this.seasonService.currentSeason.next(event.value);
   }
 }

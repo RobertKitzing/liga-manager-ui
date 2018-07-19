@@ -4,7 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'table',
-    loadChildren: './components#TableModule'
+    loadChildren: './components/table#TableModule'
+  },
+  {
+    path: 'matchplan',
+    loadChildren: './components/matchplan#MatchplanModule'
   }
 ];
 

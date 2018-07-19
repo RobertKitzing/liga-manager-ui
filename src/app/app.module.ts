@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './components/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatchplanComponent } from './components/matchplan/matchplan.component';
 
 @NgModule({
   declarations: [

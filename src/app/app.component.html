@@ -1,5 +1,51 @@
 <div style="height: 100vh;">
-  <mat-toolbar color="primary">
+  <nav class="navbar navbar-default navbar-dark sticky-top bg-dark">
+    <a class="navbar-brand">
+      <img class="logo" src="assets/wildeliga_bremen_nobg.png" />
+    </a>
+    <div fxShow="true" fxHide.lt-md="true">
+      <app-menu fxLayout="row"></app-menu>
+    </div>
+    <mat-form-field>
+      <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
+        <mat-option *ngFor="let season of seasons" [value]="season">
+          {{ season.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div fxShow="true" fxHide.gt-sm="true">
+      <span class="example-spacer"></span>
+      <a (click)="sidenav.toggle()" mat-button>
+        <i class="material-icons">
+          menu
+        </i>
+      </a>
+      <mat-sidenav-container fxFlexFill>
+        <mat-sidenav #sidenav fxLayout="column" position="end">
+          <div fxLayout="column">
+            <a (click)="sidenav.toggle()" mat-button>Close</a>
+            <app-menu fxLayout="column"></app-menu>
+          </div>
+        </mat-sidenav>
+        <mat-sidenav-content fxFlexFill>
+          <router-outlet></router-outlet>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div>
+  </nav>
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav fxLayout="column" position="end">
+      <div fxLayout="column">
+        <a (click)="sidenav.toggle()" mat-button>Close</a>
+        <app-menu fxLayout="column"></app-menu>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<!-- <mat-toolbar color="primary">
     <mat-toolbar-row>
       <img class="logo" src="assets/wildeliga_bremen_nobg.png" />
       <div fxShow="true" fxHide.lt-md="true">
@@ -23,7 +69,7 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <!-- <mat-toolbar color="secondary">
+<mat-toolbar color="secondary">
     <mat-toolbar-row>
       <span class="spacer"></span>
       <div>
@@ -32,15 +78,3 @@
       <span class="spacer"></span>
     </mat-toolbar-row>
   </mat-toolbar> -->
-  <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav fxLayout="column" position="end">
-      <div fxLayout="column">
-        <a (click)="sidenav.toggle()" mat-button>Close</a>
-        <app-menu fxLayout="column"></app-menu>
-      </div>
-    </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>

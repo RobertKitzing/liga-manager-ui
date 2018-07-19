@@ -11,14 +11,16 @@ import { TeamService } from '../../services/team.service';
 export class TableComponent implements OnInit {
 
   public ranking: Ranking;
+  public currentSeasonName: string;
 
   constructor(
-    private seasonService: SeasonService,
+    public seasonService: SeasonService,
     private api: Client,
     public teamService: TeamService) {
 
-    this.seasonService.currentSeasonId.subscribe(
+    this.seasonService.currentSeason.subscribe(
       (season) => {
+        this.currentSeasonName = season.name;
         this.api.getRanking(season.id).subscribe(
           (ranking) => {
             this.ranking = ranking;
