@@ -14,7 +14,7 @@ export class TableComponent implements OnInit {
   public currentSeasonName: string;
 
   constructor(
-    public seasonService: SeasonService,
+    private seasonService: SeasonService,
     private api: Client,
     public teamService: TeamService) {
 
