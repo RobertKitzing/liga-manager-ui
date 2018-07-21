@@ -1,27 +1,76 @@
 <div class="container-fluid">
   <div class="row">
-    <mat-form-field>
-      <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)">
-        <mat-option *ngFor="let season of seasons" [value]="season">
-          {{ season.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <div class="col" *ngIf="teamsInSeason">
-      <h3>Teams in Season</h3>
-      <div *ngFor="let team of teamsInSeason">
-        {{team.name}}
-        <mat-divider></mat-divider>
-      </div>
+    <div class="col">
+      <mat-form-field>
+        <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)">
+          <mat-option *ngFor="let season of seasons" [value]="season">
+            {{ season.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="col" *ngIf="allTeams">
-        <h3>All Teams</h3>
-        <div *ngFor="let team of allTeams">
-          <button mat-icon-button (click)="addTeamToSeason(team.id)"><-</button> {{team.name}}
-          <mat-divider></mat-divider>
+    <div class="col">
+      <mat-form-field>
+        <input #newSeason matInput placeholder="{{ 'NEW_TEAM_PLACEHOLDER' }}" (keyup.enter)="addNewSeason(newSeason.value)" />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'CREATE_SEASON_BUTTON'}}</button>
+    </div>
+  </div>
+  <mat-tab-group>
+    <mat-tab label="TEAMS">
+      <ng-container *ngIf="manageSeason">
+        <div class="row">
+          <div class="col" *ngIf="teamsInSeason">
+            <h3>Teams in Season</h3>
+            <div *ngFor="let team of teamsInSeason">
+              {{team.name}}
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+          <div class="col" *ngIf="allTeams">
+            <h3>All Teams</h3>
+            <button mat-button (click)="loadAllTeams()">reload</button>
+            <div *ngFor="let team of allTeams">
+              <button mat-icon-button (click)="addTeamToSeason(team.id)">
+                <-</button> {{team.name}}
+                  <mat-divider></mat-divider>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="MATCHES">
+      <div>
+        <button mat-raised-button color="primary" (click)="createMatches()">{{ 'CALCULATE_MATCHDAYS' }}</button>
+      </div>
+      <div class="container-fluid">
+        <div *ngFor="let match of matchesInSeason" class="row">
+          <div class="col">
+            {{ match.home_team.name }}
+          </div>
+          <div class="col-1">
+            -
+          </div>
+          <div class="col">
+            {{ match.guest_team.name }}
+          </div>
+          <div class="col">
+            ({{ match.planned_for | date:'shortDate'}})
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <button mat-raised-button *ngFor="let matchDay of matchDayCounter" (click)="getMatchesInSeason(matchDay)">{{matchDay}}</button>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <button mat-raised-button (click)="startSeason()">START_SEASON</button>
+          </div>
         </div>
       </div>
-  </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
