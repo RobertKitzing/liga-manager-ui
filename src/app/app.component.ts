@@ -29,8 +29,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.authService.loadUser();
     this.seasons = await this.seasonService.loadSeasons(SeasonState.Progress);
-    await this.teamService.loadTeams();
-    await this.pitchService.loadPitches();
     this.seasonService.currentSeason.subscribe(
       (seasonId) => {
         this.seasonSelect.value = seasonId;

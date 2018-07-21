@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { MatchService } from '../../../services/match.service';
 
@@ -15,14 +15,22 @@ export class EditmatchComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
-    private matchService: MatchService) {
+    private matchService: MatchService,
+    private dialogRef: MatDialogRef<EditmatchComponent>) {
+      this.home_score = match.home_score;
+      this.guest_score = match.guest_score;
    }
 
   ngOnInit() {
   }
 
-  onSaveClicked() {
-    this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score);
+  async onSaveClicked() {
+    let success: boolean;
+    if (this.home_score >= 0 && this.guest_score >= 0) {
+      success = await this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score);
+    }
+    if (success) {
+      this.dialogRef.close(true);
+    }
   }
-
 }

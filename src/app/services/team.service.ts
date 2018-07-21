@@ -10,6 +10,7 @@ export class TeamService {
   public teams: Team[];
 
   constructor(private apiClient: Client) {
+    this.loadTeams();
   }
 
   getTeamById(id: string): Team {

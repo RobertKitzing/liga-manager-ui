@@ -4,6 +4,7 @@ import { ContactComponent } from '../contact/contact.component';
 import { MatDialog } from '@angular/material';
 import { Team, Match } from '../../../../api';
 import { EditmatchComponent } from '../editmatch/editmatch.component';
+import { MatchService } from '../../../services/match.service';
 
 @Component({
   selector: 'app-match',
@@ -14,7 +15,9 @@ export class MatchComponent implements OnInit {
 
   @Input() match: MatchViewModel;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private matchService: MatchService) { }
 
   ngOnInit() {
   }
@@ -25,9 +28,9 @@ export class MatchComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      (result) => {
+      async (result) => {
         if (result) {
-          // this.updateMatch();
+          this.match = await this.matchService.updateSingleMatch(match.id);
           // this.pitchAdded.emit(true);
           // this.matchService.updateMatch(matchId);
         }

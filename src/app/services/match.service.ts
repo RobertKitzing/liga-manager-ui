@@ -21,11 +21,7 @@ export class MatchService {
           (matches) => {
             const mvwa = new Array<MatchViewModel>();
             matches.forEach((match) => {
-              const mv = new MatchViewModel(match);
-              mv.home_team = this.teamService.getTeamById(mv.home_team_id);
-              mv.guest_team = this.teamService.getTeamById(mv.guest_team_id);
-              mv.pitch = this.pitchService.getPitchById(mv.pitch_id);
-              mvwa.push(mv);
+              mvwa.push(this.matchConverter(match));
             });
             resolve(mvwa);
           }
@@ -34,10 +30,41 @@ export class MatchService {
     );
   }
 
-  submitMatchResult(matchId: string, homeScore: number, guestScore: number) {
-    const matchResult = new SubmitMatchResultBody();
-    matchResult.guest_score = guestScore;
-    matchResult.home_score = homeScore;
-    this.apiClient.submitMatchResult(matchId, matchResult).toPromise();
+  matchConverter(match: Match): MatchViewModel {
+    const mv = new MatchViewModel(match);
+    mv.home_team = this.teamService.getTeamById(mv.home_team_id);
+    mv.guest_team = this.teamService.getTeamById(mv.guest_team_id);
+    mv.pitch = this.pitchService.getPitchById(mv.pitch_id);
+    return mv;
+  }
+
+  submitMatchResult(matchId: string, homeScore: number, guestScore: number): Promise<boolean> {
+    return new Promise<boolean>(
+      (resolve) => {
+        const matchResult = new SubmitMatchResultBody();
+        matchResult.guest_score = guestScore;
+        matchResult.home_score = homeScore;
+        this.apiClient.submitMatchResult(matchId, matchResult).subscribe(
+          (b) => {
+            resolve(true);
+          },
+          (error) => {
+            resolve(false);
+          }
+        );
+      }
+    );
+  }
+
+  async updateSingleMatch(matchId: string): Promise<MatchViewModel> {
+    return new Promise<MatchViewModel>(
+      (resolve) => {
+        this.apiClient.getMatch(matchId).subscribe(
+          (match) => {
+            resolve(this.matchConverter(match));
+          }
+        );
+      }
+    );
   }
 }

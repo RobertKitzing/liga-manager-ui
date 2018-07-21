@@ -9,6 +9,7 @@ export class PitchService {
   pitches: Pitch[];
 
   constructor(private apiClient: Client) {
+    this.loadPitches();
   }
 
   getPitchById(id: string): Pitch {
