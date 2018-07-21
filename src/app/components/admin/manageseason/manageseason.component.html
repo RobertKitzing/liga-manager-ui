@@ -1,3 +1,27 @@
-<p>
-  manageseason works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <mat-form-field>
+      <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)">
+        <mat-option *ngFor="let season of seasons" [value]="season">
+          {{ season.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="col" *ngIf="teamsInSeason">
+      <h3>Teams in Season</h3>
+      <div *ngFor="let team of teamsInSeason">
+        {{team.name}}
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+    <div class="col" *ngIf="allTeams">
+        <h3>All Teams</h3>
+        <div *ngFor="let team of allTeams">
+          <button mat-icon-button (click)="addTeamToSeason(team.id)"><-</button> {{team.name}}
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+  </div>
+</div>

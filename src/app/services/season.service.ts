@@ -24,11 +24,7 @@ export class SeasonService {
       (resolve) => {
         this.apiClient.getAllSeasons().subscribe(
           (seasons: Season[]) => {
-            if (!state) {
-              resolve(seasons);
-            } else {
-              resolve(seasons.filter(s => s.state === SeasonState.Progress));
-            }
+            resolve(seasons.filter(s => s.state === state));
           },
           (error: any) => {
             resolve(null);
