@@ -6,13 +6,19 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './components/menu/menu.component';
-import { HttpClientModule } from '@angular/common/http';
-import { MatchplanComponent } from './components/matchplan/matchplan.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+import { LoginComponent } from './components/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
+  entryComponents: [
+    LoginComponent
+  ],
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -20,9 +26,17 @@ import { MatchplanComponent } from './components/matchplan/matchplan.component';
     FlexLayoutModule,
     HttpClientModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [
     AppComponent
   ]

@@ -1,0 +1,40 @@
+<div class="card" *ngFor="let team of teams">
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ team.name }}
+    </h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-1">
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="col" *ngIf="team.contact">
+          {{team.contact.first_name}} {{contact.contact.last_name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1">
+          <i class="material-icons">
+            contact_phone
+          </i>
+        </div>
+        <div class="col" *ngIf="team.contact">
+          <a href="tel:{{contact.contact.phone}}">{{team.contact.phone}}</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1">
+          <i class="material-icons">
+            contact_mail
+          </i>
+        </div>
+        <div class="col" *ngIf="team.contact">
+          <a href="mailto:{{contact.contact.email}}">{{team.contact.email}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  <button mat-button class="card-link" (click)="dialogRef.close()">CLOSE</button>
+</div>

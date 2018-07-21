@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <h3 style="text-align: center">{{ currentSeasonName }}</h3>
-  <table class="table table-striped table-hover" *ngIf="ranking">
+  <table class="table table-striped" *ngIf="ranking">
     <thead class="table-dark">
       <tr>
         <th class="col-1">#</th>
@@ -12,7 +12,7 @@
         <th class="col-1">P</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="">
       <ng-container *ngFor="let pos of ranking.positions">
         <tr>
           <td>{{ pos.number }}</td>

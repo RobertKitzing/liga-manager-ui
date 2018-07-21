@@ -1,5 +1,5 @@
 <div style="height: 100vh;">
-  <nav class="navbar navbar-default navbar-dark sticky-top bg-dark">
+  <nav class="navbar navbar-default navbar-dark bg-dark">
     <a class="navbar-brand">
       <img class="logo" src="assets/wildeliga_bremen_nobg.png" />
     </a>
@@ -13,6 +13,15 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <div class="navbar-text text-right">
+      <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
+        {{ 'LOGIN' }}
+      </button>
+      <button mat-button *ngIf="authService.isAuthenticated">
+        {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
+        <mat-icon>person</mat-icon>
+      </button>
+    </div>
     <div fxShow="true" fxHide.gt-sm="true">
       <span class="example-spacer"></span>
       <a (click)="sidenav.toggle()" mat-button>

@@ -1,0 +1,52 @@
+<div class="container ">
+    <div class="row card">
+        <div class="col-12">
+            <div class="row card-header">
+                <div class="col" style="text-align: right;">
+                    {{ match.home_team.name }}
+                </div>
+                <div class="col-3 text-center badge badge-light" style="font-size: large;">
+                    {{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}
+                </div>
+                <div class="col" style="text-align: left;">
+                    {{ match.guest_team.name }}
+                </div>
+            </div>
+            <div class="row card-body">
+                <div class="col text-center">
+                    <i *ngIf="match.kickoff">{{ match.kickoff | date }}</i>
+                    <i *ngIf="!match.kickoff">{{ match.planned_for | date }}</i>
+                    <!-- <mat-icon>calendar_today</mat-icon> -->
+                    <!-- <i class="material-icons">
+                        calendar_today
+                    </i> -->
+                </div>
+                <mat-divider vertical="true"></mat-divider>
+                <div class="col text-center" *ngIf="match.pitch">
+                    <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}" target="_blank"
+                        style="cursor: pointer;">
+                        {{ match.pitch.label }}
+                        <i class="fa fa-map-marker"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row card-footer">
+                <div class="col text-right">
+                    <button mat-button (click)="openContactModal()">
+                        <i class="material-icons">
+                            perm_contact_calendar
+                        </i>
+                    </button>
+                </div>
+                <mat-divider vertical="true"></mat-divider>
+                <div class="col text-right">
+                    <button mat-button (click)="openEditDialog(match)">
+                        <i class="material-icons">
+                            edit
+                        </i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
