@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, Client } from 'src/api';
+import { User, Client, UserRole } from 'src/api';
 import { Base64 } from 'js-base64';
+import { Router } from '@angular/router';
 
 
 export interface LoginContext {
@@ -30,7 +31,8 @@ export class AuthenticationService {
 
   constructor(
     private apiClient: Client,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) { }
 
   async loginAsync(context: LoginContext): Promise<boolean> {
@@ -82,5 +84,14 @@ export class AuthenticationService {
   logout() {
     this.setAccessToken(null);
     this.user = null;
+    this.router.navigateByUrl('');
+  }
+
+  public get isAdmin() {
+    return this.user ? this.user.role === UserRole.Admin : false;
+  }
+
+  public get isTeamAdmin() {
+    return this.user ? this.user.role === UserRole.Team_manager : false;
   }
 }
