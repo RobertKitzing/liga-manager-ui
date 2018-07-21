@@ -10,8 +10,7 @@ export class TeamService {
   public teams: Team[];
 
   constructor(private apiClient: Client) {
-    this.loadTeams();
-   }
+  }
 
   getTeamById(id: string): Team {
     const team: Team = this.teams.find(t => t.id === id);
@@ -29,8 +28,8 @@ export class TeamService {
         createTeamParams.name = teamName;
         this.apiClient.createTeam(createTeamParams).subscribe(
           async () => {
-            resolve(true);
             await this.loadTeams();
+            resolve(true);
           },
           (error) => {
             resolve(false);
@@ -46,7 +45,7 @@ export class TeamService {
         (resolve) => {
           this.apiClient.getAllTeams().subscribe(
             (teams) => {
-              this.teams = teams;
+              this.teams = teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
               resolve(teams);
             },
             (error) => {

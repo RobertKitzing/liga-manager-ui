@@ -73,6 +73,8 @@ export class AuthenticationService {
           (error) => {
             this.logout();
             resolve(null);
+          },
+          () => {
           });
       });
   }

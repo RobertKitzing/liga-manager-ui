@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SeasonService } from './services/season.service';
-import { Season } from '../api';
+import { Season, SeasonState } from '../api';
 import { MatSelectChange, MatSelect } from '@angular/material/select';
 import { TeamService } from 'src/app/services/team.service';
 import { PitchService } from './services/pitch.service';
@@ -27,7 +27,8 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.seasons = await this.seasonService.loadSeasons();
+    await this.authService.loadUser();
+    this.seasons = await this.seasonService.loadSeasons(SeasonState.Progress);
     await this.teamService.loadTeams();
     await this.pitchService.loadPitches();
     this.seasonService.currentSeason.subscribe(

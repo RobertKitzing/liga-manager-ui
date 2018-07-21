@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'matchplan',
     loadChildren: './components/matchplan#MatchplanModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './components/admin#AdminModule'
   }
 ];
 
