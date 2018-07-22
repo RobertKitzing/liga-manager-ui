@@ -9,7 +9,7 @@
           <i class="fa fa-user"></i>
         </div>
         <div class="col" *ngIf="team.contact">
-          {{team.contact.first_name}} {{contact.contact.last_name}}
+          {{team.contact.first_name}} {{team.contact.last_name}}
         </div>
       </div>
       <div class="row">
@@ -19,7 +19,7 @@
           </i>
         </div>
         <div class="col" *ngIf="team.contact">
-          <a href="tel:{{contact.contact.phone}}">{{team.contact.phone}}</a>
+          <a href="tel:{{team.contact.phone}}">{{team.contact.phone}}</a>
         </div>
       </div>
       <div class="row">
@@ -29,7 +29,7 @@
           </i>
         </div>
         <div class="col" *ngIf="team.contact">
-          <a href="mailto:{{contact.contact.email}}">{{team.contact.email}}</a>
+          <a href="mailto:{{team.contact.email}}">{{team.contact.email}}</a>
         </div>
       </div>
     </div>

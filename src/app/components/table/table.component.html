@@ -7,8 +7,7 @@
         <th class="col-6">Team</th>
         <th class="col-1">G</th>
         <th class="col-1">w:d:l</th>
-        <th class="col-1">SG:CG</th>
-        <th class="col-1">D</th>
+        <th class="col-2">SG:CG</th>
         <th class="col-1">P</th>
       </tr>
     </thead>
@@ -19,8 +18,7 @@
           <td>{{ teamService.getTeamById(pos.team_id).name }}</td>
           <td>{{ pos.matches }}</td>
           <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>
-          <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }}</td>
-          <td>{{ pos.scored_goals - pos.conceded_goals }}</td>
+          <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>
           <td>{{ pos.points }}</td>
         </tr>
       </ng-container>

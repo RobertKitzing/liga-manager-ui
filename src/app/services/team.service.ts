@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Team, Client, CreateTeamBody } from 'src/api';
+import { Team, Client, CreateTeamBody, Contact_person } from 'src/api';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,16 @@ export class TeamService {
 
   constructor(private apiClient: Client) {
     this.loadTeams();
+  }
+
+  getTeamContactByID(id: string) {
+    const team: Team = this.teams.find(t => t.id === id);
+    return team.contact || <Contact_person> {
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: ''
+    };
   }
 
   getTeamById(id: string): Team {

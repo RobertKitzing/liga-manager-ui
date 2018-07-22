@@ -1,0 +1,53 @@
+<mat-tab-group>
+  <mat-tab *ngFor="let teamId of authService.user.teams" label="{{teamService.getTeamById(teamId).name}}">
+    <mat-tab-group>
+      <mat-tab label="{{ 'CONTACT' }}">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Wird als Kontakt Person neben dem Team angezeigt!</h5>
+            <div class="card-text">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field>
+                    <input matInput placeholder="{{ 'FIRST_NAME'  }}" #firstname [value]="teamService.getTeamContactByID(teamId).first_name"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field>
+                    <input matInput placeholder="{{ 'LAST_NAME'  }}" #lastname [value]="teamService.getTeamContactByID(teamId).last_name"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field>
+                    <input matInput placeholder="{{ 'MAIL'  }}" #mail [formControl]="emailFormControl" #mail [value]="teamService.getTeamContactByID(teamId).email"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field>
+                    <input matInput placeholder="{{ 'PHONE'  }}" #phone [value]="teamService.getTeamContactByID(teamId).phone" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button mat-button (click)="saveContact(teamId, firstname.value, lastname.value, mail.value, phone.value)">
+                    {{ 'SAVE'  }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-tab>
+</mat-tab-group>

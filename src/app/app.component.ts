@@ -16,7 +16,6 @@ import { MatDialog } from '@angular/material';
 export class AppComponent implements OnInit {
 
   seasons: Season[];
-  @ViewChild('seasonSelect') seasonSelect: MatSelect;
 
   constructor(
     public seasonService: SeasonService,
@@ -29,15 +28,10 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.authService.loadUser();
     this.seasons = await this.seasonService.loadSeasons(SeasonState.Progress);
-    this.seasonService.currentSeason.subscribe(
-      (seasonId) => {
-        this.seasonSelect.value = seasonId;
-      }
-    );
   }
 
-  currentSeasonChanged(event: MatSelectChange) {
-    this.seasonService.currentSeason.next(event.value);
+  currentSeasonChanged(season: Season) {
+    this.seasonService.currentSeason.next(season);
   }
 
   openLoginDialog() {

@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { Team, Match } from '../../../../api';
 import { EditmatchComponent } from '../editmatch/editmatch.component';
 import { MatchService } from '../../../services/match.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-match',
@@ -17,7 +18,8 @@ export class MatchComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private matchService: MatchService) { }
+    private matchService: MatchService,
+    public authService: AuthenticationService) { }
 
   ngOnInit() {
   }

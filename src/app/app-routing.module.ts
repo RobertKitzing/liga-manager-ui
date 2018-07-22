@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './components/admin/admin.guard';
+import { TeamadminGuard } from './components/teamadmin/teamadmin.guard';
 
 const routes: Routes = [
   {
@@ -16,6 +17,12 @@ const routes: Routes = [
     loadChildren: './components/admin#AdminModule',
     canLoad: [AdminGuard],
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'teamadmin',
+    loadChildren: './components/teamadmin#TeamadminModule',
+    canLoad: [TeamadminGuard],
+    canActivate: [TeamadminGuard]
   }
 ];
 

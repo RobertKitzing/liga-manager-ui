@@ -94,4 +94,8 @@ export class AuthenticationService {
   public get isTeamAdmin() {
     return this.user ? this.user.role === UserRole.Team_manager : false;
   }
+
+  public isTeamAdminForTeam(teamId) {
+    return this.isTeamAdmin && this.user.teams.find(t => t === teamId);
+  }
 }

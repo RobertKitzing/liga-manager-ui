@@ -1,57 +1,48 @@
-<div style="height: 100vh;">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand">
-      <img class="logo" src="assets/wildeliga_bremen_nobg.png" />
-    </a>
-    <div fxShow="true" fxHide.lt-md="true" class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <app-menu fxLayout="row"></app-menu>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav fxLayout="column" position="end">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <ul class="navbar-nav flex-column justify-content-start">
+        <app-menu></app-menu>
       </ul>
-    </div>
-    <span class="spacer"></span>
-    <div class="navbar-text text-right">
-      <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
-        {{ 'LOGIN' }}
-      </button>
-      <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
-        {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
-        <mat-icon>person</mat-icon>
-      </button>
-    </div>
-    <div fxShow="true" fxHide.gt-sm="true">
-      <a (click)="sidenav.toggle()" mat-button>
-        <i class="material-icons">
-          menu
-        </i>
+    </nav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a class="navbar-brand">
+        <img class="logo" src="assets/wildeliga_bremen_nobg.png" />
       </a>
-    </div>
-  </nav>
-  <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav fxLayout="column" position="end">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <ul class="navbar-nav flex-column justify-content-start">
-          <app-menu></app-menu>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav" fxHide="true" fxShow.gt-xs="true">
+          <app-menu fxLayout="row"></app-menu>
         </ul>
-      </nav>
-    </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <span class="spacer">
-            <mat-form-field>
-              <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)">
-                <mat-option *ngFor="let season of seasons" [value]="season">
-                  {{ season.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </span>
-        </mat-toolbar-row>
-      </mat-toolbar>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+      </div>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="menu">Season</button>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let season of seasons">
+          <button mat-menu-item (click)="currentSeasonChanged(season)">{{ season.name }}</button>
+        </ng-container>
+      </mat-menu>
+      <div class="navbar-text text-right">
+        <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
+          {{ 'LOGIN' }}
+        </button>
+        <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
+          {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
+          <mat-icon>person</mat-icon>
+        </button>
+      </div>
+      <div fxShow="true" fxHide.gt-xs="true">
+        <a (click)="sidenav.toggle()" mat-button>
+          <i class="material-icons">
+            menu
+          </i>
+        </a>
+      </div>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 <mat-menu #userMenu="matMenu">
   <mat-list>
     <mat-list-item *ngIf="authService.user">

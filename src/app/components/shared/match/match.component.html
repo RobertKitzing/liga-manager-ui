@@ -38,8 +38,7 @@
                         </i>
                     </button>
                 </div>
-                <mat-divider vertical="true"></mat-divider>
-                <div class="col text-right">
+                <div class="col text-right" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team_id) || authService.isTeamAdminForTeam(match.guest_team_id)">
                     <button mat-button (click)="openEditDialog(match)">
                         <i class="material-icons">
                             edit
