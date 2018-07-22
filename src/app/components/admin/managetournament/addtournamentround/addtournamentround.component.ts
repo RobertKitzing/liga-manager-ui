@@ -1,7 +1,7 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Team_pairs, Team, Client, SetRoundBody } from 'src/api';
-import { TeamService } from 'src/app/services/team.service';
+import { Team_pairs, Team, Client, SetRoundBody } from '../../../../../api';
+import { TeamService } from '../../../../services/team.service';
 
 
 export interface AddMatchData {

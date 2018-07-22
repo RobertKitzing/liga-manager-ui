@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, Match, SubmitMatchResultBody } from 'src/api';
+import { Client, Match, SubmitMatchResultBody } from '../../api';
 import { MatchViewModel } from '../models/match.viewmodel';
 import { TeamService } from './team.service';
 import { PitchService } from './pitch.service';

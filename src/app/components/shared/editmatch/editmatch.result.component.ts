@@ -1,14 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { MatchService } from '../../../services/match.service';
 
 @Component({
-  selector: 'app-editmatch',
-  templateUrl: './editmatch.component.html',
-  styleUrls: ['./editmatch.component.css']
+  selector: 'app-editmatchresult',
+  templateUrl: './editmatch.result.component.html',
+  styleUrls: ['./editmatch.result.component.css']
 })
-export class EditmatchComponent implements OnInit {
+export class EditmatchResultComponent implements OnInit {
 
   home_score: number;
   guest_score: number;
@@ -16,12 +16,13 @@ export class EditmatchComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
     private matchService: MatchService,
-    private dialogRef: MatDialogRef<EditmatchComponent>) {
-      this.home_score = match.home_score;
-      this.guest_score = match.guest_score;
+    private dialogRef: MatDialogRef<EditmatchResultComponent>) {
+      this.home_score = this.match.home_score;
+      this.guest_score = this.match.guest_score;
    }
 
   ngOnInit() {
+
   }
 
   async onSaveClicked() {

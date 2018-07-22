@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditmatchComponent } from './editmatch.component';
+import { EditmatchTimeComponent } from './editmatch.time.component';
 
-describe('EditmatchComponent', () => {
-  let component: EditmatchComponent;
-  let fixture: ComponentFixture<EditmatchComponent>;
+describe('Editmatch.TimeComponent', () => {
+  let component: EditmatchTimeComponent;
+  let fixture: ComponentFixture<EditmatchTimeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditmatchComponent ]
+      declarations: [ EditmatchTimeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditmatchComponent);
+    fixture = TestBed.createComponent(EditmatchTimeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ranking, Client } from 'src/api';
+import { Ranking, Client } from '../../../api';
 import { SeasonService } from '../../services/season.service';
 import { TeamService } from '../../services/team.service';
 
@@ -26,7 +26,6 @@ export class TableComponent implements OnInit {
             this.ranking = ranking;
           },
           (error) => {
-            console.error(error);
             delete this.ranking;
           },
           () => {

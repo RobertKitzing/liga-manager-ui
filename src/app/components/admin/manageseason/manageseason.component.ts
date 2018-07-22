@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchesBody, Match } from 'src/api';
+import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchesBody, Match } from '../../../../api';
 import { MatSelectChange } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
 

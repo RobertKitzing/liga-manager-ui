@@ -1,0 +1,29 @@
+<div *ngIf="match" class="container-fluid">
+  <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col text-center">
+        <mat-form-field class="inputsize">
+          <input matInput type="number" min="0" max="99" placeholder="{{'HOME_SCORE_PLACEHOLDER'}}" [(ngModel)]="home_score" />
+        </mat-form-field>
+      </div>
+      <div class="col text-center">
+        <mat-form-field class="inputsize">
+          <input matInput type="number" min="0" max="99" placeholder="{{'GUEST_SCORE_PLACEHOLDER'}}" [(ngModel)]="guest_score" />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <button mat-button mat-dialog-close>{{ 'CANCEL' }}</button>
+        </div>
+        <div class="col">
+          <button mat-button (click)="onSaveClicked()">{{ 'SAVE' }}</button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

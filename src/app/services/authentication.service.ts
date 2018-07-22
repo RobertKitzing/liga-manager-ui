@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, Client, UserRole } from 'src/api';
+import { User, Client, UserRole } from '../../api';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 
@@ -39,7 +39,6 @@ export class AuthenticationService {
     return new Promise<boolean>(
       (resolve) => {
         let headers = new HttpHeaders();
-        console.log(context);
         const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
         headers = headers.append('Authorization', 'Basic ' + passBase64);
         this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
@@ -50,13 +49,11 @@ export class AuthenticationService {
               lastName: response.body['last_name'],
               token: response.headers.get('x-token')
             };
-            console.log(data);
             this.setAccessToken(data.token);
             this.user = await this.loadUser();
             if (!this.user) {
               resolve(false);
             }
-            console.log(this.user);
             resolve(true);
           }, err => {
             resolve(false);

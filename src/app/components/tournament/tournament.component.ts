@@ -42,7 +42,6 @@ export class TournamentComponent implements OnInit {
   }
 
   tournamentChanged() {
-    console.log(this.tournament);
     this.apiClient.getMatchesInTournament(this.tournament.id).subscribe(
       (matches) => {
         const mvw = this.matchService.matchConverterArray(matches);
@@ -50,7 +49,6 @@ export class TournamentComponent implements OnInit {
         for (let round = 0; round < this.tournament.rounds; round++) {
           this.matches[round] = mvw.filter(m => m.match_day === (round + 1));
         }
-        console.log(this.matches);
         this.matches = this.matches.reverse();
       }
     );

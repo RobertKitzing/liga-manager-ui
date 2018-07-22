@@ -1,4 +1,4 @@
-import { Match, Team, Pitch } from 'src/api';
+import { Match, Team, Pitch } from '../../api';
 
 export class MatchViewModel extends Match {
     public home_team: Team;

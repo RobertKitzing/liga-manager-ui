@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Team, Client, CreateTeamBody, Contact_person } from 'src/api';
+import { Team, Client, CreateTeamBody, Contact_person } from '../../api';
 
 @Injectable({
   providedIn: 'root'

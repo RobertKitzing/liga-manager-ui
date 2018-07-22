@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Team, CreateUserBodyRole, CreateUserBody, Client } from 'src/api';
+import { Team, CreateUserBodyRole, CreateUserBody, Client } from '../../../../api';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material';
 import { TeamService } from '../../../services/team.service';

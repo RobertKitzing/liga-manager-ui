@@ -27,7 +27,6 @@ export class ManagetournamentComponent implements OnInit {
 
   private loadAllTournaments() {
     this.apiClient.getAllTournaments().subscribe((tournaments) => {
-      console.log(tournaments);
       this.tournaments = tournaments;
     });
   }
@@ -42,23 +41,15 @@ export class ManagetournamentComponent implements OnInit {
 
   genRounds() {
     const startGameCount = Math.ceil(this.startTeamCount / 2);
-    // console.log(startGameCount);
     this.rounds = new Array<number[]>();
-    // this.rounds.push(Array.from(new Array(startGameCount), (val, index) => index + 1));
-
     for (let gameCount = startGameCount; gameCount >= 1; gameCount = (gameCount / 2)) {
       this.rounds.push(Array.from(new Array(gameCount), (val, index) => index + 1));
       if (gameCount % 2 !== 0 && gameCount !== 1) {
         break;
       }
     }
-
-    // let nextRoundCount = startGameCount / 2;
-    // this.rounds.push(Array.from(new Array(nextRoundCount), (val, index) => index + 1));
-
-    // nextRoundCount = nextRoundCount / 2;
-    // this.rounds.push(Array.from(new Array(nextRoundCount), (val, index) => index + 1));
   }
+  
   addMatch(round: number) {
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
         data: { round: round, tournamentId: this.manageTournament.id}

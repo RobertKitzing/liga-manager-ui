@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, SeasonState, Season } from 'src/api/liga-manager-api';
+import { Client, SeasonState, Season } from '../../api/liga-manager-api';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

@@ -40,7 +40,7 @@
                 </div>
                 <ng-container *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team_id) || authService.isTeamAdminForTeam(match.guest_team_id)">
                     <div class="col">
-                        <button mat-button (click)="openEditDialog(match)">
+                        <button mat-button (click)="openEditResultDialog(match)">
                             RESULT
                             <i class="material-icons">
                                 edit
@@ -48,7 +48,7 @@
                         </button>
                     </div>
                     <div class="col">
-                        <button mat-button>
+                        <button mat-button (click)="openEditPitchDialog(match)">
                             PITCH
                             <i class="material-icons">
                                 edit
@@ -56,7 +56,7 @@
                         </button>
                     </div>
                     <div class="col">
-                        <button mat-button>
+                        <button mat-button (click)="openEditTimeDialog(match)">
                             TIME
                             <i class="material-icons">
                                 edit

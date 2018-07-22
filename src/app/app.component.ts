@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SeasonService } from './services/season.service';
 import { Season, SeasonState } from '../api';
 import { MatSelectChange, MatSelect } from '@angular/material/select';
-import { TeamService } from 'src/app/services/team.service';
+import { TeamService } from './services/team.service';
 import { PitchService } from './services/pitch.service';
 import { AuthenticationService } from './services/authentication.service';
 import { LoginComponent } from './components/login/login.component';

@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FinalroundPipe implements PipeTransform {
 
   transform(matchDay: number, roundLength: number): any {
-    console.log(roundLength);
     switch (roundLength) {
       case 8:
         return 'Achtelfinale';
