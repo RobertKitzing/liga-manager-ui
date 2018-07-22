@@ -1,0 +1,7 @@
+<mat-form-field>
+  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)" [(value)]="season">
+    <mat-option *ngFor="let season of seasons" [value]="season">
+      {{ season.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

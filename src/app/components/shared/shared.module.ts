@@ -5,6 +5,8 @@ import { MaterialModule } from '../../material.module';
 import { ContactComponent } from './contact/contact.component';
 import { EditmatchComponent } from './editmatch/editmatch.component';
 import { FormsModule } from '@angular/forms';
+import { SeasonchooserComponent } from './seasonchooser/seasonchooser.component';
+import { FinalroundPipe } from './finalround.pipe';
 
 @NgModule({
   imports: [
@@ -19,12 +21,16 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     MatchComponent,
     ContactComponent,
-    EditmatchComponent
+    EditmatchComponent,
+    SeasonchooserComponent,
+    FinalroundPipe
   ],
   exports: [
     MatchComponent,
     FormsModule,
-    MaterialModule
+    SeasonchooserComponent,
+    MaterialModule,
+    FinalroundPipe
   ]
 })
 export class SharedModule { }

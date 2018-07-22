@@ -7,6 +7,8 @@ import { AddteamComponent } from './addteam/addteam.component';
 import { ManageseasonComponent } from './manageseason/manageseason.component';
 import { ManageusersComponent } from './manageusers/manageusers.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ManagetournamentComponent } from './managetournament/managetournament.component';
+import { AddtournamentroundComponent } from './managetournament/addtournamentround/addtournamentround.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     AdminComponent,
     AddteamComponent,
     ManageseasonComponent,
-    ManageusersComponent
+    ManageusersComponent,
+    ManagetournamentComponent,
+    AddtournamentroundComponent
+  ],
+  entryComponents: [
+    AddtournamentroundComponent
   ]
 })
 export class AdminModule { }

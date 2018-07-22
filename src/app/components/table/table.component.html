@@ -1,5 +1,9 @@
 <div class="container-fluid">
-  <h3 style="text-align: center">{{ currentSeasonName }}</h3>
+  <mat-toolbar>
+    <mat-toolbar-row style="justify-content: center">
+        <app-seasonchooser></app-seasonchooser>
+    </mat-toolbar-row>
+  </mat-toolbar>
   <table class="table table-striped" *ngIf="ranking">
     <thead class="table-dark">
       <tr>

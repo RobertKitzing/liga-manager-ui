@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: './components/matchplan#MatchplanModule'
   },
   {
+    path: 'tournament',
+    loadChildren: './components/tournament#TournamentModule'
+  },
+  {
     path: 'admin',
     loadChildren: './components/admin#AdminModule',
     canLoad: [AdminGuard],

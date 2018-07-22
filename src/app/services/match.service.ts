@@ -19,11 +19,7 @@ export class MatchService {
       (resolve) => {
         this.apiClient.getMatchesInSeason(seasonId, matchDay).subscribe(
           (matches) => {
-            const mvwa = new Array<MatchViewModel>();
-            matches.forEach((match) => {
-              mvwa.push(this.matchConverter(match));
-            });
-            resolve(mvwa);
+            resolve(this.matchConverterArray(matches));
           }
         );
       }
@@ -36,6 +32,14 @@ export class MatchService {
     mv.guest_team = this.teamService.getTeamById(mv.guest_team_id);
     mv.pitch = this.pitchService.getPitchById(mv.pitch_id);
     return mv;
+  }
+
+  matchConverterArray(matches: Match[]): MatchViewModel[] {
+    const mvwa = new Array<MatchViewModel>();
+    matches.forEach((match) => {
+      mvwa.push(this.matchConverter(match));
+    });
+    return mvwa;
   }
 
   submitMatchResult(matchId: string, homeScore: number, guestScore: number): Promise<boolean> {

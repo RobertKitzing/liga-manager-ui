@@ -17,12 +17,6 @@
         </ul>
       </div>
       <span class="spacer"></span>
-      <button mat-button [matMenuTriggerFor]="menu">Season</button>
-      <mat-menu #menu="matMenu">
-        <ng-container *ngFor="let season of seasons">
-          <button mat-menu-item (click)="currentSeasonChanged(season)">{{ season.name }}</button>
-        </ng-container>
-      </mat-menu>
       <div class="navbar-text text-right">
         <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
           {{ 'LOGIN' }}

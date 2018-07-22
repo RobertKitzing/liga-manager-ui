@@ -15,8 +15,6 @@ import { MatDialog } from '@angular/material';
 })
 export class AppComponent implements OnInit {
 
-  seasons: Season[];
-
   constructor(
     public seasonService: SeasonService,
     private teamService: TeamService,
@@ -27,11 +25,6 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.loadUser();
-    this.seasons = await this.seasonService.loadSeasons(SeasonState.Progress);
-  }
-
-  currentSeasonChanged(season: Season) {
-    this.seasonService.currentSeason.next(season);
   }
 
   openLoginDialog() {

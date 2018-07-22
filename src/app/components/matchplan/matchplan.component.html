@@ -1,17 +1,14 @@
 <div class="container-fluid">
   <mat-toolbar color="secondary">
-    <mat-toolbar-row>
-      <span class="spacer"></span>
-      <div>
-        <mat-form-field>
-          <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" >
-            <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
-              {{ matchDay }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <span class="spacer"></span>
+    <mat-toolbar-row style="justify-content: center">
+      <app-seasonchooser></app-seasonchooser>
+      <mat-form-field style="margin-left: 30px;">
+        <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()">
+          <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
+            {{ matchDay }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-toolbar-row>
   </mat-toolbar>
   <ng-container *ngFor="let match of matches">

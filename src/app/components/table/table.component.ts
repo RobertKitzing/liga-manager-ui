@@ -20,7 +20,6 @@ export class TableComponent implements OnInit {
 
     this.seasonService.currentSeason.subscribe(
       (season) => {
-        console.log(season);
         this.currentSeasonName = season.name;
         this.api.getRanking(season.id).subscribe(
           (ranking) => {
