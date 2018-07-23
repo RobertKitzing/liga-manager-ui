@@ -14,7 +14,7 @@
             </div>
             <div class="row card-body">
                 <div class="col text-center">
-                    <i *ngIf="match.kickoff">{{ match.kickoff | date }}</i>
+                    <i *ngIf="match.kickoff">{{ match.kickoff | date:'short' }}</i>
                     <i *ngIf="!match.kickoff">{{ match.planned_for | date }}</i>
                     <!-- <mat-icon>calendar_today</mat-icon> -->
                     <!-- <i class="material-icons">

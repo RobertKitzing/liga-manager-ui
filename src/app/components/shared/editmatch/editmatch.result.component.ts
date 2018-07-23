@@ -17,9 +17,9 @@ export class EditmatchResultComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
     private matchService: MatchService,
     private dialogRef: MatDialogRef<EditmatchResultComponent>) {
-      this.home_score = this.match.home_score;
-      this.guest_score = this.match.guest_score;
-   }
+    this.home_score = this.match.home_score;
+    this.guest_score = this.match.guest_score;
+  }
 
   ngOnInit() {
 

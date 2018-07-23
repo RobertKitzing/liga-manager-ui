@@ -9,12 +9,15 @@ import { FinalroundPipe } from './finalround.pipe';
 import { EditmatchResultComponent } from './editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from './editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   entryComponents: [
     ContactComponent,
@@ -36,7 +39,9 @@ import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
     FormsModule,
     SeasonchooserComponent,
     MaterialModule,
-    FinalroundPipe
+    FinalroundPipe,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ]
 })
 export class SharedModule { }

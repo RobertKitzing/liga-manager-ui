@@ -4419,6 +4419,10 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
+ng-pick-datetime@^6.0.10:
+  version "6.0.10"
+  resolved "https://registry.yarnpkg.com/ng-pick-datetime/-/ng-pick-datetime-6.0.10.tgz#214ce1c96b956e44b4603de483d1c2fcc9c6a7ff"
+
 no-case@^2.2.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"

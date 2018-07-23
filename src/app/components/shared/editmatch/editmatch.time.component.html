@@ -1,17 +1,12 @@
 <div *ngIf="match" class="container-fluid">
   <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>
   <mat-dialog-content>
+    <button [owlDateTimeTrigger]="dt5">TIME</button>
+    <input #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="kickoffSet($event)">
+    <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <button mat-button mat-dialog-close>{{ 'CANCEL' }}</button>
-        </div>
-        <div class="col">
-          <button mat-button (click)="onSaveClicked()">{{ 'SAVE' }}</button>
-        </div>
-      </div>
-    </div>
+    <button mat-button mat-dialog-close>{{ 'CANCEL' }}</button>
+    <button mat-button (click)="onSaveClicked()">{{ 'SAVE' }}</button>
   </mat-dialog-actions>
 </div>
