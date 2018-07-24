@@ -50,7 +50,12 @@ export class ManagetournamentComponent implements OnInit {
     }
   }
   
-  addMatch(round: number) {
+  editRound(round: number) {
+    if (round <= this.manageTournament.rounds) {
+      if (!confirm('Warning, this will override existing Round!')) {
+        return;
+      }
+    }
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
         data: { round: round, tournamentId: this.manageTournament.id}
       });

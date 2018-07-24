@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { ContactComponent } from '../contact/contact.component';
 import { MatDialog } from '@angular/material';
@@ -18,6 +18,7 @@ import { I18Service } from '../../../services/i18.service';
 export class MatchComponent implements OnInit {
 
   @Input() match: MatchViewModel;
+  @Output() resultUpdated: EventEmitter<MatchViewModel> = new EventEmitter<MatchViewModel>();
 
   constructor(
     public dialog: MatDialog,
@@ -37,6 +38,7 @@ export class MatchComponent implements OnInit {
       async (result) => {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
+          this.resultUpdated.emit(this.match);
           // this.pitchAdded.emit(true);
           // this.matchService.updateMatch(matchId);
         }

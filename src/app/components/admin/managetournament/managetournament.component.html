@@ -31,7 +31,10 @@
       {{ 'Game' | translate }} {{ game }}
     </div>
   </div>
-  <button mat-button class="pull-right" (click)="addMatch(createRoundNr)" translate>
-      CREATE_ROUND
+  <mat-form-field>
+      <input matInput placeholder="{{ 'EDIT_TOURNAMENT_ROUND_PLACEHOLDER' | translate }}" type="number" [(ngModel)]="createRoundNr"/>
+    </mat-form-field>
+  <button mat-button (click)="editRound(createRoundNr)" translate>
+      EDIT_ROUND
 </button>
 </div>

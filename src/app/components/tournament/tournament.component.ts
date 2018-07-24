@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, Tournament } from '../../../api';
-import { MatSelectChange } from '@angular/material';
+import { Client, Tournament, Team } from '../../../api';
 import { MatchViewModel } from '../../models/match.viewmodel';
 import { MatchService } from '../../services/match.service';
 
@@ -12,6 +11,8 @@ import { MatchService } from '../../services/match.service';
 export class TournamentComponent implements OnInit {
 
   tournaments: Tournament[];
+  winnerLastRound: Team[];
+
   get tournament(): Tournament {
     return JSON.parse(localStorage.getItem('SELECTED_TOURNAMENT'));
   }
@@ -50,7 +51,33 @@ export class TournamentComponent implements OnInit {
           this.matches[round] = mvw.filter(m => m.match_day === (round + 1));
         }
         this.matches = this.matches.reverse();
+        this.getWinner();
       }
     );
+  }
+
+  getWinner() {
+    this.winnerLastRound = new Array<Team>();
+    this.matches[0].forEach(
+      (match) => {
+        if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
+          this.winnerLastRound.push(match.home_score > match.guest_score ? match.home_team : match.guest_team);
+        }
+      });
+    this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+  }
+
+  newWinner(match: MatchViewModel) {
+    if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
+      if (match.home_score > match.guest_score) {
+        this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.guest_team_id);
+        this.winnerLastRound.push(match.home_team);
+      } else {
+        this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.home_team_id);
+        this.winnerLastRound.push(match.guest_team);
+      }
+
+      this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+    }
   }
 }

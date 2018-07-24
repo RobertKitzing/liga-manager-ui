@@ -59,6 +59,7 @@ export class AddtournamentroundComponent implements OnInit {
       }
     );
   }
+
   onDateChanged(event: any) {
     this.newRoundPlanDate.setDate(this.newRoundPlanDate.getDate() + 1);
   }
