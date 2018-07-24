@@ -24,7 +24,6 @@ export class SeasonchooserComponent implements OnInit {
   }
 
   currentSeasonChanged(event: MatSelectChange) {
-    console.log(event);
     this.seasonService.currentSeason.next(event.value);
     this.seasonChanged.emit(event.value);
   }

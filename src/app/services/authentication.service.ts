@@ -10,6 +10,12 @@ export interface LoginContext {
   password: string;
 }
 
+class Credentials {
+  constructor(public token: string) {
+
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,12 +23,13 @@ export class AuthenticationService {
 
   user: User;
 
-  private setAccessToken(value: string) {
-    localStorage.setItem('ACCESS_TOKEN', value);
+  private setAccessToken(value: Credentials) {
+    localStorage.setItem('ACCESS_TOKEN', JSON.stringify(value));
   }
 
   public get accessToken(): string {
-    return localStorage.getItem('ACCESS_TOKEN');
+    const cred: Credentials = JSON.parse(localStorage.getItem('ACCESS_TOKEN'));
+    return cred ? cred.token : null;
   }
 
   public get isAuthenticated(): boolean {
@@ -33,7 +40,8 @@ export class AuthenticationService {
     private apiClient: Client,
     private httpClient: HttpClient,
     private router: Router
-  ) { }
+  ) {
+  }
 
   async loginAsync(context: LoginContext): Promise<boolean> {
     return new Promise<boolean>(
@@ -49,7 +57,7 @@ export class AuthenticationService {
               lastName: response.body['last_name'],
               token: response.headers.get('x-token')
             };
-            this.setAccessToken(data.token);
+            this.setAccessToken(new Credentials(data.token));
             this.user = await this.loadUser();
             if (!this.user) {
               resolve(false);
@@ -61,20 +69,17 @@ export class AuthenticationService {
       });
   }
 
-  async load() {
-    this.user = await this.loadUser();
-  }
-
   async loadUser(): Promise<User> {
     return new Promise<User>(
-      (resolve) => {
+      (resolve, reject) => {
         this.apiClient.getAuthenticatedUser().subscribe(
           (user) => {
+            this.user = user;
             resolve(user);
           },
           (error) => {
             this.logout();
-            resolve(null);
+            reject(error);
           },
           () => {
           });

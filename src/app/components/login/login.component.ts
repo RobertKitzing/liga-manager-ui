@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MatDialogRef } from '@angular/material';
+import { Client, SendPasswordResetMailBody } from '../../../api';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     public dialogRef: MatDialogRef<LoginComponent>,
+    private apiClient: Client
   ) {
     this.createForm();
   }
@@ -41,6 +43,21 @@ export class LoginComponent implements OnInit {
     } else {
       this.isLoading = false;
       this.error = true;
+    }
+  }
+
+  passwordForgot(email: string) {
+    if (email) {
+      const body = new SendPasswordResetMailBody();
+      body.email = email;
+      body.target_path = '';
+      this.apiClient.sendPasswordResetMail().subscribe(
+        () => {
+          alert('Email ist unterwegs');
+        }
+      );
+    } else {
+      this.loginForm.controls['username'].setErrors({required: true});
     }
   }
 }

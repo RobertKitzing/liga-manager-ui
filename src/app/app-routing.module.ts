@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { AdminGuard } from './components/admin/admin.guard';
 import { TeamadminGuard } from './components/teamadmin/teamadmin.guard';
 
 const routes: Routes = [
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
   {
     path: 'table',
     loadChildren: './components/table#TableModule'
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'tournament',
     loadChildren: './components/tournament#TournamentModule'
+  },
+  {
+    path: 'newpassword',
+    loadChildren: './components/newpassword#NewpasswordModule',
   },
   {
     path: 'admin',

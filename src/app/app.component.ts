@@ -18,8 +18,10 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog) {
   }
 
-  ngOnInit() {
-    this.authService.load();
+  async ngOnInit() {
+    if (this.authService.accessToken) {
+      await this.authService.loadUser();
+    }
   }
 
   openLoginDialog() {
