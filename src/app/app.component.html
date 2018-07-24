@@ -44,8 +44,7 @@
       <b> {{ authService.user.email }} </b>
     </mat-list-item>
     <mat-divider></mat-divider>
-    <!-- <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'CHANGE_PASSWORD' }}</button> -->
-    <!-- <mat-divider></mat-divider> -->
+    <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'CHANGE_PASSWORD' | translate }}</button>
   </mat-list>
   <button mat-menu-item (click)="authService.logout()">Logout</button>
 </mat-menu>

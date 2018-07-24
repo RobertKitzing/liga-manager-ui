@@ -6,7 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './components/menu/menu.component';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,11 @@ import { TeamService } from './services/team.service';
 import { SeasonService } from './services/season.service';
 import { PitchService } from './services/pitch.service';
 import { I18Service } from './services/i18.service';
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+registerLocaleData(localeDe);
 
 export function teamServiceFactory(provider: TeamService) {
   return () => provider.load();
@@ -30,12 +35,14 @@ export function pitchServiceFactory(provider: PitchService) {
 
 @NgModule({
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    ChangepasswordComponent
   ],
   declarations: [
     AppComponent,
     MenuComponent,
-    LoginComponent
+    LoginComponent,
+    ChangepasswordComponent
   ],
   imports: [
     BrowserModule,

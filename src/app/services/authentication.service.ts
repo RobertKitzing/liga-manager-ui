@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, Client, UserRole } from '../../api';
+import { User, Client, UserRole, ChangePasswordBody } from '../../api';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 
@@ -98,4 +98,23 @@ export class AuthenticationService {
   public isTeamAdminForTeam(teamId) {
     return this.isTeamAdmin && this.user.teams.find(t => t === teamId);
   }
+
+  async changePassword(oldPassword: string, newPassword: string): Promise<boolean> {
+    return new Promise<boolean>(
+      (resolve) => {
+        let headers = new HttpHeaders();
+        const passBase64 = Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword);
+        headers = headers.append('Authorization', 'Basic ' + passBase64);
+        headers = headers.append('Content-Type', 'application/json; charset=utf-8');
+        const body = new ChangePasswordBody();
+        body.new_password = newPassword;
+        this.httpClient.put('/api/user/me/password', JSON.stringify(body), {headers: headers }).subscribe(
+          (response) => {
+            resolve(true);
+          }, err => {
+            resolve(false);
+          });
+      }
+    );
+}
 }

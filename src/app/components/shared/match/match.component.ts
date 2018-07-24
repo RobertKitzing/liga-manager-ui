@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { ContactComponent } from '../contact/contact.component';
 import { MatDialog } from '@angular/material';
-import { Team, Match } from '../../../../api';
+import { Team } from '../../../../api';
 import { MatchService } from '../../../services/match.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { EditmatchResultComponent } from '../editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from '../editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from '../editmatch/editmatch.pitch.component';
+import { I18Service } from '../../../services/i18.service';
 
 @Component({
   selector: 'app-match',
@@ -21,7 +22,8 @@ export class MatchComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private matchService: MatchService,
-    public authService: AuthenticationService) { }
+    public authService: AuthenticationService,
+    public i18Service: I18Service) { }
 
   ngOnInit() {
   }

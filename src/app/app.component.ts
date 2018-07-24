@@ -3,8 +3,7 @@ import { SeasonService } from './services/season.service';
 import { AuthenticationService } from './services/authentication.service';
 import { LoginComponent } from './components/login/login.component';
 import { MatDialog } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
-import { I18Service } from './services/i18.service';
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +23,10 @@ export class AppComponent implements OnInit {
   }
 
   openLoginDialog() {
-    const dialogRef = this.dialog.open(LoginComponent);
+    this.dialog.open(LoginComponent);
+  }
+
+  openChangePasswordDialog() {
+    this.dialog.open(ChangepasswordComponent);
   }
 }
