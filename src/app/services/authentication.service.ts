@@ -61,12 +61,15 @@ export class AuthenticationService {
       });
   }
 
+  async load() {
+    this.user = await this.loadUser();
+  }
+
   async loadUser(): Promise<User> {
     return new Promise<User>(
       (resolve) => {
         this.apiClient.getAuthenticatedUser().subscribe(
           (user) => {
-            this.user = user;
             resolve(user);
           },
           (error) => {

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchesBody, Match } from '../../../../api';
+import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchesBody } from '../../../../api';
 import { MatSelectChange } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
+import { MatchViewModel } from '../../../models/match.viewmodel';
 
 @Component({
   selector: 'app-manageseason',
@@ -14,7 +15,7 @@ export class ManageseasonComponent implements OnInit {
   seasons: Season[];
   teamsInSeason: Team[];
   allTeams: Team[];
-  matchesInSeason: Match[];
+  matchesInSeason: MatchViewModel[];
   manageSeason: Season;
   matchDayCounter: number[];
 
@@ -94,6 +95,10 @@ export class ManageseasonComponent implements OnInit {
   }
 
   startSeason() {
-    this.apiClient.startSeason(this.manageSeason.id).toPromise();
+    this.apiClient.startSeason(this.manageSeason.id).subscribe(
+      () => {
+        this.seasonService.seasonCreated.next();
+      }
+    );
   }
 }

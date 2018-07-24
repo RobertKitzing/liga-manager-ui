@@ -1,18 +1,18 @@
 <div class="container-fluid">
   <mat-toolbar>
     <mat-toolbar-row style="justify-content: center">
-        <app-seasonchooser></app-seasonchooser>
+        <app-seasonchooser (seasonChanged)="loadRanking($event)"></app-seasonchooser>
     </mat-toolbar-row>
   </mat-toolbar>
   <table class="table table-striped" *ngIf="ranking">
     <thead class="table-dark">
       <tr>
-        <th class="col-1">#</th>
-        <th class="col-6">Team</th>
-        <th class="col-1">G</th>
-        <th class="col-1">w:d:l</th>
-        <th class="col-2">SG:CG</th>
-        <th class="col-1">P</th>
+        <th class="col-1" translate>#</th>
+        <th class="col-6" translate>Team</th>
+        <th class="col-1" translate>G</th>
+        <th class="col-1" translate>w:d:l</th>
+        <th class="col-2" translate>SG:CG</th>
+        <th class="col-1" translate>P</th>
       </tr>
     </thead>
     <tbody class="">

@@ -13,7 +13,7 @@ export class ManagetournamentComponent implements OnInit {
   tournaments: Tournament[];
   manageTournament: Tournament;
   startTeamCount = 4;
-
+  createRoundNr: number;
   rounds: number[][];
 
   constructor(

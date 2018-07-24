@@ -36,8 +36,10 @@ export class MatchplanComponent implements OnInit {
   }
 
   async handleGetMatches() {
-    this.matches = await this.matchService.getMatchesInSeason(this.season.id, this.selectedMatchDay);
-    this.matchDays = Array.from(new Array(this.season.match_day_count), (val, index) => index + 1);
+    if(this.season) {
+      this.matches = await this.matchService.getMatchesInSeason(this.season.id, this.selectedMatchDay);
+      this.matchDays = Array.from(new Array(this.season.match_day_count), (val, index) => index + 1);
+    }
   }
 
 }

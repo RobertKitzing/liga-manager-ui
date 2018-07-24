@@ -10,6 +10,7 @@ import { EditmatchResultComponent } from './editmatch/editmatch.result.component
 import { EditmatchTimeComponent } from './editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     FormsModule,
     MaterialModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    TranslateModule
   ],
   entryComponents: [
     ContactComponent,
@@ -36,6 +38,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
   ],
   exports: [
     MatchComponent,
+    TranslateModule,
     FormsModule,
     SeasonchooserComponent,
     MaterialModule,

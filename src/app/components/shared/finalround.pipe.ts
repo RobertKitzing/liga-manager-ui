@@ -8,15 +8,15 @@ export class FinalroundPipe implements PipeTransform {
   transform(matchDay: number, roundLength: number): any {
     switch (roundLength) {
       case 8:
-        return 'Achtelfinale';
+        return 'ACHTELFINALE';
       case 4:
-        return 'Viertelfinale';
+        return 'VIERTELFINALE';
       case 2:
-        return 'Halbfinale';
+        return 'HALBFINALE';
       case 1:
-        return 'Finale';
+        return 'FINALE';
       default:
-        return 'Runde ' + matchDay.toString();
+        return matchDay.toString();
     }
   }
 

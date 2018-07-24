@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <mat-select #seasonSelect [(value)]="manageTournament">
+        <mat-select #seasonSelect [(value)]="manageTournament" placeholder="{{ 'SELECT_TOURNAMENT_PLACEHOLDER' | translate }}">
           <mat-option *ngFor="let tournament of tournaments" [value]="tournament">
             {{ tournament.name }}
           </mat-option>
@@ -11,28 +11,27 @@
     </div>
     <div class="col">
       <mat-form-field>
-        <input #newTournament matInput placeholder="{{ 'NEW_TOURNAMENT_PLACEHOLDER' }}" (keyup.enter)="createNewTournament(newTournament.value)"
+        <input #newTournament matInput placeholder="{{ 'NEW_TOURNAMENT_PLACEHOLDER' | translate }}" (keyup.enter)="createNewTournament(newTournament.value)"
         />
       </mat-form-field>
     </div>
     <div class="col">
-      <button mat-raised-button color="primary" (click)="createNewTournament(newTournament.value)">{{ 'CREATE_TOURNAMENT_BUTTON'}}</button>
+      <button mat-raised-button color="primary" (click)="createNewTournament(newTournament.value)" translate>CREATE_TOURNAMENT_BUTTON</button>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <input matInput placeholder="{{ 'START_TEAM_COUNT_PLACEHOLDER' }}" type="number" min="4" [(ngModel)]="startTeamCount" (change)="genRounds()"/>
+        <input matInput placeholder="{{ 'START_TEAM_COUNT_PLACEHOLDER' | translate }}" type="number" min="4" [(ngModel)]="startTeamCount" (change)="genRounds()"/>
       </mat-form-field>
     </div>
   </div>
   <div class="row text-center" style="border: solid" *ngFor="let round of rounds">
     <div class="col" *ngFor="let game of round">
-      Game {{ game }}
+      {{ 'Game' | translate }} {{ game }}
     </div>
   </div>
-  <button mat-button class="pull-right" (click)="addMatch(2)">
-      {{ 'CREATE_ROUND' }}
-      <i class="fa fa-plus"></i>
+  <button mat-button class="pull-right" (click)="addMatch(createRoundNr)" translate>
+      CREATE_ROUND
 </button>
 </div>

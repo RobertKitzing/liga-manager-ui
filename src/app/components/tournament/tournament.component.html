@@ -2,7 +2,7 @@
   <mat-toolbar>
     <mat-toolbar-row style="justify-content: center">
       <mat-form-field>
-        <mat-select #tournamentSelect [compareWith]="tournamentCompare" (selectionChange)="tournamentChanged()" [(value)]="tournament">
+        <mat-select #tournamentSelect [compareWith]="tournamentCompare" placeholder="{{ 'SELECT_TOURNAMENT_PLACEHOLDER | translate '}}" (selectionChange)="tournamentChanged()" [(value)]="tournament">
           <mat-option *ngFor="let tournament of tournaments" [value]="tournament">
             {{ tournament.name }}
           </mat-option>
@@ -13,7 +13,7 @@
   <ng-container *ngFor="let round of matches">
     <div class="card">
       <div class="card-header justify-content-center">
-        <h3>{{ round[0].match_day | finalround:round.length }}</h3>
+        <h3>{{ round[0].match_day | finalround:round.length | translate }}</h3>
       </div>
       <div class="card-body justify-content-center">
         <div class="row">

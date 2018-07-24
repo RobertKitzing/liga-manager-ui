@@ -3,7 +3,7 @@
     <mat-toolbar-row style="justify-content: center">
       <app-seasonchooser></app-seasonchooser>
       <mat-form-field style=" width: 5ch;margin-left: 30px;">
-        <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()">
+        <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" placeholder="{{ 'SELECT_MATCHDAY_PLACEHOLDER' | translate }}">
           <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
             {{ matchDay }}
           </mat-option>

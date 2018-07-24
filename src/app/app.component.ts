@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SeasonService } from './services/season.service';
-import { Season, SeasonState } from '../api';
-import { MatSelectChange, MatSelect } from '@angular/material/select';
-import { TeamService } from './services/team.service';
-import { PitchService } from './services/pitch.service';
 import { AuthenticationService } from './services/authentication.service';
 import { LoginComponent } from './components/login/login.component';
 import { MatDialog } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { I18Service } from './services/i18.service';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +15,14 @@ export class AppComponent implements OnInit {
 
   constructor(
     public seasonService: SeasonService,
-    private teamService: TeamService,
-    private pitchService: PitchService,
     public authService: AuthenticationService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private i18Service: I18Service) {
+      this.i18Service.changeLang();
   }
 
-  async ngOnInit() {
-    await this.authService.loadUser();
+  ngOnInit() {
+    this.authService.load();
   }
 
   openLoginDialog() {

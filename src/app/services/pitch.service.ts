@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client, Pitch } from '../../api';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,14 @@ export class PitchService {
 
   pitches: Pitch[];
 
+  pitchAdded: Subject<void> = new Subject<void>();
+
   constructor(private apiClient: Client) {
-    this.loadPitches();
+    this.pitchAdded.subscribe(
+      () => {
+        this.load();
+      }
+    );
   }
 
   getPitchById(id: string): Pitch {
@@ -17,12 +24,15 @@ export class PitchService {
     return pitch;
   }
 
+  public async load() {
+    this.pitches = await this.loadPitches();
+  }
+
   async loadPitches(): Promise<Pitch[]> {
     return new Promise<Pitch[]>(
       (resolve) => {
         this.apiClient.getAllPitches().subscribe(
           (pitches) => {
-            this.pitches = pitches;
             resolve(pitches);
           },
           (error) => {

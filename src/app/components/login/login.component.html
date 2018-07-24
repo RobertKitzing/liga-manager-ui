@@ -2,24 +2,24 @@
     <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
       <div class="row">
         <div class="col">
-          <div class="login-error" [hidden]="!error || isLoading">
-            Username or password incorrect.
+          <div class="login-error" [hidden]="!error || isLoading" translate>
+            Username or password incorrect
           </div>
           <mat-form-field>
-            <input type="text" matInput formControlName="username" [placeholder]="'Username'" />
+            <input type="text" matInput formControlName="username" placeholder="{{ 'Username' | translate }}" />
             <mat-error *ngIf="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
-              <span>Username is required</span>
+              <span translate>Username is required</span>
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input type="password" matInput formControlName="password" [placeholder]="'Password'" required/>
+            <input type="password" matInput formControlName="password" placeholder="{{ 'Password' | translate}}" required/>
             <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
-              <span>Password is required</span>
+              <span translate>Password is required</span>
             </mat-error>
           </mat-form-field>
           <br/>
           <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
-            <span>Login</span>
+            <span translate>Login</span>
           </button>
         </div>
       </div>

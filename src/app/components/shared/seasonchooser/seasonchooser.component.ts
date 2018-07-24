@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Season, SeasonState } from '../../../../api';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Season } from '../../../../api';
 import { SeasonService } from '../../../services/season.service';
 import { MatSelectChange } from '@angular/material';
 
@@ -10,13 +10,12 @@ import { MatSelectChange } from '@angular/material';
 })
 export class SeasonchooserComponent implements OnInit {
 
-  seasons: Season[];
   season: Season;
+  @Output() seasonChanged: EventEmitter<Season> = new EventEmitter<Season>();
 
   constructor(public seasonService: SeasonService) { }
 
-  async ngOnInit() {
-    this.seasons = await this.seasonService.loadSeasons(SeasonState.Progress);
+  ngOnInit() {
     this.seasonService.currentSeason.subscribe(
       (season) => {
         this.season = season;
@@ -25,7 +24,9 @@ export class SeasonchooserComponent implements OnInit {
   }
 
   currentSeasonChanged(event: MatSelectChange) {
+    console.log(event);
     this.seasonService.currentSeason.next(event.value);
+    this.seasonChanged.emit(event.value);
   }
 
 }

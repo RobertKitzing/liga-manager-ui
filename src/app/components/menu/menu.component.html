@@ -1,15 +1,15 @@
 <li class="nav-item">
-  <a class="nav-link" routerLink="table" routerLinkActive="active">Table</a>
+  <a class="nav-link" routerLink="table" routerLinkActive="active" translate>Table</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" routerLink="matchplan" routerLinkActive="active">Matchplan</a>
+  <a class="nav-link" routerLink="matchplan" routerLinkActive="active" translate>Matchplan</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" routerLink="tournament" routerLinkActive="active">Tournament</a>
+  <a class="nav-link" routerLink="tournament" routerLinkActive="active" translate>Tournament</a>
 </li>
 <li class="nav-item" *ngIf="authService.isTeamAdmin">
-  <a class="nav-link" routerLink="teamadmin" routerLinkActive="active">TeamAdmin</a>
+  <a class="nav-link" routerLink="teamadmin" routerLinkActive="active" translate>TeamAdmin</a>
 </li>
 <li class="nav-item" *ngIf="authService.isAdmin">
-  <a class="nav-link" routerLink="admin" routerLinkActive="active">Admin</a>
+  <a class="nav-link" routerLink="admin" routerLinkActive="active" translate>Admin</a>
 </li>

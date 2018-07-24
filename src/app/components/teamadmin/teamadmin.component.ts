@@ -29,9 +29,9 @@ export class TeamadminComponent implements OnInit {
       body.last_name = lastname;
       body.phone = phone;
       this.apiClient.updateTeamContact(teamId, body).subscribe(
-        async () => {
+        () => {
           alert('saved');
-          await this.teamService.loadTeams();
+          this.teamService.updateTeam(teamId);
         }
       );
     }

@@ -6,16 +6,14 @@ import { Team, Client, CreateTeamBody, Contact_person } from '../../api';
 })
 export class TeamService {
 
-  isLoadingTeams: boolean;
   public teams: Team[];
 
   constructor(private apiClient: Client) {
-    this.loadTeams();
   }
 
   getTeamContactByID(id: string) {
     const team: Team = this.teams.find(t => t.id === id);
-    return team.contact || <Contact_person> {
+    return team.contact || <Contact_person>{
       first_name: '',
       last_name: '',
       email: '',
@@ -39,7 +37,7 @@ export class TeamService {
         createTeamParams.name = teamName;
         this.apiClient.createTeam(createTeamParams).subscribe(
           async () => {
-            await this.loadTeams();
+            this.teams = await this.loadTeams();
             resolve(true);
           },
           (error) => {
@@ -49,28 +47,38 @@ export class TeamService {
       }
     );
   }
-  async loadTeams(): Promise<Team[]> {
-    this.isLoadingTeams = true;
-    if (!this.teams) {
-      return new Promise<Team[]>(
-        (resolve) => {
-          this.apiClient.getAllTeams().subscribe(
-            (teams) => {
-              this.teams = teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-              resolve(teams);
-            },
-            (error) => {
-              resolve(null);
-            },
-            () => {
-              this.isLoadingTeams = false;
-            }
-          );
+
+  updateTeam(teamId?: string) {
+    if (teamId) {
+      this.apiClient.getTeam(teamId).subscribe(
+        (team) => {
+          let curteam = this.teams.find(t => t.id === teamId);
+          curteam = team;
         }
       );
     } else {
-      this.isLoadingTeams = false;
-      return this.teams;
+      this.load();
     }
+  }
+
+  public async load() {
+    this.teams = await this.loadTeams();
+  }
+
+  public async loadTeams(): Promise<Team[]> {
+    return new Promise<Team[]>(
+      (resolve) => {
+        this.apiClient.getAllTeams().subscribe(
+          (teams) => {
+            resolve(teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
+          },
+          (error) => {
+            resolve(null);
+          },
+          () => {
+          }
+        );
+      }
+    );
   }
 }
