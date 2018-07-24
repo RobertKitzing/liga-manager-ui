@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TeamService } from './services/team.service';
 import { SeasonService } from './services/season.service';
 import { PitchService } from './services/pitch.service';
+import { I18Service } from './services/i18.service';
 
 export function teamServiceFactory(provider: TeamService) {
   return () => provider.load();
@@ -48,6 +49,7 @@ export function pitchServiceFactory(provider: PitchService) {
     ReactiveFormsModule
   ],
   providers: [
+    I18Service,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

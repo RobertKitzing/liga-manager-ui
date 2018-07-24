@@ -8,15 +8,21 @@ import * as en from './i18n/en';
 })
 export class I18Service {
 
+  public available: string[] = ['de', 'en'];
+
+  public get currentLang(): string {
+    return this.translateService.currentLang;
+  }
+
   constructor(private translateService: TranslateService) {
     // this.translateService.addLangs(['de', 'en']);
     this.translateService.setTranslation('de', de);
     this.translateService.setTranslation('en', en);
-    this.translateService.use('en');
+    this.changeLang('de');
   }
 
-  changeLang() {
-  
+  changeLang(lang: string) {
+    this.translateService.use(lang);
     // if (this.translateService.currentLang === 'de' ) {
     //   this.translateService.use('en');
     // } else {

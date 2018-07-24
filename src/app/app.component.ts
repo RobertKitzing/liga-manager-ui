@@ -16,9 +16,7 @@ export class AppComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     public authService: AuthenticationService,
-    private dialog: MatDialog,
-    private i18Service: I18Service) {
-      this.i18Service.changeLang();
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {
