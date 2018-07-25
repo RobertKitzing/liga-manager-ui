@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatchComponent } from './match/match.component';
 import { MaterialModule } from '../../material.module';
@@ -9,8 +9,25 @@ import { FinalroundPipe } from './finalround.pipe';
 import { EditmatchResultComponent } from './editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from './editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { TranslateModule } from '@ngx-translate/core';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+@Injectable()
+export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
+  constructor(private translationService: TranslateService) {
+    super();
+    this.translationService.get('BUTTON.SAVE').subscribe(
+      (save) => {
+        this.setBtnLabel = save;
+      }
+    );
+    this.translationService.get('BUTTON.CANCEL').subscribe(
+      (cancel) => {
+        this.cancelBtnLabel = cancel;
+      }
+    );
+  }
+}
 
 @NgModule({
   imports: [
@@ -47,6 +64,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FinalroundPipe,
     OwlDateTimeModule,
     OwlNativeDateTimeModule
+  ],
+  providers: [
+    {provide: OwlDateTimeIntl, useClass: CustomOwlDateTimeIntl},
   ]
 })
 export class SharedModule { }

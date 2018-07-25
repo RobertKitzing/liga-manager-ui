@@ -15,7 +15,7 @@
       </mat-form-field>
     </div>
     <div class="col">
-      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'BUTTON.CREATE_SEASON' | translate }}</button>
+      <button mat-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'BUTTON.CREATE_SEASON' | translate }}</button>
     </div>
   </div>
   <mat-tab-group>
@@ -43,7 +43,7 @@
     </mat-tab>
     <mat-tab label="{{ 'TAB.MATCHES' | translate }}">
       <div>
-        <button mat-raised-button color="primary" (click)="createMatches()">{{ 'CALCULATE_MATCHDAYS' | translate  }}</button>
+        <button mat-button color="primary" (click)="createMatches()">{{ 'CALCULATE_MATCHDAYS' | translate  }}</button>
       </div>
       <div class="container-fluid">
         <div *ngFor="let match of matchesInSeason" class="row">
@@ -62,12 +62,12 @@
         </div>
         <div class="row">
           <div>
-            <button mat-raised-button *ngFor="let matchDay of matchDayCounter" (click)="getMatchesInSeason(matchDay)">{{matchDay}}</button>
+            <button mat-button *ngFor="let matchDay of matchDayCounter" (click)="getMatchesInSeason(matchDay)">{{matchDay}}</button>
           </div>
         </div>
         <div class="row">
           <div>
-            <button mat-raised-button (click)="startSeason()">{{ 'BUTTON.START_SEASON' | translate}}</button>
+            <button mat-button (click)="startSeason()">{{ 'BUTTON.START_SEASON' | translate}}</button>
           </div>
         </div>
       </div>

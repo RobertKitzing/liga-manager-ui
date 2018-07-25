@@ -1,5 +1,5 @@
 <mat-form-field>
-  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)" [(value)]="season">
+  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="currentSeasonChanged($event)" [(value)]="season" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
     <mat-option *ngFor="let season of seasonService.seasonInProgress" [value]="season">
       {{ season.name }}
     </mat-option>
