@@ -6,6 +6,7 @@ import { Pitch, LocateMatchBody, Client, CreatePitchBody } from 'src/api';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { PitchService } from '../../../services/pitch.service';
+import { } from '@types/googlemaps';
 
 @Component({
   selector: 'app-editmatch.pitch',

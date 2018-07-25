@@ -39,6 +39,10 @@ export class ManagetournamentComponent implements OnInit {
     );
   }
 
+  onTournamentSelected() {
+    this.createRoundNr = this.manageTournament.rounds + 1;
+  }
+
   genRounds() {
     const startGameCount = Math.ceil(this.startTeamCount / 2);
     this.rounds = new Array<number[]>();
