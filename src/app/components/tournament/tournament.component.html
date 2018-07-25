@@ -2,7 +2,8 @@
   <mat-toolbar>
     <mat-toolbar-row style="justify-content: center">
       <mat-form-field>
-        <mat-select #tournamentSelect [compareWith]="tournamentCompare" placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}" (selectionChange)="tournamentChanged()" [(value)]="tournament">
+        <mat-select #tournamentSelect [compareWith]="tournamentCompare" placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
+          (selectionChange)="tournamentChanged()" [(value)]="tournament">
           <mat-option *ngFor="let tournament of tournaments" [value]="tournament">
             {{ tournament.name }}
           </mat-option>
@@ -11,19 +12,28 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="card" *ngIf="winnerLastRound">
-      <div class="card-header justify-content-center" translate>
-        WINNER_LAST_ROUND
+    <div class="card-header justify-content-center" translate>
+      WINNER_LAST_ROUND
+    </div>
+    <div class="card-body justify-content-center">
+      <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">
+        {{ winner.name }}
       </div>
-      <div class="card-body justify-content-center">
-          <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">
-            {{ winner.name }}
-          </div>
-      </div>
+    </div>
   </div>
   <ng-container *ngFor="let round of matches">
     <div class="card">
       <div class="card-header justify-content-center">
-        <h3>{{ round[0].match_day | finalround:round.length | translate }}</h3>
+        <ng-container [ngSwitch]="round.length">
+          <p *ngSwitchCase="8">{{ 'ACHTELFINALE' | translate }}</p>
+          <p *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }}</p>
+          <p *ngSwitchCase="2">{{ 'HALBFINALE' | translate }}</p>
+          <p *ngSwitchCase="1">{{ 'FINALE' | translate }}</p>
+          <p *ngSwitchDefault>{{ round[0].match_day }}. {{ 'ROUND' | translate }}</p>
+        </ng-container>
+        <!-- <h3>
+          {{ round[0].match_day | finalround:round.length | translate }}
+        </h3> -->
       </div>
       <div class="card-body justify-content-center">
         <div class="row">

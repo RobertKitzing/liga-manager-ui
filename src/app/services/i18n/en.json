@@ -1,4 +1,5 @@
 {
+	"ACHTELFINALE": "",
 	"ALL_TEAMS": "",
 	"BUTTON": {
 		"ADD": "",
@@ -31,9 +32,11 @@
 		"PASSWORD_TOKEN_INVALID": "",
 		"USERNAME_PASSWORD_WRONG": ""
 	},
+	"FINALE": "",
 	"FIRST_NAME": "",
 	"FIRST_NAME_REQUIRED": "",
 	"FORGOT_PASSWORD": "",
+	"HALBFINALE": "",
 	"LAST_NAME": "",
 	"LAST_NAME_REQUIRED": "",
 	"MATCH": "",
@@ -65,6 +68,7 @@
 		"SELECT_TOURNAMENT": "",
 		"START_TEAM_COUNT": ""
 	},
+	"ROUND": "",
 	"TAB": {
 		"ADD_TEAM": "",
 		"ADD_USER": "",
@@ -88,5 +92,6 @@
 	"USERNAME": "",
 	"USERNAME_REQUIRED": "",
 	"USER_ROLE": "",
+	"VIERTELFINALE": "",
 	"WINNER_LAST_ROUND": "Winner last round"
 }
