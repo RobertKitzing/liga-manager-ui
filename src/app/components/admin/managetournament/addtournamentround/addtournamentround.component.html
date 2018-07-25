@@ -11,21 +11,21 @@
     </div>
     <div class="col" style="max-width: 5ch;">
       <button mat-icon-button (click)="removeTeam(tupel)">
-        <i class="fa fa-minus"></i>
+        -
       </button>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <mat-select #home placeholder="{{ 'HOME_SCORE_PLACEHOLDER' }}" required [(ngModel)]="homeTeamId">
+        <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' }}" required [(ngModel)]="homeTeamId">
           <mat-option *ngFor="let team of teamList" [value]="team.id">
             {{team.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select #guest placeholder="{{ 'GUEST_SCORE_PLACEHOLDER' }}" required [(ngModel)]="guestTeamId">
+        <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' }}" required [(ngModel)]="guestTeamId">
           <mat-option *ngFor="let team of teamList" [value]="team.id">
             {{team.name}}
           </mat-option>
@@ -33,21 +33,18 @@
       </mat-form-field>
     </div>
     <button mat-icon-button (click)="addTeam()">
-      <i class="fa fa-plus"></i>
+      +
     </button>
   </div>
   <div class="row">
     <div class="col">
-      <!-- <mat-form-field style="width:100%">
-        <input matInput [matDatepicker]="kickoffDatePicker" placeholder="{{ 'KICKOFF_DATE_PLACEHOLDER'  }}" [(ngModel)]="newRoundPlanDate"
-          (dateChange)="onDateChanged($event)" />
-        <mat-datepicker-toggle matSuffix [for]="kickoffDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #kickoffDatePicker [touchUi]="true"></mat-datepicker>
-      </mat-form-field> -->
+        <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate}}</button>
+        <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="planDateSet($event)">
+        <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
     </div>
     <div class="col">
       <button mat-button (click)="createMatch()">
-        {{ 'START_ROUND'  }}
+        {{ 'BUTTON.START_ROUND' | translate  }}
       </button>
     </div>
   </div>

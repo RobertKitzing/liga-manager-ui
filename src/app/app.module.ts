@@ -33,6 +33,11 @@ export function pitchServiceFactory(provider: PitchService) {
   return () => provider.load();
 }
 
+export function i18ServiceFactory(provider: I18Service) {
+  return () => provider.init();
+}
+
+
 @NgModule({
   entryComponents: [
     LoginComponent,
@@ -56,7 +61,11 @@ export function pitchServiceFactory(provider: PitchService) {
     ReactiveFormsModule
   ],
   providers: [
-    I18Service,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: i18ServiceFactory,
+      deps: [I18Service], multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

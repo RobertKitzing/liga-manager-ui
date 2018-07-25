@@ -19,7 +19,7 @@
       <span class="spacer"></span>
       <div class="navbar-text text-right">
         <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
-          {{ 'LOGIN' }}
+          {{ 'BUTTON.LOGIN' | translate }}
         </button>
         <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
           {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
@@ -44,7 +44,7 @@
       <b> {{ authService.user.email }} </b>
     </mat-list-item>
     <mat-divider></mat-divider>
-    <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'CHANGE_PASSWORD' | translate }}</button>
+    <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
   </mat-list>
-  <button mat-menu-item (click)="authService.logout()">Logout</button>
+  <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
 </mat-menu>

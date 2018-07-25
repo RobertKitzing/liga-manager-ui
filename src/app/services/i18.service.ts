@@ -15,7 +15,9 @@ export class I18Service {
   }
 
   constructor(private translateService: TranslateService) {
-    // this.translateService.addLangs(['de', 'en']);
+  }
+
+  init() {
     this.translateService.setTranslation('de', de);
     this.translateService.setTranslation('en', en);
     this.changeLang('de');
@@ -23,10 +25,5 @@ export class I18Service {
 
   changeLang(lang: string) {
     this.translateService.use(lang);
-    // if (this.translateService.currentLang === 'de' ) {
-    //   this.translateService.use('en');
-    // } else {
-    //   this.translateService.use('de');
-    // }
   }
 }

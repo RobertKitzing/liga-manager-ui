@@ -1,9 +1,9 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 30px;">
   <mat-toolbar color="secondary">
     <mat-toolbar-row style="justify-content: center">
       <app-seasonchooser></app-seasonchooser>
-      <mat-form-field style=" width: 5ch;margin-left: 30px;">
-        <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" placeholder="{{ 'SELECT_MATCHDAY_PLACEHOLDER' | translate }}">
+      <mat-form-field style="text-align: center;margin-left: 30px;">
+        <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
           <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
             {{ matchDay }}
           </mat-option>

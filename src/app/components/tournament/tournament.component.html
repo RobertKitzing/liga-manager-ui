@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 30px;">
   <mat-toolbar>
     <mat-toolbar-row style="justify-content: center">
       <mat-form-field>
-        <mat-select #tournamentSelect [compareWith]="tournamentCompare" placeholder="{{ 'SELECT_TOURNAMENT_PLACEHOLDER | translate '}}" (selectionChange)="tournamentChanged()" [(value)]="tournament">
+        <mat-select #tournamentSelect [compareWith]="tournamentCompare" placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}" (selectionChange)="tournamentChanged()" [(value)]="tournament">
           <mat-option *ngFor="let tournament of tournaments" [value]="tournament">
             {{ tournament.name }}
           </mat-option>
@@ -12,7 +12,7 @@
   </mat-toolbar>
   <div class="card" *ngIf="winnerLastRound">
       <div class="card-header justify-content-center" translate>
-        Winner last round
+        WINNER_LAST_ROUND
       </div>
       <div class="card-body justify-content-center">
           <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">

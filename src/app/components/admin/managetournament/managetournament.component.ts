@@ -53,21 +53,21 @@ export class ManagetournamentComponent implements OnInit {
       }
     }
   }
-  
-  editRound(round: number) {
-    if (round <= this.manageTournament.rounds) {
+
+  editRound() {
+    if (this.createRoundNr <= this.manageTournament.rounds) {
       if (!confirm('Warning, this will override existing Round!')) {
         return;
       }
     }
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
-        data: { round: round, tournamentId: this.manageTournament.id}
+      data: { round: this.createRoundNr, tournamentId: this.manageTournament.id }
+    });
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          // this.loadMatches(this.tournament.id);
+        }
       });
-      dialogRef.afterClosed().subscribe(
-        (result) => {
-          if (result) {
-            // this.loadMatches(this.tournament.id);
-          }
-      });
-}
+  }
 }

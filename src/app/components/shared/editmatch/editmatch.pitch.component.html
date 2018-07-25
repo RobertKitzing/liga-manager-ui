@@ -42,7 +42,7 @@
     <div class="row">
       <div class="col" style="text-align:center;">
         <button mat-button (click)="showCreateNewPitch = !showCreateNewPitch">
-          {{ 'CREATE_PITCH' | translate}}
+          {{ 'BUTTON.CREATE_PITCH' | translate}}
           <i class="material-icons">
             add
           </i>
@@ -61,7 +61,7 @@
               <i class="fa fa-info"></i>
             </span>
             <div>
-              <button mat-button matStepperNext (click)="onShowCreateNewPitch()" [disabled]="!newPitchLabelFormGroup.valid">{{'NEXT' | translate}}</button>
+              <button mat-button matStepperNext (click)="onShowCreateNewPitch()" [disabled]="!newPitchLabelFormGroup.valid">{{'BUTTON.NEXT' | translate}}</button>
             </div>
           </form>
         </mat-step>
@@ -73,8 +73,8 @@
                 required/>
             </mat-form-field>
             <div>
-              <button mat-button matStepperPrevious>{{'BACK' | translate}}</button>
-              <button mat-button matStepperNext (click)="createNewPitch()" [disabled]="!newPitchPlaceFormGroup.valid">{{'CREATE_PITCH' | translate}}</button>
+              <button mat-button matStepperPrevious>{{'BUTTON.BACK' | translate}}</button>
+              <button mat-button matStepperNext (click)="createNewPitch()" [disabled]="!newPitchPlaceFormGroup.valid">{{'BUTTON.CREATE_PITCH' | translate}}</button>
             </div>
           </form>
         </mat-step>
@@ -82,7 +82,7 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close translate>CANCEL</button>
-    <button mat-button (click)="onSaveClicked()" translate>SAVE</button>
+    <button mat-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+    <button mat-button (click)="onSaveClicked()">{{ 'BUTTON.SAVE' | translate}}</button>
   </mat-dialog-actions>
 </div>

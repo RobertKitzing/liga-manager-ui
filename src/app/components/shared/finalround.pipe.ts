@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { _ } from '@biesbjerg/ngx-translate-extract';
 
 @Pipe({
   name: 'finalround'
@@ -8,13 +9,13 @@ export class FinalroundPipe implements PipeTransform {
   transform(matchDay: number, roundLength: number): any {
     switch (roundLength) {
       case 8:
-        return 'ACHTELFINALE';
+        return _('ACHTELFINALE');
       case 4:
-        return 'VIERTELFINALE';
+        return _('VIERTELFINALE');
       case 2:
-        return 'HALBFINALE';
+        return _('HALBFINALE');
       case 1:
-        return 'FINALE';
+        return _('FINALE');
       default:
         return matchDay.toString();
     }

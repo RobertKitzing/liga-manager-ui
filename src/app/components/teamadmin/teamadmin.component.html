@@ -4,7 +4,7 @@
       <mat-tab label="{{ 'CONTACT' }}">
         <div class="card text-center">
           <div class="card-body">
-            <h5 class="card-title" translate>Wird als Kontakt Person neben dem Team angezeigt!</h5>
+            <h5 class="card-title" translate>EDIT_TEAM_CONTACT_INFO_TEXT</h5>
             <div class="card-text">
               <div class="row">
                 <div class="col">
@@ -25,7 +25,7 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field>
-                    <input matInput placeholder="{{ 'MAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="teamService.getTeamContactByID(teamId).email"
+                    <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="teamService.getTeamContactByID(teamId).email"
                     />
                   </mat-form-field>
                 </div>
@@ -39,8 +39,8 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button mat-button (click)="saveContact(teamId, firstname.value, lastname.value, mail.value, phone.value)" translate>
-                    SAVE
+                  <button mat-button (click)="saveContact(teamId, firstname.value, lastname.value, mail.value, phone.value)">
+                    {{ 'BUTTON.SAVE' | translate }}
                   </button>
                 </div>
               </div>

@@ -48,6 +48,7 @@ export class TournamentComponent implements OnInit {
         const mvw = this.matchService.matchConverterArray(matches);
         this.matches = new Array<MatchViewModel[]>();
         for (let round = 0; round < this.tournament.rounds; round++) {
+          console.log(round);
           this.matches[round] = mvw.filter(m => m.match_day === (round + 1));
         }
         this.matches = this.matches.reverse();
@@ -58,13 +59,15 @@ export class TournamentComponent implements OnInit {
 
   getWinner() {
     this.winnerLastRound = new Array<Team>();
-    this.matches[0].forEach(
-      (match) => {
-        if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
-          this.winnerLastRound.push(match.home_score > match.guest_score ? match.home_team : match.guest_team);
-        }
-      });
-    this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+    if (this.matches[0]) {
+      this.matches[0].forEach(
+        (match) => {
+          if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
+            this.winnerLastRound.push(match.home_score > match.guest_score ? match.home_team : match.guest_team);
+          }
+        });
+      this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+    }
   }
 
   newWinner(match: MatchViewModel) {

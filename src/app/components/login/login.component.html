@@ -3,23 +3,23 @@
       <div class="row">
         <div class="col">
           <div class="login-error" [hidden]="!error || isLoading" translate>
-            Username or password incorrect
+            ERRORS.USERNAME_PASSWORD_WRONG
           </div>
           <mat-form-field>
-            <input #username type="text" matInput formControlName="username" placeholder="{{ 'Username' | translate }}" />
+            <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
             <mat-error *ngIf="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
-              <span translate>Username is required</span>
+              <span translate>USERNAME_REQUIRED</span>
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input type="password" matInput formControlName="password" placeholder="{{ 'Password' | translate}}" required/>
+            <input type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}" required/>
             <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
-              <span translate>Password is required</span>
+              <span translate>PASSWORD_REQUIRED</span>
             </mat-error>
           </mat-form-field>
           <br/>
           <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
-            <span translate>LOGIN</span>
+            <span>{{ 'BUTTON.LOGIN' | translate}}</span>
           </button>
         </div>
       </div>

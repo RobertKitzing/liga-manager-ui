@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)" placeholder="{{ 'SELECT_SEASON_PLACEHOLDER' | translate }}">
+        <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
           <mat-option *ngFor="let season of seasons" [value]="season">
             {{ season.name }}
           </mat-option>
@@ -11,27 +11,27 @@
     </div>
     <div class="col">
       <mat-form-field>
-        <input #newSeason matInput placeholder="{{ 'NEW_TEAM_PLACEHOLDER' | translate }}" (keyup.enter)="addNewSeason(newSeason.value)" />
+        <input #newSeason matInput placeholder="{{ 'PLACEHOLDER.NEW_TEAM' | translate }}" (keyup.enter)="addNewSeason(newSeason.value)" />
       </mat-form-field>
     </div>
     <div class="col">
-      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'CREATE_SEASON_BUTTON' | translate }}</button>
+      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'BUTTON.CREATE_SEASON' | translate }}</button>
     </div>
   </div>
   <mat-tab-group>
-    <mat-tab label="{{ 'TEAMS'  | translate  }}">
+    <mat-tab label="{{ 'TAB.TEAMS'  | translate  }}">
       <ng-container *ngIf="manageSeason">
         <div class="row">
           <div class="col" *ngIf="teamsInSeason">
-            <h3 translate>Teams in Season</h3>
+            <h3 translate>TEAMS_IN_SEASON</h3>
             <div *ngFor="let team of teamsInSeason">
               {{team.name}}
               <mat-divider></mat-divider>
             </div>
           </div>
           <div class="col" *ngIf="allTeams">
-            <h3 translate>All Teams</h3>
-            <button mat-button (click)="loadAllTeams()" translate>reload</button>
+            <h3 translate>ALL_TEAMS</h3>
+            <button mat-button (click)="loadAllTeams()">{{ 'BUTTON.RELOAD' | translate}}</button>
             <div *ngFor="let team of allTeams">
               <button mat-icon-button (click)="addTeamToSeason(team.id)">
                 <-</button> {{team.name}}
@@ -41,7 +41,7 @@
         </div>
       </ng-container>
     </mat-tab>
-    <mat-tab label="{{ 'MATCHES' | translate }}">
+    <mat-tab label="{{ 'TAB.MATCHES' | translate }}">
       <div>
         <button mat-raised-button color="primary" (click)="createMatches()">{{ 'CALCULATE_MATCHDAYS' | translate  }}</button>
       </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="row">
           <div>
-            <button mat-raised-button (click)="startSeason()" translate>START_SEASON</button>
+            <button mat-raised-button (click)="startSeason()">{{ 'BUTTON.START_SEASON' | translate}}</button>
           </div>
         </div>
       </div>

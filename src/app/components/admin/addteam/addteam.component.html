@@ -10,13 +10,13 @@
       <div class="row">
         <div class="col">
           <mat-form-field>
-            <input #newTeam matInput placeholder="{{ 'NEW_TEAM_PLACEHOLDER' | translate }}" (keyup.enter)="addNewTeam(newTeam.value)">
+            <input #newTeam matInput placeholder="{{ 'PLACEHOLDER.NEW_TEAM' | translate }}" (keyup.enter)="addNewTeam(newTeam.value)">
           </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <button mat-button color="primary" (click)="teamService.addNewTeam(newTeam.value)">{{ 'CREATE_TEAM_BUTTON' | translate }}</button>
+          <button mat-button color="primary" (click)="teamService.addNewTeam(newTeam.value)">{{ 'BUTTON.CREATE_TEAM' | translate }}</button>
         </div>
       </div>
     </div>

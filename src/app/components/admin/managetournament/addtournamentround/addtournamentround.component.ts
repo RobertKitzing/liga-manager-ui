@@ -2,6 +2,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Team_pairs, Team, Client, SetRoundBody } from '../../../../../api';
 import { TeamService } from '../../../../services/team.service';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 
 
 export interface AddMatchData {
@@ -27,10 +28,14 @@ export class AddtournamentroundComponent implements OnInit {
     public dialogRef: MatDialogRef<AddtournamentroundComponent>,
     public teamService: TeamService,
     private apiClient: Client,
-    @Inject(MAT_DIALOG_DATA) public data: AddMatchData) { }
+    dateTimeAdapter: DateTimeAdapter<any>,
+    @Inject(MAT_DIALOG_DATA) public data: AddMatchData) {
+      dateTimeAdapter.setLocale('de-DE');
+    }
 
   async ngOnInit() {
     this.teamList = await this.teamService.loadTeams();
+    console.log(this.data.round);
   }
 
   addTeam() {
@@ -50,7 +55,7 @@ export class AddtournamentroundComponent implements OnInit {
 
   createMatch() {
     const body = new SetRoundBody();
-    body.planned_for = new Date();
+    body.planned_for = this.newRoundPlanDate;
     body.team_pairs = this.teams;
     this.apiClient.setRound(this.data.tournamentId, this.data.round, body).subscribe(
       () => {
@@ -60,7 +65,7 @@ export class AddtournamentroundComponent implements OnInit {
     );
   }
 
-  onDateChanged(event: any) {
-    this.newRoundPlanDate.setDate(this.newRoundPlanDate.getDate() + 1);
+  planDateSet(event: any) {
+    this.newRoundPlanDate = event.value;
   }
 }

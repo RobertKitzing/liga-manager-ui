@@ -4,19 +4,19 @@
     <div class="container">
       <div class="row" style="justify-content: center">
         <div class="col">
-          <button mat-button [owlDateTimeTrigger]="dt5">TIME</button>
+          <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate }}</button>
         </div>
       </div>
       <div class="row" style="justify-content: center">
         <div class="col">
-          <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="kickoffSet($event)" disabled>
+          <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="kickoffSet($event)">
           <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
         </div>
       </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>{{ 'CANCEL' }}</button>
-    <button mat-button (click)="onSaveClicked()">{{ 'SAVE' }}</button>
+    <button mat-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+    <button mat-button (click)="onSaveClicked()">{{ 'BUTTON.SAVE' | translate }}</button>
   </mat-dialog-actions>
 </div>
