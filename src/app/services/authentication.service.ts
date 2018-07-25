@@ -23,7 +23,7 @@ export class AuthenticationService {
 
   user: User;
 
-  private setAccessToken(value: Credentials) {
+  public setAccessToken(value: Credentials) {
     localStorage.setItem('ACCESS_TOKEN', JSON.stringify(value));
   }
 

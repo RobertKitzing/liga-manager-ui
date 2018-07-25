@@ -11,7 +11,10 @@
     "nswag": "nswag run liga-manager-api.nswag",
     "extract": "ngx-translate-extract --input ./src/app/components --output ./src/assets/i18n/de.json ./src/assets/i18n/en.json --clean --sort --format namespaced-json",
     "extract:menu": "ngx-translate-extract --input ./src/app/components/menu --output ./src/app/services/i18n/menu/de.json ./src/app/services/i18n/menu/en.json --clean --sort --format namespaced-json",
-    "extract:table": "ngx-translate-extract --input ./src/app/components/table --output ./src/app/services/i18n/table/de.json ./src/app/services/i18n/table/en.json --clean --sort --format namespaced-json"
+    "extract:table": "ngx-translate-extract --input ./src/app/components/table --output ./src/app/services/i18n/table/de.json ./src/app/services/i18n/table/en.json --clean --sort --format namespaced-json",
+    "extract:tournament": "ngx-translate-extract --input ./src/app/components/tournament --output ./src/app/services/i18n/tournament/de.json ./src/app/services/i18n/tournament/en.json --clean --sort --format namespaced-json",
+    "extract:teamadmin": "ngx-translate-extract --input ./src/app/components/teamadmin --output ./src/app/services/i18n/teamadmin/de.json ./src/app/services/i18n/teamadmin/en.json --clean --sort --format namespaced-json",
+    "extract:shared": "ngx-translate-extract --input ./src/app/components/shared --output ./src/app/services/i18n/shared/de.json ./src/app/services/i18n/shared/en.json --clean --sort --format namespaced-json"
   },
   "private": true,
   "dependencies": {
