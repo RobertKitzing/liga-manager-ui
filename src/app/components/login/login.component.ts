@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
     if (email) {
       const body = new SendPasswordResetMailBody();
       body.email = email;
-      body.target_path = '';
-      this.apiClient.sendPasswordResetMail().subscribe(
+      body.target_path = 'newpassword';
+      this.apiClient.sendPasswordResetMail(body).subscribe(
         () => {
           alert('Email ist unterwegs');
         }
