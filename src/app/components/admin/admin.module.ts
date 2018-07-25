@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AddteamComponent } from './addteam/addteam.component';
 import { ManageseasonComponent } from './manageseason/manageseason.component';
 import { ManageusersComponent } from './manageusers/manageusers.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ManagetournamentComponent } from './managetournament/managetournament.component';
 import { AddtournamentroundComponent } from './managetournament/addtournamentround/addtournamentround.component';
 
@@ -14,7 +13,6 @@ import { AddtournamentroundComponent } from './managetournament/addtournamentrou
   imports: [
     CommonModule,
     SharedModule,
-    ReactiveFormsModule,
     AdminRoutingModule
   ],
   declarations: [

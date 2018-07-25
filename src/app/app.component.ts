@@ -4,6 +4,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { LoginComponent } from './components/login/login.component';
 import { MatDialog } from '@angular/material';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.loadGoogleMapsScript();
     if (this.authService.accessToken) {
       await this.authService.loadUser();
     }
@@ -30,5 +32,16 @@ export class AppComponent implements OnInit {
 
   openChangePasswordDialog() {
     this.dialog.open(ChangepasswordComponent);
+  }
+
+  loadGoogleMapsScript() {
+    const googleMapsJS = document.getElementById('googelmapsscript');
+    if (!googleMapsJS) {
+      const tag = document.createElement('script');
+      tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.googleMapsApiKey + '&libraries=places';
+      tag.type = 'text/javascript';
+      tag.id = 'googelmapsscript';
+      document.body.appendChild(tag);
+    }
   }
 }

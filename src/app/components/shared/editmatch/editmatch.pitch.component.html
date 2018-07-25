@@ -1,9 +1,88 @@
 <div *ngIf="match" class="container-fluid">
   <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>
   <mat-dialog-content>
+    <div class="row" style="justify-content: center;">
+      <div class="col" style="text-align: center;">
+        <div *ngIf="!match.pitch">
+          <i class="material-icons">
+            location_off
+          </i>
+          {{ 'NO_PTICH_SET' | translate }}
+        </div>
+        <div *ngIf="match.pitch">
+          <a href="https://www.google.com/maps/?q={{match.pitch.location_latitude}},{{match.pitch.location_longitude}}" target="_blank"
+            style="cursor: pointer;">
+            {{ match.pitch.label }}
+            <i class="material-icons">
+              location_on
+            </i>
+          </a>
+        </div>
+        <div *ngIf="newMatchPitch">
+          <a href="https://www.google.com/maps/?q={{newMatchPitch.location_latitude}},{{newMatchPitch.location_longitude}}" target="_blank" style="cursor: pointer;">
+            {{ 'NEW_PITCH' | translate}}: {{ newMatchPitch.label }}
+            <i class="material-icons">
+              location_on
+            </i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="justify-content: center;">
+      <mat-form-field style="width: 100%;">
+        <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="newMatchPitch" [matAutocomplete]="pitchAutoComplete" [formControl]="stateCtrl"
+        />
+        <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
+          <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
+            <span>{{ pitch.label }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col" style="text-align:center;">
+        <button mat-button (click)="showCreateNewPitch = !showCreateNewPitch">
+          {{ 'CREATE_PITCH' | translate}}
+          <i class="material-icons">
+            add
+          </i>
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="showCreateNewPitch">
+      <mat-horizontal-stepper [linear]="true">
+        <mat-step [stepControl]="newPitchLabelFormGroup">
+          <form [formGroup]="newPitchLabelFormGroup">
+            <ng-template matStepLabel>{{ 'NEW_PITCH_LABEL' | translate }}</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Pitch Label" formControlName="newpitchlabel" [(ngModel)]="newPitch.label" required />
+            </mat-form-field>
+            <span matTooltip="{{ 'UNIQUE_NAME_PITCH_TOOLTIP' | translate }}">
+              <i class="fa fa-info"></i>
+            </span>
+            <div>
+              <button mat-button matStepperNext (click)="onShowCreateNewPitch()" [disabled]="!newPitchLabelFormGroup.valid">{{'NEXT' | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="newPitchPlaceFormGroup">
+          <form [formGroup]="newPitchPlaceFormGroup">
+            <ng-template matStepLabel>{{ 'NEW_PITCH_ADRESS' | translate}}</ng-template>
+            <mat-form-field style="width: 100%;">
+              <input #adressAutoComplete matInput placeholder="{{ 'NEW_PITCH_ADRESS' | translate }}" formControlName="newpitchplace"
+                required/>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>{{'BACK' | translate}}</button>
+              <button mat-button matStepperNext (click)="createNewPitch()" [disabled]="!newPitchPlaceFormGroup.valid">{{'CREATE_PITCH' | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>{{ 'CANCEL' }}</button>
-    <button mat-button (click)="onSaveClicked()">{{ 'SAVE' }}</button>
+    <button mat-button mat-dialog-close translate>CANCEL</button>
+    <button mat-button (click)="onSaveClicked()" translate>SAVE</button>
   </mat-dialog-actions>
 </div>

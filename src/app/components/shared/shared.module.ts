@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatchComponent } from './match/match.component';
 import { MaterialModule } from '../../material.module';
 import { ContactComponent } from './contact/contact.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SeasonchooserComponent } from './seasonchooser/seasonchooser.component';
 import { FinalroundPipe } from './finalround.pipe';
 import { EditmatchResultComponent } from './editmatch/editmatch.result.component';
@@ -16,6 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
@@ -38,6 +39,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   exports: [
     MatchComponent,
+    ReactiveFormsModule,
     TranslateModule,
     FormsModule,
     SeasonchooserComponent,
