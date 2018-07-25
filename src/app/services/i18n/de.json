@@ -30,6 +30,7 @@
 		"ENTER_VALID_EMAIL": "Bitte eine gültige Emailadresse eingeben",
 		"ENTER_VALID_PASSWORD": "Bitte ein gültiges Passwort eingeben",
 		"PASSWORD_TOKEN_INVALID": "Der Link is ungültig!",
+		"PITCH_EXIST": "Spielort existiert bereits",
 		"USERNAME_PASSWORD_WRONG": "Email oder Passwort falsch"
 	},
 	"FINALE": "Finale",
@@ -51,11 +52,13 @@
 	"NEW_PITCH_ADRESS": "Adresse des Spielorts",
 	"NEW_PITCH_LABEL": "Name des Spielortes",
 	"NO_PTICH_SET": "Kein Spielort",
+	"OLD_PITCH": "Alter Spielort",
 	"PASSWORD": "Passwort",
 	"PASSWORD_FORGOT_TEXT": "Passwort vergessen?",
 	"PASSWORD_REQUIRED": "Bitte Passwort eingeben",
 	"PHONE": "Telefon",
 	"PITCH": "Spielort",
+	"PITCH_REQUIRED": "Bitte einen Spielort eingeben",
 	"PLACEHOLDER": {
 		"EDIT_TOURNAMENT_ROUND": "zu bearbeitende Runde",
 		"GUEST_SCORE": "Gast",

@@ -21,8 +21,9 @@ export class EditmatchPitchComponent implements OnInit {
   showCreateNewPitch: boolean;
 
   newPitch: Pitch = new Pitch();
-  newPitchLabelFormGroup: FormGroup;
+  newPitchFormControl: FormControl;
   newPitchPlaceFormGroup: FormGroup;
+  newPitchLabelExist: boolean;
 
   places: google.maps.places.Autocomplete;
   @ViewChild('adressAutoComplete') adressAutoComplete: any;
@@ -35,9 +36,7 @@ export class EditmatchPitchComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<EditmatchPitchComponent>
   ) {
-    this.newPitchLabelFormGroup = this.formBuilder.group({
-      newpitchlabel: ['', Validators.required]
-    });
+    this.newPitchFormControl = new FormControl('', Validators.required);
     this.newPitchPlaceFormGroup = this.formBuilder.group({
       newpitchplace: ['', Validators.required]
     });
@@ -100,6 +99,15 @@ export class EditmatchPitchComponent implements OnInit {
           this.pitchService.pitchAdded.next(null);
         }
       );
+    }
+  }
+  checkNewPitchName() {
+    const pitch = this.pitchService.pitches.find(p => p.label === this.newPitch.label);
+    if (pitch) {
+      this.newPitchFormControl.setErrors({ pitchexist: true });
+    } else {
+      this.newPitchFormControl.setErrors(null);
+      this.newPitchFormControl.updateValueAndValidity();
     }
   }
 }
