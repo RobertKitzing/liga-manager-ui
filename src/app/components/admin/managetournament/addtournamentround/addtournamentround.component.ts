@@ -3,6 +3,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Team_pairs, Team, Client, SetRoundBody } from '../../../../../api';
 import { TeamService } from '../../../../services/team.service';
 import { DateTimeAdapter } from 'ng-pick-datetime';
+import { I18Service } from '../../../../services/i18.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 export interface AddMatchData {
@@ -29,8 +31,15 @@ export class AddtournamentroundComponent implements OnInit {
     public teamService: TeamService,
     private apiClient: Client,
     dateTimeAdapter: DateTimeAdapter<any>,
+    private translateService: TranslateService,
+    private i18Service: I18Service,
     @Inject(MAT_DIALOG_DATA) public data: AddMatchData) {
-      dateTimeAdapter.setLocale('de-DE');
+      dateTimeAdapter.setLocale(this.i18Service.currentLang);
+      this.translateService.onLangChange.subscribe(
+        (lang) => {
+          dateTimeAdapter.setLocale(lang);
+        }
+      );
     }
 
   async ngOnInit() {

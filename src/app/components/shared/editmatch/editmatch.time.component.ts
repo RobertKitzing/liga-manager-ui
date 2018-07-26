@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialogRef } from '@angular
 import { MatchViewModel } from 'src/app/models/match.viewmodel';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { Client, ScheduleMatchBody } from '../../../../api';
+import { TranslateService } from '@ngx-translate/core';
+import { I18Service } from '../../../services/i18.service';
 
 @Component({
   selector: 'app-editmatch.time',
@@ -16,10 +18,17 @@ export class EditmatchTimeComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
     dateTimeAdapter: DateTimeAdapter<any>,
+    private translateService: TranslateService,
+    private i18Service: I18Service,
     private dialogRef: MatDialogRef<EditmatchTimeComponent>,
     private apiCLient: Client
   ) {
-    dateTimeAdapter.setLocale('de-DE');
+    dateTimeAdapter.setLocale(this.i18Service.currentLang);
+    this.translateService.onLangChange.subscribe(
+      (lang) => {
+        dateTimeAdapter.setLocale(lang);
+      }
+    );
   }
 
   ngOnInit() {

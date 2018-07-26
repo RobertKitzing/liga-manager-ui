@@ -8,7 +8,7 @@ import * as en from './i18n/en';
 })
 export class I18Service {
 
-  public available: string[] = ['de', 'en'];
+  public availableLang: string[] = ['de', 'en'];
 
   public get currentLang(): string {
     return this.translateService.currentLang;
@@ -20,10 +20,18 @@ export class I18Service {
   init() {
     this.translateService.setTranslation('de', de);
     this.translateService.setTranslation('en', en);
-    this.changeLang('de');
+    let defaultLang = localStorage.getItem('LANG');
+    if (!defaultLang) {
+      defaultLang = this.translateService.getBrowserLang();
+    }
+    if (!defaultLang) {
+      defaultLang = 'de';
+    }
+    this.changeLang(defaultLang);
   }
 
   changeLang(lang: string) {
+    localStorage.setItem('LANG', lang);
     this.translateService.use(lang);
   }
 }

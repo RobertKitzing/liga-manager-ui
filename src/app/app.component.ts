@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MatDialog } from '@angular/material';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { environment } from 'src/environments/environment';
+import { I18Service } from './services/i18.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     public authService: AuthenticationService,
+    public i18Service: I18Service,
     private dialog: MatDialog) {
   }
 
@@ -43,5 +45,9 @@ export class AppComponent implements OnInit {
       tag.id = 'googelmapsscript';
       document.body.appendChild(tag);
     }
+  }
+
+  onLangSelect(lang: string) {
+    this.i18Service.changeLang(lang);
   }
 }

@@ -12,8 +12,8 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="card" *ngIf="winnerLastRound">
-    <div class="card-header justify-content-center" translate>
-      WINNER_LAST_ROUND
+    <div class="card-header justify-content-center">
+      {{ 'WINNER_LAST_ROUND' | translate }}
     </div>
     <div class="card-body justify-content-center">
       <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">
@@ -36,7 +36,7 @@
         </h3> -->
       </div>
       <div class="card-body justify-content-center">
-        <div class="row">
+        <div class="row" style="justify-content: center">
           <div class="col-12 col-md-4" *ngFor="let match of round">
             <app-match [match]="match" (resultUpdated)="newWinner($event)"></app-match>
           </div>
