@@ -71,12 +71,13 @@
 		"SELECT_MATCHDAY": "Spieltag auswählen",
 		"SELECT_SEASON": "Saison auswählen",
 		"SELECT_TOURNAMENT": "Pokal auswählen",
-		"START_TEAM_COUNT": "Anzahl der Mannschaften der Saison"
+		"START_TEAM_COUNT": "Anzahl der Mannschaften der Saison",
+		"TEAM_NAME": "Name der Mannschaft"
 	},
 	"ROUND": "Runde",
 	"TAB": {
 		"ADD_TEAM": "Team Verwaltung",
-		"ADD_USER": "Benutzer Verwaltung",
+		"ADD_USER": "Benutzer hinzufügen",
 		"MANAGE_SEASON": "Saison Verwaltung",
 		"MANAGE_TOURNAMENT": "Pokal Verwaltung",
 		"MANAGE_USERS": "User Verwaltung",
@@ -92,7 +93,6 @@
 		"WIN_DRAW_LOST": "g:u:l"
 	},
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
-	"TEAM_NAME": "Mannschaft",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Bitte einen möglichst eindeutigen Namen eingeben",
 	"USERNAME": "Email",
 	"USERNAME_REQUIRED": "Bitte Password eingeben",
