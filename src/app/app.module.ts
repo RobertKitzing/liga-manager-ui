@@ -19,6 +19,7 @@ import { ChangepasswordComponent } from './components/changepassword/changepassw
 
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 registerLocaleData(localeDe);
 
 export function teamServiceFactory(provider: TeamService) {
@@ -85,6 +86,10 @@ export function i18ServiceFactory(provider: I18Service) {
       provide: APP_INITIALIZER,
       useFactory: pitchServiceFactory,
       deps: [PitchService], multi: true
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {duration: 2500}
     }
   ],
   bootstrap: [

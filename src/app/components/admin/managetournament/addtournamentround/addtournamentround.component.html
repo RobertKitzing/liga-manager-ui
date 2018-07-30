@@ -18,14 +18,14 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' }}" required [(ngModel)]="homeTeamId">
+        <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' | translate }}" required [(ngModel)]="homeTeamId">
           <mat-option *ngFor="let team of teamList" [value]="team.id">
             {{team.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' }}" required [(ngModel)]="guestTeamId">
+        <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' | translate }}" required [(ngModel)]="guestTeamId">
           <mat-option *ngFor="let team of teamList" [value]="team.id">
             {{team.name}}
           </mat-option>

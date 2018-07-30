@@ -11,6 +11,7 @@ import { EditmatchTimeComponent } from './editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @Injectable()
 export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
@@ -43,7 +44,8 @@ export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
     ContactComponent,
     EditmatchResultComponent,
     EditmatchTimeComponent,
-    EditmatchPitchComponent
+    EditmatchPitchComponent,
+    SnackbarComponent
   ],
   declarations: [
     MatchComponent,
@@ -52,7 +54,8 @@ export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
     SeasonchooserComponent,
     EditmatchTimeComponent,
     FinalroundPipe,
-    EditmatchPitchComponent
+    EditmatchPitchComponent,
+    SnackbarComponent
   ],
   exports: [
     MatchComponent,

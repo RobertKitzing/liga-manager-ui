@@ -64,7 +64,9 @@
 	"PLACEHOLDER": {
 		"EDIT_TOURNAMENT_ROUND": "edit Round",
 		"GUEST_SCORE": "guest",
+		"GUEST_TEAM": "guest",
 		"HOME_SCORE": "home",
+		"HOME_TEAM": "home",
 		"NEW_PASSWORD": "New Password",
 		"NEW_SEASON": "Neue Saison",
 		"NEW_TEAM": "New Team",

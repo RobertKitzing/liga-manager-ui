@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { ContactComponent } from '../contact/contact.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Team } from '../../../../api';
 import { MatchService } from '../../../services/match.service';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -9,6 +9,7 @@ import { EditmatchResultComponent } from '../editmatch/editmatch.result.componen
 import { EditmatchTimeComponent } from '../editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from '../editmatch/editmatch.pitch.component';
 import { I18Service } from '../../../services/i18.service';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-match',
@@ -24,7 +25,8 @@ export class MatchComponent implements OnInit {
     public dialog: MatDialog,
     private matchService: MatchService,
     public authService: AuthenticationService,
-    public i18Service: I18Service) { }
+    public i18Service: I18Service,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -39,8 +41,10 @@ export class MatchComponent implements OnInit {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
           this.resultUpdated.emit(this.match);
-          // this.pitchAdded.emit(true);
-          // this.matchService.updateMatch(matchId);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: { message: 'RESULT_SAVE_SUCCESS' },
+            panelClass: ['alert', 'alert-success']
+          });
         }
       });
   }

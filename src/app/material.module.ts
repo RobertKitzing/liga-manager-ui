@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
-import { MatDialogModule, MatStepperModule, MatInputModule, MatAutocompleteModule, MatTabsModule, MatMenuModule, MatListModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule } from '@angular/material';
+import { MatDialogModule, MatStepperModule, MatInputModule, MatAutocompleteModule, MatTabsModule, MatMenuModule, MatListModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule, MatSnackBarModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -20,6 +20,7 @@ import { MatDialogModule, MatStepperModule, MatInputModule, MatAutocompleteModul
         MatAutocompleteModule,
         MatStepperModule,
         MatTabsModule,
+        MatSnackBarModule,
         MatMenuModule,
         MatDatepickerModule,
         MatNativeDateModule,
@@ -33,6 +34,7 @@ import { MatDialogModule, MatStepperModule, MatInputModule, MatAutocompleteModul
         MatAutocompleteModule,
         MatNativeDateModule,
         MatDividerModule,
+        MatSnackBarModule,
         MatDatepickerModule,
         MatButtonModule,
         MatAutocompleteModule,
