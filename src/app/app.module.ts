@@ -20,6 +20,8 @@ import { ChangepasswordComponent } from './components/changepassword/changepassw
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+import { API_BASE_URL } from '../api';
+import { environment } from '../environments/environment';
 registerLocaleData(localeDe);
 
 export function teamServiceFactory(provider: TeamService) {
@@ -90,7 +92,11 @@ export function i18ServiceFactory(provider: I18Service) {
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {duration: 2500}
-    }
+    },
+    {
+      provide: API_BASE_URL,
+      useValue: environment.serverUrl
+},
   ],
   bootstrap: [
     AppComponent
