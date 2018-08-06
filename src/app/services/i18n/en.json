@@ -42,6 +42,7 @@
 	"HALBFINALE": "Semifinal",
 	"LAST_NAME": "Last Name",
 	"LAST_NAME_REQUIRED": "Please enter last Name",
+	"LOGGED_IN_AS": "Logged in as <b>{{ email }}</b>",
 	"MATCH": "Match",
 	"MENU": {
 		"ADMIN": "Adminarea",
@@ -81,6 +82,7 @@
 	"TAB": {
 		"ADD_TEAM": "Team Management",
 		"ADD_USER": "Add User",
+		"CONTACT": "Team Contact",
 		"MANAGE_SEASON": "Season Management",
 		"MANAGE_TOURNAMENT": "Tournament Management",
 		"MANAGE_USERS": "User Management",

@@ -42,6 +42,7 @@
 	"HALBFINALE": "Halbfinale",
 	"LAST_NAME": "Nachname",
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
+	"LOGGED_IN_AS": "Angemeldet als <b>{{ email }}</b>",
 	"MATCH": "Spiel",
 	"MENU": {
 		"ADMIN": "Adminbereich",
@@ -81,9 +82,10 @@
 	"TAB": {
 		"ADD_TEAM": "Team Verwaltung",
 		"ADD_USER": "Benutzer hinzufügen",
+		"CONTACT": "Team Kontakt",
 		"MANAGE_SEASON": "Saison Verwaltung",
 		"MANAGE_TOURNAMENT": "Pokal Verwaltung",
-		"MANAGE_USERS": "User Verwaltung",
+		"MANAGE_USERS": "Benutzer Verwaltung",
 		"MATCHES": "Spiele",
 		"TEAMS": "Manschaften"
 	},
@@ -98,7 +100,7 @@
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Bitte einen möglichst eindeutigen Namen eingeben",
 	"USERNAME": "Email",
-	"USERNAME_REQUIRED": "Bitte Password eingeben",
+	"USERNAME_REQUIRED": "Bitte Passwort eingeben",
 	"USER_ROLE": "Benutzer Rolle",
 	"VIERTELFINALE": "Viertelfinale",
 	"WINNER_LAST_ROUND": "Gewinner der letzten Runde"

@@ -51,8 +51,7 @@
 <mat-menu #userMenu="matMenu">
   <mat-list>
     <mat-list-item *ngIf="authService.user">
-      <span>Logged in as</span>&nbsp;
-      <b> {{ authService.user.email }} </b>
+      <span innerHTML="{{ 'LOGGED_IN_AS' | translate:{ email: authService.user.email } }}"></span>
     </mat-list-item>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>

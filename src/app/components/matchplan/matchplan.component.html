@@ -1,7 +1,9 @@
-<div class="container-fluid" style="margin-top: 30px;">
-  <mat-toolbar color="secondary">
-    <mat-toolbar-row style="justify-content: center">
+<div class="container" style="margin-top: 30px;">
+  <div class="row" style="justify-content: center">
+    <div class="col text-right">
       <app-seasonchooser></app-seasonchooser>
+    </div>
+    <div class="col text-left">
       <mat-form-field style="text-align: center;margin-left: 30px;">
         <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
           <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
@@ -9,8 +11,8 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </mat-toolbar-row>
-  </mat-toolbar>
+    </div>
+  </div>
   <ng-container *ngFor="let match of matches">
     <app-match [match]="match"></app-match>
   </ng-container>

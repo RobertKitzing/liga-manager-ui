@@ -28,18 +28,19 @@ export class TableComponent implements OnInit {
   }
 
   loadRanking(season: Season) {
-    if(season) {
-    this.api.getRanking(season.id).subscribe(
-      (ranking) => {
-        this.ranking = ranking;
-      },
-      (error) => {
-        delete this.ranking;
-      },
-      () => {
+    this.ranking = null;
+    if (season) {
+      this.api.getRanking(season.id).subscribe(
+        (ranking) => {
+          this.ranking = ranking;
+        },
+        (error) => {
+          delete this.ranking;
+        },
+        () => {
 
-      }
-    );
-  }
+        }
+      );
+    }
   }
 }

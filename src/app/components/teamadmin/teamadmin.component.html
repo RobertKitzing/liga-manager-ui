@@ -1,7 +1,7 @@
 <mat-tab-group>
   <mat-tab *ngFor="let teamId of authService.user.teams" label="{{teamService.getTeamById(teamId).name}}">
     <mat-tab-group>
-      <mat-tab label="{{ 'CONTACT' }}">
+      <mat-tab label="{{ 'TAB.CONTACT' | translate }}">
         <div class="card text-center">
           <div class="card-body">
             <h5 class="card-title" translate>EDIT_TEAM_CONTACT_INFO_TEXT</h5>
