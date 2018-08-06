@@ -65,7 +65,7 @@ export class EditmatchPitchComponent implements OnInit {
 
   onSaveClicked() {
     const body: LocateMatchBody = new LocateMatchBody();
-    body.pitch_id = this.newPitch.id;
+    body.pitch_id = this.newMatchPitch.id;
     this.apiClient.locateMatch(this.match.id, body).subscribe(
       () => {
         this.dialogRef.close(true);

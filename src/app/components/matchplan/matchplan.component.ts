@@ -33,6 +33,11 @@ export class MatchplanComponent implements OnInit {
         this.handleGetMatches();
       }
     );
+    this.matchService.matchUpdated.subscribe(
+      (matchId) => {
+        console.log(this.seasonService.currentSeason.getValue());
+        console.log(matchId);
+      });
   }
 
   async handleGetMatches() {

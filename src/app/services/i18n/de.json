@@ -62,6 +62,7 @@
 	"PHONE": "Telefon",
 	"PITCH": "Spielort",
 	"PITCH_REQUIRED": "Bitte einen Spielort eingeben",
+	"PITCH_SAVE_SUCCESS": "Spielort gespeichert",
 	"PLACEHOLDER": {
 		"EDIT_TOURNAMENT_ROUND": "zu bearbeitende Runde",
 		"GUEST_SCORE": "Gast",
@@ -78,6 +79,7 @@
 		"START_TEAM_COUNT": "Anzahl der Mannschaften der Saison",
 		"TEAM_NAME": "Name der Mannschaft"
 	},
+	"RESULT_SAVE_SUCCESS": "Ergebnis gespeichert",
 	"ROUND": "Runde",
 	"TAB": {
 		"ADD_TEAM": "Team Verwaltung",
@@ -98,6 +100,7 @@
 		"WIN_DRAW_LOST": "g:u:l"
 	},
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
+	"TIME_SAVE_SUCCESS": "Anstosszeit gespeichert",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Bitte einen möglichst eindeutigen Namen eingeben",
 	"USERNAME": "Email",
 	"USERNAME_REQUIRED": "Bitte Passwort eingeben",

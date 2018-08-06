@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ranking, Client, Season } from '../../../api';
 import { SeasonService } from '../../services/season.service';
 import { TeamService } from '../../services/team.service';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-table',
@@ -11,12 +12,12 @@ import { TeamService } from '../../services/team.service';
 export class TableComponent implements OnInit {
 
   public ranking: Ranking;
-  public currentSeasonName: string;
 
   constructor(
     private seasonService: SeasonService,
     private api: Client,
-    public teamService: TeamService) {
+    public teamService: TeamService,
+    private matchService: MatchService) {
   }
 
   ngOnInit() {
@@ -25,6 +26,10 @@ export class TableComponent implements OnInit {
         this.loadRanking(season);
       }
     );
+    this.matchService.matchUpdated.subscribe(
+      (matchId) => {
+        this.loadRanking(this.seasonService.currentSeason.getValue());
+      });
   }
 
   loadRanking(season: Season) {

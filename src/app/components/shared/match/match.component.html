@@ -18,11 +18,19 @@
                     <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.currentLang }}</i>
                 </div>
                 <mat-divider vertical="true"></mat-divider>
+                <div class="col text-center" *ngIf="!match.pitch">
+                    <i class="material-icons">
+                        location_off
+                    </i>
+                    <span>{{ 'NO_PTICH_SET' | translate }}</span>
+                </div>
                 <div class="col text-center" *ngIf="match.pitch">
                     <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}" target="_blank"
                         style="cursor: pointer;">
+                        <i class="material-icons">
+                            location_on
+                        </i>
                         {{ match.pitch.label }}
-                        <i class="fa fa-map-marker"></i>
                     </a>
                 </div>
             </div>

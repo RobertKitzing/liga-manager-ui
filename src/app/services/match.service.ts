@@ -3,11 +3,15 @@ import { Client, Match, SubmitMatchResultBody } from '../../api';
 import { MatchViewModel } from '../models/match.viewmodel';
 import { TeamService } from './team.service';
 import { PitchService } from './pitch.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
+
+  public matchUpdated: Subject<string> = new Subject<string>();
+
   constructor(
     private apiClient: Client,
     private teamService: TeamService,
@@ -50,6 +54,7 @@ export class MatchService {
         matchResult.home_score = homeScore;
         this.apiClient.submitMatchResult(matchId, matchResult).subscribe(
           (b) => {
+            this.matchUpdated.next(matchId);
             resolve(true);
           },
           (error) => {
@@ -60,7 +65,7 @@ export class MatchService {
     );
   }
 
-  async updateSingleMatch(matchId: string): Promise<MatchViewModel> {
+  updateSingleMatch(matchId: string): Promise<MatchViewModel> {
     return new Promise<MatchViewModel>(
       (resolve) => {
         this.apiClient.getMatch(matchId).subscribe(

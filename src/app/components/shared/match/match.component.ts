@@ -10,6 +10,7 @@ import { EditmatchTimeComponent } from '../editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from '../editmatch/editmatch.pitch.component';
 import { I18Service } from '../../../services/i18.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-match',
@@ -26,14 +27,15 @@ export class MatchComponent implements OnInit {
     private matchService: MatchService,
     public authService: AuthenticationService,
     public i18Service: I18Service,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    public translateService: TranslateService) { }
 
   ngOnInit() {
   }
 
   openEditResultDialog(match: MatchViewModel) {
     const dialogRef = this.dialog.open(EditmatchResultComponent, {
-      data:  match
+      data: match
     });
 
     dialogRef.afterClosed().subscribe(
@@ -42,7 +44,9 @@ export class MatchComponent implements OnInit {
           this.match = await this.matchService.updateSingleMatch(match.id);
           this.resultUpdated.emit(this.match);
           this.snackBar.openFromComponent(SnackbarComponent, {
-            data: { message: 'RESULT_SAVE_SUCCESS' },
+            data: {
+              message: this.translateService.instant('RESULT_SAVE_SUCCESS')
+            },
             panelClass: ['alert', 'alert-success']
           });
         }
@@ -51,30 +55,38 @@ export class MatchComponent implements OnInit {
 
   openEditPitchDialog(match: MatchViewModel) {
     const dialogRef = this.dialog.open(EditmatchPitchComponent, {
-      data:  match
+      data: match
     });
 
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
-          // this.pitchAdded.emit(true);
-          // this.matchService.updateMatch(matchId);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              message: this.translateService.instant('PITCH_SAVE_SUCCESS')
+            },
+            panelClass: ['alert', 'alert-success']
+          });
         }
       });
   }
 
   openEditTimeDialog(match: MatchViewModel) {
     const dialogRef = this.dialog.open(EditmatchTimeComponent, {
-      data:  match
+      data: match
     });
 
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
-          // this.pitchAdded.emit(true);
-          // this.matchService.updateMatch(matchId);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              message: this.translateService.instant('TIME_SAVE_SUCCESS')
+            },
+            panelClass: ['alert', 'alert-success']
+          });
         }
       });
   }
