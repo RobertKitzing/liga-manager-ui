@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json",
     "build": "ng build --aot --prod",
-    "build:app": "ng build --aot -c app --output-path app",
+    "build:app": "ng build --aot -c app --output-path app/www --delete-output-path --base-href ./",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -14,12 +14,7 @@
     "docker:push": "docker push robertkitzing/liga-manager-ui:1.0",
     "docker:deploy": "npm run docker:build && npm run docker:push",
     "extract:all": "ngx-translate-extract -m -i ./src/app/ -o ./src/app/services/i18n/de.json ./src/app/services/i18n/en.json --clean --sort --format namespaced-json -m",
-    "extract:update": "ngx-translate-extract -m -i ./src/app -o ./src/app/services/i18n/*.json --clean --sort --format namespaced-json -m",
-    "extract:menu": "ngx-translate-extract -i ./src/app/components/menu -o ./src/app/services/i18n/menu/de.json ./src/app/services/i18n/menu/en.json --clean --sort --format namespaced-json",
-    "extract:table": "ngx-translate-extract -i ./src/app/components/table -o ./src/app/services/i18n/table/de.json ./src/app/services/i18n/table/en.json --clean --sort --format namespaced-json",
-    "extract:tournament": "ngx-translate-extract -i ./src/app/components/tournament -o ./src/app/services/i18n/tournament/de.json ./src/app/services/i18n/tournament/en.json --clean --sort --format namespaced-json",
-    "extract:teamadmin": "ngx-translate-extract -i ./src/app/components/teamadmin -o ./src/app/services/i18n/teamadmin/de.json ./src/app/services/i18n/teamadmin/en.json --clean --sort --format namespaced-json",
-    "extract:shared": "ngx-translate-extract -i ./src/app/components/shared -o ./src/app/services/i18n/shared/de.json ./src/app/services/i18n/shared/en.json --clean --sort --format namespaced-json"
+    "extract:update": "ngx-translate-extract -m -i ./src/app -o ./src/app/services/i18n/*.json --clean --sort --format namespaced-json -m"
   },
   "private": true,
   "dependencies": {

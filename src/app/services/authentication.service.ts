@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, Client, UserRole, ChangePasswordBody } from '../../api';
+import { User, Client, UserRole, ChangePasswordBody, API_BASE_URL } from '../../api';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 
@@ -39,7 +39,8 @@ export class AuthenticationService {
   constructor(
     private apiClient: Client,
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    @Optional() @Inject(API_BASE_URL) private baseUrl?: string
   ) {
   }
 
@@ -49,7 +50,7 @@ export class AuthenticationService {
         let headers = new HttpHeaders();
         const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
         headers = headers.append('Authorization', 'Basic ' + passBase64);
-        this.httpClient.get('/api/user/me', { headers: headers, observe: 'response' }).subscribe(
+        this.httpClient.get(this.baseUrl + '/user/me', { headers: headers, observe: 'response' }).subscribe(
           async (response) => {
             const data = {
               username: response.body['email'],
