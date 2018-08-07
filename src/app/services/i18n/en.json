@@ -98,8 +98,8 @@
 		"PLACE": "#",
 		"POINTS": "P",
 		"TEAM": "Team",
-		"TORE:TORE": "CG:GG",
-		"WIN_DRAW_LOST": "w:d:l"
+		"TORE:TORE": "G:CG",
+		"WIN_DRAW_LOST": "W:D:L"
 	},
 	"TEAMS_IN_SEASON": "Teams in Season",
 	"TIME_SAVE_SUCCESS": "Kickoff time saved",

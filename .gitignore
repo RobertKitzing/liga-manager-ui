@@ -5,12 +5,14 @@
 /tmp
 /out-tsc
 /app/www
+/server/dist
 
 # dependencies
 /node_modules
 /app/node_modules
 /app/platforms
 /app/plugins
+/server/node_modules
 
 # IDEs and editors
 /.idea

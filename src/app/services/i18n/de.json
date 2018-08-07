@@ -98,8 +98,8 @@
 		"PLACE": "#",
 		"POINTS": "P",
 		"TEAM": "Mannschaft",
-		"TORE:TORE": "GT:KT",
-		"WIN_DRAW_LOST": "g:u:l"
+		"TORE:TORE": "T:GT",
+		"WIN_DRAW_LOST": "S:U:N"
 	},
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
 	"TIME_SAVE_SUCCESS": "Anstosszeit gespeichert",

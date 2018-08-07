@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json",
-    "build": "ng build --aot --prod && npm run build:app",
+    "build": "ng build --aot --prod --output-path server/dist/www && npm run build:app",
     "build:app": "ng build --aot -c app --output-path app/www --delete-output-path --base-href ./",
     "test": "ng test",
     "lint": "ng lint",
