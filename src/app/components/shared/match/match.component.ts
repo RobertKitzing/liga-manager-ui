@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class MatchComponent implements OnInit {
 
   @Input() match: MatchViewModel;
+  @Input() tournament: boolean;
   @Output() resultUpdated: EventEmitter<MatchViewModel> = new EventEmitter<MatchViewModel>();
 
   constructor(

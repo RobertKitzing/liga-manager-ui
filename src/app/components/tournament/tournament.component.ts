@@ -6,7 +6,7 @@ import { MatchService } from '../../services/match.service';
 @Component({
   selector: 'app-tournament',
   templateUrl: './tournament.component.html',
-  styleUrls: ['./tournament.component.css']
+  styleUrls: ['./tournament.component.less']
 })
 export class TournamentComponent implements OnInit {
 

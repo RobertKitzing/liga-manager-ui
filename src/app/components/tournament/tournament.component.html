@@ -29,14 +29,11 @@
           <p *ngSwitchCase="1">{{ 'FINALE' | translate }}</p>
           <p *ngSwitchDefault>{{ round[0].match_day }}. {{ 'ROUND' | translate }}</p>
         </ng-container>
-        <!-- <h3>
-          {{ round[0].match_day | finalround:round.length | translate }}
-        </h3> -->
       </div>
       <div class="card-body justify-content-center">
         <div class="row" style="justify-content: center">
           <div class="col-12 col-md-4" *ngFor="let match of round">
-            <app-match [match]="match" (resultUpdated)="newWinner($event)"></app-match>
+            <app-match [match]="match" (resultUpdated)="newWinner($event)" [tournament]="true"></app-match>
           </div>
         </div>
       </div>
