@@ -81,4 +81,21 @@ export class TeamService {
       }
     );
   }
+
+  public async loadTeamsInSeason(seasonId: string): Promise<Team[]> {
+    return new Promise<Team[]>(
+      (resolve) => {
+        this.apiClient.getTeamsInSeason(seasonId).subscribe(
+          (teams) => {
+            resolve(teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
+          },
+          (error) => {
+            resolve(null);
+          },
+          () => {
+          }
+        );
+      }
+    );
+  }
 }

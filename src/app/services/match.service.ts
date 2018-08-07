@@ -17,11 +17,11 @@ export class MatchService {
     private teamService: TeamService,
     private pitchService: PitchService) { }
 
-  public async getMatchesInSeason(seasonId: string, matchDay: number): Promise<MatchViewModel[]> {
+  public async getMatchesInSeason(seasonId: string, matchDay?: number, teamId?: string): Promise<MatchViewModel[]> {
     // TODO: Umbauen auf Observable
     return new Promise<MatchViewModel[]>(
       (resolve) => {
-        this.apiClient.getMatchesInSeason(seasonId, matchDay).subscribe(
+        this.apiClient.getMatchesInSeason(seasonId, matchDay, teamId).subscribe(
           (matches) => {
             resolve(this.matchConverterArray(matches));
           }

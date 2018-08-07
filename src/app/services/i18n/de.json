@@ -44,6 +44,7 @@
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
 	"LOGGED_IN_AS": "Angemeldet als <b>{{ email }}</b>",
 	"MATCH": "Spiel",
+	"MATCHDAY": "{{ matchDay }}. Spieltag",
 	"MENU": {
 		"ADMIN": "Adminbereich",
 		"MATCHPLAN": "Spielplan",
@@ -75,6 +76,7 @@
 		"NEW_TOURNAMENT": "Neuer Pokal",
 		"SELECT_MATCHDAY": "Spieltag auswählen",
 		"SELECT_SEASON": "Saison auswählen",
+		"SELECT_TEAM": "Mannschaft auswählen",
 		"SELECT_TOURNAMENT": "Pokal auswählen",
 		"START_TEAM_COUNT": "Anzahl der Mannschaften der Saison",
 		"TEAM_NAME": "Name der Mannschaft"

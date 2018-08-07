@@ -44,6 +44,7 @@
 	"LAST_NAME_REQUIRED": "Please enter last Name",
 	"LOGGED_IN_AS": "Logged in as <b>{{ email }}</b>",
 	"MATCH": "Match",
+	"MATCHDAY": "Matchday {{ matchDay }}",
 	"MENU": {
 		"ADMIN": "Adminarea",
 		"MATCHPLAN": "Matchplan",
@@ -75,6 +76,7 @@
 		"NEW_TOURNAMENT": "New Tournament",
 		"SELECT_MATCHDAY": "Select Matchday",
 		"SELECT_SEASON": "Select Season",
+		"SELECT_TEAM": "Select Team",
 		"SELECT_TOURNAMENT": "Select Tournament",
 		"START_TEAM_COUNT": "Team Count",
 		"TEAM_NAME": "Team name"
