@@ -16,6 +16,11 @@ class Server {
     router.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, 'www/index.html'));
     });
+    router.websocket('/ws', function(info, cb, next) {
+        cb(function(socket) {
+            socket.send('connected!');
+        });
+    });
     this.express.use('/', router);
   }
 }
