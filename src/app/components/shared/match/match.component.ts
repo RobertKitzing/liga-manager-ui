@@ -11,6 +11,8 @@ import { EditmatchPitchComponent } from '../editmatch/editmatch.pitch.component'
 import { I18Service } from '../../../services/i18.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { WebsocketService } from '../../../services/websocket.service';
+import { WebSocketMessageTypes } from 'shared/models/websocket.model';
 
 @Component({
   selector: 'app-match',
@@ -29,7 +31,17 @@ export class MatchComponent implements OnInit {
     public authService: AuthenticationService,
     public i18Service: I18Service,
     public snackBar: MatSnackBar,
-    public translateService: TranslateService) { }
+    public translateService: TranslateService,
+    private websocketService: WebsocketService) {
+
+    this.matchService.matchUpdated.subscribe(
+      async (matchId) => {
+        if (this.match.id === matchId) {
+          this.match = null;
+          this.match = await this.matchService.updateSingleMatch(matchId);
+        }
+      });
+  }
 
   ngOnInit() {
   }
@@ -44,6 +56,7 @@ export class MatchComponent implements OnInit {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
           this.resultUpdated.emit(this.match);
+          this.sendMatchUpdatedMsg();
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
               message: this.translateService.instant('RESULT_SAVE_SUCCESS')
@@ -63,6 +76,7 @@ export class MatchComponent implements OnInit {
       async (result) => {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
+          this.sendMatchUpdatedMsg();
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
               message: this.translateService.instant('PITCH_SAVE_SUCCESS')
@@ -82,6 +96,7 @@ export class MatchComponent implements OnInit {
       async (result) => {
         if (result) {
           this.match = await this.matchService.updateSingleMatch(match.id);
+          this.sendMatchUpdatedMsg();
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
               message: this.translateService.instant('TIME_SAVE_SUCCESS')
@@ -90,6 +105,15 @@ export class MatchComponent implements OnInit {
           });
         }
       });
+  }
+
+  sendMatchUpdatedMsg() {
+    this.websocketService.send(
+      {
+        type: WebSocketMessageTypes.MATCH_UPDATED,
+        data: this.match.id
+      }
+    );
   }
 
   openContactModal() {

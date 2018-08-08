@@ -9,6 +9,7 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="!matches"></mat-progress-bar>
   <div class="card" *ngIf="winnerLastRound">
     <div class="card-header justify-content-center">
       {{ 'WINNER_LAST_ROUND' | translate }}

@@ -26,6 +26,7 @@
       </mat-form-field>
     </div>
   </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="!matches"></mat-progress-bar>
   <ng-container *ngFor="let match of matches">
     <h3 class="text-center" *ngIf="selectedTeamId !== '0'">{{ 'MATCHDAY' | translate:{matchDay: match.match_day} }}</h3>
     <app-match [match]="match"></app-match>

@@ -1,28 +1,52 @@
 import * as express from 'express';
-import * as expressWs from 'express-ws-routes';
+import * as expressWsRoutes from 'express-ws-routes';
 import * as path from 'path';
+import { WebSocketMessage, WebSocketMessageTypes } from '../../shared/models/websocket.model';
 
 class Server {
-  public express;
+    public express;
+    private wsClients: any[] = new Array<any>();
 
-  constructor () {
-    this.express = expressWs();
-    this.express.use(express.static(__dirname + '/www'));
-    this.mountRoutes();
-  }
+    constructor() {
+        this.express = expressWsRoutes();
+        this.express.use(express.static(__dirname + '/www'));
+        this.mountRoutes();
+    }
 
-  private mountRoutes (): void {
-    const router = express.Router();
-    router.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'www/index.html'));
-    });
-    router.websocket('/ws', function(info, cb, next) {
-        cb(function(socket) {
-            socket.send('connected!');
+    private mountRoutes(): void {
+        const router = express.Router();
+        router.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, 'www/index.html'));
         });
-    });
-    this.express.use('/', router);
-  }
+
+        router.websocket('/ws', (info, cb, next) => {
+            cb(
+                (socket) => {
+                    this.wsClients.push(socket);
+                    socket.on('message', (message) => {
+                        const msg: WebSocketMessage = JSON.parse(message);
+                        switch (msg.type) {
+                            case WebSocketMessageTypes.MATCH_UPDATED:
+                                this.broadcast(JSON.stringify(msg), socket);
+                                break;
+                        }
+                        this.broadcast(JSON.stringify(msg), socket);
+                    });
+                });
+        });
+        this.express.use('/', router);
+    }
+
+    broadcast(message: string, self?: WebSocket) {
+        console.log('broadcasting', message);
+        this.wsClients.forEach((client) => {
+            console.log(client.readyState);
+            if (client.readyState === 1 && self && self !== client) {
+                console.log('broadcasting to', message);
+                client.send(message);
+            }
+        });
+    }
 }
 
 export default new Server().express;

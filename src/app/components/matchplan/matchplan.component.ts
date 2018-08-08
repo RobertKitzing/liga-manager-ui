@@ -47,14 +47,10 @@ export class MatchplanComponent implements OnInit {
         this.teamsInSeason = await this.teamService.loadTeamsInSeason(season.id);
       }
     );
-    this.matchService.matchUpdated.subscribe(
-      (matchId) => {
-        console.log(this.seasonService.currentSeason.getValue());
-        console.log(matchId);
-      });
   }
 
   async handleGetMatches() {
+    this.matches = null;
     if (this.season) {
       if (this.selectedTeamId !== '0') {
         this.matches = await this.matchService.getMatchesInSeason(this.season.id, undefined, this.selectedTeamId);

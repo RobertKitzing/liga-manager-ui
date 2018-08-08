@@ -54,7 +54,6 @@ export class MatchService {
         matchResult.home_score = homeScore;
         this.apiClient.submitMatchResult(matchId, matchResult).subscribe(
           (b) => {
-            this.matchUpdated.next(matchId);
             resolve(true);
           },
           (error) => {

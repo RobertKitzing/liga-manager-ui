@@ -1,5 +1,8 @@
 <div class="container">
-    <div class="row card" style="margin-bottom: 15px;">
+    <div class="row" style="justify-content: center" *ngIf="!match">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="row card" style="margin-bottom: 15px;" *ngIf="match">
         <div class="col-12">
             <div class="row card-header">
                 <div class="col-4" style="text-align: right;" [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">

@@ -12,6 +12,7 @@ import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @Injectable()
 export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
@@ -38,7 +39,8 @@ export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
     MaterialModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    TranslateModule
+    TranslateModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     ContactComponent,
@@ -66,6 +68,7 @@ export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
     MaterialModule,
     FinalroundPipe,
     OwlDateTimeModule,
+    MatProgressSpinnerModule,
     OwlNativeDateTimeModule
   ],
   providers: [

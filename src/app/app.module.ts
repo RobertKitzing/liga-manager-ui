@@ -22,6 +22,7 @@ import localeDe from '@angular/common/locales/de';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { API_BASE_URL } from '../api';
 import { environment } from '../environments/environment';
+import { WebsocketService } from './services/websocket.service';
 registerLocaleData(localeDe);
 
 export function teamServiceFactory(provider: TeamService) {
@@ -40,6 +41,9 @@ export function i18ServiceFactory(provider: I18Service) {
   return () => provider.init();
 }
 
+export function websocketServiceFactory(provider: WebsocketService) {
+  return () => provider.init();
+}
 
 @NgModule({
   entryComponents: [
@@ -91,12 +95,17 @@ export function i18ServiceFactory(provider: I18Service) {
     },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: {duration: 2500}
+      useValue: { duration: 2500 }
     },
     {
       provide: API_BASE_URL,
       useValue: environment.serverUrl
-},
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: websocketServiceFactory,
+      deps: [WebsocketService], multi: true
+    },
   ],
   bootstrap: [
     AppComponent

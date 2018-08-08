@@ -1,8 +1,8 @@
 import Server from './server';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
-Server.listen(port, (err) => {
+Server.listen(port, '0.0.0.0', (err) => {
   if (err) {
     return console.log(err);
   }
