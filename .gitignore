@@ -6,6 +6,7 @@
 /out-tsc
 /app/www
 /server/dist
+/dist
 
 # dependencies
 /node_modules

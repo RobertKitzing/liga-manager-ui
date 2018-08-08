@@ -1,4 +1,10 @@
-FROM alpine
-RUN mkdir -p /var/www/ui
-COPY www /var/www/ui
-VOLUME /var/www/ui
+FROM node:8
+# Create app directory
+WORKDIR /usr/src/app
+
+COPY ./server/package.json ./
+COPY ./dist ./
+
+RUN npm install --only=production
+
+CMD [ "npm", "start" ]

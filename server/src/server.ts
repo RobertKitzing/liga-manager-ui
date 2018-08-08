@@ -14,7 +14,7 @@ class Server {
     }
 
     private mountRoutes(): void {
-        const router = express.Router();
+        const router: any = express.Router();
         router.get('*', (req, res) => {
             res.sendFile(path.join(__dirname, 'www/index.html'));
         });
@@ -23,6 +23,12 @@ class Server {
             cb(
                 (socket) => {
                     this.wsClients.push(socket);
+                    socket.on('close', () => {
+                        this.wsClients = this.wsClients.filter(s => s !== socket);
+                    });
+                    socket.on('error', () => {
+                        this.wsClients = this.wsClients.filter(s => s !== socket);
+                    });
                     socket.on('message', (message) => {
                         const msg: WebSocketMessage = JSON.parse(message);
                         switch (msg.type) {
@@ -38,10 +44,8 @@ class Server {
     }
 
     broadcast(message: string, self?: WebSocket) {
-        console.log('broadcasting', message);
         this.wsClients.forEach((client) => {
-            console.log(client.readyState);
-            if (client.readyState === 1 && self && self !== client) {
+            if (client && client.readyState === 1 && self && self !== client) {
                 console.log('broadcasting to', message);
                 client.send(message);
             }
