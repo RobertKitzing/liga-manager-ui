@@ -3,8 +3,8 @@
     <div class="col-12 col-sm-4 text-center">
       <app-seasonchooser></app-seasonchooser>
     </div>
-    <div class="col-12 col-sm-4 text-center">
-      <mat-form-field>
+    <div class="col-6 col-sm-4 text-center">
+      <mat-form-field style="max-width: 12ch;">
         <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
         [disabled]="selectedTeamId !== '0'">
           <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
@@ -13,7 +13,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-12 col-sm-4 text-center">
+    <div class="col-6 col-sm-4 text-center">
       <mat-form-field>
         <mat-select #teamSelect [(value)]="selectedTeamId" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
           <mat-option [value]="'0'">

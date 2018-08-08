@@ -26,6 +26,7 @@
 		"START_SEASON": "Saison starten"
 	},
 	"CALCULATE_MATCHDAYS": "Spieltage berechnen",
+	"CONTACT": "Ansprechpartner",
 	"EDIT_ROUND": "Runde {{ round }} bearbeiten",
 	"EDIT_TEAM_CONTACT_INFO_TEXT": "Wird als Kontakt bei all euren Spielen angezeigt",
 	"EMAIL": "Email",

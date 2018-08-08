@@ -26,6 +26,7 @@
 		"START_SEASON": "Start Season"
 	},
 	"CALCULATE_MATCHDAYS": "Calculate Matchdays",
+	"CONTACT": "Contact",
 	"EDIT_ROUND": "Edit Round {{ round }}",
 	"EDIT_TEAM_CONTACT_INFO_TEXT": "Your Team's Contact",
 	"EMAIL": "Email",
