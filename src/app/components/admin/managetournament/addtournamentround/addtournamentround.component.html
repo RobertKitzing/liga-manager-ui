@@ -1,51 +1,54 @@
 <div class="container">
-  <div class="row" *ngFor="let tupel of teams">
-    <div class="col">
-      {{teamService.getTeamById(tupel.home_team_id).name}}
-    </div>
-    <div class="col" style="max-width: 2ch;">
-      -
-    </div>
-    <div class="col">
-      {{teamService.getTeamById(tupel.guest_team_id).name}}
-    </div>
-    <div class="col" style="max-width: 5ch;">
-      <button mat-icon-button (click)="removeTeam(tupel)">
+  <h3 mat-dialog-title class="text-center"> {{ 'EDIT_ROUND' | translate:{ round: data.round } }}</h3>
+  <mat-dialog-content>
+    <div class="row" *ngFor="let tupel of teams" style="max-height: 300px">
+      <div class="col">
+        {{teamService.getTeamById(tupel.home_team_id).name}}
+      </div>
+      <div class="col" style="max-width: 2ch;">
         -
+      </div>
+      <div class="col">
+        {{teamService.getTeamById(tupel.guest_team_id).name}}
+      </div>
+      <div class="col" style="max-width: 5ch;">
+        <button mat-icon-button (click)="removeTeam(tupel)">
+          -
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' | translate }}" required [(ngModel)]="homeTeamId">
+            <mat-option *ngFor="let team of teamList" [value]="team.id">
+              {{team.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' | translate }}" required [(ngModel)]="guestTeamId">
+            <mat-option *ngFor="let team of teamList" [value]="team.id">
+              {{team.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-icon-button (click)="addTeam()">
+        +
       </button>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <mat-form-field>
-        <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' | translate }}" required [(ngModel)]="homeTeamId">
-          <mat-option *ngFor="let team of teamList" [value]="team.id">
-            {{team.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' | translate }}" required [(ngModel)]="guestTeamId">
-          <mat-option *ngFor="let team of teamList" [value]="team.id">
-            {{team.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <button mat-icon-button (click)="addTeam()">
-      +
-    </button>
-  </div>
-  <div class="row">
-    <div class="col">
+    <div class="row">
+      <div class="col">
         <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate}}</button>
         <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="planDateSet($event)">
         <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
+      </div>
     </div>
-    <div class="col">
-      <button mat-button (click)="createMatch()">
-        {{ 'BUTTON.START_ROUND' | translate  }}
-      </button>
-    </div>
-  </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="createMatch()">
+      {{ 'BUTTON.START_ROUND' | translate }}
+    </button>
+  </mat-dialog-actions>
 </div>

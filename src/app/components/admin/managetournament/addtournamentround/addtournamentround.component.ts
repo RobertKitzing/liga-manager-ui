@@ -12,7 +12,6 @@ export interface AddMatchData {
   tournamentId: string;
 }
 
-
 @Component({
   selector: 'app-addmatch',
   templateUrl: 'addtournamentround.component.html'
