@@ -21,6 +21,9 @@ export class SeasonchooserComponent implements OnInit {
         this.season = season;
       }
     );
+    if (this.seasonService.seasonInProgress && !this.season) {
+      this.seasonService.currentSeason.next(this.seasonService.seasonInProgress[0]);
+    }
   }
 
   currentSeasonChanged(event: MatSelectChange) {

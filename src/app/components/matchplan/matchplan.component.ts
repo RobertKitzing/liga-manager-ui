@@ -41,10 +41,12 @@ export class MatchplanComponent implements OnInit {
   ngOnInit() {
     this.seasonService.currentSeason.subscribe(
       async (season) => {
-        this.season = season;
-        this.matchDays = Array.from(new Array(this.season.match_day_count), (val, index) => index + 1);
-        this.handleGetMatches();
-        this.teamsInSeason = await this.teamService.loadTeamsInSeason(season.id);
+        if (season) {
+          this.season = season;
+          this.matchDays = Array.from(new Array(this.season.match_day_count), (val, index) => index + 1);
+          this.handleGetMatches();
+          this.teamsInSeason = await this.teamService.loadTeamsInSeason(season.id);
+        }
       }
     );
   }

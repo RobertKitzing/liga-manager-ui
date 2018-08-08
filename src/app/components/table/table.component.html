@@ -3,7 +3,7 @@
     <app-seasonchooser (seasonChanged)="loadRanking($event)"></app-seasonchooser>
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="!ranking"></mat-progress-bar>
-  <div class="table-responsive">
+  <div class="table-responsive" style="scrollbar-x-position: top;">
     <table class="table table-striped" *ngIf="ranking">
       <thead class="table-dark">
         <tr>
