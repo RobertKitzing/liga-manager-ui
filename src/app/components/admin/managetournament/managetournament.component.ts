@@ -61,7 +61,8 @@ export class ManagetournamentComponent implements OnInit {
       }
     }
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
-      data: { round: this.createRoundNr, tournamentId: this.manageTournament.id }
+      data: { round: this.createRoundNr, tournamentId: this.manageTournament.id },
+      panelClass: 'my-full-screen-dialog'
     });
     dialogRef.afterClosed().subscribe(
       (result) => {

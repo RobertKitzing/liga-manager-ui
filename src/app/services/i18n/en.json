@@ -1,6 +1,6 @@
 {
 	"ACHTELFINALE": "Round of last 16",
-	"ALL_TEAMS": "All Teams",
+	"ALL_TEAMS": "All",
 	"BUTTON": {
 		"ADD": "+",
 		"BACK": "back",
@@ -76,9 +76,9 @@
 		"NEW_SEASON": "Neue Saison",
 		"NEW_TEAM": "New Team",
 		"NEW_TOURNAMENT": "New Tournament",
-		"SELECT_MATCHDAY": "Select Matchday",
+		"SELECT_MATCHDAY": "Matchday",
 		"SELECT_SEASON": "Select Season",
-		"SELECT_TEAM": "Select Team",
+		"SELECT_TEAM": "Team",
 		"SELECT_TOURNAMENT": "Select Tournament",
 		"START_TEAM_COUNT": "Team Count",
 		"TEAM_NAME": "Team name"

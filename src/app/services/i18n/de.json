@@ -1,6 +1,6 @@
 {
 	"ACHTELFINALE": "Achtelfinale",
-	"ALL_TEAMS": "Alle Mannschaften",
+	"ALL_TEAMS": "Alle",
 	"BUTTON": {
 		"ADD": "+",
 		"BACK": "zurück",
@@ -76,9 +76,9 @@
 		"NEW_SEASON": "Neue Saison",
 		"NEW_TEAM": "Neue Mannschaft",
 		"NEW_TOURNAMENT": "Neuer Pokal",
-		"SELECT_MATCHDAY": "Spieltag auswählen",
+		"SELECT_MATCHDAY": "Spieltag",
 		"SELECT_SEASON": "Saison auswählen",
-		"SELECT_TEAM": "Mannschaft auswählen",
+		"SELECT_TEAM": "Mannschaft",
 		"SELECT_TOURNAMENT": "Pokal auswählen",
 		"START_TEAM_COUNT": "Anzahl der Mannschaften der Saison",
 		"TEAM_NAME": "Name der Mannschaft"

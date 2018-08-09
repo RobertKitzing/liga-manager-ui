@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { MenuComponent } from './components/menu/menu.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
@@ -52,7 +51,6 @@ export function websocketServiceFactory(provider: WebsocketService) {
   ],
   declarations: [
     AppComponent,
-    MenuComponent,
     LoginComponent,
     ChangepasswordComponent
   ],

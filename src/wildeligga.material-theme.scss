@@ -1,0 +1,89 @@
+@import '~@angular/material/theming';
+$md-wildeligabremenyellow: (
+    50 : #fffbe0,
+    100 : #fff5b3,
+    200 : #ffee80,
+    300 : #ffe74d,
+    400 : #ffe226,
+    500 : #ffdd00,
+    600 : #ffd900,
+    700 : #ffd400,
+    800 : #ffcf00,
+    900 : #ffc700,
+    A100 : #ffffff,
+    A200 : #fffcf2,
+    A400 : #ffefbf,
+    A700 : #ffe9a6,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$md-wildeligabremendarker: (
+    50 : #fff8e0,
+    100 : #ffeeb3,
+    200 : #ffe380,
+    300 : #ffd84d,
+    400 : #ffcf26,
+    500 : #ffc700,
+    600 : #ffc100,
+    700 : #ffba00,
+    800 : #ffb300,
+    900 : #ffa600,
+    A100 : #ffffff,
+    A200 : #fffaf2,
+    A400 : #ffe6bf,
+    A700 : #ffdca6,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$candy-app-primary: mat-palette($md-wildeligabremendarker);
+$candy-app-accent:  mat-palette($md-wildeligabremendarker);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);

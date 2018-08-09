@@ -1,7 +1,7 @@
 <div class="container">
   <h3 mat-dialog-title class="text-center"> {{ 'EDIT_ROUND' | translate:{ round: data.round } }}</h3>
   <mat-dialog-content>
-    <div class="row" *ngFor="let tupel of teams" style="max-height: 300px">
+    <div class="row" *ngFor="let tupel of teams">
       <div class="col">
         {{teamService.getTeamById(tupel.home_team_id).name}}
       </div>

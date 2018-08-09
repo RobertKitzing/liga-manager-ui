@@ -48,7 +48,8 @@ export class MatchComponent implements OnInit {
 
   openEditResultDialog(match: MatchViewModel) {
     const dialogRef = this.dialog.open(EditmatchResultComponent, {
-      data: match
+      data: match,
+      panelClass: 'my-full-screen-dialog'
     });
 
     dialogRef.afterClosed().subscribe(
@@ -69,7 +70,7 @@ export class MatchComponent implements OnInit {
 
   openEditPitchDialog(match: MatchViewModel) {
     const dialogRef = this.dialog.open(EditmatchPitchComponent, {
-      data: match
+      data: match, panelClass: 'my-full-screen-dialog'
     });
 
     dialogRef.afterClosed().subscribe(
@@ -89,7 +90,7 @@ export class MatchComponent implements OnInit {
 
   openEditTimeDialog(match: MatchViewModel) {
     const dialogRef = this.dialog.open(EditmatchTimeComponent, {
-      data: match
+      data: match, panelClass: 'my-full-screen-dialog'
     });
 
     dialogRef.afterClosed().subscribe(
@@ -120,6 +121,9 @@ export class MatchComponent implements OnInit {
     const contacts = new Array<Team>();
     contacts.push(this.match.home_team);
     contacts.push(this.match.guest_team);
-    this.dialog.open(ContactComponent, { data: contacts });
+    this.dialog.open(ContactComponent, {
+      data: contacts,
+      panelClass: 'my-full-screen-dialog'
+    });
   }
 }

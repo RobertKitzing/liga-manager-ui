@@ -2,6 +2,10 @@
   <a class="navbar-brand">
     <img class="logo" src="assets/wildeliga_bremen_nobg.png" style="height: 40px; width: 40px;" />
   </a>
+  <button #navToggler class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -20,26 +24,23 @@
         <a class="nav-link" routerLink="admin" routerLinkActive="active" translate (click)="navToggler.click()">MENU.ADMIN</a>
       </li>
     </ul>
+    <div class="navbar-text d-flex justify-content-end ml-auto">
+      <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
+        {{ 'BUTTON.LOGIN' | translate }}
+      </button>
+      <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
+        {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
+        <mat-icon>person</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+        <mat-icon>language</mat-icon>
+      </button>
+    </div>
   </div>
-  <span class="spacer"></span>
-  <div class="navbar-text text-right">
-    <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
-      {{ 'BUTTON.LOGIN' | translate }}
-    </button>
-    <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
-      {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
-      <mat-icon>person</mat-icon>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="languageMenu">
-      <mat-icon>language</mat-icon>
-    </button>
-  </div>
-  <button #navToggler class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 </nav>
-<router-outlet></router-outlet>
+<div id="content">
+  <router-outlet></router-outlet>
+</div>
 <mat-menu #languageMenu="matMenu">
   <button mat-menu-item *ngFor="let language of i18Service.availableLang" (click)="onLangSelect(language)">
     <ng-container [ngSwitch]="language">
@@ -58,65 +59,3 @@
   </mat-list>
   <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
 </mat-menu>
-<!-- 
-
-<mat-sidenav-container fullscreen>
-  <mat-sidenav #sidenav fxLayout="column" position="end" class="bg-dark">
-    <nav class="navbar navbar-expand-md navbar-dark">
-      <ul class="navbar-nav flex-column justify-content-start">
-        <app-menu></app-menu>
-      </ul>
-    </nav>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <a class="navbar-brand">
-        <img class="logo" src="assets/wildeliga_bremen_nobg.png" style="height: 40px; width: 40px;" />
-      </a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav" fxHide="true" fxShow.gt-xs="true">
-          <app-menu fxLayout="row"></app-menu>
-        </ul>
-      </div>
-      <span class="spacer"></span>
-      <div class="navbar-text text-right">
-        <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
-          {{ 'BUTTON.LOGIN' | translate }}
-        </button>
-        <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="authService.isAuthenticated">
-          {{ authService.user.first_name[0] }}.{{ authService.user.last_name[0] }}
-          <mat-icon>person</mat-icon>
-        </button>
-        <button mat-icon-button [matMenuTriggerFor]="languageMenu">
-          <mat-icon>language</mat-icon>
-        </button>
-      </div>
-      <div fxShow="true" fxHide.gt-xs="true">
-        <a (click)="sidenav.toggle()" mat-button>
-          <i class="material-icons">
-            menu
-          </i>
-        </a>
-      </div>
-    </nav>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-<mat-menu #languageMenu="matMenu">
-  <button mat-menu-item *ngFor="let language of i18Service.availableLang" (click)="onLangSelect(language)">
-    <ng-container [ngSwitch]="language">
-      <p *ngSwitchCase="'de'">Deutsch</p>
-      <p *ngSwitchCase="'en'">Englisch</p>
-    </ng-container>
-  </button>
-</mat-menu>
-<mat-menu #userMenu="matMenu">
-  <mat-list>
-    <mat-list-item *ngIf="authService.user">
-      <span innerHTML="{{ 'LOGGED_IN_AS' | translate:{ email: authService.user.email } }}"></span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
-  </mat-list>
-  <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
-</mat-menu> -->
