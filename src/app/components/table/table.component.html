@@ -1,6 +1,8 @@
 <div class="container-fluid" style="margin-top: 30px;">
-  <div class="text-center">
-    <app-seasonchooser (seasonChanged)="loadRanking($event)"></app-seasonchooser>
+  <div class="row text-center" style="justify-content: center;">
+    <div class="col-6">
+      <app-seasonchooser (seasonChanged)="loadRanking($event)"></app-seasonchooser>
+    </div>
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="!ranking"></mat-progress-bar>
   <div class="table-responsive" style="scrollbar-x-position: top;">

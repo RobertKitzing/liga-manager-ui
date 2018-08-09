@@ -1,9 +1,9 @@
 <div class="container" style="margin-top: 30px;">
   <div class="row" style="justify-content: center">
-    <div class="col-12 col-sm-4 text-center">
+    <div class="col-8 col-sm-4 text-center">
       <app-seasonchooser></app-seasonchooser>
     </div>
-    <div class="col-4 col-sm-4 text-right">
+    <div class="col-2 col-sm-4 text-right">
       <mat-form-field style="max-width: 6ch;">
         <mat-select #matchDaySelect [(value)]="selectedMatchDay" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
         [disabled]="selectedTeamId !== '0'">
@@ -13,8 +13,8 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col col-sm-4 text-center">
-      <mat-form-field style="width: 80%;">
+    <div class="col-10 col-sm-4 text-center">
+      <mat-form-field style="width: 100%;">
         <mat-select #teamSelect [(value)]="selectedTeamId" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
           <mat-option [value]="'0'">
             {{ 'ALL_TEAMS' | translate }}
