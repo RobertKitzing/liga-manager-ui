@@ -2,20 +2,32 @@
   <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>
   <mat-dialog-content>
     <div class="container">
-      <div class="row" style="justify-content: center">
-        <div class="col">
+      <div class="row" style="justify-content: center; margin-bottom: 16px;">
+        <div class="col text-center">
           <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate }}</button>
+          <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
         </div>
       </div>
       <div class="row" style="justify-content: center">
+        <div class="col text-center">
+          <span *ngIf="match.kickoff">{{ 'OLD_KICKOFF_TIME' | translate}}:</span>
+        </div>
         <div class="col">
-          <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="kickoffSet($event)">
-          <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
+          <span *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.currentLang }}</span>
+        </div>
+      </div>
+      <div class="row" style="justify-content: center">
+        <div class="col text-center">
+          <span *ngIf="matchKickoff">{{ 'NEW_KICKOFF_TIME' | translate}}:</span>
+        </div>
+        <div class="col">
+          <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="kickoffSet($event)" style="display: none">
+          <span *ngIf="matchKickoff">{{ match.kickoff | date:'short':'':i18Service.currentLang }}</span>
         </div>
       </div>
     </div>
   </mat-dialog-content>
-  <mat-dialog-actions>
+  <mat-dialog-actions align="center">
     <button mat-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
     <button mat-button (click)="onSaveClicked()">{{ 'BUTTON.SAVE' | translate }}</button>
   </mat-dialog-actions>

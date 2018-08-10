@@ -32,6 +32,7 @@ class Server {
                     socket.on('message', (message) => {
                         const msg: WebSocketMessage = JSON.parse(message);
                         switch (msg.type) {
+                            case WebSocketMessageTypes.PITCH_ADDED:
                             case WebSocketMessageTypes.MATCH_UPDATED:
                                 this.broadcast(JSON.stringify(msg), socket);
                                 break;
@@ -46,7 +47,6 @@ class Server {
     broadcast(message: string, self?: WebSocket) {
         this.wsClients.forEach((client) => {
             if (client && client.readyState === 1 && self && self !== client) {
-                console.log('broadcasting to', message);
                 client.send(message);
             }
         });

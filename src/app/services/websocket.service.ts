@@ -6,6 +6,7 @@ import { MatchService } from './match.service';
 import websocketConnect, { Connection } from 'rxjs-websockets';
 import { retryWhen, delay, share } from 'rxjs/operators';
 import { WebSocketMessage, WebSocketMessageTypes } from '../../../shared/models/websocket.model';
+import { PitchService } from './pitch.service';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class WebsocketService {
   public messages: Observable<string>;
 
   constructor(
-    private matchService: MatchService
+    private matchService: MatchService,
+    private pitchService: PitchService
   ) {
   }
 
@@ -40,6 +42,9 @@ export class WebsocketService {
           switch (msg.type) {
             case WebSocketMessageTypes.MATCH_UPDATED:
               this.matchService.matchUpdated.next(msg.data);
+              break;
+            case WebSocketMessageTypes.PITCH_ADDED:
+              this.pitchService.pitchAdded.next(null);
               break;
             // case 'pitchAdded':
             //   this.pitchAdded.next(msg.data);

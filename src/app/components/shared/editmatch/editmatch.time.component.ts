@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MatchViewModel } from 'src/app/models/match.viewmodel';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { Client, ScheduleMatchBody } from '../../../../api';
@@ -19,7 +19,7 @@ export class EditmatchTimeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
     dateTimeAdapter: DateTimeAdapter<any>,
     private translateService: TranslateService,
-    private i18Service: I18Service,
+    public i18Service: I18Service,
     private dialogRef: MatDialogRef<EditmatchTimeComponent>,
     private apiCLient: Client
   ) {

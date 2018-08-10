@@ -1,6 +1,6 @@
 {
 	"ACHTELFINALE": "Achtelfinale",
-	"ALL_TEAMS": "Alle",
+	"ALL_TEAMS": "Alle Manschaften",
 	"BUTTON": {
 		"ADD": "+",
 		"BACK": "zurück",
@@ -54,10 +54,12 @@
 		"TEAM_ADMIN": "Team Verwaltung",
 		"TOURNAMENT": "Pokal"
 	},
+	"NEW_KICKOFF_TIME": "Neue Anstoßzeit",
 	"NEW_PITCH": "Neuer Spielort",
 	"NEW_PITCH_ADRESS": "Adresse des Spielorts",
 	"NEW_PITCH_LABEL": "Name des Spielortes",
 	"NO_PTICH_SET": "Kein Spielort",
+	"OLD_KICKOFF_TIME": "Alte Anstoßzeit",
 	"OLD_PITCH": "Alter Spielort",
 	"PASSWORD": "Passwort",
 	"PASSWORD_FORGOT_TEXT": "Passwort vergessen? Bitte ein neues Passwort eingeben",

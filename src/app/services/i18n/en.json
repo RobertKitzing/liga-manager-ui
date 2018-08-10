@@ -1,6 +1,6 @@
 {
 	"ACHTELFINALE": "Round of last 16",
-	"ALL_TEAMS": "All",
+	"ALL_TEAMS": "All Teams",
 	"BUTTON": {
 		"ADD": "+",
 		"BACK": "back",
@@ -54,10 +54,12 @@
 		"TEAM_ADMIN": "Team Management",
 		"TOURNAMENT": "Tournament"
 	},
+	"NEW_KICKOFF_TIME": "New Kickoff",
 	"NEW_PITCH": "New Pitch",
 	"NEW_PITCH_ADRESS": "Address of the Pitch",
 	"NEW_PITCH_LABEL": "Name of the Pitch",
 	"NO_PTICH_SET": "No Pitch",
+	"OLD_KICKOFF_TIME": "Old Kickoff",
 	"OLD_PITCH": "Old Pitch",
 	"PASSWORD": "Password",
 	"PASSWORD_FORGOT_TEXT": "Forgot Password? Please enter a new one",

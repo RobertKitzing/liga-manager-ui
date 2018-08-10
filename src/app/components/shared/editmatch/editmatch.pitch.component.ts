@@ -7,6 +7,8 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { startWith, map } from 'rxjs/operators';
 import { PitchService } from '../../../services/pitch.service';
 import { } from '@types/googlemaps';
+import { WebSocketMessageTypes } from 'shared/models/websocket.model';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-editmatch.pitch',
@@ -34,7 +36,8 @@ export class EditmatchPitchComponent implements OnInit {
     private apiClient: Client,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<EditmatchPitchComponent>
+    private dialogRef: MatDialogRef<EditmatchPitchComponent>,
+    private websocketService: WebsocketService
   ) {
     this.newPitchFormControl = new FormControl('', Validators.required);
     this.newPitchPlaceFormGroup = this.formBuilder.group({
@@ -97,6 +100,12 @@ export class EditmatchPitchComponent implements OnInit {
           this.newPitch.id = pitchId.id;
           this.newMatchPitch = this.newPitch;
           this.pitchService.pitchAdded.next(null);
+          this.websocketService.send(
+            {
+              type: WebSocketMessageTypes.PITCH_ADDED,
+              data: pitchId
+            }
+          );
         }
       );
     }
