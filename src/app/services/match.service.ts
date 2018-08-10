@@ -35,6 +35,9 @@ export class MatchService {
     mv.home_team = this.teamService.getTeamById(mv.home_team_id);
     mv.guest_team = this.teamService.getTeamById(mv.guest_team_id);
     mv.pitch = this.pitchService.getPitchById(mv.pitch_id);
+    if (mv.kickoff) {
+      mv.kickoff.setMinutes(mv.kickoff.getMinutes() - mv.kickoff.getTimezoneOffset());
+    }
     return mv;
   }
 
