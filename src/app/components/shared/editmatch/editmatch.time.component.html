@@ -22,7 +22,7 @@
         </div>
         <div class="col">
           <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="kickoffSet($event)" style="display: none">
-          <span *ngIf="matchKickoff">{{ match.kickoff | date:'short':'':i18Service.currentLang }}</span>
+          <span *ngIf="matchKickoff">{{ matchKickoff | date:'short':'':i18Service.currentLang }}</span>
         </div>
       </div>
     </div>
