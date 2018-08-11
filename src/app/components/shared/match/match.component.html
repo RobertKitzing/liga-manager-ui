@@ -4,14 +4,15 @@
     </div>
     <div class="row card" style="margin-bottom: 15px;" *ngIf="match">
         <div class="col-12">
-            <div class="row card-header">
-                <div class="col-4" style="text-align: right;" [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
+            <div class="row card-header align-items-center">
+                <div class="col-4" [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
                     {{ match.home_team.name }}
                 </div>
                 <div class="col-4 text-center badge badge-light" style="font-size: large;">
-                    {{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}
+                    <span *ngIf="match.home_score && match.guest_score">{{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
+                    <span *ngIf="!match.home_score && !match.guest_score">-&nbsp;:&nbsp;-</span>
                 </div>
-                <div class="col-4" style="text-align: left;" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
+                <div class="col-4" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
                     {{ match.guest_team.name }}
                 </div>
             </div>
