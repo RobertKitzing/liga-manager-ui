@@ -9,7 +9,7 @@
                     {{ match.home_team.name }}
                 </div>
                 <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">
-                    <span *ngIf="match.home_score && match.guest_score; else noResult">{{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
+                    <span *ngIf="isNumber(match.home_score) && isNumber(match.guest_score); else noResult">{{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
                     <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>
                 </div>
                 <div class="col-12 col-sm-4 text-center" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">

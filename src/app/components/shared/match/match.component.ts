@@ -126,4 +126,8 @@ export class MatchComponent implements OnInit {
       panelClass: 'my-full-screen-dialog'
     });
   }
+
+  isNumber(val) {
+    return typeof val === 'number';
+  }
 }
