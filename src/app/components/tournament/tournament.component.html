@@ -21,21 +21,19 @@
     </div>
   </div>
   <ng-container *ngFor="let round of matches">
-    <div class="card">
-      <div class="card-header justify-content-center">
-        <ng-container [ngSwitch]="round.length">
-          <p *ngSwitchCase="8">{{ 'ACHTELFINALE' | translate }}</p>
-          <p *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }}</p>
-          <p *ngSwitchCase="2">{{ 'HALBFINALE' | translate }}</p>
-          <p *ngSwitchCase="1">{{ 'FINALE' | translate }}</p>
-          <p *ngSwitchDefault>{{ round[0].match_day }}. {{ 'ROUND' | translate }}</p>
-        </ng-container>
-      </div>
-      <div class="card-body justify-content-center">
-        <div class="row" style="justify-content: center">
-          <div class="col-12 col-md-4" *ngFor="let match of round">
-            <app-match [match]="match" (resultUpdated)="newWinner($event)" [tournament]="true"></app-match>
-          </div>
+    <div class="text-center">
+      <ng-container [ngSwitch]="round.length">
+        <h3 *ngSwitchCase="8">{{ 'ACHTELFINALE' | translate }}</h3>
+        <h3 *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }}</h3>
+        <h3 *ngSwitchCase="2">{{ 'HALBFINALE' | translate }}</h3>
+        <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }}</h3>
+        <h3 *ngSwitchDefault>{{ round[0].match_day }}. {{ 'ROUND' | translate }}</h3>
+      </ng-container>
+    </div>
+    <div class="justify-content-center">
+      <div class="row" style="justify-content: center">
+        <div class="col-12 col-lg-4" *ngFor="let match of round">
+          <app-match [match]="match" (resultUpdated)="newWinner($event)" [tournament]="true"></app-match>
         </div>
       </div>
     </div>

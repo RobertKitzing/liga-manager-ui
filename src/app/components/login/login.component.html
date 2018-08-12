@@ -1,30 +1,33 @@
 <div class="container card">
-    <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-      <div class="row">
-        <div class="col">
-          <div class="login-error" [hidden]="!error || isLoading" translate>
-            ERRORS.USERNAME_PASSWORD_WRONG
-          </div>
-          <mat-form-field>
-            <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
-            <mat-error *ngIf="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
-              <span translate>USERNAME_REQUIRED</span>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}" required/>
-            <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
-              <span translate>PASSWORD_REQUIRED</span>
-            </mat-error>
-          </mat-form-field>
-          <br/>
-          <button mat-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
-            <span>{{ 'BUTTON.LOGIN' | translate}}</span>
-          </button>
+  <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+    <div class="row justify-content-center">
+      <div class="col">
+        <div class="login-error" [hidden]="!error || isLoading" translate>
+          ERRORS.USERNAME_PASSWORD_WRONG
         </div>
+        <mat-form-field>
+          <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
+          <mat-error *ngIf="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
+            <span translate>USERNAME_REQUIRED</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}" required/>
+          <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
+            <span translate>PASSWORD_REQUIRED</span>
+          </mat-error>
+        </mat-form-field>
       </div>
-      <div class="row" style="justify-content: center;">
-        <a style="cursor: pointer; text-align: center;" (click)="passwordForgot(username.value)" translate>FORGOT_PASSWORD</a>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col text-center">
+        <button mat-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
+          <span>{{ 'BUTTON.LOGIN' | translate}}</span>
+        </button>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="row justify-content-center">
+      <a style="cursor: pointer; text-align: center;" (click)="passwordForgot(username.value)" translate>FORGOT_PASSWORD</a>
+    </div>
+  </form>
+</div>

@@ -46,9 +46,6 @@ export class WebsocketService {
             case WebSocketMessageTypes.PITCH_ADDED:
               this.pitchService.pitchAdded.next(null);
               break;
-            // case 'pitchAdded':
-            //   this.pitchAdded.next(msg.data);
-            //   break;
           }
         } catch {
           console.error('Error parsing WS Message');

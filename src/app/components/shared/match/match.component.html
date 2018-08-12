@@ -1,24 +1,28 @@
 <div class="container">
-    <div class="row" style="justify-content: center" *ngIf="!match">
+    <div class="row justify-content-center" *ngIf="!match">
         <mat-spinner></mat-spinner>
     </div>
     <div class="row card" style="margin-bottom: 15px;" *ngIf="match">
         <div class="col-12">
             <div class="row card-header align-items-center">
-                <div class="col-4" [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
+                <div class="col-12 col-sm-4 text-center" [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
                     {{ match.home_team.name }}
                 </div>
-                <div class="col-4 text-center badge badge-light" style="font-size: large;">
-                    <span *ngIf="match.home_score && match.guest_score">{{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
-                    <span *ngIf="!match.home_score && !match.guest_score">-&nbsp;:&nbsp;-</span>
+                <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">
+                    <span *ngIf="match.home_score && match.guest_score; else noResult">{{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
+                    <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>
                 </div>
-                <div class="col-4" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
+                <div class="col-12 col-sm-4 text-center" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
                     {{ match.guest_team.name }}
                 </div>
             </div>
-            <div class="row card-body">
+            <div class="row card-body align-items-center">
                 <div class="col text-center">
-                    <i *ngIf="match.kickoff">{{ match.kickoff | date:'short':'':i18Service.currentLang }}</i>
+                    <ng-container *ngIf="match.kickoff">
+                        <i>{{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}</i>
+                        ,
+                        <i>{{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}</i>
+                    </ng-container>
                     <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.currentLang }}</i>
                 </div>
                 <mat-divider vertical="true"></mat-divider>
@@ -38,42 +42,32 @@
                     </a>
                 </div>
             </div>
-            <div class="row card-footer">
-                <div class="col">
-                    <button mat-button (click)="openContactModal()">
+            <div class="row card-footer justiy-content-center">
+                <div class="col text-center">
+                    <button mat-raised-button color="primary" (click)="openContactModal()">
                         {{ 'CONTACT' | translate }}
                         <i class="material-icons">
                             perm_contact_calendar
                         </i>
                     </button>
                 </div>
-                <ng-container *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team_id) || authService.isTeamAdminForTeam(match.guest_team_id)">
-                    <div class="col">
-                        <button mat-button (click)="openEditResultDialog(match)">
-                            {{ 'BUTTON.EDIT_RESULT' | translate }}
-                            <i class="material-icons">
-                                edit
-                            </i>
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button mat-button (click)="openEditPitchDialog(match)">
-                            {{ 'BUTTON.EDIT_PITCH' | translate }}
-                            <i class="material-icons">
-                                edit
-                            </i>
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button mat-button (click)="openEditTimeDialog(match)">
-                            {{ 'BUTTON.EDIT_TIME' | translate }}
-                            <i class="material-icons">
-                                edit
-                            </i>
-                        </button>
-                    </div>
-                </ng-container>
+                <div class="col text-center" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team_id) || authService.isTeamAdminForTeam(match.guest_team_id)">
+                    <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<mat-menu #editMenu [overlapTrigger]="false">
+    <button mat-menu-item (click)="openEditResultDialog(match)">
+        {{ 'BUTTON.EDIT_RESULT' | translate }}
+    </button>
+    <button mat-menu-item (click)="openEditPitchDialog(match)">
+        {{ 'BUTTON.EDIT_PITCH' | translate }}
+    </button>
+    <button mat-menu-item (click)="openEditTimeDialog(match)">
+        {{ 'BUTTON.EDIT_TIME' | translate }}
+    </button>
+</mat-menu>
