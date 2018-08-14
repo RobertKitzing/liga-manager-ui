@@ -25,6 +25,10 @@
       </li>
     </ul>
     <div class="navbar-text d-flex justify-content-end ml-auto">
+      <div class="led-box">
+        <div *ngIf="websocketService.numberConnected" class="led-green"></div>
+        <div *ngIf="!websocketService.numberConnected" class="led-red"></div>
+      </div>
       <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
         {{ 'BUTTON.LOGIN' | translate }}
       </button>

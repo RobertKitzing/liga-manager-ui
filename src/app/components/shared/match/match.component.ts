@@ -3,7 +3,7 @@ import { MatchViewModel } from '../../../models/match.viewmodel';
 import { ContactComponent } from '../contact/contact.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Team } from '../../../../api';
-import { MatchService } from '../../../services/match.service';
+import { MatchService, MatchUpdateMessage } from '../../../services/match.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { EditmatchResultComponent } from '../editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from '../editmatch/editmatch.time.component';
@@ -35,10 +35,10 @@ export class MatchComponent implements OnInit {
     private websocketService: WebsocketService) {
 
     this.matchService.matchUpdated.subscribe(
-      async (matchId) => {
-        if (this.match.id === matchId) {
+      async (msg) => {
+        if (this.match.id === msg.matchId) {
           this.match = null;
-          this.match = await this.matchService.updateSingleMatch(matchId);
+          this.match = await this.matchService.updateSingleMatch( msg.matchId);
         }
       });
   }
@@ -112,15 +112,19 @@ export class MatchComponent implements OnInit {
     this.websocketService.send(
       {
         type: WebSocketMessageTypes.MATCH_UPDATED,
-        data: this.match.id
+        data:  <MatchUpdateMessage> {
+          matchId: this.match.id,
+          homeTeamName: this.match.home_team.name,
+          guestTeamName: this.match.guest_team.name,
+        }
       }
     );
   }
 
   openContactModal() {
-    const contacts = new Array<Team>();
-    contacts.push(this.match.home_team);
-    contacts.push(this.match.guest_team);
+    const contacts = new Array<string>();
+    contacts.push(this.match.home_team.id);
+    contacts.push(this.match.guest_team.id);
     this.dialog.open(ContactComponent, {
       data: contacts,
       panelClass: 'my-full-screen-dialog'

@@ -7,7 +7,12 @@ import { Subject } from 'rxjs';
 })
 export class PitchService {
 
-  pitches: Pitch[];
+  public get pitches(): Pitch[] {
+    return JSON.parse(localStorage.getItem('PITCHES')) || null;
+  }
+  public set pitches(value: Pitch[]) {
+    localStorage.setItem('PITCHES', JSON.stringify(value));
+  }
 
   pitchAdded: Subject<void> = new Subject<void>();
 
@@ -36,7 +41,7 @@ export class PitchService {
             resolve(pitches);
           },
           (error) => {
-            resolve(null);
+            resolve(this.pitches);
           },
           () => {
           }

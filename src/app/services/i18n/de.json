@@ -86,6 +86,7 @@
 		"TEAM_NAME": "Name der Mannschaft"
 	},
 	"RESULT_SAVE_SUCCESS": "Ergebnis gespeichert",
+	"RESULT_UPDATED": "Spiel {{ homeTeam }} gegen {{ guestTeam }} wurde aktualisiert!",
 	"ROUND": "Runde",
 	"TAB": {
 		"ADD_TEAM": "Team Verwaltung",

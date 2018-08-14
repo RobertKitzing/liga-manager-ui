@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Team, Client, CreateTeamBody, Contact_person } from '../../api';
 
+interface CacheTeamsInSeason {
+  seasonId: string;
+  teams: Team[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
 
-  public teams: Team[];
+  public get teams(): Team[] {
+    return JSON.parse(localStorage.getItem('TEAMS')) || null;
+  }
+  public set teams(value: Team[]) {
+    localStorage.setItem('TEAMS', JSON.stringify(value));
+  }
 
-  constructor(private apiClient: Client) {
+  constructor(
+    private apiClient: Client) {
   }
 
   getTeamContactByID(id: string) {
@@ -57,11 +68,11 @@ export class TeamService {
         }
       );
     } else {
-      this.load();
+      this.initLoadTeams();
     }
   }
 
-  public async load() {
+  public async initLoadTeams() {
     this.teams = await this.loadTeams();
   }
 
@@ -73,7 +84,7 @@ export class TeamService {
             resolve(teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
           },
           (error) => {
-            resolve(null);
+            resolve(this.teams);
           },
           () => {
           }
@@ -85,12 +96,32 @@ export class TeamService {
   public async loadTeamsInSeason(seasonId: string): Promise<Team[]> {
     return new Promise<Team[]>(
       (resolve) => {
+        let cache: CacheTeamsInSeason[] = JSON.parse(localStorage.getItem('CACHE_TEAMS_IN_SEASON'));
         this.apiClient.getTeamsInSeason(seasonId).subscribe(
           (teams) => {
+            if (!cache) {
+              cache = new Array<CacheTeamsInSeason>();
+            } else {
+              cache = cache.filter(t => t.seasonId !== seasonId);
+            }
+            cache.push({
+              seasonId: seasonId,
+              teams: teams
+            });
+            localStorage.setItem('CACHE_TEAMS_IN_SEASON', JSON.stringify(cache));
             resolve(teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
           },
           (error) => {
-            resolve(null);
+            if (cache) {
+              const teams = cache.find(t => t.seasonId === seasonId);
+              if (teams) {
+                resolve(teams.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
+              } else {
+                resolve(null);
+              }
+            } else {
+              resolve(null);
+            }
           },
           () => {
           }

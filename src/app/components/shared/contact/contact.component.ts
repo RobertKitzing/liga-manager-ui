@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Team } from '../../../../api';
+import { Team, Client } from '../../../../api';
 
 
 @Component({
@@ -10,10 +10,22 @@ import { Team } from '../../../../api';
 })
 export class ContactComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<ContactComponent>,
-    @Inject(MAT_DIALOG_DATA) public teams: Team[]) { }
+  public teams: Team[] = new Array<Team>();
+
+  constructor(
+    public dialogRef: MatDialogRef<ContactComponent>,
+    private apiClient: Client,
+    @Inject(MAT_DIALOG_DATA) public teamIds: string[]) { }
 
   ngOnInit() {
+    this.teamIds.forEach(
+      (teamId) => {
+        this.apiClient.getTeam(teamId).subscribe(
+          (team) => {
+            this.teams.push(team);
+          }
+        );
+      });
   }
 
 }

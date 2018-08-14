@@ -22,10 +22,11 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { API_BASE_URL } from '../api';
 import { environment } from '../environments/environment';
 import { WebsocketService } from './services/websocket.service';
+import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
 registerLocaleData(localeDe);
 
 export function teamServiceFactory(provider: TeamService) {
-  return () => provider.load();
+  return () => provider.initLoadTeams();
 }
 
 export function seasonServiceFactory(provider: SeasonService) {
@@ -47,7 +48,8 @@ export function websocketServiceFactory(provider: WebsocketService) {
 @NgModule({
   entryComponents: [
     LoginComponent,
-    ChangepasswordComponent
+    ChangepasswordComponent,
+    SnackbarComponent
   ],
   declarations: [
     AppComponent,

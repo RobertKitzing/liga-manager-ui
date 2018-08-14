@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { QueueingSubject } from 'queueing-subject';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 import { MatchService } from './match.service';
 import websocketConnect, { Connection } from 'rxjs-websockets';
 import { retryWhen, delay, share } from 'rxjs/operators';
@@ -15,7 +14,8 @@ import { PitchService } from './pitch.service';
 export class WebsocketService {
 
   private inputStream: QueueingSubject<string> = new QueueingSubject<string>();
-  public messages: Observable<string>;
+  public connection: Connection;
+  public numberConnected = 0;
 
   constructor(
     private matchService: MatchService,
@@ -24,16 +24,21 @@ export class WebsocketService {
   }
 
   init() {
-    this.messages = websocketConnect(
+    this.connection = websocketConnect(
       environment.wsServerUrl,
-      this.inputStream,
-      null,
-      (url, protocols) => new WebSocket(url, protocols)
-    ).messages.pipe(
+      this.inputStream
+    );
+
+    this.connection.messages.pipe(
       share()
     );
 
-    this.messages.pipe(
+    this.connection.connectionStatus.subscribe(
+      (numberConnected) => {
+        this.numberConnected = numberConnected;
+      });
+
+    this.connection.messages.pipe(
       retryWhen(errors => errors.pipe(delay(60000)))
     ).subscribe(
       (message) => {

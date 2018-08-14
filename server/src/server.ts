@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as expressWsRoutes from 'express-ws-routes';
 import * as path from 'path';
+import * as helmet from 'helmet';
 import { WebSocketMessage, WebSocketMessageTypes } from '../../shared/models/websocket.model';
 
 class Server {
@@ -10,6 +11,7 @@ class Server {
     constructor() {
         this.express = expressWsRoutes();
         this.express.use(express.static(__dirname + '/www'));
+        this.express.use(helmet());
         this.mountRoutes();
     }
 
@@ -22,14 +24,18 @@ class Server {
         router.websocket('/ws', (info, cb, next) => {
             cb(
                 (socket) => {
+                    console.log('connected');
                     this.wsClients.push(socket);
-                    socket.on('close', () => {
+                    socket.on('close', (close) => {
+                        console.log('close');
                         this.wsClients = this.wsClients.filter(s => s !== socket);
                     });
-                    socket.on('error', () => {
+                    socket.on('error', (error) => {
+                        console.log('error');
                         this.wsClients = this.wsClients.filter(s => s !== socket);
                     });
                     socket.on('message', (message) => {
+                        console.log('message');
                         const msg: WebSocketMessage = JSON.parse(message);
                         switch (msg.type) {
                             case WebSocketMessageTypes.PITCH_ADDED:

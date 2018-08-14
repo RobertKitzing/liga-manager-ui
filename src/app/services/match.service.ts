@@ -5,12 +5,18 @@ import { TeamService } from './team.service';
 import { PitchService } from './pitch.service';
 import { Subject } from 'rxjs';
 
+export interface MatchUpdateMessage {
+  matchId: string;
+  homeTeamName: string;
+  guestTeamName: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
 
-  public matchUpdated: Subject<string> = new Subject<string>();
+  public matchUpdated: Subject<MatchUpdateMessage> = new Subject<MatchUpdateMessage>();
 
   constructor(
     private apiClient: Client,

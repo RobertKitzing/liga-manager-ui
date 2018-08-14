@@ -19,6 +19,7 @@ export class TeamadminComponent implements OnInit {
     private apiClient: Client) { }
 
   ngOnInit() {
+    // TODO: load User Teams from api.
   }
 
   saveContact(teamId: string, firstname: string, lastname: string, mail: string, phone: string) {
