@@ -3,6 +3,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { TeamService } from '../../services/team.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Contact_person, Client } from '../../../api';
+import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-teamadmin',
@@ -11,11 +14,13 @@ import { Contact_person, Client } from '../../../api';
 })
 export class TeamadminComponent implements OnInit {
 
-  emailFormControl: FormControl = new FormControl('', Validators.email);
+  emailFormControl: FormControl = new FormControl('', [ Validators.email, Validators.required ]);
 
   constructor(
     public authService: AuthenticationService,
     public teamService: TeamService,
+    public snackBar: MatSnackBar,
+    public translateService: TranslateService,
     private apiClient: Client) { }
 
   ngOnInit() {
@@ -31,8 +36,12 @@ export class TeamadminComponent implements OnInit {
       body.phone = phone;
       this.apiClient.updateTeamContact(teamId, body).subscribe(
         () => {
-          alert('saved');
-          this.teamService.updateTeam(teamId);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              message: this.translateService.instant('TEAM_CONTACT_SAVE_SUCCESS')
+            },
+            panelClass: ['alert', 'alert-success']
+          });
         }
       );
     }

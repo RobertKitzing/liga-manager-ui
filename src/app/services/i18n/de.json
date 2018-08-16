@@ -44,6 +44,7 @@
 	"HALBFINALE": "Halbfinale",
 	"LAST_NAME": "Nachname",
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
+	"LIVE_UPDATES": "Live updates",
 	"LOGGED_IN_AS": "Angemeldet als <b>{{ email }}</b>",
 	"MATCH": "Spiel",
 	"MATCHDAY": "{{ matchDay }}. Spieltag",
