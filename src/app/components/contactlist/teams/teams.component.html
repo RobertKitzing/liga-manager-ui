@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+      <ng-container *ngFor="let team of teams">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              {{ team.name}}
+            </div>
+            <div class="card-body">
+              <div class="card-text">
+                <div class="row">
+                  <div class="col align-self-center">
+                    {{ 'TEAM_CONTACT' | translate }}
+                  </div>
+                  <div class="col">
+                    <ng-container *ngIf="team.contact; else noContact">
+                      <app-contact-person [contact]="team.contact"></app-contact-person>
+                    </ng-container>
+                    <ng-template #noContact>
+                      {{ 'NO_CONTACT_SET' | translate}}
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>

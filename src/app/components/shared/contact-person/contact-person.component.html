@@ -1,0 +1,30 @@
+<ng-container *ngIf="contact">
+  <div class="row">
+    <div class="col-1">
+      <i class="fa fa-user"></i>
+    </div>
+    <div class="col" *ngIf="contact">
+      {{contact.first_name}} {{contact.last_name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <i class="material-icons">
+        contact_phone
+      </i>
+    </div>
+    <div class="col" *ngIf="contact">
+      <a href="tel:{{contact.phone}}">{{contact.phone}}</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <i class="material-icons">
+        contact_mail
+      </i>
+    </div>
+    <div class="col" *ngIf="contact">
+      <a href="mailto:{{contact.email}}">{{contact.email}}</a>
+    </div>
+  </div>
+</ng-container>

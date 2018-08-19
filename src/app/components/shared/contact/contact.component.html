@@ -7,34 +7,7 @@
           {{ team.name }}
         </h3>
         <div class="card-body">
-          <div class="row">
-            <div class="col-1">
-              <i class="fa fa-user"></i>
-            </div>
-            <div class="col" *ngIf="team.contact">
-              {{team.contact.first_name}} {{team.contact.last_name}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-1">
-              <i class="material-icons">
-                contact_phone
-              </i>
-            </div>
-            <div class="col" *ngIf="team.contact">
-              <a href="tel:{{team.contact.phone}}">{{team.contact.phone}}</a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-1">
-              <i class="material-icons">
-                contact_mail
-              </i>
-            </div>
-            <div class="col" *ngIf="team.contact">
-              <a href="mailto:{{team.contact.email}}">{{team.contact.email}}</a>
-            </div>
-          </div>
+          <app-contact-person [contact]="team.contact"></app-contact-person>
         </div>
       </div>
     </div>

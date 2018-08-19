@@ -13,6 +13,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl } from 'ng-
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { ContactPersonComponent } from './contact-person/contact-person.component';
 
 @Injectable()
 export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
@@ -57,11 +58,14 @@ export class CustomOwlDateTimeIntl extends OwlDateTimeIntl {
     EditmatchTimeComponent,
     FinalroundPipe,
     EditmatchPitchComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    ContactPersonComponent
   ],
   exports: [
+    CommonModule,
     MatchComponent,
     ReactiveFormsModule,
+    ContactPersonComponent,
     TranslateModule,
     FormsModule,
     SeasonchooserComponent,

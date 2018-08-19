@@ -45,11 +45,13 @@
 	"LAST_NAME": "Last Name",
 	"LAST_NAME_REQUIRED": "Please enter last Name",
 	"LIVE_UPDATES": "Live updates",
+	"LOCATION": "",
 	"LOGGED_IN_AS": "Logged in as <b>{{ email }}</b>",
 	"MATCH": "Match",
 	"MATCHDAY": "Matchday {{ matchDay }}",
 	"MENU": {
 		"ADMIN": "Adminarea",
+		"CONTACTS": "",
 		"MATCHPLAN": "Matchplan",
 		"TABLE": "Table",
 		"TEAM_ADMIN": "Team Management",
@@ -59,6 +61,7 @@
 	"NEW_PITCH": "New Pitch",
 	"NEW_PITCH_ADRESS": "Address of the Pitch",
 	"NEW_PITCH_LABEL": "Name of the Pitch",
+	"NO_CONTACT_SET": "",
 	"NO_PTICH_SET": "No Pitch",
 	"OLD_KICKOFF_TIME": "Old Kickoff",
 	"OLD_PITCH": "Old Pitch",
@@ -67,6 +70,7 @@
 	"PASSWORD_REQUIRED": "Please enter Password",
 	"PHONE": "Phone",
 	"PITCH": "Pitch",
+	"PITCH_CONTACT": "",
 	"PITCH_REQUIRED": "Please enter Pitch",
 	"PITCH_SAVE_SUCCESS": "Pitch saved",
 	"PLACEHOLDER": {
@@ -97,6 +101,7 @@
 		"MANAGE_TOURNAMENT": "Tournament Management",
 		"MANAGE_USERS": "User Management",
 		"MATCHES": "Matches",
+		"PITCHES": "",
 		"TEAMS": "Teams"
 	},
 	"TABLE": {
@@ -108,6 +113,8 @@
 		"WIN_DRAW_LOST": "W:D:L"
 	},
 	"TEAMS_IN_SEASON": "Teams in Season",
+	"TEAM_CONTACT": "",
+	"TEAM_CONTACT_SAVE_SUCCESS": "",
 	"TIME_SAVE_SUCCESS": "Kickoff time saved",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Enter unique Pitch name",
 	"USERNAME": "Email",

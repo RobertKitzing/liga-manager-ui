@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: './components/newpassword#NewpasswordModule',
   },
   {
+    path: 'contacts',
+    loadChildren: './components/contactlist#ContactlistModule',
+  },
+  {
     path: 'admin',
     loadChildren: './components/admin#AdminModule',
     canLoad: [AdminGuard],

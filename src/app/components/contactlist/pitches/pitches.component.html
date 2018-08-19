@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <ng-container *ngFor="let pitch of pitches">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            {{ pitch.label}}
+          </div>
+          <div class="card-body">
+            <div class="card-text">
+              <div class="row">
+                <div class="col">
+                  {{ 'LOCATION' | translate }}
+                </div>
+                <div class="col">
+                  <a href="https://www.google.com/maps/?q={{ pitch.location_latitude }},{{ pitch.location_longitude }}" target="_blank" style="cursor: pointer;">
+                    <i class="material-icons">
+                      location_on
+                    </i>
+                    {{ pitch.label }}
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  {{ 'PITCH_CONTACT' | translate }}
+                </div>
+                <div class="col">
+                  <ng-container *ngIf="pitch.contact; else noContact">
+                    <app-contact-person [contact]="pitch.contact"></app-contact-person>
+                  </ng-container>
+                  <ng-template #noContact>
+                    {{ 'NO_CONTACT_SET' | translate}}
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

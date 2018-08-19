@@ -26,7 +26,7 @@
 		"START_SEASON": "Saison starten"
 	},
 	"CALCULATE_MATCHDAYS": "Spieltage berechnen",
-	"CONTACT": "",
+	"CONTACT": "Kontakt",
 	"EDIT_ROUND": "Runde {{ round }} bearbeiten",
 	"EDIT_TEAM_CONTACT_INFO_TEXT": "Wird als Kontakt bei all euren Spielen angezeigt",
 	"EMAIL": "Email",
@@ -45,11 +45,13 @@
 	"LAST_NAME": "Nachname",
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
 	"LIVE_UPDATES": "Live updates",
+	"LOCATION": "Adresse",
 	"LOGGED_IN_AS": "Angemeldet als <b>{{ email }}</b>",
 	"MATCH": "Spiel",
 	"MATCHDAY": "{{ matchDay }}. Spieltag",
 	"MENU": {
 		"ADMIN": "Adminbereich",
+		"CONTACTS": "Kontakte",
 		"MATCHPLAN": "Spielplan",
 		"TABLE": "Tabelle",
 		"TEAM_ADMIN": "Team Verwaltung",
@@ -59,6 +61,7 @@
 	"NEW_PITCH": "Neuer Spielort",
 	"NEW_PITCH_ADRESS": "Adresse des Spielorts",
 	"NEW_PITCH_LABEL": "Name des Spielortes",
+	"NO_CONTACT_SET": "Kein Kontakt eingeben",
 	"NO_PTICH_SET": "Kein Spielort",
 	"OLD_KICKOFF_TIME": "Alte Anstoßzeit",
 	"OLD_PITCH": "Alter Spielort",
@@ -67,6 +70,7 @@
 	"PASSWORD_REQUIRED": "Bitte Passwort eingeben",
 	"PHONE": "Telefon",
 	"PITCH": "Spielort",
+	"PITCH_CONTACT": "Kontakt des Spielortes",
 	"PITCH_REQUIRED": "Bitte einen Spielort eingeben",
 	"PITCH_SAVE_SUCCESS": "Spielort gespeichert",
 	"PLACEHOLDER": {
@@ -97,6 +101,7 @@
 		"MANAGE_TOURNAMENT": "Pokal Verwaltung",
 		"MANAGE_USERS": "Benutzer Verwaltung",
 		"MATCHES": "Spiele",
+		"PITCHES": "Spielorte",
 		"TEAMS": "Manschaften"
 	},
 	"TABLE": {
@@ -108,6 +113,8 @@
 		"WIN_DRAW_LOST": "S:U:N"
 	},
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
+	"TEAM_CONTACT": "Kontakt der Mannschaft",
+	"TEAM_CONTACT_SAVE_SUCCESS": "Kontakt der Mannschaft gespeichert",
 	"TIME_SAVE_SUCCESS": "Anstosszeit gespeichert",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Bitte einen möglichst eindeutigen Namen eingeben",
 	"USERNAME": "Email",

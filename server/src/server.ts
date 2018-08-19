@@ -24,7 +24,7 @@ class Server {
         router.websocket('/ws', (info, cb, next) => {
             cb(
                 (socket) => {
-                    console.log('connected');
+                    console.log('connected from ', info.origin);
                     this.wsClients.push(socket);
                     socket.on('close', (close) => {
                         console.log('close');

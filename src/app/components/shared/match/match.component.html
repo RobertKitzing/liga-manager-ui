@@ -17,34 +17,26 @@
                 </div>
             </div>
             <div class="row card-body align-items-center">
-                <div class="col text-center">
+                <div class="col-1 align-self-center">
+                    <mat-icon>access_time</mat-icon>
+                </div>
+                <div class="col align-self-center">
                     <ng-container *ngIf="match.kickoff">
-                        <div class="row">
-                            <div class="col">
-                                {{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                {{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}
-                            </div>
-                        </div>
+                        <span>{{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}, </span>
+                        <span>{{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}</span>
                     </ng-container>
                     <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.currentLang }}</i>
                 </div>
-                <mat-divider vertical="true"></mat-divider>
-                <div class="col text-center" *ngIf="!match.pitch">
-                    <i class="material-icons">
-                        location_off
-                    </i>
+                <div class="col-1 align-self-center">
+                    <mat-icon *ngIf="!match.pitch">location_off</mat-icon>
+                    <mat-icon *ngIf="match.pitch">location_on</mat-icon>
+                </div>
+                <div class="col align-self-center" *ngIf="!match.pitch">
                     <span>{{ 'NO_PTICH_SET' | translate }}</span>
                 </div>
-                <div class="col text-center" *ngIf="match.pitch">
+                <div class="col align-self-center" *ngIf="match.pitch">
                     <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}" target="_blank"
                         style="cursor: pointer;">
-                        <i class="material-icons">
-                            location_on
-                        </i>
                         {{ match.pitch.label }}
                     </a>
                 </div>
@@ -52,7 +44,6 @@
             <div class="row card-footer justiy-content-center">
                 <div class="col text-center">
                     <button mat-raised-button color="primary" (click)="openContactModal()">
-                        {{ 'CONTACT' | translate }}
                         <i class="material-icons">
                             perm_contact_calendar
                         </i>
