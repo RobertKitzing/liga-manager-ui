@@ -43,7 +43,7 @@ export class NewpasswordComponent implements OnInit {
 
   submit() {
     const body = new ChangePasswordBody();
-    body.new_password = this.loginForm.value;
+    body.new_password = this.loginForm.value.password;
     this.apiClient.changePassword(body).subscribe(
       () => {
         alert('Passwort geändert, bitte neu einloggen');
