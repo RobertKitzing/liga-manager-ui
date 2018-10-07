@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './components/admin/admin.guard';
 import { TeamadminGuard } from './components/teamadmin/teamadmin.guard';
 
@@ -24,6 +24,8 @@ const routes: Routes = [
   {
     path: 'contacts',
     loadChildren: './components/contactlist#ContactlistModule',
+    canLoad: [TeamadminGuard],
+    canActivate: [TeamadminGuard]
   },
   {
     path: 'admin',
