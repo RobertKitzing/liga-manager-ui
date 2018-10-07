@@ -25,7 +25,6 @@
                         <span>{{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}, </span>
                         <span>{{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}</span>
                     </ng-container>
-                    <i *ngIf="!match.kickoff">{{ match.planned_for | date:'shortDate':'':i18Service.currentLang }}</i>
                 </div>
                 <div class="col-1 align-self-center">
                     <mat-icon *ngIf="!match.pitch">location_off</mat-icon>

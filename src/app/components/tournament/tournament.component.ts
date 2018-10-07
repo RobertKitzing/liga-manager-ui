@@ -44,17 +44,17 @@ export class TournamentComponent implements OnInit {
 
   tournamentChanged() {
     this.matches = null;
-    this.apiClient.getMatchesInTournament(this.tournament.id).subscribe(
-      (matches) => {
-        const mvw = this.matchService.matchConverterArray(matches);
-        this.matches = new Array<MatchViewModel[]>();
-        for (let round = 0; round < this.tournament.rounds; round++) {
-          this.matches[round] = mvw.filter(m => m.match_day === (round + 1));
-        }
-        this.matches = this.matches.reverse();
-        this.getWinner();
-      }
-    );
+    // this.matchService.getMatchesInSeason(this.tournament.id).subscribe(
+    //   (matches) => {
+    //     const mvw = this.matchService.matchConverterArray(matches);
+    //     this.matches = new Array<MatchViewModel[]>();
+    //     for (let round = 0; round < this.tournament.rounds; round++) {
+    //       this.matches[round] = mvw.filter(m => m.match_day === (round + 1));
+    //     }
+    //     this.matches = this.matches.reverse();
+    //     this.getWinner();
+    //   }
+    // );
   }
 
   getWinner() {

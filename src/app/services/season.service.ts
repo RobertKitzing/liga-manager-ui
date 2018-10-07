@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, SeasonState, Season } from '../../api/liga-manager-api';
+import { Client, SeasonState, Season, Match_day } from '../../api/liga-manager-api';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,6 @@ export class SeasonService {
 
   seasonInProgress: Season[];
   currentSeason: BehaviorSubject<Season> = new BehaviorSubject<Season>(JSON.parse(localStorage.getItem('SELECTED_SEASON')));
-
   seasonCreated: Subject<void> = new Subject<void>();
 
   constructor(private apiClient: Client) {

@@ -40,7 +40,8 @@ export class ManagetournamentComponent implements OnInit {
   }
 
   onTournamentSelected() {
-    this.createRoundNr = this.manageTournament.rounds + 1;
+    // this.createRoundNr = this.manageTournament + 1;
+    // TODO: implementieren
   }
 
   genRounds() {
@@ -55,11 +56,12 @@ export class ManagetournamentComponent implements OnInit {
   }
 
   editRound() {
-    if (this.createRoundNr <= this.manageTournament.rounds) {
-      if (!confirm('Warning, this will override existing Round!')) {
-        return;
-      }
-    }
+    // TODO: implentieren
+    // if (this.createRoundNr <= this.manageTournament.rounds) {
+    //   if (!confirm('Warning, this will override existing Round!')) {
+    //     return;
+    //   }
+    // }
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
       data: { round: this.createRoundNr, tournamentId: this.manageTournament.id },
       panelClass: 'my-full-screen-dialog'

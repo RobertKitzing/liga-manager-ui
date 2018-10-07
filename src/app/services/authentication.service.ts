@@ -50,7 +50,7 @@ export class AuthenticationService {
         let headers = new HttpHeaders();
         const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
         headers = headers.append('Authorization', 'Basic ' + passBase64);
-        this.httpClient.get(this.baseUrl + '/user/me', { headers: headers, observe: 'response' }).subscribe(
+        this.httpClient.get(this.baseUrl + '/users/me', { headers: headers, observe: 'response' }).subscribe(
           async (response) => {
             const data = {
               username: response.body['email'],
@@ -114,7 +114,7 @@ export class AuthenticationService {
         headers = headers.append('Content-Type', 'application/json; charset=utf-8');
         const body = new ChangePasswordBody();
         body.new_password = newPassword;
-        this.httpClient.put('/api/user/me/password', JSON.stringify(body), {headers: headers }).subscribe(
+        this.httpClient.put('/api/users/me/password', JSON.stringify(body), {headers: headers }).subscribe(
           (response) => {
             resolve(true);
           }, err => {

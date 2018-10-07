@@ -43,6 +43,7 @@
     "js-base64": "^2.4.8",
     "material-design-icons": "^3.0.1",
     "ng-pick-datetime": "^6.0.10",
+    "nswag": "^11.20.1",
     "queueing-subject": "^0.3.0",
     "rxjs": "^6.0.0",
     "rxjs-websockets": "^6.0.2",

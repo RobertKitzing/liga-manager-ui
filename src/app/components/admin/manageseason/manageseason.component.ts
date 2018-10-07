@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchesBody } from '../../../../api';
+import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchDaysBody, Date_period } from '../../../../api';
 import { MatSelectChange } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
 import { MatchViewModel } from '../../../models/match.viewmodel';
@@ -76,13 +76,13 @@ export class ManageseasonComponent implements OnInit {
   }
 
   createMatches() {
-    const body = new CreateMatchesBody();
-    body.start_at = new Date();
-    this.apiClient.createMatches(this.manageSeason.id, body).subscribe(
+    const body = new CreateMatchDaysBody();
+    body.dates = new Array<Date_period>();
+    this.apiClient.createMatchDays(this.manageSeason.id, body).subscribe(
       async (m) => {
         this.apiClient.getSeason(this.manageSeason.id).subscribe(
           async (season) => {
-            this.matchDayCounter = Array.from(new Array(season.match_day_count), (val, index) => index + 1);
+            // this.matchDayCounter = Array.from(new Array(season.match_day_count), (val, index) => index + 1);
             await this.getMatchesInSeason(1);
           }
         );
