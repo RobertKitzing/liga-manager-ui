@@ -9,7 +9,8 @@
                     {{ match.home_team.name }}
                 </div>
                 <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">
-                    <span *ngIf="isNumber(match.home_score) && isNumber(match.guest_score); else noResult">{{ match.home_score }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
+                    <span *ngIf="isNumber(match.home_score) && isNumber(match.guest_score); else noResult">{{ match.home_score
+                        }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
                     <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>
                 </div>
                 <div class="col-12 col-sm-4 text-center" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
@@ -25,6 +26,7 @@
                         <span>{{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}, </span>
                         <span>{{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}</span>
                     </ng-container>
+                    <span *ngIf="!match.kickoff">{{ 'NO_TIME_SET' | translate }}</span>
                 </div>
                 <div class="col-1 align-self-center">
                     <mat-icon *ngIf="!match.pitch">location_off</mat-icon>

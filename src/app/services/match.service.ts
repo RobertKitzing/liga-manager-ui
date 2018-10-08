@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, Match, SubmitMatchResultBody } from '../../api';
+import { Client, Match, SubmitMatchResultBody, Match_day } from '../../api';
 import { MatchViewModel } from '../models/match.viewmodel';
 import { TeamService } from './team.service';
 import { PitchService } from './pitch.service';
@@ -28,9 +28,28 @@ export class MatchService {
     // TODO: Umbauen auf Observable
     return new Promise<MatchViewModel[]>(
       (resolve) => {
-        this.apiClient.getMatches(seasonId, null, teamId, matchDayId).subscribe(
+        if (!teamId) {
+          teamId = undefined;
+        }
+        if (!matchDayId) {
+          matchDayId = undefined;
+        }
+        this.apiClient.getMatches(seasonId, undefined, teamId, matchDayId).subscribe(
           (matches) => {
             resolve(this.matchConverterArray(matches));
+          }
+        );
+      }
+    );
+  }
+
+  public async getMatchDaysInSeason(seasonId: string): Promise<Match_day[]> {
+    // TODO: Umbauen auf Observable
+    return new Promise<Match_day[]>(
+      (resolve) => {
+        this.apiClient.getMatchDaysInSeason(seasonId).subscribe(
+          (matchDays) => {
+            resolve(matchDays);
           }
         );
       }

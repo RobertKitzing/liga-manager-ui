@@ -60,7 +60,7 @@ export class MatchplanComponent implements OnInit {
       async (season) => {
         if (season) {
           this.season = season;
-          this.matchDays = matchDaysMock; // await this.apiClient.getMatchDaysInSeason(season.id).toPromise();
+          this.matchDays = await this.apiClient.getMatchDaysInSeason(season.id).toPromise();
           this.handleGetMatches();
           this.teamsInSeason = await this.teamService.loadTeamsInSeason(season.id);
         }
@@ -81,5 +81,9 @@ export class MatchplanComponent implements OnInit {
 
   matchDayCompare(md1: Match_day, md2: Match_day) {
     return md1 && md2 && md1.id === md2.id;
+  }
+
+  getMatchDay(id: string): Match_day {
+    return this.matchDays.find(t => t.id === id);
   }
 }

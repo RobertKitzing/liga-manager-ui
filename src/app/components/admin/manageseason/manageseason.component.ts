@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchDaysBody, Date_period } from '../../../../api';
+import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchDaysBody, Date_period, Match_day } from '../../../../api';
 import { MatSelectChange } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
 import { MatchViewModel } from '../../../models/match.viewmodel';
@@ -18,6 +18,8 @@ export class ManageseasonComponent implements OnInit {
   matchesInSeason: MatchViewModel[];
   manageSeason: Season;
   matchDayCounter: number[];
+  newMatchDays: Date_period[];
+  matchDaysInSeason: Match_day[];
 
   constructor(
     public seasonService: SeasonService,
@@ -75,23 +77,45 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatches() {
+  removeTeamFromSeason(teamId: string) {
+    if (this.manageSeason) {
+      this.apiClient.removeTeamFromSeason(this.manageSeason.id, teamId).subscribe(
+        (t) => {
+          this.getTeamsInManageSeason();
+        }
+      );
+    }
+  }
+
+  createMatchDays() {
+    this.newMatchDays = new Array<Date_period>();
+    for (let i = 0; i < this.manageSeason.team_count - 1; i++) {
+      const dp = new Date_period();
+      dp.from = new Date();
+      dp.from.setDate(dp.from.getDate() + (i * 7));
+      dp.to = new Date();
+      dp.to.setDate(dp.to.getDate() + (i * 7));
+      this.newMatchDays.push(dp);
+    }
+  }
+
+  sendMatchDays() {
     const body = new CreateMatchDaysBody();
-    body.dates = new Array<Date_period>();
+    body.dates = this.newMatchDays;
     this.apiClient.createMatchDays(this.manageSeason.id, body).subscribe(
-      async (m) => {
-        this.apiClient.getSeason(this.manageSeason.id).subscribe(
-          async (season) => {
-            // this.matchDayCounter = Array.from(new Array(season.match_day_count), (val, index) => index + 1);
-            await this.getMatchesInSeason(1);
-          }
-        );
+      (d) => {
+        
       }
     );
   }
 
-  async getMatchesInSeason(matchDay) {
-    this.matchesInSeason = await this.matchService.getMatchesInSeason(this.manageSeason.id, matchDay);
+  async getMatchesInSeason() {
+    this.matchDaysInSeason = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
+    this.matchesInSeason = await this.matchService.getMatchesInSeason(this.manageSeason.id, undefined, undefined);
+  }
+
+  getMatchDay(id: string): Match_day {
+    return this.matchDaysInSeason.find(t => t.id === id);
   }
 
   startSeason() {
