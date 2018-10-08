@@ -20,6 +20,8 @@ export class ManageseasonComponent implements OnInit {
   matchDayCounter: number[];
   newMatchDays: Date_period[];
   matchDaysInSeason: Match_day[];
+  fromToOffset = 2;
+  betweenMatchDaysOffset = 7;
 
   constructor(
     public seasonService: SeasonService,
@@ -87,14 +89,15 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatchDays() {
+  createMatchDays(startDate: any) {
+    console.log(startDate);
     this.newMatchDays = new Array<Date_period>();
-    for (let i = 0; i < this.manageSeason.team_count - 1; i++) {
+    for (let i = 0; i < this.teamsInSeason.length - 1; i++) {
       const dp = new Date_period();
-      dp.from = new Date();
-      dp.from.setDate(dp.from.getDate() + (i * 7));
-      dp.to = new Date();
-      dp.to.setDate(dp.to.getDate() + (i * 7));
+      dp.from = new Date(startDate.value);
+      dp.from.setDate(dp.from.getDate() + (i * this.betweenMatchDaysOffset));
+      dp.to = new Date(dp.from);
+      dp.to.setDate(dp.to.getDate() + this.fromToOffset);
       this.newMatchDays.push(dp);
     }
   }
@@ -104,7 +107,6 @@ export class ManageseasonComponent implements OnInit {
     body.dates = this.newMatchDays;
     this.apiClient.createMatchDays(this.manageSeason.id, body).subscribe(
       (d) => {
-        
       }
     );
   }
@@ -124,5 +126,13 @@ export class ManageseasonComponent implements OnInit {
         this.seasonService.seasonCreated.next();
       }
     );
+  }
+
+  setMatchDayFromDate(index: number, date: any) {
+    this.newMatchDays[index].from = date.value;
+  }
+
+  setMatchDayToDate(index: number, date: any) {
+    this.newMatchDays[index].to = date.value;
   }
 }
