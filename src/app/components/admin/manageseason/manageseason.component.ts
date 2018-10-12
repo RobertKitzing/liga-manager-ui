@@ -190,14 +190,14 @@ export class ManageseasonComponent implements OnInit {
     if (this.manageSeason) {
       this.newMatchDays = new Array<Match_day>();
       const matchDays = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
-      matchDays.forEach(
-        (md) => {
-          const dp = new Date_period();
-          dp.from = md.start_date;
-          dp.to = md.end_date;
-          this.newMatchDays.push(dp);
-        }
-      );
+        matchDays.forEach(
+          (md) => {
+            const dp = new Date_period();
+            dp.from = md.start_date;
+            dp.to = md.end_date;
+            this.newMatchDays.push(dp);
+          }
+        );
     }
   }
 
