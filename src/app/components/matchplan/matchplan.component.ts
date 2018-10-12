@@ -2,9 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { MatchService } from '../../services/match.service';
 import { MatchViewModel } from '../../models/match.viewmodel';
-import { Season, Team } from '../../../api';
+import { Season, Team, Match_day, Client } from '../../../api';
 import { TeamService } from '../../services/team.service';
+import { I18Service } from '../../services/i18.service';
 
+const matchDaysMock: Match_day[] = [
+  <Match_day>{
+    id: 'test',
+    number: 1,
+    start_date: new Date(),
+    end_date: new Date()
+  },
+  <Match_day>{
+    id: 'test2',
+    number: 2,
+    start_date: new Date(),
+    end_date: new Date()
+  }
+];
 @Component({
   selector: 'app-matchplan',
   templateUrl: './matchplan.component.html',
@@ -13,13 +28,13 @@ import { TeamService } from '../../services/team.service';
 export class MatchplanComponent implements OnInit {
 
   public matches: MatchViewModel[];
-  public matchDays: number[];
+  public matchDays: Match_day[];
 
-  public set selectedMatchDay(value: number) {
-    localStorage.setItem('SELECTED_MATCHDAY', value.toString());
+  public set selectedMatchDay(value: Match_day) {
+    localStorage.setItem('SELECTED_MATCHDAY', JSON.stringify(value));
   }
-  public get selectedMatchDay(): number {
-    return Number(localStorage.getItem('SELECTED_MATCHDAY')) || 1;
+  public get selectedMatchDay(): Match_day {
+    return JSON.parse(localStorage.getItem('SELECTED_MATCHDAY')) || new Match_day();
   }
   private season: Season;
 
@@ -35,7 +50,9 @@ export class MatchplanComponent implements OnInit {
   constructor(
     private seasonService: SeasonService,
     private matchService: MatchService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private apiClient: Client,
+    public i18Service: I18Service
   ) { }
 
   ngOnInit() {
@@ -43,7 +60,7 @@ export class MatchplanComponent implements OnInit {
       async (season) => {
         if (season) {
           this.season = season;
-          this.matchDays = Array.from(new Array(this.season.match_day_count), (val, index) => index + 1);
+          this.matchDays = await this.apiClient.getMatchDaysInSeason(season.id).toPromise();
           this.handleGetMatches();
           this.teamsInSeason = await this.teamService.loadTeamsInSeason(season.id);
         }
@@ -55,14 +72,18 @@ export class MatchplanComponent implements OnInit {
     this.matches = null;
     if (this.season) {
       if (this.selectedTeamId !== '0') {
-        this.matches = await this.matchService.getMatchesInSeason(this.season.id, undefined, this.selectedTeamId);
-        if (this.matches) {
-          this.matches = this.matches.sort((a, b) => a.match_day > b.match_day ? 1 : -1);
-        }
+        this.matches = await this.matchService.getMatchesInSeason(this.season.id, this.selectedTeamId, null);
       } else {
-        this.matches = await this.matchService.getMatchesInSeason(this.season.id, this.selectedMatchDay);
+        this.matches = await this.matchService.getMatchesInSeason(this.season.id, null, this.selectedMatchDay.id);
       }
     }
   }
 
+  matchDayCompare(md1: Match_day, md2: Match_day) {
+    return md1 && md2 && md1.id === md2.id;
+  }
+
+  getMatchDay(id: string): Match_day {
+    return this.matchDays.find(t => t.id === id);
+  }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, Match, SubmitMatchResultBody } from '../../api';
+import { Client, Match, SubmitMatchResultBody, Match_day } from '../../api';
 import { MatchViewModel } from '../models/match.viewmodel';
 import { TeamService } from './team.service';
 import { PitchService } from './pitch.service';
@@ -23,13 +23,66 @@ export class MatchService {
     private teamService: TeamService,
     private pitchService: PitchService) { }
 
-  public async getMatchesInSeason(seasonId: string, matchDay?: number, teamId?: string): Promise<MatchViewModel[]> {
+  // tslint:disable-next-line:max-line-length
+  public async getMatchesInSeason(seasonId: string, teamId?: string, matchDayId?: string): Promise<MatchViewModel[]> {
     // TODO: Umbauen auf Observable
     return new Promise<MatchViewModel[]>(
       (resolve) => {
-        this.apiClient.getMatchesInSeason(seasonId, matchDay, teamId).subscribe(
+        if (!teamId) {
+          teamId = undefined;
+        }
+        if (!matchDayId) {
+          matchDayId = undefined;
+        }
+        this.apiClient.getMatches(seasonId, undefined, teamId, matchDayId).subscribe(
           (matches) => {
             resolve(this.matchConverterArray(matches));
+          }
+        );
+      }
+    );
+  }
+
+  public async getMatchDaysInSeason(seasonId: string): Promise<Match_day[]> {
+    // TODO: Umbauen auf Observable
+    return new Promise<Match_day[]>(
+      (resolve) => {
+        this.apiClient.getMatchDaysInSeason(seasonId).subscribe(
+          (matchDays) => {
+            resolve(matchDays);
+          }
+        );
+      }
+    );
+  }
+
+  // tslint:disable-next-line:max-line-length
+  public async getMatchesInTournament(tournamentId: string, teamId?: string, matchDayId?: string): Promise<MatchViewModel[]> {
+    // TODO: Umbauen auf Observable
+    return new Promise<MatchViewModel[]>(
+      (resolve) => {
+        if (!teamId) {
+          teamId = undefined;
+        }
+        if (!matchDayId) {
+          matchDayId = undefined;
+        }
+        this.apiClient.getMatches(undefined, tournamentId, teamId, matchDayId).subscribe(
+          (matches) => {
+            resolve(this.matchConverterArray(matches));
+          }
+        );
+      }
+    );
+  }
+
+  public async getRoundsInTournament(tournamentId: string): Promise<Match_day[]> {
+    // TODO: Umbauen auf Observable
+    return new Promise<Match_day[]>(
+      (resolve) => {
+        this.apiClient.getRoundsInTournament(tournamentId).subscribe(
+          (matchDays) => {
+            resolve(matchDays);
           }
         );
       }

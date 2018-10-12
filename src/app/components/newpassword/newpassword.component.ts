@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User, Client, ChangePasswordBody } from 'src/api';
 import { AuthenticationService } from '../../services/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material';
+import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-newpassword',
@@ -18,7 +21,9 @@ export class NewpasswordComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     public authService: AuthenticationService,
-    private apiClient: Client
+    private apiClient: Client,
+    private translateService: TranslateService,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.formBuilder.group({
       password: ['', Validators.required],
@@ -46,8 +51,23 @@ export class NewpasswordComponent implements OnInit {
     body.new_password = this.loginForm.value.password;
     this.apiClient.changePassword(body).subscribe(
       () => {
-        alert('Passwort geändert, bitte neu einloggen');
         this.authService.logout();
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            message: this.translateService.instant('PASSWORD_CHANGED_SUCCESS')
+          },
+          panelClass: ['alert', 'alert-success'],
+          duration: 30000
+        });
+      },
+      () => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            message: this.translateService.instant('PASSWORD_CHANGED_ERROR')
+          },
+          panelClass: ['alert', 'alert-danger'],
+          duration: 30000
+        });
       }
     );
   }

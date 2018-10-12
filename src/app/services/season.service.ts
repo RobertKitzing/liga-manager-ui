@@ -8,14 +8,23 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class SeasonService {
 
   seasonInProgress: Season[];
-  currentSeason: BehaviorSubject<Season> = new BehaviorSubject<Season>(JSON.parse(localStorage.getItem('SELECTED_SEASON')));
+  private get _currentSeason(): Season {
+    return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || null;
+  }
 
+  private set _currentSeason(season: Season) {
+    if (season) {
+      localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
+    }
+  }
+
+  currentSeason: BehaviorSubject<Season> = new BehaviorSubject<Season>(this._currentSeason);
   seasonCreated: Subject<void> = new Subject<void>();
 
   constructor(private apiClient: Client) {
     this.currentSeason.subscribe(
       (season) => {
-        localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
+        this._currentSeason = season;
       }
     );
     this.seasonCreated.subscribe(
