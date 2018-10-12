@@ -23,7 +23,8 @@ export class AddtournamentroundComponent implements OnInit {
 
   teams: Team_pairs[] = new Array<Team_pairs>();
   teamList: Team[];
-  newRoundPlanDate: Date;
+  newRoundPlanDateFrom: Date;
+  newRoundPlanDateTo: Date;
 
   constructor(
     public dialogRef: MatDialogRef<AddtournamentroundComponent>,
@@ -63,6 +64,8 @@ export class AddtournamentroundComponent implements OnInit {
   createMatch() {
     const body = new SetRoundBody();
     body.date_period = new Date_period();
+    body.date_period.from = this.newRoundPlanDateFrom;
+    body.date_period.to = this.newRoundPlanDateTo;
     body.team_pairs = this.teams;
     this.apiClient.setRound(this.data.tournamentId, this.data.round, body).subscribe(
       () => {
@@ -72,7 +75,11 @@ export class AddtournamentroundComponent implements OnInit {
     );
   }
 
-  planDateSet(event: any) {
-    this.newRoundPlanDate = event.value;
+  setPlanDateFrom(event: any) {
+    this.newRoundPlanDateFrom = event.value;
+  }
+
+  setPlanDateTo(event: any) {
+    this.newRoundPlanDateTo = event.value;
   }
 }

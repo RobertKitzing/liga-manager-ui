@@ -56,6 +56,39 @@ export class MatchService {
     );
   }
 
+  // tslint:disable-next-line:max-line-length
+  public async getMatchesInTournament(tournamentId: string, teamId?: string, matchDayId?: string): Promise<MatchViewModel[]> {
+    // TODO: Umbauen auf Observable
+    return new Promise<MatchViewModel[]>(
+      (resolve) => {
+        if (!teamId) {
+          teamId = undefined;
+        }
+        if (!matchDayId) {
+          matchDayId = undefined;
+        }
+        this.apiClient.getMatches(undefined, tournamentId, teamId, matchDayId).subscribe(
+          (matches) => {
+            resolve(this.matchConverterArray(matches));
+          }
+        );
+      }
+    );
+  }
+
+  public async getRoundsInTournament(tournamentId: string): Promise<Match_day[]> {
+    // TODO: Umbauen auf Observable
+    return new Promise<Match_day[]>(
+      (resolve) => {
+        this.apiClient.getRoundsInTournament(tournamentId).subscribe(
+          (matchDays) => {
+            resolve(matchDays);
+          }
+        );
+      }
+    );
+  }
+
   matchConverter(match: Match): MatchViewModel {
     const mv = new MatchViewModel(match);
     mv.home_team = this.teamService.getTeamById(mv.home_team_id);

@@ -40,10 +40,17 @@
     </div>
     <div class="row">
       <div class="col">
-        <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate}}</button>
-        <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="planDateSet($event)">
-        <owl-date-time [pickerMode]="'dialog'" #dt5></owl-date-time>
+        {{ 'PLAN_DATE_FROM'| translate}}:
+          <input matInput #kickoffInput [owlDateTime]="planDateFrom" (dateTimeChange)="setPlanDateFrom($event)">
+        <button mat-button [owlDateTimeTrigger]="planDateFrom">{{ 'BUTTON.SET_TIME' | translate}}</button>
+        <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateFrom></owl-date-time>
       </div>
+      <div class="col">
+          {{ 'PLAN_DATE_TO'| translate}}:
+          <input matInput #kickoffInput [owlDateTime]="planDateTo" (dateTimeChange)="setPlanDateTo($event)">
+          <button mat-button [owlDateTimeTrigger]="planDateTo">{{ 'BUTTON.SET_TIME' | translate}}</button>
+          <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateTo></owl-date-time>
+        </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="center">

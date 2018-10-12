@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, Tournament, Team } from '../../../api';
+import { Client, Tournament, Team, Match_day } from '../../../api';
 import { MatchViewModel } from '../../models/match.viewmodel';
 import { MatchService } from '../../services/match.service';
 
@@ -12,6 +12,7 @@ export class TournamentComponent implements OnInit {
 
   tournaments: Tournament[];
   winnerLastRound: Team[];
+  tournamentRounds: Match_day[];
 
   get tournament(): Tournament {
     return JSON.parse(localStorage.getItem('SELECTED_TOURNAMENT'));
@@ -42,19 +43,20 @@ export class TournamentComponent implements OnInit {
     return c1 && c2 && c1.id === c2.id;
   }
 
-  tournamentChanged() {
+  async tournamentChanged() {
     this.matches = null;
-    // this.matchService.getMatchesInSeason(this.tournament.id).subscribe(
-    //   (matches) => {
-    //     const mvw = this.matchService.matchConverterArray(matches);
-    //     this.matches = new Array<MatchViewModel[]>();
-    //     for (let round = 0; round < this.tournament.rounds; round++) {
-    //       this.matches[round] = mvw.filter(m => m.match_day === (round + 1));
-    //     }
-    //     this.matches = this.matches.reverse();
-    //     this.getWinner();
-    //   }
-    // );
+    const matches = await this.matchService.getMatchesInTournament(this.tournament.id);
+    this.tournamentRounds = await this.matchService.getRoundsInTournament(this.tournament.id);
+    this.matches = new Array<MatchViewModel[]>();
+    for (let round = 0; round < this.tournamentRounds.length; round++) {
+      this.matches[round] = matches.filter(m => this.getRound(m.match_day_id).number === round);
+    }
+    this.matches = this.matches.reverse();
+    this.getWinner();
+  }
+
+  getRound(matchDayId: string): Match_day {
+    return this.tournamentRounds.find(t => t.id === matchDayId);
   }
 
   getWinner() {

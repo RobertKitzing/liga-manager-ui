@@ -23,7 +23,7 @@
   <ng-container *ngFor="let round of matches">
     <div class="text-center">
       <ng-container [ngSwitch]="round.length">
-        <h3 *ngSwitchCase="8">{{ 'ACHTELFINALE' | translate }}</h3>
+        <!-- <h3 *ngSwitchCase="8">{{ 'ACHTELFINALE' | translate }}</h3> -->
         <h3 *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }}</h3>
         <h3 *ngSwitchCase="2">{{ 'HALBFINALE' | translate }}</h3>
         <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }}</h3>

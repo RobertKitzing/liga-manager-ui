@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Tournament, Client, CreateTournamentBody } from '../../../../api';
+import { Tournament, Client, CreateTournamentBody, Match_day } from '../../../../api';
 import { MatDialog } from '@angular/material';
 import { AddtournamentroundComponent } from './addtournamentround/addtournamentround.component';
+import { MatchService } from '../../../services/match.service';
 
 @Component({
   selector: 'app-managetournament',
@@ -15,9 +16,11 @@ export class ManagetournamentComponent implements OnInit {
   startTeamCount = 4;
   createRoundNr: number;
   rounds: number[][];
+  manageTournamentRounds: Match_day[];
 
   constructor(
     private apiClient: Client,
+    private matchService: MatchService,
     public dialog: MatDialog
   ) { }
 
@@ -39,9 +42,9 @@ export class ManagetournamentComponent implements OnInit {
     );
   }
 
-  onTournamentSelected() {
-    // this.createRoundNr = this.manageTournament + 1;
-    // TODO: implementieren
+  async onTournamentSelected() {
+    this.manageTournamentRounds = await this.matchService.getRoundsInTournament(this.manageTournament.id);
+    this.createRoundNr = this.manageTournamentRounds.length;
   }
 
   genRounds() {
@@ -56,12 +59,11 @@ export class ManagetournamentComponent implements OnInit {
   }
 
   editRound() {
-    // TODO: implentieren
-    // if (this.createRoundNr <= this.manageTournament.rounds) {
-    //   if (!confirm('Warning, this will override existing Round!')) {
-    //     return;
-    //   }
-    // }
+    if (this.createRoundNr < this.manageTournamentRounds.length) {
+      if (!confirm('Warning, this will override existing Round!')) {
+        return;
+      }
+    }
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
       data: { round: this.createRoundNr, tournamentId: this.manageTournament.id },
       panelClass: 'my-full-screen-dialog'
