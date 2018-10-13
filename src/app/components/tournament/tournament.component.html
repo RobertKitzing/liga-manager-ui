@@ -27,8 +27,9 @@
         <h3 *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }}</h3>
         <h3 *ngSwitchCase="2">{{ 'HALBFINALE' | translate }}</h3>
         <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }}</h3>
-        <h3 *ngSwitchDefault>{{ round[0].match_day }}. {{ 'ROUND' | translate }}</h3>
+        <h3 *ngSwitchDefault>{{ getRound(round[0].match_day_id).number }}. {{ 'ROUND' | translate }}</h3>
       </ng-container>
+      <h3>({{ getRound(round[0].match_day_id).start_date | date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ getRound(round[0].match_day_id).end_date | date:'shortDate':'':i18Service.currentLang }})</h3>
     </div>
     <div class="justify-content-center">
       <div class="row" style="justify-content: center">

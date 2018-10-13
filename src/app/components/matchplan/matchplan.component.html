@@ -9,7 +9,7 @@
         [disabled]="selectedTeamId !== '0'">
           <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
             <div *ngIf="!matchDaySelect.panelOpen">{{ matchDay.number }}</div>
-            <div *ngIf="matchDaySelect.panelOpen">{{ matchDay.number }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang }} - {{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})</div>
+            <div *ngIf="matchDaySelect.panelOpen">{{ matchDay.number }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})</div>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -29,11 +29,11 @@
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="!matches"></mat-progress-bar>
   <h3 class="text-center" *ngIf="selectedTeamId === '0' && selectedMatchDay.id">
-    {{ 'MATCHDAY' | translate:{matchDay: selectedMatchDay.number} }} ({{ selectedMatchDay.start_date| date:'shortDate':'':i18Service.currentLang }} - {{ selectedMatchDay.end_date| date:'shortDate':'':i18Service.currentLang }})
+    {{ 'MATCHDAY' | translate:{matchDay: selectedMatchDay.number} }} ({{ selectedMatchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ selectedMatchDay.end_date| date:'shortDate':'':i18Service.currentLang }})
   </h3>
   <ng-container *ngFor="let match of matches">
     <h3 class="text-center" *ngIf="selectedTeamId !== '0'">
-      {{ 'MATCHDAY' | translate:{matchDay: getMatchDay(match.match_day_id).number} }} ({{ getMatchDay(match.match_day_id).start_date| date:'shortDate':'':i18Service.currentLang }} - {{ getMatchDay(match.match_day_id).end_date| date:'shortDate':'':i18Service.currentLang }})
+      {{ 'MATCHDAY' | translate:{matchDay: getMatchDay(match.match_day_id).number} }} ({{ getMatchDay(match.match_day_id).start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ getMatchDay(match.match_day_id).end_date| date:'shortDate':'':i18Service.currentLang }})
     </h3>
     <app-match [match]="match"></app-match>
   </ng-container>

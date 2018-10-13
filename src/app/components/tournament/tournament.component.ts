@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client, Tournament, Team, Match_day } from '../../../api';
 import { MatchViewModel } from '../../models/match.viewmodel';
 import { MatchService } from '../../services/match.service';
+import { I18Service } from '../../services/i18.service';
 
 @Component({
   selector: 'app-tournament',
@@ -25,7 +26,8 @@ export class TournamentComponent implements OnInit {
 
   constructor(
     private apiClient: Client,
-    private matchService: MatchService
+    private matchService: MatchService,
+    public i18Service: I18Service
   ) { }
 
   ngOnInit() {

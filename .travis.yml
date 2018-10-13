@@ -20,6 +20,7 @@ cache:
 
 script:
   - npm run build:web
+  - npm run build:app
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
 
 after_success:
