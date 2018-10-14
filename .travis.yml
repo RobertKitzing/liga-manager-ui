@@ -18,12 +18,11 @@ cache:
 
 script:
   - yarn install
-  - cd server && yarn install
   - yarn run build:web
   - yarn run build:app
+  - cd server && yarn install
   - yarn run build:server
-  - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
-  - yarn run cordova:build
+  - cd .. && docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
 
 after_success:
   - docker login -u $DOCKER_USER -p "$PENIS"
