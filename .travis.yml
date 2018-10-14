@@ -12,6 +12,7 @@ install:
   - yarn global add typescript
   - yarn install
   - cd server && yarn install
+  - cd ..
 
 node_js:
   - "8"
