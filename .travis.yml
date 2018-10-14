@@ -34,18 +34,19 @@ script:
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
   - cordova platform add android
-  - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
+  - cordova build android --release -- --versionCode=$TAG --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
 
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
   - docker push $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER
 
-before_deploy:
-  - git config --local user.name "travis ci"
-  - git config --local user.email "travis@ci.com"
-  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-deploy:
-  provider: releases
-  api_key: "$GITHUB_TOKEN"
-  file: "/home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk"
-  skip_cleanup: true
+# before_deploy:
+#   - git config --local user.name "travis ci"
+#   - git config --local user.email "travis@ci.com"
+#   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+
+# deploy:
+#   provider: releases
+#   api_key: "$GITHUB_TOKEN"
+#   file: "/home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk"
+#   skip_cleanup: true
