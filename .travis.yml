@@ -28,8 +28,9 @@ script:
   - yarn run build:server
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
-  - cordova build android
+  - cordova add android
+  - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_PASS --alias=limahb
 
 after_success:
-  - docker login -u $DOCKER_USER -p "$PENIS"
+  - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
   - docker push $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER
