@@ -1,3 +1,8 @@
+language: android
+android:
+  components:
+    - android-26
+
 env:
   global:
     - DOCKER_USER=robertkitzing
