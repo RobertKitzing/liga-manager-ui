@@ -51,7 +51,7 @@ export class TournamentComponent implements OnInit {
     this.tournamentRounds = await this.matchService.getRoundsInTournament(this.tournament.id);
     this.matches = new Array<MatchViewModel[]>();
     for (let round = 0; round < this.tournamentRounds.length; round++) {
-      this.matches[round] = matches.filter(m => this.getRound(m.match_day_id).number === round);
+      this.matches[round] = matches.filter(m => this.getRound(m.match_day_id).number === (round + 1));
     }
     this.matches = this.matches.reverse();
     this.getWinner();
