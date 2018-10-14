@@ -23,12 +23,12 @@ cache:
     - "server/node_modules"
 
 script:
-  - yarn run build:web
-  - yarn run build:app
-  - yarn run build:server
-  - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
+  # - yarn run build:web
+  # - yarn run build:app
+  # - yarn run build:server
+  # - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
-  - cordova add android
+  - cordova platform add android
   - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_PASS --alias=limahb
 
 after_success:
