@@ -16,6 +16,7 @@ services:
 install:
   - nvm install 8
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
+  - export ANDROID_VERSION=`${TAG//.}$TRAVIS_BUILD_NUMBER`
   - yarn global add cordova
   - yarn global add typescript
   - yarn install
@@ -35,7 +36,7 @@ script:
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
   - cordova platform add android
-  - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
+  - cordova build android --release -- --versionCode=$ANDROID_VERSION --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
 
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
