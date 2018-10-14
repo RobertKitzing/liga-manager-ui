@@ -27,6 +27,8 @@ script:
   - yarn run build:app
   - yarn run build:server
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
+  - cd app
+  - cordova build android
 
 after_success:
   - docker login -u $DOCKER_USER -p "$PENIS"
