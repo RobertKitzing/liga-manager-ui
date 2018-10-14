@@ -9,20 +9,22 @@ services:
 install:
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
   - yarn global add cordova 
+  - yarn install
+  - cd server && yarn install
 
 node_js:
   - "8"
 
 cache:
   - yarn
+  directories:
+    - "node_modules"
 
 script:
-  - yarn install
   - yarn run build:web
   - yarn run build:app
-  - cd server && yarn install
   - yarn run build:server
-  - cd .. && docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
+  - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
 
 after_success:
   - docker login -u $DOCKER_USER -p "$PENIS"
