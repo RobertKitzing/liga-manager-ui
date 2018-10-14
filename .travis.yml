@@ -11,6 +11,7 @@ install:
   - yarn global add cordova
   - yarn global add typescript
   - yarn install
+  - cd server && yarn install
 
 node_js:
   - "8"
@@ -19,7 +20,6 @@ cache:
   - yarn
   directories:
     - "node_modules"
-    - "server/node_modules"
 
 script:
   - yarn run build:web
