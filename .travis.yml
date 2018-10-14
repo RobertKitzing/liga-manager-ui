@@ -34,7 +34,7 @@ script:
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
   - cordova platform add android
-  - cordova build android --release -- --keystore="./limahb.keystore" --password=$ANDROID_KEYSTORE_PASS --alias=limahb
+  - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=limahb --password=$ANDROID_KEYSTORE_PASS --alias=limahb
 
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
