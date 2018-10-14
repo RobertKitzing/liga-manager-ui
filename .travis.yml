@@ -1,3 +1,4 @@
+if: tag IS blank
 language: android
 android:
   components:
@@ -40,13 +41,13 @@ after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
   - docker push $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER
 
-# before_deploy:
-#   - git config --local user.name "travis ci"
-#   - git config --local user.email "travis@ci.com"
-#   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+before_deploy:
+  - git config --local user.name "travis ci"
+  - git config --local user.email "travis@ci.com"
+  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 
-# deploy:
-#   provider: releases
-#   api_key: "$GITHUB_TOKEN"
-#   file: "/home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk"
-#   skip_cleanup: true
+deploy:
+  provider: releases
+  api_key: "$GITHUB_TOKEN"
+  file: "/home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk"
+  skip_cleanup: true
