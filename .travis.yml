@@ -5,6 +5,9 @@ android:
     - build-tools-26.0.2
     - android-27
 
+rvm:
+  - 2.2
+  
 env:
   global:
     - DOCKER_USER=robertkitzing
