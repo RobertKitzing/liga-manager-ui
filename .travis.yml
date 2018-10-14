@@ -18,6 +18,7 @@ cache:
     - node_modules
 
 script:
+  - yarn install
   - yarn run build:web
   - yarn run build:app
   - yarn run build:server
