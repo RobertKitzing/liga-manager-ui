@@ -25,6 +25,7 @@ cache:
   directories:
     - "node_modules"
     - "server/node_modules"
+    - $HOME/.gradle
 
 script:
   - yarn run build:web
@@ -33,7 +34,7 @@ script:
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
   - cordova platform add android
-  - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_PASS --alias=limahb
+  - cordova build android --release
 
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
