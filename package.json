@@ -11,6 +11,7 @@
     "build:server": "tsc -p server --outDir dist",
     "docker:build": "npm run build:web && docker build -t robertkitzing/liga-manager-ui:add-match-day-entity . ",
     "docker:push": "docker push robertkitzing/liga-manager-ui:add-match-day-entity",
+    "cordova:build": "cd app && cordova build android",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
