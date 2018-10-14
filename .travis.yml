@@ -1,4 +1,7 @@
 
+node_js:
+  - "8"
+  
 android:
   components:
     - android-26
@@ -18,9 +21,6 @@ install:
   - yarn install
   - cd server && yarn install
   - cd ..
-
-node_js:
-  - "8"
 
 cache:
   directories:
