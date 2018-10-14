@@ -14,11 +14,11 @@ node_js:
   - "8"
 
 cache:
-  directories:
-    - node_modules
+  - yarn
 
 script:
   - yarn install
+  - cd server && yarn install
   - yarn run build:web
   - yarn run build:app
   - yarn run build:server
