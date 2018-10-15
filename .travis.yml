@@ -20,7 +20,7 @@ before_install:
   - sudo apt-add-repository ppa:brightbox/ruby-ng -y
   - sudo apt-get update
   - sudo apt-get --yes install ruby2.5 ruby2.5-dev
-  - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in api-6914874775361208182-263380-a0b21f8222c8.json.enc -out api-6914874775361208182-263380-a0b21f8222c8.json -d
+  - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in key.json.enc -out /home/travis/build/key.json -d
 
 install:
   - nvm install 8
@@ -48,7 +48,7 @@ script:
   - cordova platform add android
   - cordova-set-version -v $TAG -b $((30000 + $TRAVIS_BUILD_NUMBER)) ./config.xml
   - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
-  - fastlane supply --apk /home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk --track beta -p de.wildeligamanager.bremen --json_key api-6914874775361208182-263380-a0b21f8222c8.json
+  - fastlane supply --apk /home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk --track beta -p de.wildeligamanager.bremen --json_key /home/travis/build/key.json
 
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
