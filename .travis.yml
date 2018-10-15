@@ -16,8 +16,8 @@ env:
 services:
   - docker
 before_install:
-  - sudo apt-get install ruby ruby-dev
-  
+  - sudo apt-get install ruby2.5 ruby2.5-dev
+
 install:
   - nvm install 8
   - sudo gem install fastlane
