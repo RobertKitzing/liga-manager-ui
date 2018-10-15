@@ -15,10 +15,12 @@ env:
 
 services:
   - docker
+
 before_install:
   - sudo apt-add-repository ppa:brightbox/ruby-ng -y
   - sudo apt-get update
   - sudo apt-get --yes install ruby2.5 ruby2.5-dev
+  - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in api-6914874775361208182-263380-a0b21f8222c8.json.enc -out api-6914874775361208182-263380-a0b21f8222c8.json -d
 
 install:
   - nvm install 8
@@ -50,7 +52,7 @@ script:
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
   - docker push $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER
-  - fastlane supply --apk platforms/android/app/build/outputs/release/app-release.apk --track beta -p de.wildeligamanager.bremen --json_key api-6914874775361208182-263380-a0b21f8222c8.json
+  - fastlane supply --apk app/platforms/android/app/build/outputs/release/app-release.apk --track beta -p de.wildeligamanager.bremen --json_key api-6914874775361208182-263380-a0b21f8222c8.json
 
 before_deploy:
   - git config --local user.name "travis ci"
