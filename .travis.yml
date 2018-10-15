@@ -48,7 +48,7 @@ script:
   - cordova platform add android
   - cordova-set-version -v $TAG -b $((30000 + $TRAVIS_BUILD_NUMBER)) ./config.xml
   - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
-  - fastlane supply --apk platforms/android/app/build/outputs/release/app-release.apk --track beta -p de.wildeligamanager.bremen --json_key api-6914874775361208182-263380-a0b21f8222c8.json
+  - fastlane supply --apk /home/travis/build/RobertKitzing/liga-manager-ui/app/platforms/android/app/build/outputs/apk/release/app-release.apk --track beta -p de.wildeligamanager.bremen --json_key api-6914874775361208182-263380-a0b21f8222c8.json
 
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
