@@ -1,6 +1,6 @@
 {
   "name": "liga-manager-ui",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json --port 4200",
