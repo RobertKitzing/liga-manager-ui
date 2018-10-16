@@ -108,6 +108,10 @@ export class MatchService {
     return mvwa;
   }
 
+  public isMatchPlayed(match: Match): boolean {
+    return typeof match.home_score === 'number' && typeof match.guest_score === 'number';
+  }
+
   submitMatchResult(matchId: string, homeScore: number, guestScore: number): Promise<boolean> {
     return new Promise<boolean>(
       (resolve) => {
