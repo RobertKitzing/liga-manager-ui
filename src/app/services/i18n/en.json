@@ -1,5 +1,6 @@
 {
 	"ACHTELFINALE": "Round of last 16",
+	"ALL_MATCHDAYS": "All Matchdays",
 	"ALL_TEAMS": "All Teams",
 	"BETWEEN_MATCH_DAYS_OFFSET_DAYS": "Days between Matchdays",
 	"BUTTON": {
@@ -47,6 +48,7 @@
 	"FORGOT_PASSWORD": "reset Password",
 	"FROM_TO_OFFSET_DAYS": "Days between from an to",
 	"HALBFINALE": "Semifinal",
+	"HIDE_PLAYED_MATCHES": "only open Matches",
 	"LAST_NAME": "Last Name",
 	"LAST_NAME_REQUIRED": "Please enter last Name",
 	"LIVE_UPDATES": "Live updates",

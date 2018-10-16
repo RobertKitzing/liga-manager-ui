@@ -1,5 +1,6 @@
 {
 	"ACHTELFINALE": "Achtelfinale",
+	"ALL_MATCHDAYS": "Alle Spieltage",
 	"ALL_TEAMS": "Alle Manschaften",
 	"BETWEEN_MATCH_DAYS_OFFSET_DAYS": "Tage zwischen den Spieltagen",
 	"BUTTON": {
@@ -47,6 +48,7 @@
 	"FORGOT_PASSWORD": "passwort vergessen?",
 	"FROM_TO_OFFSET_DAYS": "Tage zwischen von und bis",
 	"HALBFINALE": "Halbfinale",
+	"HIDE_PLAYED_MATCHES": "nur offene Spiele",
 	"LAST_NAME": "Nachname",
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
 	"LIVE_UPDATES": "Live updates",

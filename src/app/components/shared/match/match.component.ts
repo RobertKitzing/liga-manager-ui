@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { ContactComponent } from '../contact/contact.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { Team } from '../../../../api';
 import { MatchService, MatchUpdateMessage } from '../../../services/match.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { EditmatchResultComponent } from '../editmatch/editmatch.result.component';
@@ -23,11 +22,12 @@ export class MatchComponent implements OnInit {
 
   @Input() match: MatchViewModel;
   @Input() tournament: boolean;
+  @Input() hideIfPlayed: boolean;
   @Output() resultUpdated: EventEmitter<MatchViewModel> = new EventEmitter<MatchViewModel>();
 
   constructor(
     public dialog: MatDialog,
-    private matchService: MatchService,
+    public matchService: MatchService,
     public authService: AuthenticationService,
     public i18Service: I18Service,
     public snackBar: MatSnackBar,
@@ -38,7 +38,7 @@ export class MatchComponent implements OnInit {
       async (msg) => {
         if (this.match.id === msg.matchId) {
           this.match = null;
-          this.match = await this.matchService.updateSingleMatch( msg.matchId);
+          this.match = await this.matchService.updateSingleMatch(msg.matchId);
         }
       });
   }
@@ -112,7 +112,7 @@ export class MatchComponent implements OnInit {
     this.websocketService.send(
       {
         type: WebSocketMessageTypes.MATCH_UPDATED,
-        data:  <MatchUpdateMessage> {
+        data: <MatchUpdateMessage>{
           matchId: this.match.id,
           homeTeamName: this.match.home_team.name,
           guestTeamName: this.match.guest_team.name,

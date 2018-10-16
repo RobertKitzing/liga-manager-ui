@@ -3,18 +3,22 @@
     <div class="col-9 col-sm-4 text-center">
       <app-seasonchooser></app-seasonchooser>
     </div>
-    <div class="col-3 col-sm-4 text-right">
-      <mat-form-field style="max-width: 6ch;">
-        <mat-select #matchDaySelect [(value)]="selectedMatchDay" [compareWith]="matchDayCompare" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
-        [disabled]="selectedTeamId !== '0'">
+    <div class="col-3 col-sm-2 text-right">
+      <mat-form-field style="max-width: 7ch;">
+        <mat-select #matchDaySelect [(value)]="selectedMatchDay" [compareWith]="matchDayCompare" (selectionChange)="handleGetMatches()"
+          placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
+          <mat-option [value]="'0'">
+            {{ 'ALL_MATCHDAYS' | translate }}
+          </mat-option>
           <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
             <div *ngIf="!matchDaySelect.panelOpen">{{ matchDay.number }}</div>
-            <div *ngIf="matchDaySelect.panelOpen">{{ matchDay.number }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})</div>
+            <div *ngIf="matchDaySelect.panelOpen">{{ matchDay.number }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang
+              }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})</div>
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-12 col-sm-4 text-center">
+    <div class="col-9 col-sm-5 text-left">
       <mat-form-field style="width: 100%;">
         <mat-select #teamSelect [(value)]="selectedTeamId" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
           <mat-option [value]="'0'">
@@ -26,15 +30,27 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <div class="col-3 col-sm-1 text-right">
+      <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+        <mat-icon *ngIf="filterActive" color="primary">filter_list</mat-icon>
+        <mat-icon *ngIf="!filterActive">filter_list</mat-icon>
+      </button>
+      <mat-menu #filterMenu="matMenu" [overlapTrigger]="false">
+        <span mat-menu-item>
+          <mat-slide-toggle [(ngModel)]="hidePlayed">{{ 'HIDE_PLAYED_MATCHES' | translate }}</mat-slide-toggle>
+        </span>
+      </mat-menu>
+    </div>
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="!matches"></mat-progress-bar>
-  <h3 class="text-center" *ngIf="selectedTeamId === '0' && selectedMatchDay.id">
-    {{ 'MATCHDAY' | translate:{matchDay: selectedMatchDay.number} }} ({{ selectedMatchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ selectedMatchDay.end_date| date:'shortDate':'':i18Service.currentLang }})
-  </h3>
-  <ng-container *ngFor="let match of matches">
-    <h3 class="text-center" *ngIf="selectedTeamId !== '0'">
-      {{ 'MATCHDAY' | translate:{matchDay: getMatchDay(match.match_day_id).number} }} ({{ getMatchDay(match.match_day_id).start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ getMatchDay(match.match_day_id).end_date| date:'shortDate':'':i18Service.currentLang }})
+  <ng-container *ngFor="let match of matches;let i = index">
+    <h3 class="text-center" *ngIf="(!hidePlayed || (hidePlayed && !matchService.isMatchPlayed(match))) && isNewMatchDay(match, i)">
+      {{ 'MATCHDAY' | translate:{matchDay: getMatchDay(match.match_day_id).number} }} ({{ getMatchDay(match.match_day_id).start_date|
+      date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ getMatchDay(match.match_day_id).end_date| date:'shortDate':'':i18Service.currentLang
+      }})
     </h3>
-    <app-match [match]="match"></app-match>
+    <ng-container>
+      <app-match [match]="match" [hideIfPlayed]="hidePlayed"></app-match>
+    </ng-container>
   </ng-container>
 </div>

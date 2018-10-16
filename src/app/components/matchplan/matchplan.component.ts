@@ -2,24 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { MatchService } from '../../services/match.service';
 import { MatchViewModel } from '../../models/match.viewmodel';
-import { Season, Team, Match_day, Client } from '../../../api';
+import { Season, Team, Match_day, Client, Match } from '../../../api';
 import { TeamService } from '../../services/team.service';
 import { I18Service } from '../../services/i18.service';
 
-const matchDaysMock: Match_day[] = [
-  <Match_day>{
-    id: 'test',
-    number: 1,
-    start_date: new Date(),
-    end_date: new Date()
-  },
-  <Match_day>{
-    id: 'test2',
-    number: 2,
-    start_date: new Date(),
-    end_date: new Date()
-  }
-];
 @Component({
   selector: 'app-matchplan',
   templateUrl: './matchplan.component.html',
@@ -29,10 +15,12 @@ export class MatchplanComponent implements OnInit {
 
   public matches: MatchViewModel[];
   public matchDays: Match_day[];
+  public hidePlayed: boolean;
 
   public set selectedMatchDay(value: Match_day) {
     localStorage.setItem('SELECTED_MATCHDAY', JSON.stringify(value));
   }
+
   public get selectedMatchDay(): Match_day {
     return JSON.parse(localStorage.getItem('SELECTED_MATCHDAY')) || new Match_day();
   }
@@ -41,15 +29,20 @@ export class MatchplanComponent implements OnInit {
   public get selectedTeamId() {
     return localStorage.getItem('SELECTED_TEAM') || '0';
   }
+
   public set selectedTeamId(value: string) {
     localStorage.setItem('SELECTED_TEAM', value);
+  }
+
+  public get filterActive(): boolean {
+    return this.hidePlayed;
   }
 
   teamsInSeason: Team[];
 
   constructor(
     private seasonService: SeasonService,
-    private matchService: MatchService,
+    public matchService: MatchService,
     private teamService: TeamService,
     private apiClient: Client,
     public i18Service: I18Service
@@ -85,5 +78,15 @@ export class MatchplanComponent implements OnInit {
 
   getMatchDay(id: string): Match_day {
     return this.matchDays.find(t => t.id === id);
+  }
+
+  isNewMatchDay(match: Match, index: number): boolean {
+    if (!match || index < 1) {
+      return true;
+    } else {
+      const currentMatchDay = this.getMatchDay(match.match_day_id);
+      const previusMatchDay = this.getMatchDay(this.matches[index - 1].match_day_id);
+      return currentMatchDay.number !== previusMatchDay.number;
+    }
   }
 }
