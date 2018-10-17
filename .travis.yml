@@ -32,7 +32,7 @@ install:
   - yarn global add cordova-set-version
   - yarn install
   - cd server && yarn install
-  - cd ..$((30000 + $TRAVIS_BUILD_NUMBER))
+  - cd ..
 
 cache:
   directories:
