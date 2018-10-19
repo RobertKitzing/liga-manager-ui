@@ -6,7 +6,6 @@ import { Pitch, LocateMatchBody, Client, CreatePitchBody } from 'src/api';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { PitchService } from '../../../services/pitch.service';
-import { } from '@types/googlemaps';
 import { WebSocketMessageTypes } from 'shared/models/websocket.model';
 import { WebsocketService } from 'src/app/services/websocket.service';
 
