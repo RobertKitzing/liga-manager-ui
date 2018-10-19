@@ -6,10 +6,20 @@ interface CacheTeamsInSeason {
   teams: Team[];
 }
 
+export interface ITeamService {
+  getTeamContactByID(id: string): Contact_person;
+  getTeamById(id: string): Team;
+  addNewTeam(teamName: string): Promise<boolean>;
+  updateTeam(teamId: string);
+  initLoadTeams();
+  loadTeams(): Promise<Team[]>;
+  loadTeamsInSeason(seasonId: string): Promise<Team[]>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
+export class TeamService implements ITeamService {
 
   public get teams(): Team[] {
     return JSON.parse(localStorage.getItem('TEAMS')) || null;
@@ -22,7 +32,7 @@ export class TeamService {
     private apiClient: Client) {
   }
 
-  getTeamContactByID(id: string) {
+  getTeamContactByID(id: string): Contact_person {
     const team: Team = this.teams.find(t => t.id === id);
     return team.contact || <Contact_person>{
       first_name: '',
@@ -59,7 +69,7 @@ export class TeamService {
     );
   }
 
-  updateTeam(teamId?: string) {
+  updateTeam(teamId: string) {
     if (teamId) {
       this.apiClient.getTeam(teamId).subscribe(
         (team) => {

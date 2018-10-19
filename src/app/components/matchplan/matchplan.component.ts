@@ -64,6 +64,7 @@ export class MatchplanComponent implements OnInit {
   async handleGetMatches() {
     this.matches = null;
     if (this.season) {
+      // TODO: Umbauen, sodass beides möglich ist
       if (this.selectedTeamId !== '0') {
         this.matches = await this.matchService.getMatchesInSeason(this.season.id, this.selectedTeamId, null);
       } else {

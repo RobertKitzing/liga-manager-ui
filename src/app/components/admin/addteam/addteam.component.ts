@@ -6,13 +6,13 @@ import { TeamService } from '../../../services/team.service';
   templateUrl: './addteam.component.html',
   styleUrls: ['./addteam.component.css']
 })
-export class AddteamComponent implements OnInit {
+export class AddteamComponent {
 
   constructor(
     public teamService: TeamService
   ) { }
 
-  ngOnInit() {
+  addNewTeam(teamName: string) {
+    this.teamService.addNewTeam(teamName);
   }
-
 }

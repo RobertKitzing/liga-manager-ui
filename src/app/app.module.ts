@@ -23,6 +23,7 @@ import { API_BASE_URL } from '../api';
 import { environment } from '../environments/environment';
 import { WebsocketService } from './services/websocket.service';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
+import { AppCoreModule } from './app-core.module';
 registerLocaleData(localeDe);
 
 export function teamServiceFactory(provider: TeamService) {
@@ -65,7 +66,7 @@ export function websocketServiceFactory(provider: WebsocketService) {
     MaterialModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     {
