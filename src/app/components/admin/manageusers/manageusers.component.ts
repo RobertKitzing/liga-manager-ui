@@ -15,16 +15,11 @@ export class ManageusersComponent implements OnInit {
 
   teamList: Team[];
   userTeamList: string[] = new Array<string>();
-  newUserName: string;
-  newPassword: string;
 
-  newVorname: string;
-  newNachname: string;
   userRole: CreateUserBodyRole;
 
   CreateUserBodyRole = CreateUserBodyRole;
 
-  // createUserForm: FormGroup;
   email: FormControl;
   firstName: FormControl;
   lastName: FormControl;
@@ -56,11 +51,11 @@ export class ManageusersComponent implements OnInit {
   createUser() {
     const body = new CreateUserBody();
 
-    body.email = this.newUserName.toLowerCase();
-    body.password = this.newPassword;
+    body.email = this.email.value.toLowerCase();
+    body.password = this.password.value;
     body.teams = this.userTeamList;
-    body.first_name = this.newVorname;
-    body.last_name = this.newNachname;
+    body.first_name = this.firstName.value;
+    body.last_name = this.lastName.value;
     body.role = CreateUserBodyRole.Team_manager;
     this.apiClient.createUser(body).subscribe(
       (res) => {
