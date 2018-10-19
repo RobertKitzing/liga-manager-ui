@@ -8,7 +8,7 @@ const { exec } = require('child_process');
 var fs = require('fs');
 const fastLaneDir = "./metadata/de-DE/changelogs";
 
-exec("git log --oneline $(git describe --tags --abbrev=0 @^)..@",
+exec('git log --oneline $(git describe --tags --abbrev=0 @^)..@ --pretty=format:"%s"',
     function (error, out) {
         if (error instanceof Error)
             throw error;
