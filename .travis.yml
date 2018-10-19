@@ -1,4 +1,9 @@
 if: tag IS blank
+
+branches:
+  only:
+  - master
+
 language: android
 android:
   components:

@@ -50,6 +50,7 @@
     "material-design-icons": "^3.0.1",
     "ng-pick-datetime": "^6.0.16",
     "nswag": "^11.20.1",
+    "popper.js": "^1.14.4",
     "queueing-subject": "^0.3.0",
     "rxjs": "^6.3.3",
     "rxjs-websockets": "^6.0.2",
