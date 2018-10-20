@@ -32,9 +32,9 @@ install:
   - sudo gem install fastlane
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
   - export ANDROID_VERSION_CODE=$((30000 + $TRAVIS_BUILD_NUMBER))
-  - sudo npm -g install cordova
-  - sudo npm -g install typescript
-  - sudo npm -g install cordova-set-version
+  - npm -g install cordova
+  - npm -g install typescript
+  - npm -g install cordova-set-version
   - npm install
   - cd server && npm install
   - cd ..
