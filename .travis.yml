@@ -23,11 +23,12 @@ services:
 
 before_install:
   - sudo apt-add-repository ppa:brightbox/ruby-ng -y
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
   - sudo apt-get update
-  - sudo apt-get --yes install ruby2.5 ruby2.5-dev
+  - sudo apt-get --yes install ruby2.5 ruby2.5-dev nodejs yarn
   - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in key.json.enc -out /home/travis/build/key.json -d
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.10.1
-  - export PATH="$HOME/.yarn/bin:$PATH"
 
 install:
   - nvm install 8
