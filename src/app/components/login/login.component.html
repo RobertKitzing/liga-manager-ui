@@ -12,10 +12,13 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}" required/>
+          <input #password type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}" required/>
           <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
             <span translate>PASSWORD_REQUIRED</span>
           </mat-error>
+          <button mat-button *ngIf="password.value" matSuffix mat-icon-button (click)="password.type === 'password'? password.type = 'text': password.type = 'password'">
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
         </mat-form-field>
       </div>
     </div>
