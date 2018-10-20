@@ -23,25 +23,20 @@ services:
 
 before_install:
   - sudo apt-add-repository ppa:brightbox/ruby-ng -y
-  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-  - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update
   - sudo apt-get --yes install ruby2.5 ruby2.5-dev
   - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in key.json.enc -out /home/travis/build/key.json -d
 
 install:
   - nvm install 8
-  - sudo apt-get install yarn
-  - export PATH="$HOME/.yarn/bin:$PATH"
   - sudo gem install fastlane
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
   - export ANDROID_VERSION_CODE=$((30000 + $TRAVIS_BUILD_NUMBER))
-  - yarn global add cordova
-  - yarn global add typescript
-  - yarn global add cordova-set-version
-  - yarn global add @angular/cli
-  - yarn install
-  - cd server && yarn install
+  - sudo npm -g install cordova
+  - sudo npm -g install typescript
+  - sudo npm -g install cordova-set-version
+  - npm install
+  - cd server && npm install
   - cd ..
 
 cache:
@@ -51,9 +46,9 @@ cache:
     - $HOME/.gradle
 
 script:
-  - yarn run build:web
-  - yarn run build:app
-  - yarn run build:server
+  - npm run build:web
+  - npm run build:app
+  - npm run build:server
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
   - cordova platform add android
