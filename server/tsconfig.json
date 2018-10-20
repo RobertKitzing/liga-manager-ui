@@ -4,7 +4,7 @@
         "module": "commonjs",
         "outDir": "dist",
         "sourceMap": true,
-        "noEmitOnError": true,
+        "noEmitOnError": true
     },
     "typeRoots": [
         "node_modules/@types"

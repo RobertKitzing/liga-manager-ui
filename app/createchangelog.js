@@ -18,6 +18,6 @@ exec("git log --oneline $(git describe --tags --abbrev=0 @^)..@ --pretty=format:
                 console.error(err);
             }
 
-            console.log("The file was saved!");// jshint ignore:line
+            console.log("The file was saved!");
         });
     });
