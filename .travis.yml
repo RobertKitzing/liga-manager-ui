@@ -25,13 +25,13 @@ before_install:
   - sudo apt-add-repository ppa:brightbox/ruby-ng -y
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  - wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
   - sudo apt-get update
-  - sudo apt-get --yes install ruby2.5 ruby2.5-dev nodejs yarn
+  - sudo apt-get --yes install ruby2.5 ruby2.5-dev
   - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in key.json.enc -out /home/travis/build/key.json -d
 
 install:
-  # - nvm install 8
+  - nvm install 8
+  - sudo apt-get install yarn
   - sudo gem install fastlane
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
   - export ANDROID_VERSION_CODE=$((30000 + $TRAVIS_BUILD_NUMBER))
