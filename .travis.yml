@@ -29,6 +29,7 @@ before_install:
 
 install:
   - nvm install 8
+  - sudo npm -g install yarn
   - sudo gem install fastlane
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
   - export ANDROID_VERSION_CODE=$((30000 + $TRAVIS_BUILD_NUMBER))
