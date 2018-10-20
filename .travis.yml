@@ -35,6 +35,7 @@ install:
   - yarn global add cordova
   - yarn global add typescript
   - yarn global add cordova-set-version
+  - yarn global add @angular/cli
   - yarn install
   - cd server && yarn install
   - cd ..
