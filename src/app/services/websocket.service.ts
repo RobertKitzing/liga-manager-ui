@@ -52,8 +52,8 @@ export class WebsocketService {
               this.pitchService.pitchAdded.next(null);
               break;
           }
-        } catch {
-          console.error('Error parsing WS Message');
+        } catch (error) {
+          console.error('Error parsing WS Message', error);
         }
       }
     );
