@@ -6,7 +6,7 @@
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json --port 4200",
     "build": "rm -R dist && npm run build:web && npm run build:app && npm run build:server",
     "build:web": "ng build --aot --prod --output-path dist/server/src/www",
-    "build:app": "ng build --aot -c app --output-path app/www --delete-output-path --base-href ./",
+    "build:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./",
     "build:app:local": "ng build --aot -c app.local --output-path app/www --delete-output-path --base-href ./",
     "build:server": "tsc -p server --outDir dist",
     "docker:build": "npm run build:web && docker build -t robertkitzing/liga-manager-ui:add-match-day-entity . ",
