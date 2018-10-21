@@ -47,3 +47,6 @@ Thumbs.db
 app/build.json
 api-6914874775361208182-263380-a0b21f8222c8.json
 key.json
+
+#fastlane
+app/fastlane
