@@ -29,8 +29,8 @@ services:
 before_install:
   - sudo apt-add-repository ppa:brightbox/ruby-ng -y
   - sudo apt-get update
-  - sudo apt-get --yes install -f ruby2.5 ruby2.5-dev
   - sudo apt-get install -f
+  - sudo apt-get --yes install ruby2.5 ruby2.5-dev && sudo apt-get install -f
   - openssl aes-256-cbc -K $encrypted_5a45bd5412da_key -iv $encrypted_5a45bd5412da_iv -in key.json.enc -out /home/travis/build/key.json -d
 
 install:
