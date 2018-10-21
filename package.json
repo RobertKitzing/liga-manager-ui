@@ -13,7 +13,7 @@
     "docker:push": "docker push robertkitzing/liga-manager-ui:add-match-day-entity",
     "cordova:build": "cd app && cordova build android",
     "test": "ng test --code-coverage",
-    "test:ci": "ng test --code-coverage --single-run",
+    "test:ci": "ng test --code-coverage --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "nswag": "nswag run liga-manager-api.nswag",
