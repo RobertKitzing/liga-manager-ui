@@ -13,6 +13,10 @@ describe('AddteamComponent', () => {
   let fixture: ComponentFixture<AddteamComponent>;
   let teamService: TeamService;
 
+  beforeAll(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [

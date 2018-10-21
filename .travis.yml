@@ -17,6 +17,7 @@ env:
   global:
     - DOCKER_USER=robertkitzing
     - DOCKER_REPO=robertkitzing/liga-manager-ui
+    - secure: fO02T2gjC5XxeXp5QhswzX+encZQf9mA8y9bgkE9NywumdiygJSM+9WAndzgce9reIxD3Y4R0cUc28dyrlJXnrCeBy3pATnqmxI2rhAtAfNXmbz1lK/RNiGluXIKXOElCuaYGrDohYRYfJfUSD1L2GjHRXjjUOUKJJxcsKdjrUV0VKsy7m8dqo4jZrdiKpJY/dLKyOqNJ3tjXgQYOHARCP4MESvQOX2zKtJe5o1nYhl4f2kkXVH/eIdwLsrLl4/m20WoitS8iJcANWoK/16ZE0H08q2uYAI/iWfXlTNMMctyYoeKj6Ef8MQ6SA7G9MJrbYiaeRz3hwsF4RpA/gkioQ1A1LxaeBAZ8KMHYAX1s33/VYRCMWV1SUD+SJIdsCkduTL4dHS5CIk3CMvKxL9aSiEOzQfEvFGF8gjIQP/jn+87QMunoQc8KJTcjs0MlSEWhTe9RDZydgNEiDLRQmWj5dGbq1CqkldjbgOF8S0CUVAP13LHRmsu+FrSZqRVmiVonkvOPTAaROKDSr+vIiga5TgvxjWElYrAbtBXCqN+da7E9s/EeZP8ksLaAsNGcfabK9Ofu9MphbHHyyrFwSiFkgxkWnL7hOtjl/GsuUM0s8EL4JVKkqtT2XZEo+kWZ7twahuy37VG73zTrW0lW1IW02dI5F+U6/GytwfRa4UMcLY=
 
 services:
   - docker
@@ -46,6 +47,8 @@ cache:
     - $HOME/.gradle
 
 script:
+  - npm run test:ci
+  - npm run codacy:coverage -- --token $CODACY_KEY
   - npm run build:web
   - npm run build:app
   - npm run build:server

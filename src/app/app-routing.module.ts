@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './components/admin/admin.guard';
 import { TeamadminGuard } from './components/teamadmin/teamadmin.guard';
 
-const routes: Routes = [
+export const APP_ROUTES: Routes = [
   { path: '', redirectTo: 'matchplan', pathMatch: 'full' },
   {
     path: 'table',
@@ -43,7 +43,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(APP_ROUTES)
   ],
   exports: [
     RouterModule

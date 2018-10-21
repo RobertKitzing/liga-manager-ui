@@ -18,7 +18,8 @@
     "nswag": "nswag run liga-manager-api.nswag",
     "docker:deploy": "npm run docker:build && npm run docker:push",
     "extract:all": "ngx-translate-extract -m -i ./src/app/ -o ./src/app/services/i18n/de.json ./src/app/services/i18n/en.json --clean --sort --format namespaced-json -m",
-    "extract:update": "ngx-translate-extract -m -i ./src/app -o ./src/app/services/i18n/*.json --clean --sort --format namespaced-json -m"
+    "extract:update": "ngx-translate-extract -m -i ./src/app -o ./src/app/services/i18n/*.json --clean --sort --format namespaced-json -m",
+    "codacy:coverage": "cat ./coverage/lcov.info | codacy-coverage"
   },
   "private": true,
   "dependencies": {
@@ -38,10 +39,10 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "@types/googlemaps": "^3.30.15",
     "bootstrap": "^4.1.2",
+    "codacy-coverage": "^3.2.0",
     "command-line-args": "^5.0.2",
     "cordova-set-version": "^7.0.3",
     "core-js": "^2.5.4",
-    "d3": "^5.5.0",
     "exec": "^0.2.1",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
@@ -63,7 +64,6 @@
     "@angular/compiler-cli": "^7.0.0",
     "@angular/language-service": "^7.0.0",
     "@biesbjerg/ngx-translate-extract": "^2.3.4",
-    "@types/d3": "^5.0.0",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
