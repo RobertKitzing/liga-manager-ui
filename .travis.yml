@@ -46,6 +46,7 @@ install:
   - cd ..
 
 cache:
+  bundler: true
   directories:
     - "node_modules"
     - "server/node_modules"
