@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChangepasswordComponent } from './changepassword.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../../shared.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogRef } from '@angular/material';
 
 describe('ChangepasswordComponent', () => {
   let component: ChangepasswordComponent;
@@ -8,7 +13,17 @@ describe('ChangepasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangepasswordComponent ]
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        HttpClientTestingModule,
+        NoopAnimationsModule,
+        RouterTestingModule
+      ],
+      declarations: [ ChangepasswordComponent ],
+      providers: [
+        { provide: MatDialogRef, useValue: {}}
+      ]
     })
     .compileComponents();
   }));
