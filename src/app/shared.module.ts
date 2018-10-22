@@ -12,9 +12,7 @@ import { EditmatchPitchComponent } from './components/shared/editmatch/editmatch
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TranslateModule } from '@ngx-translate/core';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { ContactPersonComponent } from './components/shared/contact-person/contact-person.component';
-
 
 @NgModule({
   imports: [
@@ -24,8 +22,7 @@ import { ContactPersonComponent } from './components/shared/contact-person/conta
     MaterialModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    TranslateModule,
-    MatProgressSpinnerModule
+    TranslateModule
   ],
   entryComponents: [
     ContactComponent,
@@ -56,7 +53,6 @@ import { ContactPersonComponent } from './components/shared/contact-person/conta
     MaterialModule,
     FinalroundPipe,
     OwlDateTimeModule,
-    MatProgressSpinnerModule,
     OwlNativeDateTimeModule
   ]
 })
