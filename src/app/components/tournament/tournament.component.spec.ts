@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TournamentComponent } from './tournament.component';
+import { TournamentModule } from './tournament.module';
+import { SharedModule } from '../../shared.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TournamentComponent', () => {
   let component: TournamentComponent;
@@ -8,7 +13,13 @@ describe('TournamentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TournamentComponent ]
+      imports: [
+        TournamentModule,
+        SharedModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));

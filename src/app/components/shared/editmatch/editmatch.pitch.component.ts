@@ -16,9 +16,8 @@ import { WebsocketService } from 'src/app/services/websocket.service';
 })
 export class EditmatchPitchComponent implements OnInit {
 
-  newMatchPitch: Pitch;
+  newMatchPitch: FormControl = new FormControl();
   filteredPitches: Observable<Pitch[]>;
-  stateCtrl: FormControl = new FormControl();
   showCreateNewPitch: boolean;
 
   newPitch: Pitch = new Pitch();
@@ -45,12 +44,14 @@ export class EditmatchPitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filteredPitches = this.stateCtrl.valueChanges
-      .pipe(
-        startWith<string | Pitch>(''),
-        map(value => typeof value === 'string' ? value : value.label),
-        map((pitch) => pitch ? this.filterPitches(pitch) : this.pitchService.pitches.slice())
-      );
+    if (this.pitchService.pitches) {
+      this.filteredPitches = this.newMatchPitch.valueChanges
+        .pipe(
+          startWith<string | Pitch>(''),
+          map(value => typeof value === 'string' ? value : value.label),
+          map((pitch) => pitch ? this.filterPitches(pitch) : this.pitchService.pitches.slice())
+        );
+    }
   }
 
   filterPitches(searchTerm: string): Pitch[] {
@@ -67,7 +68,7 @@ export class EditmatchPitchComponent implements OnInit {
 
   onSaveClicked() {
     const body: LocateMatchBody = new LocateMatchBody();
-    body.pitch_id = this.newMatchPitch.id;
+    body.pitch_id = this.newMatchPitch.value.id;
     this.apiClient.locateMatch(this.match.id, body).subscribe(
       () => {
         this.dialogRef.close(true);
@@ -97,7 +98,7 @@ export class EditmatchPitchComponent implements OnInit {
       this.apiClient.createPitch(body).subscribe(
         async (pitchId) => {
           this.newPitch.id = pitchId.id;
-          this.newMatchPitch = this.newPitch;
+          this.newMatchPitch.setValue(this.newPitch);
           this.pitchService.pitchAdded.next(null);
           this.websocketService.send(
             {

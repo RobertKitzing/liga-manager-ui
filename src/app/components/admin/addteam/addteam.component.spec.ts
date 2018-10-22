@@ -4,8 +4,7 @@ import { AddteamComponent } from './addteam.component';
 import { SharedModule } from '../../../shared.module';
 import { TeamService } from '../../../services/team.service';
 import { TeamServiceMock } from 'src/app/services/team.service.mock';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AppCoreModule } from '../../../app-core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AddteamComponent', () => {
 
@@ -21,7 +20,6 @@ describe('AddteamComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         SharedModule,
-        AppCoreModule,
         TranslateModule.forRoot()
       ],
       declarations: [

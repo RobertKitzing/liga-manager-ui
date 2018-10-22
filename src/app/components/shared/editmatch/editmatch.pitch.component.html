@@ -33,8 +33,8 @@
     </div>
     <div class="row" style="justify-content: center;">
       <mat-form-field style="width: 100%;">
-        <input matInput placeholder="{{ 'PITCH' | translate }}" [(ngModel)]="newMatchPitch" [matAutocomplete]="pitchAutoComplete"
-          [formControl]="stateCtrl" />
+        <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete"
+          [formControl]="newMatchPitch" />
         <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
           <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
             <span>{{ pitch.label }}</span>
@@ -59,8 +59,8 @@
           <mat-form-field>
             <input matInput placeholder="Pitch Label" [formControl]="newPitchFormControl" [(ngModel)]="newPitch.label" required (change)="checkNewPitchName()"
             />
-            <mat-error *ngIf="newPitchFormControl.errors && newPitchFormControl.errors.pitchexist" translate>ERRORS.PITCH_EXIST</mat-error>
-            <mat-error *ngIf="newPitchFormControl.errors && newPitchFormControl.errors.required" translate>PITCH_REQUIRED</mat-error>
+            <mat-error *ngIf="newPitchFormControl.errors && newPitchFormControl.errors['pitchexist']" translate>ERRORS.PITCH_EXIST</mat-error>
+            <mat-error *ngIf="newPitchFormControl.errors && newPitchFormControl.errors['required']" translate>PITCH_REQUIRED</mat-error>
           </mat-form-field>
           <span matTooltip="{{ 'UNIQUE_NAME_PITCH_TOOLTIP' | translate }}">
             <i class="fa fa-info"></i>

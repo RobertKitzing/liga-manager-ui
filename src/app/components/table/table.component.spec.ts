@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableComponent } from './table.component';
+import { TableModule } from './table.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../../shared.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -8,7 +13,13 @@ describe('TableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableComponent ]
+      imports: [
+        TableModule,
+        SharedModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));
