@@ -1,5 +1,5 @@
 <div *ngIf="match" class="container-fluid">
-  <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>
+  <h3 mat-dialog-title class="text-center" *ngIf="match.home_team && match.guest_team"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>
   <mat-dialog-content>
     <div class="container">
       <div class="row" style="justify-content: center; margin-bottom: 16px;">

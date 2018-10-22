@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactComponent } from './contact.component';
+import { SharedModule } from '../../../shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -8,9 +12,17 @@ describe('ContactComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactComponent ]
+      imports: [
+        SharedModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

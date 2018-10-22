@@ -5,7 +5,6 @@ import { MaterialModule } from './material.module';
 import { ContactComponent } from './components/shared/contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SeasonchooserComponent } from './components/shared/seasonchooser/seasonchooser.component';
-import { FinalroundPipe } from './components/shared/finalround.pipe';
 import { EditmatchResultComponent } from './components/shared/editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from './components/shared/editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from './components/shared/editmatch/editmatch.pitch.component';
@@ -37,7 +36,6 @@ import { ContactPersonComponent } from './components/shared/contact-person/conta
     EditmatchResultComponent,
     SeasonchooserComponent,
     EditmatchTimeComponent,
-    FinalroundPipe,
     EditmatchPitchComponent,
     SnackbarComponent,
     ContactPersonComponent
@@ -51,7 +49,6 @@ import { ContactPersonComponent } from './components/shared/contact-person/conta
     FormsModule,
     SeasonchooserComponent,
     MaterialModule,
-    FinalroundPipe,
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ]

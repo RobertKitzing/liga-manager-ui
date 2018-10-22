@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditmatchTimeComponent } from './editmatch.time.component';
+import { SharedModule } from '../../../shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { I18Service } from '../../../services/i18.service';
 
 describe('Editmatch.TimeComponent', () => {
   let component: EditmatchTimeComponent;
@@ -8,7 +14,16 @@ describe('Editmatch.TimeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditmatchTimeComponent ]
+      imports: [
+        SharedModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        NoopAnimationsModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     })
     .compileComponents();
   }));

@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewpasswordComponent } from './newpassword.component';
+import { NewpasswordModule } from './newpassword.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_ROUTES } from '../../app-routing.module';
 
 describe('NewpasswordComponent', () => {
   let component: NewpasswordComponent;
@@ -8,7 +13,12 @@ describe('NewpasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewpasswordComponent ]
+      imports: [
+        NewpasswordModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes(APP_ROUTES)
+      ]
     })
     .compileComponents();
   }));

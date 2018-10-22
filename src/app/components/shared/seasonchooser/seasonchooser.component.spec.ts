@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeasonchooserComponent } from './seasonchooser.component';
+import { SharedModule } from '../../../shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SeasonchooserComponent', () => {
   let component: SeasonchooserComponent;
@@ -8,7 +12,12 @@ describe('SeasonchooserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SeasonchooserComponent ]
+      imports: [
+        SharedModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));

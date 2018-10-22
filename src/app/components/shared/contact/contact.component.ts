@@ -18,14 +18,12 @@ export class ContactComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public teamIds: string[]) { }
 
   ngOnInit() {
-    this.teamIds.forEach(
-      (teamId) => {
-        this.apiClient.getTeam(teamId).subscribe(
-          (team) => {
-            this.teams.push(team);
-          }
-        );
-      });
+    for (const teamId of this.teamIds) {
+      this.apiClient.getTeam(teamId).subscribe(
+        (team) => {
+          this.teams.push(team);
+        });
+    }
   }
 
 }
