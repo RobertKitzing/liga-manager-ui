@@ -19,8 +19,8 @@ describe('AddteamComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        SharedModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        SharedModule
       ],
       declarations: [
         AddteamComponent

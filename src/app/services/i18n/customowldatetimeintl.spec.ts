@@ -1,15 +1,16 @@
 import { async, TestBed } from '@angular/core/testing';
 import { AppCoreModule } from '../../app-core.module';
 import { CustomOwlDateTimeIntl } from './customowldatetimeintl';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
-describe('AddteamComponent', () => {
+describe('CustomOwlDateTimeIntl', () => {
 
     let customIntl: CustomOwlDateTimeIntl;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                TranslateModule.forRoot(),
                 AppCoreModule
             ],
         });
