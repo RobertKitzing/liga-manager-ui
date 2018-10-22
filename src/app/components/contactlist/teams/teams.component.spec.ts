@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TeamsComponent } from './teams.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../../../shared.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TeamsComponent', () => {
   let component: TeamsComponent;
@@ -8,6 +11,11 @@ describe('TeamsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        HttpClientTestingModule
+      ],
       declarations: [ TeamsComponent ]
     })
     .compileComponents();

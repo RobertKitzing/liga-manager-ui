@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactlistComponent } from './contactlist.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContactlistModule } from './contactlist.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ContactlistComponent', () => {
   let component: ContactlistComponent;
@@ -8,7 +12,12 @@ describe('ContactlistComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactlistComponent ]
+      imports: [
+        TranslateModule.forRoot(),
+        ContactlistModule,
+        HttpClientTestingModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));
