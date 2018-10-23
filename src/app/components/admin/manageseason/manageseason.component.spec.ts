@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../../shared.module';
+import { SeasonService } from '../../../services/season.service';
+import { SeasonState } from '../../../../api';
 
 describe('ManageseasonComponent', () => {
   let component: ManageseasonComponent;
@@ -18,9 +20,9 @@ describe('ManageseasonComponent', () => {
         HttpClientTestingModule,
         NoopAnimationsModule
       ],
-      declarations: [ ManageseasonComponent ]
+      declarations: [ManageseasonComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -32,4 +34,11 @@ describe('ManageseasonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call seasonService.loadSeasons with SeasonState.Preparation on loadAllSeasonInPrep',
+    async(() => {
+      const seasonServiceSpy = spyOn(TestBed.get(SeasonService), 'loadSeasons');
+      component.loadAllSeasonInPrep();
+      expect(seasonServiceSpy).toHaveBeenCalledWith(SeasonState.Preparation);
+    }));
 });

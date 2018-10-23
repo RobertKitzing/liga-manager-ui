@@ -116,6 +116,10 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
+            ],
+            "codeCoverageExclude": [
+              "src/api/index.ts",
+              "src/api/liga-manager-api.ts"
             ]
           }
         },
