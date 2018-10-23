@@ -6,7 +6,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../../shared.module';
 import { SeasonService } from '../../../services/season.service';
-import { SeasonState } from '../../../../api';
+import { SeasonState, Team, Client, CreateSeasonBody } from '../../../../api';
+import { TeamService } from '../../../services/team.service';
+import { of } from 'rxjs';
 
 describe('ManageseasonComponent', () => {
   let component: ManageseasonComponent;
@@ -41,4 +43,24 @@ describe('ManageseasonComponent', () => {
       component.loadAllSeasonInPrep();
       expect(seasonServiceSpy).toHaveBeenCalledWith(SeasonState.Preparation);
     }));
+
+  it('should call teamService.loadAllTeams on loadAllTeams() and set this.allTeams',
+    async () => {
+      const testTeams: Team[] = new Array<Team>();
+      testTeams.push(<Team>{ name: 'TestName' });
+      const teamServiceSpy = spyOn(TestBed.get(TeamService), 'loadAllTeams').and.returnValue(testTeams);
+      await component.loadAllTeams();
+      fixture.detectChanges();
+      expect(teamServiceSpy).toHaveBeenCalled();
+      expect(component.allTeams).toBe(testTeams);
+    });
+
+  it('should call apiClient.createSeason on addNewSeason() and reload SeasonsInPrep', () => {
+    const testSeasonname = 'test';
+    const createSeasonSpy = spyOn(TestBed.get(Client), 'createSeason').and.returnValue(of(true));
+    const componentSpy = spyOn(component, 'loadAllSeasonInPrep');
+    component.addNewSeason(testSeasonname);
+    expect(createSeasonSpy).toHaveBeenCalledWith(new CreateSeasonBody({ name: testSeasonname }));
+    expect(componentSpy).toHaveBeenCalled();
+  });
 });

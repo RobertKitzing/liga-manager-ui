@@ -16,7 +16,7 @@ export class TeamsComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.teams = await this.teamService.loadTeams();
+    this.teams = await this.teamService.loadAllTeams();
   }
 
 }

@@ -43,7 +43,7 @@ export class AddtournamentroundComponent implements OnInit {
     }
 
   async ngOnInit() {
-    this.teamList = await this.teamService.loadTeams();
+    this.teamList = await this.teamService.loadAllTeams();
   }
 
   addTeam() {

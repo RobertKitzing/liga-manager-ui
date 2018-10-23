@@ -41,7 +41,7 @@ export class ManageusersComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.teamList = await this.teamService.loadTeams();
+    this.teamList = await this.teamService.loadAllTeams();
   }
 
   onChangeTeamSelect(event: MatSelectChange) {

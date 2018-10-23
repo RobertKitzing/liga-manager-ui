@@ -12,7 +12,7 @@ export interface ITeamService {
   addNewTeam(teamName: string): Promise<boolean>;
   updateTeam(teamId: string);
   initLoadTeams();
-  loadTeams(): Promise<Team[]>;
+  loadAllTeams(): Promise<Team[]>;
   loadTeamsInSeason(seasonId: string): Promise<Team[]>;
 }
 
@@ -58,7 +58,7 @@ export class TeamService implements ITeamService {
         createTeamParams.name = teamName;
         this.apiClient.createTeam(createTeamParams).subscribe(
           async () => {
-            this.teams = await this.loadTeams();
+            this.teams = await this.loadAllTeams();
             resolve(true);
           },
           (error) => {
@@ -83,10 +83,10 @@ export class TeamService implements ITeamService {
   }
 
   public async initLoadTeams() {
-    this.teams = await this.loadTeams();
+    this.teams = await this.loadAllTeams();
   }
 
-  public async loadTeams(): Promise<Team[]> {
+  public async loadAllTeams(): Promise<Team[]> {
     return new Promise<Team[]>(
       (resolve) => {
         this.apiClient.getAllTeams().subscribe(

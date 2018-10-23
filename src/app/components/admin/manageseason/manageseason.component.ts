@@ -6,6 +6,7 @@ import { MatchService } from '../../../services/match.service';
 import { MatchViewModel } from '../../../models/match.viewmodel';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-manageseason',
@@ -27,6 +28,7 @@ export class ManageseasonComponent implements OnInit {
 
   constructor(
     public seasonService: SeasonService,
+    private teamService: TeamService,
     private matchService: MatchService,
     private apiClient: Client,
     private snackBar: MatSnackBar,
@@ -42,12 +44,8 @@ export class ManageseasonComponent implements OnInit {
     this.seasons = await this.seasonService.loadSeasons(SeasonState.Preparation);
   }
 
-  loadAllTeams() {
-    this.apiClient.getAllTeams().subscribe(
-      (teams) => {
-        this.allTeams = teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-      }
-    );
+  async loadAllTeams() {
+    this.allTeams = await this.teamService.loadAllTeams();
   }
 
   addNewSeason(seasonName: string) {
@@ -190,14 +188,14 @@ export class ManageseasonComponent implements OnInit {
     if (this.manageSeason) {
       this.newMatchDays = new Array<Match_day>();
       const matchDays = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
-        matchDays.forEach(
-          (md) => {
-            const dp = new Date_period();
-            dp.from = md.start_date;
-            dp.to = md.end_date;
-            this.newMatchDays.push(dp);
-          }
-        );
+      matchDays.forEach(
+        (md) => {
+          const dp = new Date_period();
+          dp.from = md.start_date;
+          dp.to = md.end_date;
+          this.newMatchDays.push(dp);
+        }
+      );
     }
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ITeamService } from './team.service';
-import { Team, Client, Contact_person } from '../../api';
+import { Team, Contact_person } from '../../api';
 
 @Injectable()
 export class TeamServiceMock implements ITeamService {
@@ -25,7 +25,7 @@ export class TeamServiceMock implements ITeamService {
         throw new Error('Method not implemented.');
     }
 
-    loadTeams(): Promise<Team[]> {
+    loadAllTeams(): Promise<Team[]> {
         throw new Error('Method not implemented.');
     }
 
