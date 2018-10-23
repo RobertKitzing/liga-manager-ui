@@ -8,7 +8,7 @@ const { exec } = require("child_process");
 var fs = require("fs");
 const fastLaneDir = "./metadata/de-DE/changelogs";
 
-exec("git log --oneline \"v3.0.4\"..@ --pretty=format:\"%s\" --grep=\"[[ADD]]\" --grep=\"[[REMOVE]]\" --grep=\"[[CHANGE]]\" ",
+exec("git log --oneline v3.0.4..@ --pretty=format:\"%s\" --grep=\"[[ADD]]\" --grep=\"[[REMOVE]]\" --grep=\"[[CHANGE]]\" ",
     function (error, out) {
         if (error instanceof Error) {
             throw error;
