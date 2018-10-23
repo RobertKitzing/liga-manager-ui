@@ -1,6 +1,6 @@
-const optionDefinitions = [
-    { name: "versionCode", alias: "v", type: String },
-    { name: "tagName", alias: "t", type: String }
+let optionDefinitions = [
+    {name: "versionCode", alias: "v", type: String},
+    {name: "tagName", alias: "t", type: String}
 ];
 const commandLineArgs = require("command-line-args");
 const options = commandLineArgs(optionDefinitions);
