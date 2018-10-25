@@ -2,7 +2,8 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { TeamService } from './team.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Team } from '../../api';
+import { Team, Client, CreateTeamBody } from '../../api';
+import { of } from 'rxjs/internal/observable/of';
 
 describe('TeamService', () => {
   beforeEach(() => {
@@ -25,4 +26,12 @@ describe('TeamService', () => {
     service.teams = testTeams;
     expect(localStorageSpy).toHaveBeenCalledWith('TEAMS', JSON.stringify(testTeams));
   }));
+
+  it('should call createTeam on addNewTeam', inject([TeamService],
+    async (service: TeamService) => {
+      const createTeamsSpy = spyOn(TestBed.get(Client), 'createTeam').and.returnValue(of());
+      const teamName = 'test';
+      service.addNewTeam(teamName);
+      expect(createTeamsSpy).toHaveBeenCalledWith(new CreateTeamBody({ name: teamName }));
+    }));
 });
