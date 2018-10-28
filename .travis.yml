@@ -56,8 +56,6 @@ cache:
     - "node_modules"
     - "server/node_modules"
     - $HOME/.gradle
-    - /home/travis/.nvm/versions/node/v8.12.0/bin
-    - /home/travis/.rvm/gems
 
 script:
   - npm run test:ci
