@@ -25,16 +25,18 @@ export class TeamadminComponent implements OnInit {
     private apiClient: Client) { }
 
   ngOnInit() {
-    this.authService.user.teams.forEach(
-      async (teamId) => {
-        try {
-          const team = await this.teamService.getSingleTeam(teamId);
-          this.teams.push(team);
-        } catch (error) {
-          console.error(error);
+    if (this.authService.user && this.authService.user.teams) {
+      this.authService.user.teams.forEach(
+        async (teamId) => {
+          try {
+            const team = await this.teamService.getSingleTeam(teamId);
+            this.teams.push(team);
+          } catch (error) {
+            console.error(error);
+          }
         }
-      }
-    );
+      );
+    }
   }
 
   saveContact(teamId: string, firstname: string, lastname: string, mail: string, phone: string) {
