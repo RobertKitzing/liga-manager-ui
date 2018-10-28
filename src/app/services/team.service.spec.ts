@@ -34,4 +34,11 @@ describe('TeamService', () => {
       service.addNewTeam(teamName);
       expect(createTeamsSpy).toHaveBeenCalledWith(new CreateTeamBody({ name: teamName }));
     }));
+
+    it('should return false on addNewTeam() with empty teamName', inject([TeamService],
+      async (service: TeamService) => {
+        const teamName = '';
+        const result = await service.addNewTeam(teamName);
+        expect(result).toBeFalsy();
+      }));
 });

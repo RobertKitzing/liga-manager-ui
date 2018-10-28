@@ -6,9 +6,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../../shared.module';
 import { SeasonService } from '../../../services/season.service';
-import { SeasonState, Team, Client, CreateSeasonBody } from '../../../../api';
+import { SeasonState, Team, Client, CreateSeasonBody, Season } from '../../../../api';
 import { TeamService } from '../../../services/team.service';
 import { of } from 'rxjs';
+import { MatSelectChange } from '@angular/material';
 
 describe('ManageseasonComponent', () => {
   let component: ManageseasonComponent;
@@ -62,5 +63,17 @@ describe('ManageseasonComponent', () => {
     component.addNewSeason(testSeasonname);
     expect(createSeasonSpy).toHaveBeenCalledWith(new CreateSeasonBody({ name: testSeasonname }));
     expect(componentSpy).toHaveBeenCalled();
+  });
+
+  it('should reload Teams in Season && set this.manageSeason on manageSeasonChanged()', () => {
+    const testSeason = new Season();
+    testSeason.name = 'testSeason';
+    const changeEvent: MatSelectChange = <MatSelectChange>{ value: testSeason };
+    const spy = spyOn(component, 'getTeamsInManageSeason');
+
+    component.manageSeasonChanged(changeEvent);
+
+    expect(component.manageSeason).toBe(testSeason);
+    expect(spy).toHaveBeenCalled();
   });
 });
