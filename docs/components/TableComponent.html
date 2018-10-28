@@ -1,0 +1,630 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>liga-manager-ui documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">liga-manager-ui documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>TableComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/table/table.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-table</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>table.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./table.component.html</code></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ranking">ranking</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#teamService">teamService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#loadRanking">loadRanking</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, api: <a href="../injectables/Client.html">Client</a>, teamService: <a href="../injectables/TeamService.html">TeamService</a>, matchService: <a href="../injectables/MatchService.html">MatchService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/table/table.component.ts:14</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>seasonService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/SeasonService.html" target="_self" >SeasonService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>api</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/Client.html" target="_self" >Client</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>teamService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>matchService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/MatchService.html" target="_self" >MatchService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadRanking"></a>
+                        <span class="name">
+                            <b>
+                            loadRanking
+                            </b>
+                            <a href="#loadRanking"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>loadRanking(season: <a href="../classes/Season.html">Season</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/table/table.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>season</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Season.html" target="_self" >Season</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngOnInit"></a>
+                        <span class="name">
+                            <b>
+                            ngOnInit
+                            </b>
+                            <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>ngOnInit()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/components/table/table.component.ts:23</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ranking"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            ranking
+                            </b>
+                            <a href="#ranking"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>ranking:     <code><a href="../classes/Ranking.html" target="_self" >Ranking</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../classes/Ranking.html" target="_self" >Ranking</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/table/table.component.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="teamService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            teamService
+                            </b>
+                            <a href="#teamService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>teamService:     <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/table/table.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { Ranking, Client, Season } from &#x27;../../../api&#x27;;
+import { SeasonService } from &#x27;../../services/season.service&#x27;;
+import { TeamService } from &#x27;../../services/team.service&#x27;;
+import { MatchService } from &#x27;../../services/match.service&#x27;;
+
+@Component({
+  selector: &#x27;app-table&#x27;,
+  templateUrl: &#x27;./table.component.html&#x27;,
+  styleUrls: [&#x27;./table.component.scss&#x27;]
+})
+export class TableComponent implements OnInit {
+
+  public ranking: Ranking;
+
+  constructor(
+    private seasonService: SeasonService,
+    private api: Client,
+    public teamService: TeamService,
+    private matchService: MatchService) {
+  }
+
+  ngOnInit() {
+    this.seasonService.currentSeason.subscribe(
+      (season) &#x3D;&gt; {
+        this.loadRanking(season);
+      }
+    );
+    this.matchService.matchUpdated.subscribe(
+      (matchId) &#x3D;&gt; {
+        this.loadRanking(this.seasonService.currentSeason.getValue());
+      });
+  }
+
+  loadRanking(season: Season) {
+    this.ranking &#x3D; null;
+    if (season) {
+      this.api.getRanking(season.id).subscribe(
+        (ranking) &#x3D;&gt; {
+          this.ranking &#x3D; ranking;
+        },
+        (error) &#x3D;&gt; {
+          delete this.ranking;
+        },
+        () &#x3D;&gt; {
+
+        }
+      );
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot; style&#x3D;&quot;margin-top: 30px;&quot;&gt;
+  &lt;div class&#x3D;&quot;row text-center&quot; style&#x3D;&quot;justify-content: center;&quot;&gt;
+    &lt;div class&#x3D;&quot;col-6&quot;&gt;
+      &lt;app-seasonchooser (seasonChanged)&#x3D;&quot;loadRanking($event)&quot;&gt;&lt;/app-seasonchooser&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;mat-progress-bar mode&#x3D;&quot;indeterminate&quot; *ngIf&#x3D;&quot;!ranking&quot;&gt;&lt;/mat-progress-bar&gt;
+  &lt;div class&#x3D;&quot;table-responsive&quot; style&#x3D;&quot;scrollbar-x-position: top;&quot;&gt;
+    &lt;table class&#x3D;&quot;table table-striped font-size-sm&quot; *ngIf&#x3D;&quot;ranking&quot;&gt;
+      &lt;thead class&#x3D;&quot;table-dark&quot;&gt;
+        &lt;tr&gt;
+          &lt;th translate style&#x3D;&quot;max-width: 3ch;&quot;&gt;TABLE.PLACE&lt;/th&gt;
+          &lt;th class&#x3D;&quot;col-6&quot; translate&gt;TABLE.TEAM&lt;/th&gt;
+          &lt;th class&#x3D;&quot;col-1&quot; translate&gt;TABLE.GAMES&lt;/th&gt;
+          &lt;th class&#x3D;&quot;col-1&quot; translate&gt;TABLE.WIN_DRAW_LOST&lt;/th&gt;
+          &lt;th class&#x3D;&quot;col-2&quot; translate&gt;TABLE.TORE:TORE&lt;/th&gt;
+          &lt;th class&#x3D;&quot;col-1&quot; translate&gt;TABLE.POINTS&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody class&#x3D;&quot;&quot;&gt;
+        &lt;ng-container *ngFor&#x3D;&quot;let pos of ranking.positions&quot;&gt;
+          &lt;tr&gt;
+            &lt;td&gt;{{ pos.number }}&lt;/td&gt;
+            &lt;td&gt;{{ teamService.getTeamById(pos.team_id).name }}&lt;/td&gt;
+            &lt;td&gt;{{ pos.matches }}&lt;/td&gt;
+            &lt;td&gt;{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}&lt;/td&gt;
+            &lt;td&gt;{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})&lt;/td&gt;
+            &lt;td&gt;{{ pos.points }}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/ng-container&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <div class="row text-center" style="justify-content: center;">    <div class="col-6">      <app-seasonchooser (seasonChanged)="loadRanking($event)"></app-seasonchooser>    </div>  </div>  <mat-progress-bar mode="indeterminate" *ngIf="!ranking"></mat-progress-bar>  <div class="table-responsive" style="scrollbar-x-position: top;">    <table class="table table-striped font-size-sm" *ngIf="ranking">      <thead class="table-dark">        <tr>          <th translate style="max-width: 3ch;">TABLE.PLACE</th>          <th class="col-6" translate>TABLE.TEAM</th>          <th class="col-1" translate>TABLE.GAMES</th>          <th class="col-1" translate>TABLE.WIN_DRAW_LOST</th>          <th class="col-2" translate>TABLE.TORE:TORE</th>          <th class="col-1" translate>TABLE.POINTS</th>        </tr>      </thead>      <tbody class="">        <ng-container *ngFor="let pos of ranking.positions">          <tr>            <td>{{ pos.number }}</td>            <td>{{ teamService.getTeamById(pos.team_id).name }}</td>            <td>{{ pos.matches }}</td>            <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>            <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>            <td>{{ pos.points }}</td>          </tr>        </ng-container>      </tbody>    </table>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TableComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TableComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
