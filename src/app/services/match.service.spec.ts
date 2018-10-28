@@ -100,7 +100,7 @@ describe('MatchService', () => {
       expect(getMatchspy).toHaveBeenCalledWith(matchId);
   }));
 
-  it('should call submitMatchResult on submitMatchResult', inject([MatchService],
+  it('should call submitMatchResult on submitMatchResult and return true on success', inject([MatchService],
     async (service: MatchService) => {
       const matchId = 'match';
       const homeScore = 1;
@@ -108,7 +108,8 @@ describe('MatchService', () => {
       const getMatchspy = spyOn(TestBed.get(Client), 'submitMatchResult').and.returnValue(
         of({}));
       const t = await service.submitMatchResult(matchId, homeScore, guestScore);
-      expect(t).toBeTruthy();
+      expect(t).toBeUndefined();
       expect(getMatchspy).toHaveBeenCalledWith(matchId, new SubmitMatchResultBody({guest_score: guestScore, home_score: homeScore}));
   }));
+
 });

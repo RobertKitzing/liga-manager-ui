@@ -26,12 +26,14 @@ export class EditmatchResultComponent implements OnInit {
   }
 
   async onSaveClicked() {
-    let success: boolean;
-    if (this.home_score >= 0 && this.guest_score >= 0) {
-      success = await this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score);
-    }
-    if (success) {
-      this.dialogRef.close(true);
+    if (this.matchService.isValidResult(this.home_score) && this.matchService.isValidResult(this.guest_score)) {
+      this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score)
+        .then( () => {
+          this.dialogRef.close(true);
+        })
+        .catch( (error) => {
+          console.log(error);
+        });
     }
   }
 }

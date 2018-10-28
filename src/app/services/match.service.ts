@@ -109,21 +109,25 @@ export class MatchService {
   }
 
   public isMatchPlayed(match: Match): boolean {
-    return typeof match.home_score === 'number' && typeof match.guest_score === 'number';
+    return this.isValidResult(match.home_score) && this.isValidResult(match.guest_score);
   }
 
-  submitMatchResult(matchId: string, homeScore: number, guestScore: number): Promise<boolean> {
-    return new Promise<boolean>(
-      (resolve) => {
+  public isValidResult(score: number): boolean {
+    return typeof score === 'number' && score >= 0;
+  }
+
+  submitMatchResult(matchId: string, homeScore: number, guestScore: number): Promise<void> {
+    return new Promise<void>(
+      (resolve, reject) => {
         const matchResult = new SubmitMatchResultBody();
         matchResult.guest_score = guestScore;
         matchResult.home_score = homeScore;
         this.apiClient.submitMatchResult(matchId, matchResult).subscribe(
           (b) => {
-            resolve(true);
+            resolve();
           },
           (error) => {
-            resolve(false);
+            reject(error);
           }
         );
       }
