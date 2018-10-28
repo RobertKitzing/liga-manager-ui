@@ -7,7 +7,6 @@
 /app/www
 /server/dist
 /dist
-/documentation
 
 # dependencies
 /node_modules
