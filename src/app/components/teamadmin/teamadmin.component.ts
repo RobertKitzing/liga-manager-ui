@@ -3,7 +3,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { TeamService } from '../../services/team.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Contact_person, Client, Team } from '../../../api';
-import { MatSnackBar, MatTabChangeEvent } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 

@@ -60,6 +60,7 @@ cache:
 script:
   - npm run test:ci
   - npm run codacy:coverage -- --token $CODACY_KEY
+  - npm run compodoc
   - npm run build:web
   - npm run build:app
   - npm run build:server
@@ -75,3 +76,4 @@ script:
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
   - docker push $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER
+  - .travis/push.sh

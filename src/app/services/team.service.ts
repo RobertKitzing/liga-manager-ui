@@ -5,25 +5,29 @@ interface CacheTeamsInSeason {
   seasonId: string;
   teams: Team[];
 }
-
-export interface ITeamService {
-  getTeamContactByID(id: string): Contact_person;
-  getTeamById(id: string): Team;
-  addNewTeam(teamName: string): Promise<boolean>;
-  updateTeam(teamId: string);
-  initLoadTeams();
-  loadAllTeams(): Promise<Team[]>;
-  loadTeamsInSeason(seasonId: string): Promise<Team[]>;
-}
-
+/**
+ * Service to load/save everything related to Teams
+ * @export
+ * @class TeamService
+ */
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService implements ITeamService {
+export class TeamService {
 
+  /**
+   * Returns a List of Teams from localStorage
+   * @type {Team[]}
+   * @memberof TeamService
+   */
   public get teams(): Team[] {
     return JSON.parse(localStorage.getItem('TEAMS')) || null;
   }
+
+  /**
+   * Stores a List of Teams to localStorage
+   * @memberof TeamService
+   */
   public set teams(value: Team[]) {
     localStorage.setItem('TEAMS', JSON.stringify(value));
   }
@@ -32,6 +36,12 @@ export class TeamService implements ITeamService {
     private apiClient: Client) {
   }
 
+  /**
+   * Returns a Contact_person for given teamID or an empty Contact_person if no Team was found
+   * @param {string} id
+   * @returns {Contact_person}
+   * @memberof TeamService
+   */
   getTeamContactByID(id: string): Contact_person {
     const team: Team = this.teams.find(t => t.id === id);
     return team.contact || <Contact_person>{
@@ -42,6 +52,12 @@ export class TeamService implements ITeamService {
     };
   }
 
+  /**
+   * Returns a Team for given teamId or an empty Team
+   * @param {string} id
+   * @returns {Team}
+   * @memberof TeamService
+   */
   getTeamById(id: string): Team {
     if (this.teams) {
       return this.teams.find(t => t.id === id);
@@ -50,6 +66,12 @@ export class TeamService implements ITeamService {
     }
   }
 
+  /**
+   * Calls the API to create a new Team
+   * @param {string} teamName
+   * @returns {Promise<boolean>}
+   * @memberof TeamService
+   */
   async addNewTeam(teamName: string): Promise<boolean> {
     return new Promise<boolean>(
       (resolve) => {
@@ -72,19 +94,10 @@ export class TeamService implements ITeamService {
     );
   }
 
-  updateTeam(teamId: string) {
-    if (teamId) {
-      this.apiClient.getTeam(teamId).subscribe(
-        (team) => {
-          let curteam = this.teams.find(t => t.id === teamId);
-          curteam = team;
-        }
-      );
-    } else {
-      this.initLoadTeams();
-    }
-  }
-
+  /**
+   * Initial load of all Teams (should only be called in APP_INITIALIZER)
+   * @memberof TeamService
+   */
   public async initLoadTeams() {
     this.teams = await this.loadAllTeams();
   }
@@ -98,17 +111,22 @@ export class TeamService implements ITeamService {
           },
           (error) => {
             resolve(this.teams);
-          },
-          () => {
           }
         );
       }
     );
   }
 
+  /**
+   * Returns an Team[] for an Season.
+   * With a Cache Mechanism, it Stores an CacheTeamsInSeason[] in localStorage
+   * @param {string} seasonId
+   * @returns {Promise<Team[]>}
+   * @memberof TeamService
+   */
   public async loadTeamsInSeason(seasonId: string): Promise<Team[]> {
     return new Promise<Team[]>(
-      (resolve) => {
+      (resolve, reject) => {
         let cache: CacheTeamsInSeason[] = JSON.parse(localStorage.getItem('CACHE_TEAMS_IN_SEASON'));
         this.apiClient.getTeamsInSeason(seasonId).subscribe(
           (teams) => {
@@ -130,19 +148,23 @@ export class TeamService implements ITeamService {
               if (teams) {
                 resolve(teams.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
               } else {
-                resolve(null);
+                reject(error);
               }
             } else {
-              resolve(null);
+              reject(error);
             }
-          },
-          () => {
           }
         );
       }
     );
   }
 
+  /**
+   * Loads an Team from API
+   * @param {string} teamId
+   * @returns {Promise<Team>}
+   * @memberof TeamService
+   */
   public async getSingleTeam(teamId: string): Promise<Team> {
     return new Promise<Team>(
       (resolve, reject) => {
