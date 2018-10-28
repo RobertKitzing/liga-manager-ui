@@ -64,11 +64,11 @@ export class MatchplanComponent implements OnInit {
   async handleGetMatches() {
     this.matches = null;
     if (this.season) {
-      // TODO: Umbauen, sodass beides möglich ist
-      if (this.selectedTeamId !== '0') {
-        this.matches = await this.matchService.getMatchesInSeason(this.season.id, this.selectedTeamId, null);
-      } else {
-        this.matches = await this.matchService.getMatchesInSeason(this.season.id, null, this.selectedMatchDay.id);
+      const selectedTeamId = this.selectedTeamId === '0' ? undefined : this.selectedTeamId;
+      try {
+        this.matches = await this.matchService.getMatchesInSeason(this.season.id, selectedTeamId, this.selectedMatchDay.id);
+      } catch (error) {
+        console.error(error);
       }
     }
   }

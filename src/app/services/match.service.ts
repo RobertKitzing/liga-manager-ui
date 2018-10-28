@@ -25,9 +25,8 @@ export class MatchService {
 
   // tslint:disable-next-line:max-line-length
   public async getMatchesInSeason(seasonId: string, teamId?: string, matchDayId?: string): Promise<MatchViewModel[]> {
-    // TODO: Umbauen auf Observable
     return new Promise<MatchViewModel[]>(
-      (resolve) => {
+      (resolve, reject) => {
         if (!teamId) {
           teamId = undefined;
         }
@@ -37,6 +36,9 @@ export class MatchService {
         this.apiClient.getMatches(seasonId, undefined, teamId, matchDayId).subscribe(
           (matches) => {
             resolve(this.matchConverterArray(matches));
+          },
+          (error) => {
+            reject(error);
           }
         );
       }
