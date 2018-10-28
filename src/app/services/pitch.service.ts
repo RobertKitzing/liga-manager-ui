@@ -25,8 +25,11 @@ export class PitchService {
   }
 
   getPitchById(id: string): Pitch {
-    const pitch: Pitch = this.pitches.find(t => t.id === id);
-    return pitch;
+    if (this.pitches) {
+      return this.pitches.find(t => t.id === id);
+    } else {
+      return new Pitch();
+    }
   }
 
   public async load() {

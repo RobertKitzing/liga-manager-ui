@@ -43,8 +43,11 @@ export class TeamService implements ITeamService {
   }
 
   getTeamById(id: string): Team {
-    const team: Team = this.teams.find(t => t.id === id);
-    return team;
+    if (this.teams) {
+      return this.teams.find(t => t.id === id);
+    } else {
+      return new Team();
+    }
   }
 
   async addNewTeam(teamName: string): Promise<boolean> {
