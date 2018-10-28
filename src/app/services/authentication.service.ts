@@ -12,7 +12,6 @@ export interface LoginContext {
 
 class Credentials {
   constructor(public token: string) {
-
   }
 }
 

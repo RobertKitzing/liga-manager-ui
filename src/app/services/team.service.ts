@@ -142,4 +142,19 @@ export class TeamService implements ITeamService {
       }
     );
   }
+
+  public async getSingleTeam(teamId: string): Promise<Team> {
+    return new Promise<Team>(
+      (resolve, reject) => {
+        this.apiClient.getTeam(teamId).subscribe(
+          (team) => {
+            resolve(team);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      }
+    );
+  }
 }

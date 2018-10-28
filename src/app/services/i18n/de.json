@@ -33,7 +33,7 @@
 	"CREATE_USER_ERROR": "User konnte nicht angelegt werden",
 	"CREATE_USER_SUCCESS": "User angelegt",
 	"EDIT_ROUND": "Runde {{ round }} bearbeiten",
-	"EDIT_TEAM_CONTACT_INFO_TEXT": "Wird als Kontakt bei all euren Spielen angezeigt",
+	"EDIT_TEAM_CONTACT_INFO_TEXT": "Anprechpartner bezüglich Spiele etc.",
 	"EMAIL": "Email",
 	"ERRORS": {
 		"ENTER_VALID_EMAIL": "Bitte eine gültige Emailadresse eingeben",
@@ -133,6 +133,7 @@
 	},
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
 	"TEAM_CONTACT": "Kontakt der Mannschaft",
+	"TEAM_CONTACT_SAVE_ERROR": "Speichern fehlgeschlagen",
 	"TEAM_CONTACT_SAVE_SUCCESS": "Kontakt der Mannschaft gespeichert",
 	"TIME_SAVE_SUCCESS": "Anstosszeit gespeichert",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Bitte einen möglichst eindeutigen Namen eingeben",

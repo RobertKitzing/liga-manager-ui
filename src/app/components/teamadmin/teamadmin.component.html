@@ -1,6 +1,6 @@
 <ng-container *ngIf="authService.user">
   <mat-tab-group>
-    <mat-tab *ngFor="let teamId of authService.user.teams" label="{{teamService.getTeamById(teamId).name}}">
+    <mat-tab *ngFor="let team of teams" label="{{ team.name }}">
       <mat-tab-group>
         <mat-tab label="{{ 'TAB.CONTACT' | translate }}">
           <div class="card text-center">
@@ -10,7 +10,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'FIRST_NAME' | translate  }}" #firstname [value]="teamService.getTeamContactByID(teamId).first_name"
+                      <input matInput placeholder="{{ 'FIRST_NAME' | translate  }}" #firstname [value]="team.contact.first_name"
                       />
                     </mat-form-field>
                   </div>
@@ -18,7 +18,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname [value]="teamService.getTeamContactByID(teamId).last_name"
+                      <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname [value]="team.contact.last_name"
                       />
                     </mat-form-field>
                   </div>
@@ -26,7 +26,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="teamService.getTeamContactByID(teamId).email"
+                      <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="team.contact.email"
                       />
                     </mat-form-field>
                   </div>
@@ -34,13 +34,13 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'PHONE' | translate }}" #phone [value]="teamService.getTeamContactByID(teamId).phone" />
+                      <input matInput placeholder="{{ 'PHONE' | translate }}" #phone [value]="team.contact.phone" />
                     </mat-form-field>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <button mat-button (click)="saveContact(teamId, firstname.value, lastname.value, mail.value, phone.value)">
+                    <button mat-button (click)="saveContact(team.id, firstname.value, lastname.value, mail.value, phone.value)">
                       {{ 'BUTTON.SAVE' | translate }}
                     </button>
                   </div>

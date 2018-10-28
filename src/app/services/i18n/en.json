@@ -133,6 +133,7 @@
 	},
 	"TEAMS_IN_SEASON": "Teams in Season",
 	"TEAM_CONTACT": "Team Contact",
+	"TEAM_CONTACT_SAVE_ERROR": "Saving failed",
 	"TEAM_CONTACT_SAVE_SUCCESS": "Team Contact saved",
 	"TIME_SAVE_SUCCESS": "Kickoff time saved",
 	"UNIQUE_NAME_PITCH_TOOLTIP": "Enter unique Pitch name",
