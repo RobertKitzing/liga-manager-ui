@@ -3,3 +3,7 @@
 [![Build Status](https://travis-ci.org/RobertKitzing/liga-manager-ui.svg?branch=master)](https://travis-ci.org/RobertKitzing/liga-manager-ui)
 
 # Liga Manager UI
+
+## Documentation
+
+https://robertkitzing.github.io/liga-manager-ui/

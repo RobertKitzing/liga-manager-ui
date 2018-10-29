@@ -6,12 +6,12 @@ setup_git() {
 }
 
 commit_documentation_files() {
-    git add ./docs
-    git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
+    git add /home/travis/build/RobertKitzing/liga-manager-ui/docs
+    git commit --message "[skip travis] Update Documentation"
 }
 
 upload_files() {
-    git push --quiet --set-upstream origin-gh-pages gh-pages 
+    git push --quiet
 }
 
 setup_git
