@@ -6,6 +6,7 @@ setup_git() {
 }
 
 commit_documentation_files() {
+    git checkout master
     git add /home/travis/build/RobertKitzing/liga-manager-ui/docs
     git commit --message "[skip travis] Update Documentation"
 }
