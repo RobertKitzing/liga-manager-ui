@@ -10,7 +10,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'FIRST_NAME' | translate  }}" #firstname [value]="team.contact.first_name"
+                      <input matInput placeholder="{{ 'FIRST_NAME' | translate  }}" #firstname [value]="team.contact?.first_name"
                       />
                     </mat-form-field>
                   </div>
@@ -18,7 +18,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname [value]="team.contact.last_name"
+                      <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname [value]="team.contact?.last_name"
                       />
                     </mat-form-field>
                   </div>
@@ -26,7 +26,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="team.contact.email"
+                      <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="team.contact?.email"
                       />
                     </mat-form-field>
                   </div>
@@ -34,7 +34,7 @@
                 <div class="row">
                   <div class="col">
                     <mat-form-field>
-                      <input matInput placeholder="{{ 'PHONE' | translate }}" #phone [value]="team.contact.phone" />
+                      <input matInput placeholder="{{ 'PHONE' | translate }}" #phone [value]="team.contact?.phone" />
                     </mat-form-field>
                   </div>
                 </div>
