@@ -1,7 +1,9 @@
 <ng-container *ngIf="contact">
   <div class="row">
     <div class="col-1">
-      <i class="fa fa-user"></i>
+      <mat-icon>
+        person
+      </mat-icon>
     </div>
     <div class="col" *ngIf="contact">
       {{contact.first_name}} {{contact.last_name}}
