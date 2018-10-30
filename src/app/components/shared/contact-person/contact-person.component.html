@@ -1,4 +1,4 @@
-<ng-container *ngIf="contact">
+<ng-container *ngIf="contact; else noContact">
   <div class="row">
     <div class="col-1">
       <mat-icon>
@@ -30,3 +30,7 @@
     </div>
   </div>
 </ng-container>
+
+<ng-template #noContact>
+  {{ 'NO_CONTACT_SET' | translate}}
+</ng-template>
