@@ -12,6 +12,7 @@ commit_documentation_files() {
 }
 
 upload_files() {
+    git remote add origin-pages https://${GITHUB_TOKEN}@github.com/RobertKitzing/liga-manager-ui > /dev/null 2>&1
     git push --quiet
 }
 
