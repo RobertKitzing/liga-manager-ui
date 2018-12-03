@@ -15,6 +15,19 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IClient {
     /**
+     * Returns a list of latest events
+     * @param start_date (optional) 
+     * @param end_date (optional) 
+     * @param type (optional) 
+     * @return Array of events
+     */
+    getLatestEvents(start_date?: Date | null | undefined, end_date?: Date | null | undefined, type?: string | null | undefined): Observable<Event[]>;
+    /**
+     * Returns a single event
+     * @return An event object
+     */
+    getEvent(id: string): Observable<Event>;
+    /**
      * Find matches by multiple filter criteria
      * @param season_id (optional) 
      * @param tournament_id (optional) 
@@ -32,9 +45,10 @@ export interface IClient {
     /**
      * Cancel a match
      * @param id match id
+     * @param cancelMatchBody (optional) 
      * @return Operation successful
      */
-    cancelMatch(id: string): Observable<void>;
+    cancelMatch(id: string, cancelMatchBody?: CancelMatchBody | null | undefined): Observable<void>;
     /**
      * Schedule a match
      * @param id match id
@@ -56,6 +70,13 @@ export interface IClient {
      * @return Operation successful
      */
     submitMatchResult(id: string, submitMatchResultBody?: SubmitMatchResultBody | null | undefined): Observable<void>;
+    /**
+     * Reschedules a matchday
+     * @param id matchday id
+     * @param scheduleMatchDayBody (optional) 
+     * @return Operation successful
+     */
+    rescheduleMatchDay(id: string, scheduleMatchDayBody?: ScheduleMatchDayBody | null | undefined): Observable<void>;
     /**
      * Find all pitches
      * @return Array of pitches
@@ -129,11 +150,31 @@ export interface IClient {
      */
     getRanking(id: string): Observable<Ranking>;
     /**
+     * Creates a ranking penalty for a team
+     * @param season_id ID of season
+     * @param createRankingPenaltyBody (optional) 
+     * @return Operation successful
+     */
+    createRankingPenalty(season_id: string, createRankingPenaltyBody?: CreateRankingPenaltyBody | null | undefined): Observable<Identifier>;
+    /**
+     * Deletes a ranking penalty
+     * @param season_id ID of season
+     * @param penalty_id ID of ranking penalty
+     * @return Operation successful
+     */
+    deleteRankingPenalty(season_id: string, penalty_id: string): Observable<void>;
+    /**
      * Starts a season
      * @param id ID of season
      * @return Season has been successfully started
      */
     startSeason(id: string): Observable<void>;
+    /**
+     * Ends a season
+     * @param id ID of season
+     * @return Operation successful
+     */
+    endSeason(id: string): Observable<void>;
     /**
      * Find all teams related to a single season
      * @param id ID of season
@@ -178,6 +219,13 @@ export interface IClient {
      */
     getTeam(id: string): Observable<Team>;
     /**
+     * Renames a team
+     * @param id ID of team
+     * @param renameTeamBody (optional) 
+     * @return Operation successful
+     */
+    renameTeam(id: string, renameTeamBody?: RenameTeamBody | null | undefined): Observable<void>;
+    /**
      * Updates the contact person of team
      * @param id ID of team
      * @param updateTeamContactBody (optional) 
@@ -202,6 +250,12 @@ export interface IClient {
      */
     getTournament(id: string): Observable<Tournament>;
     /**
+     * Delete a single tournament by id
+     * @param id ID of tournament
+     * @return Operation successful
+     */
+    deleteTournament(id: string): Observable<void>;
+    /**
      * Defines a set of team pairings as a tournament round
      * @param id ID of tournament
      * @param round Number identifying the tournament round
@@ -215,6 +269,11 @@ export interface IClient {
      * @return Array of rounds
      */
     getRoundsInTournament(id: string): Observable<Match_day[]>;
+    /**
+     * Find all users
+     * @return Array of users
+     */
+    getAllUsers(): Observable<void>;
     /**
      * Create a user
      * @param createUserBody (optional) 
@@ -251,6 +310,126 @@ export class Client implements IClient {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "/api";
+    }
+
+    /**
+     * Returns a list of latest events
+     * @param start_date (optional) 
+     * @param end_date (optional) 
+     * @param type (optional) 
+     * @return Array of events
+     */
+    getLatestEvents(start_date?: Date | null | undefined, end_date?: Date | null | undefined, type?: string | null | undefined): Observable<Event[]> {
+        let url_ = this.baseUrl + "/events?";
+        if (start_date !== undefined)
+            url_ += "start_date=" + encodeURIComponent(start_date ? "" + start_date.toJSON() : "") + "&"; 
+        if (end_date !== undefined)
+            url_ += "end_date=" + encodeURIComponent(end_date ? "" + end_date.toJSON() : "") + "&"; 
+        if (type !== undefined)
+            url_ += "type=" + encodeURIComponent("" + type) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetLatestEvents(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetLatestEvents(<any>response_);
+                } catch (e) {
+                    return <Observable<Event[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Event[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetLatestEvents(response: HttpResponseBase): Observable<Event[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(Event.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Event[]>(<any>null);
+    }
+
+    /**
+     * Returns a single event
+     * @return An event object
+     */
+    getEvent(id: string): Observable<Event> {
+        let url_ = this.baseUrl + "/events/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEvent(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEvent(<any>response_);
+                } catch (e) {
+                    return <Observable<Event>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Event>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEvent(response: HttpResponseBase): Observable<Event> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Event.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Event>(<any>null);
     }
 
     /**
@@ -384,19 +563,24 @@ export class Client implements IClient {
     /**
      * Cancel a match
      * @param id match id
+     * @param cancelMatchBody (optional) 
      * @return Operation successful
      */
-    cancelMatch(id: string): Observable<void> {
+    cancelMatch(id: string, cancelMatchBody?: CancelMatchBody | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/matches/{id}/cancellation";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(cancelMatchBody);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -599,6 +783,63 @@ export class Client implements IClient {
         } else if (status === 403) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * Reschedules a matchday
+     * @param id matchday id
+     * @param scheduleMatchDayBody (optional) 
+     * @return Operation successful
+     */
+    rescheduleMatchDay(id: string, scheduleMatchDayBody?: ScheduleMatchDayBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/match_days/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(scheduleMatchDayBody);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("patch", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRescheduleMatchDay(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRescheduleMatchDay(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRescheduleMatchDay(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
@@ -1301,6 +1542,123 @@ export class Client implements IClient {
     }
 
     /**
+     * Creates a ranking penalty for a team
+     * @param season_id ID of season
+     * @param createRankingPenaltyBody (optional) 
+     * @return Operation successful
+     */
+    createRankingPenalty(season_id: string, createRankingPenaltyBody?: CreateRankingPenaltyBody | null | undefined): Observable<Identifier> {
+        let url_ = this.baseUrl + "/seasons/{season_id}/ranking/penalties";
+        if (season_id === undefined || season_id === null)
+            throw new Error("The parameter 'season_id' must be defined.");
+        url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(createRankingPenaltyBody);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateRankingPenalty(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateRankingPenalty(<any>response_);
+                } catch (e) {
+                    return <Observable<Identifier>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Identifier>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateRankingPenalty(response: HttpResponseBase): Observable<Identifier> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Identifier.fromJS(resultData200) : new Identifier();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Identifier>(<any>null);
+    }
+
+    /**
+     * Deletes a ranking penalty
+     * @param season_id ID of season
+     * @param penalty_id ID of ranking penalty
+     * @return Operation successful
+     */
+    deleteRankingPenalty(season_id: string, penalty_id: string): Observable<void> {
+        let url_ = this.baseUrl + "/seasons/{season_id}/ranking/penalties/{penalty_id}";
+        if (season_id === undefined || season_id === null)
+            throw new Error("The parameter 'season_id' must be defined.");
+        url_ = url_.replace("{season_id}", encodeURIComponent("" + season_id)); 
+        if (penalty_id === undefined || penalty_id === null)
+            throw new Error("The parameter 'penalty_id' must be defined.");
+        url_ = url_.replace("{penalty_id}", encodeURIComponent("" + penalty_id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteRankingPenalty(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteRankingPenalty(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteRankingPenalty(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * Starts a season
      * @param id ID of season
      * @return Season has been successfully started
@@ -1334,6 +1692,66 @@ export class Client implements IClient {
     }
 
     protected processStartSeason(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * Ends a season
+     * @param id ID of season
+     * @return Operation successful
+     */
+    endSeason(id: string): Observable<void> {
+        let url_ = this.baseUrl + "/seasons/{id}/end";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEndSeason(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEndSeason(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processEndSeason(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1774,6 +2192,67 @@ export class Client implements IClient {
     }
 
     /**
+     * Renames a team
+     * @param id ID of team
+     * @param renameTeamBody (optional) 
+     * @return Operation successful
+     */
+    renameTeam(id: string, renameTeamBody?: RenameTeamBody | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/teams/{id}/name";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(renameTeamBody);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRenameTeam(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRenameTeam(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRenameTeam(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * Updates the contact person of team
      * @param id ID of team
      * @param updateTeamContactBody (optional) 
@@ -2012,6 +2491,62 @@ export class Client implements IClient {
     }
 
     /**
+     * Delete a single tournament by id
+     * @param id ID of tournament
+     * @return Operation successful
+     */
+    deleteTournament(id: string): Observable<void> {
+        let url_ = this.baseUrl + "/tournaments/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteTournament(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteTournament(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteTournament(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * Defines a set of team pairings as a tournament round
      * @param id ID of tournament
      * @param round Number identifying the tournament round
@@ -2134,6 +2669,54 @@ export class Client implements IClient {
             }));
         }
         return _observableOf<Match_day[]>(<any>null);
+    }
+
+    /**
+     * Find all users
+     * @return Array of users
+     */
+    getAllUsers(): Observable<void> {
+        let url_ = this.baseUrl + "/users";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllUsers(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllUsers(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -2402,6 +2985,7 @@ export interface IIdentifier {
 
 export class Match implements IMatch {
     cancelled_at?: Date | undefined;
+    cancellation_reason?: string | undefined;
     guest_score?: number | undefined;
     guest_team_id?: string | undefined;
     home_score?: number | undefined;
@@ -2423,6 +3007,7 @@ export class Match implements IMatch {
     init(data?: any) {
         if (data) {
             this.cancelled_at = data["cancelled_at"] ? new Date(data["cancelled_at"].toString()) : <any>undefined;
+            this.cancellation_reason = data["cancellation_reason"];
             this.guest_score = data["guest_score"];
             this.guest_team_id = data["guest_team_id"];
             this.home_score = data["home_score"];
@@ -2444,6 +3029,7 @@ export class Match implements IMatch {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["cancelled_at"] = this.cancelled_at ? this.cancelled_at.toISOString() : <any>undefined;
+        data["cancellation_reason"] = this.cancellation_reason;
         data["guest_score"] = this.guest_score;
         data["guest_team_id"] = this.guest_team_id;
         data["home_score"] = this.home_score;
@@ -2458,6 +3044,7 @@ export class Match implements IMatch {
 
 export interface IMatch {
     cancelled_at?: Date | undefined;
+    cancellation_reason?: string | undefined;
     guest_score?: number | undefined;
     guest_team_id?: string | undefined;
     home_score?: number | undefined;
@@ -2522,6 +3109,7 @@ export interface IPitch {
 
 export class Ranking implements IRanking {
     positions?: Ranking_position[] | undefined;
+    penalties?: Ranking_penalty[] | undefined;
     season_id?: string | undefined;
     updated_at?: Date | undefined;
 
@@ -2540,6 +3128,11 @@ export class Ranking implements IRanking {
                 this.positions = [];
                 for (let item of data["positions"])
                     this.positions.push(Ranking_position.fromJS(item));
+            }
+            if (data["penalties"] && data["penalties"].constructor === Array) {
+                this.penalties = [];
+                for (let item of data["penalties"])
+                    this.penalties.push(Ranking_penalty.fromJS(item));
             }
             this.season_id = data["season_id"];
             this.updated_at = data["updated_at"] ? new Date(data["updated_at"].toString()) : <any>undefined;
@@ -2560,6 +3153,11 @@ export class Ranking implements IRanking {
             for (let item of this.positions)
                 data["positions"].push(item.toJSON());
         }
+        if (this.penalties && this.penalties.constructor === Array) {
+            data["penalties"] = [];
+            for (let item of this.penalties)
+                data["penalties"].push(item.toJSON());
+        }
         data["season_id"] = this.season_id;
         data["updated_at"] = this.updated_at ? this.updated_at.toISOString() : <any>undefined;
         return data; 
@@ -2568,6 +3166,7 @@ export class Ranking implements IRanking {
 
 export interface IRanking {
     positions?: Ranking_position[] | undefined;
+    penalties?: Ranking_penalty[] | undefined;
     season_id?: string | undefined;
     updated_at?: Date | undefined;
 }
@@ -2646,6 +3245,62 @@ export interface IRanking_position {
     sort_index?: number | undefined;
     team_id?: string | undefined;
     wins?: number | undefined;
+}
+
+export class Ranking_penalty implements IRanking_penalty {
+    id?: string | undefined;
+    season_id?: string | undefined;
+    team_id?: string | undefined;
+    reason?: string | undefined;
+    points?: number | undefined;
+    created_at?: Date | undefined;
+
+    constructor(data?: IRanking_penalty) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.season_id = data["season_id"];
+            this.team_id = data["team_id"];
+            this.reason = data["reason"];
+            this.points = data["points"];
+            this.created_at = data["created_at"] ? new Date(data["created_at"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Ranking_penalty {
+        data = typeof data === 'object' ? data : {};
+        let result = new Ranking_penalty();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["season_id"] = this.season_id;
+        data["team_id"] = this.team_id;
+        data["reason"] = this.reason;
+        data["points"] = this.points;
+        data["created_at"] = this.created_at ? this.created_at.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IRanking_penalty {
+    id?: string | undefined;
+    season_id?: string | undefined;
+    team_id?: string | undefined;
+    reason?: string | undefined;
+    points?: number | undefined;
+    created_at?: Date | undefined;
 }
 
 export class Season implements ISeason {
@@ -2984,6 +3639,90 @@ export interface IDate_period {
     to?: Date | undefined;
 }
 
+export class Event implements IEvent {
+    id?: string | undefined;
+    occurred_at?: Date | undefined;
+    payload?: any | undefined;
+    type?: EventType | undefined;
+
+    constructor(data?: IEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.occurred_at = data["occurred_at"] ? new Date(data["occurred_at"].toString()) : <any>undefined;
+            this.payload = data["payload"];
+            this.type = data["type"];
+        }
+    }
+
+    static fromJS(data: any): Event {
+        data = typeof data === 'object' ? data : {};
+        let result = new Event();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["occurred_at"] = this.occurred_at ? this.occurred_at.toISOString() : <any>undefined;
+        data["payload"] = this.payload;
+        data["type"] = this.type;
+        return data; 
+    }
+}
+
+export interface IEvent {
+    id?: string | undefined;
+    occurred_at?: Date | undefined;
+    payload?: any | undefined;
+    type?: EventType | undefined;
+}
+
+export class CancelMatchBody implements ICancelMatchBody {
+    reason: string;
+
+    constructor(data?: ICancelMatchBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.reason = data["reason"];
+        }
+    }
+
+    static fromJS(data: any): CancelMatchBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new CancelMatchBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reason"] = this.reason;
+        return data; 
+    }
+}
+
+export interface ICancelMatchBody {
+    reason: string;
+}
+
 export class ScheduleMatchBody implements IScheduleMatchBody {
     kickoff: Date;
 
@@ -3094,6 +3833,42 @@ export class SubmitMatchResultBody implements ISubmitMatchResultBody {
 export interface ISubmitMatchResultBody {
     guest_score: number;
     home_score: number;
+}
+
+export class ScheduleMatchDayBody implements IScheduleMatchDayBody {
+    date_period: Date_period;
+
+    constructor(data?: IScheduleMatchDayBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.date_period = data["date_period"] ? Date_period.fromJS(data["date_period"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ScheduleMatchDayBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScheduleMatchDayBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["date_period"] = this.date_period ? this.date_period.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IScheduleMatchDayBody {
+    date_period: Date_period;
 }
 
 export class CreatePitchBody implements ICreatePitchBody {
@@ -3223,6 +3998,50 @@ export interface ICreateMatchDaysBody {
     dates: Date_period[];
 }
 
+export class CreateRankingPenaltyBody implements ICreateRankingPenaltyBody {
+    reason?: string | undefined;
+    points?: number | undefined;
+    team_id?: string | undefined;
+
+    constructor(data?: ICreateRankingPenaltyBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.reason = data["reason"];
+            this.points = data["points"];
+            this.team_id = data["team_id"];
+        }
+    }
+
+    static fromJS(data: any): CreateRankingPenaltyBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateRankingPenaltyBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reason"] = this.reason;
+        data["points"] = this.points;
+        data["team_id"] = this.team_id;
+        return data; 
+    }
+}
+
+export interface ICreateRankingPenaltyBody {
+    reason?: string | undefined;
+    points?: number | undefined;
+    team_id?: string | undefined;
+}
+
 export class CreateTeamBody implements ICreateTeamBody {
     name: string;
 
@@ -3256,6 +4075,42 @@ export class CreateTeamBody implements ICreateTeamBody {
 }
 
 export interface ICreateTeamBody {
+    name: string;
+}
+
+export class RenameTeamBody implements IRenameTeamBody {
+    name: string;
+
+    constructor(data?: IRenameTeamBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): RenameTeamBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new RenameTeamBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface IRenameTeamBody {
     name: string;
 }
 
@@ -3492,6 +4347,16 @@ export enum SeasonState {
 export enum UserRole {
     Admin = <any>"admin", 
     Team_manager = <any>"team_manager", 
+}
+
+export enum EventType {
+    MatchLocated = <any>"match:located", 
+    MatchResultSubmitted = <any>"match:result:submitted", 
+    MatchScheduled = <any>"match:scheduled", 
+    MatchCancelled = <any>"match:cancelled", 
+    RankingPenaltyAdded = <any>"ranking:penalty:added", 
+    RankingPenaltyRemoved = <any>"ranking:penalty:removed", 
+    TeamRenamed = <any>"team:renamed", 
 }
 
 export class Team_pairs implements ITeam_pairs {
