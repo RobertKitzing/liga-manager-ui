@@ -271,7 +271,7 @@ export class ContactPersonComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;ng-container *ngIf&#x3D;&quot;contact&quot;&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;ng-container *ngIf&#x3D;&quot;contact; else noContact&quot;&gt;
   &lt;div class&#x3D;&quot;row&quot;&gt;
     &lt;div class&#x3D;&quot;col-1&quot;&gt;
       &lt;mat-icon&gt;
@@ -302,7 +302,10 @@ export class ContactPersonComponent implements OnInit {
       &lt;a href&#x3D;&quot;mailto:{{contact.email}}&quot;&gt;{{contact.email}}&lt;/a&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/ng-container&gt;</code></pre>
+&lt;/ng-container&gt;
+&lt;ng-template #noContact&gt;
+  {{ &#x27;NO_CONTACT_SET&#x27; | translate}}
+&lt;/ng-template&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-tree">
@@ -330,7 +333,7 @@ export class ContactPersonComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><ng-container *ngIf="contact">  <div class="row">    <div class="col-1">      <mat-icon>        person      </mat-icon>    </div>    <div class="col" *ngIf="contact">      {{contact.first_name}} {{contact.last_name}}    </div>  </div>  <div class="row">    <div class="col-1">      <i class="material-icons">        contact_phone      </i>    </div>    <div class="col" *ngIf="contact">      <a href="tel:{{contact.phone}}">{{contact.phone}}</a>    </div>  </div>  <div class="row">    <div class="col-1">      <i class="material-icons">        contact_mail      </i>    </div>    <div class="col" *ngIf="contact">      <a href="mailto:{{contact.email}}">{{contact.email}}</a>    </div>  </div></ng-container></div>'
+        var COMPONENT_TEMPLATE = '<div><ng-container *ngIf="contact; else noContact">  <div class="row">    <div class="col-1">      <mat-icon>        person      </mat-icon>    </div>    <div class="col" *ngIf="contact">      {{contact.first_name}} {{contact.last_name}}    </div>  </div>  <div class="row">    <div class="col-1">      <i class="material-icons">        contact_phone      </i>    </div>    <div class="col" *ngIf="contact">      <a href="tel:{{contact.phone}}">{{contact.phone}}</a>    </div>  </div>  <div class="row">    <div class="col-1">      <i class="material-icons">        contact_mail      </i>    </div>    <div class="col" *ngIf="contact">      <a href="mailto:{{contact.email}}">{{contact.email}}</a>    </div>  </div></ng-container><ng-template #noContact>  {{ \'NO_CONTACT_SET\' | translate}}</ng-template></div>'
     var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ContactPersonComponent'};
