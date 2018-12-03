@@ -4,17 +4,20 @@
     <div class="row">
       <div class="col text-center">
         <mat-form-field class="inputsize">
-          <input matInput type="number" min="0" max="99" placeholder="{{ 'PLACEHOLDER.HOME_SCORE' | translate}}" [(ngModel)]="home_score" required/>
+          <input matInput type="number" min="0" max="99" placeholder="{{ 'PLACEHOLDER.HOME_SCORE' | translate}}" [(ngModel)]="home_score"
+            required/>
         </mat-form-field>
       </div>
       <div class="col text-center">
         <mat-form-field class="inputsize">
-          <input matInput type="number" min="0" max="99" placeholder="{{ 'PLACEHOLDER.GUEST_SCORE' | translate}}" [(ngModel)]="guest_score" required/>
+          <input matInput type="number" min="0" max="99" placeholder="{{ 'PLACEHOLDER.GUEST_SCORE' | translate}}" [(ngModel)]="guest_score"
+            required/>
         </mat-form-field>
       </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="center">
+    <!-- <button mat-button (click)="onCancelResultClicked()">{{ 'BUTTON.CANCEL_RESULT' | translate}}</button> -->
     <button mat-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate}}</button>
     <button mat-button (click)="onSaveClicked()">{{ 'BUTTON.SAVE' | translate}}</button>
   </mat-dialog-actions>

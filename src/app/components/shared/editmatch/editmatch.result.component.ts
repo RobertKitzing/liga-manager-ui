@@ -25,7 +25,7 @@ export class EditmatchResultComponent implements OnInit {
 
   }
 
-  async onSaveClicked() {
+  onSaveClicked() {
     if (this.matchService.isValidResult(this.home_score) && this.matchService.isValidResult(this.guest_score)) {
       this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score)
         .then( () => {
@@ -36,4 +36,8 @@ export class EditmatchResultComponent implements OnInit {
         });
     }
   }
+
+  // onCancelResultClicked() {
+  //   this.matchService.
+  // }
 }
