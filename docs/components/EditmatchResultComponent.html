@@ -149,7 +149,6 @@
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                             <li>
-                                    <span class="modifier">Async</span>
                                 <a href="#onSaveClicked">onSaveClicked</a>
                             </li>
                         </ul>
@@ -291,7 +290,6 @@
                         <a name="onSaveClicked"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Async</span>
                             onSaveClicked
                             </b>
                             <a href="#onSaveClicked"><span class="icon ion-ios-link"></span></a>
@@ -300,8 +298,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>onSaveClicked()</code>
+<code>onSaveClicked()</code>
                     </td>
                 </tr>
 
@@ -317,7 +314,7 @@
                     <td class="col-md-4">
 
                             <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                             </div>
                     </td>
@@ -472,7 +469,7 @@ export class EditmatchResultComponent implements OnInit {
 
   }
 
-  async onSaveClicked() {
+  onSaveClicked() {
     if (this.matchService.isValidResult(this.home_score) &amp;&amp; this.matchService.isValidResult(this.guest_score)) {
       this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score)
         .then( () &#x3D;&gt; {
@@ -483,6 +480,10 @@ export class EditmatchResultComponent implements OnInit {
         });
     }
   }
+
+  // onCancelResultClicked() {
+  //   this.matchService.
+  // }
 }
 </code></pre>
     </div>
@@ -494,17 +495,20 @@ export class EditmatchResultComponent implements OnInit {
     &lt;div class&#x3D;&quot;row&quot;&gt;
       &lt;div class&#x3D;&quot;col text-center&quot;&gt;
         &lt;mat-form-field class&#x3D;&quot;inputsize&quot;&gt;
-          &lt;input matInput type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; max&#x3D;&quot;99&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.HOME_SCORE&#x27; | translate}}&quot; [(ngModel)]&#x3D;&quot;home_score&quot; required/&gt;
+          &lt;input matInput type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; max&#x3D;&quot;99&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.HOME_SCORE&#x27; | translate}}&quot; [(ngModel)]&#x3D;&quot;home_score&quot;
+            required/&gt;
         &lt;/mat-form-field&gt;
       &lt;/div&gt;
       &lt;div class&#x3D;&quot;col text-center&quot;&gt;
         &lt;mat-form-field class&#x3D;&quot;inputsize&quot;&gt;
-          &lt;input matInput type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; max&#x3D;&quot;99&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.GUEST_SCORE&#x27; | translate}}&quot; [(ngModel)]&#x3D;&quot;guest_score&quot; required/&gt;
+          &lt;input matInput type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; max&#x3D;&quot;99&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.GUEST_SCORE&#x27; | translate}}&quot; [(ngModel)]&#x3D;&quot;guest_score&quot;
+            required/&gt;
         &lt;/mat-form-field&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/mat-dialog-content&gt;
   &lt;mat-dialog-actions align&#x3D;&quot;center&quot;&gt;
+    &lt;!-- &lt;button mat-button (click)&#x3D;&quot;onCancelResultClicked()&quot;&gt;{{ &#x27;BUTTON.CANCEL_RESULT&#x27; | translate}}&lt;/button&gt; --&gt;
     &lt;button mat-button mat-dialog-close&gt;{{ &#x27;BUTTON.CANCEL&#x27; | translate}}&lt;/button&gt;
     &lt;button mat-button (click)&#x3D;&quot;onSaveClicked()&quot;&gt;{{ &#x27;BUTTON.SAVE&#x27; | translate}}&lt;/button&gt;
   &lt;/mat-dialog-actions&gt;
@@ -536,7 +540,7 @@ export class EditmatchResultComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div *ngIf="match" class="container-fluid">  <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>  <mat-dialog-content>    <div class="row">      <div class="col text-center">        <mat-form-field class="inputsize">          <input matInput type="number" min="0" max="99" placeholder="{{ \'PLACEHOLDER.HOME_SCORE\' | translate}}" [(ngModel)]="home_score" required/>        </mat-form-field>      </div>      <div class="col text-center">        <mat-form-field class="inputsize">          <input matInput type="number" min="0" max="99" placeholder="{{ \'PLACEHOLDER.GUEST_SCORE\' | translate}}" [(ngModel)]="guest_score" required/>        </mat-form-field>      </div>    </div>  </mat-dialog-content>  <mat-dialog-actions align="center">    <button mat-button mat-dialog-close>{{ \'BUTTON.CANCEL\' | translate}}</button>    <button mat-button (click)="onSaveClicked()">{{ \'BUTTON.SAVE\' | translate}}</button>  </mat-dialog-actions></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="match" class="container-fluid">  <h3 mat-dialog-title class="text-center"> {{ match.home_team.name }} - {{ match.guest_team.name }} </h3>  <mat-dialog-content>    <div class="row">      <div class="col text-center">        <mat-form-field class="inputsize">          <input matInput type="number" min="0" max="99" placeholder="{{ \'PLACEHOLDER.HOME_SCORE\' | translate}}" [(ngModel)]="home_score"            required/>        </mat-form-field>      </div>      <div class="col text-center">        <mat-form-field class="inputsize">          <input matInput type="number" min="0" max="99" placeholder="{{ \'PLACEHOLDER.GUEST_SCORE\' | translate}}" [(ngModel)]="guest_score"            required/>        </mat-form-field>      </div>    </div>  </mat-dialog-content>  <mat-dialog-actions align="center">    <!-- <button mat-button (click)="onCancelResultClicked()">{{ \'BUTTON.CANCEL_RESULT\' | translate}}</button> -->    <button mat-button mat-dialog-close>{{ \'BUTTON.CANCEL\' | translate}}</button>    <button mat-button (click)="onSaveClicked()">{{ \'BUTTON.SAVE\' | translate}}</button>  </mat-dialog-actions></div></div>'
     var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'EditmatchResultComponent'};

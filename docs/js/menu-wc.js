@@ -35,6 +35,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </a>
                     </li>
                     <li class="link">
+                            <a href="todo.html"
+                        data-type="chapter-link">
+                            <span class="icon ion-ios-paper"></span>TODO
+                        </a>
+                    </li>
+                    <li class="link">
                         <a href="dependencies.html"
                             data-type="chapter-link">
                             <span class="icon ion-ios-list"></span>Dependencies
@@ -310,6 +316,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
             <ul class="links collapse"
             ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
                     <li class="link">
+                        <a href="classes/CancelMatchBody.html" data-type="entity-link">CancelMatchBody</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/ChangePasswordBody.html" data-type="entity-link">ChangePasswordBody</a>
                     </li>
                     <li class="link">
@@ -320,6 +329,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="classes/CreatePitchBody.html" data-type="entity-link">CreatePitchBody</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/CreateRankingPenaltyBody.html" data-type="entity-link">CreateRankingPenaltyBody</a>
                     </li>
                     <li class="link">
                         <a href="classes/CreateSeasonBody.html" data-type="entity-link">CreateSeasonBody</a>
@@ -338,6 +350,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="classes/Date_period.html" data-type="entity-link">Date_period</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Event.html" data-type="entity-link">Event</a>
                     </li>
                     <li class="link">
                         <a href="classes/Identifier.html" data-type="entity-link">Identifier</a>
@@ -361,10 +376,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="classes/Ranking.html" data-type="entity-link">Ranking</a>
                     </li>
                     <li class="link">
+                        <a href="classes/Ranking_penalty.html" data-type="entity-link">Ranking_penalty</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/Ranking_position.html" data-type="entity-link">Ranking_position</a>
                     </li>
                     <li class="link">
+                        <a href="classes/RenameTeamBody.html" data-type="entity-link">RenameTeamBody</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/ScheduleMatchBody.html" data-type="entity-link">ScheduleMatchBody</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ScheduleMatchDayBody.html" data-type="entity-link">ScheduleMatchDayBody</a>
                     </li>
                     <li class="link">
                         <a href="classes/Season.html" data-type="entity-link">Season</a>
@@ -480,6 +504,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/CacheTeamsInSeason.html" data-type="entity-link">CacheTeamsInSeason</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ICancelMatchBody.html" data-type="entity-link">ICancelMatchBody</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/IChangePasswordBody.html" data-type="entity-link">IChangePasswordBody</a>
                     </li>
                     <li class="link">
@@ -495,6 +522,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/ICreatePitchBody.html" data-type="entity-link">ICreatePitchBody</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ICreateRankingPenaltyBody.html" data-type="entity-link">ICreateRankingPenaltyBody</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ICreateSeasonBody.html" data-type="entity-link">ICreateSeasonBody</a>
                     </li>
                     <li class="link">
@@ -508,6 +538,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/IDate_period.html" data-type="entity-link">IDate_period</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/IEvent.html" data-type="entity-link">IEvent</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/IIdentifier.html" data-type="entity-link">IIdentifier</a>
@@ -528,10 +561,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/IRanking.html" data-type="entity-link">IRanking</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/IRanking_penalty.html" data-type="entity-link">IRanking_penalty</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/IRanking_position.html" data-type="entity-link">IRanking_position</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/IRenameTeamBody.html" data-type="entity-link">IRenameTeamBody</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/IScheduleMatchBody.html" data-type="entity-link">IScheduleMatchBody</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/IScheduleMatchDayBody.html" data-type="entity-link">IScheduleMatchDayBody</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/ISeason.html" data-type="entity-link">ISeason</a>
