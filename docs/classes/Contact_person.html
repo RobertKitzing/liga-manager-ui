@@ -149,7 +149,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="2855" class="link-to-prism">src/api/liga-manager-api.ts:2855</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="3510" class="link-to-prism">src/api/liga-manager-api.ts:3510</a></div>
                             </td>
                         </tr>
 
@@ -220,7 +220,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2855" class="link-to-prism">src/api/liga-manager-api.ts:2855</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3510" class="link-to-prism">src/api/liga-manager-api.ts:3510</a></div>
                             </td>
                         </tr>
 
@@ -255,7 +255,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2852" class="link-to-prism">src/api/liga-manager-api.ts:2852</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3507" class="link-to-prism">src/api/liga-manager-api.ts:3507</a></div>
                             </td>
                         </tr>
 
@@ -290,7 +290,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2853" class="link-to-prism">src/api/liga-manager-api.ts:2853</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3508" class="link-to-prism">src/api/liga-manager-api.ts:3508</a></div>
                             </td>
                         </tr>
 
@@ -325,7 +325,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2854" class="link-to-prism">src/api/liga-manager-api.ts:2854</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3509" class="link-to-prism">src/api/liga-manager-api.ts:3509</a></div>
                             </td>
                         </tr>
 
@@ -363,7 +363,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2875" class="link-to-prism">src/api/liga-manager-api.ts:2875</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3530" class="link-to-prism">src/api/liga-manager-api.ts:3530</a></div>
                             </td>
                         </tr>
 
@@ -432,7 +432,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2866" class="link-to-prism">src/api/liga-manager-api.ts:2866</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3521" class="link-to-prism">src/api/liga-manager-api.ts:3521</a></div>
                             </td>
                         </tr>
 
@@ -501,7 +501,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="2882" class="link-to-prism">src/api/liga-manager-api.ts:2882</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="3537" class="link-to-prism">src/api/liga-manager-api.ts:3537</a></div>
                             </td>
                         </tr>
 
@@ -568,6 +568,19 @@ export const API_BASE_URL &#x3D; new InjectionToken&lt;string&gt;(&#x27;API_BASE
 
 export interface IClient {
     /**
+     * Returns a list of latest events
+     * @param start_date (optional) 
+     * @param end_date (optional) 
+     * @param type (optional) 
+     * @return Array of events
+     */
+    getLatestEvents(start_date?: Date | null | undefined, end_date?: Date | null | undefined, type?: string | null | undefined): Observable&lt;Event[]&gt;;
+    /**
+     * Returns a single event
+     * @return An event object
+     */
+    getEvent(id: string): Observable&lt;Event&gt;;
+    /**
      * Find matches by multiple filter criteria
      * @param season_id (optional) 
      * @param tournament_id (optional) 
@@ -585,9 +598,10 @@ export interface IClient {
     /**
      * Cancel a match
      * @param id match id
+     * @param cancelMatchBody (optional) 
      * @return Operation successful
      */
-    cancelMatch(id: string): Observable&lt;void&gt;;
+    cancelMatch(id: string, cancelMatchBody?: CancelMatchBody | null | undefined): Observable&lt;void&gt;;
     /**
      * Schedule a match
      * @param id match id
@@ -609,6 +623,13 @@ export interface IClient {
      * @return Operation successful
      */
     submitMatchResult(id: string, submitMatchResultBody?: SubmitMatchResultBody | null | undefined): Observable&lt;void&gt;;
+    /**
+     * Reschedules a matchday
+     * @param id matchday id
+     * @param scheduleMatchDayBody (optional) 
+     * @return Operation successful
+     */
+    rescheduleMatchDay(id: string, scheduleMatchDayBody?: ScheduleMatchDayBody | null | undefined): Observable&lt;void&gt;;
     /**
      * Find all pitches
      * @return Array of pitches
@@ -682,11 +703,31 @@ export interface IClient {
      */
     getRanking(id: string): Observable&lt;Ranking&gt;;
     /**
+     * Creates a ranking penalty for a team
+     * @param season_id ID of season
+     * @param createRankingPenaltyBody (optional) 
+     * @return Operation successful
+     */
+    createRankingPenalty(season_id: string, createRankingPenaltyBody?: CreateRankingPenaltyBody | null | undefined): Observable&lt;Identifier&gt;;
+    /**
+     * Deletes a ranking penalty
+     * @param season_id ID of season
+     * @param penalty_id ID of ranking penalty
+     * @return Operation successful
+     */
+    deleteRankingPenalty(season_id: string, penalty_id: string): Observable&lt;void&gt;;
+    /**
      * Starts a season
      * @param id ID of season
      * @return Season has been successfully started
      */
     startSeason(id: string): Observable&lt;void&gt;;
+    /**
+     * Ends a season
+     * @param id ID of season
+     * @return Operation successful
+     */
+    endSeason(id: string): Observable&lt;void&gt;;
     /**
      * Find all teams related to a single season
      * @param id ID of season
@@ -731,6 +772,13 @@ export interface IClient {
      */
     getTeam(id: string): Observable&lt;Team&gt;;
     /**
+     * Renames a team
+     * @param id ID of team
+     * @param renameTeamBody (optional) 
+     * @return Operation successful
+     */
+    renameTeam(id: string, renameTeamBody?: RenameTeamBody | null | undefined): Observable&lt;void&gt;;
+    /**
      * Updates the contact person of team
      * @param id ID of team
      * @param updateTeamContactBody (optional) 
@@ -755,6 +803,12 @@ export interface IClient {
      */
     getTournament(id: string): Observable&lt;Tournament&gt;;
     /**
+     * Delete a single tournament by id
+     * @param id ID of tournament
+     * @return Operation successful
+     */
+    deleteTournament(id: string): Observable&lt;void&gt;;
+    /**
      * Defines a set of team pairings as a tournament round
      * @param id ID of tournament
      * @param round Number identifying the tournament round
@@ -768,6 +822,11 @@ export interface IClient {
      * @return Array of rounds
      */
     getRoundsInTournament(id: string): Observable&lt;Match_day[]&gt;;
+    /**
+     * Find all users
+     * @return Array of users
+     */
+    getAllUsers(): Observable&lt;void&gt;;
     /**
      * Create a user
      * @param createUserBody (optional) 
@@ -804,6 +863,126 @@ export class Client implements IClient {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http &#x3D; http;
         this.baseUrl &#x3D; baseUrl ? baseUrl : &quot;/api&quot;;
+    }
+
+    /**
+     * Returns a list of latest events
+     * @param start_date (optional) 
+     * @param end_date (optional) 
+     * @param type (optional) 
+     * @return Array of events
+     */
+    getLatestEvents(start_date?: Date | null | undefined, end_date?: Date | null | undefined, type?: string | null | undefined): Observable&lt;Event[]&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/events?&quot;;
+        if (start_date !&#x3D;&#x3D; undefined)
+            url_ +&#x3D; &quot;start_date&#x3D;&quot; + encodeURIComponent(start_date ? &quot;&quot; + start_date.toJSON() : &quot;&quot;) + &quot;&amp;&quot;; 
+        if (end_date !&#x3D;&#x3D; undefined)
+            url_ +&#x3D; &quot;end_date&#x3D;&quot; + encodeURIComponent(end_date ? &quot;&quot; + end_date.toJSON() : &quot;&quot;) + &quot;&amp;&quot;; 
+        if (type !&#x3D;&#x3D; undefined)
+            url_ +&#x3D; &quot;type&#x3D;&quot; + encodeURIComponent(&quot;&quot; + type) + &quot;&amp;&quot;; 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        let options_ : any &#x3D; {
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+                &quot;Accept&quot;: &quot;application/json&quot;
+            })
+        };
+
+        return this.http.request(&quot;get&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processGetLatestEvents(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetLatestEvents(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;Event[]&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;Event[]&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processGetLatestEvents(response: HttpResponseBase): Observable&lt;Event[]&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            let result200: any &#x3D; null;
+            let resultData200 &#x3D; _responseText &#x3D;&#x3D;&#x3D; &quot;&quot; ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 &amp;&amp; resultData200.constructor &#x3D;&#x3D;&#x3D; Array) {
+                result200 &#x3D; [];
+                for (let item of resultData200)
+                    result200.push(Event.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;Event[]&gt;(&lt;any&gt;null);
+    }
+
+    /**
+     * Returns a single event
+     * @return An event object
+     */
+    getEvent(id: string): Observable&lt;Event&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/events/{id}&quot;;
+        if (id &#x3D;&#x3D;&#x3D; undefined || id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{id}&quot;, encodeURIComponent(&quot;&quot; + id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        let options_ : any &#x3D; {
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+                &quot;Accept&quot;: &quot;application/json&quot;
+            })
+        };
+
+        return this.http.request(&quot;get&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processGetEvent(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEvent(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;Event&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;Event&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEvent(response: HttpResponseBase): Observable&lt;Event&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            let result200: any &#x3D; null;
+            let resultData200 &#x3D; _responseText &#x3D;&#x3D;&#x3D; &quot;&quot; ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 &#x3D; resultData200 ? Event.fromJS(resultData200) : &lt;any&gt;null;
+            return _observableOf(result200);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;Event&gt;(&lt;any&gt;null);
     }
 
     /**
@@ -937,19 +1116,24 @@ export class Client implements IClient {
     /**
      * Cancel a match
      * @param id match id
+     * @param cancelMatchBody (optional) 
      * @return Operation successful
      */
-    cancelMatch(id: string): Observable&lt;void&gt; {
+    cancelMatch(id: string, cancelMatchBody?: CancelMatchBody | null | undefined): Observable&lt;void&gt; {
         let url_ &#x3D; this.baseUrl + &quot;/matches/{id}/cancellation&quot;;
         if (id &#x3D;&#x3D;&#x3D; undefined || id &#x3D;&#x3D;&#x3D; null)
             throw new Error(&quot;The parameter &#x27;id&#x27; must be defined.&quot;);
         url_ &#x3D; url_.replace(&quot;{id}&quot;, encodeURIComponent(&quot;&quot; + id)); 
         url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
 
+        const content_ &#x3D; JSON.stringify(cancelMatchBody);
+
         let options_ : any &#x3D; {
+            body: content_,
             observe: &quot;response&quot;,
             responseType: &quot;blob&quot;,
             headers: new HttpHeaders({
+                &quot;Content-Type&quot;: &quot;application/json&quot;, 
             })
         };
 
@@ -1152,6 +1336,63 @@ export class Client implements IClient {
         } else if (status &#x3D;&#x3D;&#x3D; 403) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
             return throwException(&quot;A server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;void&gt;(&lt;any&gt;null);
+    }
+
+    /**
+     * Reschedules a matchday
+     * @param id matchday id
+     * @param scheduleMatchDayBody (optional) 
+     * @return Operation successful
+     */
+    rescheduleMatchDay(id: string, scheduleMatchDayBody?: ScheduleMatchDayBody | null | undefined): Observable&lt;void&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/match_days/{id}&quot;;
+        if (id &#x3D;&#x3D;&#x3D; undefined || id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{id}&quot;, encodeURIComponent(&quot;&quot; + id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        const content_ &#x3D; JSON.stringify(scheduleMatchDayBody);
+
+        let options_ : any &#x3D; {
+            body: content_,
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+                &quot;Content-Type&quot;: &quot;application/json&quot;, 
+            })
+        };
+
+        return this.http.request(&quot;patch&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processRescheduleMatchDay(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRescheduleMatchDay(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processRescheduleMatchDay(response: HttpResponseBase): Observable&lt;void&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return _observableOf&lt;void&gt;(&lt;any&gt;null);
             }));
         } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
@@ -1854,6 +2095,123 @@ export class Client implements IClient {
     }
 
     /**
+     * Creates a ranking penalty for a team
+     * @param season_id ID of season
+     * @param createRankingPenaltyBody (optional) 
+     * @return Operation successful
+     */
+    createRankingPenalty(season_id: string, createRankingPenaltyBody?: CreateRankingPenaltyBody | null | undefined): Observable&lt;Identifier&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/seasons/{season_id}/ranking/penalties&quot;;
+        if (season_id &#x3D;&#x3D;&#x3D; undefined || season_id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;season_id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{season_id}&quot;, encodeURIComponent(&quot;&quot; + season_id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        const content_ &#x3D; JSON.stringify(createRankingPenaltyBody);
+
+        let options_ : any &#x3D; {
+            body: content_,
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+                &quot;Content-Type&quot;: &quot;application/json&quot;, 
+                &quot;Accept&quot;: &quot;application/json&quot;
+            })
+        };
+
+        return this.http.request(&quot;post&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processCreateRankingPenalty(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateRankingPenalty(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;Identifier&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;Identifier&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateRankingPenalty(response: HttpResponseBase): Observable&lt;Identifier&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            let result200: any &#x3D; null;
+            let resultData200 &#x3D; _responseText &#x3D;&#x3D;&#x3D; &quot;&quot; ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 &#x3D; resultData200 ? Identifier.fromJS(resultData200) : new Identifier();
+            return _observableOf(result200);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;Identifier&gt;(&lt;any&gt;null);
+    }
+
+    /**
+     * Deletes a ranking penalty
+     * @param season_id ID of season
+     * @param penalty_id ID of ranking penalty
+     * @return Operation successful
+     */
+    deleteRankingPenalty(season_id: string, penalty_id: string): Observable&lt;void&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/seasons/{season_id}/ranking/penalties/{penalty_id}&quot;;
+        if (season_id &#x3D;&#x3D;&#x3D; undefined || season_id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;season_id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{season_id}&quot;, encodeURIComponent(&quot;&quot; + season_id)); 
+        if (penalty_id &#x3D;&#x3D;&#x3D; undefined || penalty_id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;penalty_id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{penalty_id}&quot;, encodeURIComponent(&quot;&quot; + penalty_id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        let options_ : any &#x3D; {
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request(&quot;delete&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processDeleteRankingPenalty(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteRankingPenalty(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteRankingPenalty(response: HttpResponseBase): Observable&lt;void&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return _observableOf&lt;void&gt;(&lt;any&gt;null);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;void&gt;(&lt;any&gt;null);
+    }
+
+    /**
      * Starts a season
      * @param id ID of season
      * @return Season has been successfully started
@@ -1887,6 +2245,66 @@ export class Client implements IClient {
     }
 
     protected processStartSeason(response: HttpResponseBase): Observable&lt;void&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return _observableOf&lt;void&gt;(&lt;any&gt;null);
+            }));
+        } else if (status &#x3D;&#x3D;&#x3D; 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;A server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        } else if (status &#x3D;&#x3D;&#x3D; 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;A server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;void&gt;(&lt;any&gt;null);
+    }
+
+    /**
+     * Ends a season
+     * @param id ID of season
+     * @return Operation successful
+     */
+    endSeason(id: string): Observable&lt;void&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/seasons/{id}/end&quot;;
+        if (id &#x3D;&#x3D;&#x3D; undefined || id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{id}&quot;, encodeURIComponent(&quot;&quot; + id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        let options_ : any &#x3D; {
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request(&quot;post&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processEndSeason(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEndSeason(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processEndSeason(response: HttpResponseBase): Observable&lt;void&gt; {
         const status &#x3D; response.status;
         const responseBlob &#x3D; 
             response instanceof HttpResponse ? response.body : 
@@ -2327,6 +2745,67 @@ export class Client implements IClient {
     }
 
     /**
+     * Renames a team
+     * @param id ID of team
+     * @param renameTeamBody (optional) 
+     * @return Operation successful
+     */
+    renameTeam(id: string, renameTeamBody?: RenameTeamBody | null | undefined): Observable&lt;void&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/teams/{id}/name&quot;;
+        if (id &#x3D;&#x3D;&#x3D; undefined || id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{id}&quot;, encodeURIComponent(&quot;&quot; + id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        const content_ &#x3D; JSON.stringify(renameTeamBody);
+
+        let options_ : any &#x3D; {
+            body: content_,
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+                &quot;Content-Type&quot;: &quot;application/json&quot;, 
+            })
+        };
+
+        return this.http.request(&quot;put&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processRenameTeam(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRenameTeam(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processRenameTeam(response: HttpResponseBase): Observable&lt;void&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return _observableOf&lt;void&gt;(&lt;any&gt;null);
+            }));
+        } else if (status &#x3D;&#x3D;&#x3D; 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;A server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;void&gt;(&lt;any&gt;null);
+    }
+
+    /**
      * Updates the contact person of team
      * @param id ID of team
      * @param updateTeamContactBody (optional) 
@@ -2565,6 +3044,62 @@ export class Client implements IClient {
     }
 
     /**
+     * Delete a single tournament by id
+     * @param id ID of tournament
+     * @return Operation successful
+     */
+    deleteTournament(id: string): Observable&lt;void&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/tournaments/{id}&quot;;
+        if (id &#x3D;&#x3D;&#x3D; undefined || id &#x3D;&#x3D;&#x3D; null)
+            throw new Error(&quot;The parameter &#x27;id&#x27; must be defined.&quot;);
+        url_ &#x3D; url_.replace(&quot;{id}&quot;, encodeURIComponent(&quot;&quot; + id)); 
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        let options_ : any &#x3D; {
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request(&quot;delete&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processDeleteTournament(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteTournament(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteTournament(response: HttpResponseBase): Observable&lt;void&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return _observableOf&lt;void&gt;(&lt;any&gt;null);
+            }));
+        } else if (status &#x3D;&#x3D;&#x3D; 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;A server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;void&gt;(&lt;any&gt;null);
+    }
+
+    /**
      * Defines a set of team pairings as a tournament round
      * @param id ID of tournament
      * @param round Number identifying the tournament round
@@ -2687,6 +3222,54 @@ export class Client implements IClient {
             }));
         }
         return _observableOf&lt;Match_day[]&gt;(&lt;any&gt;null);
+    }
+
+    /**
+     * Find all users
+     * @return Array of users
+     */
+    getAllUsers(): Observable&lt;void&gt; {
+        let url_ &#x3D; this.baseUrl + &quot;/users&quot;;
+        url_ &#x3D; url_.replace(/[?&amp;]$/, &quot;&quot;);
+
+        let options_ : any &#x3D; {
+            observe: &quot;response&quot;,
+            responseType: &quot;blob&quot;,
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request(&quot;get&quot;, url_, options_).pipe(_observableMergeMap((response_ : any) &#x3D;&gt; {
+            return this.processGetAllUsers(response_);
+        })).pipe(_observableCatch((response_: any) &#x3D;&gt; {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllUsers(&lt;any&gt;response_);
+                } catch (e) {
+                    return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(e);
+                }
+            } else
+                return &lt;Observable&lt;void&gt;&gt;&lt;any&gt;_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllUsers(response: HttpResponseBase): Observable&lt;void&gt; {
+        const status &#x3D; response.status;
+        const responseBlob &#x3D; 
+            response instanceof HttpResponse ? response.body : 
+            (&lt;any&gt;response).error instanceof Blob ? (&lt;any&gt;response).error : undefined;
+
+        let _headers: any &#x3D; {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] &#x3D; response.headers.get(key); }};
+        if (status &#x3D;&#x3D;&#x3D; 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return _observableOf&lt;void&gt;(&lt;any&gt;null);
+            }));
+        } else if (status !&#x3D;&#x3D; 200 &amp;&amp; status !&#x3D;&#x3D; 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText &#x3D;&gt; {
+            return throwException(&quot;An unexpected server error occurred.&quot;, status, _responseText, _headers);
+            }));
+        }
+        return _observableOf&lt;void&gt;(&lt;any&gt;null);
     }
 
     /**
@@ -2955,6 +3538,7 @@ export interface IIdentifier {
 
 export class Match implements IMatch {
     cancelled_at?: Date | undefined;
+    cancellation_reason?: string | undefined;
     guest_score?: number | undefined;
     guest_team_id?: string | undefined;
     home_score?: number | undefined;
@@ -2976,6 +3560,7 @@ export class Match implements IMatch {
     init(data?: any) {
         if (data) {
             this.cancelled_at &#x3D; data[&quot;cancelled_at&quot;] ? new Date(data[&quot;cancelled_at&quot;].toString()) : &lt;any&gt;undefined;
+            this.cancellation_reason &#x3D; data[&quot;cancellation_reason&quot;];
             this.guest_score &#x3D; data[&quot;guest_score&quot;];
             this.guest_team_id &#x3D; data[&quot;guest_team_id&quot;];
             this.home_score &#x3D; data[&quot;home_score&quot;];
@@ -2997,6 +3582,7 @@ export class Match implements IMatch {
     toJSON(data?: any) {
         data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
         data[&quot;cancelled_at&quot;] &#x3D; this.cancelled_at ? this.cancelled_at.toISOString() : &lt;any&gt;undefined;
+        data[&quot;cancellation_reason&quot;] &#x3D; this.cancellation_reason;
         data[&quot;guest_score&quot;] &#x3D; this.guest_score;
         data[&quot;guest_team_id&quot;] &#x3D; this.guest_team_id;
         data[&quot;home_score&quot;] &#x3D; this.home_score;
@@ -3011,6 +3597,7 @@ export class Match implements IMatch {
 
 export interface IMatch {
     cancelled_at?: Date | undefined;
+    cancellation_reason?: string | undefined;
     guest_score?: number | undefined;
     guest_team_id?: string | undefined;
     home_score?: number | undefined;
@@ -3075,6 +3662,7 @@ export interface IPitch {
 
 export class Ranking implements IRanking {
     positions?: Ranking_position[] | undefined;
+    penalties?: Ranking_penalty[] | undefined;
     season_id?: string | undefined;
     updated_at?: Date | undefined;
 
@@ -3093,6 +3681,11 @@ export class Ranking implements IRanking {
                 this.positions &#x3D; [];
                 for (let item of data[&quot;positions&quot;])
                     this.positions.push(Ranking_position.fromJS(item));
+            }
+            if (data[&quot;penalties&quot;] &amp;&amp; data[&quot;penalties&quot;].constructor &#x3D;&#x3D;&#x3D; Array) {
+                this.penalties &#x3D; [];
+                for (let item of data[&quot;penalties&quot;])
+                    this.penalties.push(Ranking_penalty.fromJS(item));
             }
             this.season_id &#x3D; data[&quot;season_id&quot;];
             this.updated_at &#x3D; data[&quot;updated_at&quot;] ? new Date(data[&quot;updated_at&quot;].toString()) : &lt;any&gt;undefined;
@@ -3113,6 +3706,11 @@ export class Ranking implements IRanking {
             for (let item of this.positions)
                 data[&quot;positions&quot;].push(item.toJSON());
         }
+        if (this.penalties &amp;&amp; this.penalties.constructor &#x3D;&#x3D;&#x3D; Array) {
+            data[&quot;penalties&quot;] &#x3D; [];
+            for (let item of this.penalties)
+                data[&quot;penalties&quot;].push(item.toJSON());
+        }
         data[&quot;season_id&quot;] &#x3D; this.season_id;
         data[&quot;updated_at&quot;] &#x3D; this.updated_at ? this.updated_at.toISOString() : &lt;any&gt;undefined;
         return data; 
@@ -3121,6 +3719,7 @@ export class Ranking implements IRanking {
 
 export interface IRanking {
     positions?: Ranking_position[] | undefined;
+    penalties?: Ranking_penalty[] | undefined;
     season_id?: string | undefined;
     updated_at?: Date | undefined;
 }
@@ -3199,6 +3798,62 @@ export interface IRanking_position {
     sort_index?: number | undefined;
     team_id?: string | undefined;
     wins?: number | undefined;
+}
+
+export class Ranking_penalty implements IRanking_penalty {
+    id?: string | undefined;
+    season_id?: string | undefined;
+    team_id?: string | undefined;
+    reason?: string | undefined;
+    points?: number | undefined;
+    created_at?: Date | undefined;
+
+    constructor(data?: IRanking_penalty) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (&lt;any&gt;this)[property] &#x3D; (&lt;any&gt;data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id &#x3D; data[&quot;id&quot;];
+            this.season_id &#x3D; data[&quot;season_id&quot;];
+            this.team_id &#x3D; data[&quot;team_id&quot;];
+            this.reason &#x3D; data[&quot;reason&quot;];
+            this.points &#x3D; data[&quot;points&quot;];
+            this.created_at &#x3D; data[&quot;created_at&quot;] ? new Date(data[&quot;created_at&quot;].toString()) : &lt;any&gt;undefined;
+        }
+    }
+
+    static fromJS(data: any): Ranking_penalty {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        let result &#x3D; new Ranking_penalty();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        data[&quot;id&quot;] &#x3D; this.id;
+        data[&quot;season_id&quot;] &#x3D; this.season_id;
+        data[&quot;team_id&quot;] &#x3D; this.team_id;
+        data[&quot;reason&quot;] &#x3D; this.reason;
+        data[&quot;points&quot;] &#x3D; this.points;
+        data[&quot;created_at&quot;] &#x3D; this.created_at ? this.created_at.toISOString() : &lt;any&gt;undefined;
+        return data; 
+    }
+}
+
+export interface IRanking_penalty {
+    id?: string | undefined;
+    season_id?: string | undefined;
+    team_id?: string | undefined;
+    reason?: string | undefined;
+    points?: number | undefined;
+    created_at?: Date | undefined;
 }
 
 export class Season implements ISeason {
@@ -3537,6 +4192,90 @@ export interface IDate_period {
     to?: Date | undefined;
 }
 
+export class Event implements IEvent {
+    id?: string | undefined;
+    occurred_at?: Date | undefined;
+    payload?: any | undefined;
+    type?: EventType | undefined;
+
+    constructor(data?: IEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (&lt;any&gt;this)[property] &#x3D; (&lt;any&gt;data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id &#x3D; data[&quot;id&quot;];
+            this.occurred_at &#x3D; data[&quot;occurred_at&quot;] ? new Date(data[&quot;occurred_at&quot;].toString()) : &lt;any&gt;undefined;
+            this.payload &#x3D; data[&quot;payload&quot;];
+            this.type &#x3D; data[&quot;type&quot;];
+        }
+    }
+
+    static fromJS(data: any): Event {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        let result &#x3D; new Event();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        data[&quot;id&quot;] &#x3D; this.id;
+        data[&quot;occurred_at&quot;] &#x3D; this.occurred_at ? this.occurred_at.toISOString() : &lt;any&gt;undefined;
+        data[&quot;payload&quot;] &#x3D; this.payload;
+        data[&quot;type&quot;] &#x3D; this.type;
+        return data; 
+    }
+}
+
+export interface IEvent {
+    id?: string | undefined;
+    occurred_at?: Date | undefined;
+    payload?: any | undefined;
+    type?: EventType | undefined;
+}
+
+export class CancelMatchBody implements ICancelMatchBody {
+    reason: string;
+
+    constructor(data?: ICancelMatchBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (&lt;any&gt;this)[property] &#x3D; (&lt;any&gt;data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.reason &#x3D; data[&quot;reason&quot;];
+        }
+    }
+
+    static fromJS(data: any): CancelMatchBody {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        let result &#x3D; new CancelMatchBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        data[&quot;reason&quot;] &#x3D; this.reason;
+        return data; 
+    }
+}
+
+export interface ICancelMatchBody {
+    reason: string;
+}
+
 export class ScheduleMatchBody implements IScheduleMatchBody {
     kickoff: Date;
 
@@ -3647,6 +4386,42 @@ export class SubmitMatchResultBody implements ISubmitMatchResultBody {
 export interface ISubmitMatchResultBody {
     guest_score: number;
     home_score: number;
+}
+
+export class ScheduleMatchDayBody implements IScheduleMatchDayBody {
+    date_period: Date_period;
+
+    constructor(data?: IScheduleMatchDayBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (&lt;any&gt;this)[property] &#x3D; (&lt;any&gt;data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.date_period &#x3D; data[&quot;date_period&quot;] ? Date_period.fromJS(data[&quot;date_period&quot;]) : &lt;any&gt;undefined;
+        }
+    }
+
+    static fromJS(data: any): ScheduleMatchDayBody {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        let result &#x3D; new ScheduleMatchDayBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        data[&quot;date_period&quot;] &#x3D; this.date_period ? this.date_period.toJSON() : &lt;any&gt;undefined;
+        return data; 
+    }
+}
+
+export interface IScheduleMatchDayBody {
+    date_period: Date_period;
 }
 
 export class CreatePitchBody implements ICreatePitchBody {
@@ -3776,6 +4551,50 @@ export interface ICreateMatchDaysBody {
     dates: Date_period[];
 }
 
+export class CreateRankingPenaltyBody implements ICreateRankingPenaltyBody {
+    reason?: string | undefined;
+    points?: number | undefined;
+    team_id?: string | undefined;
+
+    constructor(data?: ICreateRankingPenaltyBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (&lt;any&gt;this)[property] &#x3D; (&lt;any&gt;data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.reason &#x3D; data[&quot;reason&quot;];
+            this.points &#x3D; data[&quot;points&quot;];
+            this.team_id &#x3D; data[&quot;team_id&quot;];
+        }
+    }
+
+    static fromJS(data: any): CreateRankingPenaltyBody {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        let result &#x3D; new CreateRankingPenaltyBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        data[&quot;reason&quot;] &#x3D; this.reason;
+        data[&quot;points&quot;] &#x3D; this.points;
+        data[&quot;team_id&quot;] &#x3D; this.team_id;
+        return data; 
+    }
+}
+
+export interface ICreateRankingPenaltyBody {
+    reason?: string | undefined;
+    points?: number | undefined;
+    team_id?: string | undefined;
+}
+
 export class CreateTeamBody implements ICreateTeamBody {
     name: string;
 
@@ -3809,6 +4628,42 @@ export class CreateTeamBody implements ICreateTeamBody {
 }
 
 export interface ICreateTeamBody {
+    name: string;
+}
+
+export class RenameTeamBody implements IRenameTeamBody {
+    name: string;
+
+    constructor(data?: IRenameTeamBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (&lt;any&gt;this)[property] &#x3D; (&lt;any&gt;data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name &#x3D; data[&quot;name&quot;];
+        }
+    }
+
+    static fromJS(data: any): RenameTeamBody {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        let result &#x3D; new RenameTeamBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data &#x3D; typeof data &#x3D;&#x3D;&#x3D; &#x27;object&#x27; ? data : {};
+        data[&quot;name&quot;] &#x3D; this.name;
+        return data; 
+    }
+}
+
+export interface IRenameTeamBody {
     name: string;
 }
 
@@ -4045,6 +4900,16 @@ export enum SeasonState {
 export enum UserRole {
     Admin &#x3D; &lt;any&gt;&quot;admin&quot;, 
     Team_manager &#x3D; &lt;any&gt;&quot;team_manager&quot;, 
+}
+
+export enum EventType {
+    MatchLocated &#x3D; &lt;any&gt;&quot;match:located&quot;, 
+    MatchResultSubmitted &#x3D; &lt;any&gt;&quot;match:result:submitted&quot;, 
+    MatchScheduled &#x3D; &lt;any&gt;&quot;match:scheduled&quot;, 
+    MatchCancelled &#x3D; &lt;any&gt;&quot;match:cancelled&quot;, 
+    RankingPenaltyAdded &#x3D; &lt;any&gt;&quot;ranking:penalty:added&quot;, 
+    RankingPenaltyRemoved &#x3D; &lt;any&gt;&quot;ranking:penalty:removed&quot;, 
+    TeamRenamed &#x3D; &lt;any&gt;&quot;team:renamed&quot;, 
 }
 
 export class Team_pairs implements ITeam_pairs {

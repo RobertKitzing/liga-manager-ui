@@ -582,7 +582,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">src/app/services/match.service.ts:119</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/app/services/match.service.ts:120</a></div>
                             </td>
                         </tr>
 
@@ -653,7 +653,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/services/match.service.ts:123</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/app/services/match.service.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -722,7 +722,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="100" class="link-to-prism">src/app/services/match.service.ts:100</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">src/app/services/match.service.ts:104</a></div>
                             </td>
                         </tr>
 
@@ -791,7 +791,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/app/services/match.service.ts:111</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">src/app/services/match.service.ts:112</a></div>
                             </td>
                         </tr>
 
@@ -860,7 +860,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/services/match.service.ts:127</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/services/match.service.ts:128</a></div>
                             </td>
                         </tr>
 
@@ -953,7 +953,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">src/app/services/match.service.ts:145</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/services/match.service.ts:146</a></div>
                             </td>
                         </tr>
 
@@ -1152,14 +1152,15 @@ export class MatchService {
     );
   }
 
+  // public async cancelMatch(matchId: string) {
+  //   return new Promise&lt;
+  // }
+
   matchConverter(match: Match): MatchViewModel {
     const mv &#x3D; new MatchViewModel(match);
     mv.home_team &#x3D; this.teamService.getTeamById(mv.home_team_id);
     mv.guest_team &#x3D; this.teamService.getTeamById(mv.guest_team_id);
     mv.pitch &#x3D; this.pitchService.getPitchById(mv.pitch_id);
-    if (mv.kickoff) {
-      mv.kickoff.setMinutes(mv.kickoff.getMinutes() - mv.kickoff.getTimezoneOffset());
-    }
     return mv;
   }
 
