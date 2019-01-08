@@ -1,0 +1,63 @@
+<div *ngIf="manageSeason">
+  {{ manageSeason.name }}
+</div>
+
+<div class="container">
+  <h2>Pitches</h2>
+  <div class="row" style="justify-content: center;">
+    <div class="col">
+      <mat-form-field style="width: 100%;">
+        <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete" [formControl]="newMatchPitch"
+        />
+        <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
+          <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
+            <span>{{ pitch.label }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      OFFSET: <input #offset type="number" value="1">
+    </div>
+    <div class="col">
+      <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="addKickoffDateToPitch(offset.value, $event)" style="display: none">
+      <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate }}</button>
+      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #dt5></owl-date-time>
+    </div>
+  </div>
+  <div class="row" *ngFor="let e of possibleKickoffs">
+    <div class="col">
+      {{ e.pitch.label }}
+    </div>
+    <div class="col">
+      {{ e.kickoffTime | date:'shortTime':'':i18Service.currentLang }} OFFSET: {{ e.daysOffset}}
+    </div>
+  </div>
+  <button mat-button (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>
+</div>
+<div *ngFor="let match of matchesInSeason" class="row">
+  <div class="col">
+    {{ 'MATCHDAY' | translate:{ matchDay: getMatchDay(match.match_day_id).number } }}
+  </div>
+  <div class="col">
+    {{ match.home_team.name }}
+  </div>
+  <div class="col-1">
+    -
+  </div>
+  <div class="col">
+    {{ match.guest_team.name }}
+  </div>
+  <div class="col">
+    ({{ getMatchDay(match.match_day_id).start_date | date:'short':'':i18Service.currentLang}})
+  </div>
+  <div class="col">
+    ({{ getMatchDay(match.match_day_id).end_date | date:'shortDate'}})
+  </div>
+  <div class="col" *ngIf="match.kickoff">
+    ({{ match.kickoff | date:'short':'':i18Service.currentLang}})
+  </div>
+  <div class="col">
+    ({{ match.pitch?.label }})
+  </div>
+</div>

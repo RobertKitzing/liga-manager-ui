@@ -123,5 +123,8 @@
         </div>
       </div>
     </mat-tab>
+    <mat-tab label="{{ 'TAB.MATCH_SCHEDULING' | translate }}">
+      <app-match-scheduling [manageSeason]="manageSeason" [matchesInSeason]="matchesInSeason" [matchDaysInSeason]="matchDaysInSeason"></app-match-scheduling>
+    </mat-tab>
   </mat-tab-group>
 </div>

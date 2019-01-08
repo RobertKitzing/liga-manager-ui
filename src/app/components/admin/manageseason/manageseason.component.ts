@@ -179,6 +179,7 @@ export class ManageseasonComponent implements OnInit {
         this.getDatePeriodsForSeason();
         break;
       case 2:
+      case 3:
         this.getMatchesInSeason();
         break;
     }
