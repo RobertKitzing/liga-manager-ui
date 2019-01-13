@@ -41,7 +41,7 @@ export class ManageseasonComponent implements OnInit {
   }
 
   async loadAllSeasonInPrep() {
-    this.seasons = await this.seasonService.loadSeasons();
+    this.seasons = await this.seasonService.loadSeasons(SeasonState.Preparation);
   }
 
   async loadAllTeams() {
