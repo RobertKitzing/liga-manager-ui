@@ -162,7 +162,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, OnChanges } from &#x27;@angular/core&#x27;;
-import { Season, Match_day, Pitch, Team } from &#x27;../../../../../api&#x27;;
+import { Season, Match_day, Pitch, Team, Client, ScheduleMatchBody, LocateMatchBody } from &#x27;../../../../../api&#x27;;
 import { MatchViewModel } from &#x27;src/app/models/match.viewmodel&#x27;;
 import { MatchService } from &#x27;src/app/services/match.service&#x27;;
 import { PitchService } from &#x27;../../../../services/pitch.service&#x27;;
@@ -209,7 +209,8 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   constructor(
     private pitchService: PitchService,
-    public i18Service: I18Service
+    public i18Service: I18Service,
+    private client: Client
   ) { }
 
   ngOnInit() {
@@ -283,6 +284,19 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
             }
           }
         );
+      }
+    );
+  }
+
+  saveMatches() {
+    console.log(this.matchesInSeason);
+    this.matchesInSeason.forEach(
+      (match) &#x3D;&gt; {
+        console.log(match);
+        const body &#x3D; new ScheduleMatchBody({kickoff: match.kickoff});
+        this.client.scheduleMatch(match.id, body).toPromise();
+        const body2 &#x3D; new LocateMatchBody({pitch_id: match.pitch.id});
+        this.client.locateMatch(match.id, body2).toPromise();
       }
     );
   }
