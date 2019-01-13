@@ -53,6 +53,8 @@
   <div class="row">
     <div class="col">
       ab Spieltag:
+    </div>
+    <div class="col">
       <mat-select #startMatchDay [(ngModel)]="startmatchDay">
         <mat-option *ngFor="let matchDay of matchDaysInSeason" [value]="matchDay.number">
           {{ matchDay.number }}
@@ -60,30 +62,35 @@
       </mat-select>
     </div>
   </div>
-</div>
-<div *ngFor="let match of matchesInSeason" class="row">
-  <div class="col">
-    {{ 'MATCHDAY' | translate:{ matchDay: getMatchDay(match.match_day_id).number } }}
+  <div *ngFor="let match of matchesInSeason" class="row">
+    <div class="col">
+      {{ 'MATCHDAY' | translate:{ matchDay: getMatchDay(match.match_day_id).number } }}
+    </div>
+    <div class="col">
+      {{ match.home_team.name }}
+    </div>
+    <div class="col-1">
+      -
+    </div>
+    <div class="col">
+      {{ match.guest_team.name }}
+    </div>
+    <div class="col">
+      ({{ getMatchDay(match.match_day_id).start_date | date:'short':'':i18Service.currentLang}})
+    </div>
+    <div class="col">
+      ({{ getMatchDay(match.match_day_id).end_date | date:'shortDate'}})
+    </div>
+    <div class="col" *ngIf="match.kickoff">
+      ({{ match.kickoff | date:'short':'':i18Service.currentLang}})
+    </div>
+    <div class="col">
+      ({{ match.pitch?.label }})
+    </div>
   </div>
-  <div class="col">
-    {{ match.home_team.name }}
-  </div>
-  <div class="col-1">
-    -
-  </div>
-  <div class="col">
-    {{ match.guest_team.name }}
-  </div>
-  <div class="col">
-    ({{ getMatchDay(match.match_day_id).start_date | date:'short':'':i18Service.currentLang}})
-  </div>
-  <div class="col">
-    ({{ getMatchDay(match.match_day_id).end_date | date:'shortDate'}})
-  </div>
-  <div class="col" *ngIf="match.kickoff">
-    ({{ match.kickoff | date:'short':'':i18Service.currentLang}})
-  </div>
-  <div class="col">
-    ({{ match.pitch?.label }})
+  <div class="row">
+    <div class="col">
+      <button mat-button (click)="saveMatches()">save</button>
+    </div>
   </div>
 </div>

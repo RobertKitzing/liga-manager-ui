@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Season, Match_day, Pitch, Team } from '../../../../../api';
+import { Season, Match_day, Pitch, Team, Client, ScheduleMatchBody, LocateMatchBody } from '../../../../../api';
 import { MatchViewModel } from 'src/app/models/match.viewmodel';
 import { MatchService } from 'src/app/services/match.service';
 import { PitchService } from '../../../../services/pitch.service';
@@ -46,7 +46,8 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   constructor(
     private pitchService: PitchService,
-    public i18Service: I18Service
+    public i18Service: I18Service,
+    private client: Client
   ) { }
 
   ngOnInit() {
@@ -120,6 +121,19 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
             }
           }
         );
+      }
+    );
+  }
+
+  saveMatches() {
+    console.log(this.matchesInSeason);
+    this.matchesInSeason.forEach(
+      (match) => {
+        console.log(match);
+        const body = new ScheduleMatchBody({kickoff: match.kickoff});
+        this.client.scheduleMatch(match.id, body).toPromise();
+        const body2 = new LocateMatchBody({pitch_id: match.pitch.id});
+        this.client.locateMatch(match.id, body2).toPromise();
       }
     );
   }
