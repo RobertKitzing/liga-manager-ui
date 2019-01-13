@@ -63,13 +63,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="modules/AdminModule.html" data-type="entity-link">AdminModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                    ${ isNormalMode ? 'data-target="#components-links-module-AdminModule-6026e5b456f2f4b9ffdcd20cc5e3d29f"' : 'data-target="#xs-components-links-module-AdminModule-6026e5b456f2f4b9ffdcd20cc5e3d29f"' }>
+                                    ${ isNormalMode ? 'data-target="#components-links-module-AdminModule-184e242969a569f4bc38517576ef02c7"' : 'data-target="#xs-components-links-module-AdminModule-184e242969a569f4bc38517576ef02c7"' }>
                                     <span class="icon ion-md-cog"></span>
                                     <span>Components</span>
                                     <span class="icon ion-ios-arrow-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                    ${ isNormalMode ? 'id="components-links-module-AdminModule-6026e5b456f2f4b9ffdcd20cc5e3d29f"' : 'id="xs-components-links-module-AdminModule-6026e5b456f2f4b9ffdcd20cc5e3d29f"' }>
+                                    ${ isNormalMode ? 'id="components-links-module-AdminModule-184e242969a569f4bc38517576ef02c7"' : 'id="xs-components-links-module-AdminModule-184e242969a569f4bc38517576ef02c7"' }>
                                         <li class="link">
                                             <a href="components/AddteamComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AddteamComponent</a>
                                         </li>
@@ -87,6 +87,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         </li>
                                         <li class="link">
                                             <a href="components/ManageusersComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">ManageusersComponent</a>
+                                        </li>
+                                        <li class="link">
+                                            <a href="components/MatchSchedulingComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">MatchSchedulingComponent</a>
                                         </li>
                                 </ul>
                             </li>
@@ -558,6 +561,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/IPitch.html" data-type="entity-link">IPitch</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/IPossibleKickoffs.html" data-type="entity-link">IPossibleKickoffs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/IRanking.html" data-type="entity-link">IRanking</a>
                     </li>
                     <li class="link">
@@ -592,6 +598,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/ITeam.html" data-type="entity-link">ITeam</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ITeamCanPlayAtDate.html" data-type="entity-link">ITeamCanPlayAtDate</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/ITeam_pairs.html" data-type="entity-link">ITeam_pairs</a>

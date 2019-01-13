@@ -1,0 +1,1464 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>liga-manager-ui documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">liga-manager-ui documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>MatchSchedulingComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-match-scheduling</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>match-scheduling.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./match-scheduling.component.html</code></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filteredPitches">filteredPitches</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#i18Service">i18Service</a>
+                            </li>
+                            <li>
+                                <a href="#newMatchPitch">newMatchPitch</a>
+                            </li>
+                            <li>
+                                <a href="#possibleKickoffs">possibleKickoffs</a>
+                            </li>
+                            <li>
+                                <a href="#startmatchDay">startmatchDay</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addKickoffDateToPitch">addKickoffDateToPitch</a>
+                            </li>
+                            <li>
+                                <a href="#displayPitch">displayPitch</a>
+                            </li>
+                            <li>
+                                <a href="#filterPitches">filterPitches</a>
+                            </li>
+                            <li>
+                                <a href="#getMatchDay">getMatchDay</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges">ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#removePair">removePair</a>
+                            </li>
+                            <li>
+                                <a href="#scheduleMatches">scheduleMatches</a>
+                            </li>
+                            <li>
+                                <a href="#shuffle">shuffle</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#manageSeason">manageSeason</a>
+                            </li>
+                            <li>
+                                <a href="#matchDaysInSeason">matchDaysInSeason</a>
+                            </li>
+                            <li>
+                                <a href="#matchesInSeason">matchesInSeason</a>
+                            </li>
+                            <li>
+                                <a href="#teamsInSeason">teamsInSeason</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#matchDayLength">matchDayLength</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(pitchService: <a href="../injectables/PitchService.html">PitchService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>pitchService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/PitchService.html" target="_self" >PitchService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>i18Service</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/I18Service.html" target="_self" >I18Service</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="manageSeason"></a>
+                        <code>manageSeason</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="../classes/Season.html" target="_self" >Season</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="matchDaysInSeason"></a>
+                        <code>matchDaysInSeason</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="../classes/Match_day.html" target="_self" >Match_day[]</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="matchesInSeason"></a>
+                        <code>matchesInSeason</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="../classes/MatchViewModel.html" target="_self" >MatchViewModel[]</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="teamsInSeason"></a>
+                        <code>teamsInSeason</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="../classes/Team.html" target="_self" >Team[]</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addKickoffDateToPitch"></a>
+                        <span class="name">
+                            <b>
+                            addKickoffDateToPitch
+                            </b>
+                            <a href="#addKickoffDateToPitch"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>addKickoffDateToPitch(offset: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:78</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>offset</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>event</td>
+                                                        <td>
+                                                                    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayPitch"></a>
+                        <span class="name">
+                            <b>
+                            displayPitch
+                            </b>
+                            <a href="#displayPitch"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>displayPitch(pitch?: <a href="../classes/Pitch.html">Pitch</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:74</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>pitch</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Pitch.html" target="_self" >Pitch</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>string | undefined</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filterPitches"></a>
+                        <span class="name">
+                            <b>
+                            filterPitches
+                            </b>
+                            <a href="#filterPitches"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>filterPitches(searchTerm: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>searchTerm</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Pitch.html" target="_self" >Pitch[]</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getMatchDay"></a>
+                        <span class="name">
+                            <b>
+                            getMatchDay
+                            </b>
+                            <a href="#getMatchDay"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>getMatchDay(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:70</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>id</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Match_day.html" target="_self" >Match_day</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngOnChanges"></a>
+                        <span class="name">
+                            <b>
+                            ngOnChanges
+                            </b>
+                            <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>ngOnChanges()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngOnInit"></a>
+                        <span class="name">
+                            <b>
+                            ngOnInit
+                            </b>
+                            <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>ngOnInit()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="removePair"></a>
+                        <span class="name">
+                            <b>
+                            removePair
+                            </b>
+                            <a href="#removePair"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>removePair(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:92</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>index</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="scheduleMatches"></a>
+                        <span class="name">
+                            <b>
+                            scheduleMatches
+                            </b>
+                            <a href="#scheduleMatches"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>scheduleMatches()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:96</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="shuffle"></a>
+                        <span class="name">
+                            <b>
+                            shuffle
+                            </b>
+                            <a href="#shuffle"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>shuffle(a: )</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:127</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>a</td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filteredPitches"></a>
+                        <span class="name">
+                            <b>
+                            filteredPitches
+                            </b>
+                            <a href="#filteredPitches"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>filteredPitches:     <code><a href="../classes/Pitch.html" target="_self" >Observable&lt;Pitch[]&gt;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../classes/Pitch.html" target="_self" >Observable&lt;Pitch[]&gt;</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="i18Service"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            i18Service
+                            </b>
+                            <a href="#i18Service"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>i18Service:     <code><a href="../injectables/I18Service.html" target="_self" >I18Service</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../injectables/I18Service.html" target="_self" >I18Service</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="newMatchPitch"></a>
+                        <span class="name">
+                            <b>
+                            newMatchPitch
+                            </b>
+                            <a href="#newMatchPitch"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>newMatchPitch:     <code><a href="https://angular.io/api/forms/FormControl" target="_blank" >FormControl</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://angular.io/api/forms/FormControl" target="_blank" >FormControl</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="possibleKickoffs"></a>
+                        <span class="name">
+                            <b>
+                            possibleKickoffs
+                            </b>
+                            <a href="#possibleKickoffs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>possibleKickoffs:     <code><a href="../interfaces/IPossibleKickoffs.html" target="_self" >IPossibleKickoffs[]</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/IPossibleKickoffs.html" target="_self" >IPossibleKickoffs[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Array&lt;IPossibleKickoffs&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:38</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="startmatchDay"></a>
+                        <span class="name">
+                            <b>
+                            startmatchDay
+                            </b>
+                            <a href="#startmatchDay"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>startmatchDay:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:41</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="matchDayLength"></a>
+                        <span class="name"><b>matchDayLength</b><a href="#matchDayLength"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>matchDayLength()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/admin/manageseason/match-scheduling/match-scheduling.component.ts:43</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, OnChanges } from &#x27;@angular/core&#x27;;
+import { Season, Match_day, Pitch, Team } from &#x27;../../../../../api&#x27;;
+import { MatchViewModel } from &#x27;src/app/models/match.viewmodel&#x27;;
+import { MatchService } from &#x27;src/app/services/match.service&#x27;;
+import { PitchService } from &#x27;../../../../services/pitch.service&#x27;;
+import { FormControl } from &#x27;@angular/forms&#x27;;
+import { startWith, map } from &#x27;rxjs/operators&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+import { I18Service } from &#x27;../../../../services/i18.service&#x27;;
+import * as momentjs from &#x27;moment&#x27;;
+import { TeamService } from &#x27;../../../../services/team.service&#x27;;
+
+interface IPossibleKickoffs {
+  index: number;
+  kickoffTime: Date;
+  daysOffset: number;
+  pitch: Pitch;
+  teamsCanPlay: ITeamCanPlayAtDate[];
+}
+
+interface ITeamCanPlayAtDate {
+  team: Team;
+  canPlay: boolean;
+}
+
+@Component({
+  selector: &#x27;app-match-scheduling&#x27;,
+  templateUrl: &#x27;./match-scheduling.component.html&#x27;,
+  styleUrls: [&#x27;./match-scheduling.component.css&#x27;]
+})
+export class MatchSchedulingComponent implements OnInit, OnChanges {
+
+  @Input() manageSeason: Season;
+  @Input() matchesInSeason: MatchViewModel[];
+  @Input() matchDaysInSeason: Match_day[];
+  @Input() teamsInSeason: Team[];
+
+  possibleKickoffs: IPossibleKickoffs[] &#x3D; new Array&lt;IPossibleKickoffs&gt;();
+  filteredPitches: Observable&lt;Pitch[]&gt;;
+  newMatchPitch: FormControl &#x3D; new FormControl();
+  startmatchDay: number;
+
+  get matchDayLength(): number {
+    return this.matchesInSeason ? this.matchesInSeason.filter(x &#x3D;&gt; x.match_day_id &#x3D;&#x3D;&#x3D; this.matchDaysInSeason[0].id).length : 0;
+  }
+
+  constructor(
+    private pitchService: PitchService,
+    public i18Service: I18Service
+  ) { }
+
+  ngOnInit() {
+    if (this.pitchService.pitches) {
+      this.filteredPitches &#x3D; this.newMatchPitch.valueChanges
+        .pipe(
+          startWith&lt;string | Pitch&gt;(&#x27;&#x27;),
+          map(value &#x3D;&gt; typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? value : value.label),
+          map((pitch) &#x3D;&gt; pitch ? this.filterPitches(pitch) : this.pitchService.pitches.slice())
+        );
+    }
+  }
+
+  ngOnChanges() {
+  }
+
+  filterPitches(searchTerm: string): Pitch[] {
+    return this.pitchService.pitches.filter(p &#x3D;&gt; p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !&#x3D;&#x3D; -1);
+  }
+
+  getMatchDay(id: string): Match_day {
+    return this.matchDaysInSeason.find(t &#x3D;&gt; t.id &#x3D;&#x3D;&#x3D; id) || new Match_day();
+  }
+
+  displayPitch(pitch?: Pitch): string | undefined {
+    return pitch ? pitch.label : undefined;
+  }
+
+  addKickoffDateToPitch(offset: number, event: any) {
+    if (this.newMatchPitch.value) {
+      const newElement: IPossibleKickoffs &#x3D; {
+        index: this.possibleKickoffs.length,
+        pitch: this.newMatchPitch.value,
+        kickoffTime: event.value,
+        daysOffset: +offset,
+        teamsCanPlay: this.teamsInSeason.map(x &#x3D;&gt; &lt;ITeamCanPlayAtDate&gt;{ team: x, canPlay: true })
+      };
+      console.log(newElement);
+      this.possibleKickoffs.push(newElement);
+    }
+  }
+
+  removePair(index: number) {
+    this.possibleKickoffs &#x3D; this.possibleKickoffs.filter(x &#x3D;&gt; x.index !&#x3D;&#x3D; +index);
+  }
+
+  scheduleMatches() {
+
+    this.matchDaysInSeason.filter( x &#x3D;&gt; x.number &gt;&#x3D; this.startmatchDay).forEach(
+      (matchDay) &#x3D;&gt; {
+        let possibleKickoffs: IPossibleKickoffs[] &#x3D; JSON.parse(JSON.stringify(this.possibleKickoffs));
+        const matches &#x3D; this.matchesInSeason.filter(x &#x3D;&gt; x.match_day_id &#x3D;&#x3D;&#x3D; matchDay.id);
+        matches.forEach(
+          (match) &#x3D;&gt; {
+            if (possibleKickoffs) {
+              possibleKickoffs &#x3D; this.shuffle(possibleKickoffs);
+              let list &#x3D; possibleKickoffs.filter(x &#x3D;&gt; x.teamsCanPlay.find(y &#x3D;&gt; y.team.id &#x3D;&#x3D;&#x3D; match.home_team_id).canPlay);
+              list &#x3D; list.filter(x &#x3D;&gt; x.teamsCanPlay.find(y &#x3D;&gt; y.team.id &#x3D;&#x3D;&#x3D; match.guest_team_id).canPlay);
+              if (list[0]) {
+                if (!match.pitch &amp;&amp; !match.kickoff) {
+                  match.pitch &#x3D; list[0].pitch;
+                  match.kickoff &#x3D; momentjs(matchDay.start_date).add(list[0].daysOffset, &#x27;d&#x27;).toDate();
+                  match.kickoff.setUTCHours(new Date(list[0].kickoffTime).getUTCHours());
+                  match.kickoff.setUTCMinutes(new Date(list[0].kickoffTime).getUTCMinutes());
+                }
+                possibleKickoffs &#x3D; possibleKickoffs.filter(x &#x3D;&gt; x.index !&#x3D;&#x3D; list[0].index);
+              } else {
+                alert(&#x60;${matchDay.id}. Spieltag - Spiel ${match.home_team.name} - ${match.guest_team.name} konnte nicht terminiert werden&#x60;);
+                console.error(&#x27;iwas passt nicht&#x27;);
+              }
+            }
+          }
+        );
+      }
+    );
+  }
+
+  shuffle(a) {
+    for (let i &#x3D; a.length - 1; i &gt; 0; i--) {
+      const j &#x3D; Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] &#x3D; [a[j], a[i]];
+    }
+    return a;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;manageSeason&quot;&gt;
+  {{ manageSeason.name }}
+&lt;/div&gt;
+
+&lt;div class&#x3D;&quot;container&quot;&gt;
+  &lt;h2&gt;Pitches&lt;/h2&gt;
+  &lt;div class&#x3D;&quot;row&quot; style&#x3D;&quot;justify-content: center;&quot;&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      &lt;mat-form-field style&#x3D;&quot;width: 100%;&quot;&gt;
+        &lt;input matInput placeholder&#x3D;&quot;{{ &#x27;PITCH&#x27; | translate }}&quot; [matAutocomplete]&#x3D;&quot;pitchAutoComplete&quot; [formControl]&#x3D;&quot;newMatchPitch&quot;
+        /&gt;
+        &lt;mat-autocomplete #pitchAutoComplete [displayWith]&#x3D;&quot;displayPitch&quot;&gt;
+          &lt;mat-option *ngFor&#x3D;&quot;let pitch of filteredPitches | async&quot; [value]&#x3D;&quot;pitch&quot;&gt;
+            &lt;span&gt;{{ pitch.label }}&lt;/span&gt;
+          &lt;/mat-option&gt;
+        &lt;/mat-autocomplete&gt;
+      &lt;/mat-form-field&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      OFFSET: &lt;input #offset type&#x3D;&quot;number&quot; value&#x3D;&quot;1&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;dt5&quot; (dateTimeChange)&#x3D;&quot;addKickoffDateToPitch(offset.value, $event)&quot; style&#x3D;&quot;display: none&quot;&gt;
+      &lt;button mat-button [owlDateTimeTrigger]&#x3D;&quot;dt5&quot;&gt;{{ &#x27;BUTTON.SET_TIME&#x27; | translate }}&lt;/button&gt;
+      &lt;owl-date-time [pickerMode]&#x3D;&quot;&#x27;dialog&#x27;&quot; [pickerType]&#x3D;&quot;&#x27;timer&#x27;&quot; #dt5&gt;&lt;/owl-date-time&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;row&quot; *ngFor&#x3D;&quot;let e of possibleKickoffs&quot; style&#x3D;&quot;border: 1px solid black&quot;&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      {{ e.pitch.label }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      {{ e.kickoffTime | date:&#x27;shortTime&#x27;:&#x27;&#x27;:i18Service.currentLang }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      OFFSET: {{ e.daysOffset}}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      &lt;div class&#x3D;&quot;row&quot; *ngFor&#x3D;&quot;let d of e.teamsCanPlay&quot;&gt;
+        &lt;div class&#x3D;&quot;col&quot;&gt;
+          {{ d.team.name }}
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col&quot;&gt;
+          &lt;input type&#x3D;&quot;checkbox&quot; [(ngModel)]&#x3D;&quot;d.canPlay&quot; value&#x3D;&quot;true&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      &lt;button mat-button (click)&#x3D;&quot;removePair(e.index)&quot;&gt;Remove&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button mat-button (click)&#x3D;&quot;scheduleMatches()&quot; *ngIf&#x3D;&quot;possibleKickoffs.length &#x3D;&#x3D;&#x3D; matchDayLength&quot;&gt;scheduleMatches&lt;/button&gt;
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      ab Spieltag:
+      &lt;mat-select #startMatchDay [(ngModel)]&#x3D;&quot;startmatchDay&quot;&gt;
+        &lt;mat-option *ngFor&#x3D;&quot;let matchDay of matchDaysInSeason&quot; [value]&#x3D;&quot;matchDay.number&quot;&gt;
+          {{ matchDay.number }}
+        &lt;/mat-option&gt;
+      &lt;/mat-select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div *ngFor&#x3D;&quot;let match of matchesInSeason&quot; class&#x3D;&quot;row&quot;&gt;
+  &lt;div class&#x3D;&quot;col&quot;&gt;
+    {{ &#x27;MATCHDAY&#x27; | translate:{ matchDay: getMatchDay(match.match_day_id).number } }}
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col&quot;&gt;
+    {{ match.home_team.name }}
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col-1&quot;&gt;
+    -
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col&quot;&gt;
+    {{ match.guest_team.name }}
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col&quot;&gt;
+    ({{ getMatchDay(match.match_day_id).start_date | date:&#x27;short&#x27;:&#x27;&#x27;:i18Service.currentLang}})
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col&quot;&gt;
+    ({{ getMatchDay(match.match_day_id).end_date | date:&#x27;shortDate&#x27;}})
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col&quot; *ngIf&#x3D;&quot;match.kickoff&quot;&gt;
+    ({{ match.kickoff | date:&#x27;short&#x27;:&#x27;&#x27;:i18Service.currentLang}})
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;col&quot;&gt;
+    ({{ match.pitch?.label }})
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="manageSeason">  {{ manageSeason.name }}</div><div class="container">  <h2>Pitches</h2>  <div class="row" style="justify-content: center;">    <div class="col">      <mat-form-field style="width: 100%;">        <input matInput placeholder="{{ \'PITCH\' | translate }}" [matAutocomplete]="pitchAutoComplete" [formControl]="newMatchPitch"        />        <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">          <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">            <span>{{ pitch.label }}</span>          </mat-option>        </mat-autocomplete>      </mat-form-field>    </div>    <div class="col">      OFFSET: <input #offset type="number" value="1">    </div>    <div class="col">      <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="addKickoffDateToPitch(offset.value, $event)" style="display: none">      <button mat-button [owlDateTimeTrigger]="dt5">{{ \'BUTTON.SET_TIME\' | translate }}</button>      <owl-date-time [pickerMode]="\'dialog\'" [pickerType]="\'timer\'" #dt5></owl-date-time>    </div>  </div>  <div class="row" *ngFor="let e of possibleKickoffs" style="border: 1px solid black">    <div class="col">      {{ e.pitch.label }}    </div>    <div class="col">      {{ e.kickoffTime | date:\'shortTime\':\'\':i18Service.currentLang }}    </div>    <div class="col">      OFFSET: {{ e.daysOffset}}    </div>    <div class="col">      <div class="row" *ngFor="let d of e.teamsCanPlay">        <div class="col">          {{ d.team.name }}        </div>        <div class="col">          <input type="checkbox" [(ngModel)]="d.canPlay" value="true" />        </div>      </div>    </div>    <div class="col">      <button mat-button (click)="removePair(e.index)">Remove</button>    </div>  </div>  <button mat-button (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>  <div class="row">    <div class="col">      ab Spieltag:      <mat-select #startMatchDay [(ngModel)]="startmatchDay">        <mat-option *ngFor="let matchDay of matchDaysInSeason" [value]="matchDay.number">          {{ matchDay.number }}        </mat-option>      </mat-select>    </div>  </div></div><div *ngFor="let match of matchesInSeason" class="row">  <div class="col">    {{ \'MATCHDAY\' | translate:{ matchDay: getMatchDay(match.match_day_id).number } }}  </div>  <div class="col">    {{ match.home_team.name }}  </div>  <div class="col-1">    -  </div>  <div class="col">    {{ match.guest_team.name }}  </div>  <div class="col">    ({{ getMatchDay(match.match_day_id).start_date | date:\'short\':\'\':i18Service.currentLang}})  </div>  <div class="col">    ({{ getMatchDay(match.match_day_id).end_date | date:\'shortDate\'}})  </div>  <div class="col" *ngIf="match.kickoff">    ({{ match.kickoff | date:\'short\':\'\':i18Service.currentLang}})  </div>  <div class="col">    ({{ match.pitch?.label }})  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'MatchSchedulingComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'MatchSchedulingComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

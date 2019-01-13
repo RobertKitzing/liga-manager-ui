@@ -624,7 +624,7 @@ export class SeasonService {
       (resolve) &#x3D;&gt; {
         this.apiClient.getAllSeasons().subscribe(
           (seasons: Season[]) &#x3D;&gt; {
-            resolve(seasons.filter(s &#x3D;&gt; s.state &#x3D;&#x3D;&#x3D; state));
+            resolve(state ? seasons.filter(s &#x3D;&gt; s.state &#x3D;&#x3D;&#x3D; state) : seasons);
           },
           (error: any) &#x3D;&gt; {
             resolve(null);
