@@ -39,7 +39,11 @@ export class WebsocketService {
       });
 
     this.connection.messages.pipe(
-      retryWhen(errors => errors.pipe(delay(60000)))
+      retryWhen(
+        (errors) => {
+          console.error(errors);
+          return errors.pipe(delay(60000));
+        })
     ).subscribe(
       (message) => {
         try {

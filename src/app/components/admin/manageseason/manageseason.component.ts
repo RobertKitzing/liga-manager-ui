@@ -36,12 +36,12 @@ export class ManageseasonComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.loadAllSeasonInPrep();
+    this.loadAllSeason();
     this.loadAllTeams();
   }
 
-  async loadAllSeasonInPrep() {
-    this.seasons = await this.seasonService.loadSeasons(SeasonState.Preparation);
+  async loadAllSeason() {
+    this.seasons = await this.seasonService.loadSeasons();
   }
 
   async loadAllTeams() {
@@ -53,7 +53,7 @@ export class ManageseasonComponent implements OnInit {
     createSeasonBody.name = seasonName;
     this.apiClient.createSeason(createSeasonBody).subscribe(
       (t) => {
-        this.loadAllSeasonInPrep();
+        this.loadAllSeason();
       }
     );
   }

@@ -42,11 +42,11 @@ describe('ManageseasonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call seasonService.loadSeasons with SeasonState.Preparation on loadAllSeasonInPrep',
+  it('should call seasonService.loadSeasons on loadAllSeason',
     async(() => {
       const seasonServiceSpy = spyOn(TestBed.get(SeasonService), 'loadSeasons');
-      component.loadAllSeasonInPrep();
-      expect(seasonServiceSpy).toHaveBeenCalledWith(SeasonState.Preparation);
+      component.loadAllSeason();
+      expect(seasonServiceSpy).toHaveBeenCalledWith();
     }));
 
   it('should call teamService.loadAllTeams on loadAllTeams() and set this.allTeams',
@@ -63,7 +63,7 @@ describe('ManageseasonComponent', () => {
   it('should call apiClient.createSeason on addNewSeason() and reload SeasonsInPrep', () => {
     const testSeasonname = 'test';
     const createSeasonSpy = spyOn(TestBed.get(Client), 'createSeason').and.returnValue(of(true));
-    const componentSpy = spyOn(component, 'loadAllSeasonInPrep');
+    const componentSpy = spyOn(component, 'loadAllSeason');
     component.addNewSeason(testSeasonname);
     expect(createSeasonSpy).toHaveBeenCalledWith(new CreateSeasonBody({ name: testSeasonname }));
     expect(componentSpy).toHaveBeenCalled();
