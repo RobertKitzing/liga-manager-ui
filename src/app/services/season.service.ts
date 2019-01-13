@@ -43,7 +43,7 @@ export class SeasonService {
       (resolve) => {
         this.apiClient.getAllSeasons().subscribe(
           (seasons: Season[]) => {
-            resolve(seasons.filter(s => s.state === state));
+            resolve(state ? seasons.filter(s => s.state === state) : seasons);
           },
           (error: any) => {
             resolve(null);

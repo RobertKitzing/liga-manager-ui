@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatchSchedulingComponent } from './match-scheduling.component';
+import { SharedModule } from '../../../../shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MatchSchedulingComponent', () => {
   let component: MatchSchedulingComponent;
@@ -8,6 +12,12 @@ describe('MatchSchedulingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        SharedModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        NoopAnimationsModule
+      ],
       declarations: [ MatchSchedulingComponent ]
     })
     .compileComponents();

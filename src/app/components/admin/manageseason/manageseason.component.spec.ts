@@ -10,6 +10,7 @@ import { SeasonState, Team, Client, CreateSeasonBody, Season } from '../../../..
 import { TeamService } from '../../../services/team.service';
 import { of } from 'rxjs';
 import { MatSelectChange } from '@angular/material';
+import { MatchSchedulingComponent } from './match-scheduling/match-scheduling.component';
 
 describe('ManageseasonComponent', () => {
   let component: ManageseasonComponent;
@@ -23,7 +24,10 @@ describe('ManageseasonComponent', () => {
         HttpClientTestingModule,
         NoopAnimationsModule
       ],
-      declarations: [ManageseasonComponent]
+      declarations: [
+        ManageseasonComponent,
+        MatchSchedulingComponent
+      ]
     })
       .compileComponents();
   }));

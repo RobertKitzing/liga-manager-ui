@@ -4,7 +4,7 @@
       <mat-form-field>
         <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
           <mat-option *ngFor="let season of seasons" [value]="season">
-            {{ season.name }}
+            {{ season.name }} | {{ season.state }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -124,7 +124,7 @@
       </div>
     </mat-tab>
     <mat-tab label="{{ 'TAB.MATCH_SCHEDULING' | translate }}">
-      <app-match-scheduling [manageSeason]="manageSeason" [matchesInSeason]="matchesInSeason" [matchDaysInSeason]="matchDaysInSeason"></app-match-scheduling>
+      <app-match-scheduling [teamsInSeason]="teamsInSeason" [manageSeason]="manageSeason" [matchesInSeason]="matchesInSeason" [matchDaysInSeason]="matchDaysInSeason"></app-match-scheduling>
     </mat-tab>
   </mat-tab-group>
 </div>

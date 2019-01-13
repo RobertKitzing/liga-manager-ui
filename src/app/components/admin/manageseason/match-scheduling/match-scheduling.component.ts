@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Season, Match_day, Pitch } from '../../../../../api';
+import { Season, Match_day, Pitch, Team } from '../../../../../api';
 import { MatchViewModel } from 'src/app/models/match.viewmodel';
 import { MatchService } from 'src/app/services/match.service';
 import { PitchService } from '../../../../services/pitch.service';
@@ -8,12 +8,19 @@ import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { I18Service } from '../../../../services/i18.service';
 import * as momentjs from 'moment';
+import { TeamService } from '../../../../services/team.service';
 
 interface IPossibleKickoffs {
+  index: number;
   kickoffTime: Date;
   daysOffset: number;
-  given: boolean;
   pitch: Pitch;
+  teamsCanPlay: ITeamCanPlayAtDate[];
+}
+
+interface ITeamCanPlayAtDate {
+  team: Team;
+  canPlay: boolean;
 }
 
 @Component({
@@ -26,10 +33,12 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
   @Input() manageSeason: Season;
   @Input() matchesInSeason: MatchViewModel[];
   @Input() matchDaysInSeason: Match_day[];
+  @Input() teamsInSeason: Team[];
 
   possibleKickoffs: IPossibleKickoffs[] = new Array<IPossibleKickoffs>();
   filteredPitches: Observable<Pitch[]>;
   newMatchPitch: FormControl = new FormControl();
+  startmatchDay: number;
 
   get matchDayLength(): number {
     return this.matchesInSeason ? this.matchesInSeason.filter(x => x.match_day_id === this.matchDaysInSeason[0].id).length : 0;
@@ -68,14 +77,25 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   addKickoffDateToPitch(offset: number, event: any) {
     if (this.newMatchPitch.value) {
-      this.possibleKickoffs.push({ pitch: this.newMatchPitch.value, kickoffTime: event.value, daysOffset: +offset, given: false });
-      console.log(this.possibleKickoffs);
+      const newElement: IPossibleKickoffs = {
+        index: this.possibleKickoffs.length,
+        pitch: this.newMatchPitch.value,
+        kickoffTime: event.value,
+        daysOffset: +offset,
+        teamsCanPlay: this.teamsInSeason.map(x => <ITeamCanPlayAtDate>{ team: x, canPlay: true })
+      };
+      console.log(newElement);
+      this.possibleKickoffs.push(newElement);
     }
+  }
+
+  removePair(index: number) {
+    this.possibleKickoffs = this.possibleKickoffs.filter(x => x.index !== +index);
   }
 
   scheduleMatches() {
 
-    this.matchDaysInSeason.forEach(
+    this.matchDaysInSeason.filter( x => x.number >= this.startmatchDay).forEach(
       (matchDay) => {
         let possibleKickoffs: IPossibleKickoffs[] = JSON.parse(JSON.stringify(this.possibleKickoffs));
         const matches = this.matchesInSeason.filter(x => x.match_day_id === matchDay.id);
@@ -83,12 +103,19 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
           (match) => {
             if (possibleKickoffs) {
               possibleKickoffs = this.shuffle(possibleKickoffs);
-              if (!match.pitch && !match.kickoff) {
-                match.pitch = possibleKickoffs[0].pitch;
-                match.kickoff = momentjs(matchDay.start_date).add(possibleKickoffs[0].daysOffset, 'd').toDate();
-                match.kickoff.setUTCHours(new Date(possibleKickoffs[0].kickoffTime).getUTCHours());
-                match.kickoff.setUTCMinutes(new Date(possibleKickoffs[0].kickoffTime).getUTCMinutes());
-                possibleKickoffs.shift();
+              let list = possibleKickoffs.filter(x => x.teamsCanPlay.find(y => y.team.id === match.home_team_id).canPlay);
+              list = list.filter(x => x.teamsCanPlay.find(y => y.team.id === match.guest_team_id).canPlay);
+              if (list[0]) {
+                if (!match.pitch && !match.kickoff) {
+                  match.pitch = list[0].pitch;
+                  match.kickoff = momentjs(matchDay.start_date).add(list[0].daysOffset, 'd').toDate();
+                  match.kickoff.setUTCHours(new Date(list[0].kickoffTime).getUTCHours());
+                  match.kickoff.setUTCMinutes(new Date(list[0].kickoffTime).getUTCMinutes());
+                }
+                possibleKickoffs = possibleKickoffs.filter(x => x.index !== list[0].index);
+              } else {
+                alert(`${matchDay.id}. Spieltag - Spiel ${match.home_team.name} - ${match.guest_team.name} konnte nicht terminiert werden`);
+                console.error('iwas passt nicht');
               }
             }
           }

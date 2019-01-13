@@ -25,15 +25,41 @@
       <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #dt5></owl-date-time>
     </div>
   </div>
-  <div class="row" *ngFor="let e of possibleKickoffs">
+  <div class="row" *ngFor="let e of possibleKickoffs" style="border: 1px solid black">
     <div class="col">
       {{ e.pitch.label }}
     </div>
     <div class="col">
-      {{ e.kickoffTime | date:'shortTime':'':i18Service.currentLang }} OFFSET: {{ e.daysOffset}}
+      {{ e.kickoffTime | date:'shortTime':'':i18Service.currentLang }}
+    </div>
+    <div class="col">
+      OFFSET: {{ e.daysOffset}}
+    </div>
+    <div class="col">
+      <div class="row" *ngFor="let d of e.teamsCanPlay">
+        <div class="col">
+          {{ d.team.name }}
+        </div>
+        <div class="col">
+          <input type="checkbox" [(ngModel)]="d.canPlay" value="true" />
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <button mat-button (click)="removePair(e.index)">Remove</button>
     </div>
   </div>
   <button mat-button (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>
+  <div class="row">
+    <div class="col">
+      ab Spieltag:
+      <mat-select #startMatchDay [(ngModel)]="startmatchDay">
+        <mat-option *ngFor="let matchDay of matchDaysInSeason" [value]="matchDay.number">
+          {{ matchDay.number }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
 </div>
 <div *ngFor="let match of matchesInSeason" class="row">
   <div class="col">
