@@ -1755,7 +1755,7 @@ export class ManageseasonComponent implements OnInit {
   }
 
   async loadAllSeasonInPrep() {
-    this.seasons &#x3D; await this.seasonService.loadSeasons();
+    this.seasons &#x3D; await this.seasonService.loadSeasons(SeasonState.Preparation);
   }
 
   async loadAllTeams() {
