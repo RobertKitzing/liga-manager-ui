@@ -49,11 +49,13 @@ export class ManageseasonComponent implements OnInit {
   }
 
   addNewSeason(seasonName: string) {
-    const createSeasonBody = new CreateSeasonBody();
-    createSeasonBody.name = seasonName;
-    this.apiClient.createSeason(createSeasonBody).subscribe(
-      (t) => {
+    this.seasonService.createSeason(seasonName).then(
+      () => {
         this.loadAllSeason();
+      }
+    ).catch(
+      (error) => {
+        console.error(error);
       }
     );
   }

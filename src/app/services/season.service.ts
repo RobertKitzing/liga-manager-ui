@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, SeasonState, Season } from '../../api/liga-manager-api';
+import { Client, SeasonState, Season, CreateSeasonBody } from '../../api/liga-manager-api';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
@@ -30,6 +30,23 @@ export class SeasonService {
     this.seasonCreated.subscribe(
       () => {
         this.loadSeasonInProgress();
+      }
+    );
+  }
+
+  public async createSeason(seasonName: string): Promise<void> {
+    return new Promise<void>(
+      (resolve, reject) => {
+        const createSeasonBody = new CreateSeasonBody();
+        createSeasonBody.name = seasonName;
+        this.apiClient.createSeason(createSeasonBody).subscribe(
+          (t) => {
+            resolve();
+          },
+          (error) => {
+            reject(error);
+          }
+        );
       }
     );
   }
