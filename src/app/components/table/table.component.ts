@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Ranking, Client, Season } from '../../../api';
+import { Ranking, Client } from '../../../api';
 import { SeasonService } from '../../services/season.service';
-import { TeamService } from '../../services/team.service';
 import { MatchService } from '../../services/match.service';
+import { Season } from 'src/api/graphql';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-table',
@@ -11,41 +13,15 @@ import { MatchService } from '../../services/match.service';
 })
 export class TableComponent implements OnInit {
 
-  public ranking: Ranking;
+  rankingQGL: Observable<Season.Ranking>;
 
   constructor(
-    private seasonService: SeasonService,
-    private api: Client,
-    public teamService: TeamService,
-    private matchService: MatchService) {
+    public seasonService: SeasonService) {
   }
 
   ngOnInit() {
-    this.seasonService.currentSeason.subscribe(
-      (season) => {
-        this.loadRanking(season);
-      }
+    this.rankingQGL = this.seasonService.currentSeasonQGL.valueChanges.pipe(
+      map(({data}) => data.season.ranking)
     );
-    this.matchService.matchUpdated.subscribe(
-      (matchId) => {
-        this.loadRanking(this.seasonService.currentSeason.getValue());
-      });
-  }
-
-  loadRanking(season: Season) {
-    this.ranking = null;
-    if (season) {
-      this.api.getRanking(season.id).subscribe(
-        (ranking) => {
-          this.ranking = ranking;
-        },
-        (error) => {
-          delete this.ranking;
-        },
-        () => {
-
-        }
-      );
-    }
   }
 }

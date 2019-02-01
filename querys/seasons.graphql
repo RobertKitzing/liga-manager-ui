@@ -1,0 +1,7 @@
+query AllSeasonsList {
+  allSeasons{
+    id
+    name
+    state
+  }
+}

@@ -23,15 +23,12 @@ import { API_BASE_URL } from '../api';
 import { environment } from '../environments/environment';
 import { WebsocketService } from './services/websocket.service';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
-import { AppCoreModule } from './app-core.module';
+import { GraphQLModule } from './graphql.module';
+
 registerLocaleData(localeDe);
 
-export function teamServiceFactory(provider: TeamService) {
-  return () => provider.initLoadTeams();
-}
-
 export function seasonServiceFactory(provider: SeasonService) {
-  return () => provider.loadSeasonInProgress();
+  return () => provider.init();
 }
 
 export function pitchServiceFactory(provider: PitchService) {
@@ -66,6 +63,7 @@ export function websocketServiceFactory(provider: WebsocketService) {
     MaterialModule,
     AppRoutingModule,
     FormsModule,
+    GraphQLModule,
     ReactiveFormsModule,
   ],
   providers: [
@@ -78,11 +76,6 @@ export function websocketServiceFactory(provider: WebsocketService) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: teamServiceFactory,
-      deps: [TeamService], multi: true
     },
     {
       provide: APP_INITIALIZER,

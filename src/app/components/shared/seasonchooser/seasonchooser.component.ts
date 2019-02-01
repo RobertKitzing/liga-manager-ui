@@ -1,8 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Season } from '../../../../api';
 import { SeasonService } from '../../../services/season.service';
 import { MatSelectChange } from '@angular/material';
-
+import { AllSeasonsList } from 'src/api/graphql';
 @Component({
   selector: 'app-seasonchooser',
   templateUrl: './seasonchooser.component.html',
@@ -10,8 +9,8 @@ import { MatSelectChange } from '@angular/material';
 })
 export class SeasonchooserComponent implements OnInit {
 
-  season: Season;
-  @Output() seasonChanged: EventEmitter<Season> = new EventEmitter<Season>();
+  season: AllSeasonsList.AllSeasons;
+  @Output() seasonChanged: EventEmitter<AllSeasonsList.AllSeasons> = new EventEmitter<AllSeasonsList.AllSeasons>();
 
   constructor(public seasonService: SeasonService) { }
 
@@ -21,9 +20,6 @@ export class SeasonchooserComponent implements OnInit {
         this.season = season;
       }
     );
-    if (this.seasonService.seasonInProgress && !this.season) {
-      this.seasonService.currentSeason.next(this.seasonService.seasonInProgress[0]);
-    }
   }
 
   currentSeasonChanged(event: MatSelectChange) {

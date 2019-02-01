@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 30px;">
+<div class="container" style="margin-top: 30px;" *ngIf="(seasonQGL | async) as season" >
   <div class="row justify-content-center">
     <div class="col-9 col-sm-4 text-center">
       <app-seasonchooser></app-seasonchooser>
@@ -7,13 +7,16 @@
       <mat-form-field style="max-width: 7ch;">
         <mat-select #matchDaySelect [(value)]="selectedMatchDay" [compareWith]="matchDayCompare" (selectionChange)="handleGetMatches()"
           placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
-          <mat-option [value]="'0'">
+          <mat-option [value]="{number: 0}">
             {{ 'ALL_MATCHDAYS' | translate }}
           </mat-option>
-          <mat-option *ngFor="let matchDay of matchDays" [value]="matchDay">
+          <mat-option *ngFor="let matchDay of season.match_days" [value]="matchDay">
             <div *ngIf="!matchDaySelect.panelOpen">{{ matchDay.number }}</div>
-            <div *ngIf="matchDaySelect.panelOpen">{{ matchDay.number }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang
-              }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})</div>
+            <div *ngIf="matchDaySelect.panelOpen">
+              {{ matchDay.number }}
+              <!-- ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang
+              }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }}) -->
+            </div>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -24,7 +27,7 @@
           <mat-option [value]="'0'">
             {{ 'ALL_TEAMS' | translate }}
           </mat-option>
-          <mat-option *ngFor="let team of teamsInSeason" [value]="team.id">
+          <mat-option *ngFor="let team of season.teams" [value]="team.id">
             {{ team.name }}
           </mat-option>
         </mat-select>
@@ -43,14 +46,23 @@
     </div>
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="!matches"></mat-progress-bar>
-  <ng-container *ngFor="let match of matches;let i = index">
+  <ng-container *ngFor="let matchDay of filterMatchDays(season.match_days)">
+    <h3 class="text-center">
+      {{ 'MATCHDAY' | translate:{matchDay: matchDay.number} }}
+    </h3>
+    <ng-container *ngFor="let match of matchDay.matches">
+      <app-match [match]="match" [hideIfPlayed]="hidePlayed"></app-match>
+    </ng-container>
+  </ng-container>
+  <!-- <ng-container *ngFor="let match of matches;let i = index">
     <h3 class="text-center" *ngIf="(!hidePlayed || (hidePlayed && !matchService.isMatchPlayed(match))) && isNewMatchDay(match, i)">
-      {{ 'MATCHDAY' | translate:{matchDay: getMatchDay(match.match_day_id).number} }} ({{ getMatchDay(match.match_day_id).start_date|
-      date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ getMatchDay(match.match_day_id).end_date| date:'shortDate':'':i18Service.currentLang
+      {{ 'MATCHDAY' | translate:{matchDay: getMatchDay(match.match_day_id).number} }}
+      ({{ getMatchDay(match.id).start_date|
+      date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ getMatchDay(match.id).end_date| date:'shortDate':'':i18Service.currentLang
       }})
     </h3>
     <ng-container>
       <app-match [match]="match" [hideIfPlayed]="hidePlayed"></app-match>
     </ng-container>
-  </ng-container>
+  </ng-container> -->
 </div>

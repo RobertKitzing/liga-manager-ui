@@ -1,0 +1,55 @@
+query Season($id: String){
+    season(id: $id) {
+id
+    name
+    state
+    teams {
+      id
+      name
+    }
+    match_days {
+      id
+      number
+      matches {
+        id
+        home_team {
+          id
+          name
+        }
+        guest_team {
+          id
+          name
+        }
+        kickoff
+      }
+    }
+    ranking {
+      updated_at
+      positions {
+        team {
+          id
+          name
+        }
+        sort_index
+        number
+        matches
+        wins
+        draws
+        losses
+        scored_goals
+        conceded_goals
+        points
+        
+      }
+      penalties {
+        team {
+          id
+          name
+        }
+        reason
+        created_at
+        points
+      }
+    }
+    }
+}
