@@ -1,5 +1,5 @@
 overwrite: true
-schema: "server/graphql/schema.gql"
+schema: "server/graphql/schema.graphql"
 documents: "**/*.graphqls"
 generates:
   src/api/graphqlsubs.ts:

@@ -44,7 +44,7 @@ class Server {
         };
 
         this.graphQLServer = new GraphQLServer({
-            typeDefs: './graphql/schema',
+            typeDefs: './graphql/schema.graphql',
             resolvers
         });
     }
