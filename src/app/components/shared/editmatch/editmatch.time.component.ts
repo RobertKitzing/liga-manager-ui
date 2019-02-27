@@ -5,6 +5,7 @@ import { DateTimeAdapter } from 'ng-pick-datetime';
 import { Client, ScheduleMatchBody } from '../../../../api';
 import { TranslateService } from '@ngx-translate/core';
 import { I18Service } from '../../../services/i18.service';
+import { MatchService } from '../../../services/match.service';
 
 @Component({
   selector: 'app-editmatch.time',
@@ -21,7 +22,7 @@ export class EditmatchTimeComponent implements OnInit {
     private translateService: TranslateService,
     public i18Service: I18Service,
     private dialogRef: MatDialogRef<EditmatchTimeComponent>,
-    private apiCLient: Client
+    private matchService: MatchService
   ) {
     dateTimeAdapter.setLocale(this.i18Service.currentLang);
     this.translateService.onLangChange.subscribe(
@@ -39,10 +40,16 @@ export class EditmatchTimeComponent implements OnInit {
   }
 
   onSaveClicked() {
-    this.apiCLient.scheduleMatch(this.match.id, <ScheduleMatchBody>{ kickoff: this.matchKickoff }).subscribe(
-      (t) => {
-        this.dialogRef.close(true);
-      }
-    );
+    this.matchService.scheduleMatch(this.match.id, this.matchKickoff)
+      .then(
+        () => {
+          this.dialogRef.close(true);
+        }
+      )
+      .catch(
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }

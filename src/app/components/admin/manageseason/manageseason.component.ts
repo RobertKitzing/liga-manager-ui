@@ -7,6 +7,9 @@ import { MatchViewModel } from '../../../models/match.viewmodel';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { TeamService } from 'src/app/services/team.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { AllSeasonsList, MatchesGQL } from '../../../../api/graphql';
 
 @Component({
   selector: 'app-manageseason',
@@ -15,7 +18,6 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class ManageseasonComponent implements OnInit {
 
-  seasons: Season[];
   teamsInSeason: Team[];
   allTeams: Team[];
   matchesInSeason: MatchViewModel[];
@@ -25,6 +27,7 @@ export class ManageseasonComponent implements OnInit {
   matchDaysInSeason: Match_day[];
   fromToOffset = 2;
   betweenMatchDaysOffset = 7;
+  seasonList: Observable<AllSeasonsList.AllSeasons[]>;
 
   constructor(
     public seasonService: SeasonService,
@@ -32,8 +35,37 @@ export class ManageseasonComponent implements OnInit {
     private matchService: MatchService,
     private apiClient: Client,
     private snackBar: MatSnackBar,
-    private translateService: TranslateService
-  ) { }
+    private translateService: TranslateService,
+    private matchesQL: MatchesGQL
+  ) {
+
+    this.seasonList = this.seasonService.seasonsQGL.valueChanges.pipe(
+      map(
+        ({ data }) => {
+          data.allSeasons.sort(
+            (a, b) => {
+              const aState = a.state.toLocaleLowerCase();
+              const bState = b.state.toLocaleLowerCase();
+              if (aState > bState) {
+                return 1;
+              }
+              if (aState < bState) {
+                return -1;
+              }
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) {
+                return 1;
+              }
+              if (aName < bName) {
+                return -1;
+              }
+              // a.state.toLowerCase() > b.state.toLowerCase() ? 1 : -1
+            });
+          return data.allSeasons;
+        })
+    );
+  }
 
   async ngOnInit() {
     this.loadAllSeason();
@@ -41,7 +73,7 @@ export class ManageseasonComponent implements OnInit {
   }
 
   async loadAllSeason() {
-    this.seasons = await this.seasonService.loadSeasons();
+    this.seasonService.seasonsQGL.refetch();
   }
 
   async loadAllTeams() {
@@ -106,9 +138,14 @@ export class ManageseasonComponent implements OnInit {
   }
 
   sendMatchDays() {
-    const body = new CreateMatchDaysBody();
-    body.dates = this.newMatchDays;
-    this.apiClient.createMatchDays(this.manageSeason.id, body).subscribe(
+    // const body = new CreateMatchDaysBody();
+    // body.dates = this.newMatchDays;
+    this.matchesQL.mutate(
+      {
+        season_id: this.manageSeason.id,
+        dates: this.newMatchDays
+      }
+    ).subscribe(
       (d) => {
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {
@@ -126,13 +163,6 @@ export class ManageseasonComponent implements OnInit {
         });
       }
     );
-  }
-
-  async getMatchesInSeason() {
-    if (this.manageSeason) {
-      this.matchDaysInSeason = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
-      this.matchesInSeason = await this.matchService.getMatchesInSeason(this.manageSeason.id, undefined, undefined);
-    }
   }
 
   getMatchDay(id: string): Match_day {
@@ -178,28 +208,10 @@ export class ManageseasonComponent implements OnInit {
   onTabChanged(event: MatTabChangeEvent) {
     switch (event.index) {
       case 1:
-        this.getDatePeriodsForSeason();
         break;
       case 2:
       case 3:
-        this.getMatchesInSeason();
         break;
     }
   }
-
-  async getDatePeriodsForSeason() {
-    if (this.manageSeason) {
-      this.newMatchDays = new Array<Match_day>();
-      const matchDays = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
-      matchDays.forEach(
-        (md) => {
-          const dp = new Date_period();
-          dp.from = md.start_date;
-          dp.to = md.end_date;
-          this.newMatchDays.push(dp);
-        }
-      );
-    }
-  }
-
 }

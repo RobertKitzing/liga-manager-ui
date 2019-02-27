@@ -1,62 +1,53 @@
 import * as express from 'express';
-import * as expressWsRoutes from 'express-ws-routes';
 import * as path from 'path';
 import * as helmet from 'helmet';
-import { WebSocketMessage, WebSocketMessageTypes } from '../../shared/models/websocket.model';
+import * as redis from 'redis';
+import { GraphQLServer, PubSub } from 'graphql-yoga';
 
 class Server {
     public express;
-    private wsClients: any[] = new Array<any>();
+    public graphQLServer;
+    private redisClient;
+    private pubSub: PubSub = new PubSub();
 
     constructor() {
-        this.express = expressWsRoutes();
+        this.express = express();
         this.express.use(express.static(__dirname + '/www'));
         this.express.use(helmet());
-        this.mountRoutes();
-    }
-
-    private mountRoutes(): void {
-        const router: any = express.Router();
-        router.get('*', (req, res) => {
+        this.express.get('*', (req, res) => {
             res.sendFile(path.join(__dirname, 'www/index.html'));
         });
-
-        router.websocket('/ws', (info, cb, next) => {
-            cb(
-                (socket) => {
-                    console.log('connected from ', info.origin);
-                    this.wsClients.push(socket);
-                    socket.on('close', (close) => {
-                        console.log('close');
-                        this.wsClients = this.wsClients.filter(s => s !== socket);
-                    });
-                    socket.on('error', (error) => {
-                        console.log('error');
-                        this.wsClients = this.wsClients.filter(s => s !== socket);
-                    });
-                    socket.on('message', (message) => {
-                        console.log('message');
-                        const msg: WebSocketMessage = JSON.parse(message);
-                        switch (msg.type) {
-                            case WebSocketMessageTypes.PITCH_ADDED:
-                            case WebSocketMessageTypes.MATCH_UPDATED:
-                                this.broadcast(JSON.stringify(msg), socket);
-                                break;
-                        }
-                        this.broadcast(JSON.stringify(msg), socket);
-                    });
-                });
-        });
-        this.express.use('/', router);
+        this.initGraphQL();
+        this.redisClient = redis.createClient();
+        this.redisClient.on('message', (channel, message) => {
+            console.log(`message: ${message} channel: ${channel}`);
+            this.pubSub.publish('REDIS_CHANNEL', message);
+          });
+        this.redisClient.subscribe('events');
     }
 
-    broadcast(message: string, self?: WebSocket) {
-        this.wsClients.forEach((client) => {
-            if (client && client.readyState === 1 && self && self !== client) {
-                client.send(message);
-            }
+    private initGraphQL() {
+        const resolvers = {
+            Query: {
+                hello: () => 'duda'
+            },
+            Subscription: {
+                redisevent: {
+                    subscribe: async (parent, args, context) => {
+                        return this.pubSub.asyncIterator('REDIS_CHANNEL');
+                    },
+                    resolve: payload => {
+                        return payload;
+                    }
+                }
+            },
+        };
+
+        this.graphQLServer = new GraphQLServer({
+            typeDefs: './graphql/schema',
+            resolvers
         });
     }
 }
 
-export default new Server().express;
+export default new Server();

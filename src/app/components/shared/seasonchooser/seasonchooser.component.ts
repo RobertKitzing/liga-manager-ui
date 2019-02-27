@@ -1,7 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
 import { MatSelectChange } from '@angular/material';
 import { AllSeasonsList } from 'src/api/graphql';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-seasonchooser',
   templateUrl: './seasonchooser.component.html',
@@ -9,7 +11,9 @@ import { AllSeasonsList } from 'src/api/graphql';
 })
 export class SeasonchooserComponent implements OnInit {
 
+  @Input() filterState = 'progress';
   season: AllSeasonsList.AllSeasons;
+  seasonList: Observable<AllSeasonsList.AllSeasons[]>;
   @Output() seasonChanged: EventEmitter<AllSeasonsList.AllSeasons> = new EventEmitter<AllSeasonsList.AllSeasons>();
 
   constructor(public seasonService: SeasonService) { }
@@ -19,6 +23,11 @@ export class SeasonchooserComponent implements OnInit {
       (season) => {
         this.season = season;
       }
+    );
+    this.seasonList = this.seasonService.seasonsQGL.valueChanges.pipe(
+      map(
+        ({ data }) => data.allSeasons.filter(s => s.state === this.filterState)
+      )
     );
   }
 

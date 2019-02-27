@@ -1,9 +1,9 @@
 <div class="container-fluid" style="margin-top: 30px;">
   <div class="row">
-    <div class="col">
-      <mat-form-field>
+    <div class="col-5">
+      <mat-form-field style="width: 100%">
         <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" (selectionChange)="manageSeasonChanged($event)" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
-          <mat-option *ngFor="let season of seasons" [value]="season">
+          <mat-option *ngFor="let season of seasonList | async" [value]="season">
             {{ season.name }} | {{ season.state }}
           </mat-option>
         </mat-select>
@@ -16,7 +16,7 @@
       </mat-form-field>
     </div>
     <div class="col">
-      <button mat-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'BUTTON.CREATE_SEASON' | translate }}</button>
+      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'BUTTON.CREATE_SEASON' | translate }}</button>
     </div>
   </div>
   <mat-tab-group (selectedTabChange)="onTabChanged($event)">

@@ -1,0 +1,11 @@
+overwrite: true
+schema: "http://localhost/api/graphql"
+documents: "**/*.graphql"
+generates:
+  src/api/graphql.ts:
+    plugins:
+      - add: "/* tslint:disable */"
+      - "typescript-common"
+      - "typescript-client"
+      - "typescript-apollo-angular"
+      - "fragment-matcher"

@@ -99,7 +99,7 @@ export function websocketServiceFactory(provider: WebsocketService) {
       provide: APP_INITIALIZER,
       useFactory: websocketServiceFactory,
       deps: [WebsocketService], multi: true
-    },
+    }
   ],
   bootstrap: [
     AppComponent

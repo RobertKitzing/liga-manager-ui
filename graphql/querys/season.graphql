@@ -11,16 +11,7 @@ id
       id
       number
       matches {
-        id
-        home_team {
-          id
-          name
-        }
-        guest_team {
-          id
-          name
-        }
-        kickoff
+        ...Match
       }
     }
     ranking {

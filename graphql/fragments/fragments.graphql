@@ -1,0 +1,14 @@
+fragment Match on Match {
+    id
+    home_team {
+        id
+        name
+    }
+    home_score
+    guest_team {
+        id
+        name
+    }
+    guest_score
+    kickoff
+}

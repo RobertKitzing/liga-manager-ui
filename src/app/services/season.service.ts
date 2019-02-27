@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, CreateSeasonBody } from '../../api/liga-manager-api';
-import { BehaviorSubject, Subject, Observable, Subscription } from 'rxjs';
-import { Season, AllSeasonsList, AllSeasonsListGQL, SeasonGQL } from '../../api/graphql';
+import { BehaviorSubject, Subject, Subscription, Observable, of } from 'rxjs';
+import { Season, AllSeasonsList, AllSeasonsListGQL, SeasonGQL, RankingGQL, Ranking } from '../../api/graphql';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -9,11 +9,12 @@ import { map } from 'rxjs/operators';
 })
 export class SeasonService {
 
-  seasonsInProgress: Observable<AllSeasonsList.AllSeasons[]>;
-  currentSeasonQGL = this.seasonQQL.watch({id: this._currentSeason.id});
+  seasonsQGL = this.allSeasonsListGQL.watch();
+  currentSeasonQGL = this.seasonQQL.watch({ id: this._currentSeason.id });
+  currentSeasonRankingQGL = this.rankingQGL.watch({ id: this._currentSeason.id });
 
   private get _currentSeason(): AllSeasonsList.AllSeasons {
-    return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || null;
+    return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || '';
   }
 
   private set _currentSeason(season: AllSeasonsList.AllSeasons) {
@@ -25,28 +26,45 @@ export class SeasonService {
   currentSeason: BehaviorSubject<AllSeasonsList.AllSeasons> = new BehaviorSubject<AllSeasonsList.AllSeasons>(this._currentSeason);
   seasonCreated: Subject<void> = new Subject<void>();
 
-  allSeasonSubscrition: Subscription;
-
   constructor(
     private apiClient: Client,
     private allSeasonsListGQL: AllSeasonsListGQL,
-    private seasonQQL: SeasonGQL
+    private seasonQQL: SeasonGQL,
+    private rankingQGL: RankingGQL
   ) {
     this.currentSeason.subscribe(
-      async (season) => {
-        this._currentSeason = season;
-        await this.currentSeasonQGL.refetch({ id: season.id });
+      (season) => {
+        if (season) {
+          this._currentSeason = season;
+          this.refetchCurrentSeason();
+        }
       }
     );
   }
 
-  init() {
-    this.seasonsInProgress =
-      this.allSeasonsListGQL.watch().valueChanges.pipe(
+  getRankingForSeason(seasonId?: string): Observable<Ranking.Ranking | null> {
+    const _seasonId = seasonId || this.currentSeason.getValue().id;
+    if (!_seasonId) {
+      return of(null);
+    } else {
+      return this.rankingQGL.watch(
+        {
+          id: _seasonId
+        }
+      ).valueChanges.pipe(
         map(
-          ({ data }) => data.allSeasons.filter(s => s.state === 'progress')
+          ({ data }) => data.season.ranking
         )
       );
+    }
+  }
+
+  refetchCurrentSeason() {
+    // this.currentSeasonQGL.refetch({ id: this.currentSeason.getValue().id });
+  }
+
+  init() {
+
   }
 
   public async createSeason(seasonName: string): Promise<void> {

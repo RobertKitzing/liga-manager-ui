@@ -1,5 +1,5 @@
 query AllSeasonsList {
-  allSeasons{
+  allSeasons {
     id
     name
     state

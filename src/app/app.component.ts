@@ -10,6 +10,8 @@ import { WebsocketService } from './services/websocket.service';
 import { MatchService } from './services/match.service';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { TeamService } from './services/team.service';
+import { RedisEventGQL } from '../api/graphqlsubs';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +28,11 @@ export class AppComponent implements OnInit {
     private matchService: MatchService,
     public snackBar: MatSnackBar,
     private translateService: TranslateService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private teamService: TeamService,
+    private redis: RedisEventGQL) {
+
+
   }
 
   async ngOnInit() {
@@ -43,6 +49,18 @@ export class AppComponent implements OnInit {
           panelClass: ['alert', 'alert-info']
         });
       });
+
+    this.redis.subscribe().subscribe(
+      (message) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            message: `Redis said: ${ JSON.stringify(message)}`
+          },
+          panelClass: ['alert', 'alert-info'],
+          duration: 2000
+        });
+      }
+    );
   }
 
   openLoginDialog() {

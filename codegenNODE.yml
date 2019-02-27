@@ -1,9 +1,10 @@
 overwrite: true
-schema: "http://localhost/api/graphql"
-documents: "**/*.graphql"
+schema: "server/graphql/schema.gql"
+documents: "**/*.graphqls"
 generates:
-  src/api/graphql.ts:
+  src/api/graphqlsubs.ts:
     plugins:
+      - add: "/* tslint:disable */"
       - "typescript-common"
       - "typescript-client"
       - "typescript-apollo-angular"

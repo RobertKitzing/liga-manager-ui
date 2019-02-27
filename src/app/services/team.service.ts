@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Team, Client, CreateTeamBody, Contact_person } from '../../api';
+import { TeamsGQL } from '../../api/graphql';
 
 interface CacheTeamsInSeason {
   seasonId: string;
@@ -33,7 +34,8 @@ export class TeamService {
   }
 
   constructor(
-    private apiClient: Client) {
+    private apiClient: Client,
+    private teamsQL: TeamsGQL) {
   }
 
   /**
@@ -79,17 +81,30 @@ export class TeamService {
           resolve(false);
         }
         this.teams = null;
-        const createTeamParams: CreateTeamBody = new CreateTeamBody();
-        createTeamParams.name = teamName;
-        this.apiClient.createTeam(createTeamParams).subscribe(
-          async () => {
-            this.teams = await this.loadAllTeams();
-            resolve(true);
-          },
-          (error) => {
-            resolve(false);
+        this.teamsQL.mutate(
+          {
+            name: teamName
           }
+        ).subscribe(
+          async (result) => {
+            this.teams = await this.loadAllTeams();
+          },
+            (error) => {
+              console.error(error);
+              resolve(false);
+            }
         );
+        // const createTeamParams: CreateTeamBody = new CreateTeamBody();
+        // createTeamParams.name = teamName;
+        // this.apiClient.createTeam(createTeamParams).subscribe(
+        //   async () => {
+        //     this.teams = await this.loadAllTeams();
+
+        //   },
+        //   (error) => {
+        //     resolve(false);
+        //   }
+        // );
       }
     );
   }

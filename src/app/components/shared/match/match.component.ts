@@ -33,14 +33,6 @@ export class MatchComponent implements OnInit {
     public snackBar: MatSnackBar,
     public translateService: TranslateService,
     private websocketService: WebsocketService) {
-
-    this.matchService.matchUpdated.subscribe(
-      async (msg) => {
-        if (this.match.id === msg.matchId) {
-          this.match = null;
-          this.match = await this.matchService.updateSingleMatch(msg.matchId);
-        }
-      });
   }
 
   ngOnInit() {
@@ -55,9 +47,6 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
-          this.match = await this.matchService.updateSingleMatch(match.id);
-          this.resultUpdated.emit(this.match);
-          this.sendMatchUpdatedMsg();
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
               message: this.translateService.instant('RESULT_SAVE_SUCCESS')
@@ -76,8 +65,6 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
-          this.match = await this.matchService.updateSingleMatch(match.id);
-          this.sendMatchUpdatedMsg();
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
               message: this.translateService.instant('PITCH_SAVE_SUCCESS')
@@ -94,10 +81,8 @@ export class MatchComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      async (result) => {
+      (result) => {
         if (result) {
-          this.match = await this.matchService.updateSingleMatch(match.id);
-          this.sendMatchUpdatedMsg();
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
               message: this.translateService.instant('TIME_SAVE_SUCCESS')

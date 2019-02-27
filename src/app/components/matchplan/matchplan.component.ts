@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { I18Service } from '../../services/i18.service';
 import { Observable } from 'rxjs';
-import { Season } from '../../../api/graphql';
-import { map } from 'rxjs/operators';
+import { Season, MatchPlanGQL, MatchPlan } from '../../../api/graphql';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-matchplan',
@@ -12,18 +12,24 @@ import { map } from 'rxjs/operators';
 })
 export class MatchplanComponent implements OnInit {
 
-  public seasonQGL: Observable<Season.Season>;
-  public hidePlayed: boolean;
+  public matchesQGL: Observable<MatchPlan.Season>;
 
-  public set selectedMatchDay(value: Season.MatchDays) {
-    localStorage.setItem('SELECTED_MATCHDAY', JSON.stringify(value));
+  public get hidePlayed(): boolean {
+    return JSON.parse(localStorage.getItem('HIDE_PLAYED'));
+  }
+  public set hidePlayed(value: boolean) {
+    localStorage.setItem('HIDE_PLAYED', value.toString());
   }
 
-  public get selectedMatchDay(): Season.MatchDays {
-    return JSON.parse(localStorage.getItem('SELECTED_MATCHDAY')) || {};
+  public set selectedMatchDayId(value: string) {
+    localStorage.setItem('SELECTED_MATCHDAY', value);
   }
 
-  public get selectedTeamId() {
+  public get selectedMatchDayId(): string {
+    return localStorage.getItem('SELECTED_MATCHDAY') || '0';
+  }
+
+  public get selectedTeamId(): string {
     return localStorage.getItem('SELECTED_TEAM') || '0';
   }
 
@@ -37,44 +43,38 @@ export class MatchplanComponent implements OnInit {
 
   constructor(
     public seasonService: SeasonService,
-    public i18Service: I18Service
+    public i18Service: I18Service,
+    public matchPlanQGL: MatchPlanGQL
   ) { }
 
   ngOnInit() {
-    this.seasonService.currentSeasonQGL.valueChanges.subscribe(
-      (season) => {
-        console.log(season);
-      }
-    );
-    this.seasonQGL = this.seasonService.currentSeasonQGL.valueChanges.pipe(
-      map(
-        ({data}) => data.season)
-    );
-  }
-
-  filterMatchDays(matchDays: Season.MatchDays[]) {
-    if (this.selectedMatchDay.number !== 0) {
-      return matchDays.filter(x => x.number === this.selectedMatchDay.number);
-    } else {
-      return matchDays;
+    if (this.seasonService.currentSeason) {
+      this.handleGetMatches();
     }
   }
 
+  filterMatchDays(matchDays: Season.MatchDays[]) {
+
+    return this.selectedMatchDayId !== '0' ? matchDays.filter(x => x.id === this.selectedMatchDayId) : matchDays;
+
+  }
+
+  filterMatches(matches: Season.Matches[]) {
+
+    return this.selectedTeamId !== '0' ?
+      matches.filter(x => x.guest_team.id === this.selectedTeamId || x.home_team.id === this.selectedTeamId) :
+      matches;
+
+  }
+
   handleGetMatches() {
-    
+    this.matchesQGL = this.matchPlanQGL.watch({ id: this.seasonService.currentSeason.getValue().id }).valueChanges.pipe(
+      map(
+        ({ data }) => {
+          data.season.teams = data.season.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+          return data.season;
+        }
+      )
+    );
   }
-
-  matchDayCompare(md1: Season.MatchDays, md2: Season.MatchDays) {
-    return md1 && md2 && md1.id === md2.id;
-  }
-
-  // isNewMatchDay(match: AllSeasons.Matches, index: number): boolean {
-  //   if (!match || index < 1) {
-  //     return true;
-  //   } else {
-  //     const currentMatchDay = this.getMatchDay(match.id);
-  //     const previusMatchDay = this.getMatchDay(this.matches[index - 1].id);
-  //     return currentMatchDay.number !== previusMatchDay.number;
-  //   }
-  // }
 }
