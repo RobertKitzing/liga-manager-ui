@@ -28,10 +28,10 @@
       </li>
     </ul>
     <div class="navbar-text d-flex justify-content-end ml-auto">
-      <div class="led-box" data-toggle="tooltip" data-placement="top" title="{{ 'LIVE_UPDATES' | translate }}">
+      <!-- <div class="led-box" data-toggle="tooltip" data-placement="top" title="{{ 'LIVE_UPDATES' | translate }}">
         <div *ngIf="websocketService.numberConnected" class="led-green"></div>
         <div *ngIf="!websocketService.numberConnected" class="led-red"></div>
-      </div>
+      </div> -->
       <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
         {{ 'BUTTON.LOGIN' | translate }}
       </button>

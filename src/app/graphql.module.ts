@@ -5,40 +5,46 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { HttpHeaders } from '@angular/common/http';
 import { toIdValue, getMainDefinition } from 'apollo-utilities';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService, Credentials } from './services/authentication.service';
 import { WebSocketLink } from 'apollo-link-ws';
-import { split } from 'apollo-link';
+import { split, ApolloLink } from 'apollo-link';
+import { environment } from '../environments/environment';
 
-const uri = 'api/graphql'; // <-- add the URL of the GraphQL server here
+const uri = environment.graphqlUrl; // <-- add the URL of the GraphQL server here
 
-export function createApollo(httpLink: HttpLink) {
+export function createApollo(httpLink: HttpLink, authService: AuthenticationService) {
   const http = httpLink.create({ uri });
+  const afterwareLink = new ApolloLink((operation, forward) => {
+    return forward(operation).map(response => {
+      const { response: { headers } } = operation.getContext();
+      if (headers) {
+        const token = headers.get('x-token');
+        if (token) {
+          authService.setAccessToken({ token: token });
+        }
+      }
+      return response;
+    });
+  });
+
   const auth = setContext((_, { headers }) => {
     if (!headers) {
       headers = new HttpHeaders();
     }
-    // get the authentication token from local storage if it exists
-    const token = null;
-    // return the headers to the context so httpLink can read them
-    // in this example we assume headers property exists
-    // and it is an instance of HttpHeaders
-    if (!token) {
-      return {};
-    } else {
+    const token = authService.accessToken;
+    if (token) {
       return {
-        headers: headers.append('Authorization', `Bearer ${token}`)
+        headers: headers.get('Authorization') ? null : headers.append('Authorization', `Bearer ${token}`)
       };
+    } else {
+      return {};
     }
   });
   const wsClient = new WebSocketLink({
-    uri: `ws://localhost:4000/`,
+    uri: environment.graphqlWsUrl,
     options: {
       reconnect: true,
       lazy: true,
-      connectionCallback: (error, result ) => {
-        console.error(error);
-        console.log(result);
-      },
       reconnectionAttempts: 5,
       inactivityTimeout: 3000
     },
@@ -50,7 +56,7 @@ export function createApollo(httpLink: HttpLink) {
       return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsClient,
-    auth.concat(http),
+    afterwareLink.concat(auth).concat(http),
   );
   const cache = new InMemoryCache(
     {
@@ -74,7 +80,10 @@ export function createApollo(httpLink: HttpLink) {
     {
       provide: APOLLO_OPTIONS,
       useFactory: createApollo,
-      deps: [HttpLink],
+      deps: [
+        HttpLink,
+        AuthenticationService
+      ],
     },
   ],
 })

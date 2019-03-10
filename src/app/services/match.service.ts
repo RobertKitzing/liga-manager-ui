@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Client, Match, Match_day } from '../../api';
-import { MatchViewModel } from '../models/match.viewmodel';
-import { TeamService } from './team.service';
-import { PitchService } from './pitch.service';
 import { Subject } from 'rxjs';
-import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL } from '../../api/graphql';
+import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match } from '../../api/graphql';
 import { SeasonService } from './season.service';
 
 export interface MatchUpdateMessage {
@@ -21,70 +17,15 @@ export class MatchService {
   public matchUpdated: Subject<MatchUpdateMessage> = new Subject<MatchUpdateMessage>();
 
   constructor(
-    private apiClient: Client,
-    private teamService: TeamService,
-    private pitchService: PitchService,
     private submitResultGQL: SubmitResultGQL,
     private rankingQGL: RankingGQL,
     private scheduleMatchGQL: ScheduleMatchGQL,
     private locateMatchQGL: LocateMatchGQL,
-    private seasonService: SeasonService
+    private seasonService: SeasonService,
+    private matchPlanQGL: MatchPlanGQL
   ) { }
 
-  // tslint:disable-next-line:max-line-length
-  public async getMatchesInTournament(tournamentId: string, teamId?: string, matchDayId?: string): Promise<MatchViewModel[]> {
-    return new Promise<MatchViewModel[]>(
-      (resolve, reject) => {
-        if (!teamId) {
-          teamId = undefined;
-        }
-        if (!matchDayId) {
-          matchDayId = undefined;
-        }
-        this.apiClient.getMatches(undefined, tournamentId, teamId, matchDayId).subscribe(
-          (matches) => {
-            resolve(this.matchConverterArray(matches));
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
-  }
-
-  public async getRoundsInTournament(tournamentId: string): Promise<Match_day[]> {
-    return new Promise<Match_day[]>(
-      (resolve, reject) => {
-        this.apiClient.getRoundsInTournament(tournamentId).subscribe(
-          (matchDays) => {
-            resolve(matchDays);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
-  }
-
-  matchConverter(match: Match): MatchViewModel {
-    const mv = new MatchViewModel(match);
-    mv.home_team = this.teamService.getTeamById(mv.home_team_id);
-    mv.guest_team = this.teamService.getTeamById(mv.guest_team_id);
-    mv.pitch = this.pitchService.getPitchById(mv.pitch_id);
-    return mv;
-  }
-
-  matchConverterArray(matches: Match[]): MatchViewModel[] {
-    const mvwa = new Array<MatchViewModel>();
-    matches.forEach((match) => {
-      mvwa.push(this.matchConverter(match));
-    });
-    return mvwa;
-  }
-
-  public isMatchPlayed(match: Match): boolean {
+  public isMatchPlayed(match: Match.Fragment): boolean {
     return this.isValidResult(match.home_score) && this.isValidResult(match.guest_score);
   }
 
@@ -105,12 +46,14 @@ export class MatchService {
             update: (store, { data }) => {
               const match: any = store.readFragment(
                 {
+                  fragmentName: 'Match',
                   fragment: MatchFragment,
                   id: `Match:${matchId}`
                 }
               );
               store.writeFragment(
                 {
+                  fragmentName: 'Match',
                   fragment: MatchFragment,
                   id: `Match:${matchId}`,
                   data: {
@@ -154,12 +97,14 @@ export class MatchService {
             update: (store, { data }) => {
               const match: any = store.readFragment(
                 {
+                  fragmentName: 'Match',
                   fragment: MatchFragment,
                   id: `Match:${matchId}`
                 }
               );
               store.writeFragment(
                 {
+                  fragmentName: 'Match',
                   fragment: MatchFragment,
                   id: `Match:${matchId}`,
                   data: {
@@ -192,25 +137,14 @@ export class MatchService {
             pitch_id: pitchId
           },
           {
-            // update: (store, { data }) => {
-            //   const match: any = store.readFragment(
-            //     {
-            //       fragment: MatchFragment,
-            //       id: `Match:${matchId}`
-            //     }
-            //   );
-            //   store.writeFragment(
-            //     {
-            //       fragment: MatchFragment,
-            //       id: `Match:${matchId}`,
-            //       data: {
-            //         __typename: 'Match',
-            //         ...match,
-            //         pit
-            //       }
-            //     }
-            //   );
-            // }
+            refetchQueries: [
+              {
+                query: this.matchPlanQGL.document,
+                variables: {
+                  id: this.seasonService.currentSeason.getValue().id
+                }
+              }
+            ]
           }
         ).subscribe(
           () => {

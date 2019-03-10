@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Tournament, Client, CreateTournamentBody, Match_day } from '../../../../api';
+import { Client, CreateTournamentBody } from '../../../../api';
 import { MatDialog } from '@angular/material';
 import { AddtournamentroundComponent } from './addtournamentround/addtournamentround.component';
 import { MatchService } from '../../../services/match.service';
+import { AllTournamentListGQL, AllTournamentList, TournamentGQL, MatchDay, CreateTournamentGQL } from '../../../../api/graphql';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import * as uuidv4 from 'uuid/v4';
 
 @Component({
   selector: 'app-managetournament',
@@ -11,17 +15,19 @@ import { MatchService } from '../../../services/match.service';
 })
 export class ManagetournamentComponent implements OnInit {
 
-  tournaments: Tournament[];
-  manageTournament: Tournament;
+  tournaments: Observable<AllTournamentList.AllTournaments[]>;
+  manageTournamentId: string;
+  manageTournamentRounds: Observable<MatchDay.Fragment[]>;
   startTeamCount = 4;
   createRoundNr: number;
   rounds: number[][];
-  manageTournamentRounds: Match_day[];
+  manageTournamentRoundCount: number;
 
   constructor(
-    private apiClient: Client,
-    private matchService: MatchService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private allTournamentsQGL: AllTournamentListGQL,
+    private tournamentQGL: TournamentGQL,
+    private createTournament: CreateTournamentGQL
   ) { }
 
   ngOnInit() {
@@ -29,22 +35,40 @@ export class ManagetournamentComponent implements OnInit {
   }
 
   private loadAllTournaments() {
-    this.apiClient.getAllTournaments().subscribe((tournaments) => {
-      this.tournaments = tournaments;
-    });
-  }
-
-  createNewTournament(name: string) {
-    this.apiClient.createTournament(<CreateTournamentBody>{ name: name }).subscribe(
-      (id) => {
-        this.loadAllTournaments();
-      }
+    this.tournaments = this.allTournamentsQGL.watch().valueChanges.pipe(
+      map(({ data }) => data.allTournaments)
     );
   }
 
+  async createNewTournament(name: string) {
+    await this.createTournament.mutate({
+      id: uuidv4(),
+      name: name
+    },
+      {
+        refetchQueries: [
+          {query: this.allTournamentsQGL.document}
+        ]
+      }).toPromise();
+  }
+
   async onTournamentSelected() {
-    this.manageTournamentRounds = await this.matchService.getRoundsInTournament(this.manageTournament.id);
-    this.createRoundNr = this.manageTournamentRounds.length;
+    this.manageTournamentRounds = this.tournamentQGL.watch(
+      {
+        id: this.manageTournamentId
+      }
+    ).valueChanges.pipe(
+      map(
+        (result) => {
+          if (result.data.tournament.rounds) {
+            this.manageTournamentRoundCount = result.data.tournament.rounds.length;
+          } else {
+            this.manageTournamentRoundCount = 0;
+          }
+          this.createRoundNr = this.manageTournamentRoundCount;
+          return result.data.tournament.rounds;
+        })
+    );
   }
 
   genRounds() {
@@ -59,13 +83,13 @@ export class ManagetournamentComponent implements OnInit {
   }
 
   editRound() {
-    if (this.createRoundNr < this.manageTournamentRounds.length) {
+    if (this.createRoundNr < this.manageTournamentRoundCount) {
       if (!confirm('Warning, this will override existing Round!')) {
         return;
       }
     }
     const dialogRef = this.dialog.open(AddtournamentroundComponent, {
-      data: { round: this.createRoundNr, tournamentId: this.manageTournament.id },
+      data: { round: this.createRoundNr, tournamentId: this.manageTournamentId },
       panelClass: 'my-full-screen-dialog'
     });
     dialogRef.afterClosed().subscribe(

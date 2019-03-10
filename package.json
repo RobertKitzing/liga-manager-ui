@@ -5,11 +5,11 @@
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json --port 4200",
     "build": "rm -R dist && npm run build:web && npm run build:app && npm run build:server",
-    "build:web": "ng build --aot --prod --output-path dist/server/src/www",
+    "build:web": "ng build --aot --prod",
     "build:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./",
     "build:app:local": "ng build --aot -c app.local --output-path app/www --delete-output-path --base-href ./",
-    "build:server": "tsc -p server --outDir dist",
-    "docker:build": "npm run build:web && docker build -t robertkitzing/liga-manager-ui:graphql . ",
+    "build:server": "tsc -p server --outDir dist && cp -r server/graphql dist && cp server/package.json dist",
+    "docker:build": "npm run build:server && npm run build:web && docker build -t robertkitzing/liga-manager-ui:graphql . ",
     "docker:push": "docker push robertkitzing/liga-manager-ui:graphql",
     "cordova:build": "cd app && cordova build android",
     "test": "ng test --code-coverage",
@@ -76,6 +76,7 @@
     "rxjs": "^6.3.3",
     "rxjs-websockets": "^6.0.2",
     "subscriptions-transport-ws": "^0.9.15",
+    "uuid": "^3.3.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

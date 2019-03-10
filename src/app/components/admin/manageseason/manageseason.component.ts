@@ -3,13 +3,12 @@ import { SeasonService } from '../../../services/season.service';
 import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchDaysBody, Date_period, Match_day } from '../../../../api';
 import { MatSelectChange, MatTabChangeEvent, MatSnackBar } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
-import { MatchViewModel } from '../../../models/match.viewmodel';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { TeamService } from 'src/app/services/team.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { AllSeasonsList, MatchesGQL } from '../../../../api/graphql';
+import { AllSeasonsList, MatchesGQL, Match } from '../../../../api/graphql';
 
 @Component({
   selector: 'app-manageseason',
@@ -20,7 +19,7 @@ export class ManageseasonComponent implements OnInit {
 
   teamsInSeason: Team[];
   allTeams: Team[];
-  matchesInSeason: MatchViewModel[];
+  matchesInSeason: Match.Fragment[];
   manageSeason: Season;
   matchDayCounter: number[];
   newMatchDays: Date_period[];

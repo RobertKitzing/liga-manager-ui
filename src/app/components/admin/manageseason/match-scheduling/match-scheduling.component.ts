@@ -51,21 +51,22 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    if (this.pitchService.pitches) {
-      this.filteredPitches = this.newMatchPitch.valueChanges
-        .pipe(
-          startWith<string | Pitch>(''),
-          map(value => typeof value === 'string' ? value : value.label),
-          map((pitch) => pitch ? this.filterPitches(pitch) : this.pitchService.pitches.slice())
-        );
-    }
+    // if (this.pitchService.pitches) {
+    //   this.filteredPitches = this.newMatchPitch.valueChanges
+    //     .pipe(
+    //       startWith<string | Pitch>(''),
+    //       map(value => typeof value === 'string' ? value : value.label),
+    //       map((pitch) => pitch ? this.filterPitches(pitch) : this.pitchService.pitches.slice())
+    //     );
+    // }
   }
 
   ngOnChanges() {
   }
 
   filterPitches(searchTerm: string): Pitch[] {
-    return this.pitchService.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+    return [];
+    // return this.pitchService.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
   }
 
   getMatchDay(id: string): Match_day {

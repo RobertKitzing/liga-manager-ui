@@ -1,14 +1,65 @@
 fragment Match on Match {
     id
     home_team {
-        id
-        name
+        ...Team
     }
     home_score
     guest_team {
-        id
-        name
+        ...Team
     }
     guest_score
     kickoff
+    pitch {
+        ...Pitch
+    }
+}
+
+fragment MatchDay on MatchDay {
+    id
+    number
+    start_date
+    end_date
+    matches {
+        ...Match
+    }
+}
+
+fragment Pitch on Pitch {
+    id
+    label
+    location_longitude
+    location_latitude
+    contact {
+        ...Contact
+    }
+}
+
+fragment Team on Team {
+    id
+    name
+    created_at
+    contact {
+        ...Contact
+    }
+}
+
+fragment Contact on Contact {
+    first_name
+    last_name
+    phone
+    email
+}
+
+fragment Season on Season {
+    id
+    name
+    state
+}
+
+fragment Tournament on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
 }

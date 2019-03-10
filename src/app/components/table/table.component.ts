@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
-import { Season, RankingGQL } from 'src/api/graphql';
+import { Ranking, RankingGQL } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { I18Service } from '../../services/i18.service';
@@ -12,7 +12,7 @@ import { I18Service } from '../../services/i18.service';
 })
 export class TableComponent implements OnInit {
 
-  rankingQGL: Observable<Season.Ranking>;
+  rankingQGL: Observable<Ranking.Ranking>;
 
   constructor(
     public seasonService: SeasonService,

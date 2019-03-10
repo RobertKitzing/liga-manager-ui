@@ -4,7 +4,7 @@
   "description": "Node.js Server to serve liga-manager-ui",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node server/src/index.js",
+    "start": "node index.js",
     "start:local": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

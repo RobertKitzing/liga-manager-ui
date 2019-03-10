@@ -1,11 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { MatchViewModel } from 'src/app/models/match.viewmodel';
 import { DateTimeAdapter } from 'ng-pick-datetime';
-import { Client, ScheduleMatchBody } from '../../../../api';
 import { TranslateService } from '@ngx-translate/core';
 import { I18Service } from '../../../services/i18.service';
 import { MatchService } from '../../../services/match.service';
+import { Match } from 'src/api/graphql';
 
 @Component({
   selector: 'app-editmatch.time',
@@ -17,7 +16,7 @@ export class EditmatchTimeComponent implements OnInit {
   matchKickoff: Date;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
+    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
     dateTimeAdapter: DateTimeAdapter<any>,
     private translateService: TranslateService,
     public i18Service: I18Service,

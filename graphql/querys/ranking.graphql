@@ -1,4 +1,4 @@
-query Ranking($id: String) {
+query Ranking($id: String!) {
   season(id: $id) {
     ranking {
       updated_at

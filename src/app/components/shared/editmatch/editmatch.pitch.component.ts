@@ -1,13 +1,11 @@
 import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MatchViewModel } from '../../../models/match.viewmodel';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs';
-import { Pitch, LocateMatchBody, Client, CreatePitchBody } from 'src/api';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
+import { map, startWith, switchMapTo } from 'rxjs/operators';
 import { PitchService } from '../../../services/pitch.service';
-import { WebSocketMessageTypes } from 'shared/models/websocket.model';
-import { WebsocketService } from 'src/app/services/websocket.service';
+import { Match, Pitch } from 'src/api/graphql';
+import { MatchService } from '../../../services/match.service';
 
 @Component({
   selector: 'app-editmatch.pitch',
@@ -17,10 +15,10 @@ import { WebsocketService } from 'src/app/services/websocket.service';
 export class EditmatchPitchComponent implements OnInit {
 
   newMatchPitch: FormControl = new FormControl();
-  filteredPitches: Observable<Pitch[]>;
+  filteredPitches: Observable<Pitch.Fragment[]>;
   showCreateNewPitch: boolean;
 
-  newPitch: Pitch = new Pitch();
+  newPitch: Pitch.Fragment;
   newPitchFormControl: FormControl;
   newPitchPlaceFormGroup: FormGroup;
   newPitchLabelExist: boolean;
@@ -29,13 +27,12 @@ export class EditmatchPitchComponent implements OnInit {
   @ViewChild('adressAutoComplete') adressAutoComplete: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
+    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
     private pitchService: PitchService,
-    private apiClient: Client,
+    private matchService: MatchService,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<EditmatchPitchComponent>,
-    private websocketService: WebsocketService
+    private dialogRef: MatDialogRef<EditmatchPitchComponent>
   ) {
     this.newPitchFormControl = new FormControl('', Validators.required);
     this.newPitchPlaceFormGroup = this.formBuilder.group({
@@ -44,39 +41,32 @@ export class EditmatchPitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.pitchService.pitches) {
-      this.filteredPitches = this.newMatchPitch.valueChanges
-        .pipe(
-          startWith<string | Pitch>(''),
-          map(value => typeof value === 'string' ? value : value.label),
-          map((pitch) => pitch ? this.filterPitches(pitch) : this.pitchService.pitches.slice())
-        );
-    }
+    this.filteredPitches = this.newMatchPitch.valueChanges.pipe(
+      startWith<string | Pitch.Fragment>(''),
+      map(value => typeof value === 'string' ? value : value.label),
+      switchMapTo(this.pitchService.pitches),
+      map(x => {
+        return (this.newMatchPitch.value && (typeof this.newMatchPitch.value === 'string')) ?
+          x.filter(y => y.label.toLowerCase().includes(this.newMatchPitch.value.toLowerCase())) : [];
+      })
+    );
   }
 
-  filterPitches(searchTerm: string): Pitch[] {
-    return this.pitchService.pitches.filter(p => p.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
-  }
-
-  displayPitch(pitch?: Pitch): string | undefined {
+  displayPitch(pitch?: Pitch.Fragment): string | undefined {
     return pitch ? pitch.label : undefined;
   }
 
-  onPitchSelect(pitch: Pitch) {
+  onPitchSelect(pitch: Pitch.Fragment) {
     this.match.pitch = pitch;
   }
 
-  onSaveClicked() {
-    const body: LocateMatchBody = new LocateMatchBody();
-    body.pitch_id = this.newMatchPitch.value.id;
-    this.apiClient.locateMatch(this.match.id, body).subscribe(
-      () => {
-        this.dialogRef.close(true);
-      },
-      (error) => {
-        this.dialogRef.close(false);
-      }
-    );
+  async onSaveClicked() {
+    try {
+      await this.matchService.locateMatch(this.match.id, this.newMatchPitch.value.id);
+      this.dialogRef.close(true);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   onShowCreateNewPitch() {
@@ -90,33 +80,27 @@ export class EditmatchPitchComponent implements OnInit {
   }
 
   createNewPitch() {
-    if (this.newPitch.location_latitude && this.newPitch.location_longitude) {
-      const body: CreatePitchBody = new CreatePitchBody();
-      body.label = this.newPitch.label;
-      body.location_latitude = this.newPitch.location_latitude;
-      body.location_longitude = this.newPitch.location_longitude;
-      this.apiClient.createPitch(body).subscribe(
-        async (pitchId) => {
-          this.newPitch.id = pitchId.id;
-          this.newMatchPitch.setValue(this.newPitch);
-          this.pitchService.pitchAdded.next(null);
-          this.websocketService.send(
-            {
-              type: WebSocketMessageTypes.PITCH_ADDED,
-              data: pitchId
-            }
-          );
-        }
-      );
-    }
+    // if (this.newPitch.location_latitude && this.newPitch.location_longitude) {
+    //   const body: CreatePitchBody = new CreatePitchBody();
+    //   body.label = this.newPitch.label;
+    //   body.location_latitude = this.newPitch.location_latitude;
+    //   body.location_longitude = this.newPitch.location_longitude;
+    //   this.apiClient.createPitch(body).subscribe(
+    //     async (pitchId) => {
+    //       this.newPitch.id = pitchId.id;
+    //       this.newMatchPitch.setValue(this.newPitch);
+    //       this.pitchService.pitchAdded.next(null);
+    //     }
+    //   );
+    // }
   }
   checkNewPitchName() {
-    const pitch = this.pitchService.pitches.find(p => p.label === this.newPitch.label);
-    if (pitch) {
-      this.newPitchFormControl.setErrors({ pitchexist: true });
-    } else {
-      this.newPitchFormControl.setErrors(null);
-      this.newPitchFormControl.updateValueAndValidity();
-    }
+    // const pitch = this.pitchService.pitches.find(p => p.label === this.newPitch.label);
+    // if (pitch) {
+    //   this.newPitchFormControl.setErrors({ pitchexist: true });
+    // } else {
+    //   this.newPitchFormControl.setErrors(null);
+    //   this.newPitchFormControl.updateValueAndValidity();
+    // }
   }
 }

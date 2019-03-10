@@ -16,7 +16,7 @@ export class PitchesComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.pitches = await this.pitchService.loadPitches();
+    // this.pitches = await this.pitchService.loadPitches();
   }
 
 }

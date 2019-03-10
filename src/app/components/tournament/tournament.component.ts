@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, Tournament, Team, Match_day } from '../../../api';
-import { MatchViewModel } from '../../models/match.viewmodel';
+import { Client, Team, Match_day } from '../../../api';
 import { MatchService } from '../../services/match.service';
 import { I18Service } from '../../services/i18.service';
+import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } from 'src/api/graphql';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tournament',
@@ -11,80 +13,83 @@ import { I18Service } from '../../services/i18.service';
 })
 export class TournamentComponent implements OnInit {
 
-  tournaments: Tournament[];
+  tournaments: Observable<AllTournamentList.AllTournaments[]>;
+  tournament: Observable<Tournament.Fragment>;
   winnerLastRound: Team[];
   tournamentRounds: Match_day[];
 
-  get tournament(): Tournament {
-    return JSON.parse(localStorage.getItem('SELECTED_TOURNAMENT'));
+  get tournamentId(): string {
+    return localStorage.getItem('SELECTED_TOURNAMENT');
   }
-  set tournament(t: Tournament) {
-    localStorage.setItem('SELECTED_TOURNAMENT', JSON.stringify(t));
+  set tournamentId(t: string) {
+    localStorage.setItem('SELECTED_TOURNAMENT', t);
   }
-
-  matches: MatchViewModel[][];
 
   constructor(
-    private apiClient: Client,
-    private matchService: MatchService,
-    public i18Service: I18Service
+    public i18Service: I18Service,
+    private allTournamentQGL: AllTournamentListGQL,
+    private tournamentQGL: TournamentGQL
   ) { }
 
   ngOnInit() {
-    this.apiClient.getAllTournaments().subscribe(
-      (tournaments) => {
-        this.tournaments = tournaments;
-        if (this.tournament) {
-          this.tournamentChanged();
-        }
-      }
+    this.tournaments = this.allTournamentQGL.watch().valueChanges.pipe(
+      map(({ data }) => data.allTournaments)
     );
-  }
-
-  tournamentCompare(c1: Tournament, c2: Tournament) {
-    return c1 && c2 && c1.id === c2.id;
-  }
-
-  async tournamentChanged() {
-    this.matches = null;
-    const matches = await this.matchService.getMatchesInTournament(this.tournament.id);
-    this.tournamentRounds = await this.matchService.getRoundsInTournament(this.tournament.id);
-    this.matches = new Array<MatchViewModel[]>();
-    for (let round = 0; round < this.tournamentRounds.length; round++) {
-      this.matches[round] = matches.filter(m => this.getRound(m.match_day_id).number === (round + 1));
+    if (this.tournamentId) {
+      this.tournamentChanged();
     }
-    this.matches = this.matches.reverse();
-    this.getWinner();
   }
 
-  getRound(matchDayId: string): Match_day {
-    return this.tournamentRounds.find(t => t.id === matchDayId);
+  tournamentChanged() {
+
+    this.tournament = this.tournamentQGL.watch(
+      {
+        id: this.tournamentId
+      }
+    ).valueChanges.pipe(
+      map(({ data }) => {
+        if (data.tournament.rounds) {
+          data.tournament.rounds = data.tournament.rounds.sort((a, b) => a.number < b.number ? 1 : -1);
+        }
+        return data.tournament;
+      })
+    );
+
+    // this.matches = null;
+    // const matches = await this.matchService.getMatchesInTournament(this.tournament.id);
+    // this.tournamentRounds = await this.matchService.getRoundsInTournament(this.tournament.id);
+    // this.matches = new Array<MatchViewModel[]>();
+    // for (let round = 0; round < this.tournamentRounds.length; round++) {
+    //   this.matches[round] = matches.filter(m => this.getRound(m.match_day_id).number === (round + 1));
+    // }
+    // this.matches = this.matches.reverse();
+    // this.getWinner();
   }
 
   getWinner() {
-    this.winnerLastRound = new Array<Team>();
-    if (this.matches[0]) {
-      this.matches[0].forEach(
-        (match) => {
-          if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
-            this.winnerLastRound.push(match.home_score > match.guest_score ? match.home_team : match.guest_team);
-          }
-        });
-      this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-    }
+    // this.winnerLastRound = new Array<Team>();
+    // if (this.matches[0]) {
+    //   this.matches[0].forEach(
+    //     (match) => {
+    //       if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
+    //         this.winnerLastRound.push(match.home_score > match.guest_score ? match.home_team : match.guest_team);
+    //       }
+    //     });
+    //   this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+    // }
   }
 
-  newWinner(match: MatchViewModel) {
-    if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
-      if (match.home_score > match.guest_score) {
-        this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.guest_team_id);
-        this.winnerLastRound.push(match.home_team);
-      } else {
-        this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.home_team_id);
-        this.winnerLastRound.push(match.guest_team);
-      }
+  // newWinner(match: MatchViewModel) {
+  //   if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
+  //     if (match.home_score > match.guest_score) {
+  //       this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.guest_team_id);
+  //       this.winnerLastRound.push(match.home_team);
+  //     } else {
+  //       this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.home_team_id);
+  //       this.winnerLastRound.push(match.guest_team);
+  //     }
 
-      this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-    }
-  }
+  //     this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+  //   }
+  // }
 }

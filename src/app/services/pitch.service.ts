@@ -1,55 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Client, Pitch } from '../../api';
-import { Subject } from 'rxjs';
+import { Pitch, PitchesGQL } from 'src/api/graphql';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PitchService {
 
-  public get pitches(): Pitch[] {
-    return JSON.parse(localStorage.getItem('PITCHES')) || null;
-  }
-  public set pitches(value: Pitch[]) {
-    localStorage.setItem('PITCHES', JSON.stringify(value));
+  pitches: Observable<Pitch.Fragment[]> = this.pitchesQGL.watch().valueChanges.pipe(
+    map(({data}) => data.allPitches)
+  );
+
+  constructor(
+    private pitchesQGL: PitchesGQL
+  ) {
   }
 
-  pitchAdded: Subject<void> = new Subject<void>();
-
-  constructor(private apiClient: Client) {
-    this.pitchAdded.subscribe(
-      () => {
-        this.load();
-      }
-    );
-  }
-
-  getPitchById(id: string): Pitch {
-    if (this.pitches) {
-      return this.pitches.find(t => t.id === id);
-    } else {
-      return new Pitch();
-    }
-  }
-
-  public async load() {
-    this.pitches = await this.loadPitches();
-  }
-
-  async loadPitches(): Promise<Pitch[]> {
-    return new Promise<Pitch[]>(
-      (resolve) => {
-        this.apiClient.getAllPitches().subscribe(
-          (pitches) => {
-            resolve(pitches);
-          },
-          (error) => {
-            resolve(this.pitches);
-          },
-          () => {
-          }
-        );
-      }
-    );
-  }
 }

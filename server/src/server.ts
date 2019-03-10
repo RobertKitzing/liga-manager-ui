@@ -3,10 +3,11 @@ import * as path from 'path';
 import * as helmet from 'helmet';
 import * as redis from 'redis';
 import { GraphQLServer, PubSub } from 'graphql-yoga';
+import environment from './environment';
 
 class Server {
     public express;
-    public graphQLServer;
+    public graphQLServer: GraphQLServer;
     private redisClient;
     private pubSub: PubSub = new PubSub();
 
@@ -18,7 +19,7 @@ class Server {
             res.sendFile(path.join(__dirname, 'www/index.html'));
         });
         this.initGraphQL();
-        this.redisClient = redis.createClient();
+        this.redisClient = redis.createClient(environment.REDIS_PORT, environment.REDIS_HOST);
         this.redisClient.on('message', (channel, message) => {
             console.log(`message: ${message} channel: ${channel}`);
             this.pubSub.publish('REDIS_CHANNEL', message);

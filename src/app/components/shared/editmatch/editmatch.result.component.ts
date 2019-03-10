@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { MatchViewModel } from '../../../models/match.viewmodel';
 import { MatchService } from '../../../services/match.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { Match } from 'src/api/graphql';
 
 @Component({
   selector: 'app-editmatchresult',
@@ -16,7 +16,7 @@ export class EditmatchResultComponent implements OnInit {
   guest_score: number;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
+    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
     private matchService: MatchService,
     private dialogRef: MatDialogRef<EditmatchResultComponent>,
     public snackBar: MatSnackBar,

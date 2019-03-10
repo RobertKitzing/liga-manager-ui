@@ -1,26 +1,26 @@
-import { Injectable, Optional, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, Client, UserRole, ChangePasswordBody, API_BASE_URL } from '../../api';
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
-
+import { UserGQL, User, UserRole, PasswordChangeGQL } from '../../api/graphql';
+import { FetchPolicy } from 'apollo-client';
 
 export interface LoginContext {
   username: string;
   password: string;
 }
 
-class Credentials {
-  constructor(public token: string) {
-  }
+export interface Credentials {
+  token: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  useExisting: AuthenticationService
 })
 export class AuthenticationService {
 
-  user: User;
+  user: User.AuthenticatedUser;
 
   public setAccessToken(value: Credentials) {
     localStorage.setItem('ACCESS_TOKEN', JSON.stringify(value));
@@ -36,52 +36,48 @@ export class AuthenticationService {
   }
 
   constructor(
-    private apiClient: Client,
-    private httpClient: HttpClient,
     private router: Router,
-    @Optional() @Inject(API_BASE_URL) private baseUrl?: string
+    private userQGL: UserGQL,
+    private changePasswordQGL: PasswordChangeGQL
   ) {
   }
 
   async loginAsync(context: LoginContext): Promise<boolean> {
     return new Promise<boolean>(
-      (resolve) => {
-        let headers = new HttpHeaders();
-        const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
-        headers = headers.append('Authorization', 'Basic ' + passBase64);
-        this.httpClient.get(this.baseUrl + '/users/me', { headers: headers, observe: 'response' }).subscribe(
-          async (response) => {
-            const data = {
-              username: response.body['email'],
-              firstName: response.body['first_name'],
-              lastName: response.body['last_name'],
-              token: response.headers.get('x-token')
-            };
-            this.setAccessToken(new Credentials(data.token));
-            this.user = await this.loadUser();
-            if (!this.user) {
-              resolve(false);
-            }
-            resolve(true);
-          }, err => {
-            resolve(false);
-          });
-      });
-  }
-
-  async loadUser(): Promise<User> {
-    return new Promise<User>(
       (resolve, reject) => {
-        this.apiClient.getAuthenticatedUser().subscribe(
-          (user) => {
-            this.user = user;
-            resolve(user);
+        const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
+        this.userQGL.fetch(
+          null,
+          {
+            fetchPolicy: 'network-only',
+            context: {
+              headers: new HttpHeaders().set('Authorization', `Basic ${passBase64}`)
+            }
+          }
+        ).subscribe(
+          (result) => {
+            this.user = result.data.authenticatedUser;
+            resolve(true);
           },
           (error) => {
             this.logout();
             reject(error);
+          });
+
+      });
+  }
+
+  async loadUser(): Promise<User.AuthenticatedUser> {
+    return new Promise<User.AuthenticatedUser>(
+      (resolve, reject) => {
+        this.userQGL.watch().valueChanges.subscribe(
+          (result) => {
+            this.user = result.data.authenticatedUser;
+            resolve(result.data.authenticatedUser);
           },
-          () => {
+          (error) => {
+            this.logout();
+            reject(error);
           });
       });
   }
@@ -93,11 +89,11 @@ export class AuthenticationService {
   }
 
   public get isAdmin() {
-    return true ; // this.user ? this.user.role === UserRole.Admin : false;
+    return this.user ? this.user.role === UserRole.Admin : false;
   }
 
   public get isTeamAdmin() {
-    return this.user ? this.user.role === UserRole.Team_manager : false;
+    return this.user ? this.user.role === UserRole.TeamManager : false;
   }
 
   public isTeamAdminForTeam(teamId) {
@@ -107,13 +103,17 @@ export class AuthenticationService {
   async changePassword(oldPassword: string, newPassword: string): Promise<boolean> {
     return new Promise<boolean>(
       (resolve) => {
-        let headers = new HttpHeaders();
         const passBase64 = Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword);
-        headers = headers.append('Authorization', 'Basic ' + passBase64);
-        headers = headers.append('Content-Type', 'application/json; charset=utf-8');
-        const body = new ChangePasswordBody();
-        body.new_password = newPassword;
-        this.httpClient.put('/api/users/me/password', JSON.stringify(body), {headers: headers }).subscribe(
+        this.changePasswordQGL.mutate(
+          {
+            new_password: newPassword
+          },
+          {
+            context: {
+              headers: new HttpHeaders().set('Authorization', 'Basic ' + passBase64)
+            }
+          }
+        ).subscribe(
           (response) => {
             resolve(true);
           }, err => {
@@ -121,5 +121,5 @@ export class AuthenticationService {
           });
       }
     );
-}
+  }
 }

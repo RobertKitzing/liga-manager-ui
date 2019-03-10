@@ -19,11 +19,11 @@
             </i>
           </a>
         </div>
-        <div *ngIf="newMatchPitch">
+        <div *ngIf="newMatchPitch.value?.id">
           <span>{{ 'NEW_PITCH' | translate}}:</span>
-          <a href="https://www.google.com/maps/?q={{newMatchPitch.location_latitude}},{{newMatchPitch.location_longitude}}" target="_blank"
+          <a href="https://www.google.com/maps/?q={{newMatchPitch.value.location_latitude}},{{newMatchPitch.value.location_longitude}}" target="_blank"
             style="cursor: pointer;">
-            {{ newMatchPitch.label }}
+            {{ newMatchPitch.value.label }}
             <i class="material-icons">
               location_on
             </i>
@@ -42,7 +42,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col" style="text-align:center;">
         <button mat-button (click)="showCreateNewPitch = !showCreateNewPitch">
           {{ 'BUTTON.CREATE_PITCH' | translate}}
@@ -51,7 +51,7 @@
           </i>
         </button>
       </div>
-    </div>
+    </div> -->
     <div class="row" *ngIf="showCreateNewPitch">
       <mat-horizontal-stepper [linear]="true">
         <mat-step [stepControl]="newPitchFormControl">

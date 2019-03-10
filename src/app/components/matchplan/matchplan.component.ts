@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { I18Service } from '../../services/i18.service';
 import { Observable } from 'rxjs';
-import { Season, MatchPlanGQL, MatchPlan } from '../../../api/graphql';
-import { map, filter } from 'rxjs/operators';
+import { MatchPlanGQL, MatchPlan, Match, MatchDay } from '../../../api/graphql';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-matchplan',
@@ -48,18 +48,18 @@ export class MatchplanComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.seasonService.currentSeason) {
+    if (this.seasonService.currentSeason.getValue()) {
       this.handleGetMatches();
     }
   }
 
-  filterMatchDays(matchDays: Season.MatchDays[]) {
+  filterMatchDays(matchDays: MatchDay.Fragment[]): MatchDay.Fragment[] {
 
     return this.selectedMatchDayId !== '0' ? matchDays.filter(x => x.id === this.selectedMatchDayId) : matchDays;
 
   }
 
-  filterMatches(matches: Season.Matches[]) {
+  filterMatches(matches: Match.Fragment[]): Match.Fragment[] {
 
     return this.selectedTeamId !== '0' ?
       matches.filter(x => x.guest_team.id === this.selectedTeamId || x.home_team.id === this.selectedTeamId) :
@@ -72,6 +72,12 @@ export class MatchplanComponent implements OnInit {
       map(
         ({ data }) => {
           data.season.teams = data.season.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+          if (this.selectedMatchDayId && !data.season.match_days.find(x => x.id === this.selectedMatchDayId)) {
+            this.selectedMatchDayId = '0';
+          }
+          if (this.selectedTeamId && !data.season.teams.find(x => x.id === this.selectedTeamId)) {
+            this.selectedTeamId = '0';
+          }
           return data.season;
         }
       )

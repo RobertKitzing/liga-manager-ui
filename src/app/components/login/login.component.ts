@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
-import { Client, SendPasswordResetMailBody } from '../../../api';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { PasswordResetGQL } from '../../../api/graphql';
 
 @Component({
   selector: 'app-login',
@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     public dialogRef: MatDialogRef<LoginComponent>,
-    private apiClient: Client,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private resetPasswordQGL: PasswordResetGQL
   ) {
     this.createForm();
   }
@@ -52,10 +52,12 @@ export class LoginComponent implements OnInit {
 
   passwordForgot(email: string) {
     if (email) {
-      const body = new SendPasswordResetMailBody();
-      body.email = email;
-      body.target_path = 'newpassword';
-      this.apiClient.sendPasswordResetMail(body).subscribe(
+      this.resetPasswordQGL.mutate(
+        {
+          email: email,
+          target_path: 'newpassword'
+        }
+      ).subscribe(
         () => {
           this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
@@ -74,7 +76,7 @@ export class LoginComponent implements OnInit {
         }
       );
     } else {
-      this.loginForm.controls['username'].setErrors({required: true});
+      this.loginForm.controls['username'].setErrors({ required: true });
     }
   }
 }

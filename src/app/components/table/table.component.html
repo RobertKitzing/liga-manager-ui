@@ -30,7 +30,7 @@
           </ng-container>
         </tbody>
       </table>
-      <div class="text-right">
+      <div class="text-right" *ngIf="ranking.updated_at">
         ({{ ranking.updated_at | date:'medium':'':i18Service.currentLang}})
       </div>
     </div>

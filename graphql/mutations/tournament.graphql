@@ -1,0 +1,17 @@
+mutation CreateTournament($id: String,$name: String!) {
+    createTournament(id: $id, name: $name)
+}
+
+mutation CreateTournamentRound(
+    $tournament_id: String!,
+    $round: Int!,
+    $team_id_pairs: [TeamIdPair]!,
+    $date_period: DatePeriod!
+) {
+    setTournamentRound(
+        tournament_id: $tournament_id
+        round: $round
+        team_id_pairs: $team_id_pairs
+        date_period: $date_period
+    )
+}

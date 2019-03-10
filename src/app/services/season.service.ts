@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, CreateSeasonBody } from '../../api/liga-manager-api';
-import { BehaviorSubject, Subject, Subscription, Observable, of } from 'rxjs';
-import { Season, AllSeasonsList, AllSeasonsListGQL, SeasonGQL, RankingGQL, Ranking } from '../../api/graphql';
+import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
+import { Season, AllSeasonsList, AllSeasonsListGQL, RankingGQL, Ranking } from '../../api/graphql';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
 export class SeasonService {
 
   seasonsQGL = this.allSeasonsListGQL.watch();
-  currentSeasonQGL = this.seasonQQL.watch({ id: this._currentSeason.id });
   currentSeasonRankingQGL = this.rankingQGL.watch({ id: this._currentSeason.id });
 
   private get _currentSeason(): AllSeasonsList.AllSeasons {
@@ -29,7 +28,6 @@ export class SeasonService {
   constructor(
     private apiClient: Client,
     private allSeasonsListGQL: AllSeasonsListGQL,
-    private seasonQQL: SeasonGQL,
     private rankingQGL: RankingGQL
   ) {
     this.currentSeason.subscribe(
@@ -84,7 +82,7 @@ export class SeasonService {
     );
   }
 
-  seasonCompare(c1: Season.Season, c2: Season.Season) {
+  seasonCompare(c1: Season.Fragment, c2: Season.Fragment) {
     return c1 && c2 && c1.id === c2.id;
   }
 }
