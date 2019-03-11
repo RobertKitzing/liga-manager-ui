@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Contact_person } from '../../../../api';
+import { Contact } from 'src/api/graphql';
 
 @Component({
   selector: 'app-contact-person',
@@ -8,7 +8,7 @@ import { Contact_person } from '../../../../api';
 })
 export class ContactPersonComponent implements OnInit {
 
-  @Input() contact: Contact_person;
+  @Input() contact: Contact.Fragment;
 
   constructor() { }
 

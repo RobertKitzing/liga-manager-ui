@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { TeamService } from '../../services/team.service';
 import { FormControl, Validators } from '@angular/forms';
-import { Contact_person, Client, Team } from '../../../api';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
+import { UpdateTeamContactGQL, UserGQL } from 'src/api/graphql';
 
 @Component({
   selector: 'app-teamadmin',
@@ -15,55 +15,51 @@ import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 export class TeamadminComponent implements OnInit {
 
   emailFormControl: FormControl = new FormControl('', [Validators.email, Validators.required]);
-  teams: Team[] = new Array<Team>();
+  user = this.authService.user;
 
   constructor(
-    public authService: AuthenticationService,
+    private authService: AuthenticationService,
     public teamService: TeamService,
     public snackBar: MatSnackBar,
     public translateService: TranslateService,
-    private apiClient: Client) { }
+    private updateTeamContact: UpdateTeamContactGQL,
+    private userQGL: UserGQL
+  ) { }
 
   ngOnInit() {
-    if (this.authService.user && this.authService.user.teams) {
-      this.authService.user.teams.forEach(
-        async (teamId) => {
-          try {
-            // const team = await this.teamService.getSingleTeam(teamId.id);
-            // this.teams.push(team);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      );
-    }
   }
 
-  saveContact(teamId: string, firstname: string, lastname: string, mail: string, phone: string) {
-    const body = new Contact_person();
-    body.email = mail;
-    body.first_name = firstname;
-    body.last_name = lastname;
-    body.phone = phone;
-    this.apiClient.updateTeamContact(teamId, body).subscribe(
-      () => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('TEAM_CONTACT_SAVE_SUCCESS')
-          },
-          panelClass: ['alert', 'alert-success']
-        });
-      },
-      (error) => {
-        console.error(error);
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('TEAM_CONTACT_SAVE_ERROR')
-          },
-          panelClass: ['alert', 'alert-danger']
-        });
-      }
-    );
+  async saveContact(teamId: string, firstname: string, lastname: string, email: string, phone: string) {
+    try {
+      await this.updateTeamContact.mutate(
+        {
+          team_id: teamId,
+          email: email,
+          first_name: firstname,
+          last_name: lastname,
+          phone: phone
+        },
+        {
+          refetchQueries: [
+            { query: this.userQGL.document }
+          ]
+        }
+      ).toPromise();
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          message: this.translateService.instant('TEAM_CONTACT_SAVE_SUCCESS')
+        },
+        panelClass: ['alert', 'alert-success']
+      });
+    } catch (error) {
+      console.error(error);
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          message: this.translateService.instant('TEAM_CONTACT_SAVE_ERROR')
+        },
+        panelClass: ['alert', 'alert-danger']
+      });
+    }
   }
 
   isEmailValidOrEmpty(mail: string) {

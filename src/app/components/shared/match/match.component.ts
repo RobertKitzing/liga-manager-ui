@@ -90,11 +90,11 @@ export class MatchComponent implements OnInit {
   }
 
   openContactModal() {
-    const contacts = new Array<string>();
-    contacts.push(this.match.home_team.id);
-    contacts.push(this.match.guest_team.id);
     this.dialog.open(ContactComponent, {
-      data: contacts,
+      data: [
+        this.match.home_team,
+        this.match.guest_team
+      ],
       panelClass: 'my-full-screen-dialog'
     });
   }

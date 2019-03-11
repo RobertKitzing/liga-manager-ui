@@ -96,8 +96,8 @@ export class AuthenticationService {
     return this.user ? this.user.role === UserRole.TeamManager : false;
   }
 
-  public isTeamAdminForTeam(teamId) {
-    return this.isTeamAdmin && this.user.teams.find(t => t === teamId);
+  public isTeamAdminForTeam(teamId: string) {
+    return this.isTeamAdmin && this.user.teams.find(t => t.id === teamId);
   }
 
   changePassword(newPassword: string, oldPassword?: string): Promise<void> {

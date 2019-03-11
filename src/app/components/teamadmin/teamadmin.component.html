@@ -1,6 +1,6 @@
-<ng-container *ngIf="authService.user">
+<ng-container *ngIf="user">
   <mat-tab-group>
-    <mat-tab *ngFor="let team of teams" label="{{ team.name }}">
+    <mat-tab *ngFor="let team of user.teams" label="{{ team.name }}">
       <mat-tab-group>
         <mat-tab label="{{ 'TAB.CONTACT' | translate }}">
           <div class="card text-center">

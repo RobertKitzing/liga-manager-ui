@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-      <ng-container *ngFor="let team of teams">
+      <ng-container *ngFor="let team of teamService.allTeams | async">
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card">
             <div class="card-header">

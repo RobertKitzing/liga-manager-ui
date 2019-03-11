@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class PitchService {
 
-  pitches: Observable<Pitch.Fragment[]> = this.pitchesQGL.watch().valueChanges.pipe(
+  allPitches: Observable<Pitch.Fragment[]> = this.pitchesQGL.watch().valueChanges.pipe(
     map(({data}) => data.allPitches)
   );
 

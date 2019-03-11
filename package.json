@@ -16,7 +16,6 @@
     "test:ci": "ng test --code-coverage --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "nswag": "nswag run liga-manager-api.nswag",
     "graphql-gen:api": "gql-gen --config codegenAPI.yml",
     "graphql-gen:node": "gql-gen --config codegenNODE.yml",
     "docker:deploy": "npm run docker:build && npm run docker:push",

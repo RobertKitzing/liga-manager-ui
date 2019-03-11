@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PitchService } from '../../../services/pitch.service';
-import { Pitch } from '../../../../api';
 
 @Component({
   selector: 'app-pitches',
@@ -9,14 +8,11 @@ import { Pitch } from '../../../../api';
 })
 export class PitchesComponent implements OnInit {
 
-  public pitches: Pitch[];
-
   constructor(
-    private pitchService: PitchService
+    public pitchService: PitchService
   ) { }
 
   async ngOnInit() {
-    // this.pitches = await this.pitchService.loadPitches();
   }
 
 }

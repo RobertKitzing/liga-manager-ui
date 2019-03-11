@@ -172,6 +172,22 @@ export namespace Teams {
   };
 }
 
+export namespace UpdateTeamContact {
+  export type Variables = {
+    team_id: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateTeamContact: Maybe<boolean>;
+  };
+}
+
 export namespace CreateTournament {
   export type Variables = {
     id?: Maybe<string>;
@@ -827,6 +843,31 @@ export class TeamsGQL extends Apollo.Mutation<Teams.Mutation, Teams.Variables> {
   document: any = gql`
     mutation Teams($id: String!, $name: String!) {
       createTeam(id: $id, name: $name)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UpdateTeamContactGQL extends Apollo.Mutation<
+  UpdateTeamContact.Mutation,
+  UpdateTeamContact.Variables
+> {
+  document: any = gql`
+    mutation UpdateTeamContact(
+      $team_id: String!
+      $first_name: String!
+      $last_name: String!
+      $phone: String!
+      $email: String!
+    ) {
+      updateTeamContact(
+        team_id: $team_id
+        first_name: $first_name
+        last_name: $last_name
+        phone: $phone
+        email: $email
+      )
     }
   `;
 }

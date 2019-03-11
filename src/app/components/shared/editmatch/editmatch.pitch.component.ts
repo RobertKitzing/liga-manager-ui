@@ -44,10 +44,10 @@ export class EditmatchPitchComponent implements OnInit {
     this.filteredPitches = this.newMatchPitch.valueChanges.pipe(
       startWith<string | Pitch.Fragment>(''),
       map(value => typeof value === 'string' ? value : value.label),
-      switchMapTo(this.pitchService.pitches),
+      switchMapTo(this.pitchService.allPitches),
       map(x => {
         return (this.newMatchPitch.value && (typeof this.newMatchPitch.value === 'string')) ?
-          x.filter(y => y.label.toLowerCase().includes(this.newMatchPitch.value.toLowerCase())) : [];
+          x.filter(y => y.label.toLowerCase().includes(this.newMatchPitch.value.toLowerCase())) : x;
       })
     );
   }

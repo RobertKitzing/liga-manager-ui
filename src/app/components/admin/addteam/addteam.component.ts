@@ -17,7 +17,11 @@ export class AddteamComponent implements OnInit {
   async ngOnInit() {
   }
 
-  addNewTeam(teamName: string) {
-    this.teamService.addNewTeam(teamName);
+  async addNewTeam(teamName: string) {
+    try {
+      await this.teamService.addNewTeam(teamName);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

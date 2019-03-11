@@ -30,11 +30,11 @@ export class TeamService {
    * @returns {Promise<boolean>}
    * @memberof TeamService
    */
-  async addNewTeam(teamName: string): Promise<boolean> {
-    return new Promise<boolean>(
-      (resolve) => {
+  async addNewTeam(teamName: string): Promise<void> {
+    return new Promise<void>(
+      (resolve, reject) => {
         if (!teamName) {
-          resolve(false);
+          reject(new Error('Empty Teamname'));
         }
         this.teamsQL.mutate(
           {
@@ -48,11 +48,10 @@ export class TeamService {
           }
         ).subscribe(
           async (result) => {
-            resolve(true);
+            resolve();
           },
             (error) => {
-              console.error(error);
-              resolve(false);
+              reject(error);
             }
         );
       }
