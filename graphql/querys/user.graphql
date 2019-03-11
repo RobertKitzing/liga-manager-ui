@@ -1,12 +1,11 @@
 query User {
      authenticatedUser {
-        email
-        teams {
-            id
-            name
-        }
-        first_name
-        last_name
-        role
+        ...User
+    }
+}
+
+query AllUsers {
+    allUsers {
+        ...User
     }
 }

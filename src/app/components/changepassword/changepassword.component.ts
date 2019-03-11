@@ -29,11 +29,13 @@ export class ChangepasswordComponent implements OnInit {
   }
 
   async changePassword() {
-      if (await this.authService.changePassword(this.oldPassword.value, this.newPassword.value)) {
-          this.oldPasswordWrong = false;
-          this.authService.logout();
-          this.dialogRef.close();
-      } else {
+      try {
+        await this.authService.changePassword(this.newPassword.value, this.oldPassword.value);
+        this.oldPasswordWrong = false;
+        this.authService.logout();
+        this.dialogRef.close();
+      } catch (error) {
+          console.error(error);
           this.oldPasswordWrong = true;
       }
   }

@@ -29,8 +29,8 @@ export class TeamadminComponent implements OnInit {
       this.authService.user.teams.forEach(
         async (teamId) => {
           try {
-            const team = await this.teamService.getSingleTeam(teamId.id);
-            this.teams.push(team);
+            // const team = await this.teamService.getSingleTeam(teamId.id);
+            // this.teams.push(team);
           } catch (error) {
             console.error(error);
           }

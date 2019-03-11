@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
-import { UserGQL, User, UserRole, PasswordChangeGQL } from '../../api/graphql';
-import { FetchPolicy } from 'apollo-client';
+import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from '../../api/graphql';
 
 export interface LoginContext {
   username: string;
@@ -38,20 +37,21 @@ export class AuthenticationService {
   constructor(
     private router: Router,
     private userQGL: UserGQL,
-    private changePasswordQGL: PasswordChangeGQL
+    private changePasswordQGL: PasswordChangeGQL,
+    private resetPasswordQGL: PasswordResetGQL
   ) {
   }
 
   async loginAsync(context: LoginContext): Promise<boolean> {
     return new Promise<boolean>(
       (resolve, reject) => {
-        const passBase64 = Base64.encode(context.username.toLowerCase() + ':' + context.password);
         this.userQGL.fetch(
           null,
           {
             fetchPolicy: 'network-only',
             context: {
-              headers: new HttpHeaders().set('Authorization', `Basic ${passBase64}`)
+              headers: new HttpHeaders()
+                .set('Authorization', `Basic ${Base64.encode(context.username.toLowerCase() + ':' + context.password)}`)
             }
           }
         ).subscribe(
@@ -100,25 +100,45 @@ export class AuthenticationService {
     return this.isTeamAdmin && this.user.teams.find(t => t === teamId);
   }
 
-  async changePassword(oldPassword: string, newPassword: string): Promise<boolean> {
-    return new Promise<boolean>(
-      (resolve) => {
-        const passBase64 = Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword);
+  changePassword(newPassword: string, oldPassword?: string): Promise<void> {
+    return new Promise<void>(
+      (resolve, reject) => {
         this.changePasswordQGL.mutate(
           {
             new_password: newPassword
           },
           {
             context: {
-              headers: new HttpHeaders().set('Authorization', 'Basic ' + passBase64)
+              headers: oldPassword ?
+                new HttpHeaders().set('Authorization', 'Basic ' + Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword)) : null
             }
           }
         ).subscribe(
           (response) => {
-            resolve(true);
+            resolve();
           }, err => {
-            resolve(false);
+            reject();
           });
+      }
+    );
+  }
+
+  sendPasswordMail(email: string): Promise<void> {
+    return new Promise<void>(
+      (resolve, reject) => {
+        this.resetPasswordQGL.mutate(
+          {
+            email: email,
+            target_path: 'newpassword'
+          }
+        ).subscribe(
+          () => {
+            resolve();
+          },
+          (error) => {
+            reject(error);
+          }
+        );
       }
     );
   }

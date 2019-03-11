@@ -85,13 +85,14 @@ export class MatchService {
     );
   }
 
-  scheduleMatch(matchId: string, matchKickoff: Date): Promise<void> {
+  scheduleMatch(matchId: string, matchKickoff: Date | string): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
+        const kickoff = typeof matchKickoff === 'string' ? matchKickoff : matchKickoff.toISOString();
         this.scheduleMatchGQL.mutate(
           {
             match_id: matchId,
-            kickoff: matchKickoff.toISOString()
+            kickoff: kickoff
           },
           {
             update: (store, { data }) => {

@@ -22,8 +22,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     public dialogRef: MatDialogRef<LoginComponent>,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar,
-    private resetPasswordQGL: PasswordResetGQL
+    private snackBar: MatSnackBar
   ) {
     this.createForm();
   }
@@ -50,31 +49,25 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  passwordForgot(email: string) {
+  async passwordForgot(email: string) {
     if (email) {
-      this.resetPasswordQGL.mutate(
-        {
-          email: email,
-          target_path: 'newpassword'
-        }
-      ).subscribe(
-        () => {
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_SUCCESS')
-            },
-            panelClass: ['alert', 'alert-success']
-          });
-        },
-        () => {
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_ERROR')
-            },
-            panelClass: ['alert', 'alert-danger']
-          });
-        }
-      );
+      try {
+        await this.authenticationService.sendPasswordMail(email);
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_SUCCESS')
+          },
+          panelClass: ['alert', 'alert-success']
+        });
+      } catch (error) {
+        console.error(error);
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_ERROR')
+          },
+          panelClass: ['alert', 'alert-danger']
+        });
+      }
     } else {
       this.loginForm.controls['username'].setErrors({ required: true });
     }

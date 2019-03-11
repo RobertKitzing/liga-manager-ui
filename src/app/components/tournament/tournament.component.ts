@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, Team, Match_day } from '../../../api';
-import { MatchService } from '../../services/match.service';
 import { I18Service } from '../../services/i18.service';
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } from 'src/api/graphql';
 import { Observable } from 'rxjs';
@@ -15,8 +13,6 @@ export class TournamentComponent implements OnInit {
 
   tournaments: Observable<AllTournamentList.AllTournaments[]>;
   tournament: Observable<Tournament.Fragment>;
-  winnerLastRound: Team[];
-  tournamentRounds: Match_day[];
 
   get tournamentId(): string {
     return localStorage.getItem('SELECTED_TOURNAMENT');

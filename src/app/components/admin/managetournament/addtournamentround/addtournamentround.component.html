@@ -21,7 +21,7 @@
       <div class="col">
         <mat-form-field style="width: 100%">
           <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' | translate }}" required [(ngModel)]="homeTeam">
-            <mat-option *ngFor="let team of allTeams | async" [value]="team">
+            <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team">
               {{team.name}}
             </mat-option>
           </mat-select>
@@ -33,7 +33,7 @@
       <div class="col">
         <mat-form-field style="width: 100%">
           <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' | translate }}" required [(ngModel)]="guestTeam">
-            <mat-option *ngFor="let team of allTeams | async" [value]="team">
+            <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team">
               {{team.name}}
             </mat-option>
           </mat-select>

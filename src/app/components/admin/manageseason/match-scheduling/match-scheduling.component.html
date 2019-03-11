@@ -1,7 +1,3 @@
-<div *ngIf="manageSeason">
-  {{ manageSeason.name }}
-</div>
-
 <div class="container">
   <h2>Pitches</h2>
   <div class="row" style="justify-content: center;">
@@ -23,6 +19,9 @@
       <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="addKickoffDateToPitch(offset.value, $event)" style="display: none">
       <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate }}</button>
       <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #dt5></owl-date-time>
+    </div>
+    <div class="col">
+      <button mat-raised-button color="primary" (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>
     </div>
   </div>
   <div class="row" *ngFor="let e of possibleKickoffs" style="border: 1px solid black">
@@ -49,45 +48,37 @@
       <button mat-button (click)="removePair(e.index)">Remove</button>
     </div>
   </div>
-  <button mat-button (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>
   <div class="row">
     <div class="col">
       ab Spieltag:
     </div>
     <div class="col">
       <mat-select #startMatchDay [(ngModel)]="startmatchDay">
-        <mat-option *ngFor="let matchDay of matchDaysInSeason" [value]="matchDay.number">
+        <mat-option *ngFor="let matchDay of manageSeason.match_days" [value]="matchDay.number">
           {{ matchDay.number }}
         </mat-option>
       </mat-select>
     </div>
   </div>
-  <div *ngFor="let match of matchesInSeason" class="row">
-    <div class="col">
-      {{ 'MATCHDAY' | translate:{ matchDay: getMatchDay(match.match_day_id).number } }}
+  <ng-container *ngFor="let matchDay of manageSeason.match_days">
+    <div class="row">
+      <div class="col text-center">
+        <h3>{{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date | date:'short':'':i18Service.currentLang}}
+          - {{ matchDay.end_date | date:'shortDate'}})</h3>
+      </div>
     </div>
-    <div class="col">
-      {{ match.home_team.name }}
+    <div class="row" *ngFor="let match of matchDay.matches">
+      <div class="col">
+        {{ match.home_team.name }} - {{ match.guest_team.name }}
+      </div>
+      <div class="col" *ngIf="match.kickoff">
+        {{ match.kickoff | date:'short':'':i18Service.currentLang}}
+      </div>
+      <div class="col">
+        ({{ match.pitch?.label }})
+      </div>
     </div>
-    <div class="col-1">
-      -
-    </div>
-    <div class="col">
-      {{ match.guest_team.name }}
-    </div>
-    <div class="col">
-      ({{ getMatchDay(match.match_day_id).start_date | date:'short':'':i18Service.currentLang}})
-    </div>
-    <div class="col">
-      ({{ getMatchDay(match.match_day_id).end_date | date:'shortDate'}})
-    </div>
-    <div class="col" *ngIf="match.kickoff">
-      ({{ match.kickoff | date:'short':'':i18Service.currentLang}})
-    </div>
-    <div class="col">
-      ({{ match.pitch?.label }})
-    </div>
-  </div>
+  </ng-container>
   <div class="row">
     <div class="col">
       <button mat-button (click)="saveMatches()">save</button>

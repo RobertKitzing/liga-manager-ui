@@ -30,19 +30,6 @@ export type Date = any;
 // Documents
 // ====================================================
 
-export namespace Matches {
-  export type Variables = {
-    season_id: string;
-    dates: (Maybe<DatePeriod>)[];
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    createMatchesForSeason: Maybe<boolean>;
-  };
-}
-
 export namespace SubmitResult {
   export type Variables = {
     match_id: string;
@@ -108,8 +95,73 @@ export namespace PasswordChange {
   };
 }
 
+export namespace CreateSeason {
+  export type Variables = {
+    id?: Maybe<string>;
+    name: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createSeason: Maybe<boolean>;
+  };
+}
+
+export namespace AddTeamToSeason {
+  export type Variables = {
+    season_id: string;
+    team_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addTeamToSeason: Maybe<boolean>;
+  };
+}
+
+export namespace RemoveTeamFromSeason {
+  export type Variables = {
+    season_id: string;
+    team_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    removeTeamFromSeason: Maybe<boolean>;
+  };
+}
+
+export namespace CreateMatchesForSeason {
+  export type Variables = {
+    season_id: string;
+    dates: (Maybe<DatePeriod>)[];
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createMatchesForSeason: Maybe<boolean>;
+  };
+}
+
+export namespace StartSeason {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    startSeason: Maybe<boolean>;
+  };
+}
+
 export namespace Teams {
   export type Variables = {
+    id: string;
     name: string;
   };
 
@@ -148,6 +200,24 @@ export namespace CreateTournamentRound {
   };
 }
 
+export namespace CreateUser {
+  export type Variables = {
+    id?: Maybe<string>;
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    role: string;
+    team_ids: (Maybe<string>)[];
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createUser: Maybe<boolean>;
+  };
+}
+
 export namespace MatchPlan {
   export type Variables = {
     id: string;
@@ -162,18 +232,16 @@ export namespace MatchPlan {
   export type Season = {
     __typename?: "Season";
 
+    id: Maybe<string>;
+
+    name: Maybe<string>;
+
     teams: Maybe<(Maybe<Teams>)[]>;
 
     match_days: Maybe<(Maybe<MatchDays>)[]>;
   };
 
-  export type Teams = {
-    __typename?: "Team";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-  };
+  export type Teams = Team.Fragment;
 
   export type MatchDays = MatchDay.Fragment;
 }
@@ -335,27 +403,19 @@ export namespace User {
     authenticatedUser: Maybe<AuthenticatedUser>;
   };
 
-  export type AuthenticatedUser = {
-    __typename?: "User";
+  export type AuthenticatedUser = User.Fragment;
+}
 
-    email: Maybe<string>;
+export namespace AllUsers {
+  export type Variables = {};
 
-    teams: Maybe<(Maybe<Teams>)[]>;
+  export type Query = {
+    __typename?: "Query";
 
-    first_name: Maybe<string>;
-
-    last_name: Maybe<string>;
-
-    role: Maybe<UserRole>;
+    allUsers: Maybe<(Maybe<AllUsers>)[]>;
   };
 
-  export type Teams = {
-    __typename?: "Team";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-  };
+  export type AllUsers = User.Fragment;
 }
 
 export namespace Match {
@@ -476,6 +536,26 @@ export namespace Tournament {
   export type Rounds = MatchDay.Fragment;
 }
 
+export namespace User {
+  export type Fragment = {
+    __typename?: "User";
+
+    id: Maybe<string>;
+
+    email: Maybe<string>;
+
+    teams: Maybe<(Maybe<Teams>)[]>;
+
+    role: Maybe<UserRole>;
+
+    first_name: Maybe<string>;
+
+    last_name: Maybe<string>;
+  };
+
+  export type Teams = Team.Fragment;
+}
+
 // ====================================================
 // START: Apollo Angular template
 // ====================================================
@@ -580,23 +660,25 @@ export const TournamentFragment = gql`
   ${MatchDayFragment}
 `;
 
+export const UserFragment = gql`
+  fragment User on User {
+    id
+    email
+    teams {
+      ...Team
+    }
+    role
+    first_name
+    last_name
+  }
+
+  ${TeamFragment}
+`;
+
 // ====================================================
 // Apollo Services
 // ====================================================
 
-@Injectable({
-  providedIn: "root"
-})
-export class MatchesGQL extends Apollo.Mutation<
-  Matches.Mutation,
-  Matches.Variables
-> {
-  document: any = gql`
-    mutation Matches($season_id: String!, $dates: [DatePeriod]!) {
-      createMatchesForSeason(season_id: $season_id, dates: $dates)
-    }
-  `;
-}
 @Injectable({
   providedIn: "root"
 })
@@ -673,10 +755,78 @@ export class PasswordChangeGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class CreateSeasonGQL extends Apollo.Mutation<
+  CreateSeason.Mutation,
+  CreateSeason.Variables
+> {
+  document: any = gql`
+    mutation CreateSeason($id: String, $name: String!) {
+      createSeason(id: $id, name: $name)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AddTeamToSeasonGQL extends Apollo.Mutation<
+  AddTeamToSeason.Mutation,
+  AddTeamToSeason.Variables
+> {
+  document: any = gql`
+    mutation AddTeamToSeason($season_id: String!, $team_id: String!) {
+      addTeamToSeason(season_id: $season_id, team_id: $team_id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class RemoveTeamFromSeasonGQL extends Apollo.Mutation<
+  RemoveTeamFromSeason.Mutation,
+  RemoveTeamFromSeason.Variables
+> {
+  document: any = gql`
+    mutation RemoveTeamFromSeason($season_id: String!, $team_id: String!) {
+      removeTeamFromSeason(season_id: $season_id, team_id: $team_id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class CreateMatchesForSeasonGQL extends Apollo.Mutation<
+  CreateMatchesForSeason.Mutation,
+  CreateMatchesForSeason.Variables
+> {
+  document: any = gql`
+    mutation CreateMatchesForSeason(
+      $season_id: String!
+      $dates: [DatePeriod]!
+    ) {
+      createMatchesForSeason(season_id: $season_id, dates: $dates)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class StartSeasonGQL extends Apollo.Mutation<
+  StartSeason.Mutation,
+  StartSeason.Variables
+> {
+  document: any = gql`
+    mutation StartSeason($id: String!) {
+      startSeason(season_id: $id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class TeamsGQL extends Apollo.Mutation<Teams.Mutation, Teams.Variables> {
   document: any = gql`
-    mutation Teams($name: String!) {
-      createTeam(name: $name)
+    mutation Teams($id: String!, $name: String!) {
+      createTeam(id: $id, name: $name)
     }
   `;
 }
@@ -719,6 +869,35 @@ export class CreateTournamentRoundGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class CreateUserGQL extends Apollo.Mutation<
+  CreateUser.Mutation,
+  CreateUser.Variables
+> {
+  document: any = gql`
+    mutation CreateUser(
+      $id: String
+      $email: String!
+      $password: String!
+      $first_name: String!
+      $last_name: String!
+      $role: String!
+      $team_ids: [String]!
+    ) {
+      createUser(
+        id: $id
+        email: $email
+        password: $password
+        first_name: $first_name
+        last_name: $last_name
+        role: $role
+        team_ids: $team_ids
+      )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class MatchPlanGQL extends Apollo.Query<
   MatchPlan.Query,
   MatchPlan.Variables
@@ -726,9 +905,10 @@ export class MatchPlanGQL extends Apollo.Query<
   document: any = gql`
     query MatchPlan($id: String!) {
       season(id: $id) {
+        id
+        name
         teams {
-          id
-          name
+          ...Team
         }
         match_days {
           ...MatchDay
@@ -736,6 +916,7 @@ export class MatchPlanGQL extends Apollo.Query<
       }
     }
 
+    ${TeamFragment}
     ${MatchDayFragment}
   `;
 }
@@ -865,16 +1046,28 @@ export class UserGQL extends Apollo.Query<User.Query, User.Variables> {
   document: any = gql`
     query User {
       authenticatedUser {
-        email
-        teams {
-          id
-          name
-        }
-        first_name
-        last_name
-        role
+        ...User
       }
     }
+
+    ${UserFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AllUsersGQL extends Apollo.Query<
+  AllUsers.Query,
+  AllUsers.Variables
+> {
+  document: any = gql`
+    query AllUsers {
+      allUsers {
+        ...User
+      }
+    }
+
+    ${UserFragment}
   `;
 }
 

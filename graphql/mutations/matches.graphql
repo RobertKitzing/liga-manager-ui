@@ -1,9 +1,3 @@
-mutation Matches(
-        $season_id: String!,
-        $dates: [DatePeriod]!
-    ) {
-    createMatchesForSeason(season_id: $season_id,  dates: $dates )
-}
 mutation SubmitResult(
     $match_id: String!,
     $home_score: Int!,

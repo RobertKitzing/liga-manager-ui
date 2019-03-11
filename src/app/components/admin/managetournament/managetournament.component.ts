@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, CreateTournamentBody } from '../../../../api';
 import { MatDialog } from '@angular/material';
 import { AddtournamentroundComponent } from './addtournamentround/addtournamentround.component';
-import { MatchService } from '../../../services/match.service';
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, MatchDay, CreateTournamentGQL } from '../../../../api/graphql';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

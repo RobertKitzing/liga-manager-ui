@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'USERNAME' | translate }}" [formControl]="email" required />
+        <mat-error *ngIf="email.invalid" translate>ERRORS.ENTER_VALID_EMAIL</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" [formControl]="firstName" required />
+        <mat-error *ngIf="firstName.invalid" translate>FIRST_NAME_REQUIRED</mat-error>
+      </mat-form-field>
+      <mat-form-field style="margin-left: 15px;">
+        <input matInput placeholder="{{ 'LAST_NAME' | translate }}" [formControl]="lastName" required />
+        <mat-error *ngIf="lastName.invalid" translate>LAST_NAME_REQUIRED</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="{{ 'PASSWORD' | translate }}" [formControl]="password" required />
+        <mat-error *ngIf="password.invalid" translate>ERRORS.ENTER_VALID_PASSWORD</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <mat-select #home placeholder="{{ 'USER_ROLE' | translate }}" [(ngModel)]="userRole">
+          <mat-option [value]="UserRole.Admin">
+            {{ UserRole.Admin }}
+          </mat-option>
+          <mat-option [value]="UserRole.TeamManager" selected>
+            {{ UserRole.TeamManager }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <mat-select #home placeholder="{{ 'PLACEHOLDER.TEAM_NAME' | translate }}" [(ngModel)]="userTeamList" multiple (selectionChange)="onChangeTeamSelect($event)">
+          <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team.id">
+            {{team.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button mat-raised-button (click)="createUser()" [disabled]="email.invalid || firstName.invalid || lastName.invalid || password.invalid">
+        {{ 'BUTTON.ADD_USER' | translate}}
+      </button>
+    </div>
+    <div class="col">
+      <button mat-raised-button (click)="sendUsermail()" [disabled]="email.invalid || firstName.invalid || lastName.invalid || password.invalid">
+        {{ 'BUTTON.SEND_USER_MAIL' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

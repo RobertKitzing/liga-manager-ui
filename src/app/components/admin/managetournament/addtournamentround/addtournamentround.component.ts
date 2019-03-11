@@ -5,7 +5,7 @@ import { DateTimeAdapter } from 'ng-pick-datetime';
 import { I18Service } from '../../../../services/i18.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { Team, AllTeamsGQL, CreateTournamentRoundGQL, TeamIdPair, AllTournamentListGQL, TournamentGQL } from 'src/api/graphql';
+import { Team, CreateTournamentRoundGQL, TeamIdPair, AllTournamentListGQL, TournamentGQL } from 'src/api/graphql';
 import { map } from 'rxjs/operators';
 
 export interface AddMatchData {
@@ -37,7 +37,6 @@ export class AddtournamentroundComponent implements OnInit {
     dateTimeAdapter: DateTimeAdapter<any>,
     private translateService: TranslateService,
     private i18Service: I18Service,
-    private allTeamsQGL: AllTeamsGQL,
     private createRoundGQL: CreateTournamentRoundGQL,
     private tournamentQGL: TournamentGQL,
     @Inject(MAT_DIALOG_DATA) public data: AddMatchData) {
@@ -49,10 +48,8 @@ export class AddtournamentroundComponent implements OnInit {
     );
   }
 
-  async ngOnInit() {
-    this.allTeams = this.allTeamsQGL.watch().valueChanges.pipe(
-      map(({ data }) => data.allTeams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
-    );
+  ngOnInit() {
+    console.log(this.data);
   }
 
   addTeam() {

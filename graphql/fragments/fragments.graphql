@@ -63,3 +63,14 @@ fragment Tournament on Tournament {
       ...MatchDay
     }
 }
+
+fragment User on User {
+    id
+    email
+    teams {
+        ...Team
+    }
+    role
+    first_name
+    last_name
+}
