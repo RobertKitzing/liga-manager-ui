@@ -3,18 +3,10 @@ import { Subject } from 'rxjs';
 import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match } from '../../api/graphql';
 import { SeasonService } from './season.service';
 
-export interface MatchUpdateMessage {
-  matchId: string;
-  homeTeamName: string;
-  guestTeamName: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
-
-  public matchUpdated: Subject<MatchUpdateMessage> = new Subject<MatchUpdateMessage>();
 
   constructor(
     private submitResultGQL: SubmitResultGQL,

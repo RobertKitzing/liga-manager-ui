@@ -17,3 +17,7 @@ mutation UpdateTeamContact(
         email: $email
     )
 }
+
+mutation RenameTeam($team_id: String!, $new_name: String!) {
+    renameTeam(team_id: $team_id,new_name: $new_name)
+}

@@ -1,3 +1,11 @@
 - Implement rescheduleMatchDay()
 - Implement RankingPenalty
 - Implement endSeason()
+- Update Translation -done
+- Implenet CreatePitches
+- Implement EventComponent
+- Implement Edit User
+- Implement Edit Pitches (Overview + Contacts + Delete)
+- Implement Cancel Match
+- Implement Season History (show old Seasons)
+- Implement Rename Teams - done

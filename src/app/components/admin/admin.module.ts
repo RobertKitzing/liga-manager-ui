@@ -10,6 +10,7 @@ import { AddtournamentroundComponent } from './managetournament/addtournamentrou
 import { MatchSchedulingComponent } from './manageseason/match-scheduling/match-scheduling.component';
 import { AddUserComponent } from './manageusers/add-user/add-user.component';
 import { UserListComponent } from './manageusers/user-list/user-list.component';
+import { RenameTeamComponent } from './addteam/rename-team/rename-team.component';
 
 @NgModule({
   imports: [
@@ -25,10 +26,12 @@ import { UserListComponent } from './manageusers/user-list/user-list.component';
     AddtournamentroundComponent,
     MatchSchedulingComponent,
     AddUserComponent,
-    UserListComponent
+    UserListComponent,
+    RenameTeamComponent
   ],
   entryComponents: [
-    AddtournamentroundComponent
+    AddtournamentroundComponent,
+    RenameTeamComponent
   ]
 })
 export class AdminModule { }

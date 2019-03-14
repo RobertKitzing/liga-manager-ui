@@ -188,6 +188,19 @@ export namespace UpdateTeamContact {
   };
 }
 
+export namespace RenameTeam {
+  export type Variables = {
+    team_id: string;
+    new_name: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    renameTeam: Maybe<boolean>;
+  };
+}
+
 export namespace CreateTournament {
   export type Variables = {
     id?: Maybe<string>;
@@ -868,6 +881,19 @@ export class UpdateTeamContactGQL extends Apollo.Mutation<
         phone: $phone
         email: $email
       )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class RenameTeamGQL extends Apollo.Mutation<
+  RenameTeam.Mutation,
+  RenameTeam.Variables
+> {
+  document: any = gql`
+    mutation RenameTeam($team_id: String!, $new_name: String!) {
+      renameTeam(team_id: $team_id, new_name: $new_name)
     }
   `;
 }

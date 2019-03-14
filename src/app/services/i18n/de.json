@@ -1,12 +1,12 @@
 {
-	"ACHTELFINALE": "Achtelfinale",
 	"ALL_MATCHDAYS": "Alle Spieltage",
 	"ALL_TEAMS": "Alle Manschaften",
 	"BETWEEN_MATCH_DAYS_OFFSET_DAYS": "Tage zwischen den Spieltagen",
 	"BUTTON": {
-		"ADD": "+",
+		"ADD_USER": "Benutzer anlegen",
 		"BACK": "zurück",
 		"CANCEL": "abbrechen",
+		"CANCEL_RESULT": "CANCEL_RESULT",
 		"CHANGE_PASSWORD": "Passwort ändern",
 		"CLOSE": "schliessen",
 		"CREATE_PITCH": "Spielort anlegen",
@@ -21,8 +21,9 @@
 		"LOGOUT": "Abmelden",
 		"NEXT": "weiter",
 		"OK": "ok",
-		"RELOAD": "aktualisieren",
 		"SAVE": "speichern",
+		"SEND_USER_MAIL": "Email an Benutzer",
+		"SET_DAY": "Tag auswählen",
 		"SET_TIME": "Zeit auswählen",
 		"START_ROUND": "Runde starten",
 		"START_SEASON": "Saison starten"
@@ -32,6 +33,7 @@
 	"CREATE_MATCH_DAYS_SUCCESS": "Spieltage angelegt",
 	"CREATE_USER_ERROR": "User konnte nicht angelegt werden",
 	"CREATE_USER_SUCCESS": "User angelegt",
+	"EDIT_RESULT_ERROR": "Ergebniss konnte nicht gespeichert werden",
 	"EDIT_ROUND": "Runde {{ round }} bearbeiten",
 	"EDIT_TEAM_CONTACT_INFO_TEXT": "Anprechpartner bezüglich Spiele etc.",
 	"EMAIL": "Email",
@@ -71,6 +73,7 @@
 	"NO_CONTACT_SET": "Kein Kontakt bekannt",
 	"NO_PTICH_SET": "Kein Spielort",
 	"NO_TIME_SET": "Keine Anstosszeit",
+	"NO_TOURNAMENT_ROUNDS_YET": "Noch keine Spiele angelegt",
 	"OLD_KICKOFF_TIME": "Alte Anstoßzeit",
 	"OLD_PITCH": "Alter Spielort",
 	"PASSWORD": "Passwort",
@@ -104,7 +107,6 @@
 	"PLAN_DATE_FROM": "Plandatum von",
 	"PLAN_DATE_TO": "Plandatum bis",
 	"RESULT_SAVE_SUCCESS": "Ergebnis gespeichert",
-	"RESULT_UPDATED": "Spiel {{ homeTeam }} gegen {{ guestTeam }} wurde aktualisiert!",
 	"ROUND": "Runde",
 	"SEND_NEW_PASSWORD_MAIL_ERROR": "Email senden fehlgeschlagen",
 	"SEND_NEW_PASSWORD_MAIL_SUCCESS": "Email ist unterwegs, bitte auch den Spamordner checken!",
@@ -120,8 +122,10 @@
 		"MANAGE_USERS": "Benutzer Verwaltung",
 		"MATCHES": "Spiele",
 		"MATCH_DAYS": "Spieltage",
+		"MATCH_SCHEDULING": "Spiele terminieren (Beta)",
 		"PITCHES": "Spielorte",
-		"TEAMS": "Manschaften"
+		"TEAMS": "Manschaften",
+		"USER_LIST": "Benutzerliste"
 	},
 	"TABLE": {
 		"GAMES": "S",
@@ -131,6 +135,7 @@
 		"TORE:TORE": "T:GT",
 		"WIN_DRAW_LOST": "S:U:N"
 	},
+	"TEAMS": "Mannschaften",
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
 	"TEAM_CONTACT": "Kontakt der Mannschaft",
 	"TEAM_CONTACT_SAVE_ERROR": "Speichern fehlgeschlagen",

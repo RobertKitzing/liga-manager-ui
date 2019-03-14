@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>
+  {{ 'TEAM' | translate }} {{team.name}}
+</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input placeholder="{{ 'NEW_NAME' | translate }}" matInput #newName>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <button mat-raised-button color="primary" (click)="renameTeam(newName.value)" [disabled]="!newName.value">
+        <mat-icon>
+          save
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'BUTTON.CLOSE' | translate }}</button>
+</div>

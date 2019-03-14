@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
+import { Team } from 'src/api/graphql';
+import { MatDialog } from '@angular/material';
+import { RenameTeamComponent } from './rename-team/rename-team.component';
 
 @Component({
   selector: 'app-addteam',
@@ -9,7 +12,8 @@ import { TeamService } from '../../../services/team.service';
 export class AddteamComponent implements OnInit {
 
   constructor(
-    public teamService: TeamService
+    public teamService: TeamService,
+    public dialog: MatDialog
   ) {
 
   }
@@ -23,5 +27,9 @@ export class AddteamComponent implements OnInit {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  openRenameTeamDialog(team: Team.Fragment) {
+    this.dialog.open(RenameTeamComponent, { data: team, minWidth: '50vw' });
   }
 }
