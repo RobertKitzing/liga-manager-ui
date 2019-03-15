@@ -244,7 +244,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/services/websocket.service.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/services/websocket.service.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -460,7 +460,11 @@ export class WebsocketService {
       });
 
     this.connection.messages.pipe(
-      retryWhen(errors &#x3D;&gt; errors.pipe(delay(60000)))
+      retryWhen(
+        (errors) &#x3D;&gt; {
+          console.error(errors);
+          return errors.pipe(delay(60000));
+        })
     ).subscribe(
       (message) &#x3D;&gt; {
         try {

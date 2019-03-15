@@ -194,7 +194,7 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#loadAllSeasonInPrep">loadAllSeasonInPrep</a>
+                                <a href="#loadAllSeason">loadAllSeason</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -753,20 +753,20 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="loadAllSeasonInPrep"></a>
+                        <a name="loadAllSeason"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Async</span>
-                            loadAllSeasonInPrep
+                            loadAllSeason
                             </b>
-                            <a href="#loadAllSeasonInPrep"><span class="icon ion-ios-link"></span></a>
+                            <a href="#loadAllSeason"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>loadAllSeasonInPrep()</code>
+                        <code>loadAllSeason()</code>
                     </td>
                 </tr>
 
@@ -1750,12 +1750,12 @@ export class ManageseasonComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.loadAllSeasonInPrep();
+    this.loadAllSeason();
     this.loadAllTeams();
   }
 
-  async loadAllSeasonInPrep() {
-    this.seasons &#x3D; await this.seasonService.loadSeasons(SeasonState.Preparation);
+  async loadAllSeason() {
+    this.seasons &#x3D; await this.seasonService.loadSeasons();
   }
 
   async loadAllTeams() {
@@ -1767,7 +1767,7 @@ export class ManageseasonComponent implements OnInit {
     createSeasonBody.name &#x3D; seasonName;
     this.apiClient.createSeason(createSeasonBody).subscribe(
       (t) &#x3D;&gt; {
-        this.loadAllSeasonInPrep();
+        this.loadAllSeason();
       }
     );
   }
