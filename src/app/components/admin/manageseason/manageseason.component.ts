@@ -11,6 +11,7 @@ import {
   MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
   AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL
 } from '../../../../api/graphql';
+import { I18Service } from 'src/app/services/i18.service';
 
 @Component({
   selector: 'app-manageseason',
@@ -32,6 +33,7 @@ export class ManageseasonComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     public teamService: TeamService,
+    public i18Service: I18Service,
     private snackBar: MatSnackBar,
     private translateService: TranslateService,
     private matchesQL: CreateMatchesForSeasonGQL,
@@ -149,6 +151,9 @@ export class ManageseasonComponent implements OnInit {
 
   createMatchDays(startDate: any, length: number, oldMatchDays: any) {
     this.newMatchDays = new Array<DatePeriod>();
+    if (length % 2 !== 0) {
+      length += 1;
+    }
     for (let i = 0; i < length - 1; i++) {
       const dp = <DatePeriod>{};
       dp.from = new Date(startDate.value);
@@ -203,7 +208,7 @@ export class ManageseasonComponent implements OnInit {
           refetchQueries: [
             {
               query: this.matchPlanGQL.document,
-              variables: {id: this.manageSeasonId}
+              variables: { id: this.manageSeasonId }
             }
           ]
         }

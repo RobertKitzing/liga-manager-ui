@@ -65,7 +65,7 @@ script:
   - ./push.sh
   - npm run build:web
   - npm run build:app
-  - npm run build:server
+  - npm run build:server:express
   - docker build -t $DOCKER_REPO:$TAG-$TRAVIS_BUILD_NUMBER .
   - cd app
   - cordova platform add android

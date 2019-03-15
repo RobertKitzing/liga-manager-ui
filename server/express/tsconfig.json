@@ -3,14 +3,14 @@
         "target": "es6",
         "module": "commonjs",
         "outDir": "dist",
-        "sourceMap": true,
+        "sourceMap": false,
         "noEmitOnError": true
     },
     "typeRoots": [
         "node_modules/@types"
     ],
     "include": [
-        "src/express.ts"
+        "src/index.ts"
     ],
     "exclude": [
         "node_modules"

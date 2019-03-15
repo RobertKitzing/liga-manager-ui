@@ -1,0 +1,23 @@
+{
+  "name": "liga-manager-node",
+  "version": "1.0.0",
+  "description": "Node.js Server to serve liga-manager-ui",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:local": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Kitzing",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.16.0"
+  }
+}

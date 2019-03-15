@@ -1,6 +1,3 @@
-import * as express from 'express';
-import * as path from 'path';
-import * as helmet from 'helmet';
 import * as redis from 'redis';
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 import environment from './environment';
@@ -8,19 +5,12 @@ import { RedisEvent } from './generated/types';
 
 const REDIS_CHANNEL = 'REDIS_CHANNEL';
 
-class Server {
-    public express;
+class QGLServer {
     public graphQLServer: GraphQLServer;
     private redisClient;
     private pubSub: PubSub = new PubSub();
 
     constructor() {
-        this.express = express();
-        this.express.use(express.static(__dirname + '/www'));
-        this.express.use(helmet());
-        this.express.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, 'www/index.html'));
-        });
         this.initGraphQL();
         this.redisClient = redis.createClient(environment.REDIS_PORT, environment.REDIS_HOST);
         this.redisClient.on('message', (_, message) => {
@@ -55,4 +45,4 @@ class Server {
     }
 }
 
-export default new Server();
+export default new QGLServer();
