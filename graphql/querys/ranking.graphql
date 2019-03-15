@@ -1,11 +1,11 @@
 query Ranking($id: String!) {
   season(id: $id) {
+    id
     ranking {
       updated_at
       positions {
         team {
-          id
-          name
+          ...Team
         }
         sort_index
         number
@@ -20,8 +20,7 @@ query Ranking($id: String!) {
       }
       penalties {
         team {
-          id
-          name
+          ...Team
         }
         reason
         created_at

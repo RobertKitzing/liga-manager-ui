@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
+import { EventsComponent } from './events.component';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminComponent } from './admin.component';
-import { AdminGuard } from './admin.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminComponent
+    component: EventsComponent
   }
 ];
 
@@ -15,4 +14,4 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class AdminRoutingModule { }
+export class EventsRoutingModule { }

@@ -53,7 +53,12 @@ fragment Contact on Contact {
 fragment Season on Season {
     id
     name
-    state
+    teams {
+        ...Team
+    }
+    match_days {
+        ...MatchDay
+    }
 }
 
 fragment Tournament on Tournament {
@@ -73,4 +78,10 @@ fragment User on User {
     role
     first_name
     last_name
+}
+
+fragment Event on Event {
+    id
+    occurred_at
+    type
 }

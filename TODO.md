@@ -1,7 +1,7 @@
 - Implement rescheduleMatchDay()
 - Implement RankingPenalty
 - Implement endSeason()
-- Update Translation -done
+- Update Translation
 - Implenet CreatePitches
 - Implement EventComponent
 - Implement Edit User

@@ -1,6 +1,8 @@
 /* tslint:disable */
 export type Maybe<T> = T | null;
 
+export type DateTime = any;
+
 // ====================================================
 // Documents
 // ====================================================
@@ -11,7 +13,19 @@ export namespace RedisEvent {
   export type Subscription = {
     __typename?: "Subscription";
 
-    redisevent: Maybe<string>;
+    redisevent: Maybe<Redisevent>;
+  };
+
+  export type Redisevent = {
+    __typename?: "RedisEvent";
+
+    id: string;
+
+    occurredAt: DateTime;
+
+    payload: Maybe<string>;
+
+    type: Maybe<string>;
   };
 }
 
@@ -37,7 +51,12 @@ export class RedisEventGQL extends Apollo.Subscription<
 > {
   document: any = gql`
     subscription RedisEvent {
-      redisevent
+      redisevent {
+        id
+        occurredAt
+        payload
+        type
+      }
     }
   `;
 }

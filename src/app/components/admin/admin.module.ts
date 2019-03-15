@@ -11,11 +11,13 @@ import { MatchSchedulingComponent } from './manageseason/match-scheduling/match-
 import { AddUserComponent } from './manageusers/add-user/add-user.component';
 import { UserListComponent } from './manageusers/user-list/user-list.component';
 import { RenameTeamComponent } from './addteam/rename-team/rename-team.component';
+import { EventsModule } from './events';
 
 @NgModule({
   imports: [
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    EventsModule
   ],
   declarations: [
     AdminComponent,

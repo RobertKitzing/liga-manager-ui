@@ -135,6 +135,7 @@
 		"TORE:TORE": "G:CG",
 		"WIN_DRAW_LOST": "W:D:L"
 	},
+	"TEAM": "Team",
 	"TEAMS": "Teams",
 	"TEAMS_IN_SEASON": "Teams in Season",
 	"TEAM_CONTACT": "Team Contact",

@@ -4,6 +4,9 @@ import * as helmet from 'helmet';
 import * as redis from 'redis';
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 import environment from './environment';
+import { RedisEvent } from './generated/types';
+
+const REDIS_CHANNEL = 'REDIS_CHANNEL';
 
 class Server {
     public express;
@@ -20,9 +23,10 @@ class Server {
         });
         this.initGraphQL();
         this.redisClient = redis.createClient(environment.REDIS_PORT, environment.REDIS_HOST);
-        this.redisClient.on('message', (channel, message) => {
-            console.log(`message: ${message} channel: ${channel}`);
-            this.pubSub.publish('REDIS_CHANNEL', message);
+        this.redisClient.on('message', (_, message) => {
+            const data: RedisEvent = JSON.parse(message);
+            data.payload = JSON.stringify(data.payload);
+            this.pubSub.publish(REDIS_CHANNEL, data);
           });
         this.redisClient.subscribe('events');
     }
@@ -30,14 +34,14 @@ class Server {
     private initGraphQL() {
         const resolvers = {
             Query: {
-                hello: () => 'duda'
+                hello: () => ''
             },
             Subscription: {
                 redisevent: {
                     subscribe: async (parent, args, context) => {
-                        return this.pubSub.asyncIterator('REDIS_CHANNEL');
+                        return this.pubSub.asyncIterator(REDIS_CHANNEL);
                     },
-                    resolve: payload => {
+                    resolve: (payload: RedisEvent) => {
                         return payload;
                     }
                 }

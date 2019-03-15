@@ -76,7 +76,7 @@
             {{ i + 1 }}. Spieltag
           </div>
           <div class="col">
-            {{ matchDay.from | date }}
+            {{ matchDay.from | date:'short':'':i18Service.currentLang }}
           </div>
           <div class="col text-left">
             <button mat-button [owlDateTimeTrigger]="dtFrom">{{ 'BUTTON.SET_TIME' | translate }}</button>
@@ -84,7 +84,7 @@
             <input matInput #kickoffInput [owlDateTime]="dtFrom" (dateTimeChange)="setMatchDayFromDate(i, $event)" style="display: none;">
           </div>
           <div class="col">
-            {{ matchDay.to | date }}
+            {{ matchDay.to | date:'short':'':i18Service.currentLang }}
           </div>
           <div class="col text-left">
             <button mat-button [owlDateTimeTrigger]="dtTo">{{ 'BUTTON.SET_TIME' | translate }}</button>

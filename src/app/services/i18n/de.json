@@ -135,6 +135,7 @@
 		"TORE:TORE": "T:GT",
 		"WIN_DRAW_LOST": "S:U:N"
 	},
+	"TEAM": "Mannschaft",
 	"TEAMS": "Mannschaften",
 	"TEAMS_IN_SEASON": "Mannschaften der Saison",
 	"TEAM_CONTACT": "Kontakt der Mannschaft",

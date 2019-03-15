@@ -1,12 +1,5 @@
 query MatchPlan($id: String!) {
     season(id: $id) {
-        id
-        name
-        teams {
-            ...Team
-        }
-        match_days {
-           ...MatchDay
-        }
+        ...Season
     }
 }

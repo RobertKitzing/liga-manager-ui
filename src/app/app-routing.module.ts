@@ -4,7 +4,11 @@ import { AdminGuard } from './components/admin/admin.guard';
 import { TeamadminGuard } from './components/teamadmin/teamadmin.guard';
 
 export const APP_ROUTES: Routes = [
-  { path: '', redirectTo: 'matchplan', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'matchplan',
+    pathMatch: 'full'
+  },
   {
     path: 'table',
     loadChildren: './components/table#TableModule'

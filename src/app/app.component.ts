@@ -5,8 +5,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { environment } from 'src/environments/environment';
 import { I18Service } from './services/i18.service';
-import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
-import { RedisEventGQL } from '../api/graphqlsubs';
+import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
 
 @Component({
   selector: 'app-root',
@@ -20,25 +19,15 @@ export class AppComponent implements OnInit {
     public i18Service: I18Service,
     public snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private redis: RedisEventGQL) {
+    private graphSubscription: GraphqlSubscriptionService) {
   }
 
   async ngOnInit() {
+    this.graphSubscription.connect();
     if (this.authService.accessToken) {
       this.authService.loadUser();
     }
     this.loadGoogleMapsScript();
-    this.redis.subscribe().subscribe(
-      (message) => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: `Redis said: ${ JSON.stringify(message)}`
-          },
-          panelClass: ['alert', 'alert-info'],
-          duration: 2000
-        });
-      }
-    );
   }
 
   openLoginDialog() {

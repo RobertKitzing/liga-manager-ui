@@ -247,6 +247,36 @@ export namespace CreateUser {
   };
 }
 
+export namespace Event {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    event: Maybe<Event>;
+  };
+
+  export type Event = Event.Fragment;
+}
+
+export namespace LatestEvent {
+  export type Variables = {
+    start_date?: Maybe<Date>;
+    end_date?: Maybe<Date>;
+    type?: Maybe<string>;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    latestEvents: Maybe<(Maybe<LatestEvents>)[]>;
+  };
+
+  export type LatestEvents = Event.Fragment;
+}
+
 export namespace MatchPlan {
   export type Variables = {
     id: string;
@@ -258,21 +288,7 @@ export namespace MatchPlan {
     season: Maybe<Season>;
   };
 
-  export type Season = {
-    __typename?: "Season";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-
-    teams: Maybe<(Maybe<Teams>)[]>;
-
-    match_days: Maybe<(Maybe<MatchDays>)[]>;
-  };
-
-  export type Teams = Team.Fragment;
-
-  export type MatchDays = MatchDay.Fragment;
+  export type Season = Season.Fragment;
 }
 
 export namespace Pitches {
@@ -300,6 +316,8 @@ export namespace Ranking {
 
   export type Season = {
     __typename?: "Season";
+
+    id: Maybe<string>;
 
     ranking: Maybe<Ranking>;
   };
@@ -338,13 +356,7 @@ export namespace Ranking {
     points: Maybe<number>;
   };
 
-  export type Team = {
-    __typename?: "Team";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-  };
+  export type Team = Team.Fragment;
 
   export type Penalties = {
     __typename?: "RankingPenalty";
@@ -358,13 +370,7 @@ export namespace Ranking {
     points: Maybe<number>;
   };
 
-  export type _Team = {
-    __typename?: "Team";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-  };
+  export type _Team = Team.Fragment;
 }
 
 export namespace AllSeasonsList {
@@ -376,7 +382,15 @@ export namespace AllSeasonsList {
     allSeasons: Maybe<(Maybe<AllSeasons>)[]>;
   };
 
-  export type AllSeasons = Season.Fragment;
+  export type AllSeasons = {
+    __typename?: "Season";
+
+    id: Maybe<string>;
+
+    name: Maybe<string>;
+
+    state: Maybe<SeasonState>;
+  };
 }
 
 export namespace AllTeams {
@@ -547,8 +561,14 @@ export namespace Season {
 
     name: Maybe<string>;
 
-    state: Maybe<SeasonState>;
+    teams: Maybe<(Maybe<Teams>)[]>;
+
+    match_days: Maybe<(Maybe<MatchDays>)[]>;
   };
+
+  export type Teams = Team.Fragment;
+
+  export type MatchDays = MatchDay.Fragment;
 }
 
 export namespace Tournament {
@@ -585,6 +605,18 @@ export namespace User {
   export type Teams = Team.Fragment;
 }
 
+export namespace Event {
+  export type Fragment = {
+    __typename?: "Event";
+
+    id: Maybe<string>;
+
+    occurred_at: Maybe<string>;
+
+    type: Maybe<string>;
+  };
+}
+
 // ====================================================
 // START: Apollo Angular template
 // ====================================================
@@ -597,14 +629,6 @@ import gql from "graphql-tag";
 // ====================================================
 // GraphQL Fragments
 // ====================================================
-
-export const SeasonFragment = gql`
-  fragment Season on Season {
-    id
-    name
-    state
-  }
-`;
 
 export const ContactFragment = gql`
   fragment Contact on Contact {
@@ -677,6 +701,22 @@ export const MatchDayFragment = gql`
   ${MatchFragment}
 `;
 
+export const SeasonFragment = gql`
+  fragment Season on Season {
+    id
+    name
+    teams {
+      ...Team
+    }
+    match_days {
+      ...MatchDay
+    }
+  }
+
+  ${TeamFragment}
+  ${MatchDayFragment}
+`;
+
 export const TournamentFragment = gql`
   fragment Tournament on Tournament {
     id
@@ -702,6 +742,14 @@ export const UserFragment = gql`
   }
 
   ${TeamFragment}
+`;
+
+export const EventFragment = gql`
+  fragment Event on Event {
+    id
+    occurred_at
+    type
+  }
 `;
 
 // ====================================================
@@ -965,6 +1013,37 @@ export class CreateUserGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class EventGQL extends Apollo.Query<Event.Query, Event.Variables> {
+  document: any = gql`
+    query Event($id: String!) {
+      event(id: $id) {
+        ...Event
+      }
+    }
+
+    ${EventFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class LatestEventGQL extends Apollo.Query<
+  LatestEvent.Query,
+  LatestEvent.Variables
+> {
+  document: any = gql`
+    query LatestEvent($start_date: Date, $end_date: Date, $type: String) {
+      latestEvents(start_date: $start_date, end_date: $end_date, type: $type) {
+        ...Event
+      }
+    }
+
+    ${EventFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class MatchPlanGQL extends Apollo.Query<
   MatchPlan.Query,
   MatchPlan.Variables
@@ -972,19 +1051,11 @@ export class MatchPlanGQL extends Apollo.Query<
   document: any = gql`
     query MatchPlan($id: String!) {
       season(id: $id) {
-        id
-        name
-        teams {
-          ...Team
-        }
-        match_days {
-          ...MatchDay
-        }
+        ...Season
       }
     }
 
-    ${TeamFragment}
-    ${MatchDayFragment}
+    ${SeasonFragment}
   `;
 }
 @Injectable({
@@ -1008,12 +1079,12 @@ export class RankingGQL extends Apollo.Query<Ranking.Query, Ranking.Variables> {
   document: any = gql`
     query Ranking($id: String!) {
       season(id: $id) {
+        id
         ranking {
           updated_at
           positions {
             team {
-              id
-              name
+              ...Team
             }
             sort_index
             number
@@ -1027,8 +1098,7 @@ export class RankingGQL extends Apollo.Query<Ranking.Query, Ranking.Variables> {
           }
           penalties {
             team {
-              id
-              name
+              ...Team
             }
             reason
             created_at
@@ -1037,6 +1107,8 @@ export class RankingGQL extends Apollo.Query<Ranking.Query, Ranking.Variables> {
         }
       }
     }
+
+    ${TeamFragment}
   `;
 }
 @Injectable({
@@ -1049,11 +1121,11 @@ export class AllSeasonsListGQL extends Apollo.Query<
   document: any = gql`
     query AllSeasonsList {
       allSeasons {
-        ...Season
+        id
+        name
+        state
       }
     }
-
-    ${SeasonFragment}
   `;
 }
 @Injectable({

@@ -9,10 +9,12 @@ import { AuthenticationService, Credentials } from './services/authentication.se
 import { WebSocketLink } from 'apollo-link-ws';
 import { split, ApolloLink } from 'apollo-link';
 import { environment } from '../environments/environment';
+import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 const uri = environment.graphqlUrl; // <-- add the URL of the GraphQL server here
 
-export function createApollo(httpLink: HttpLink, authService: AuthenticationService) {
+export function createApollo(httpLink: HttpLink, authService: AuthenticationService, ownService: GraphqlSubscriptionService) {
   const http = httpLink.create({ uri });
   const afterwareLink = new ApolloLink((operation, forward) => {
     return forward(operation).map(response => {
@@ -40,15 +42,15 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
       return {};
     }
   });
-  const wsClient = new WebSocketLink({
-    uri: environment.graphqlWsUrl,
-    options: {
-      reconnect: true,
+
+  ownService.subscriptionClient = new SubscriptionClient(
+    environment.graphqlWsUrl,
+    {
       lazy: true,
-      reconnectionAttempts: 5,
-      inactivityTimeout: 3000
-    },
-  });
+      reconnect: true
+    });
+  const wsClient = new WebSocketLink(ownService.subscriptionClient);
+
   const link = split(
     // split based on operation type
     ({ query }) => {
@@ -60,11 +62,6 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
   );
   const cache = new InMemoryCache(
     {
-      cacheRedirects: {
-        Query: {
-          season: (_, args) => toIdValue(cache.config.dataIdFromObject({ __typename: 'Season', id: args.id }))
-        },
-      },
       addTypename: true
     }
   );
@@ -77,12 +74,14 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
 @NgModule({
   exports: [ApolloModule, HttpLinkModule],
   providers: [
+    GraphqlSubscriptionService,
     {
       provide: APOLLO_OPTIONS,
       useFactory: createApollo,
       deps: [
         HttpLink,
-        AuthenticationService
+        AuthenticationService,
+        GraphqlSubscriptionService
       ],
     },
   ],
