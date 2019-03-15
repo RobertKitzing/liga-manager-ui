@@ -1,9 +1,10 @@
 <div class="container-fluid" style="margin-top: 30px;">
   <div class="row">
-    <div class="col">
+    <div class="col-7">
       <mat-form-field>
-        <mat-select #seasonSelect [(value)]="manageTournament" placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}" (selectionChange)="onTournamentSelected()">
-          <mat-option *ngFor="let tournament of tournaments" [value]="tournament">
+        <mat-select #tournamentSelect [(value)]="manageTournamentId" placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
+          (selectionChange)="onTournamentSelected()">
+          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament.id">
             {{ tournament.name }}
           </mat-option>
         </mat-select>
@@ -16,24 +17,36 @@
       </mat-form-field>
     </div>
     <div class="col">
-      <button mat-button (click)="createNewTournament(newTournament.value)">{{ 'BUTTON.CREATE_TOURNAMENT' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="createNewTournament(newTournament.value)">{{ 'BUTTON.CREATE_TOURNAMENT'
+        | translate}}</button>
     </div>
   </div>
-  <div class="row justify-content-center" *ngIf="manageTournament">
-    <div class="col">
-      <mat-form-field>
-        <input matInput placeholder="{{ 'PLACEHOLDER.EDIT_TOURNAMENT_ROUND' | translate }}" type="number" min="1" [(ngModel)]="createRoundNr"
-        />
-      </mat-form-field>
-    </div>
-    <div class="col">
-      <button mat-button (click)="editRound()">
+  <ng-container *ngIf="manageTournamentId">
+    <div class="row justify-content-center">
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="{{ 'PLACEHOLDER.EDIT_TOURNAMENT_ROUND' | translate }}" type="number" min="1" [(ngModel)]="createRoundNr"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col">
+      <button mat-raised-button color="primary" (click)="editRound()">
         {{ 'BUTTON.EDIT_ROUND' | translate }}
       </button>
     </div>
-  </div>
-
-  <div class="row">
+    </div>
+    <div class="col">
+      <ng-container *ngFor="let mt of manageTournamentRounds | async">
+        <h3>{{ mt.number }}. {{ 'ROUND' | translate }}</h3>
+        <div class="row" *ngFor="let match of mt.matches">
+          <div class="col">
+            {{ match.home_team.name }} - {{ match.guest_team.name }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <!-- <div class="row">
     <div class="col">
       <mat-form-field>
         <input matInput placeholder="{{ 'PLACEHOLDER.START_TEAM_COUNT' | translate }}" type="number" min="4" [(ngModel)]="startTeamCount"
@@ -45,5 +58,5 @@
     <div class="col" *ngFor="let game of round">
       {{ 'MATCH' | translate }} {{ game }}
     </div>
-  </div>
+  </div> -->
 </div>

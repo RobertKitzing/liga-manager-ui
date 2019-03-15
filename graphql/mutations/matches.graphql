@@ -1,0 +1,23 @@
+mutation SubmitResult(
+    $match_id: String!,
+    $home_score: Int!,
+    $guest_score: Int!
+) {
+    submitMatchResult(
+        match_id: $match_id
+        home_score: $home_score
+        guest_score: $guest_score
+    )
+}
+mutation ScheduleMatch(
+    $match_id: String!,
+    $kickoff: String!
+) {
+    scheduleMatch(match_id: $match_id, kickoff: $kickoff)
+}
+mutation LocateMatch(
+    $match_id: String!,
+    $pitch_id: String!
+) {
+    locateMatch(match_id: $match_id, pitch_id: $pitch_id)
+}

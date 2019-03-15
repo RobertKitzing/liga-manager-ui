@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { Season, SeasonState, Team, Client, CreateSeasonBody, CreateMatchDaysBody, Date_period, Match_day } from '../../../../api';
 import { MatSelectChange, MatTabChangeEvent, MatSnackBar } from '@angular/material';
-import { MatchService } from '../../../services/match.service';
-import { MatchViewModel } from '../../../models/match.viewmodel';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { TeamService } from 'src/app/services/team.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import {
+  AllSeasonsList, Match,
+  MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
+  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL
+} from '../../../../api/graphql';
 
 @Component({
   selector: 'app-manageseason',
@@ -15,88 +19,138 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class ManageseasonComponent implements OnInit {
 
-  seasons: Season[];
-  teamsInSeason: Team[];
-  allTeams: Team[];
-  matchesInSeason: MatchViewModel[];
-  manageSeason: Season;
-  matchDayCounter: number[];
-  newMatchDays: Date_period[];
-  matchDaysInSeason: Match_day[];
+  matchesInSeason: Match.Fragment[];
+
+  newMatchDays: DatePeriod[];
   fromToOffset = 2;
   betweenMatchDaysOffset = 7;
 
+  seasonList: Observable<AllSeasonsList.AllSeasons[]>;
+  manageSeason: Observable<MatchPlan.Season>;
+  manageSeasonId: string;
+
   constructor(
     public seasonService: SeasonService,
-    private teamService: TeamService,
-    private matchService: MatchService,
-    private apiClient: Client,
+    public teamService: TeamService,
     private snackBar: MatSnackBar,
-    private translateService: TranslateService
-  ) { }
-
-  async ngOnInit() {
-    this.loadAllSeason();
-    this.loadAllTeams();
-  }
-
-  async loadAllSeason() {
-    this.seasons = await this.seasonService.loadSeasons();
-  }
-
-  async loadAllTeams() {
-    this.allTeams = await this.teamService.loadAllTeams();
-  }
-
-  addNewSeason(seasonName: string) {
-    this.seasonService.createSeason(seasonName).then(
-      () => {
-        this.loadAllSeason();
-      }
-    ).catch(
-      (error) => {
-        console.error(error);
-      }
+    private translateService: TranslateService,
+    private matchesQL: CreateMatchesForSeasonGQL,
+    private matchPlanGQL: MatchPlanGQL,
+    private removeTeamGQL: RemoveTeamFromSeasonGQL,
+    private addTeamGQL: AddTeamToSeasonGQL,
+    private startSeasonGQL: StartSeasonGQL
+  ) {
+    this.seasonList = this.seasonService.seasonsQGL.valueChanges.pipe(
+      map(
+        ({ data }) => {
+          return data.allSeasons.sort(
+            (a, b) => {
+              const aState = a.state.toLocaleLowerCase();
+              const bState = b.state.toLocaleLowerCase();
+              if (aState > bState) {
+                return 1;
+              }
+              if (aState < bState) {
+                return -1;
+              }
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) {
+                return 1;
+              }
+              if (aName < bName) {
+                return -1;
+              }
+            });
+        })
     );
+  }
+
+  ngOnInit() {
+  }
+
+  async addNewSeason(seasonName: string) {
+    try {
+      await this.seasonService.createSeason(seasonName);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   manageSeasonChanged(event: MatSelectChange) {
-    this.manageSeason = event.value;
-    this.getTeamsInManageSeason();
-  }
-
-  getTeamsInManageSeason() {
-    this.apiClient.getTeamsInSeason(this.manageSeason.id).subscribe(
-      (teams) => {
-        this.teamsInSeason = teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-      }
+    this.manageSeason = this.matchPlanGQL.watch({
+      id: event.value
+    }).valueChanges.pipe(
+      map(({ data }) => {
+        if (data.season.teams) {
+          data.season.teams = data.season.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+        }
+        return data.season;
+      })
     );
+    delete this.newMatchDays;
   }
 
-  addTeamToSeason(teamId: string) {
+  async addTeamToSeason(teamId: string) {
     if (this.manageSeason) {
-      this.apiClient.addTeamToSeason(this.manageSeason.id, teamId).subscribe(
-        (t) => {
-          this.getTeamsInManageSeason();
-        }
-      );
+      try {
+        await this.addTeamGQL.mutate(
+          {
+            season_id: this.manageSeasonId,
+            team_id: teamId
+          },
+          {
+            refetchQueries: [
+              {
+                query: this.matchPlanGQL.document,
+                variables: { id: this.manageSeasonId }
+              }
+            ]
+          }
+        ).toPromise();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
-  removeTeamFromSeason(teamId: string) {
+  async removeTeamFromSeason(teamId: string) {
     if (this.manageSeason) {
-      this.apiClient.removeTeamFromSeason(this.manageSeason.id, teamId).subscribe(
-        (t) => {
-          this.getTeamsInManageSeason();
-        }
-      );
+      try {
+        await this.removeTeamGQL.mutate(
+          {
+            season_id: this.manageSeasonId,
+            team_id: teamId
+          },
+          {
+            refetchQueries: [
+              {
+                query: this.matchPlanGQL.document,
+                variables: { id: this.manageSeasonId }
+              }
+            ]
+          }
+        ).toPromise();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
-  createMatchDays(startDate: any) {
-    this.newMatchDays = new Array<Date_period>();
-    for (let i = 0; i < this.teamsInSeason.length - 1; i++) {
-      const dp = new Date_period();
+  selectedTabChanged(event: MatTabChangeEvent, season: MatchPlan.Season) {
+    switch (event.index) {
+      case 1:
+        if (season.match_days) {
+          this.newMatchDays = season.match_days.map((matchDay) => ({ from: matchDay.start_date, to: matchDay.end_date }));
+        }
+        break;
+    }
+  }
+
+  createMatchDays(startDate: any, length: number, oldMatchDays: any) {
+    this.newMatchDays = new Array<DatePeriod>();
+    for (let i = 0; i < length - 1; i++) {
+      const dp = <DatePeriod>{};
       dp.from = new Date(startDate.value);
       dp.from.setDate(dp.from.getDate() + (i * this.betweenMatchDaysOffset));
       dp.to = new Date(dp.from);
@@ -106,9 +160,20 @@ export class ManageseasonComponent implements OnInit {
   }
 
   sendMatchDays() {
-    const body = new CreateMatchDaysBody();
-    body.dates = this.newMatchDays;
-    this.apiClient.createMatchDays(this.manageSeason.id, body).subscribe(
+    this.matchesQL.mutate(
+      {
+        season_id: this.manageSeasonId,
+        dates: this.newMatchDays
+      },
+      {
+        refetchQueries: [
+          {
+            query: this.matchPlanGQL.document,
+            variables: { id: this.manageSeasonId }
+          }
+        ]
+      }
+    ).subscribe(
       (d) => {
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {
@@ -128,78 +193,48 @@ export class ManageseasonComponent implements OnInit {
     );
   }
 
-  async getMatchesInSeason() {
-    if (this.manageSeason) {
-      this.matchDaysInSeason = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
-      this.matchesInSeason = await this.matchService.getMatchesInSeason(this.manageSeason.id, undefined, undefined);
+  async startSeason() {
+    try {
+      await this.startSeasonGQL.mutate(
+        {
+          id: this.manageSeasonId
+        },
+        {
+          refetchQueries: [
+            {
+              query: this.matchPlanGQL.document,
+              variables: {id: this.manageSeasonId}
+            }
+          ]
+        }
+      ).toPromise();
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          message: this.translateService.instant('START_SEASON_SUCCESS')
+        },
+        panelClass: ['alert', 'alert-success']
+      });
+    } catch (error) {
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          message: this.translateService.instant('START_SEASON_ERROR')
+        },
+        panelClass: ['alert', 'alert-danger']
+      });
     }
-  }
-
-  getMatchDay(id: string): Match_day {
-    return this.matchDaysInSeason.find(t => t.id === id) || new Match_day();
-  }
-
-  startSeason() {
-    this.apiClient.startSeason(this.manageSeason.id).subscribe(
-      () => {
-        this.seasonService.seasonCreated.next();
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('START_SEASON_SUCCESS')
-          },
-          panelClass: ['alert', 'alert-success']
-        });
-      },
-      (error) => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('START_SEASON_ERROR')
-          },
-          panelClass: ['alert', 'alert-danger']
-        });
-      }
-    );
   }
 
   setMatchDayFromDate(index: number, date: any) {
     if (!this.newMatchDays[index]) {
-      this.newMatchDays[index] = new Date_period();
+      this.newMatchDays[index] = <DatePeriod>{};
     }
     this.newMatchDays[index].from = date.value;
   }
 
   setMatchDayToDate(index: number, date: any) {
     if (!this.newMatchDays[index]) {
-      this.newMatchDays[index] = new Date_period();
+      this.newMatchDays[index] = <DatePeriod>{};
     }
     this.newMatchDays[index].to = date.value;
   }
-
-  onTabChanged(event: MatTabChangeEvent) {
-    switch (event.index) {
-      case 1:
-        this.getDatePeriodsForSeason();
-        break;
-      case 2:
-      case 3:
-        this.getMatchesInSeason();
-        break;
-    }
-  }
-
-  async getDatePeriodsForSeason() {
-    if (this.manageSeason) {
-      this.newMatchDays = new Array<Match_day>();
-      const matchDays = await this.matchService.getMatchDaysInSeason(this.manageSeason.id);
-      matchDays.forEach(
-        (md) => {
-          const dp = new Date_period();
-          dp.from = md.start_date;
-          dp.to = md.end_date;
-          this.newMatchDays.push(dp);
-        }
-      );
-    }
-  }
-
 }

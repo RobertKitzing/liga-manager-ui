@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Team, Client } from '../../../../api';
-
+import { Team } from 'src/api/graphql';
 
 @Component({
   selector: 'app-contact',
@@ -10,20 +9,12 @@ import { Team, Client } from '../../../../api';
 })
 export class ContactComponent implements OnInit {
 
-  public teams: Team[] = new Array<Team>();
-
   constructor(
     public dialogRef: MatDialogRef<ContactComponent>,
-    private apiClient: Client,
-    @Inject(MAT_DIALOG_DATA) public teamIds: string[]) { }
+    @Inject(MAT_DIALOG_DATA) public teams: Team.Fragment[]) { }
 
   ngOnInit() {
-    for (const teamId of this.teamIds) {
-      this.apiClient.getTeam(teamId).subscribe(
-        (team) => {
-          this.teams.push(team);
-        });
-    }
+
   }
 
 }

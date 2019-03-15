@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User, Client, ChangePasswordBody } from 'src/api';
 import { AuthenticationService } from '../../services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
@@ -18,10 +17,9 @@ export class NewpasswordComponent implements OnInit {
   token: string;
 
   constructor(
+    public authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    public authService: AuthenticationService,
-    private apiClient: Client,
     private translateService: TranslateService,
     private snackBar: MatSnackBar
   ) {
@@ -46,12 +44,10 @@ export class NewpasswordComponent implements OnInit {
     );
   }
 
-  submit() {
-    const body = new ChangePasswordBody();
-    body.new_password = this.loginForm.value.password;
-    this.apiClient.changePassword(body).subscribe(
-      () => {
-        this.authService.logout();
+  async submit() {
+    try {
+      await this.authService.changePassword(this.loginForm.value.password);
+      this.authService.logout();
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {
             message: this.translateService.instant('PASSWORD_CHANGED_SUCCESS')
@@ -59,16 +55,14 @@ export class NewpasswordComponent implements OnInit {
           panelClass: ['alert', 'alert-success'],
           duration: 30000
         });
-      },
-      () => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('PASSWORD_CHANGED_ERROR')
-          },
-          panelClass: ['alert', 'alert-danger'],
-          duration: 30000
-        });
-      }
-    );
+    } catch (error) {
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          message: this.translateService.instant('PASSWORD_CHANGED_ERROR')
+        },
+        panelClass: ['alert', 'alert-danger'],
+        duration: 30000
+      });
+    }
   }
 }

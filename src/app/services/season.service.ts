@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Client, SeasonState, Season, CreateSeasonBody } from '../../api/liga-manager-api';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { Season, AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from '../../api/graphql';
+import * as uuid from 'uuid/v4';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeasonService {
 
-  seasonInProgress: Season[];
-  private get _currentSeason(): Season {
-    return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || null;
+  seasonsQGL = this.allSeasonsListGQL.watch();
+
+  private get _currentSeason(): AllSeasonsList.AllSeasons {
+    return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || '';
   }
 
-  private set _currentSeason(season: Season) {
+  private set _currentSeason(season: AllSeasonsList.AllSeasons) {
     if (season) {
       localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
     }
   }
 
-  currentSeason: BehaviorSubject<Season> = new BehaviorSubject<Season>(this._currentSeason);
-  seasonCreated: Subject<void> = new Subject<void>();
+  currentSeason: BehaviorSubject<AllSeasonsList.AllSeasons> = new BehaviorSubject<AllSeasonsList.AllSeasons>(this._currentSeason);
 
-  constructor(private apiClient: Client) {
+  constructor(
+    private allSeasonsListGQL: AllSeasonsListGQL,
+    private createSeasonGQL: CreateSeasonGQL
+  ) {
     this.currentSeason.subscribe(
       (season) => {
-        this._currentSeason = season;
-      }
-    );
-    this.seasonCreated.subscribe(
-      () => {
-        this.loadSeasonInProgress();
+        if (season) {
+          this._currentSeason = season;
+        }
       }
     );
   }
@@ -37,10 +38,18 @@ export class SeasonService {
   public async createSeason(seasonName: string): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
-        const createSeasonBody = new CreateSeasonBody();
-        createSeasonBody.name = seasonName;
-        this.apiClient.createSeason(createSeasonBody).subscribe(
-          (t) => {
+        this.createSeasonGQL.mutate(
+          {
+            id: uuid(),
+            name: seasonName
+          },
+          {
+            refetchQueries: [
+              {query: this.allSeasonsListGQL.document}
+            ]
+          }
+        ).subscribe(
+          () => {
             resolve();
           },
           (error) => {
@@ -51,28 +60,7 @@ export class SeasonService {
     );
   }
 
-  public async loadSeasonInProgress() {
-    this.seasonInProgress = await this.loadSeasons(SeasonState.Progress);
-  }
-
-  public async loadSeasons(state?: SeasonState | null): Promise<Season[]> {
-    return new Promise<Season[]>(
-      (resolve) => {
-        this.apiClient.getAllSeasons().subscribe(
-          (seasons: Season[]) => {
-            resolve(state ? seasons.filter(s => s.state === state) : seasons);
-          },
-          (error: any) => {
-            resolve(null);
-          },
-          () => {
-          }
-        );
-      }
-    );
-  }
-
-  seasonCompare(c1: Season, c2: Season) {
+  seasonCompare(c1: Season.Fragment, c2: Season.Fragment) {
     return c1 && c2 && c1.id === c2.id;
   }
 }

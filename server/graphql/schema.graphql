@@ -1,0 +1,16 @@
+scalar DateTime
+
+type Query {
+  hello: String 
+}
+
+type Subscription {
+  redisevent: RedisEvent
+}
+
+type RedisEvent {
+  id: String!
+  occurredAt: DateTime!
+  payload: String
+  type: String
+}

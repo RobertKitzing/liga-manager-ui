@@ -1,0 +1,87 @@
+fragment Match on Match {
+    id
+    home_team {
+        ...Team
+    }
+    home_score
+    guest_team {
+        ...Team
+    }
+    guest_score
+    kickoff
+    pitch {
+        ...Pitch
+    }
+}
+
+fragment MatchDay on MatchDay {
+    id
+    number
+    start_date
+    end_date
+    matches {
+        ...Match
+    }
+}
+
+fragment Pitch on Pitch {
+    id
+    label
+    location_longitude
+    location_latitude
+    contact {
+        ...Contact
+    }
+}
+
+fragment Team on Team {
+    id
+    name
+    created_at
+    contact {
+        ...Contact
+    }
+}
+
+fragment Contact on Contact {
+    first_name
+    last_name
+    phone
+    email
+}
+
+fragment Season on Season {
+    id
+    name
+    teams {
+        ...Team
+    }
+    match_days {
+        ...MatchDay
+    }
+}
+
+fragment Tournament on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
+}
+
+fragment User on User {
+    id
+    email
+    teams {
+        ...Team
+    }
+    role
+    first_name
+    last_name
+}
+
+fragment Event on Event {
+    id
+    occurred_at
+    type
+}

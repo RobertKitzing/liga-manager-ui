@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Team } from 'src/api';
 import { TeamService } from 'src/app/services/team.service';
 
 @Component({
@@ -9,14 +8,11 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class TeamsComponent implements OnInit {
 
-  teams: Team[];
-
   constructor(
-    private teamService: TeamService
+    public teamService: TeamService
   ) { }
 
   async ngOnInit() {
-    this.teams = await this.teamService.loadAllTeams();
   }
 
 }

@@ -1,71 +1,8 @@
 <mat-tab-group>
   <mat-tab label="{{ 'TAB.ADD_USER' | translate}}">
-    <div class="card">
-      <div class="card-header">
-        {{ 'TAB.ADD_USER' | translate }}
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <mat-form-field>
-              <input matInput placeholder="{{ 'USERNAME' | translate }}" [formControl]="email" required />
-              <mat-error *ngIf="email.invalid" translate>ERRORS.ENTER_VALID_EMAIL</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field>
-              <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" [formControl]="firstName" required />
-              <mat-error *ngIf="firstName.invalid" translate>FIRST_NAME_REQUIRED</mat-error>
-            </mat-form-field>
-            <mat-form-field style="margin-left: 15px;">
-              <input matInput placeholder="{{ 'LAST_NAME' | translate }}" [formControl]="lastName" required />
-              <mat-error *ngIf="lastName.invalid" translate>LAST_NAME_REQUIRED</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field style="width: 100%">
-              <input matInput placeholder="{{ 'PASSWORD' | translate }}" [formControl]="password" required />
-              <mat-error *ngIf="password.invalid" translate>ERRORS.ENTER_VALID_PASSWORD</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field>
-              <mat-select #home placeholder="{{ 'USER_ROLE' | translate }}" [(ngModel)]="userRole">
-                <mat-option [value]="CreateUserBodyRole.Admin">
-                  {{ CreateUserBodyRole.Admin }}
-                </mat-option>
-                <mat-option [value]="CreateUserBodyRole.Team_manager" selected>
-                  {{ CreateUserBodyRole.Team_manager }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field>
-              <mat-select #home placeholder="{{ 'PLACEHOLDER.TEAM_NAME' | translate }}" [(ngModel)]="userTeamList" multiple (selectionChange)="onChangeTeamSelect($event)">
-                <mat-option *ngFor="let team of teamList" [value]="team.id">
-                  {{team.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <button mat-icon-button (click)="createUser()" [disabled]="email.invalid || firstName.invalid || lastName.invalid || password.invalid">
-              {{ 'BUTTON.ADD' | translate}}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-add-user></app-add-user>
   </mat-tab>
+  <mat-tab label="{{ 'TAB.USER_LIST' | translate}}">
+      <app-user-list></app-user-list>
+    </mat-tab>
 </mat-tab-group>

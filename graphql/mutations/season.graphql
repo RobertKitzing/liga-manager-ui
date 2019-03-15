@@ -1,0 +1,39 @@
+mutation CreateSeason(
+    $id: String,
+    $name: String!
+) {
+    createSeason(
+        id: $id,
+        name: $name
+    )
+}
+
+mutation AddTeamToSeason(
+    $season_id: String!,
+    $team_id: String!
+) {
+    addTeamToSeason(
+        season_id: $season_id,
+        team_id: $team_id
+        )
+}
+
+mutation RemoveTeamFromSeason(
+        $season_id: String!,
+        $team_id: String!
+) {
+    removeTeamFromSeason(
+        season_id: $season_id,
+        team_id: $team_id
+        )
+}
+mutation CreateMatchesForSeason(
+        $season_id: String!,
+        $dates: [DatePeriod]!
+    ) {
+    createMatchesForSeason(season_id: $season_id,  dates: $dates )
+}
+
+mutation StartSeason($id: String!) {
+    startSeason(season_id: $id)
+}

@@ -4,7 +4,8 @@
   "description": "Node.js Server to serve liga-manager-ui",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node server/src/index.js",
+    "start": "node index.js",
+    "start:local": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Robert Kitzing",
@@ -12,12 +13,16 @@
   "devDependencies": {
     "@types/express": "^4.16.0",
     "@types/ws": "^5.1.2",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.2",
     "typescript": "^3.0.1"
   },
   "dependencies": {
     "express": "^4.16.3",
     "express-ws": "^4.0.0",
     "express-ws-routes": "^1.1.0",
-    "helmet": "^3.13.0"
+    "graphql-yoga": "^1.17.4",
+    "helmet": "^3.13.0",
+    "redis": "^2.8.0"
   }
 }

@@ -8,11 +8,16 @@ import { ManageusersComponent } from './manageusers/manageusers.component';
 import { ManagetournamentComponent } from './managetournament/managetournament.component';
 import { AddtournamentroundComponent } from './managetournament/addtournamentround/addtournamentround.component';
 import { MatchSchedulingComponent } from './manageseason/match-scheduling/match-scheduling.component';
+import { AddUserComponent } from './manageusers/add-user/add-user.component';
+import { UserListComponent } from './manageusers/user-list/user-list.component';
+import { RenameTeamComponent } from './addteam/rename-team/rename-team.component';
+import { EventsModule } from './events';
 
 @NgModule({
   imports: [
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    EventsModule
   ],
   declarations: [
     AdminComponent,
@@ -21,10 +26,14 @@ import { MatchSchedulingComponent } from './manageseason/match-scheduling/match-
     ManageusersComponent,
     ManagetournamentComponent,
     AddtournamentroundComponent,
-    MatchSchedulingComponent
+    MatchSchedulingComponent,
+    AddUserComponent,
+    UserListComponent,
+    RenameTeamComponent
   ],
   entryComponents: [
-    AddtournamentroundComponent
+    AddtournamentroundComponent,
+    RenameTeamComponent
   ]
 })
 export class AdminModule { }

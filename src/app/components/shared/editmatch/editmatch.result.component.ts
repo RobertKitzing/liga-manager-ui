@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { MatchViewModel } from '../../../models/match.viewmodel';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { TranslateService } from '@ngx-translate/core';
+import { Match } from 'src/api/graphql';
 
 @Component({
   selector: 'app-editmatchresult',
@@ -14,9 +16,12 @@ export class EditmatchResultComponent implements OnInit {
   guest_score: number;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: MatchViewModel,
+    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
     private matchService: MatchService,
-    private dialogRef: MatDialogRef<EditmatchResultComponent>) {
+    private dialogRef: MatDialogRef<EditmatchResultComponent>,
+    public snackBar: MatSnackBar,
+    public translateService: TranslateService
+  ) {
     this.home_score = this.match.home_score;
     this.guest_score = this.match.guest_score;
   }
@@ -32,12 +37,13 @@ export class EditmatchResultComponent implements OnInit {
           this.dialogRef.close(true);
         })
         .catch( (error) => {
-          console.log(error);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              message: this.translateService.instant('EDIT_RESULT_ERROR')
+            },
+            panelClass: ['alert', 'alert-danger'],
+          });
         });
     }
   }
-
-  // onCancelResultClicked() {
-  //   this.matchService.
-  // }
 }
