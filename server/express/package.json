@@ -1,6 +1,6 @@
 {
-  "name": "liga-manager-node",
-  "version": "1.0.0",
+  "name": "liga-manager-ui",
+  "version": "4.0.0",
   "description": "Node.js Server to serve liga-manager-ui",
   "main": "dist/index.js",
   "scripts": {

@@ -47,7 +47,8 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
     environment.graphqlWsUrl,
     {
       lazy: true,
-      reconnect: true
+      reconnect: true,
+      reconnectionAttempts: 3
     });
   const wsClient = new WebSocketLink(ownService.subscriptionClient);
 

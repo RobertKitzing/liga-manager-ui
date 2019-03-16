@@ -6,18 +6,27 @@ import { RedisEvent } from './generated/types';
 const REDIS_CHANNEL = 'REDIS_CHANNEL';
 
 class QGLServer {
+
     public graphQLServer: GraphQLServer;
     private redisClient;
     private pubSub: PubSub = new PubSub();
 
     constructor() {
-        this.initGraphQL();
+        try {
+            this.initRedisClient();
+            this.initGraphQL();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    private initRedisClient() {
         this.redisClient = redis.createClient(environment.REDIS_PORT, environment.REDIS_HOST);
         this.redisClient.on('message', (_, message) => {
             const data: RedisEvent = JSON.parse(message);
             data.payload = JSON.stringify(data.payload);
             this.pubSub.publish(REDIS_CHANNEL, data);
-          });
+        });
         this.redisClient.subscribe('events');
     }
 
@@ -39,7 +48,7 @@ class QGLServer {
         };
 
         this.graphQLServer = new GraphQLServer({
-            typeDefs: './graphql/schema.graphql',
+            typeDefs: './schema.graphql',
             resolvers
         });
     }

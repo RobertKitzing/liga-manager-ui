@@ -6,6 +6,6 @@ COPY ./dist ./
 
 RUN npm install --only=production
 
-EXPOSE 3098
+EXPOSE 4000
 
 CMD [ "npm", "start" ]
