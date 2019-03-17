@@ -214,13 +214,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/GraphQLModule.html" data-type="entity-link">GraphQLModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-GraphQLModule-b0f03ffb82126368cff1c9874bf430bf"' : 'data-target="#xs-injectables-links-module-GraphQLModule-b0f03ffb82126368cff1c9874bf430bf"' }>
+                                        'data-target="#injectables-links-module-GraphQLModule-db67a76b690df0214e3cbf6c1a2f6e4a"' : 'data-target="#xs-injectables-links-module-GraphQLModule-db67a76b690df0214e3cbf6c1a2f6e4a"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-GraphQLModule-b0f03ffb82126368cff1c9874bf430bf"' :
-                                        'id="xs-injectables-links-module-GraphQLModule-b0f03ffb82126368cff1c9874bf430bf"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-GraphQLModule-db67a76b690df0214e3cbf6c1a2f6e4a"' :
+                                        'id="xs-injectables-links-module-GraphQLModule-db67a76b690df0214e3cbf6c1a2f6e4a"' }>
                                         <li class="link">
                                             <a href="injectables/GraphqlSubscriptionService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>GraphqlSubscriptionService</a>
