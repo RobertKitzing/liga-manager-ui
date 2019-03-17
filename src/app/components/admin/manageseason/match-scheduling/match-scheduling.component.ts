@@ -119,7 +119,7 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
       async (match) => {
         console.log(match);
         try {
-          await this.matchService.locateMatch(match.id, match.pitch.id);
+          await this.matchService.locateMatch(match.id, match.pitch);
           await this.matchService.scheduleMatch(match.id, match.kickoff);
         } catch (error) {
           console.error(error);

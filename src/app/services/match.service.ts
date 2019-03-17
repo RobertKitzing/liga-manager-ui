@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match } from '../../api/graphql';
+import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match, Pitch } from '../../api/graphql';
 import { SeasonService } from './season.service';
 
 @Injectable({
@@ -120,23 +120,36 @@ export class MatchService {
     );
   }
 
-  locateMatch(matchId: string, pitchId: string): Promise<void> {
+  locateMatch(matchId: string, pitch: Pitch.Fragment): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
         this.locateMatchQGL.mutate(
           {
             match_id: matchId,
-            pitch_id: pitchId
+            pitch_id: pitch.id
           },
           {
-            refetchQueries: [
-              {
-                query: this.matchPlanQGL.document,
-                variables: {
-                  id: this.seasonService.currentSeason.getValue().id
+            update: (store, { data }) => {
+              const match: any = store.readFragment(
+                {
+                  fragmentName: 'Match',
+                  fragment: MatchFragment,
+                  id: `Match:${matchId}`
                 }
-              }
-            ]
+              );
+              store.writeFragment(
+                {
+                  fragmentName: 'Match',
+                  fragment: MatchFragment,
+                  id: `Match:${matchId}`,
+                  data: {
+                    __typename: 'Match',
+                    ...match,
+                    pitch: pitch
+                  }
+                }
+              );
+            }
           }
         ).subscribe(
           () => {

@@ -62,7 +62,7 @@ export class EditmatchPitchComponent implements OnInit {
 
   async onSaveClicked() {
     try {
-      await this.matchService.locateMatch(this.match.id, this.newMatchPitch.value.id);
+      await this.matchService.locateMatch(this.match.id, this.newMatchPitch.value);
       this.dialogRef.close(true);
     } catch (error) {
       console.error(error);

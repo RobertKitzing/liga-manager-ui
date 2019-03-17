@@ -48,7 +48,7 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
     {
       lazy: true,
       reconnect: true,
-      reconnectionAttempts: 3
+      reconnectionAttempts: 2
     });
   const wsClient = new WebSocketLink(ownService.subscriptionClient);
 
