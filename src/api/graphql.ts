@@ -277,6 +277,20 @@ export namespace LatestEvent {
   export type LatestEvents = Event.Fragment;
 }
 
+export namespace Match {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    match: Maybe<Match>;
+  };
+
+  export type Match = Match.Fragment;
+}
+
 export namespace MatchPlan {
   export type Variables = {
     id: string;
@@ -314,63 +328,7 @@ export namespace Ranking {
     season: Maybe<Season>;
   };
 
-  export type Season = {
-    __typename?: "Season";
-
-    id: Maybe<string>;
-
-    ranking: Maybe<Ranking>;
-  };
-
-  export type Ranking = {
-    __typename?: "Ranking";
-
-    updated_at: Maybe<string>;
-
-    positions: Maybe<(Maybe<Positions>)[]>;
-
-    penalties: Maybe<(Maybe<Penalties>)[]>;
-  };
-
-  export type Positions = {
-    __typename?: "RankingPosition";
-
-    team: Maybe<Team>;
-
-    sort_index: Maybe<number>;
-
-    number: Maybe<number>;
-
-    matches: Maybe<number>;
-
-    wins: Maybe<number>;
-
-    draws: Maybe<number>;
-
-    losses: Maybe<number>;
-
-    scored_goals: Maybe<number>;
-
-    conceded_goals: Maybe<number>;
-
-    points: Maybe<number>;
-  };
-
-  export type Team = Team.Fragment;
-
-  export type Penalties = {
-    __typename?: "RankingPenalty";
-
-    team: Maybe<_Team>;
-
-    reason: Maybe<string>;
-
-    created_at: Maybe<string>;
-
-    points: Maybe<number>;
-  };
-
-  export type _Team = Team.Fragment;
+  export type Season = Ranking.Fragment;
 }
 
 export namespace AllSeasonsList {
@@ -382,15 +340,7 @@ export namespace AllSeasonsList {
     allSeasons: Maybe<(Maybe<AllSeasons>)[]>;
   };
 
-  export type AllSeasons = {
-    __typename?: "Season";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-
-    state: Maybe<SeasonState>;
-  };
+  export type AllSeasons = AllSeasons.Fragment;
 }
 
 export namespace AllTeams {
@@ -414,13 +364,7 @@ export namespace AllTournamentList {
     allTournaments: Maybe<(Maybe<AllTournaments>)[]>;
   };
 
-  export type AllTournaments = {
-    __typename?: "Tournament";
-
-    id: Maybe<string>;
-
-    name: Maybe<string>;
-  };
+  export type AllTournaments = AllTournaments.Fragment;
 }
 
 export namespace Tournament {
@@ -571,6 +515,28 @@ export namespace Season {
   export type MatchDays = MatchDay.Fragment;
 }
 
+export namespace AllSeasons {
+  export type Fragment = {
+    __typename?: "Season";
+
+    id: Maybe<string>;
+
+    name: Maybe<string>;
+
+    state: Maybe<SeasonState>;
+  };
+}
+
+export namespace AllTournaments {
+  export type Fragment = {
+    __typename?: "Tournament";
+
+    id: Maybe<string>;
+
+    name: Maybe<string>;
+  };
+}
+
 export namespace Tournament {
   export type Fragment = {
     __typename?: "Tournament";
@@ -615,6 +581,66 @@ export namespace Event {
 
     type: Maybe<string>;
   };
+}
+
+export namespace Ranking {
+  export type Fragment = {
+    __typename?: "Season";
+
+    id: Maybe<string>;
+
+    ranking: Maybe<Ranking>;
+  };
+
+  export type Ranking = {
+    __typename?: "Ranking";
+
+    updated_at: Maybe<string>;
+
+    positions: Maybe<(Maybe<Positions>)[]>;
+
+    penalties: Maybe<(Maybe<Penalties>)[]>;
+  };
+
+  export type Positions = {
+    __typename?: "RankingPosition";
+
+    team: Maybe<Team>;
+
+    sort_index: Maybe<number>;
+
+    number: Maybe<number>;
+
+    matches: Maybe<number>;
+
+    wins: Maybe<number>;
+
+    draws: Maybe<number>;
+
+    losses: Maybe<number>;
+
+    scored_goals: Maybe<number>;
+
+    conceded_goals: Maybe<number>;
+
+    points: Maybe<number>;
+  };
+
+  export type Team = Team.Fragment;
+
+  export type Penalties = {
+    __typename?: "RankingPenalty";
+
+    team: Maybe<_Team>;
+
+    reason: Maybe<string>;
+
+    created_at: Maybe<string>;
+
+    points: Maybe<number>;
+  };
+
+  export type _Team = Team.Fragment;
 }
 
 // ====================================================
@@ -717,6 +743,21 @@ export const SeasonFragment = gql`
   ${MatchDayFragment}
 `;
 
+export const AllSeasonsFragment = gql`
+  fragment AllSeasons on Season {
+    id
+    name
+    state
+  }
+`;
+
+export const AllTournamentsFragment = gql`
+  fragment AllTournaments on Tournament {
+    id
+    name
+  }
+`;
+
 export const TournamentFragment = gql`
   fragment Tournament on Tournament {
     id
@@ -750,6 +791,39 @@ export const EventFragment = gql`
     occurred_at
     type
   }
+`;
+
+export const RankingFragment = gql`
+  fragment Ranking on Season {
+    id
+    ranking {
+      updated_at
+      positions {
+        team {
+          ...Team
+        }
+        sort_index
+        number
+        matches
+        wins
+        draws
+        losses
+        scored_goals
+        conceded_goals
+        points
+      }
+      penalties {
+        team {
+          ...Team
+        }
+        reason
+        created_at
+        points
+      }
+    }
+  }
+
+  ${TeamFragment}
 `;
 
 // ====================================================
@@ -1044,6 +1118,20 @@ export class LatestEventGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class MatchGQL extends Apollo.Query<Match.Query, Match.Variables> {
+  document: any = gql`
+    query Match($id: String!) {
+      match(id: $id) {
+        ...Match
+      }
+    }
+
+    ${MatchFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class MatchPlanGQL extends Apollo.Query<
   MatchPlan.Query,
   MatchPlan.Variables
@@ -1079,36 +1167,11 @@ export class RankingGQL extends Apollo.Query<Ranking.Query, Ranking.Variables> {
   document: any = gql`
     query Ranking($id: String!) {
       season(id: $id) {
-        id
-        ranking {
-          updated_at
-          positions {
-            team {
-              ...Team
-            }
-            sort_index
-            number
-            matches
-            wins
-            draws
-            losses
-            scored_goals
-            conceded_goals
-            points
-          }
-          penalties {
-            team {
-              ...Team
-            }
-            reason
-            created_at
-            points
-          }
-        }
+        ...Ranking
       }
     }
 
-    ${TeamFragment}
+    ${RankingFragment}
   `;
 }
 @Injectable({
@@ -1121,11 +1184,11 @@ export class AllSeasonsListGQL extends Apollo.Query<
   document: any = gql`
     query AllSeasonsList {
       allSeasons {
-        id
-        name
-        state
+        ...AllSeasons
       }
     }
+
+    ${AllSeasonsFragment}
   `;
 }
 @Injectable({
@@ -1155,10 +1218,11 @@ export class AllTournamentListGQL extends Apollo.Query<
   document: any = gql`
     query AllTournamentList {
       allTournaments {
-        id
-        name
+        ...AllTournaments
       }
     }
+
+    ${AllTournamentsFragment}
   `;
 }
 @Injectable({
@@ -1213,23 +1277,3 @@ export class AllUsersGQL extends Apollo.Query<
 // ====================================================
 // END: Apollo Angular template
 // ====================================================
-
-export interface IntrospectionResultData {
-  __schema: {
-    types: {
-      kind: string;
-      name: string;
-      possibleTypes: {
-        name: string;
-      }[];
-    }[];
-  };
-}
-
-const result: IntrospectionResultData = {
-  __schema: {
-    types: []
-  }
-};
-
-export default result;

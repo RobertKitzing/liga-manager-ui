@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match, Pitch } from '../../api/graphql';
 import { SeasonService } from './season.service';
+import { Apollo } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MatchService {
     private scheduleMatchGQL: ScheduleMatchGQL,
     private locateMatchQGL: LocateMatchGQL,
     private seasonService: SeasonService,
-    private matchPlanQGL: MatchPlanGQL
+    private matchPlanGQL: MatchPlanGQL
   ) { }
 
   public isMatchPlayed(match: Match.Fragment): boolean {
@@ -35,18 +36,19 @@ export class MatchService {
           },
           {
             update: (store, { data }) => {
+              const fragment = {
+                fragmentName: 'Match',
+                fragment: MatchFragment,
+                id: `Match:${matchId}`
+              };
               const match: any = store.readFragment(
                 {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`
+                  ...fragment
                 }
               );
               store.writeFragment(
                 {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`,
+                  ...fragment,
                   data: {
                     __typename: 'Match',
                     ...match,
@@ -54,15 +56,7 @@ export class MatchService {
                   }
                 }
               );
-            },
-            refetchQueries: [
-              {
-                query: this.rankingQGL.document,
-                variables: {
-                  id: this.seasonService.currentSeason.getValue().id
-                }
-              }
-            ]
+            }
           }
         ).subscribe(
           () => {

@@ -6,7 +6,7 @@
     <div class="col-9 col-sm-4 text-center">
       <app-seasonchooser (seasonChanged)="handleGetMatches()"></app-seasonchooser>
     </div>
-    <ng-container *ngIf="(matchesQGL | async) as matches; else loading">
+    <ng-container *ngIf="(matchesGQL | async) as matches; else loading">
       <div class="col-3 col-sm-2 text-right">
         <mat-form-field style="max-width: 7ch;">
           <mat-select #matchDaySelect [(value)]="selectedMatchDayId" (selectionChange)="handleGetMatches()" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
@@ -47,13 +47,13 @@
       </div>
     </ng-container>
   </div>
-  <ng-container *ngIf="(matchesQGL | async) as matches">
+  <ng-container *ngIf="(matchesGQL | async) as matches">
     <ng-container *ngFor="let matchDay of filterMatchDays(matches.match_days)">
         <h3 class="text-center">
           {{ 'MATCHDAY' | translate:{matchDay: matchDay.number} }}
         </h3>
         <ng-container *ngFor="let match of filterMatches(matchDay.matches)">
-          <app-match [match]="match" [hideIfPlayed]="hidePlayed"></app-match>
+          <app-match [match]="match" [hideIfPlayed]="hidePlayed" (matchUpdated)="matchUpdated($event)"></app-match>
         </ng-container>
       </ng-container>
   </ng-container>

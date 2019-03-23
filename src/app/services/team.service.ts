@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TeamsGQL, Team, AllTeamsGQL } from '../../api/graphql';
+import { TeamsGQL, Team, AllTeamsGQL, RenameTeamGQL, TeamFragment } from '../../api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as uuid from 'uuid/v4';
@@ -20,7 +20,8 @@ export class TeamService {
 
   constructor(
     private teamsQL: TeamsGQL,
-    private allTeamsGQL: AllTeamsGQL
+    private allTeamsGQL: AllTeamsGQL,
+    private renameTeamGQL: RenameTeamGQL
   ) {
   }
 
@@ -56,5 +57,41 @@ export class TeamService {
         );
       }
     );
+  }
+
+  async renameTeam(teamId: string, newName: string) {
+    try {
+      await this.renameTeamGQL.mutate(
+        {
+          team_id: teamId,
+          new_name: newName
+        },
+        {
+          update: (store, { data }) => {
+            const team: any = store.readFragment(
+              {
+                fragmentName: 'Team',
+                fragment: TeamFragment,
+                id: `Team:${teamId}`
+              }
+            );
+            store.writeFragment(
+              {
+                fragmentName: 'Team',
+                fragment: TeamFragment,
+                id: `Team:${teamId}`,
+                data: {
+                  __typename: 'Team',
+                  ...team,
+                  name: newName
+                }
+              }
+            );
+          },
+        }
+      ).toPromise();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

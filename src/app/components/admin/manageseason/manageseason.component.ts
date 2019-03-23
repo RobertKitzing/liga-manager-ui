@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import {
   AllSeasonsList, Match,
   MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
-  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL
+  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL
 } from '../../../../api/graphql';
 import { I18Service } from 'src/app/services/i18.service';
 
@@ -40,9 +40,10 @@ export class ManageseasonComponent implements OnInit {
     private matchPlanGQL: MatchPlanGQL,
     private removeTeamGQL: RemoveTeamFromSeasonGQL,
     private addTeamGQL: AddTeamToSeasonGQL,
-    private startSeasonGQL: StartSeasonGQL
+    private startSeasonGQL: StartSeasonGQL,
+    private allSeasonsListGQL: AllSeasonsListGQL
   ) {
-    this.seasonList = this.seasonService.seasonsQGL.valueChanges.pipe(
+    this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
         ({ data }) => {
           return data.allSeasons.sort(

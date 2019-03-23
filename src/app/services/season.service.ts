@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Season, AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from '../../api/graphql';
+import { AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from '../../api/graphql';
 import * as uuid from 'uuid/v4';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeasonService {
-
-  seasonsQGL = this.allSeasonsListGQL.watch();
 
   private get _currentSeason(): AllSeasonsList.AllSeasons {
     return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || '';
@@ -60,7 +58,7 @@ export class SeasonService {
     );
   }
 
-  seasonCompare(c1: Season.Fragment, c2: Season.Fragment) {
+  seasonCompare(c1: any, c2: any) {
     return c1 && c2 && c1.id === c2.id;
   }
 }

@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+
 import { setContext } from 'apollo-link-context';
 import { HttpHeaders } from '@angular/common/http';
-import { toIdValue, getMainDefinition } from 'apollo-utilities';
-import { AuthenticationService, Credentials } from './services/authentication.service';
+import { getMainDefinition } from 'apollo-utilities';
+import { AuthenticationService } from './services/authentication.service';
 import { WebSocketLink } from 'apollo-link-ws';
 import { split, ApolloLink } from 'apollo-link';
 import { environment } from '../environments/environment';
 import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
+
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { persistCache } from 'apollo-cache-persist';
 
 const uri = environment.graphqlUrl; // <-- add the URL of the GraphQL server here
 
@@ -19,6 +22,9 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
   const afterwareLink = new ApolloLink((operation, forward) => {
     return forward(operation).map(response => {
       const { response: { headers } } = operation.getContext();
+      if (response.errors && response.errors.some(x => x.message.includes('Unauthenticated')) ) {
+        authService.logout();
+      }
       if (headers) {
         const token = headers.get('x-token');
         if (token) {
@@ -61,14 +67,22 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
     wsClient,
     afterwareLink.concat(auth).concat(http),
   );
+
   const cache = new InMemoryCache(
     {
       addTypename: true
     }
   );
+  persistCache({
+    cache,
+    storage: window.localStorage,
+    key: 'graphql-cache',
+    debug: !environment.production
+  });
   return {
     link: link,
-    cache: cache
+    cache: cache,
+    connectToDevTools: !environment.production
   };
 }
 

@@ -35,7 +35,7 @@
           <h3 *ngSwitchDefault>{{ round.number + 1 }}. {{ 'ROUND' | translate }}</h3>
         </ng-container>
         <ng-container *ngFor="let match of round.matches">
-          <app-match [match]="match" [tournament]="true"></app-match>
+          <app-match [match]="match" [tournament]="true" (matchUpdated)="matchUpdated($event)"></app-match>
         </ng-container>
       </div>
     </ng-container>

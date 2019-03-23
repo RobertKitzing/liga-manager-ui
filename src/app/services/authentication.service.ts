@@ -56,6 +56,7 @@ export class AuthenticationService {
           }
         ).subscribe(
           (result) => {
+            console.log(result);
             this.user = result.data.authenticatedUser;
             resolve(true);
           },
@@ -70,7 +71,7 @@ export class AuthenticationService {
   async loadUser(): Promise<User.AuthenticatedUser> {
     return new Promise<User.AuthenticatedUser>(
       (resolve, reject) => {
-        this.userQGL.watch().valueChanges.subscribe(
+        this.userQGL.fetch().subscribe(
           (result) => {
             this.user = result.data.authenticatedUser;
             resolve(result.data.authenticatedUser);

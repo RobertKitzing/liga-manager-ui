@@ -60,13 +60,13 @@
     </div>
 </div>
 <mat-menu #editMenu [overlapTrigger]="false">
-    <button mat-menu-item (click)="openEditResultDialog(match)">
+    <button mat-menu-item (click)="openEditResultDialog()">
         {{ 'BUTTON.EDIT_RESULT' | translate }}
     </button>
-    <button mat-menu-item (click)="openEditPitchDialog(match)">
+    <button mat-menu-item (click)="openEditPitchDialog()">
         {{ 'BUTTON.EDIT_PITCH' | translate }}
     </button>
-    <button mat-menu-item (click)="openEditTimeDialog(match)">
+    <button mat-menu-item (click)="openEditTimeDialog()">
         {{ 'BUTTON.EDIT_TIME' | translate }}
     </button>
 </mat-menu>

@@ -9,7 +9,7 @@ generates:
       - "typescript-client"
       - "typescript-apollo-angular"
       - "fragment-matcher"
-  ./server/src/generated/types.d.ts:
+  ./server/graphql/src/generated/types.d.ts:
     plugins:
       - add: "/* tslint:disable */"
       - typescript-common

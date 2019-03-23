@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContactComponent } from '../contact/contact.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -22,6 +22,8 @@ export class MatchComponent implements OnInit {
   @Input() tournament: boolean;
   @Input() hideIfPlayed: boolean;
 
+  @Output() matchUpdated = new EventEmitter<string>();
+
   constructor(
     public dialog: MatDialog,
     public authService: AuthenticationService,
@@ -34,9 +36,9 @@ export class MatchComponent implements OnInit {
   ngOnInit() {
   }
 
-  openEditResultDialog(match: Match.Fragment) {
+  openEditResultDialog() {
     const dialogRef = this.dialog.open(EditmatchResultComponent, {
-      data: match,
+      data: this.match,
       panelClass: 'my-full-screen-dialog'
     });
 
@@ -49,13 +51,14 @@ export class MatchComponent implements OnInit {
             },
             panelClass: ['alert', 'alert-success']
           });
+          this.matchUpdated.emit(this.match.id);
         }
       });
   }
 
-  openEditPitchDialog(match: Match.Fragment) {
+  openEditPitchDialog() {
     const dialogRef = this.dialog.open(EditmatchPitchComponent, {
-      data: match, panelClass: 'my-full-screen-dialog'
+      data: this.match, panelClass: 'my-full-screen-dialog'
     });
 
     dialogRef.afterClosed().subscribe(
@@ -67,13 +70,14 @@ export class MatchComponent implements OnInit {
             },
             panelClass: ['alert', 'alert-success']
           });
+          this.matchUpdated.emit(this.match.id);
         }
       });
   }
 
-  openEditTimeDialog(match: Match.Fragment) {
+  openEditTimeDialog() {
     const dialogRef = this.dialog.open(EditmatchTimeComponent, {
-      data: match, panelClass: 'my-full-screen-dialog'
+      data: this.match, panelClass: 'my-full-screen-dialog'
     });
 
     dialogRef.afterClosed().subscribe(
@@ -85,6 +89,7 @@ export class MatchComponent implements OnInit {
             },
             panelClass: ['alert', 'alert-success']
           });
+          this.matchUpdated.emit(this.match.id);
         }
       });
   }

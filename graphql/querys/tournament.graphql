@@ -1,7 +1,6 @@
 query AllTournamentList {
   allTournaments {
-    id
-    name
+    ...AllTournaments
   }
 }
 

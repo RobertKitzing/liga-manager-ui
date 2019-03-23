@@ -1,31 +1,5 @@
 query Ranking($id: String!) {
   season(id: $id) {
-    id
-    ranking {
-      updated_at
-      positions {
-        team {
-          ...Team
-        }
-        sort_index
-        number
-        matches
-        wins
-        draws
-        losses
-        scored_goals
-        conceded_goals
-        points
-        
-      }
-      penalties {
-        team {
-          ...Team
-        }
-        reason
-        created_at
-        points
-      }
-    }
+    ...Ranking
   }
 }

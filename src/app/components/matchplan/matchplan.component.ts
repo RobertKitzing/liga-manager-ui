@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { I18Service } from '../../services/i18.service';
 import { Observable } from 'rxjs';
-import { MatchPlanGQL, MatchPlan, Match, MatchDay } from '../../../api/graphql';
+import { MatchPlanGQL, MatchPlan, Match, MatchDay, RankingGQL, MatchGQL } from '../../../api/graphql';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 })
 export class MatchplanComponent implements OnInit {
 
-  public matchesQGL: Observable<MatchPlan.Season>;
+  public matchesGQL: Observable<MatchPlan.Season>;
 
   public get hidePlayed(): boolean {
     return JSON.parse(localStorage.getItem('HIDE_PLAYED'));
@@ -44,7 +44,9 @@ export class MatchplanComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     public i18Service: I18Service,
-    public matchPlanQGL: MatchPlanGQL
+    public matchPlanGQL: MatchPlanGQL,
+    private rankingGQL: RankingGQL,
+    private matchGQL: MatchGQL
   ) { }
 
   ngOnInit() {
@@ -68,7 +70,8 @@ export class MatchplanComponent implements OnInit {
   }
 
   handleGetMatches() {
-    this.matchesQGL = this.matchPlanQGL.watch({ id: this.seasonService.currentSeason.getValue().id }).valueChanges.pipe(
+    this.matchesGQL = this.matchPlanGQL.watch(
+      { id: this.seasonService.currentSeason.getValue().id } ).valueChanges.pipe(
       map(
         ({ data }) => {
           data.season.teams = data.season.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
@@ -82,5 +85,12 @@ export class MatchplanComponent implements OnInit {
         }
       )
     );
+  }
+
+  matchUpdated(matchId: string) {
+    this.matchPlanGQL.watch(
+      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+    this.rankingGQL.watch(
+      { id: this.seasonService.currentSeason.getValue().id }).refetch();
   }
 }

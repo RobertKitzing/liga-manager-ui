@@ -36,6 +36,14 @@ export class TournamentComponent implements OnInit {
     }
   }
 
+  matchUpdated(matchId: string) {
+    this.tournamentQGL.watch(
+      {
+        id: this.tournamentId
+      }
+    ).refetch();
+  }
+
   tournamentChanged() {
 
     this.tournament = this.tournamentQGL.watch(

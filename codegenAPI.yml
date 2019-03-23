@@ -8,4 +8,5 @@ generates:
       - "typescript-common"
       - "typescript-client"
       - "typescript-apollo-angular"
+  src/api/introspection-result.ts:
       - "fragment-matcher"
