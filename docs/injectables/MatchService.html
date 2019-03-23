@@ -377,7 +377,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>locateMatch(matchId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, pitchId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>locateMatch(matchId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, pitch: Pitch.Fragment)</code>
                 </td>
             </tr>
 
@@ -417,9 +417,9 @@
 
                                 </tr>
                                 <tr>
-                                    <td>pitchId</td>
+                                    <td>pitch</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <code>Pitch.Fragment</code>
                                     </td>
 
                                     <td>
@@ -627,7 +627,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match } from &#x27;../../api/graphql&#x27;;
+import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match, Pitch } from &#x27;../../api/graphql&#x27;;
 import { SeasonService } from &#x27;./season.service&#x27;;
 
 @Injectable({
@@ -748,23 +748,36 @@ export class MatchService {
     );
   }
 
-  locateMatch(matchId: string, pitchId: string): Promise&lt;void&gt; {
+  locateMatch(matchId: string, pitch: Pitch.Fragment): Promise&lt;void&gt; {
     return new Promise&lt;void&gt;(
       (resolve, reject) &#x3D;&gt; {
         this.locateMatchQGL.mutate(
           {
             match_id: matchId,
-            pitch_id: pitchId
+            pitch_id: pitch.id
           },
           {
-            refetchQueries: [
-              {
-                query: this.matchPlanQGL.document,
-                variables: {
-                  id: this.seasonService.currentSeason.getValue().id
+            update: (store, { data }) &#x3D;&gt; {
+              const match: any &#x3D; store.readFragment(
+                {
+                  fragmentName: &#x27;Match&#x27;,
+                  fragment: MatchFragment,
+                  id: &#x60;Match:${matchId}&#x60;
                 }
-              }
-            ]
+              );
+              store.writeFragment(
+                {
+                  fragmentName: &#x27;Match&#x27;,
+                  fragment: MatchFragment,
+                  id: &#x60;Match:${matchId}&#x60;,
+                  data: {
+                    __typename: &#x27;Match&#x27;,
+                    ...match,
+                    pitch: pitch
+                  }
+                }
+              );
+            }
           }
         ).subscribe(
           () &#x3D;&gt; {
