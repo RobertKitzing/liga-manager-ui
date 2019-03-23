@@ -135,11 +135,11 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#matchesQGL">matchesQGL</a>
+                                <a href="#matchesGQL">matchesGQL</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#matchPlanQGL">matchPlanQGL</a>
+                                <a href="#matchPlanGQL">matchPlanGQL</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -165,6 +165,9 @@
                             </li>
                             <li>
                                 <a href="#handleGetMatches">handleGetMatches</a>
+                            </li>
+                            <li>
+                                <a href="#matchUpdated">matchUpdated</a>
                             </li>
                             <li>
                                 <a href="#ngOnInit">ngOnInit</a>
@@ -210,7 +213,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, matchPlanQGL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>)</code>
+<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, rankingGQL: <a href="../injectables/RankingGQL.html">RankingGQL</a>, matchGQL: <a href="../injectables/MatchGQL.html">MatchGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -257,10 +260,34 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>matchPlanQGL</td>
+                                                        <td>matchPlanGQL</td>
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/MatchPlanGQL.html" target="_self" >MatchPlanGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>rankingGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/RankingGQL.html" target="_self" >RankingGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>matchGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MatchGQL.html" target="_self" >MatchGQL</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -308,8 +335,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:58</a></div>
                 </td>
             </tr>
 
@@ -378,8 +405,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="62"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:62</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:64</a></div>
                 </td>
             </tr>
 
@@ -448,8 +475,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="70"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:70</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:72</a></div>
                 </td>
             </tr>
 
@@ -460,6 +487,76 @@
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="matchUpdated"></a>
+                    <span class="name">
+                        <b>
+                            matchUpdated
+                        </b>
+                        <a href="#matchUpdated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>matchUpdated(matchId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>matchId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -487,8 +584,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:50</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:52</a></div>
                 </td>
             </tr>
 
@@ -542,12 +639,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="matchesQGL"></a>
+                        <a name="matchesGQL"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            matchesQGL</b>
-                            <a href="#matchesQGL"><span class="icon ion-ios-link"></span></a>
+                            matchesGQL</b>
+                            <a href="#matchesGQL"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
@@ -570,12 +667,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="matchPlanQGL"></a>
+                        <a name="matchPlanGQL"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            matchPlanQGL</b>
-                            <a href="#matchPlanQGL"><span class="icon ion-ios-link"></span></a>
+                            matchPlanGQL</b>
+                            <a href="#matchPlanGQL"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
@@ -866,7 +963,7 @@
 import { SeasonService } from &#x27;../../services/season.service&#x27;;
 import { I18Service } from &#x27;../../services/i18.service&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { MatchPlanGQL, MatchPlan, Match, MatchDay } from &#x27;../../../api/graphql&#x27;;
+import { MatchPlanGQL, MatchPlan, Match, MatchDay, RankingGQL, MatchGQL } from &#x27;../../../api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 
 @Component({
@@ -876,7 +973,7 @@ import { map } from &#x27;rxjs/operators&#x27;;
 })
 export class MatchplanComponent implements OnInit {
 
-  public matchesQGL: Observable&lt;MatchPlan.Season&gt;;
+  public matchesGQL: Observable&lt;MatchPlan.Season&gt;;
 
   public get hidePlayed(): boolean {
     return JSON.parse(localStorage.getItem(&#x27;HIDE_PLAYED&#x27;));
@@ -908,7 +1005,9 @@ export class MatchplanComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     public i18Service: I18Service,
-    public matchPlanQGL: MatchPlanGQL
+    public matchPlanGQL: MatchPlanGQL,
+    private rankingGQL: RankingGQL,
+    private matchGQL: MatchGQL
   ) { }
 
   ngOnInit() {
@@ -932,7 +1031,8 @@ export class MatchplanComponent implements OnInit {
   }
 
   handleGetMatches() {
-    this.matchesQGL &#x3D; this.matchPlanQGL.watch({ id: this.seasonService.currentSeason.getValue().id }).valueChanges.pipe(
+    this.matchesGQL &#x3D; this.matchPlanGQL.watch(
+      { id: this.seasonService.currentSeason.getValue().id } ).valueChanges.pipe(
       map(
         ({ data }) &#x3D;&gt; {
           data.season.teams &#x3D; data.season.teams.sort((a, b) &#x3D;&gt; a.name.toLowerCase() &gt; b.name.toLowerCase() ? 1 : -1);
@@ -947,6 +1047,13 @@ export class MatchplanComponent implements OnInit {
       )
     );
   }
+
+  matchUpdated(matchId: string) {
+    this.matchPlanGQL.watch(
+      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+    this.rankingGQL.watch(
+      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+  }
 }
 </code></pre>
     </div>
@@ -960,7 +1067,7 @@ export class MatchplanComponent implements OnInit {
     &lt;div class&#x3D;&quot;col-9 col-sm-4 text-center&quot;&gt;
       &lt;app-seasonchooser (seasonChanged)&#x3D;&quot;handleGetMatches()&quot;&gt;&lt;/app-seasonchooser&gt;
     &lt;/div&gt;
-    &lt;ng-container *ngIf&#x3D;&quot;(matchesQGL | async) as matches; else loading&quot;&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;(matchesGQL | async) as matches; else loading&quot;&gt;
       &lt;div class&#x3D;&quot;col-3 col-sm-2 text-right&quot;&gt;
         &lt;mat-form-field style&#x3D;&quot;max-width: 7ch;&quot;&gt;
           &lt;mat-select #matchDaySelect [(value)]&#x3D;&quot;selectedMatchDayId&quot; (selectionChange)&#x3D;&quot;handleGetMatches()&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_MATCHDAY&#x27; | translate }}&quot;&gt;
@@ -1001,13 +1108,13 @@ export class MatchplanComponent implements OnInit {
       &lt;/div&gt;
     &lt;/ng-container&gt;
   &lt;/div&gt;
-  &lt;ng-container *ngIf&#x3D;&quot;(matchesQGL | async) as matches&quot;&gt;
+  &lt;ng-container *ngIf&#x3D;&quot;(matchesGQL | async) as matches&quot;&gt;
     &lt;ng-container *ngFor&#x3D;&quot;let matchDay of filterMatchDays(matches.match_days)&quot;&gt;
         &lt;h3 class&#x3D;&quot;text-center&quot;&gt;
           {{ &#x27;MATCHDAY&#x27; | translate:{matchDay: matchDay.number} }}
         &lt;/h3&gt;
         &lt;ng-container *ngFor&#x3D;&quot;let match of filterMatches(matchDay.matches)&quot;&gt;
-          &lt;app-match [match]&#x3D;&quot;match&quot; [hideIfPlayed]&#x3D;&quot;hidePlayed&quot;&gt;&lt;/app-match&gt;
+          &lt;app-match [match]&#x3D;&quot;match&quot; [hideIfPlayed]&#x3D;&quot;hidePlayed&quot; (matchUpdated)&#x3D;&quot;matchUpdated($event)&quot;&gt;&lt;/app-match&gt;
         &lt;/ng-container&gt;
       &lt;/ng-container&gt;
   &lt;/ng-container&gt;
@@ -1048,7 +1155,7 @@ export class MatchplanComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <ng-template #loading>    <mat-progress-bar *ngIf="seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>  </ng-template>  <div class="row justify-content-center">    <div class="col-9 col-sm-4 text-center">      <app-seasonchooser (seasonChanged)="handleGetMatches()"></app-seasonchooser>    </div>    <ng-container *ngIf="(matchesQGL | async) as matches; else loading">      <div class="col-3 col-sm-2 text-right">        <mat-form-field style="max-width: 7ch;">          <mat-select #matchDaySelect [(value)]="selectedMatchDayId" (selectionChange)="handleGetMatches()" placeholder="{{ \'PLACEHOLDER.SELECT_MATCHDAY\' | translate }}">            <mat-option [value]="\'0\'">              {{ \'ALL_MATCHDAYS\' | translate }}            </mat-option>            <mat-option *ngFor="let matchDay of matches.match_days" [value]="matchDay.id">              <div *ngIf="!matchDaySelect.panelOpen">{{ matchDay.number }}</div>              <div *ngIf="matchDaySelect.panelOpen">                {{ matchDay.number }} ({{ matchDay.start_date| date:\'shortDate\':\'\':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:\'shortDate\':\'\':i18Service.currentLang }})              </div>            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="col-9 col-sm-5 text-left">        <mat-form-field style="width: 100%;">          <mat-select #teamSelect [(value)]="selectedTeamId" (selectionChange)="handleGetMatches()" placeholder="{{ \'PLACEHOLDER.SELECT_TEAM\' | translate }}">            <mat-option [value]="\'0\'">              {{ \'ALL_TEAMS\' | translate }}            </mat-option>            <mat-option *ngFor="let team of matches.teams" [value]="team.id">              {{ team.name }}            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="col-3 col-sm-1 text-right">        <button mat-icon-button [matMenuTriggerFor]="filterMenu">          <mat-icon *ngIf="filterActive" color="primary">filter_list</mat-icon>          <mat-icon *ngIf="!filterActive">filter_list</mat-icon>        </button>        <mat-menu #filterMenu="matMenu" [overlapTrigger]="false">          <span mat-menu-item>            <mat-slide-toggle [(ngModel)]="hidePlayed">{{ \'HIDE_PLAYED_MATCHES\' | translate }}</mat-slide-toggle>          </span>        </mat-menu>      </div>    </ng-container>  </div>  <ng-container *ngIf="(matchesQGL | async) as matches">    <ng-container *ngFor="let matchDay of filterMatchDays(matches.match_days)">        <h3 class="text-center">          {{ \'MATCHDAY\' | translate:{matchDay: matchDay.number} }}        </h3>        <ng-container *ngFor="let match of filterMatches(matchDay.matches)">          <app-match [match]="match" [hideIfPlayed]="hidePlayed"></app-match>        </ng-container>      </ng-container>  </ng-container></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <ng-template #loading>    <mat-progress-bar *ngIf="seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>  </ng-template>  <div class="row justify-content-center">    <div class="col-9 col-sm-4 text-center">      <app-seasonchooser (seasonChanged)="handleGetMatches()"></app-seasonchooser>    </div>    <ng-container *ngIf="(matchesGQL | async) as matches; else loading">      <div class="col-3 col-sm-2 text-right">        <mat-form-field style="max-width: 7ch;">          <mat-select #matchDaySelect [(value)]="selectedMatchDayId" (selectionChange)="handleGetMatches()" placeholder="{{ \'PLACEHOLDER.SELECT_MATCHDAY\' | translate }}">            <mat-option [value]="\'0\'">              {{ \'ALL_MATCHDAYS\' | translate }}            </mat-option>            <mat-option *ngFor="let matchDay of matches.match_days" [value]="matchDay.id">              <div *ngIf="!matchDaySelect.panelOpen">{{ matchDay.number }}</div>              <div *ngIf="matchDaySelect.panelOpen">                {{ matchDay.number }} ({{ matchDay.start_date| date:\'shortDate\':\'\':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:\'shortDate\':\'\':i18Service.currentLang }})              </div>            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="col-9 col-sm-5 text-left">        <mat-form-field style="width: 100%;">          <mat-select #teamSelect [(value)]="selectedTeamId" (selectionChange)="handleGetMatches()" placeholder="{{ \'PLACEHOLDER.SELECT_TEAM\' | translate }}">            <mat-option [value]="\'0\'">              {{ \'ALL_TEAMS\' | translate }}            </mat-option>            <mat-option *ngFor="let team of matches.teams" [value]="team.id">              {{ team.name }}            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="col-3 col-sm-1 text-right">        <button mat-icon-button [matMenuTriggerFor]="filterMenu">          <mat-icon *ngIf="filterActive" color="primary">filter_list</mat-icon>          <mat-icon *ngIf="!filterActive">filter_list</mat-icon>        </button>        <mat-menu #filterMenu="matMenu" [overlapTrigger]="false">          <span mat-menu-item>            <mat-slide-toggle [(ngModel)]="hidePlayed">{{ \'HIDE_PLAYED_MATCHES\' | translate }}</mat-slide-toggle>          </span>        </mat-menu>      </div>    </ng-container>  </div>  <ng-container *ngIf="(matchesGQL | async) as matches">    <ng-container *ngFor="let matchDay of filterMatchDays(matches.match_days)">        <h3 class="text-center">          {{ \'MATCHDAY\' | translate:{matchDay: matchDay.number} }}        </h3>        <ng-container *ngFor="let match of filterMatches(matchDay.matches)">          <app-match [match]="match" [hideIfPlayed]="hidePlayed" (matchUpdated)="matchUpdated($event)"></app-match>        </ng-container>      </ng-container>  </ng-container></div></div>'
     var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MatchplanComponent'};

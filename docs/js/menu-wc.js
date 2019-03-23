@@ -214,13 +214,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/GraphQLModule.html" data-type="entity-link">GraphQLModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-GraphQLModule-ce02dce1ba0d61bf67dfd09c8f9b2513"' : 'data-target="#xs-injectables-links-module-GraphQLModule-ce02dce1ba0d61bf67dfd09c8f9b2513"' }>
+                                        'data-target="#injectables-links-module-GraphQLModule-7b57cbe8bdfb2bdaca8432e027e0e227"' : 'data-target="#xs-injectables-links-module-GraphQLModule-7b57cbe8bdfb2bdaca8432e027e0e227"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-GraphQLModule-ce02dce1ba0d61bf67dfd09c8f9b2513"' :
-                                        'id="xs-injectables-links-module-GraphQLModule-ce02dce1ba0d61bf67dfd09c8f9b2513"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-GraphQLModule-7b57cbe8bdfb2bdaca8432e027e0e227"' :
+                                        'id="xs-injectables-links-module-GraphQLModule-7b57cbe8bdfb2bdaca8432e027e0e227"' }>
                                         <li class="link">
                                             <a href="injectables/GraphqlSubscriptionService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>GraphqlSubscriptionService</a>
@@ -454,6 +454,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/LocateMatchGQL.html" data-type="entity-link">LocateMatchGQL</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/MatchGQL.html" data-type="entity-link">MatchGQL</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/MatchPlanGQL.html" data-type="entity-link">MatchPlanGQL</a>
                                 </li>
                                 <li class="link">
@@ -575,6 +578,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/LoginContext.html" data-type="entity-link">LoginContext</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/MatchEventPayload.html" data-type="entity-link">MatchEventPayload</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/RoundTeam.html" data-type="entity-link">RoundTeam</a>

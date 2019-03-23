@@ -455,7 +455,10 @@ export class TableComponent implements OnInit {
 
   getRanking() {
     this.rankingQGL &#x3D; this.ranking.watch({id: this.seasonService.currentSeason.getValue().id}).valueChanges.pipe(
-      map(({data}) &#x3D;&gt; data.season.ranking)
+      map(({data}) &#x3D;&gt; {
+        console.log(data);
+        return data.season.ranking;
+      })
     );
   }
 }

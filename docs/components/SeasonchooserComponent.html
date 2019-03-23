@@ -203,7 +203,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>)</code>
+<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, allSeasonsListGQL: <a href="../injectables/AllSeasonsListGQL.html">AllSeasonsListGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -230,6 +230,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/SeasonService.html" target="_self" >SeasonService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>allSeasonsListGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AllSeasonsListGQL.html" target="_self" >AllSeasonsListGQL</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -322,8 +334,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="34"
-                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:34</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:37</a></div>
                 </td>
             </tr>
 
@@ -392,8 +404,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="21"
-                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:21</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:24</a></div>
                 </td>
             </tr>
 
@@ -490,7 +502,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -506,7 +518,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Output, EventEmitter, Input } from &#x27;@angular/core&#x27;;
 import { SeasonService } from &#x27;../../../services/season.service&#x27;;
 import { MatSelectChange } from &#x27;@angular/material&#x27;;
-import { AllSeasonsList, SeasonState } from &#x27;src/api/graphql&#x27;;
+import { AllSeasonsList, SeasonState, AllSeasonsListGQL } from &#x27;src/api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 @Component({
@@ -521,7 +533,10 @@ export class SeasonchooserComponent implements OnInit {
   seasonList: Observable&lt;AllSeasonsList.AllSeasons[]&gt;;
   @Output() seasonChanged: EventEmitter&lt;AllSeasonsList.AllSeasons&gt; &#x3D; new EventEmitter&lt;AllSeasonsList.AllSeasons&gt;();
 
-  constructor(public seasonService: SeasonService) { }
+  constructor(
+    public seasonService: SeasonService,
+    private allSeasonsListGQL: AllSeasonsListGQL
+  ) { }
 
   ngOnInit() {
     this.seasonService.currentSeason.subscribe(
@@ -529,7 +544,7 @@ export class SeasonchooserComponent implements OnInit {
         this.season &#x3D; season;
       }
     );
-    this.seasonList &#x3D; this.seasonService.seasonsQGL.valueChanges.pipe(
+    this.seasonList &#x3D; this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
         ({ data }) &#x3D;&gt; data.allSeasons.filter(s &#x3D;&gt; s.state &#x3D;&#x3D;&#x3D; this.filterState)
       )

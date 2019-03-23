@@ -125,12 +125,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(redis: <a href="../injectables/RedisEventGQL.html">RedisEventGQL</a>, rankingQGL: <a href="../injectables/RankingGQL.html">RankingGQL</a>, eventsGQL: <a href="../injectables/LatestEventGQL.html">LatestEventGQL</a>)</code>
+<code>constructor(redis: <a href="../injectables/RedisEventGQL.html">RedisEventGQL</a>, rankingQGL: <a href="../injectables/RankingGQL.html">RankingGQL</a>, eventsGQL: <a href="../injectables/LatestEventGQL.html">LatestEventGQL</a>, matchQGL: <a href="../injectables/MatchGQL.html">MatchGQL</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/services/graphql-subscription.service.ts:35</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/services/graphql-subscription.service.ts:43</a></div>
                             </td>
                         </tr>
 
@@ -183,6 +183,42 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>matchQGL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MatchGQL.html" target="_self" >MatchGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>matchPlanGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MatchPlanGQL.html" target="_self" >MatchPlanGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>seasonService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SeasonService.html" target="_self" >SeasonService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -219,8 +255,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/app/services/graphql-subscription.service.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">src/app/services/graphql-subscription.service.ts:55</a></div>
                 </td>
             </tr>
 
@@ -263,7 +299,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/services/graphql-subscription.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/services/graphql-subscription.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -292,7 +328,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/graphql-subscription.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/services/graphql-subscription.service.ts:21</a></div>
                                 </td>
                             </tr>
 
@@ -303,7 +339,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/services/graphql-subscription.service.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/services/graphql-subscription.service.ts:24</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -349,7 +385,15 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { RedisEventGQL } from &#x27;src/api/graphqlsubs&#x27;;
 import { SubscriptionClient } from &#x27;subscriptions-transport-ws&#x27;;
-import { RankingGQL, LatestEventGQL } from &#x27;../../api/graphql&#x27;;
+import { RankingGQL, LatestEventGQL, MatchPlanGQL, MatchGQL } from &#x27;../../api/graphql&#x27;;
+import { SeasonService } from &#x27;./season.service&#x27;;
+
+export interface MatchEventPayload {
+  matchId: string;
+  homeScore: number;
+  guestScore: number;
+  userId: string;
+}
 
 @Injectable({
   providedIn: &#x27;root&#x27;,
@@ -385,7 +429,10 @@ export class GraphqlSubscriptionService {
   constructor(
     private redis: RedisEventGQL,
     private rankingQGL: RankingGQL,
-    private eventsGQL: LatestEventGQL
+    private eventsGQL: LatestEventGQL,
+    private matchQGL: MatchGQL,
+    private matchPlanGQL: MatchPlanGQL,
+    private seasonService: SeasonService
   ) {
   }
 
@@ -394,9 +441,15 @@ export class GraphqlSubscriptionService {
       async (message) &#x3D;&gt; {
         if (message.data) {
           console.log(message.data);
-          await this.eventsGQL.fetch(null, {
-            fetchPolicy: &#x27;network-only&#x27;
-          }).toPromise();
+          // await this.eventsGQL.fetch(null, {
+          //   fetchPolicy: &#x27;network-only&#x27;
+          // }).toPromise();
+          const msgType: string[] &#x3D; message.data.redisevent.type.split(&#x27;:&#x27;);
+          const payload: MatchEventPayload &#x3D; JSON.parse(message.data.redisevent.payload);
+          if (msgType[0] &#x3D;&#x3D;&#x3D; &#x27;match&#x27;) {
+            await this.matchQGL.fetch({ id: payload.matchId }).toPromise();
+            // await this.matchPlanGQL.fetch({id: this.seasonService.currentSeason.getValue().id}).toPromise();
+          }
         }
 
       },
