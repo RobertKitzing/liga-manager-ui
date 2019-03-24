@@ -28,6 +28,7 @@
 		"START_ROUND": "Start Round",
 		"START_SEASON": "Start Season"
 	},
+	"COMMON_ERROR": "Sorry, that didn't work. Please try again later",
 	"CONTACT": "Contact",
 	"CREATE_MATCH_DAYS_ERROR": "Matchdays not created",
 	"CREATE_MATCH_DAYS_SUCCESS": "Matchdays created",
@@ -53,6 +54,7 @@
 	"HIDE_PLAYED_MATCHES": "only open Matches",
 	"LAST_NAME": "Last Name",
 	"LAST_NAME_REQUIRED": "Please enter last Name",
+	"LAST_UPDATED_AT": "updated at",
 	"LIVE_UPDATES": "Live updates",
 	"LOCATION": "Address",
 	"LOGGED_IN_AS": "Logged in as <b>{{ email }}</b>",
@@ -67,6 +69,7 @@
 		"TOURNAMENT": "Tournament"
 	},
 	"NEW_KICKOFF_TIME": "New Kickoff",
+	"NEW_NAME": "New Name",
 	"NEW_PITCH": "New Pitch",
 	"NEW_PITCH_ADRESS": "Address of the Pitch",
 	"NEW_PITCH_LABEL": "Name of the Pitch",
@@ -117,6 +120,7 @@
 		"ADD_TEAM": "Team Management",
 		"ADD_USER": "Add User",
 		"CONTACT": "Team Contact",
+		"EVENTS": "History",
 		"MANAGE_SEASON": "Season Management",
 		"MANAGE_TOURNAMENT": "Tournament Management",
 		"MANAGE_USERS": "User Management",

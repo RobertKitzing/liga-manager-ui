@@ -28,6 +28,7 @@
 		"START_ROUND": "Runde starten",
 		"START_SEASON": "Saison starten"
 	},
+	"COMMON_ERROR": "Sorry, das hat leider nicht geklappt. Probiers doch später nochmal.",
 	"CONTACT": "Kontakt",
 	"CREATE_MATCH_DAYS_ERROR": "Spieltage konnten nicht angelegt werden",
 	"CREATE_MATCH_DAYS_SUCCESS": "Spieltage angelegt",
@@ -53,6 +54,7 @@
 	"HIDE_PLAYED_MATCHES": "nur offene Spiele",
 	"LAST_NAME": "Nachname",
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
+	"LAST_UPDATED_AT": "aktualisiert am:",
 	"LIVE_UPDATES": "Live updates",
 	"LOCATION": "Adresse",
 	"LOGGED_IN_AS": "Angemeldet als <b>{{ email }}</b>",
@@ -67,6 +69,7 @@
 		"TOURNAMENT": "Pokal"
 	},
 	"NEW_KICKOFF_TIME": "Neue Anstoßzeit",
+	"NEW_NAME": "Neuer Name",
 	"NEW_PITCH": "Neuer Spielort",
 	"NEW_PITCH_ADRESS": "Adresse des Spielorts",
 	"NEW_PITCH_LABEL": "Name des Spielortes",
@@ -117,6 +120,7 @@
 		"ADD_TEAM": "Team Verwaltung",
 		"ADD_USER": "Benutzer hinzufügen",
 		"CONTACT": "Team Kontakt",
+		"EVENTS": "Verlauf",
 		"MANAGE_SEASON": "Saison Verwaltung",
 		"MANAGE_TOURNAMENT": "Pokal Verwaltung",
 		"MANAGE_USERS": "Benutzer Verwaltung",

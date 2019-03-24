@@ -3,6 +3,13 @@
     <div class="col-6">
       <app-seasonchooser (seasonChanged)="getRanking()"></app-seasonchooser>
     </div>
+    <div class="col text-right">
+      <button mat-raised-button color="primary" (click)="refresh()">
+        <mat-icon>
+          refresh
+        </mat-icon>
+      </button>
+    </div>
   </div>
   <ng-container *ngIf="seasonService.currentSeason">
     <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive" style="scrollbar-x-position: top;">
@@ -31,11 +38,11 @@
         </tbody>
       </table>
       <div class="text-right" *ngIf="ranking.updated_at">
-        ({{ ranking.updated_at | date:'medium':'':i18Service.currentLang}})
+        {{ 'LAST_UPDATED_AT' | translate }}: ({{ ranking.updated_at | date:'medium':'':i18Service.currentLang}})
       </div>
     </div>
   </ng-container>
   <ng-template #loading>
-    <mat-progress-bar *ngIf="seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="!error && seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>
   </ng-template>
 </div>
