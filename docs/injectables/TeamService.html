@@ -105,6 +105,10 @@
                                     <span class="modifier">Async</span>
                                 <a href="#addNewTeam">addNewTeam</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#renameTeam">renameTeam</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -123,7 +127,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(teamsQL: <a href="../injectables/TeamsGQL.html">TeamsGQL</a>, allTeamsGQL: <a href="../injectables/AllTeamsGQL.html">AllTeamsGQL</a>)</code>
+<code>constructor(teamsQL: <a href="../injectables/TeamsGQL.html">TeamsGQL</a>, allTeamsGQL: <a href="../injectables/AllTeamsGQL.html">AllTeamsGQL</a>, renameTeamGQL: <a href="../injectables/RenameTeamGQL.html">RenameTeamGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -169,6 +173,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>renameTeamGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/RenameTeamGQL.html" target="_self" >RenameTeamGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -207,8 +223,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">src/app/services/team.service.ts:33</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">src/app/services/team.service.ts:34</a></div>
                 </td>
             </tr>
 
@@ -248,6 +264,90 @@
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renameTeam"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            renameTeam
+                        </b>
+                        <a href="#renameTeam"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>renameTeam(teamId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, newName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/services/team.service.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>teamId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>newName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                     </div>
                     <div class="io-description">
@@ -304,7 +404,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { TeamsGQL, Team, AllTeamsGQL } from &#x27;../../api/graphql&#x27;;
+import { TeamsGQL, Team, AllTeamsGQL, RenameTeamGQL, TeamFragment } from &#x27;../../api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import * as uuid from &#x27;uuid/v4&#x27;;
@@ -325,7 +425,8 @@ export class TeamService {
 
   constructor(
     private teamsQL: TeamsGQL,
-    private allTeamsGQL: AllTeamsGQL
+    private allTeamsGQL: AllTeamsGQL,
+    private renameTeamGQL: RenameTeamGQL
   ) {
   }
 
@@ -361,6 +462,42 @@ export class TeamService {
         );
       }
     );
+  }
+
+  async renameTeam(teamId: string, newName: string) {
+    try {
+      await this.renameTeamGQL.mutate(
+        {
+          team_id: teamId,
+          new_name: newName
+        },
+        {
+          update: (store, { data }) &#x3D;&gt; {
+            const team: any &#x3D; store.readFragment(
+              {
+                fragmentName: &#x27;Team&#x27;,
+                fragment: TeamFragment,
+                id: &#x60;Team:${teamId}&#x60;
+              }
+            );
+            store.writeFragment(
+              {
+                fragmentName: &#x27;Team&#x27;,
+                fragment: TeamFragment,
+                id: &#x60;Team:${teamId}&#x60;,
+                data: {
+                  __typename: &#x27;Team&#x27;,
+                  ...team,
+                  name: newName
+                }
+              }
+            );
+          },
+        }
+      ).toPromise();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 </code></pre>

@@ -145,16 +145,19 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
 import { ApolloModule, APOLLO_OPTIONS } from &#x27;apollo-angular&#x27;;
 import { HttpLinkModule, HttpLink } from &#x27;apollo-angular-link-http&#x27;;
-import { InMemoryCache } from &#x27;apollo-cache-inmemory&#x27;;
+
 import { setContext } from &#x27;apollo-link-context&#x27;;
 import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
-import { toIdValue, getMainDefinition } from &#x27;apollo-utilities&#x27;;
-import { AuthenticationService, Credentials } from &#x27;./services/authentication.service&#x27;;
+import { getMainDefinition } from &#x27;apollo-utilities&#x27;;
+import { AuthenticationService } from &#x27;./services/authentication.service&#x27;;
 import { WebSocketLink } from &#x27;apollo-link-ws&#x27;;
 import { split, ApolloLink } from &#x27;apollo-link&#x27;;
 import { environment } from &#x27;../environments/environment&#x27;;
 import { GraphqlSubscriptionService } from &#x27;src/app/services/graphql-subscription.service&#x27;;
 import { SubscriptionClient } from &#x27;subscriptions-transport-ws&#x27;;
+
+import { InMemoryCache } from &#x27;apollo-cache-inmemory&#x27;;
+import { persistCache } from &#x27;apollo-cache-persist&#x27;;
 
 const uri &#x3D; environment.graphqlUrl; // &lt;-- add the URL of the GraphQL server here
 
@@ -163,6 +166,9 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
   const afterwareLink &#x3D; new ApolloLink((operation, forward) &#x3D;&gt; {
     return forward(operation).map(response &#x3D;&gt; {
       const { response: { headers } } &#x3D; operation.getContext();
+      if (response.errors &amp;&amp; response.errors.some(x &#x3D;&gt; x.message.includes(&#x27;Unauthenticated&#x27;)) ) {
+        authService.logout();
+      }
       if (headers) {
         const token &#x3D; headers.get(&#x27;x-token&#x27;);
         if (token) {
@@ -205,14 +211,22 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
     wsClient,
     afterwareLink.concat(auth).concat(http),
   );
+
   const cache &#x3D; new InMemoryCache(
     {
       addTypename: true
     }
   );
+  persistCache({
+    cache,
+    storage: window.localStorage,
+    key: &#x27;graphql-cache&#x27;,
+    debug: !environment.production
+  });
   return {
     link: link,
-    cache: cache
+    cache: cache,
+    connectToDevTools: !environment.production
   };
 }
 

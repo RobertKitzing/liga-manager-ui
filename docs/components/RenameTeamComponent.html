@@ -174,12 +174,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(dialogRef: <a href="../components/RenameTeamComponent.html">MatDialogRef<RenameTeamComponent></a>, renameTeamGQL: <a href="../injectables/RenameTeamGQL.html">RenameTeamGQL</a>, team: Team.Fragment)</code>
+<code>constructor(dialogRef: <a href="../components/RenameTeamComponent.html">MatDialogRef<RenameTeamComponent></a>, teamService: <a href="../injectables/TeamService.html">TeamService</a>, team: Team.Fragment)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:11</a></div>
                             </td>
                         </tr>
 
@@ -209,10 +209,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>renameTeamGQL</td>
+                                                        <td>teamService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/RenameTeamGQL.html" target="_self" >RenameTeamGQL</a></code>
+                                                                        <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -272,8 +272,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="18"
-                            class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:18</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="19"
+                            class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:19</a></div>
                 </td>
             </tr>
 
@@ -313,8 +313,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:22</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="23"
+                            class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:23</a></div>
                 </td>
             </tr>
 
@@ -388,7 +388,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -425,7 +425,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin/addteam/rename-team/rename-team.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -441,6 +441,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject } from &#x27;@angular/core&#x27;;
 import { MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material&#x27;;
 import { Team, RenameTeamGQL, TeamFragment } from &#x27;src/api/graphql&#x27;;
+import { TeamService } from &#x27;../../../../services/team.service&#x27;;
 
 @Component({
   selector: &#x27;app-rename-team&#x27;,
@@ -451,7 +452,7 @@ export class RenameTeamComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef&lt;RenameTeamComponent&gt;,
-    private renameTeamGQL: RenameTeamGQL,
+    private teamService: TeamService,
     @Inject(MAT_DIALOG_DATA) public team: Team.Fragment
   ) { }
 
@@ -461,35 +462,7 @@ export class RenameTeamComponent implements OnInit {
 
   async renameTeam(newName: string) {
     try {
-      await this.renameTeamGQL.mutate(
-        {
-          team_id: this.team.id,
-          new_name: newName
-        },
-        {
-          update: (store, { data }) &#x3D;&gt; {
-            const team: any &#x3D; store.readFragment(
-              {
-                fragmentName: &#x27;Team&#x27;,
-                fragment: TeamFragment,
-                id: &#x60;Team:${this.team.id}&#x60;
-              }
-            );
-            store.writeFragment(
-              {
-                fragmentName: &#x27;Team&#x27;,
-                fragment: TeamFragment,
-                id: &#x60;Team:${this.team.id}&#x60;,
-                data: {
-                  __typename: &#x27;Team&#x27;,
-                  ...team,
-                  name: newName
-                }
-              }
-            );
-          },
-        }
-      ).toPromise();
+      await this.teamService.renameTeam(this.team.id, newName);
       this.dialogRef.close();
     } catch (error) {
       console.error(error);

@@ -77,9 +77,6 @@
                             <li>
                                 <a href="#currentSeason">currentSeason</a>
                             </li>
-                            <li>
-                                <a href="#seasonsQGL">seasonsQGL</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -137,7 +134,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/services/season.service.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/services/season.service.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -217,8 +214,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">src/app/services/season.service.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">src/app/services/season.service.ts:36</a></div>
                 </td>
             </tr>
 
@@ -280,15 +277,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>seasonCompare(c1: Season.Fragment, c2: Season.Fragment)</code>
+<code>seasonCompare(c1: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, c2: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="63"
-                            class="link-to-prism">src/app/services/season.service.ts:63</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/app/services/season.service.ts:61</a></div>
                 </td>
             </tr>
 
@@ -310,7 +307,7 @@
                                 <tr>
                                     <td>c1</td>
                                     <td>
-                                            <code>Season.Fragment</code>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
                                     </td>
 
                                     <td>
@@ -322,7 +319,7 @@
                                 <tr>
                                     <td>c2</td>
                                     <td>
-                                            <code>Season.Fragment</code>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
                                     </td>
 
                                     <td>
@@ -378,33 +375,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/services/season.service.ts:23</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="seasonsQGL"></a>
-                        <span class="name">
-                            <b>
-                            seasonsQGL</b>
-                            <a href="#seasonsQGL"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>this.allSeasonsListGQL.watch()</code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/services/season.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/services/season.service.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -433,7 +404,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/season.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/services/season.service.ts:11</a></div>
                                 </td>
                             </tr>
 
@@ -444,7 +415,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/season.service.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/season.service.ts:15</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -489,15 +460,13 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { BehaviorSubject } from &#x27;rxjs&#x27;;
-import { Season, AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from &#x27;../../api/graphql&#x27;;
+import { AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from &#x27;../../api/graphql&#x27;;
 import * as uuid from &#x27;uuid/v4&#x27;;
 
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class SeasonService {
-
-  seasonsQGL &#x3D; this.allSeasonsListGQL.watch();
 
   private get _currentSeason(): AllSeasonsList.AllSeasons {
     return JSON.parse(localStorage.getItem(&#x27;SELECTED_SEASON&#x27;)) || &#x27;&#x27;;
@@ -549,7 +518,7 @@ export class SeasonService {
     );
   }
 
-  seasonCompare(c1: Season.Fragment, c2: Season.Fragment) {
+  seasonCompare(c1: any, c2: any) {
     return c1 &amp;&amp; c2 &amp;&amp; c1.id &#x3D;&#x3D;&#x3D; c2.id;
   }
 }
