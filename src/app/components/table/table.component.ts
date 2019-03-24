@@ -28,10 +28,7 @@ export class TableComponent implements OnInit {
 
   getRanking() {
     this.rankingQGL = this.ranking.watch({id: this.seasonService.currentSeason.getValue().id}).valueChanges.pipe(
-      map(({data}) => {
-        console.log(data);
-        return data.season.ranking;
-      })
+      map(({data}) => data.season.ranking)
     );
   }
 }
