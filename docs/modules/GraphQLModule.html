@@ -214,7 +214,14 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
 
   const cache &#x3D; new InMemoryCache(
     {
-      addTypename: true
+      addTypename: true,
+      cacheRedirects: {
+        Query: {
+          allSeasons: (t, args, { getCacheKey }) &#x3D;&gt; {
+            return getCacheKey({ __typename: &#x27;Season&#x27; });
+          }
+        },
+      }
     }
   );
   persistCache({
