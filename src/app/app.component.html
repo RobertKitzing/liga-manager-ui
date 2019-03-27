@@ -28,10 +28,9 @@
       </li>
     </ul>
     <div class="navbar-text d-flex justify-content-end ml-auto">
-      <!-- <div class="led-box" data-toggle="tooltip" data-placement="top" title="{{ 'LIVE_UPDATES' | translate }}">
-        <div *ngIf="websocketService.numberConnected" class="led-green"></div>
-        <div *ngIf="!websocketService.numberConnected" class="led-red"></div>
-      </div> -->
+      <div class="led-box" data-toggle="tooltip" data-placement="top" title="{{ 'LIVE_UPDATES' | translate }}">
+        <div [ngClass]="{'led-green': graphSubscription.connected, 'led-red': !graphSubscription.connected}"></div>
+      </div>
       <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
         {{ 'BUTTON.LOGIN' | translate }}
       </button>
@@ -41,6 +40,11 @@
       </button>
       <button mat-icon-button [matMenuTriggerFor]="languageMenu">
         <mat-icon>language</mat-icon>
+      </button>
+      <button mat-icon-button (click)="refresh()">
+        <mat-icon>
+          refresh
+        </mat-icon>
       </button>
     </div>
   </div>

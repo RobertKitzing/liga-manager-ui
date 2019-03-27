@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as de from './i18n/de';
 import * as en from './i18n/en';
+import { LocalStorage } from 'ngx-store';
+
+const LANG_KEY = 'LANG';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +12,8 @@ import * as en from './i18n/en';
 export class I18Service {
 
   public availableLang: string[] = ['de', 'en'];
+
+  @LocalStorage(LANG_KEY) storedLang: string;
 
   public get currentLang(): string {
     return this.translateService.currentLang;
@@ -20,18 +25,17 @@ export class I18Service {
   init() {
     this.translateService.setTranslation('de', de);
     this.translateService.setTranslation('en', en);
-    let defaultLang = localStorage.getItem('LANG');
-    if (!defaultLang) {
-      defaultLang = this.translateService.getBrowserLang();
+    if (!this.storedLang) {
+      this.storedLang = this.translateService.getBrowserLang();
     }
-    if (!defaultLang) {
-      defaultLang = 'de';
+    if (!this.storedLang) {
+      this.storedLang = 'de';
     }
-    this.changeLang(defaultLang);
+    this.changeLang(this.storedLang);
   }
 
   changeLang(lang: string) {
-    localStorage.setItem('LANG', lang);
     this.translateService.use(lang);
+    this.storedLang = lang;
   }
 }

@@ -4,6 +4,11 @@ import { I18Service } from '../../services/i18.service';
 import { Observable } from 'rxjs';
 import { MatchPlanGQL, MatchPlan, Match, MatchDay, RankingGQL, MatchGQL } from '../../../api/graphql';
 import { map } from 'rxjs/operators';
+import { LocalStorage } from 'ngx-store';
+
+const HIDE_PLAYED_KEY = 'HIDE_PLAYED';
+const SELECTED_MATCHDAY_KEY = 'SELECTED_MATCHDAY';
+const SELECTED_TEAM_KEY = 'SELECTED_TEAM';
 
 @Component({
   selector: 'app-matchplan',
@@ -14,28 +19,11 @@ export class MatchplanComponent implements OnInit {
 
   public matchesGQL: Observable<MatchPlan.Season>;
 
-  public get hidePlayed(): boolean {
-    return JSON.parse(localStorage.getItem('HIDE_PLAYED'));
-  }
-  public set hidePlayed(value: boolean) {
-    localStorage.setItem('HIDE_PLAYED', value.toString());
-  }
+  @LocalStorage(HIDE_PLAYED_KEY) hidePlayed: boolean;
 
-  public set selectedMatchDayId(value: string) {
-    localStorage.setItem('SELECTED_MATCHDAY', value);
-  }
+  @LocalStorage(SELECTED_MATCHDAY_KEY) selectedMatchDayId = '0';
 
-  public get selectedMatchDayId(): string {
-    return localStorage.getItem('SELECTED_MATCHDAY') || '0';
-  }
-
-  public get selectedTeamId(): string {
-    return localStorage.getItem('SELECTED_TEAM') || '0';
-  }
-
-  public set selectedTeamId(value: string) {
-    localStorage.setItem('SELECTED_TEAM', value);
-  }
+  @LocalStorage(SELECTED_TEAM_KEY) selectedTeamId = '0';
 
   public get filterActive(): boolean {
     return this.hidePlayed;

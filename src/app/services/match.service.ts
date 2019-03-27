@@ -35,28 +35,28 @@ export class MatchService {
             ...result
           },
           {
-            update: (store, { data }) => {
-              const fragment = {
-                fragmentName: 'Match',
-                fragment: MatchFragment,
-                id: `Match:${matchId}`
-              };
-              const match: any = store.readFragment(
-                {
-                  ...fragment
-                }
-              );
-              store.writeFragment(
-                {
-                  ...fragment,
-                  data: {
-                    __typename: 'Match',
-                    ...match,
-                    ...result
-                  }
-                }
-              );
-            }
+            // update: (store, { data }) => {
+            //   const fragment = {
+            //     fragmentName: 'Match',
+            //     fragment: MatchFragment,
+            //     id: `Match:${matchId}`
+            //   };
+            //   const match: any = store.readFragment(
+            //     {
+            //       ...fragment
+            //     }
+            //   );
+            //   store.writeFragment(
+            //     {
+            //       ...fragment,
+            //       data: {
+            //         __typename: 'Match',
+            //         ...match,
+            //         ...result
+            //       }
+            //     }
+            //   );
+            // }
           }
         ).subscribe(
           () => {

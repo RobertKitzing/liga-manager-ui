@@ -53,10 +53,6 @@ export class TableComponent implements OnInit {
     );
   }
 
-  refresh() {
-    this.ranking.watch({ id: this.seasonService.currentSeason.getValue().id }).refetch();
-  }
-
   showErrorSnackBar(errorCode?: number) {
     this.error = true;
     this.snackBar.openFromComponent(SnackbarComponent, {

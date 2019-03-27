@@ -32,12 +32,12 @@ export class NewpasswordComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(
       async (params) => {
         if (params['token']) {
-          this.authService.setAccessToken({ token: params['token'] });
+          this.authService.accessToken = params['token'];
           const user = await this.authService.loadUser();
           if (user) {
             this.token = params['token'];
           } else {
-            this.authService.setAccessToken({ token: null });
+            this.authService.accessToken = null;
           }
         }
       }

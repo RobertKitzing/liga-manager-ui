@@ -2,21 +2,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from '../../api/graphql';
 import * as uuid from 'uuid/v4';
+import { LocalStorage } from 'ngx-store';
+
+const SELECTED_SEASON_KEY = 'SELECTED_SEASON';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeasonService {
 
-  private get _currentSeason(): AllSeasonsList.AllSeasons {
-    return JSON.parse(localStorage.getItem('SELECTED_SEASON')) || '';
-  }
-
-  private set _currentSeason(season: AllSeasonsList.AllSeasons) {
-    if (season) {
-      localStorage.setItem('SELECTED_SEASON', JSON.stringify(season));
-    }
-  }
+  @LocalStorage(SELECTED_SEASON_KEY) _currentSeason: AllSeasonsList.AllSeasons;
 
   currentSeason: BehaviorSubject<AllSeasonsList.AllSeasons> = new BehaviorSubject<AllSeasonsList.AllSeasons>(this._currentSeason);
 
@@ -43,7 +38,7 @@ export class SeasonService {
           },
           {
             refetchQueries: [
-              {query: this.allSeasonsListGQL.document}
+              { query: this.allSeasonsListGQL.document }
             ]
           }
         ).subscribe(

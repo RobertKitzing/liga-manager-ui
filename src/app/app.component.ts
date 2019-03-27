@@ -6,6 +6,10 @@ import { ChangepasswordComponent } from './components/changepassword/changepassw
 import { environment } from 'src/environments/environment';
 import { I18Service } from './services/i18.service';
 import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
+import { RankingGQL, MatchPlanGQL, TournamentGQL } from 'src/api/graphql';
+import { SeasonService } from 'src/app/services/season.service';
+import { LocalStorage } from 'ngx-store';
+import { SELECTED_TOURNAMENT_KEY } from './components/tournament/tournament.component';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +18,18 @@ import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscriptio
 })
 export class AppComponent implements OnInit {
 
+  @LocalStorage(SELECTED_TOURNAMENT_KEY) tournamentId: string;
+
   constructor(
     public authService: AuthenticationService,
     public i18Service: I18Service,
     public snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private graphSubscription: GraphqlSubscriptionService) {
+    private ranking: RankingGQL,
+    private matchPlanGQL: MatchPlanGQL,
+    private tournamentGQL: TournamentGQL,
+    public seasonService: SeasonService,
+    public graphSubscription: GraphqlSubscriptionService) {
   }
 
   async ngOnInit() {
@@ -51,5 +61,17 @@ export class AppComponent implements OnInit {
 
   onLangSelect(lang: string) {
     this.i18Service.changeLang(lang);
+  }
+
+  async refresh() {
+    if (this.seasonService.currentSeason.getValue()) {
+      await this.ranking.fetch({ id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).toPromise();
+    }
+    if (this.seasonService.currentSeason.getValue()) {
+      await this.matchPlanGQL.fetch({ id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).toPromise();
+    }
+    if (this.tournamentId) {
+      await this.tournamentGQL.fetch({ id: this.tournamentId }, { fetchPolicy: 'network-only' }).toPromise();
+    }
   }
 }

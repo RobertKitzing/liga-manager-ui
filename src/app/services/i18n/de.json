@@ -54,7 +54,7 @@
 	"HIDE_PLAYED_MATCHES": "nur offene Spiele",
 	"LAST_NAME": "Nachname",
 	"LAST_NAME_REQUIRED": "Bitte Nachnamen eingeben",
-	"LAST_UPDATED_AT": "aktualisiert am:",
+	"LAST_UPDATED_AT": "aktualisiert am",
 	"LIVE_UPDATES": "Live updates",
 	"LOCATION": "Adresse",
 	"LOGGED_IN_AS": "Angemeldet als <b>{{ email }}</b>",

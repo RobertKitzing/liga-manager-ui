@@ -17,6 +17,8 @@ export interface MatchEventPayload {
 })
 export class GraphqlSubscriptionService {
 
+  public connected: boolean;
+
   private _subscriptionClient: SubscriptionClient;
   public get subscriptionClient(): SubscriptionClient {
     return this._subscriptionClient;
@@ -27,16 +29,31 @@ export class GraphqlSubscriptionService {
       this.subscriptionClient.onConnected(
         () => {
           console.log('connected');
+          this.connected = true;
         }
       );
       this.subscriptionClient.onConnecting(
         () => {
-          console.log('connecting');
+          console.log('connected', false);
+          this.connected = false;
         }
       );
       this.subscriptionClient.onError(
         (error) => {
-          console.log('error', error);
+          console.log('connected', false);
+          this.connected = false;
+        }
+      );
+      this.subscriptionClient.onReconnected(
+        () => {
+          console.log('connected');
+          this.connected = true;
+        }
+      );
+      this.subscriptionClient.onReconnecting(
+        () => {
+          console.log('connected', false);
+          this.connected = false;
         }
       );
     }
@@ -63,8 +80,9 @@ export class GraphqlSubscriptionService {
           const msgType: string[] = message.data.redisevent.type.split(':');
           const payload: MatchEventPayload = JSON.parse(message.data.redisevent.payload);
           if (msgType[0] === 'match') {
-            await this.matchQGL.fetch({ id: payload.matchId }).toPromise();
-            // await this.matchPlanGQL.fetch({id: this.seasonService.currentSeason.getValue().id}).toPromise();
+            // await this.matchQGL.fetch({ id: payload.matchId }).toPromise();
+            await this.matchPlanGQL.fetch({id: this.seasonService.currentSeason.getValue().id}, { fetchPolicy: 'network-only'}).toPromise();
+            await this.rankingQGL.fetch({id: this.seasonService.currentSeason.getValue().id}, { fetchPolicy: 'network-only'}).toPromise();
           }
         }
 

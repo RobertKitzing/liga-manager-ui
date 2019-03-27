@@ -22,13 +22,13 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
   const afterwareLink = new ApolloLink((operation, forward) => {
     return forward(operation).map(response => {
       const { response: { headers } } = operation.getContext();
-      if (response.errors && response.errors.some(x => x.message.includes('Unauthenticated')) ) {
+      if (response.errors && response.errors.some(x => x.message.includes('Unauthenticated'))) {
         authService.logout();
       }
       if (headers) {
         const token = headers.get('x-token');
         if (token) {
-          authService.setAccessToken({ token: token });
+          authService.accessToken = token;
         }
       }
       return response;
@@ -80,12 +80,13 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
       }
     }
   );
-  persistCache({
-    cache,
-    storage: window.localStorage,
-    key: 'graphql-cache',
-    debug: !environment.production
-  });
+  if (environment.persistCache) {
+    persistCache({
+      cache,
+      storage: window.localStorage,
+      key: 'graphql-cache'
+    });
+  }
   return {
     link: link,
     cache: cache,
