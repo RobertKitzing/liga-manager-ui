@@ -241,6 +241,8 @@ export interface MatchEventPayload {
 })
 export class GraphqlSubscriptionService {
 
+  public connected: boolean;
+
   private _subscriptionClient: SubscriptionClient;
   public get subscriptionClient(): SubscriptionClient {
     return this._subscriptionClient;
@@ -251,16 +253,31 @@ export class GraphqlSubscriptionService {
       this.subscriptionClient.onConnected(
         () &#x3D;&gt; {
           console.log(&#x27;connected&#x27;);
+          this.connected &#x3D; true;
         }
       );
       this.subscriptionClient.onConnecting(
         () &#x3D;&gt; {
-          console.log(&#x27;connecting&#x27;);
+          console.log(&#x27;connected&#x27;, false);
+          this.connected &#x3D; false;
         }
       );
       this.subscriptionClient.onError(
         (error) &#x3D;&gt; {
-          console.log(&#x27;error&#x27;, error);
+          console.log(&#x27;connected&#x27;, false);
+          this.connected &#x3D; false;
+        }
+      );
+      this.subscriptionClient.onReconnected(
+        () &#x3D;&gt; {
+          console.log(&#x27;connected&#x27;);
+          this.connected &#x3D; true;
+        }
+      );
+      this.subscriptionClient.onReconnecting(
+        () &#x3D;&gt; {
+          console.log(&#x27;connected&#x27;, false);
+          this.connected &#x3D; false;
         }
       );
     }
@@ -287,8 +304,9 @@ export class GraphqlSubscriptionService {
           const msgType: string[] &#x3D; message.data.redisevent.type.split(&#x27;:&#x27;);
           const payload: MatchEventPayload &#x3D; JSON.parse(message.data.redisevent.payload);
           if (msgType[0] &#x3D;&#x3D;&#x3D; &#x27;match&#x27;) {
-            await this.matchQGL.fetch({ id: payload.matchId }).toPromise();
-            // await this.matchPlanGQL.fetch({id: this.seasonService.currentSeason.getValue().id}).toPromise();
+            // await this.matchQGL.fetch({ id: payload.matchId }).toPromise();
+            await this.matchPlanGQL.fetch({id: this.seasonService.currentSeason.getValue().id}, { fetchPolicy: &#x27;network-only&#x27;}).toPromise();
+            await this.rankingQGL.fetch({id: this.seasonService.currentSeason.getValue().id}, { fetchPolicy: &#x27;network-only&#x27;}).toPromise();
           }
         }
 

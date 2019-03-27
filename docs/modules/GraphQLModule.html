@@ -166,13 +166,13 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
   const afterwareLink &#x3D; new ApolloLink((operation, forward) &#x3D;&gt; {
     return forward(operation).map(response &#x3D;&gt; {
       const { response: { headers } } &#x3D; operation.getContext();
-      if (response.errors &amp;&amp; response.errors.some(x &#x3D;&gt; x.message.includes(&#x27;Unauthenticated&#x27;)) ) {
+      if (response.errors &amp;&amp; response.errors.some(x &#x3D;&gt; x.message.includes(&#x27;Unauthenticated&#x27;))) {
         authService.logout();
       }
       if (headers) {
         const token &#x3D; headers.get(&#x27;x-token&#x27;);
         if (token) {
-          authService.setAccessToken({ token: token });
+          authService.accessToken &#x3D; token;
         }
       }
       return response;
@@ -224,12 +224,13 @@ export function createApollo(httpLink: HttpLink, authService: AuthenticationServ
       }
     }
   );
-  persistCache({
-    cache,
-    storage: window.localStorage,
-    key: &#x27;graphql-cache&#x27;,
-    debug: !environment.production
-  });
+  if (environment.persistCache) {
+    persistCache({
+      cache,
+      storage: window.localStorage,
+      key: &#x27;graphql-cache&#x27;
+    });
+  }
   return {
     link: link,
     cache: cache,

@@ -166,9 +166,6 @@
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                             <li>
-                                <a href="#refresh">refresh</a>
-                            </li>
-                            <li>
                                 <a href="#showErrorSnackBar">showErrorSnackBar</a>
                             </li>
                         </ul>
@@ -371,45 +368,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="refresh"></a>
-                    <span class="name">
-                        <b>
-                            refresh
-                        </b>
-                        <a href="#refresh"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>refresh()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/app/components/table/table.component.ts:56</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="showErrorSnackBar"></a>
                     <span class="name">
                         <b>
@@ -428,8 +386,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">src/app/components/table/table.component.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/app/components/table/table.component.ts:56</a></div>
                 </td>
             </tr>
 
@@ -681,10 +639,6 @@ export class TableComponent implements OnInit {
     );
   }
 
-  refresh() {
-    this.ranking.watch({ id: this.seasonService.currentSeason.getValue().id }).refetch();
-  }
-
   showErrorSnackBar(errorCode?: number) {
     this.error &#x3D; true;
     this.snackBar.openFromComponent(SnackbarComponent, {
@@ -704,13 +658,6 @@ export class TableComponent implements OnInit {
   &lt;div class&#x3D;&quot;row text-center&quot; style&#x3D;&quot;justify-content: center;&quot;&gt;
     &lt;div class&#x3D;&quot;col-6&quot;&gt;
       &lt;app-seasonchooser (seasonChanged)&#x3D;&quot;getRanking()&quot;&gt;&lt;/app-seasonchooser&gt;
-    &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col text-right&quot;&gt;
-      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;refresh()&quot;&gt;
-        &lt;mat-icon&gt;
-          refresh
-        &lt;/mat-icon&gt;
-      &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;ng-container *ngIf&#x3D;&quot;seasonService.currentSeason&quot;&gt;
@@ -782,7 +729,7 @@ export class TableComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <div class="row text-center" style="justify-content: center;">    <div class="col-6">      <app-seasonchooser (seasonChanged)="getRanking()"></app-seasonchooser>    </div>    <div class="col text-right">      <button mat-raised-button color="primary" (click)="refresh()">        <mat-icon>          refresh        </mat-icon>      </button>    </div>  </div>  <ng-container *ngIf="seasonService.currentSeason">    <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive" style="scrollbar-x-position: top;">      <table class="table table-striped font-size-sm">        <thead class="table-dark">          <tr>            <th translate style="max-width: 3ch;">TABLE.PLACE</th>            <th class="col-6" translate>TABLE.TEAM</th>            <th class="col-1" translate>TABLE.GAMES</th>            <th class="col-1" translate>TABLE.WIN_DRAW_LOST</th>            <th class="col-2" translate>TABLE.TORE:TORE</th>            <th class="col-1" translate>TABLE.POINTS</th>          </tr>        </thead>        <tbody class="">          <ng-container *ngFor="let pos of ranking.positions">            <tr>              <td>{{ pos.number }}</td>              <td>{{ pos.team.name }}</td>              <td>{{ pos.matches }}</td>              <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>              <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>              <td>{{ pos.points }}</td>            </tr>          </ng-container>        </tbody>      </table>      <div class="text-right" *ngIf="ranking.updated_at">        {{ \'LAST_UPDATED_AT\' | translate }}: ({{ ranking.updated_at | date:\'medium\':\'\':i18Service.currentLang}})      </div>    </div>  </ng-container>  <ng-template #loading>    <mat-progress-bar *ngIf="!error && seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>  </ng-template></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <div class="row text-center" style="justify-content: center;">    <div class="col-6">      <app-seasonchooser (seasonChanged)="getRanking()"></app-seasonchooser>    </div>  </div>  <ng-container *ngIf="seasonService.currentSeason">    <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive" style="scrollbar-x-position: top;">      <table class="table table-striped font-size-sm">        <thead class="table-dark">          <tr>            <th translate style="max-width: 3ch;">TABLE.PLACE</th>            <th class="col-6" translate>TABLE.TEAM</th>            <th class="col-1" translate>TABLE.GAMES</th>            <th class="col-1" translate>TABLE.WIN_DRAW_LOST</th>            <th class="col-2" translate>TABLE.TORE:TORE</th>            <th class="col-1" translate>TABLE.POINTS</th>          </tr>        </thead>        <tbody class="">          <ng-container *ngFor="let pos of ranking.positions">            <tr>              <td>{{ pos.number }}</td>              <td>{{ pos.team.name }}</td>              <td>{{ pos.matches }}</td>              <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>              <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>              <td>{{ pos.points }}</td>            </tr>          </ng-container>        </tbody>      </table>      <div class="text-right" *ngIf="ranking.updated_at">        {{ \'LAST_UPDATED_AT\' | translate }}: ({{ ranking.updated_at | date:\'medium\':\'\':i18Service.currentLang}})      </div>    </div>  </ng-container>  <ng-template #loading>    <mat-progress-bar *ngIf="!error && seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>  </ng-template></div></div>'
     var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TableComponent'};
