@@ -163,7 +163,7 @@ import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { Base64 } from &#x27;js-base64&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from &#x27;../../api/graphql&#x27;;
-import { LocalStorage } from &#x27;ngx-store&#x27;;
+import { LocalStorage, LocalStorageService } from &#x27;ngx-store&#x27;;
 
 export interface LoginContext {
   username: string;
@@ -180,7 +180,7 @@ export class AuthenticationService {
 
   user: User.AuthenticatedUser;
 
-  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string;
+  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string &#x3D; null;
 
   public get isAuthenticated(): boolean {
     return this.user &amp;&amp; Boolean(this.accessToken);
@@ -190,7 +190,8 @@ export class AuthenticationService {
     private router: Router,
     private userQGL: UserGQL,
     private changePasswordQGL: PasswordChangeGQL,
-    private resetPasswordQGL: PasswordResetGQL
+    private resetPasswordQGL: PasswordResetGQL,
+    private localStorageService: LocalStorageService
   ) {
   }
 
@@ -236,7 +237,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.accessToken &#x3D; null;
+    this.localStorageService.remove(ACCESS_TOKEN_KEY);
     this.user &#x3D; null;
     this.router.navigateByUrl(&#x27;&#x27;);
   }

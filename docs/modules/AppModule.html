@@ -329,12 +329,18 @@ import { SnackbarComponent } from &#x27;./components/shared/snackbar/snackbar.co
 import { GraphQLModule } from &#x27;./graphql.module&#x27;;
 import { AuthenticationService } from &#x27;./services/authentication.service&#x27;;
 import { WebStorageModule } from &#x27;ngx-store&#x27;;
+import { AppsettingsService } from &#x27;./services/appsettings.service&#x27;;
 
 registerLocaleData(localeDe);
 
 export function i18ServiceFactory(provider: I18Service) {
   return () &#x3D;&gt; provider.init();
 }
+
+export function loadAppsettingsFactory(provider: AppsettingsService) {
+  return () &#x3D;&gt; provider.init();
+}
+
 
 @NgModule({
   entryComponents: [
@@ -366,6 +372,11 @@ export function i18ServiceFactory(provider: I18Service) {
       provide: APP_INITIALIZER,
       useFactory: i18ServiceFactory,
       deps: [I18Service], multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadAppsettingsFactory,
+      deps: [AppsettingsService], multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
