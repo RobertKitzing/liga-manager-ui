@@ -1,0 +1,3 @@
+mutation DeletePitch($pitch_id: String!){
+  deletePitch(pitch_id: $pitch_id)
+}

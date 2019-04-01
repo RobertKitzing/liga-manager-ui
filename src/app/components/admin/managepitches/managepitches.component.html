@@ -1,0 +1,40 @@
+<ng-container *ngIf="(pitchService.allPitches | async) as allPitches; else loading">
+  <div class="container-fluid mt-3">
+    <div class="row mb-3">
+      <div class="col">
+        {{ 'PITCH' | translate }}
+      </div>
+      <div class="col">
+        {{ 'CONTACT' | translate }}
+      </div>
+      <div class="col">
+          &nbsp;
+      </div>
+    </div>
+    <div class="row mb-2" *ngFor="let pitch of allPitches">
+      <div class="col">
+        <mat-icon>location_on</mat-icon>
+        <a href="https://www.google.com/maps/?q={{ pitch.location_latitude }},{{ pitch.location_longitude }}"
+          target="_blank" style="cursor: pointer;">
+          {{ pitch.label }}
+        </a>
+      </div>
+      <div class="col">
+        <ng-container *ngIf="pitch.contact; else noContact">
+          <app-contact-person [contact]="pitch.contact"></app-contact-person>
+        </ng-container>
+        <ng-template #noContact>
+          {{ 'NO_CONTACT_SET' | translate}}
+        </ng-template>
+      </div>
+      <div class="col">
+        <button mat-flat-button color="primary" (click)="deletePitch(pitch)">
+          {{ 'BUTTON.DELETE_PITCH'}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

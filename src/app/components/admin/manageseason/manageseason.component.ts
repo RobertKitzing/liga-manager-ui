@@ -212,39 +212,60 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  setMatchDayFromDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
-    if (!this.newMatchDays[index]) {
-      this.newMatchDays[index] = <DatePeriod>{};
-    }
-    this.newMatchDays[index].from = date.value;
-    if (matchDays) {
-      const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
-      this.rescheduleMatchDay(matchDayId, { from: this.newMatchDays[index].from, to: this.newMatchDays[index].to });
-    }
-  }
+  async setMatchDayFromDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
 
-  setMatchDayToDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
-    if (!this.newMatchDays[index]) {
-      this.newMatchDays[index] = <DatePeriod>{};
-    }
-    this.newMatchDays[index].to = date.value;
-    if (matchDays) {
-      const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
-      this.rescheduleMatchDay(matchDayId, { from: this.newMatchDays[index].from, to: this.newMatchDays[index].to });
-    }
-  }
-
-  async rescheduleMatchDay(matchDayId: string, period: DatePeriod) {
     try {
-      await this.rescheduleMatchDayGQL.mutate(
-        {
-          match_day_id: matchDayId,
-          date_period: period
-        }
-      ).toPromise();
-      this.notificationService.showSuccessNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_SUCCESS'));
+      if (matchDays) {
+        const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
+        await this.rescheduleMatchDay(matchDayId, { from: date.value, to: this.newMatchDays[index].to });
+      }
+      if (!this.newMatchDays[index]) {
+        this.newMatchDays[index] = <DatePeriod>{};
+      }
+      this.newMatchDays[index].from = date.value;
     } catch (error) {
-      this.notificationService.showErrorNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_ERROR'), error);
+
     }
+  }
+
+  async setMatchDayToDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
+    try {
+      if (matchDays) {
+        const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
+        await this.rescheduleMatchDay(matchDayId, { from: this.newMatchDays[index].from, to: date.value });
+      }
+      if (!this.newMatchDays[index]) {
+        this.newMatchDays[index] = <DatePeriod>{};
+      }
+      this.newMatchDays[index].to = date.value;
+    } catch (error) {
+
+    }
+  }
+
+  async rescheduleMatchDay(matchDayId: string, period: DatePeriod): Promise<void> {
+    return new Promise<void>(
+      async (resolve, reject) => {
+        try {
+          if (new Date(period.from) > new Date(period.to)) {
+            throw new Error(this.translateService.instant('RESCHEDULE_MATCH_DAY_ERROR_FROM_TO_SMALL'));
+          }
+          await this.rescheduleMatchDayGQL.mutate(
+            {
+              match_day_id: matchDayId,
+              date_period: {
+                from: new Date(period.from).toDateString(),
+                to: new Date(period.to).toDateString()
+              }
+            }
+          ).toPromise();
+          this.notificationService.showSuccessNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_SUCCESS'));
+          resolve();
+        } catch (error) {
+          this.notificationService.showErrorNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_ERROR'), error);
+          reject();
+        }
+      }
+    );
   }
 }

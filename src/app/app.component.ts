@@ -39,7 +39,9 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
 
     this.graphqlService.createApolloLink();
-    this.graphqlSubscriptionService.connect();
+    if (this.appsettingsService.appsettings.graphqlWsUrl) {
+      this.graphqlSubscriptionService.connect();
+    }
 
     if (this.authService.accessToken) {
       this.authService.loadUser();

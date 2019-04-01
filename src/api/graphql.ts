@@ -95,6 +95,18 @@ export namespace PasswordChange {
   };
 }
 
+export namespace DeletePitch {
+  export type Variables = {
+    pitch_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deletePitch: Maybe<boolean>;
+  };
+}
+
 export namespace CreateSeason {
   export type Variables = {
     id?: Maybe<string>;
@@ -913,6 +925,19 @@ export class PasswordChangeGQL extends Apollo.Mutation<
   document: any = gql`
     mutation PasswordChange($new_password: String!) {
       changeUserPassword(new_password: $new_password)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class DeletePitchGQL extends Apollo.Mutation<
+  DeletePitch.Mutation,
+  DeletePitch.Variables
+> {
+  document: any = gql`
+    mutation DeletePitch($pitch_id: String!) {
+      deletePitch(pitch_id: $pitch_id)
     }
   `;
 }

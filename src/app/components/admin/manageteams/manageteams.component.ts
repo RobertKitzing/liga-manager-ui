@@ -5,11 +5,11 @@ import { MatDialog } from '@angular/material';
 import { RenameTeamComponent } from './rename-team/rename-team.component';
 
 @Component({
-  selector: 'app-addteam',
-  templateUrl: './addteam.component.html',
-  styleUrls: ['./addteam.component.css']
+  selector: 'app-manageteams',
+  templateUrl: './manageteams.component.html',
+  styleUrls: ['./manageteams.component.css']
 })
-export class AddteamComponent implements OnInit {
+export class ManageteamsComponent implements OnInit {
 
   constructor(
     public teamService: TeamService,
