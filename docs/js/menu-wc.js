@@ -60,20 +60,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AdminModule.html" data-type="entity-link">AdminModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AdminModule-01feebd04b396b2a7a6aaf4048030590"' : 'data-target="#xs-components-links-module-AdminModule-01feebd04b396b2a7a6aaf4048030590"' }>
+                                            'data-target="#components-links-module-AdminModule-d8f789148a93578f3bb3ad2c9c7d479b"' : 'data-target="#xs-components-links-module-AdminModule-d8f789148a93578f3bb3ad2c9c7d479b"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AdminModule-01feebd04b396b2a7a6aaf4048030590"' :
-                                            'id="xs-components-links-module-AdminModule-01feebd04b396b2a7a6aaf4048030590"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AdminModule-d8f789148a93578f3bb3ad2c9c7d479b"' :
+                                            'id="xs-components-links-module-AdminModule-d8f789148a93578f3bb3ad2c9c7d479b"' }>
                                             <li class="link">
                                                 <a href="components/AddUserComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AddUserComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/AddteamComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">AddteamComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/AddtournamentroundComponent.html"
@@ -84,8 +80,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AdminComponent</a>
                                             </li>
                                             <li class="link">
+                                                <a href="components/ManagepitchesComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ManagepitchesComponent</a>
+                                            </li>
+                                            <li class="link">
                                                 <a href="components/ManageseasonComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ManageseasonComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/ManageteamsComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ManageteamsComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/ManagetournamentComponent.html"
@@ -444,6 +448,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/CustomOwlDateTimeIntl.html" data-type="entity-link">CustomOwlDateTimeIntl</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/DeletePitchGQL.html" data-type="entity-link">DeletePitchGQL</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/EventGQL.html" data-type="entity-link">EventGQL</a>

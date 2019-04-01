@@ -126,7 +126,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="952" class="link-to-prism">src/api/graphql.ts:952</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="977" class="link-to-prism">src/api/graphql.ts:977</a></div>
                             </td>
                         </tr>
 
@@ -232,6 +232,18 @@ export namespace PasswordChange {
     __typename?: &quot;Mutation&quot;;
 
     changeUserPassword: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace DeletePitch {
+  export type Variables &#x3D; {
+    pitch_id: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    deletePitch: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -1053,6 +1065,19 @@ export class PasswordChangeGQL extends Apollo.Mutation&lt;
   document: any &#x3D; gql&#x60;
     mutation PasswordChange($new_password: String!) {
       changeUserPassword(new_password: $new_password)
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class DeletePitchGQL extends Apollo.Mutation&lt;
+  DeletePitch.Mutation,
+  DeletePitch.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation DeletePitch($pitch_id: String!) {
+      deletePitch(pitch_id: $pitch_id)
     }
   &#x60;;
 }
