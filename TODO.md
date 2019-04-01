@@ -1,7 +1,9 @@
+- Implement Appsettings initial Call
+    
 - Implement rescheduleMatchDay()
 - Implement RankingPenalty
 - Implement endSeason()
-- Implenet CreatePitches
+- Implement CreatePitches
 - Implement Edit User
 - Implement Edit Pitches (Overview + Contacts + Delete)
 - Implement Cancel Match

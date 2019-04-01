@@ -10,6 +10,9 @@ import { RankingGQL, MatchPlanGQL, TournamentGQL } from 'src/api/graphql';
 import { SeasonService } from 'src/app/services/season.service';
 import { LocalStorage } from 'ngx-store';
 import { SELECTED_TOURNAMENT_KEY } from './components/tournament/tournament.component';
+import { AppsettingsService } from './services/appsettings.service';
+import { Apollo } from 'apollo-angular';
+import { GraphqlService } from './services/graphql.service';
 
 @Component({
   selector: 'app-root',
@@ -29,11 +32,15 @@ export class AppComponent implements OnInit {
     private matchPlanGQL: MatchPlanGQL,
     private tournamentGQL: TournamentGQL,
     public seasonService: SeasonService,
-    public graphSubscription: GraphqlSubscriptionService) {
+    private graphqlService: GraphqlService,
+    private appsettingsService: AppsettingsService,
+    private graphqlSubscriptionService: GraphqlSubscriptionService) {
   }
-
   async ngOnInit() {
-    this.graphSubscription.connect();
+
+    this.graphqlService.createApolloLink();
+    this.graphqlSubscriptionService.connect();
+
     if (this.authService.accessToken) {
       this.authService.loadUser();
     }
@@ -52,7 +59,7 @@ export class AppComponent implements OnInit {
     const googleMapsJS = document.getElementById('googelmapsscript');
     if (!googleMapsJS) {
       const tag = document.createElement('script');
-      tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.googleMapsApiKey + '&libraries=places';
+      tag.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.appsettingsService.appsettings.googleMapsApiKey + '&libraries=places';
       tag.type = 'text/javascript';
       tag.id = 'googelmapsscript';
       document.body.appendChild(tag);

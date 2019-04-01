@@ -5,12 +5,12 @@
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0 --proxy-config proxy.conf.json --port 4200",
     "build": "rm -R dist && npm run build:web && npm run build:app && npm run build:server",
-    "build:web": "ng build --aot --prod",
-    "build:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./",
+    "build:angular:web": "ng build --aot --prod",
+    "build:angular:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./",
     "build:app:local": "ng build --aot -c app.local --output-path app/www --delete-output-path --base-href ./",
-    "build:server:express": "rimraf server/express/dist && tsc -p server/express && cp server/express/package*.json server/express/dist && npm run build:web -- ----output-path server/express/dist/www",
+    "build:server:express": "rimraf server/express/dist && tsc -p server/express && cp server/express/package*.json server/express/dist && npm run build:angular:web -- ----output-path server/express/dist/www",
     "build:server:graphql": "rimraf server/graphql/dist && tsc -p server/graphql && cp server/graphql/package*.json server/graphql/dist && cp server/graphql/schema.graphql server/graphql/dist",
-    "docker:build": "npm run build:server:express && npm run build:web && docker build -t robertkitzing/liga-manager-ui:graphql . ",
+    "docker:build:express": "docker build -t robertkitzing/liga-manager-ui:graphql server/express",
     "docker:push": "docker push robertkitzing/liga-manager-ui:graphql",
     "cordova:build": "cd app && cordova build android",
     "test": "ng test --code-coverage",
@@ -106,6 +106,6 @@
     "protractor": "~5.3.0",
     "ts-node": "~8.0.3",
     "tslint": "~5.14.0",
-    "typescript": "^3.2.4"
+    "typescript": "3.2.4"
   }
 }

@@ -12,8 +12,7 @@ export interface MatchEventPayload {
 }
 
 @Injectable({
-  providedIn: 'root',
-  useExisting: GraphqlSubscriptionService
+  providedIn: 'root'
 })
 export class GraphqlSubscriptionService {
 

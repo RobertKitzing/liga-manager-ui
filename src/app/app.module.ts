@@ -20,12 +20,18 @@ import { SnackbarComponent } from './components/shared/snackbar/snackbar.compone
 import { GraphQLModule } from './graphql.module';
 import { AuthenticationService } from './services/authentication.service';
 import { WebStorageModule } from 'ngx-store';
+import { AppsettingsService } from './services/appsettings.service';
 
 registerLocaleData(localeDe);
 
 export function i18ServiceFactory(provider: I18Service) {
   return () => provider.init();
 }
+
+export function loadAppsettingsFactory(provider: AppsettingsService) {
+  return () => provider.init();
+}
+
 
 @NgModule({
   entryComponents: [
@@ -57,6 +63,11 @@ export function i18ServiceFactory(provider: I18Service) {
       provide: APP_INITIALIZER,
       useFactory: i18ServiceFactory,
       deps: [I18Service], multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadAppsettingsFactory,
+      deps: [AppsettingsService], multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,

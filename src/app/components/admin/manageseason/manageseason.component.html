@@ -93,7 +93,7 @@
           </div>
         </div>
         <div>
-          <button mat-button color="primary" (click)="sendMatchDays()">{{ 'BUTTON.OK' | translate }}</button>
+          <button mat-button color="primary" *ngIf="!manageSeason.match_days" (click)="sendMatchDays()">{{ 'BUTTON.GENERATE_MATCHPLAN' | translate }}</button>
         </div>
       </mat-tab>
       <mat-tab label="{{ 'TAB.MATCHES' | translate }}">

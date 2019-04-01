@@ -1,36 +1,42 @@
-<div class="container card">
-  <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+<form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+  <div mat-dialog-content>
     <div class="row justify-content-center">
       <div class="col">
-        <div class="login-error" [hidden]="!error || isLoading" translate>
-          ERRORS.USERNAME_PASSWORD_WRONG
-        </div>
-        <mat-form-field>
+        <mat-form-field class="w-100">
           <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
           <mat-error *ngIf="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
             <span translate>USERNAME_REQUIRED</span>
           </mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <input #password type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}" required/>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col">
+        <mat-form-field class="w-100">
+          <input #password type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}"
+            required />
           <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
             <span translate>PASSWORD_REQUIRED</span>
           </mat-error>
-          <button mat-button *ngIf="password.value" matSuffix mat-icon-button (click)="password.type === 'password'? password.type = 'text': password.type = 'password'">
+          <button mat-button *ngIf="password.value" matSuffix mat-icon-button
+            (click)="password.type === 'password'? password.type = 'text': password.type = 'password'">
             <mat-icon>remove_red_eye</mat-icon>
           </button>
         </mat-form-field>
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col text-center">
-        <button mat-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
-          <span>{{ 'BUTTON.LOGIN' | translate}}</span>
-        </button>
+        <div class="col login-error" [hidden]="!error" translate>
+          ERRORS.USERNAME_PASSWORD_WRONG
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-center">
-      <a style="cursor: pointer; text-align: center;" (click)="passwordForgot(username.value)" translate>FORGOT_PASSWORD</a>
-    </div>
-  </form>
-</div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button color="primary" (click)="passwordForgot(username.value)">
+      <span>{{ 'FORGOT_PASSWORD' | translate}}</span>
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+      <span>{{ 'BUTTON.LOGIN' | translate}}</span>
+    </button>
+  </div>
+</form>

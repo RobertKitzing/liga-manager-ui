@@ -4,7 +4,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
-import { PasswordResetGQL } from '../../../api/graphql';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,6 @@ import { PasswordResetGQL } from '../../../api/graphql';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  isLoading: boolean;
   error: boolean;
 
   constructor(
@@ -38,14 +36,15 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    this.isLoading = true;
-    if (await this.authenticationService.loginAsync(this.loginForm.value)) {
-      this.loginForm.markAsPristine();
-      this.isLoading = false;
+    try {
+      this.error = false;
+      await this.authenticationService.loginAsync(this.loginForm.value);
       this.dialogRef.close();
-    } else {
-      this.isLoading = false;
+    } catch (error) {
       this.error = true;
+      this.loginForm.controls.password.setValue('');
+      this.loginForm.controls.username.setErrors({ required: true });
+      this.loginForm.controls.password.setErrors({ required: true });
     }
   }
 
@@ -60,7 +59,6 @@ export class LoginComponent implements OnInit {
           panelClass: ['alert', 'alert-success']
         });
       } catch (error) {
-        console.error(error);
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {
             message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_ERROR')
