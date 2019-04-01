@@ -79,11 +79,9 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                            <span class="modifier">Optional</span>
                                         <a href="#from">from</a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
                                         <a href="#to">to</a>
                                 </li>
                             </ul>
@@ -107,7 +105,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>from:     <code>Maybe&lt;Date&gt;</code>
+                                        <code>from:         <code><a href="../miscellaneous/typealiases.html#Date" target="_self" >Date</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -115,16 +113,11 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>Maybe&lt;Date&gt;</code>
+                                            <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Date" target="_self" >Date</a></code>
 
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
 
 
 
@@ -141,7 +134,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>to:     <code>Maybe&lt;Date&gt;</code>
+                                        <code>to:         <code><a href="../miscellaneous/typealiases.html#Date" target="_self" >Date</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -149,16 +142,11 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>Maybe&lt;Date&gt;</code>
+                                            <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Date" target="_self" >Date</a></code>
 
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
 
 
 
@@ -173,15 +161,15 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export type Maybe&lt;T&gt; &#x3D; T | null;
 
 export interface DatePeriod {
-  from?: Maybe&lt;Date&gt;;
+  from: Date;
 
-  to?: Maybe&lt;Date&gt;;
+  to: Date;
 }
 
 export interface TeamIdPair {
-  home_team_id?: Maybe&lt;string&gt;;
+  home_team_id: string;
 
-  guest_team_id?: Maybe&lt;string&gt;;
+  guest_team_id: string;
 }
 
 export enum SeasonState {
@@ -315,6 +303,19 @@ export namespace CreateMatchesForSeason {
     __typename?: &quot;Mutation&quot;;
 
     createMatchesForSeason: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace RescheduleMatchDay {
+  export type Variables &#x3D; {
+    match_day_id: string;
+    date_period: DatePeriod;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    rescheduleMatchDay: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -580,13 +581,13 @@ export namespace Match {
   export type Fragment &#x3D; {
     __typename?: &quot;Match&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    home_team: Maybe&lt;HomeTeam&gt;;
+    home_team: HomeTeam;
 
     home_score: Maybe&lt;number&gt;;
 
-    guest_team: Maybe&lt;GuestTeam&gt;;
+    guest_team: GuestTeam;
 
     guest_score: Maybe&lt;number&gt;;
 
@@ -606,13 +607,13 @@ export namespace MatchDay {
   export type Fragment &#x3D; {
     __typename?: &quot;MatchDay&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    number: Maybe&lt;number&gt;;
+    number: number;
 
-    start_date: Maybe&lt;string&gt;;
+    start_date: string;
 
-    end_date: Maybe&lt;string&gt;;
+    end_date: string;
 
     matches: Maybe&lt;(Maybe&lt;Matches&gt;)[]&gt;;
   };
@@ -624,13 +625,13 @@ export namespace Pitch {
   export type Fragment &#x3D; {
     __typename?: &quot;Pitch&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    label: Maybe&lt;string&gt;;
+    label: string;
 
-    location_longitude: Maybe&lt;number&gt;;
+    location_longitude: number;
 
-    location_latitude: Maybe&lt;number&gt;;
+    location_latitude: number;
 
     contact: Maybe&lt;Contact&gt;;
   };
@@ -642,11 +643,11 @@ export namespace Team {
   export type Fragment &#x3D; {
     __typename?: &quot;Team&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    name: Maybe&lt;string&gt;;
+    name: string;
 
-    created_at: Maybe&lt;string&gt;;
+    created_at: string;
 
     contact: Maybe&lt;Contact&gt;;
   };
@@ -658,13 +659,13 @@ export namespace Contact {
   export type Fragment &#x3D; {
     __typename?: &quot;Contact&quot;;
 
-    first_name: Maybe&lt;string&gt;;
+    first_name: string;
 
-    last_name: Maybe&lt;string&gt;;
+    last_name: string;
 
-    phone: Maybe&lt;string&gt;;
+    phone: string;
 
-    email: Maybe&lt;string&gt;;
+    email: string;
   };
 }
 
@@ -672,9 +673,9 @@ export namespace Season {
   export type Fragment &#x3D; {
     __typename?: &quot;Season&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    name: Maybe&lt;string&gt;;
+    name: string;
 
     teams: Maybe&lt;(Maybe&lt;Teams&gt;)[]&gt;;
 
@@ -690,11 +691,11 @@ export namespace AllSeasons {
   export type Fragment &#x3D; {
     __typename?: &quot;Season&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    name: Maybe&lt;string&gt;;
+    name: string;
 
-    state: Maybe&lt;SeasonState&gt;;
+    state: SeasonState;
   };
 }
 
@@ -702,9 +703,9 @@ export namespace AllTournaments {
   export type Fragment &#x3D; {
     __typename?: &quot;Tournament&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    name: Maybe&lt;string&gt;;
+    name: string;
   };
 }
 
@@ -712,9 +713,9 @@ export namespace Tournament {
   export type Fragment &#x3D; {
     __typename?: &quot;Tournament&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    name: Maybe&lt;string&gt;;
+    name: string;
 
     rounds: Maybe&lt;(Maybe&lt;Rounds&gt;)[]&gt;;
   };
@@ -726,17 +727,17 @@ export namespace User {
   export type Fragment &#x3D; {
     __typename?: &quot;User&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    email: Maybe&lt;string&gt;;
+    email: string;
 
     teams: Maybe&lt;(Maybe&lt;Teams&gt;)[]&gt;;
 
-    role: Maybe&lt;UserRole&gt;;
+    role: UserRole;
 
-    first_name: Maybe&lt;string&gt;;
+    first_name: string;
 
-    last_name: Maybe&lt;string&gt;;
+    last_name: string;
   };
 
   export type Teams &#x3D; Team.Fragment;
@@ -746,11 +747,11 @@ export namespace Event {
   export type Fragment &#x3D; {
     __typename?: &quot;Event&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
-    occurred_at: Maybe&lt;string&gt;;
+    occurred_at: string;
 
-    type: Maybe&lt;string&gt;;
+    type: string;
   };
 }
 
@@ -758,7 +759,7 @@ export namespace Ranking {
   export type Fragment &#x3D; {
     __typename?: &quot;Season&quot;;
 
-    id: Maybe&lt;string&gt;;
+    id: string;
 
     ranking: Maybe&lt;Ranking&gt;;
   };
@@ -776,25 +777,25 @@ export namespace Ranking {
   export type Positions &#x3D; {
     __typename?: &quot;RankingPosition&quot;;
 
-    team: Maybe&lt;Team&gt;;
+    team: Team;
 
-    sort_index: Maybe&lt;number&gt;;
+    sort_index: number;
 
-    number: Maybe&lt;number&gt;;
+    number: number;
 
-    matches: Maybe&lt;number&gt;;
+    matches: number;
 
-    wins: Maybe&lt;number&gt;;
+    wins: number;
 
-    draws: Maybe&lt;number&gt;;
+    draws: number;
 
-    losses: Maybe&lt;number&gt;;
+    losses: number;
 
-    scored_goals: Maybe&lt;number&gt;;
+    scored_goals: number;
 
-    conceded_goals: Maybe&lt;number&gt;;
+    conceded_goals: number;
 
-    points: Maybe&lt;number&gt;;
+    points: number;
   };
 
   export type Team &#x3D; Team.Fragment;
@@ -802,13 +803,13 @@ export namespace Ranking {
   export type Penalties &#x3D; {
     __typename?: &quot;RankingPenalty&quot;;
 
-    team: Maybe&lt;_Team&gt;;
+    team: _Team;
 
-    reason: Maybe&lt;string&gt;;
+    reason: string;
 
-    created_at: Maybe&lt;string&gt;;
+    created_at: string;
 
-    points: Maybe&lt;number&gt;;
+    points: number;
   };
 
   export type _Team &#x3D; Team.Fragment;
@@ -1126,6 +1127,22 @@ export class CreateMatchesForSeasonGQL extends Apollo.Mutation&lt;
       $dates: [DatePeriod]!
     ) {
       createMatchesForSeason(season_id: $season_id, dates: $dates)
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class RescheduleMatchDayGQL extends Apollo.Mutation&lt;
+  RescheduleMatchDay.Mutation,
+  RescheduleMatchDay.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation RescheduleMatchDay(
+      $match_day_id: String!
+      $date_period: DatePeriod!
+    ) {
+      rescheduleMatchDay(match_day_id: $match_day_id, date_period: $date_period)
     }
   &#x60;;
 }
