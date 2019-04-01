@@ -96,12 +96,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(apollo: Apollo, httpLink: HttpLink, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, appsettingsService: <a href="../injectables/AppsettingsService.html">AppsettingsService</a>, graphqlSubscriptionService: <a href="../injectables/GraphqlSubscriptionService.html">GraphqlSubscriptionService</a>)</code>
+<code>constructor(apollo: Apollo, httpLink: HttpLink, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, appsettingsService: <a href="../injectables/AppsettingsService.html">AppsettingsService</a>, graphqlSubscriptionService: <a href="../injectables/GraphqlSubscriptionService.html">GraphqlSubscriptionService</a>, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, translationService: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/services/graphql.service.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/services/graphql.service.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -178,6 +178,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>notify</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translationService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -214,8 +238,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">src/app/services/graphql.service.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">src/app/services/graphql.service.ts:36</a></div>
                 </td>
             </tr>
 
@@ -252,6 +276,9 @@ import { GraphqlSubscriptionService } from &#x27;./graphql-subscription.service&
 import { SubscriptionClient } from &#x27;subscriptions-transport-ws&#x27;;
 import { WebSocketLink } from &#x27;apollo-link-ws&#x27;;
 import { getMainDefinition } from &#x27;apollo-utilities&#x27;;
+import { onError } from &#x27;apollo-link-error&#x27;;
+import { NotificationService } from &#x27;./notification.service&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -263,7 +290,9 @@ export class GraphqlService {
     private httpLink: HttpLink,
     private authService: AuthenticationService,
     private appsettingsService: AppsettingsService,
-    private graphqlSubscriptionService: GraphqlSubscriptionService
+    private graphqlSubscriptionService: GraphqlSubscriptionService,
+    private notify: NotificationService,
+    private translationService: TranslateService
   ) {
   }
 
@@ -273,9 +302,6 @@ export class GraphqlService {
     const afterwareLink &#x3D; new ApolloLink((operation, forward) &#x3D;&gt; {
       return forward(operation).map(response &#x3D;&gt; {
         const { response: { headers } } &#x3D; operation.getContext();
-        if (response.errors &amp;&amp; response.errors.some(x &#x3D;&gt; x.message.includes(&#x27;Unauthenticated&#x27;))) {
-          this.authService.logout();
-        }
         if (headers) {
           const token &#x3D; headers.get(&#x27;x-token&#x27;);
           if (token) {
@@ -284,6 +310,25 @@ export class GraphqlService {
         }
         return response;
       });
+    });
+
+    const errorHandler &#x3D; onError(({ graphQLErrors, networkError }) &#x3D;&gt; {
+      if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) &#x3D;&gt;
+          console.log(
+            &#x60;[GraphQL error]: Message: ${message}&#x60;,
+          ),
+        );
+      }
+      if (networkError) {
+        switch (networkError[&#x27;status&#x27;]) {
+          case 401:
+            this.authService.logout();
+            break;
+          default:
+            this.notify.showErrorNotification(this.translationService.instant(&#x27;UNKNOWN_NETWORK_ERROR&#x27;), networkError[&#x27;statusText&#x27;]);
+        }
+      }
     });
 
     const auth &#x3D; setContext((_, { headers }) &#x3D;&gt; {
@@ -300,25 +345,28 @@ export class GraphqlService {
       }
     });
 
-    this.graphqlSubscriptionService.subscriptionClient &#x3D; new SubscriptionClient(
-      this.appsettingsService.appsettings.graphqlWsUrl,
-      {
-        lazy: true,
-        reconnect: true,
-        reconnectionAttempts: 2
-      });
-    const wsClient &#x3D; new WebSocketLink(this.graphqlSubscriptionService.subscriptionClient);
+    let link &#x3D; errorHandler.concat(afterwareLink).concat(auth).concat(http);
+    if (this.appsettingsService.appsettings.graphqlWsUrl) {
 
-    const link &#x3D; split(
-      // split based on operation type
-      ({ query }) &#x3D;&gt; {
-        const { kind, operation } &#x3D; getMainDefinition(query);
-        return kind &#x3D;&#x3D;&#x3D; &#x27;OperationDefinition&#x27; &amp;&amp; operation &#x3D;&#x3D;&#x3D; &#x27;subscription&#x27;;
-      },
-      wsClient,
-      afterwareLink.concat(auth).concat(http),
-    );
+      this.graphqlSubscriptionService.subscriptionClient &#x3D; new SubscriptionClient(
+        this.appsettingsService.appsettings.graphqlWsUrl,
+        {
+          lazy: true,
+          reconnect: true,
+          reconnectionAttempts: 2
+        });
+      const wsClient &#x3D; new WebSocketLink(this.graphqlSubscriptionService.subscriptionClient);
 
+      link &#x3D; split(
+        // split based on operation type
+        ({ query }) &#x3D;&gt; {
+          const { kind, operation } &#x3D; getMainDefinition(query);
+          return kind &#x3D;&#x3D;&#x3D; &#x27;OperationDefinition&#x27; &amp;&amp; operation &#x3D;&#x3D;&#x3D; &#x27;subscription&#x27;;
+        },
+        wsClient,
+        link,
+      );
+    }
     const cache &#x3D; new InMemoryCache(
       {
         addTypename: true,

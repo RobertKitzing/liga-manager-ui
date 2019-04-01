@@ -198,7 +198,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(teamService: <a href="../injectables/TeamService.html">TeamService</a>, translateService: TranslateService, snackBar: MatSnackBar, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, createUserGQL: <a href="../injectables/CreateUserGQL.html">CreateUserGQL</a>)</code>
+<code>constructor(teamService: <a href="../injectables/TeamService.html">TeamService</a>, translateService: TranslateService, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, createUserGQL: <a href="../injectables/CreateUserGQL.html">CreateUserGQL</a>, notify: <a href="../injectables/NotificationService.html">NotificationService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -245,18 +245,6 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>snackBar</td>
-                                                  
-                                                        <td>
-                                                                    <code>MatSnackBar</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
                                                         <td>authService</td>
                                                   
                                                         <td>
@@ -273,6 +261,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/CreateUserGQL.html" target="_self" >CreateUserGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notify</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -472,8 +472,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="81"
-                            class="link-to-prism">src/app/components/admin/manageusers/add-user/add-user.component.ts:81</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">src/app/components/admin/manageusers/add-user/add-user.component.ts:70</a></div>
                 </td>
             </tr>
 
@@ -727,10 +727,10 @@ import { UserRole, CreateUserGQL } from &#x27;src/api/graphql&#x27;;
 import { FormControl, Validators } from &#x27;@angular/forms&#x27;;
 import { TeamService } from &#x27;../../../../services/team.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
-import { MatSnackBar, MatSelectChange } from &#x27;@angular/material&#x27;;
+import { MatSelectChange } from &#x27;@angular/material&#x27;;
 import { AuthenticationService } from &#x27;../../../../services/authentication.service&#x27;;
-import { SnackbarComponent } from &#x27;../../../shared/snackbar/snackbar.component&#x27;;
 import * as uuid from &#x27;uuid/v4&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 
 @Component({
   selector: &#x27;app-add-user&#x27;,
@@ -753,9 +753,9 @@ export class AddUserComponent implements OnInit {
   constructor(
     public teamService: TeamService,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar,
     private authService: AuthenticationService,
-    private createUserGQL: CreateUserGQL
+    private createUserGQL: CreateUserGQL,
+    private notify: NotificationService
   ) {
     this.email &#x3D; new FormControl(&#x27;&#x27;, [Validators.required, Validators.email]);
     this.firstName &#x3D; new FormControl(&#x27;&#x27;, [Validators.required]);
@@ -785,40 +785,18 @@ export class AddUserComponent implements OnInit {
           role: this.userRole
         }
       ).toPromise();
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant(&#x27;CREATE_USER_SUCCESS&#x27;)
-        },
-        panelClass: [&#x27;alert&#x27;, &#x27;alert-success&#x27;]
-      });
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;CREATE_USER_SUCCESS&#x27;));
     } catch (error) {
-      console.error(error);
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant(&#x27;CREATE_USER_ERROR&#x27;)
-        },
-        panelClass: [&#x27;alert&#x27;, &#x27;alert-danger&#x27;]
-      });
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;CREATE_USER_ERROR&#x27;), error);
     }
   }
 
   async sendUsermail() {
     try {
       await this.authService.sendPasswordMail(this.email.value.toLowerCase());
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_SUCCESS&#x27;)
-        },
-        panelClass: [&#x27;alert&#x27;, &#x27;alert-success&#x27;]
-      });
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_SUCCESS&#x27;));
     } catch (error) {
-      console.error(error);
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_ERROR&#x27;)
-        },
-        panelClass: [&#x27;alert&#x27;, &#x27;alert-danger&#x27;]
-      });
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_ERROR&#x27;), error);
     }
   }
 }

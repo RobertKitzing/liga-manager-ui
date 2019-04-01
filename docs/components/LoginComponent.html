@@ -184,7 +184,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, authenticationService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, dialogRef: <a href="../components/LoginComponent.html">MatDialogRef<LoginComponent></a>, translateService: TranslateService, snackBar: MatSnackBar)</code>
+<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, authenticationService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, dialogRef: <a href="../components/LoginComponent.html">MatDialogRef<LoginComponent></a>, translateService: TranslateService, notify: <a href="../injectables/NotificationService.html">NotificationService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -255,10 +255,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>snackBar</td>
+                                                        <td>notify</td>
                                                   
                                                         <td>
-                                                                    <code>MatSnackBar</code>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -574,9 +574,9 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { Validators, FormGroup, FormBuilder } from &#x27;@angular/forms&#x27;;
 import { AuthenticationService } from &#x27;../../services/authentication.service&#x27;;
-import { MatDialogRef, MatSnackBar } from &#x27;@angular/material&#x27;;
-import { SnackbarComponent } from &#x27;../shared/snackbar/snackbar.component&#x27;;
+import { MatDialogRef } from &#x27;@angular/material&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 
 @Component({
   selector: &#x27;app-login&#x27;,
@@ -593,7 +593,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     public dialogRef: MatDialogRef&lt;LoginComponent&gt;,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar
+    private notify: NotificationService
   ) {
     this.createForm();
   }
@@ -625,22 +625,13 @@ export class LoginComponent implements OnInit {
     if (email) {
       try {
         await this.authenticationService.sendPasswordMail(email);
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_SUCCESS&#x27;)
-          },
-          panelClass: [&#x27;alert&#x27;, &#x27;alert-success&#x27;]
-        });
+        this.notify.showSuccessNotification(this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_SUCCESS&#x27;));
       } catch (error) {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_ERROR&#x27;)
-          },
-          panelClass: [&#x27;alert&#x27;, &#x27;alert-danger&#x27;]
-        });
+        this.notify.showErrorNotification(this.translateService.instant(&#x27;SEND_NEW_PASSWORD_MAIL_ERROR&#x27;), error);
       }
     } else {
-      this.loginForm.controls[&#x27;username&#x27;].setErrors({ required: true });
+      this.loginForm.controls.username.setErrors({ required: true });
+      this.loginForm.controls.password.disable();
     }
   }
 }
@@ -654,7 +645,7 @@ export class LoginComponent implements OnInit {
       &lt;div class&#x3D;&quot;col&quot;&gt;
         &lt;mat-form-field class&#x3D;&quot;w-100&quot;&gt;
           &lt;input #username type&#x3D;&quot;text&quot; matInput formControlName&#x3D;&quot;username&quot; placeholder&#x3D;&quot;{{ &#x27;USERNAME&#x27; | translate }}&quot; /&gt;
-          &lt;mat-error *ngIf&#x3D;&quot;loginForm.controls[&#x27;username&#x27;].valid || loginForm.controls[&#x27;username&#x27;].untouched&quot;&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;!loginForm.controls[&#x27;username&#x27;].valid&quot;&gt;
             &lt;span translate&gt;USERNAME_REQUIRED&lt;/span&gt;
           &lt;/mat-error&gt;
         &lt;/mat-form-field&gt;
@@ -662,10 +653,10 @@ export class LoginComponent implements OnInit {
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
       &lt;div class&#x3D;&quot;col&quot;&gt;
-        &lt;mat-form-field class&#x3D;&quot;w-100&quot;&gt;
+        &lt;mat-form-field class&#x3D;&quot;w-100&quot; (click)&#x3D;&quot;loginForm.controls[&#x27;password&#x27;].enable()&quot;&gt;
           &lt;input #password type&#x3D;&quot;password&quot; matInput formControlName&#x3D;&quot;password&quot; placeholder&#x3D;&quot;{{ &#x27;PASSWORD&#x27; | translate}}&quot;
             required /&gt;
-          &lt;mat-error *ngIf&#x3D;&quot;loginForm.controls[&#x27;password&#x27;].valid || loginForm.controls[&#x27;password&#x27;].untouched&quot;&gt;
+          &lt;mat-error *ngIf&#x3D;&quot;!loginForm.controls[&#x27;password&#x27;].valid&quot;&gt;
             &lt;span translate&gt;PASSWORD_REQUIRED&lt;/span&gt;
           &lt;/mat-error&gt;
           &lt;button mat-button *ngIf&#x3D;&quot;password.value&quot; matSuffix mat-icon-button
@@ -675,11 +666,6 @@ export class LoginComponent implements OnInit {
         &lt;/mat-form-field&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
-        &lt;div class&#x3D;&quot;col login-error&quot; [hidden]&#x3D;&quot;!error&quot; translate&gt;
-          ERRORS.USERNAME_PASSWORD_WRONG
-        &lt;/div&gt;
-      &lt;/div&gt;
   &lt;/div&gt;
   &lt;div mat-dialog-actions&gt;
     &lt;button mat-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;passwordForgot(username.value)&quot;&gt;
@@ -726,7 +712,7 @@ export class LoginComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>  <div mat-dialog-content>    <div class="row justify-content-center">      <div class="col">        <mat-form-field class="w-100">          <input #username type="text" matInput formControlName="username" placeholder="{{ \'USERNAME\' | translate }}" />          <mat-error *ngIf="loginForm.controls[\'username\'].valid || loginForm.controls[\'username\'].untouched">            <span translate>USERNAME_REQUIRED</span>          </mat-error>        </mat-form-field>      </div>    </div>    <div class="row justify-content-center">      <div class="col">        <mat-form-field class="w-100">          <input #password type="password" matInput formControlName="password" placeholder="{{ \'PASSWORD\' | translate}}"            required />          <mat-error *ngIf="loginForm.controls[\'password\'].valid || loginForm.controls[\'password\'].untouched">            <span translate>PASSWORD_REQUIRED</span>          </mat-error>          <button mat-button *ngIf="password.value" matSuffix mat-icon-button            (click)="password.type === \'password\'? password.type = \'text\': password.type = \'password\'">            <mat-icon>remove_red_eye</mat-icon>          </button>        </mat-form-field>      </div>    </div>    <div class="row justify-content-center">        <div class="col login-error" [hidden]="!error" translate>          ERRORS.USERNAME_PASSWORD_WRONG        </div>      </div>  </div>  <div mat-dialog-actions>    <button mat-button color="primary" (click)="passwordForgot(username.value)">      <span>{{ \'FORGOT_PASSWORD\' | translate}}</span>    </button>    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">      <span>{{ \'BUTTON.LOGIN\' | translate}}</span>    </button>  </div></form></div>'
+        var COMPONENT_TEMPLATE = '<div><form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>  <div mat-dialog-content>    <div class="row justify-content-center">      <div class="col">        <mat-form-field class="w-100">          <input #username type="text" matInput formControlName="username" placeholder="{{ \'USERNAME\' | translate }}" />          <mat-error *ngIf="!loginForm.controls[\'username\'].valid">            <span translate>USERNAME_REQUIRED</span>          </mat-error>        </mat-form-field>      </div>    </div>    <div class="row justify-content-center">      <div class="col">        <mat-form-field class="w-100" (click)="loginForm.controls[\'password\'].enable()">          <input #password type="password" matInput formControlName="password" placeholder="{{ \'PASSWORD\' | translate}}"            required />          <mat-error *ngIf="!loginForm.controls[\'password\'].valid">            <span translate>PASSWORD_REQUIRED</span>          </mat-error>          <button mat-button *ngIf="password.value" matSuffix mat-icon-button            (click)="password.type === \'password\'? password.type = \'text\': password.type = \'password\'">            <mat-icon>remove_red_eye</mat-icon>          </button>        </mat-form-field>      </div>    </div>  </div>  <div mat-dialog-actions>    <button mat-button color="primary" (click)="passwordForgot(username.value)">      <span>{{ \'FORGOT_PASSWORD\' | translate}}</span>    </button>    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">      <span>{{ \'BUTTON.LOGIN\' | translate}}</span>    </button>  </div></form></div>'
     var COMPONENTS = [{'name': 'AddteamComponent', 'selector': 'app-addteam'},{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'LoginComponent'};
