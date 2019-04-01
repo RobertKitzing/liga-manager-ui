@@ -163,15 +163,14 @@ import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { Base64 } from &#x27;js-base64&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from &#x27;../../api/graphql&#x27;;
+import { LocalStorage } from &#x27;ngx-store&#x27;;
 
 export interface LoginContext {
   username: string;
   password: string;
 }
 
-export interface Credentials {
-  token: string;
-}
+const ACCESS_TOKEN_KEY &#x3D; &#x27;ACCESS_TOKEN&#x27;;
 
 @Injectable({
   providedIn: &#x27;root&#x27;,
@@ -181,14 +180,7 @@ export class AuthenticationService {
 
   user: User.AuthenticatedUser;
 
-  public setAccessToken(value: Credentials) {
-    localStorage.setItem(&#x27;ACCESS_TOKEN&#x27;, JSON.stringify(value));
-  }
-
-  public get accessToken(): string {
-    const cred: Credentials &#x3D; JSON.parse(localStorage.getItem(&#x27;ACCESS_TOKEN&#x27;));
-    return cred ? cred.token : null;
-  }
+  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string;
 
   public get isAuthenticated(): boolean {
     return this.user &amp;&amp; Boolean(this.accessToken);
@@ -244,7 +236,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.setAccessToken(null);
+    this.accessToken &#x3D; null;
     this.user &#x3D; null;
     this.router.navigateByUrl(&#x27;&#x27;);
   }

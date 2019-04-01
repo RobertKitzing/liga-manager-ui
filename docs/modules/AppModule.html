@@ -328,6 +328,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from &#x27;@angular/material&#x27;;
 import { SnackbarComponent } from &#x27;./components/shared/snackbar/snackbar.component&#x27;;
 import { GraphQLModule } from &#x27;./graphql.module&#x27;;
 import { AuthenticationService } from &#x27;./services/authentication.service&#x27;;
+import { WebStorageModule } from &#x27;ngx-store&#x27;;
 
 registerLocaleData(localeDe);
 
@@ -356,6 +357,7 @@ export function i18ServiceFactory(provider: I18Service) {
     AppRoutingModule,
     FormsModule,
     GraphQLModule,
+    WebStorageModule,
     ReactiveFormsModule,
   ],
   providers: [

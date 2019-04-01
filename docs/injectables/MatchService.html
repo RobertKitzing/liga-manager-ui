@@ -663,28 +663,28 @@ export class MatchService {
             ...result
           },
           {
-            update: (store, { data }) &#x3D;&gt; {
-              const fragment &#x3D; {
-                fragmentName: &#x27;Match&#x27;,
-                fragment: MatchFragment,
-                id: &#x60;Match:${matchId}&#x60;
-              };
-              const match: any &#x3D; store.readFragment(
-                {
-                  ...fragment
-                }
-              );
-              store.writeFragment(
-                {
-                  ...fragment,
-                  data: {
-                    __typename: &#x27;Match&#x27;,
-                    ...match,
-                    ...result
-                  }
-                }
-              );
-            }
+            // update: (store, { data }) &#x3D;&gt; {
+            //   const fragment &#x3D; {
+            //     fragmentName: &#x27;Match&#x27;,
+            //     fragment: MatchFragment,
+            //     id: &#x60;Match:${matchId}&#x60;
+            //   };
+            //   const match: any &#x3D; store.readFragment(
+            //     {
+            //       ...fragment
+            //     }
+            //   );
+            //   store.writeFragment(
+            //     {
+            //       ...fragment,
+            //       data: {
+            //         __typename: &#x27;Match&#x27;,
+            //         ...match,
+            //         ...result
+            //       }
+            //     }
+            //   );
+            // }
           }
         ).subscribe(
           () &#x3D;&gt; {
