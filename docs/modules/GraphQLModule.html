@@ -63,29 +63,41 @@
 <text text-anchor="start" x="429.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_GraphQLModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="112,-70 112,-195 384,-195 384,-70 112,-70"/>
+<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="31,-70 31,-195 465,-195 465,-70 31,-70"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_GraphQLModule_providers</title>
-<polygon fill="none" stroke="#000000" points="120,-78 120,-130 376,-130 376,-78 120,-78"/>
+<polygon fill="none" stroke="#000000" points="39,-78 39,-130 457,-130 457,-78 39,-78"/>
 </g>
-<!-- GraphqlSubscriptionService -->
+<!-- GraphqlService -->
 <g id="node1" class="node">
-<title>GraphqlSubscriptionService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="248" cy="-104" rx="120.4052" ry="18"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphqlSubscriptionService</text>
+<title>GraphqlService</title>
+<ellipse fill="#fdb462" stroke="#000000" cx="377" cy="-104" rx="71.7679" ry="18"/>
+<text text-anchor="middle" x="377" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphqlService</text>
 </g>
 <!-- GraphQLModule -->
-<g id="node2" class="node">
+<g id="node3" class="node">
 <title>GraphQLModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="304.691,-187 301.691,-191 280.691,-191 277.691,-187 191.309,-187 191.309,-151 304.691,-151 304.691,-187"/>
-<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphQLModule</text>
+<polygon fill="#8dd3c7" stroke="#000000" points="328.691,-187 325.691,-191 304.691,-191 301.691,-187 215.309,-187 215.309,-151 328.691,-151 328.691,-187"/>
+<text text-anchor="middle" x="272" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphQLModule</text>
+</g>
+<!-- GraphqlService&#45;&gt;GraphQLModule -->
+<g id="edge1" class="edge">
+<title>GraphqlService&#45;&gt;GraphQLModule</title>
+<path fill="none" stroke="#000000" d="M316.9808,-113.8721C316.9808,-113.8721 316.9808,-140.9074 316.9808,-140.9074"/>
+<polygon fill="#000000" stroke="#000000" points="313.4809,-140.9073 316.9808,-150.9074 320.4809,-140.9074 313.4809,-140.9073"/>
+</g>
+<!-- GraphqlSubscriptionService -->
+<g id="node2" class="node">
+<title>GraphqlSubscriptionService</title>
+<ellipse fill="#fdb462" stroke="#000000" cx="167" cy="-104" rx="120.4052" ry="18"/>
+<text text-anchor="middle" x="167" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphqlSubscriptionService</text>
 </g>
 <!-- GraphqlSubscriptionService&#45;&gt;GraphQLModule -->
-<g id="edge1" class="edge">
+<g id="edge2" class="edge">
 <title>GraphqlSubscriptionService&#45;&gt;GraphQLModule</title>
-<path fill="none" stroke="#000000" d="M248,-122.1061C248,-122.1061 248,-140.991 248,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="244.5001,-140.9909 248,-150.991 251.5001,-140.991 244.5001,-140.9909"/>
+<path fill="none" stroke="#000000" d="M251.4286,-116.8419C251.4286,-116.8419 251.4286,-140.5231 251.4286,-140.5231"/>
+<polygon fill="#000000" stroke="#000000" points="247.9287,-140.523 251.4286,-150.5231 254.9287,-140.5231 247.9287,-140.523"/>
 </g>
 </g>
 </svg>
@@ -130,6 +142,9 @@
                             title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
+                            <a href="../injectables/GraphqlService.html">GraphqlService</a>
+                        </li>
+                        <li class="list-group-item">
                             <a href="../injectables/GraphqlSubscriptionService.html">GraphqlSubscriptionService</a>
                         </li>
                     </ul>
@@ -143,114 +158,19 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { ApolloModule, APOLLO_OPTIONS } from &#x27;apollo-angular&#x27;;
-import { HttpLinkModule, HttpLink } from &#x27;apollo-angular-link-http&#x27;;
-
-import { setContext } from &#x27;apollo-link-context&#x27;;
-import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
-import { getMainDefinition } from &#x27;apollo-utilities&#x27;;
-import { AuthenticationService } from &#x27;./services/authentication.service&#x27;;
-import { WebSocketLink } from &#x27;apollo-link-ws&#x27;;
-import { split, ApolloLink } from &#x27;apollo-link&#x27;;
-import { environment } from &#x27;../environments/environment&#x27;;
-import { GraphqlSubscriptionService } from &#x27;src/app/services/graphql-subscription.service&#x27;;
-import { SubscriptionClient } from &#x27;subscriptions-transport-ws&#x27;;
-
-import { InMemoryCache } from &#x27;apollo-cache-inmemory&#x27;;
-import { persistCache } from &#x27;apollo-cache-persist&#x27;;
-
-const uri &#x3D; environment.graphqlUrl; // &lt;-- add the URL of the GraphQL server here
-
-export function createApollo(httpLink: HttpLink, authService: AuthenticationService, ownService: GraphqlSubscriptionService) {
-  const http &#x3D; httpLink.create({ uri });
-  const afterwareLink &#x3D; new ApolloLink((operation, forward) &#x3D;&gt; {
-    return forward(operation).map(response &#x3D;&gt; {
-      const { response: { headers } } &#x3D; operation.getContext();
-      if (response.errors &amp;&amp; response.errors.some(x &#x3D;&gt; x.message.includes(&#x27;Unauthenticated&#x27;))) {
-        authService.logout();
-      }
-      if (headers) {
-        const token &#x3D; headers.get(&#x27;x-token&#x27;);
-        if (token) {
-          authService.accessToken &#x3D; token;
-        }
-      }
-      return response;
-    });
-  });
-
-  const auth &#x3D; setContext((_, { headers }) &#x3D;&gt; {
-    if (!headers) {
-      headers &#x3D; new HttpHeaders();
-    }
-    const token &#x3D; authService.accessToken;
-    if (token) {
-      return {
-        headers: headers.get(&#x27;Authorization&#x27;) ? null : headers.append(&#x27;Authorization&#x27;, &#x60;Bearer ${token}&#x60;)
-      };
-    } else {
-      return {};
-    }
-  });
-
-  ownService.subscriptionClient &#x3D; new SubscriptionClient(
-    environment.graphqlWsUrl,
-    {
-      lazy: true,
-      reconnect: true,
-      reconnectionAttempts: 2
-    });
-  const wsClient &#x3D; new WebSocketLink(ownService.subscriptionClient);
-
-  const link &#x3D; split(
-    // split based on operation type
-    ({ query }) &#x3D;&gt; {
-      const { kind, operation } &#x3D; getMainDefinition(query);
-      return kind &#x3D;&#x3D;&#x3D; &#x27;OperationDefinition&#x27; &amp;&amp; operation &#x3D;&#x3D;&#x3D; &#x27;subscription&#x27;;
-    },
-    wsClient,
-    afterwareLink.concat(auth).concat(http),
-  );
-
-  const cache &#x3D; new InMemoryCache(
-    {
-      addTypename: true,
-      cacheRedirects: {
-        Query: {
-          allSeasons: (t, args, { getCacheKey }) &#x3D;&gt; {
-            return getCacheKey({ __typename: &#x27;Season&#x27; });
-          }
-        },
-      }
-    }
-  );
-  if (environment.persistCache) {
-    persistCache({
-      cache,
-      storage: window.localStorage,
-      key: &#x27;graphql-cache&#x27;
-    });
-  }
-  return {
-    link: link,
-    cache: cache,
-    connectToDevTools: !environment.production
-  };
-}
+import { ApolloModule } from &#x27;apollo-angular&#x27;;
+import { HttpLinkModule } from &#x27;apollo-angular-link-http&#x27;;
+import { GraphqlService } from &#x27;./services/graphql.service&#x27;;
+import { GraphqlSubscriptionService } from &#x27;./services/graphql-subscription.service&#x27;;
 
 @NgModule({
-  exports: [ApolloModule, HttpLinkModule],
+  exports: [
+    ApolloModule,
+    HttpLinkModule
+  ],
   providers: [
     GraphqlSubscriptionService,
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: createApollo,
-      deps: [
-        HttpLink,
-        AuthenticationService,
-        GraphqlSubscriptionService
-      ],
-    },
+    GraphqlService
   ],
 })
 export class GraphQLModule { }

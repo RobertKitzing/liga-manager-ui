@@ -151,7 +151,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, userQGL: <a href="../injectables/UserGQL.html">UserGQL</a>, changePasswordQGL: <a href="../injectables/PasswordChangeGQL.html">PasswordChangeGQL</a>, resetPasswordQGL: <a href="../injectables/PasswordResetGQL.html">PasswordResetGQL</a>)</code>
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, userQGL: <a href="../injectables/UserGQL.html">UserGQL</a>, changePasswordQGL: <a href="../injectables/PasswordChangeGQL.html">PasswordChangeGQL</a>, resetPasswordQGL: <a href="../injectables/PasswordResetGQL.html">PasswordResetGQL</a>, localStorageService: LocalStorageService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -221,6 +221,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>localStorageService</td>
+                                                  
+                                                        <td>
+                                                                    <code>LocalStorageService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -257,8 +269,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="96"
-                            class="link-to-prism">src/app/services/authentication.service.ts:96</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">src/app/services/authentication.service.ts:97</a></div>
                 </td>
             </tr>
 
@@ -341,8 +353,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">src/app/services/authentication.service.ts:92</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">src/app/services/authentication.service.ts:93</a></div>
                 </td>
             </tr>
 
@@ -413,8 +425,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="63"
-                            class="link-to-prism">src/app/services/authentication.service.ts:63</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">src/app/services/authentication.service.ts:64</a></div>
                 </td>
             </tr>
 
@@ -454,8 +466,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">src/app/services/authentication.service.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/app/services/authentication.service.ts:38</a></div>
                 </td>
             </tr>
 
@@ -524,8 +536,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="78"
-                            class="link-to-prism">src/app/services/authentication.service.ts:78</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="79"
+                            class="link-to-prism">src/app/services/authentication.service.ts:79</a></div>
                 </td>
             </tr>
 
@@ -563,8 +575,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="119"
-                            class="link-to-prism">src/app/services/authentication.service.ts:119</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">src/app/services/authentication.service.ts:120</a></div>
                 </td>
             </tr>
 
@@ -633,6 +645,11 @@
                         <td class="col-md-4">
                             <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>null</code>
                         </td>
                     </tr>
                     <tr>
@@ -724,7 +741,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">src/app/services/authentication.service.ts:84</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/services/authentication.service.ts:85</a></div>
                                 </td>
                             </tr>
 
@@ -746,7 +763,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">src/app/services/authentication.service.ts:88</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/services/authentication.service.ts:89</a></div>
                                 </td>
                             </tr>
 
@@ -762,7 +779,7 @@ import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { Base64 } from &#x27;js-base64&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from &#x27;../../api/graphql&#x27;;
-import { LocalStorage } from &#x27;ngx-store&#x27;;
+import { LocalStorage, LocalStorageService } from &#x27;ngx-store&#x27;;
 
 export interface LoginContext {
   username: string;
@@ -779,7 +796,7 @@ export class AuthenticationService {
 
   user: User.AuthenticatedUser;
 
-  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string;
+  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string &#x3D; null;
 
   public get isAuthenticated(): boolean {
     return this.user &amp;&amp; Boolean(this.accessToken);
@@ -789,7 +806,8 @@ export class AuthenticationService {
     private router: Router,
     private userQGL: UserGQL,
     private changePasswordQGL: PasswordChangeGQL,
-    private resetPasswordQGL: PasswordResetGQL
+    private resetPasswordQGL: PasswordResetGQL,
+    private localStorageService: LocalStorageService
   ) {
   }
 
@@ -835,7 +853,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.accessToken &#x3D; null;
+    this.localStorageService.remove(ACCESS_TOKEN_KEY);
     this.user &#x3D; null;
     this.router.navigateByUrl(&#x27;&#x27;);
   }

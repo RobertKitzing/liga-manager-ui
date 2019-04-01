@@ -1,0 +1,410 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>liga-manager-ui documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">liga-manager-ui documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>GraphqlService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/graphql.service.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#createApolloLink">createApolloLink</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(apollo: Apollo, httpLink: HttpLink, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, appsettingsService: <a href="../injectables/AppsettingsService.html">AppsettingsService</a>, graphqlSubscriptionService: <a href="../injectables/GraphqlSubscriptionService.html">GraphqlSubscriptionService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/services/graphql.service.ts:20</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>apollo</td>
+                                                  
+                                                        <td>
+                                                                    <code>Apollo</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>httpLink</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpLink</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>appsettingsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AppsettingsService.html" target="_self" >AppsettingsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>graphqlSubscriptionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/GraphqlSubscriptionService.html" target="_self" >GraphqlSubscriptionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createApolloLink"></a>
+                    <span class="name">
+                        <b>
+                            createApolloLink
+                        </b>
+                        <a href="#createApolloLink"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createApolloLink()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/app/services/graphql.service.ts:31</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Apollo } from &#x27;apollo-angular&#x27;;
+import { HttpLink } from &#x27;apollo-angular-link-http&#x27;;
+import { InMemoryCache } from &#x27;apollo-cache-inmemory&#x27;;
+import { AppsettingsService } from &#x27;./appsettings.service&#x27;;
+import { ApolloLink, split } from &#x27;apollo-link&#x27;;
+import { AuthenticationService } from &#x27;./authentication.service&#x27;;
+import { setContext } from &#x27;apollo-link-context&#x27;;
+import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { environment } from &#x27;src/environments/environment&#x27;;
+import { persistCache } from &#x27;apollo-cache-persist&#x27;;
+import { GraphqlSubscriptionService } from &#x27;./graphql-subscription.service&#x27;;
+import { SubscriptionClient } from &#x27;subscriptions-transport-ws&#x27;;
+import { WebSocketLink } from &#x27;apollo-link-ws&#x27;;
+import { getMainDefinition } from &#x27;apollo-utilities&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class GraphqlService {
+
+  constructor(
+    private apollo: Apollo,
+    private httpLink: HttpLink,
+    private authService: AuthenticationService,
+    private appsettingsService: AppsettingsService,
+    private graphqlSubscriptionService: GraphqlSubscriptionService
+  ) {
+  }
+
+  createApolloLink() {
+    const http &#x3D; this.httpLink.create({ uri: this.appsettingsService.appsettings.graphqlUrl });
+
+    const afterwareLink &#x3D; new ApolloLink((operation, forward) &#x3D;&gt; {
+      return forward(operation).map(response &#x3D;&gt; {
+        const { response: { headers } } &#x3D; operation.getContext();
+        if (response.errors &amp;&amp; response.errors.some(x &#x3D;&gt; x.message.includes(&#x27;Unauthenticated&#x27;))) {
+          this.authService.logout();
+        }
+        if (headers) {
+          const token &#x3D; headers.get(&#x27;x-token&#x27;);
+          if (token) {
+            this.authService.accessToken &#x3D; token;
+          }
+        }
+        return response;
+      });
+    });
+
+    const auth &#x3D; setContext((_, { headers }) &#x3D;&gt; {
+      if (!headers) {
+        headers &#x3D; new HttpHeaders();
+      }
+      const token &#x3D; this.authService.accessToken;
+      if (token) {
+        return {
+          headers: headers.get(&#x27;Authorization&#x27;) ? null : headers.append(&#x27;Authorization&#x27;, &#x60;Bearer ${token}&#x60;)
+        };
+      } else {
+        return {};
+      }
+    });
+
+    this.graphqlSubscriptionService.subscriptionClient &#x3D; new SubscriptionClient(
+      this.appsettingsService.appsettings.graphqlWsUrl,
+      {
+        lazy: true,
+        reconnect: true,
+        reconnectionAttempts: 2
+      });
+    const wsClient &#x3D; new WebSocketLink(this.graphqlSubscriptionService.subscriptionClient);
+
+    const link &#x3D; split(
+      // split based on operation type
+      ({ query }) &#x3D;&gt; {
+        const { kind, operation } &#x3D; getMainDefinition(query);
+        return kind &#x3D;&#x3D;&#x3D; &#x27;OperationDefinition&#x27; &amp;&amp; operation &#x3D;&#x3D;&#x3D; &#x27;subscription&#x27;;
+      },
+      wsClient,
+      afterwareLink.concat(auth).concat(http),
+    );
+
+    const cache &#x3D; new InMemoryCache(
+      {
+        addTypename: true,
+        cacheRedirects: {
+          Query: {
+            allSeasons: (t, args, { getCacheKey }) &#x3D;&gt; {
+              return getCacheKey({ __typename: &#x27;Season&#x27; });
+            }
+          },
+        }
+      }
+    );
+    if (environment.persistCache) {
+      persistCache({
+        cache,
+        storage: window.localStorage,
+        key: &#x27;graphql-cache&#x27;
+      });
+    }
+    this.apollo.create({
+      link: link,
+      cache: cache
+    });
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'GraphqlService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -75,13 +75,13 @@
                             <a href="#environment" title="src/environments/environment.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.ts)</a>
                         </li>
                         <li>
-                            <a href="#environment" title="src/environments/environment.app.local.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.app.local.ts)</a>
+                            <a href="#environment" title="src/environments/environment.app.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.app.ts)</a>
                         </li>
                         <li>
                             <a href="#environment" title="src/environments/environment.prod.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.prod.ts)</a>
                         </li>
                         <li>
-                            <a href="#environment" title="src/environments/environment.app.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.app.ts)</a>
+                            <a href="#environment" title="src/environments/environment.app.local.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.app.local.ts)</a>
                         </li>
                         <li>
                             <a href="#EventFragment" title="src/api/graphql.ts"><b>EventFragment</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.ts)</a>
@@ -133,9 +133,6 @@
                         </li>
                         <li>
                             <a href="#TournamentFragment" title="src/api/graphql.ts"><b>TournamentFragment</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#uri" title="src/app/graphql.module.ts"><b>uri</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.module.ts)</a>
                         </li>
                         <li>
                             <a href="#UserFragment" title="src/api/graphql.ts"><b>UserFragment</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.ts)</a>
@@ -648,83 +645,6 @@
                         <td class="col-md-4">
                             <i>Default value : </i><code>{
   production: false,
-  googleMapsApiKey: &#x27;AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0&#x27;,
-  serverUrl: &#x27;/api&#x27;,
-  graphqlUrl: &#x27;api/graphql&#x27;,
-  graphqlWsUrl: &#x27;ws://localhost:4000&#x27;,
-  persistCache: false
-}</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-</section>
-    <h3>src/environments/environment.app.local.ts</h3>
-    <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="environment"></a>
-                        <span class="name">
-                            <b>
-                            environment</b>
-                            <a href="#environment"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>{
-    production: true,
-    googleMapsApiKey: &#x27;AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0&#x27;,
-    serverUrl: &#x27;http://192.168.178.23/api&#x27;,
-    graphqlUrl: &#x27;http:/192.168.178.23/api/graphql&#x27;,
-    graphqlWsUrl: &#x27;ws://192.168.178.23:3001/ws&#x27;
-}</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-</section>
-    <h3>src/environments/environment.prod.ts</h3>
-    <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="environment"></a>
-                        <span class="name">
-                            <b>
-                            environment</b>
-                            <a href="#environment"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>{
-  production: true,
-  googleMapsApiKey: &#x27;AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0&#x27;,
-  serverUrl: &#x27;/api&#x27;,
-  graphqlUrl: &#x27;api/graphql&#x27;,
-  graphqlWsUrl: &#x60;ws://${window.location.hostname}:4000&#x60;,
   persistCache: false
 }</code>
                         </td>
@@ -758,10 +678,72 @@
                         <td class="col-md-4">
                             <i>Default value : </i><code>{
     production: true,
-    googleMapsApiKey: &#x27;AIzaSyBo4kTaSyVs6hxw6PV7njib0k9muSx8YM0&#x27;,
-    serverUrl: &#x27;https://manager.wildeligabremen.de/api&#x27;,
-    graphqlUrl: &#x27;https://manager.wildeligabremen.de/api/graphql&#x27;,
-    graphqlWsUrl: &#x27;wss://manager.wildeligabremen.de/ws&#x27;,
+    persistCache: false
+}</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+</section>
+    <h3>src/environments/environment.prod.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="environment"></a>
+                        <span class="name">
+                            <b>
+                            environment</b>
+                            <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+  production: true,
+  persistCache: false
+}</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+</section>
+    <h3>src/environments/environment.app.local.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="environment"></a>
+                        <span class="name">
+                            <b>
+                            environment</b>
+                            <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+    production: true,
     persistCache: false
 }</code>
                         </td>
@@ -1006,30 +988,6 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>&#x27;SELECTED_TOURNAMENT&#x27;</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-</section>
-    <h3>src/app/graphql.module.ts</h3>
-    <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="uri"></a>
-                        <span class="name">
-                            <b>
-                            uri</b>
-                            <a href="#uri"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>environment.graphqlUrl</code>
                         </td>
                     </tr>
 
