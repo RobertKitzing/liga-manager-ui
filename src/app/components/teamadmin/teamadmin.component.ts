@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { TeamService } from '../../services/team.service';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { UpdateTeamContactGQL, UserGQL } from 'src/api/graphql';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-teamadmin',
@@ -20,7 +19,7 @@ export class TeamadminComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     public teamService: TeamService,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
     public translateService: TranslateService,
     private updateTeamContact: UpdateTeamContactGQL,
     private userQGL: UserGQL
@@ -45,20 +44,9 @@ export class TeamadminComponent implements OnInit {
           ]
         }
       ).toPromise();
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('TEAM_CONTACT_SAVE_SUCCESS')
-        },
-        panelClass: ['alert', 'alert-success']
-      });
+      this.notify.showSuccessNotification(this.translateService.instant('TEAM_CONTACT_SAVE_SUCCESS'));
     } catch (error) {
-      console.error(error);
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('TEAM_CONTACT_SAVE_ERROR')
-        },
-        panelClass: ['alert', 'alert-danger']
-      });
+      this.notify.showSuccessNotification(this.translateService.instant('TEAM_CONTACT_SAVE_ERROR'), error);
     }
   }
 

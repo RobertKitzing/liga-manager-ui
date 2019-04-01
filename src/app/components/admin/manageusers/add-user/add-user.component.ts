@@ -3,10 +3,10 @@ import { UserRole, CreateUserGQL } from 'src/api/graphql';
 import { FormControl, Validators } from '@angular/forms';
 import { TeamService } from '../../../../services/team.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar, MatSelectChange } from '@angular/material';
+import { MatSelectChange } from '@angular/material';
 import { AuthenticationService } from '../../../../services/authentication.service';
-import { SnackbarComponent } from '../../../shared/snackbar/snackbar.component';
 import * as uuid from 'uuid/v4';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-add-user',
@@ -29,9 +29,9 @@ export class AddUserComponent implements OnInit {
   constructor(
     public teamService: TeamService,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar,
     private authService: AuthenticationService,
-    private createUserGQL: CreateUserGQL
+    private createUserGQL: CreateUserGQL,
+    private notify: NotificationService
   ) {
     this.email = new FormControl('', [Validators.required, Validators.email]);
     this.firstName = new FormControl('', [Validators.required]);
@@ -61,40 +61,18 @@ export class AddUserComponent implements OnInit {
           role: this.userRole
         }
       ).toPromise();
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('CREATE_USER_SUCCESS')
-        },
-        panelClass: ['alert', 'alert-success']
-      });
+      this.notify.showSuccessNotification(this.translateService.instant('CREATE_USER_SUCCESS'));
     } catch (error) {
-      console.error(error);
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('CREATE_USER_ERROR')
-        },
-        panelClass: ['alert', 'alert-danger']
-      });
+      this.notify.showErrorNotification(this.translateService.instant('CREATE_USER_ERROR'), error);
     }
   }
 
   async sendUsermail() {
     try {
       await this.authService.sendPasswordMail(this.email.value.toLowerCase());
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_SUCCESS')
-        },
-        panelClass: ['alert', 'alert-success']
-      });
+      this.notify.showSuccessNotification(this.translateService.instant('SEND_NEW_PASSWORD_MAIL_SUCCESS'));
     } catch (error) {
-      console.error(error);
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('SEND_NEW_PASSWORD_MAIL_ERROR')
-        },
-        panelClass: ['alert', 'alert-danger']
-      });
+      this.notify.showErrorNotification(this.translateService.instant('SEND_NEW_PASSWORD_MAIL_ERROR'), error);
     }
   }
 }

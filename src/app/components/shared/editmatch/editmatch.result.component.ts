@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MatchService } from '../../../services/match.service';
-import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Match } from 'src/api/graphql';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-editmatchresult',
@@ -19,7 +19,7 @@ export class EditmatchResultComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
     private matchService: MatchService,
     private dialogRef: MatDialogRef<EditmatchResultComponent>,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
     public translateService: TranslateService
   ) {
     this.home_score = this.match.home_score;
@@ -30,20 +30,17 @@ export class EditmatchResultComponent implements OnInit {
 
   }
 
-  onSaveClicked() {
+  async onSaveClicked() {
     if (this.matchService.isValidResult(this.home_score) && this.matchService.isValidResult(this.guest_score)) {
-      this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score)
-        .then( () => {
-          this.dialogRef.close(true);
-        })
-        .catch( (error) => {
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              message: this.translateService.instant('EDIT_RESULT_ERROR')
-            },
-            panelClass: ['alert', 'alert-danger'],
-          });
-        });
+      try {
+        await this.matchService.submitMatchResult(this.match.id, this.home_score, this.guest_score);
+        this.notify.showSuccessNotification(this.translateService.instant('EDIT_RESULT_SUCCESS'));
+        this.dialogRef.close(true);
+      } catch (error) {
+        this.notify.showSuccessNotification(this.translateService.instant('EDIT_RESULT_ERROR'), error);
+      }
+    } else {
+      this.notify.showSuccessNotification(this.translateService.instant('ENTER_VALID_RESULT'));
     }
   }
 }

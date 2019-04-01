@@ -13,6 +13,9 @@ import { GraphqlSubscriptionService } from './graphql-subscription.service';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
+import { onError } from 'apollo-link-error';
+import { NotificationService } from './notification.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +27,9 @@ export class GraphqlService {
     private httpLink: HttpLink,
     private authService: AuthenticationService,
     private appsettingsService: AppsettingsService,
-    private graphqlSubscriptionService: GraphqlSubscriptionService
+    private graphqlSubscriptionService: GraphqlSubscriptionService,
+    private notify: NotificationService,
+    private translationService: TranslateService
   ) {
   }
 
@@ -34,9 +39,6 @@ export class GraphqlService {
     const afterwareLink = new ApolloLink((operation, forward) => {
       return forward(operation).map(response => {
         const { response: { headers } } = operation.getContext();
-        if (response.errors && response.errors.some(x => x.message.includes('Unauthenticated'))) {
-          this.authService.logout();
-        }
         if (headers) {
           const token = headers.get('x-token');
           if (token) {
@@ -45,6 +47,25 @@ export class GraphqlService {
         }
         return response;
       });
+    });
+
+    const errorHandler = onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) =>
+          console.log(
+            `[GraphQL error]: Message: ${message}`,
+          ),
+        );
+      }
+      if (networkError) {
+        switch (networkError['status']) {
+          case 401:
+            this.authService.logout();
+            break;
+          default:
+            this.notify.showErrorNotification(this.translationService.instant('UNKNOWN_NETWORK_ERROR'), networkError['statusText']);
+        }
+      }
     });
 
     const auth = setContext((_, { headers }) => {
@@ -61,25 +82,28 @@ export class GraphqlService {
       }
     });
 
-    this.graphqlSubscriptionService.subscriptionClient = new SubscriptionClient(
-      this.appsettingsService.appsettings.graphqlWsUrl,
-      {
-        lazy: true,
-        reconnect: true,
-        reconnectionAttempts: 2
-      });
-    const wsClient = new WebSocketLink(this.graphqlSubscriptionService.subscriptionClient);
+    let link = errorHandler.concat(afterwareLink).concat(auth).concat(http);
+    if (this.appsettingsService.appsettings.graphqlWsUrl) {
 
-    const link = split(
-      // split based on operation type
-      ({ query }) => {
-        const { kind, operation } = getMainDefinition(query);
-        return kind === 'OperationDefinition' && operation === 'subscription';
-      },
-      wsClient,
-      afterwareLink.concat(auth).concat(http),
-    );
+      this.graphqlSubscriptionService.subscriptionClient = new SubscriptionClient(
+        this.appsettingsService.appsettings.graphqlWsUrl,
+        {
+          lazy: true,
+          reconnect: true,
+          reconnectionAttempts: 2
+        });
+      const wsClient = new WebSocketLink(this.graphqlSubscriptionService.subscriptionClient);
 
+      link = split(
+        // split based on operation type
+        ({ query }) => {
+          const { kind, operation } = getMainDefinition(query);
+          return kind === 'OperationDefinition' && operation === 'subscription';
+        },
+        wsClient,
+        link,
+      );
+    }
     const cache = new InMemoryCache(
       {
         addTypename: true,

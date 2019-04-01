@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContactComponent } from '../contact/contact.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { EditmatchResultComponent } from '../editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from '../editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from '../editmatch/editmatch.pitch.component';
 import { I18Service } from '../../../services/i18.service';
-import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Match } from 'src/api/graphql';
 import { MatchService } from '../../../services/match.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-match',
@@ -28,7 +28,7 @@ export class MatchComponent implements OnInit {
     public dialog: MatDialog,
     public authService: AuthenticationService,
     public i18Service: I18Service,
-    public snackBar: MatSnackBar,
+    public notify: NotificationService,
     public matchService: MatchService,
     public translateService: TranslateService) {
   }
@@ -45,12 +45,7 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              message: this.translateService.instant('RESULT_SAVE_SUCCESS')
-            },
-            panelClass: ['alert', 'alert-success']
-          });
+          this.notify.showSuccessNotification(this.translateService.instant('RESULT_SAVE_SUCCESS'));
           this.matchUpdated.emit(this.match.id);
         }
       });
@@ -64,12 +59,7 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              message: this.translateService.instant('PITCH_SAVE_SUCCESS')
-            },
-            panelClass: ['alert', 'alert-success']
-          });
+          this.notify.showSuccessNotification(this.translateService.instant('PITCH_SAVE_SUCCESS'));
           this.matchUpdated.emit(this.match.id);
         }
       });
@@ -83,12 +73,7 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result) {
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              message: this.translateService.instant('TIME_SAVE_SUCCESS')
-            },
-            panelClass: ['alert', 'alert-success']
-          });
+          this.notify.showSuccessNotification(this.translateService.instant('TIME_SAVE_SUCCESS'));
           this.matchUpdated.emit(this.match.id);
         }
       });

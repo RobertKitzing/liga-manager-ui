@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { I18Service } from '../../services/i18.service';
 import { MatSnackBar } from '@angular/material';
-import { SnackbarComponent } from 'src/app/components/shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -36,31 +35,7 @@ export class TableComponent implements OnInit {
   getRanking() {
     this.error = false;
     this.rankingQGL = this.ranking.watch({ id: this.seasonService.currentSeason.getValue().id }).valueChanges.pipe(
-      map(
-        (result) => {
-          if (result.errors) {
-            console.error(result.errors);
-            this.showErrorSnackBar();
-            return null;
-          } else {
-            if (!result.data.season) {
-              this.showErrorSnackBar();
-            }
-            return result.data.season.ranking;
-          }
-        }
-      )
+      map((result) => result.data.season.ranking)
     );
-  }
-
-  showErrorSnackBar(errorCode?: number) {
-    this.error = true;
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      data: {
-        message: this.translateService.instant('COMMON_ERROR'),
-        duration: 60000
-      },
-      panelClass: ['alert', 'alert-danger'],
-    });
   }
 }

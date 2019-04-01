@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material';
-import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-newpassword',
@@ -21,7 +20,7 @@ export class NewpasswordComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar
+    private notify: NotificationService
   ) {
     this.loginForm = this.formBuilder.group({
       password: ['', Validators.required],
@@ -37,7 +36,7 @@ export class NewpasswordComponent implements OnInit {
           if (user) {
             this.token = params['token'];
           } else {
-            this.authService.accessToken = null;
+            this.authService.logout();
           }
         }
       }
@@ -48,21 +47,9 @@ export class NewpasswordComponent implements OnInit {
     try {
       await this.authService.changePassword(this.loginForm.value.password);
       this.authService.logout();
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('PASSWORD_CHANGED_SUCCESS')
-          },
-          panelClass: ['alert', 'alert-success'],
-          duration: 30000
-        });
+      this.notify.showSuccessNotification(this.translateService.instant('PASSWORD_CHANGED_SUCCESS'));
     } catch (error) {
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('PASSWORD_CHANGED_ERROR')
-        },
-        panelClass: ['alert', 'alert-danger'],
-        duration: 30000
-      });
+      this.notify.showErrorNotification(this.translateService.instant('PASSWORD_CHANGED_ERROR'), error);
     }
   }
 }

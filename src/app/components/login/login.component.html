@@ -4,7 +4,7 @@
       <div class="col">
         <mat-form-field class="w-100">
           <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
-          <mat-error *ngIf="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
+          <mat-error *ngIf="!loginForm.controls['username'].valid">
             <span translate>USERNAME_REQUIRED</span>
           </mat-error>
         </mat-form-field>
@@ -12,10 +12,10 @@
     </div>
     <div class="row justify-content-center">
       <div class="col">
-        <mat-form-field class="w-100">
+        <mat-form-field class="w-100" (click)="loginForm.controls['password'].enable()">
           <input #password type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}"
             required />
-          <mat-error *ngIf="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
+          <mat-error *ngIf="!loginForm.controls['password'].valid">
             <span translate>PASSWORD_REQUIRED</span>
           </mat-error>
           <button mat-button *ngIf="password.value" matSuffix mat-icon-button
@@ -25,11 +25,6 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col login-error" [hidden]="!error" translate>
-          ERRORS.USERNAME_PASSWORD_WRONG
-        </div>
-      </div>
   </div>
   <div mat-dialog-actions>
     <button mat-button color="primary" (click)="passwordForgot(username.value)">

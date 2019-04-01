@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
 import { MatSelectChange, MatTabChangeEvent, MatSnackBar } from '@angular/material';
-import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { TeamService } from 'src/app/services/team.service';
 import { map } from 'rxjs/operators';
@@ -116,7 +115,7 @@ export class ManageseasonComponent implements OnInit {
         ).toPromise();
         this.notificationService.showSuccessNotification(this.translateService.instant('TEAM_ADDED_TO_SEASON_SUCCESS'));
       } catch (error) {
-        this.notificationService.showErrorNotification(this.translateService.instant('TEAM_ADDED_TO_SEASON_ERROR'));
+        this.notificationService.showErrorNotification(this.translateService.instant('TEAM_ADDED_TO_SEASON_ERROR'), error);
       }
     }
   }
