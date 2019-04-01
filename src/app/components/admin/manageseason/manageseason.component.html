@@ -81,7 +81,7 @@
           <div class="col text-left">
             <button mat-button [owlDateTimeTrigger]="dtFrom">{{ 'BUTTON.SET_TIME' | translate }}</button>
             <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #dtFrom></owl-date-time>
-            <input matInput #kickoffInput [owlDateTime]="dtFrom" (dateTimeChange)="setMatchDayFromDate(i, $event)" style="display: none;">
+            <input matInput #kickoffInput [owlDateTime]="dtFrom" (dateTimeChange)="setMatchDayFromDate(i, $event, manageSeason.match_days)" style="display: none;">
           </div>
           <div class="col">
             {{ matchDay.to | date:'short':'':i18Service.currentLang }}
@@ -89,36 +89,33 @@
           <div class="col text-left">
             <button mat-button [owlDateTimeTrigger]="dtTo">{{ 'BUTTON.SET_TIME' | translate }}</button>
             <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #dtTo></owl-date-time>
-            <input matInput #kickoffInput [owlDateTime]="dtTo" (dateTimeChange)="setMatchDayToDate(i, $event)" style="display: none;">
+            <input matInput #kickoffInput [owlDateTime]="dtTo" (dateTimeChange)="setMatchDayToDate(i, $event, manageSeason.match_days)" style="display: none;">
           </div>
         </div>
         <div>
-          <button mat-button color="primary" *ngIf="!manageSeason.match_days" (click)="sendMatchDays()">{{ 'BUTTON.GENERATE_MATCHPLAN' | translate }}</button>
+          <button mat-raised-button color="primary" *ngIf="!manageSeason.match_days" (click)="sendMatchDays()">{{ 'BUTTON.GENERATE_MATCHPLAN' | translate }}</button>
         </div>
       </mat-tab>
       <mat-tab label="{{ 'TAB.MATCHES' | translate }}">
-        <div class="container-fluid">
+        <div class="container-fluid mt-2" style="max-height: 60vh; overflow: auto;">
           <ng-container *ngFor="let matchDay of manageSeason.match_days">
             <div class="row">
               <div class="col text-center">
-                <h3>{{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{matchDay.start_date | date }}-{{matchDay.end_date
-                  | date}})</h3>
+                <h3>
+                  {{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})
+                </h3>
               </div>
             </div>
-            <div class="row">
-              <div class="col" *ngFor="let match of matchDay.matches">
+            <div class="row" *ngFor="let match of matchDay.matches">
+              <div class="col text-center">
                 {{ match.home_team.name }} - {{ match.guest_team.name }}
               </div>
             </div>
           </ng-container>
-          <div class="row">
-            <div>
-              <button mat-button (click)="startSeason()">{{ 'BUTTON.START_SEASON' | translate}}</button>
-            </div>
-          </div>
         </div>
+        <button mat-raised-button color="primary" (click)="startSeason()">{{ 'BUTTON.START_SEASON' | translate}}</button>
       </mat-tab>
-      <mat-tab label="{{ 'TAB.MATCH_SCHEDULING' | translate }}">
+      <mat-tab label="{{ 'TAB.MATCH_SCHEDULING' | translate }}" *ngIf="manageSeason.match_days">
           <app-match-scheduling [manageSeason]="manageSeason"></app-match-scheduling>
         </mat-tab>
     </mat-tab-group>

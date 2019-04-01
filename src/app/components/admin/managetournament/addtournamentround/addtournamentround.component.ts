@@ -64,7 +64,7 @@ export class AddtournamentroundComponent implements OnInit {
   }
 
   removeTeam(tupel: TeamIdPair) {
-    this.roundTeams = this.roundTeams.filter(t => t !== tupel);
+    this.roundTeams = this.roundTeams.filter(t => t.guestTeam.id !== tupel.guest_team_id && t.homeTeam.id !== tupel.home_team_id);
   }
 
   async createRound() {

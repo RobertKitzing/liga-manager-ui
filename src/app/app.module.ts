@@ -73,10 +73,6 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    },
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: { duration: 2500 }
     }
   ],
   bootstrap: [

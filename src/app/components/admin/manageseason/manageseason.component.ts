@@ -9,9 +9,10 @@ import { Observable } from 'rxjs';
 import {
   AllSeasonsList, Match,
   MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
-  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL
+  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay
 } from '../../../../api/graphql';
 import { I18Service } from 'src/app/services/i18.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-manageseason',
@@ -34,14 +35,15 @@ export class ManageseasonComponent implements OnInit {
     public seasonService: SeasonService,
     public teamService: TeamService,
     public i18Service: I18Service,
-    private snackBar: MatSnackBar,
     private translateService: TranslateService,
     private matchesQL: CreateMatchesForSeasonGQL,
     private matchPlanGQL: MatchPlanGQL,
     private removeTeamGQL: RemoveTeamFromSeasonGQL,
     private addTeamGQL: AddTeamToSeasonGQL,
     private startSeasonGQL: StartSeasonGQL,
-    private allSeasonsListGQL: AllSeasonsListGQL
+    private allSeasonsListGQL: AllSeasonsListGQL,
+    private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
+    private notificationService: NotificationService
   ) {
     this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
@@ -75,8 +77,9 @@ export class ManageseasonComponent implements OnInit {
   async addNewSeason(seasonName: string) {
     try {
       await this.seasonService.createSeason(seasonName);
+      this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_SEASON_SUCCESS'));
     } catch (error) {
-      console.error(error);
+      this.notificationService.showErrorNotification(this.translateService.instant('CREATE_SEASON_ERROR'), error);
     }
   }
 
@@ -111,8 +114,9 @@ export class ManageseasonComponent implements OnInit {
             ]
           }
         ).toPromise();
+        this.notificationService.showSuccessNotification(this.translateService.instant('TEAM_ADDED_TO_SEASON_SUCCESS'));
       } catch (error) {
-        console.log(error);
+        this.notificationService.showErrorNotification(this.translateService.instant('TEAM_ADDED_TO_SEASON_ERROR'));
       }
     }
   }
@@ -134,8 +138,9 @@ export class ManageseasonComponent implements OnInit {
             ]
           }
         ).toPromise();
+        this.notificationService.showSuccessNotification(this.translateService.instant('TEAM_REMOVED_SEASON_SUCCESS'));
       } catch (error) {
-        console.log(error);
+        this.notificationService.showErrorNotification(this.translateService.instant('TEAM_REMOVED_SEASON_ERROR'), error);
       }
     }
   }
@@ -166,37 +171,25 @@ export class ManageseasonComponent implements OnInit {
   }
 
   sendMatchDays() {
-    this.matchesQL.mutate(
-      {
-        season_id: this.manageSeasonId,
-        dates: this.newMatchDays
-      },
-      {
-        refetchQueries: [
-          {
-            query: this.matchPlanGQL.document,
-            variables: { id: this.manageSeasonId }
-          }
-        ]
-      }
-    ).subscribe(
-      (d) => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS')
-          },
-          panelClass: ['alert', 'alert-success']
-        });
-      },
-      (error) => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            message: this.translateService.instant('CREATE_MATCH_DAYS_ERROR')
-          },
-          panelClass: ['alert', 'alert-danger']
-        });
-      }
-    );
+    try {
+      this.matchesQL.mutate(
+        {
+          season_id: this.manageSeasonId,
+          dates: this.newMatchDays
+        },
+        {
+          refetchQueries: [
+            {
+              query: this.matchPlanGQL.document,
+              variables: { id: this.manageSeasonId }
+            }
+          ]
+        }
+      ).toPromise();
+      this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
+    } catch (error) {
+      this.notificationService.showErrorNotification(this.translateService.instant('CREATE_MATCH_DAYS_ERROR'), error);
+    }
   }
 
   async startSeason() {
@@ -214,33 +207,45 @@ export class ManageseasonComponent implements OnInit {
           ]
         }
       ).toPromise();
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('START_SEASON_SUCCESS')
-        },
-        panelClass: ['alert', 'alert-success']
-      });
+      this.notificationService.showSuccessNotification(this.translateService.instant('START_SEASON_SUCCESS'));
     } catch (error) {
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: this.translateService.instant('START_SEASON_ERROR')
-        },
-        panelClass: ['alert', 'alert-danger']
-      });
+      this.notificationService.showErrorNotification(this.translateService.instant('START_SEASON_ERROR'), error);
     }
   }
 
-  setMatchDayFromDate(index: number, date: any) {
+  setMatchDayFromDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
     if (!this.newMatchDays[index]) {
       this.newMatchDays[index] = <DatePeriod>{};
     }
     this.newMatchDays[index].from = date.value;
+    if (matchDays) {
+      const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
+      this.rescheduleMatchDay(matchDayId, { from: this.newMatchDays[index].from, to: this.newMatchDays[index].to });
+    }
   }
 
-  setMatchDayToDate(index: number, date: any) {
+  setMatchDayToDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
     if (!this.newMatchDays[index]) {
       this.newMatchDays[index] = <DatePeriod>{};
     }
     this.newMatchDays[index].to = date.value;
+    if (matchDays) {
+      const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
+      this.rescheduleMatchDay(matchDayId, { from: this.newMatchDays[index].from, to: this.newMatchDays[index].to });
+    }
+  }
+
+  async rescheduleMatchDay(matchDayId: string, period: DatePeriod) {
+    try {
+      await this.rescheduleMatchDayGQL.mutate(
+        {
+          match_day_id: matchDayId,
+          date_period: period
+        }
+      ).toPromise();
+      this.notificationService.showSuccessNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_SUCCESS'));
+    } catch (error) {
+      this.notificationService.showErrorNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_ERROR'), error);
+    }
   }
 }

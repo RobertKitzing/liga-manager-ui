@@ -33,6 +33,9 @@ mutation CreateMatchesForSeason(
     ) {
     createMatchesForSeason(season_id: $season_id,  dates: $dates )
 }
+mutation RescheduleMatchDay($match_day_id: String!, $date_period: DatePeriod!){
+  rescheduleMatchDay(match_day_id: $match_day_id, date_period: $date_period)
+}
 
 mutation StartSeason($id: String!) {
     startSeason(season_id: $id)

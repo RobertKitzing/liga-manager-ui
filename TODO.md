@@ -1,6 +1,3 @@
-- Implement Appsettings initial Call
-    
-- Implement rescheduleMatchDay()
 - Implement RankingPenalty
 - Implement endSeason()
 - Implement CreatePitches

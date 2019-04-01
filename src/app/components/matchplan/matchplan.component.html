@@ -50,7 +50,7 @@
   <ng-container *ngIf="(matchesGQL | async) as matches">
     <ng-container *ngFor="let matchDay of filterMatchDays(matches.match_days)">
         <h3 class="text-center">
-          {{ 'MATCHDAY' | translate:{matchDay: matchDay.number} }}
+          {{ 'MATCHDAY' | translate:{matchDay: matchDay.number} }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})
         </h3>
         <ng-container *ngFor="let match of filterMatches(matchDay.matches)">
           <app-match [match]="match" [hideIfPlayed]="hidePlayed" (matchUpdated)="matchUpdated($event)"></app-match>

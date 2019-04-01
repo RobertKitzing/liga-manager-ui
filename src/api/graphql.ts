@@ -2,15 +2,15 @@
 export type Maybe<T> = T | null;
 
 export interface DatePeriod {
-  from?: Maybe<Date>;
+  from: Date;
 
-  to?: Maybe<Date>;
+  to: Date;
 }
 
 export interface TeamIdPair {
-  home_team_id?: Maybe<string>;
+  home_team_id: string;
 
-  guest_team_id?: Maybe<string>;
+  guest_team_id: string;
 }
 
 export enum SeasonState {
@@ -144,6 +144,19 @@ export namespace CreateMatchesForSeason {
     __typename?: "Mutation";
 
     createMatchesForSeason: Maybe<boolean>;
+  };
+}
+
+export namespace RescheduleMatchDay {
+  export type Variables = {
+    match_day_id: string;
+    date_period: DatePeriod;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    rescheduleMatchDay: Maybe<boolean>;
   };
 }
 
@@ -409,13 +422,13 @@ export namespace Match {
   export type Fragment = {
     __typename?: "Match";
 
-    id: Maybe<string>;
+    id: string;
 
-    home_team: Maybe<HomeTeam>;
+    home_team: HomeTeam;
 
     home_score: Maybe<number>;
 
-    guest_team: Maybe<GuestTeam>;
+    guest_team: GuestTeam;
 
     guest_score: Maybe<number>;
 
@@ -435,13 +448,13 @@ export namespace MatchDay {
   export type Fragment = {
     __typename?: "MatchDay";
 
-    id: Maybe<string>;
+    id: string;
 
-    number: Maybe<number>;
+    number: number;
 
-    start_date: Maybe<string>;
+    start_date: string;
 
-    end_date: Maybe<string>;
+    end_date: string;
 
     matches: Maybe<(Maybe<Matches>)[]>;
   };
@@ -453,13 +466,13 @@ export namespace Pitch {
   export type Fragment = {
     __typename?: "Pitch";
 
-    id: Maybe<string>;
+    id: string;
 
-    label: Maybe<string>;
+    label: string;
 
-    location_longitude: Maybe<number>;
+    location_longitude: number;
 
-    location_latitude: Maybe<number>;
+    location_latitude: number;
 
     contact: Maybe<Contact>;
   };
@@ -471,11 +484,11 @@ export namespace Team {
   export type Fragment = {
     __typename?: "Team";
 
-    id: Maybe<string>;
+    id: string;
 
-    name: Maybe<string>;
+    name: string;
 
-    created_at: Maybe<string>;
+    created_at: string;
 
     contact: Maybe<Contact>;
   };
@@ -487,13 +500,13 @@ export namespace Contact {
   export type Fragment = {
     __typename?: "Contact";
 
-    first_name: Maybe<string>;
+    first_name: string;
 
-    last_name: Maybe<string>;
+    last_name: string;
 
-    phone: Maybe<string>;
+    phone: string;
 
-    email: Maybe<string>;
+    email: string;
   };
 }
 
@@ -501,9 +514,9 @@ export namespace Season {
   export type Fragment = {
     __typename?: "Season";
 
-    id: Maybe<string>;
+    id: string;
 
-    name: Maybe<string>;
+    name: string;
 
     teams: Maybe<(Maybe<Teams>)[]>;
 
@@ -519,11 +532,11 @@ export namespace AllSeasons {
   export type Fragment = {
     __typename?: "Season";
 
-    id: Maybe<string>;
+    id: string;
 
-    name: Maybe<string>;
+    name: string;
 
-    state: Maybe<SeasonState>;
+    state: SeasonState;
   };
 }
 
@@ -531,9 +544,9 @@ export namespace AllTournaments {
   export type Fragment = {
     __typename?: "Tournament";
 
-    id: Maybe<string>;
+    id: string;
 
-    name: Maybe<string>;
+    name: string;
   };
 }
 
@@ -541,9 +554,9 @@ export namespace Tournament {
   export type Fragment = {
     __typename?: "Tournament";
 
-    id: Maybe<string>;
+    id: string;
 
-    name: Maybe<string>;
+    name: string;
 
     rounds: Maybe<(Maybe<Rounds>)[]>;
   };
@@ -555,17 +568,17 @@ export namespace User {
   export type Fragment = {
     __typename?: "User";
 
-    id: Maybe<string>;
+    id: string;
 
-    email: Maybe<string>;
+    email: string;
 
     teams: Maybe<(Maybe<Teams>)[]>;
 
-    role: Maybe<UserRole>;
+    role: UserRole;
 
-    first_name: Maybe<string>;
+    first_name: string;
 
-    last_name: Maybe<string>;
+    last_name: string;
   };
 
   export type Teams = Team.Fragment;
@@ -575,11 +588,11 @@ export namespace Event {
   export type Fragment = {
     __typename?: "Event";
 
-    id: Maybe<string>;
+    id: string;
 
-    occurred_at: Maybe<string>;
+    occurred_at: string;
 
-    type: Maybe<string>;
+    type: string;
   };
 }
 
@@ -587,7 +600,7 @@ export namespace Ranking {
   export type Fragment = {
     __typename?: "Season";
 
-    id: Maybe<string>;
+    id: string;
 
     ranking: Maybe<Ranking>;
   };
@@ -605,25 +618,25 @@ export namespace Ranking {
   export type Positions = {
     __typename?: "RankingPosition";
 
-    team: Maybe<Team>;
+    team: Team;
 
-    sort_index: Maybe<number>;
+    sort_index: number;
 
-    number: Maybe<number>;
+    number: number;
 
-    matches: Maybe<number>;
+    matches: number;
 
-    wins: Maybe<number>;
+    wins: number;
 
-    draws: Maybe<number>;
+    draws: number;
 
-    losses: Maybe<number>;
+    losses: number;
 
-    scored_goals: Maybe<number>;
+    scored_goals: number;
 
-    conceded_goals: Maybe<number>;
+    conceded_goals: number;
 
-    points: Maybe<number>;
+    points: number;
   };
 
   export type Team = Team.Fragment;
@@ -631,13 +644,13 @@ export namespace Ranking {
   export type Penalties = {
     __typename?: "RankingPenalty";
 
-    team: Maybe<_Team>;
+    team: _Team;
 
-    reason: Maybe<string>;
+    reason: string;
 
-    created_at: Maybe<string>;
+    created_at: string;
 
-    points: Maybe<number>;
+    points: number;
   };
 
   export type _Team = Team.Fragment;
@@ -955,6 +968,22 @@ export class CreateMatchesForSeasonGQL extends Apollo.Mutation<
       $dates: [DatePeriod]!
     ) {
       createMatchesForSeason(season_id: $season_id, dates: $dates)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class RescheduleMatchDayGQL extends Apollo.Mutation<
+  RescheduleMatchDay.Mutation,
+  RescheduleMatchDay.Variables
+> {
+  document: any = gql`
+    mutation RescheduleMatchDay(
+      $match_day_id: String!
+      $date_period: DatePeriod!
+    ) {
+      rescheduleMatchDay(match_day_id: $match_day_id, date_period: $date_period)
     }
   `;
 }
