@@ -35,7 +35,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>TeamsComponent</li>
+  <li>ManagepitchesComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -61,7 +61,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/app/components/contactlist/teams/teams.component.ts</code>
+    <code>src/app/components/admin/managepitches/managepitches.component.ts</code>
 </p>
 
 
@@ -91,19 +91,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-teams</code></td>
+                <td class="col-md-9"><code>app-managepitches</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>./teams.component.css</code></td>
+                <td class="col-md-9"><code>./managepitches.component.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./teams.component.html</code></td>
+                <td class="col-md-9"><code>./managepitches.component.html</code></td>
             </tr>
 
 
@@ -131,7 +131,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#teamService">teamService</a>
+                                <a href="#pitchService">pitchService</a>
                             </li>
                         </ul>
                     </td>
@@ -146,7 +146,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Async</span>
+                                <a href="#deletePitch">deletePitch</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                         </ul>
@@ -167,12 +169,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(teamService: <a href="../injectables/TeamService.html">TeamService</a>)</code>
+<code>constructor(pitchService: <a href="../injectables/PitchService.html">PitchService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/components/contactlist/teams/teams.component.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -190,10 +192,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>teamService</td>
+                                                        <td>pitchService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+                                                                        <code><a href="../injectables/PitchService.html" target="_self" >PitchService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -223,28 +225,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="ngOnInit"></a>
+                    <a name="deletePitch"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Async</span>
-                            ngOnInit
+                            deletePitch
                         </b>
-                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                        <a href="#deletePitch"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>ngOnInit()</code>
+<code>deletePitch(pitch: Pitch.Fragment)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">src/app/components/contactlist/teams/teams.component.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:22</a></div>
                 </td>
             </tr>
 
@@ -253,7 +253,77 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pitch</td>
+                                    <td>
+                                            <code>Pitch.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="18"
+                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:18</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
                 </td>
@@ -270,24 +340,24 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="teamService"></a>
+                        <a name="pitchService"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            teamService</b>
-                            <a href="#teamService"><span class="icon ion-ios-link"></span></a>
+                            pitchService</b>
+                            <a href="#pitchService"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+                            <i>Type : </i>        <code><a href="../injectables/PitchService.html" target="_self" >PitchService</a></code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/contactlist/teams/teams.component.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -301,62 +371,79 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { TeamService } from &#x27;src/app/services/team.service&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+import { Pitch, PitchesGQL } from &#x27;src/api/graphql&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
+import { PitchService } from &#x27;src/app/services/pitch.service&#x27;;
 
 @Component({
-  selector: &#x27;app-teams&#x27;,
-  templateUrl: &#x27;./teams.component.html&#x27;,
-  styleUrls: [&#x27;./teams.component.css&#x27;]
+  selector: &#x27;app-managepitches&#x27;,
+  templateUrl: &#x27;./managepitches.component.html&#x27;,
+  styleUrls: [&#x27;./managepitches.component.css&#x27;]
 })
-export class TeamsComponent implements OnInit {
+export class ManagepitchesComponent implements OnInit {
 
   constructor(
-    public teamService: TeamService
+    public pitchService: PitchService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+
   }
 
+  deletePitch(pitch: Pitch.Fragment) {
+
+  }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
-    &lt;div class&#x3D;&quot;row&quot;&gt;
-      &lt;ng-container *ngFor&#x3D;&quot;let team of teamService.allTeams | async&quot;&gt;
-        &lt;div class&#x3D;&quot;col-12 col-md-6 col-lg-4&quot;&gt;
-          &lt;div class&#x3D;&quot;card&quot;&gt;
-            &lt;div class&#x3D;&quot;card-header&quot;&gt;
-              {{ team.name}}
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;card-body&quot;&gt;
-              &lt;div class&#x3D;&quot;card-text&quot;&gt;
-                &lt;div class&#x3D;&quot;row&quot;&gt;
-                  &lt;div class&#x3D;&quot;col align-self-center&quot;&gt;
-                    {{ &#x27;TEAM_CONTACT&#x27; | translate }}
-                  &lt;/div&gt;
-                  &lt;div class&#x3D;&quot;col&quot;&gt;
-                    &lt;ng-container *ngIf&#x3D;&quot;team.contact; else noContact&quot;&gt;
-                      &lt;app-contact-person [contact]&#x3D;&quot;team.contact&quot;&gt;&lt;/app-contact-person&gt;
-                    &lt;/ng-container&gt;
-                    &lt;ng-template #noContact&gt;
-                      {{ &#x27;NO_CONTACT_SET&#x27; | translate}}
-                    &lt;/ng-template&gt;
-                  &lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/ng-container&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;ng-container *ngIf&#x3D;&quot;(pitchService.allPitches | async) as allPitches; else loading&quot;&gt;
+  &lt;div class&#x3D;&quot;container-fluid mt-3&quot;&gt;
+    &lt;div class&#x3D;&quot;row mb-3&quot;&gt;
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+        {{ &#x27;PITCH&#x27; | translate }}
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+        {{ &#x27;CONTACT&#x27; | translate }}
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+          &amp;nbsp;
+      &lt;/div&gt;
     &lt;/div&gt;
-  &lt;/div&gt;</code></pre>
+    &lt;div class&#x3D;&quot;row mb-2&quot; *ngFor&#x3D;&quot;let pitch of allPitches&quot;&gt;
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+        &lt;mat-icon&gt;location_on&lt;/mat-icon&gt;
+        &lt;a href&#x3D;&quot;https://www.google.com/maps/?q&#x3D;{{ pitch.location_latitude }},{{ pitch.location_longitude }}&quot;
+          target&#x3D;&quot;_blank&quot; style&#x3D;&quot;cursor: pointer;&quot;&gt;
+          {{ pitch.label }}
+        &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;pitch.contact; else noContact&quot;&gt;
+          &lt;app-contact-person [contact]&#x3D;&quot;pitch.contact&quot;&gt;&lt;/app-contact-person&gt;
+        &lt;/ng-container&gt;
+        &lt;ng-template #noContact&gt;
+          {{ &#x27;NO_CONTACT_SET&#x27; | translate}}
+        &lt;/ng-template&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col&quot;&gt;
+        &lt;button mat-flat-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;deletePitch(pitch)&quot;&gt;
+          {{ &#x27;BUTTON.DELETE_PITCH&#x27;}}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/ng-container&gt;
+&lt;ng-template #loading&gt;
+  &lt;mat-progress-bar mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-progress-bar&gt;
+&lt;/ng-template&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
-                    <code>./teams.component.css</code>
+                    <code>./managepitches.component.css</code>
                 </p>
                 <pre class="line-numbers"><code class="language-scss"></code></pre>
     </div>
@@ -386,10 +473,10 @@ export class TeamsComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">    <div class="row">      <ng-container *ngFor="let team of teamService.allTeams | async">        <div class="col-12 col-md-6 col-lg-4">          <div class="card">            <div class="card-header">              {{ team.name}}            </div>            <div class="card-body">              <div class="card-text">                <div class="row">                  <div class="col align-self-center">                    {{ \'TEAM_CONTACT\' | translate }}                  </div>                  <div class="col">                    <ng-container *ngIf="team.contact; else noContact">                      <app-contact-person [contact]="team.contact"></app-contact-person>                    </ng-container>                    <ng-template #noContact>                      {{ \'NO_CONTACT_SET\' | translate}}                    </ng-template>                  </div>                </div>              </div>            </div>          </div>        </div>      </ng-container>    </div>  </div></div>'
+        var COMPONENT_TEMPLATE = '<div><ng-container *ngIf="(pitchService.allPitches | async) as allPitches; else loading">  <div class="container-fluid mt-3">    <div class="row mb-3">      <div class="col">        {{ \'PITCH\' | translate }}      </div>      <div class="col">        {{ \'CONTACT\' | translate }}      </div>      <div class="col">          &nbsp;      </div>    </div>    <div class="row mb-2" *ngFor="let pitch of allPitches">      <div class="col">        <mat-icon>location_on</mat-icon>        <a href="https://www.google.com/maps/?q={{ pitch.location_latitude }},{{ pitch.location_longitude }}"          target="_blank" style="cursor: pointer;">          {{ pitch.label }}        </a>      </div>      <div class="col">        <ng-container *ngIf="pitch.contact; else noContact">          <app-contact-person [contact]="pitch.contact"></app-contact-person>        </ng-container>        <ng-template #noContact>          {{ \'NO_CONTACT_SET\' | translate}}        </ng-template>      </div>      <div class="col">        <button mat-flat-button color="primary" (click)="deletePitch(pitch)">          {{ \'BUTTON.DELETE_PITCH\'}}        </button>      </div>    </div>  </div></ng-container><ng-template #loading>  <mat-progress-bar mode="indeterminate"></mat-progress-bar></ng-template></div>'
     var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
-    var ACTUAL_COMPONENT = {'name': 'TeamsComponent'};
+    var ACTUAL_COMPONENT = {'name': 'ManagepitchesComponent'};
 </script>
 <script src="../js/tree.js"></script>
 
@@ -423,7 +510,7 @@ export class TeamsComponent implements OnInit {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
-            var COMPODOC_CURRENT_PAGE_URL = 'TeamsComponent.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'ManagepitchesComponent.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

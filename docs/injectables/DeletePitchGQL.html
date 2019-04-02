@@ -38,7 +38,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li>ScheduleMatchGQL</li>
+  <li>DeletePitchGQL</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -118,15 +118,15 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>gql&#x60;
-    mutation ScheduleMatch($match_id: String!, $kickoff: String!) {
-      scheduleMatch(match_id: $match_id, kickoff: $kickoff)
+    mutation DeletePitch($pitch_id: String!) {
+      deletePitch(pitch_id: $pitch_id)
     }
   &#x60;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="886" class="link-to-prism">src/api/graphql.ts:886</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="938" class="link-to-prism">src/api/graphql.ts:938</a></div>
                             </td>
                         </tr>
 
@@ -1503,7 +1503,7 @@ export class AllUsersGQL extends Apollo.Query&lt;
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'ScheduleMatchGQL.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'DeletePitchGQL.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
