@@ -107,6 +107,22 @@ export namespace DeletePitch {
   };
 }
 
+export namespace UpdatePitchContact {
+  export type Variables = {
+    pitch_id: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updatePitchContact: Maybe<boolean>;
+  };
+}
+
 export namespace CreateSeason {
   export type Variables = {
     id?: Maybe<string>;
@@ -938,6 +954,31 @@ export class DeletePitchGQL extends Apollo.Mutation<
   document: any = gql`
     mutation DeletePitch($pitch_id: String!) {
       deletePitch(pitch_id: $pitch_id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UpdatePitchContactGQL extends Apollo.Mutation<
+  UpdatePitchContact.Mutation,
+  UpdatePitchContact.Variables
+> {
+  document: any = gql`
+    mutation UpdatePitchContact(
+      $pitch_id: String!
+      $first_name: String!
+      $last_name: String!
+      $phone: String!
+      $email: String!
+    ) {
+      updatePitchContact(
+        pitch_id: $pitch_id
+        first_name: $first_name
+        last_name: $last_name
+        phone: $phone
+        email: $email
+      )
     }
   `;
 }

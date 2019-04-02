@@ -1,0 +1,4 @@
+<h1 mat-dialog-title>{{pitch.label}}</h1>
+<div mat-dialog-content>
+  <app-edit-contact [contact]="pitch.contact" (contactChanged)="contactChanged($event)"></app-edit-contact>
+</div>

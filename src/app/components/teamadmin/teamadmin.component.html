@@ -6,46 +6,7 @@
           <div class="card text-center">
             <div class="card-body">
               <h5 class="card-title" translate>EDIT_TEAM_CONTACT_INFO_TEXT</h5>
-              <div class="card-text">
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field>
-                      <input matInput placeholder="{{ 'FIRST_NAME' | translate  }}" #firstname [value]="team.contact?.first_name"
-                      />
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field>
-                      <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname [value]="team.contact?.last_name"
-                      />
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field>
-                      <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail [value]="team.contact?.email"
-                      />
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <mat-form-field>
-                      <input matInput placeholder="{{ 'PHONE' | translate }}" #phone [value]="team.contact?.phone" />
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <button mat-button (click)="saveContact(team.id, firstname.value, lastname.value, mail.value, phone.value)">
-                      {{ 'BUTTON.SAVE' | translate }}
-                    </button>
-                  </div>
-                </div>
-              </div>
+                <app-edit-contact [contact]="team.contact" (contactChanged)="saveContact(team.id, $event)"></app-edit-contact>
             </div>
           </div>
         </mat-tab>

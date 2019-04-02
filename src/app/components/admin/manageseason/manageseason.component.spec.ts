@@ -4,7 +4,7 @@ import { ManageseasonComponent } from './manageseason.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from '../../../shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { SeasonService } from '../../../services/season.service';
 import { SeasonState, Team, Client, CreateSeasonBody, Season } from '../../../../api';
 import { TeamService } from '../../../services/team.service';

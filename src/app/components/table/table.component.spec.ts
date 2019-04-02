@@ -4,7 +4,7 @@ import { TableComponent } from './table.component';
 import { TableModule } from './table.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '../../shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TableComponent', () => {

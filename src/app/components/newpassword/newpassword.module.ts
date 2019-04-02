@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewpasswordComponent } from './newpassword.component';
 import { NewpasswordRoutingModule } from './newpassword-routing.module';
-import { SharedModule } from '../../shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [

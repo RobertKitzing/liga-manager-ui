@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { TeamService } from '../../services/team.service';
-import { FormControl, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { UpdateTeamContactGQL, UserGQL } from 'src/api/graphql';
+import { UpdateTeamContactGQL, UserGQL, Contact } from 'src/api/graphql';
 import { NotificationService } from 'src/app/services/notification.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-teamadmin',
@@ -13,30 +12,26 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class TeamadminComponent implements OnInit {
 
-  emailFormControl: FormControl = new FormControl('', [Validators.email, Validators.required]);
   user = this.authService.user;
 
   constructor(
+    private userQGL: UserGQL,
     private authService: AuthenticationService,
     public teamService: TeamService,
-    public notify: NotificationService,
-    public translateService: TranslateService,
     private updateTeamContact: UpdateTeamContactGQL,
-    private userQGL: UserGQL
+    public notify: NotificationService,
+    public translateService: TranslateService
   ) { }
 
   ngOnInit() {
   }
 
-  async saveContact(teamId: string, firstname: string, lastname: string, email: string, phone: string) {
+  async saveContact(teamId: string, contact: Contact.Fragment) {
     try {
       await this.updateTeamContact.mutate(
         {
           team_id: teamId,
-          email: email,
-          first_name: firstname,
-          last_name: lastname,
-          phone: phone
+          ...contact
         },
         {
           refetchQueries: [
@@ -46,11 +41,7 @@ export class TeamadminComponent implements OnInit {
       ).toPromise();
       this.notify.showSuccessNotification(this.translateService.instant('TEAM_CONTACT_SAVE_SUCCESS'));
     } catch (error) {
-      this.notify.showSuccessNotification(this.translateService.instant('TEAM_CONTACT_SAVE_ERROR'), error);
+      this.notify.showErrorNotification(this.translateService.instant('TEAM_CONTACT_SAVE_ERROR'), error);
     }
-  }
-
-  isEmailValidOrEmpty(mail: string) {
-    return mail ? this.emailFormControl.valid : true;
   }
 }

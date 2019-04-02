@@ -1,0 +1,38 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'FIRST_NAME' | translate  }}" #firstname [value]="contact?.first_name" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'LAST_NAME' | translate }}" #lastname [value]="contact?.last_name" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'EMAIL' | translate }}" #mail [formControl]="emailFormControl" #mail
+          [value]="contact?.email" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'PHONE' | translate }}" #phone [value]="contact?.phone" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center mb-1">
+      <button mat-raised-button color="primary" (click)="emitContactChanged(firstname.value, lastname.value, mail.value, phone.value)">
+        {{ 'BUTTON.SAVE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

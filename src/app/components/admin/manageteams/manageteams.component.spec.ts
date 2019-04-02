@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddteamComponent } from './addteam.component';
-import { SharedModule } from '../../../shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { TeamService } from '../../../services/team.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

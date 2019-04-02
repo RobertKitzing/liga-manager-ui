@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TeamsComponent } from './teams.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '../../../shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TeamsComponent', () => {
