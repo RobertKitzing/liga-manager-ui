@@ -81,10 +81,13 @@ export class MatchComponent implements OnInit {
 
   openContactModal() {
     this.dialog.open(ContactComponent, {
-      data: [
-        this.match.home_team,
-        this.match.guest_team
-      ],
+      data: {
+        teams: [
+          this.match.home_team,
+          this.match.guest_team
+        ],
+        pitch: this.match.pitch
+      },
       panelClass: 'my-full-screen-dialog'
     });
   }

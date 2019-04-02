@@ -1,7 +1,7 @@
 <div class="container">
   <h3 mat-dialog-title class="text-center"> {{ 'EDIT_ROUND' | translate:{ round: data.round } }}</h3>
   <mat-dialog-content>
-    <div class="row" *ngFor="let tupel of roundTeams">
+    <div class="row" *ngFor="let tupel of roundTeams; index as index">
       <div class="col">
         {{ tupel.homeTeam.name }}
       </div>
@@ -12,7 +12,7 @@
         {{ tupel.guestTeam.name }}
       </div>
       <div class="col" style="max-width: 5ch;">
-        <button mat-icon-button (click)="removeTeam(tupel)">
+        <button mat-icon-button (click)="removeTeam(index)">
           -
         </button>
       </div>

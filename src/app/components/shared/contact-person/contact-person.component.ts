@@ -13,7 +13,6 @@ export class ContactPersonComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.contact);
   }
 
 }

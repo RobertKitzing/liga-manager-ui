@@ -1,16 +1,23 @@
 <div class="container">
   <h3 mat-dialog-title class="text-center"> {{ 'CONTACT' | translate }}</h3>
   <mat-dialog-content>
-    <div>
-      <div class="card" *ngFor="let team of teams">
-        <h3 class="card-header">
-          {{ team.name }}
-        </h3>
-        <div class="card-body">
-          <app-contact-person [contact]="team.contact"></app-contact-person>
-        </div>
+    <div class="card mb-2" *ngFor="let team of data.teams">
+      <h3 class="card-header">
+        {{ team.name }}
+      </h3>
+      <div class="card-body">
+        <app-contact-person [contact]="team.contact"></app-contact-person>
       </div>
     </div>
+    <div class="card" *ngIf="data.pitch">
+      <h3 class="card-header">
+        {{ data.pitch.label }}
+      </h3>
+      <div class="card-body">
+        <app-contact-person [contact]="data.pitch.contact"></app-contact-person>
+      </div>
+    </div>
+
   </mat-dialog-content>
   <mat-dialog-actions align="center">
     <button mat-button (click)="dialogRef.close()">{{ 'BUTTON.CLOSE' | translate }}</button>

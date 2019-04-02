@@ -5,3 +5,7 @@ mutation DeletePitch($pitch_id: String!){
 mutation UpdatePitchContact($pitch_id: String!, $first_name: String!, $last_name: String!, $phone: String!, $email: String!)  {
   updatePitchContact(pitch_id: $pitch_id, first_name: $first_name, last_name: $last_name, phone: $phone, email: $email)
 }
+
+mutation CreatePitch($id: String!, $label: String!, $longitude: Float!, $latitude: Float!){
+  createPitch(id: $id, label: $label, longitude: $longitude, latitude: $latitude)
+}

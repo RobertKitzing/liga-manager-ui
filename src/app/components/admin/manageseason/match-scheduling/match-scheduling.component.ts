@@ -83,7 +83,6 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   scheduleMatches() {
 
-    console.log(this.possibleKickoffs);
     this.manageSeason.match_days.filter( x => x.number >= this.startmatchDay).forEach(
       (matchDay) => {
         let possibleKickoffs: IPossibleKickoffs[] = JSON.parse(JSON.stringify(this.possibleKickoffs));
@@ -117,7 +116,6 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
     const matches = this.manageSeason.match_days.map(x => x.matches).reduce((acc, val) => acc.concat(val), []);
     matches.forEach(
       async (match) => {
-        console.log(match);
         try {
           await this.matchService.locateMatch(match.id, match.pitch);
           await this.matchService.scheduleMatch(match.id, match.kickoff);

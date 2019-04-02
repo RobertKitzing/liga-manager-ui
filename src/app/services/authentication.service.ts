@@ -49,7 +49,6 @@ export class AuthenticationService {
           }
         ).subscribe(
           (result) => {
-            console.log(result);
             this.user = result.data.authenticatedUser;
             resolve(true);
           },

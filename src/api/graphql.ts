@@ -123,6 +123,21 @@ export namespace UpdatePitchContact {
   };
 }
 
+export namespace CreatePitch {
+  export type Variables = {
+    id: string;
+    label: string;
+    longitude: number;
+    latitude: number;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createPitch: Maybe<boolean>;
+  };
+}
+
 export namespace CreateSeason {
   export type Variables = {
     id?: Maybe<string>;
@@ -978,6 +993,29 @@ export class UpdatePitchContactGQL extends Apollo.Mutation<
         last_name: $last_name
         phone: $phone
         email: $email
+      )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class CreatePitchGQL extends Apollo.Mutation<
+  CreatePitch.Mutation,
+  CreatePitch.Variables
+> {
+  document: any = gql`
+    mutation CreatePitch(
+      $id: String!
+      $label: String!
+      $longitude: Float!
+      $latitude: Float!
+    ) {
+      createPitch(
+        id: $id
+        label: $label
+        longitude: $longitude
+        latitude: $latitude
       )
     }
   `;

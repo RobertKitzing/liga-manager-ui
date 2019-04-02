@@ -1,0 +1,41 @@
+<mat-horizontal-stepper [linear]="true">
+  <mat-step [stepControl]="newPitchFormControl">
+    <ng-template matStepLabel>{{ 'NEW_PITCH_LABEL' | translate }}</ng-template>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Pitch Label" [formControl]="newPitchFormControl" required
+        (change)="checkNewPitchName()" />
+      <mat-error *ngIf="newPitchFormControl.errors && newPitchFormControl.errors['pitchexist']" translate>
+        ERRORS.PITCH_EXIST
+      </mat-error>
+      <mat-error *ngIf="newPitchFormControl.errors && newPitchFormControl.errors['required']" translate>PITCH_REQUIRED
+      </mat-error>
+    </mat-form-field>
+    <span matTooltip="{{ 'UNIQUE_NAME_PITCH_TOOLTIP' | translate }}">
+      <i class="fa fa-info"></i>
+    </span>
+    <div class="text-center">
+      <button mat-raised-button color="primary" matStepperNext
+        [disabled]="!newPitchFormControl.valid">
+        {{'BUTTON.NEXT' | translate}}
+      </button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="newPitchPlaceFormGroup">
+    <form [formGroup]="newPitchPlaceFormGroup">
+      <ng-template matStepLabel>{{ 'NEW_PITCH_ADRESS' | translate}}</ng-template>
+      <mat-form-field style="width: 100%;">
+        <input #adressAutoComplete matInput placeholder="{{ 'NEW_PITCH_ADRESS' | translate }}"
+          formControlName="newpitchplace" required />
+      </mat-form-field>
+      <div class="row">
+        <div class="col text-center">
+          <button mat-raised-button color="primary" matStepperPrevious>{{'BUTTON.BACK' | translate}}</button>
+        </div>
+        <div class="col text-center">
+          <button mat-raised-button color="primary" matStepperNext (click)="createNewPitch()"
+            [disabled]="!newPitchPlaceFormGroup.valid">{{'BUTTON.CREATE_PITCH' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

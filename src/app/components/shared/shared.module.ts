@@ -14,6 +14,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { ContactPersonComponent } from './contact-person/contact-person.component';
 import { EditContactComponent } from './edit-contact/edit-contact.component';
 import { EditPitchContactDialogComponent } from './edit-pitch-contact-dialog/edit-pitch-contact-dialog.component';
+import { CreatePitchDialogComponent } from './create-pitch-dialog/create-pitch-dialog.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { EditPitchContactDialogComponent } from './edit-pitch-contact-dialog/edi
     EditmatchTimeComponent,
     EditmatchPitchComponent,
     SnackbarComponent,
-    EditPitchContactDialogComponent
+    EditPitchContactDialogComponent,
+    CreatePitchDialogComponent
   ],
   declarations: [
     MatchComponent,
@@ -43,7 +45,8 @@ import { EditPitchContactDialogComponent } from './edit-pitch-contact-dialog/edi
     SnackbarComponent,
     ContactPersonComponent,
     EditContactComponent,
-    EditPitchContactDialogComponent
+    EditPitchContactDialogComponent,
+    CreatePitchDialogComponent
   ],
   exports: [
     CommonModule,

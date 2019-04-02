@@ -36,6 +36,8 @@
     </div>
   </ng-container>
   <ng-template #loading>
-    <mat-progress-bar *ngIf="!error && seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>
+    <ng-container *ngIf="seasonService.currentSeason | async">
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+    </ng-container>
   </ng-template>
 </div>
