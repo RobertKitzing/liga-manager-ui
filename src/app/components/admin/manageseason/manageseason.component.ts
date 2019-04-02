@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import {
   AllSeasonsList, Match,
   MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
-  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay
+  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay, EndSeasonGQL
 } from '../../../../api/graphql';
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -42,7 +42,8 @@ export class ManageseasonComponent implements OnInit {
     private startSeasonGQL: StartSeasonGQL,
     private allSeasonsListGQL: AllSeasonsListGQL,
     private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private endSeasonGQL: EndSeasonGQL
   ) {
     this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
@@ -52,10 +53,10 @@ export class ManageseasonComponent implements OnInit {
               const aState = a.state.toLocaleLowerCase();
               const bState = b.state.toLocaleLowerCase();
               if (aState > bState) {
-                return 1;
+                return -1;
               }
               if (aState < bState) {
-                return -1;
+                return 1;
               }
               const aName = a.name.toLocaleLowerCase();
               const bName = b.name.toLocaleLowerCase();
@@ -257,6 +258,14 @@ export class ManageseasonComponent implements OnInit {
                 from: new Date(period.from).toDateString(),
                 to: new Date(period.to).toDateString()
               }
+            },
+            {
+              refetchQueries: [
+                {
+                  query: this.matchPlanGQL.document,
+                  variables: { id: this.manageSeasonId }
+                }
+              ]
             }
           ).toPromise();
           this.notificationService.showSuccessNotification(this.translateService.instant('RESCHEDULE_MATCH_DAY_SUCCESS'));
@@ -267,5 +276,22 @@ export class ManageseasonComponent implements OnInit {
         }
       }
     );
+  }
+
+  async endSeason() {
+    try {
+      await this.endSeasonGQL.mutate({
+        season_id: this.manageSeasonId
+      }, {
+        refetchQueries: [
+          {
+            query: this.allSeasonsListGQL.document
+          }
+        ]
+      }).toPromise();
+      this.notificationService.showSuccessNotification(this.translateService.instant('END_SEASON_SUCCESS'));
+    } catch (error) {
+      this.notificationService.showErrorNotification(this.translateService.instant('END_SEASON_SUCCESS'), error);
+    }
   }
 }

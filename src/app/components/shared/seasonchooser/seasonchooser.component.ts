@@ -11,10 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class SeasonchooserComponent implements OnInit {
 
-  @Input() filterState = SeasonState.Progress;
+  @Input() filterStates: Array<SeasonState> = [SeasonState.Progress, SeasonState.Ended];
   season: AllSeasonsList.AllSeasons;
   seasonList: Observable<AllSeasonsList.AllSeasons[]>;
   @Output() seasonChanged: EventEmitter<AllSeasonsList.AllSeasons> = new EventEmitter<AllSeasonsList.AllSeasons>();
+
+  SeasonState = SeasonState;
 
   constructor(
     public seasonService: SeasonService,
@@ -29,7 +31,29 @@ export class SeasonchooserComponent implements OnInit {
     );
     this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
-        ({ data }) => data.allSeasons.filter(s => s.state === this.filterState)
+        ({ data }) => {
+          let p = data.allSeasons.filter(s => this.filterStates.some(x => x === s.state));
+          p = p.sort((a, b) => {
+
+            const aState = a.state.toLocaleLowerCase();
+            const bState = b.state.toLocaleLowerCase();
+            if (aState > bState) {
+              return -1;
+            }
+            if (aState < bState) {
+              return 1;
+            }
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) {
+              return 1;
+            }
+            if (aName < bName) {
+              return -1;
+            }
+          });
+          return p;
+        }
       )
     );
   }

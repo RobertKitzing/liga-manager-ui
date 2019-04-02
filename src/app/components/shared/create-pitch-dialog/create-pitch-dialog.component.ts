@@ -44,7 +44,6 @@ export class CreatePitchDialogComponent implements OnInit {
   }
   
   async createNewPitch() {
-    console.log(this.newPitch);
     try {
       await this.pitchService.createNewPitch({
         ...this.newPitch,

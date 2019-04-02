@@ -215,6 +215,18 @@ export namespace StartSeason {
   };
 }
 
+export namespace EndSeason {
+  export type Variables = {
+    season_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    endSeason: Maybe<boolean>;
+  };
+}
+
 export namespace Teams {
   export type Variables = {
     id: string;
@@ -1101,6 +1113,19 @@ export class StartSeasonGQL extends Apollo.Mutation<
   document: any = gql`
     mutation StartSeason($id: String!) {
       startSeason(season_id: $id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class EndSeasonGQL extends Apollo.Mutation<
+  EndSeason.Mutation,
+  EndSeason.Variables
+> {
+  document: any = gql`
+    mutation EndSeason($season_id: String!) {
+      endSeason(season_id: $season_id)
     }
   `;
 }
