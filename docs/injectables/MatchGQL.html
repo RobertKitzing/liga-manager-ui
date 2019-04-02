@@ -130,7 +130,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1176" class="link-to-prism">src/api/graphql.ts:1176</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1217" class="link-to-prism">src/api/graphql.ts:1217</a></div>
                             </td>
                         </tr>
 
@@ -248,6 +248,22 @@ export namespace DeletePitch {
     __typename?: &quot;Mutation&quot;;
 
     deletePitch: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace UpdatePitchContact {
+  export type Variables &#x3D; {
+    pitch_id: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    updatePitchContact: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -1082,6 +1098,31 @@ export class DeletePitchGQL extends Apollo.Mutation&lt;
   document: any &#x3D; gql&#x60;
     mutation DeletePitch($pitch_id: String!) {
       deletePitch(pitch_id: $pitch_id)
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class UpdatePitchContactGQL extends Apollo.Mutation&lt;
+  UpdatePitchContact.Mutation,
+  UpdatePitchContact.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation UpdatePitchContact(
+      $pitch_id: String!
+      $first_name: String!
+      $last_name: String!
+      $phone: String!
+      $email: String!
+    ) {
+      updatePitchContact(
+        pitch_id: $pitch_id
+        first_name: $first_name
+        last_name: $last_name
+        phone: $phone
+        email: $email
+      )
     }
   &#x60;;
 }

@@ -241,14 +241,16 @@ export class ManageusersComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;mat-tab-group&gt;
-  &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.ADD_USER&#x27; | translate}}&quot;&gt;
-    &lt;app-add-user&gt;&lt;/app-add-user&gt;
-  &lt;/mat-tab&gt;
-  &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.USER_LIST&#x27; | translate}}&quot;&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+  &lt;mat-tab-group&gt;
+    &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.ADD_USER&#x27; | translate}}&quot;&gt;
+      &lt;app-add-user&gt;&lt;/app-add-user&gt;
+    &lt;/mat-tab&gt;
+    &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.USER_LIST&#x27; | translate}}&quot;&gt;
       &lt;app-user-list&gt;&lt;/app-user-list&gt;
     &lt;/mat-tab&gt;
-&lt;/mat-tab-group&gt;</code></pre>
+  &lt;/mat-tab-group&gt;
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
@@ -283,8 +285,8 @@ export class ManageusersComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-tab-group>  <mat-tab label="{{ \'TAB.ADD_USER\' | translate}}">    <app-add-user></app-add-user>  </mat-tab>  <mat-tab label="{{ \'TAB.USER_LIST\' | translate}}">      <app-user-list></app-user-list>    </mat-tab></mat-tab-group></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">  <mat-tab-group>    <mat-tab label="{{ \'TAB.ADD_USER\' | translate}}">      <app-add-user></app-add-user>    </mat-tab>    <mat-tab label="{{ \'TAB.USER_LIST\' | translate}}">      <app-user-list></app-user-list>    </mat-tab>  </mat-tab-group></div></div>'
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ManageusersComponent'};
 </script>
