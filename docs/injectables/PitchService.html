@@ -81,6 +81,25 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createNewPitch">createNewPitch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deletePitch">deletePitch</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
@@ -96,12 +115,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(pitchesQGL: <a href="../injectables/PitchesGQL.html">PitchesGQL</a>)</code>
+<code>constructor(pitchesGQL: <a href="../injectables/PitchesGQL.html">PitchesGQL</a>, createPitchGQL: <a href="../injectables/CreatePitchGQL.html">CreatePitchGQL</a>, deletePitchGQL: <a href="../injectables/DeletePitchGQL.html">DeletePitchGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/pitch.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/pitch.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -119,10 +138,34 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>pitchesQGL</td>
+                                                        <td>pitchesGQL</td>
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/PitchesGQL.html" target="_self" >PitchesGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>createPitchGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CreatePitchGQL.html" target="_self" >CreatePitchGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>deletePitchGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DeletePitchGQL.html" target="_self" >DeletePitchGQL</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -139,7 +182,156 @@
         </table>
 </section>
 
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createNewPitch"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            createNewPitch
+                        </b>
+                        <a href="#createNewPitch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createNewPitch(pitch: Pitch.Fragment)</code>
+                </td>
+            </tr>
 
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/services/pitch.service.ts:45</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pitch</td>
+                                    <td>
+                                            <code>Pitch.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deletePitch"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            deletePitch
+                        </b>
+                        <a href="#deletePitch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deletePitch(pitchId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="23"
+                            class="link-to-prism">src/app/services/pitch.service.ts:23</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pitchId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
             <section>
     
         <h3 id="inputs">
@@ -165,14 +357,14 @@
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>this.pitchesQGL.watch().valueChanges.pipe(
-    map(({data}) &#x3D;&gt; data.allPitches)
+                            <i>Default value : </i><code>this.pitchesGQL.watch().valueChanges.pipe(
+    map(({ data }) &#x3D;&gt; data.allPitches.sort((a, b) &#x3D;&gt; a.label.toLowerCase() &gt; b.label.toLowerCase() ? 1 : -1))
   )</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/services/pitch.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/services/pitch.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -186,24 +378,74 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { Pitch, PitchesGQL } from &#x27;src/api/graphql&#x27;;
+import { Pitch, PitchesGQL, CreatePitchGQL, DeletePitchGQL } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
+import * as uuidv4 from &#x27;uuid/v4&#x27;;
 
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class PitchService {
 
-  allPitches: Observable&lt;Pitch.Fragment[]&gt; &#x3D; this.pitchesQGL.watch().valueChanges.pipe(
-    map(({data}) &#x3D;&gt; data.allPitches)
+  allPitches: Observable&lt;Pitch.Fragment[]&gt; &#x3D; this.pitchesGQL.watch().valueChanges.pipe(
+    map(({ data }) &#x3D;&gt; data.allPitches.sort((a, b) &#x3D;&gt; a.label.toLowerCase() &gt; b.label.toLowerCase() ? 1 : -1))
   );
 
   constructor(
-    private pitchesQGL: PitchesGQL
+    private pitchesGQL: PitchesGQL,
+    private createPitchGQL: CreatePitchGQL,
+    private deletePitchGQL: DeletePitchGQL
   ) {
   }
 
+  async deletePitch(pitchId: string): Promise&lt;void&gt; {
+    return new Promise&lt;void&gt;(
+      async (resolve, reject) &#x3D;&gt; {
+        try {
+          await this.deletePitchGQL.mutate({
+            pitch_id: pitchId
+          },
+            {
+              refetchQueries: [
+                {
+                  query: this.pitchesGQL.document
+                }
+              ]
+            }).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
+  async createNewPitch(pitch: Pitch.Fragment): Promise&lt;void&gt; {
+    return new Promise&lt;void&gt;(
+      async (resolve, reject) &#x3D;&gt; {
+        try {
+          await this.createPitchGQL.mutate({
+            id: uuidv4(),
+            label: pitch.label,
+            longitude: pitch.location_longitude,
+            latitude: pitch.location_latitude
+          },
+            {
+              refetchQueries: [
+                {
+                  query: this.pitchesGQL.document
+                }
+              ]
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
 }
 </code></pre>
     </div>
