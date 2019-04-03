@@ -5,7 +5,8 @@
     <div class="row card" style="margin-bottom: 15px;" *ngIf="match">
         <div class="col-12">
             <div class="row card-header align-items-center">
-                <div class="col-12 col-sm-4 text-center" [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
+                <div class="col-12 col-sm-4 text-center"
+                    [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
                     {{ match.home_team.name }}
                 </div>
                 <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">
@@ -13,33 +14,44 @@
                         }}&nbsp;:&nbsp;{{ match.guest_score }}</span>
                     <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>
                 </div>
-                <div class="col-12 col-sm-4 text-center" [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
+                <div class="col-12 col-sm-4 text-center"
+                    [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
                     {{ match.guest_team.name }}
                 </div>
             </div>
-            <div class="row card-body align-items-center">
-                <div class="col-1 align-self-center">
-                    <mat-icon>access_time</mat-icon>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-1 align-self-center">
+                        <mat-icon>access_time</mat-icon>
+                    </div>
+                    <div class="col align-self-center">
+                        <ng-container *ngIf="match.kickoff">
+                            <span>{{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}, </span>
+                            <span>{{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}</span>
+                        </ng-container>
+                        <span *ngIf="!match.kickoff">{{ 'NO_TIME_SET' | translate }}</span>
+                    </div>
+                    <div class="col-1 align-self-center">
+                        <mat-icon *ngIf="!match.pitch">location_off</mat-icon>
+                        <mat-icon *ngIf="match.pitch">location_on</mat-icon>
+                    </div>
+                    <div class="col align-self-center" *ngIf="!match.pitch">
+                        <span>{{ 'NO_PTICH_SET' | translate }}</span>
+                    </div>
+                    <div class="col align-self-center" *ngIf="match.pitch">
+                        <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}"
+                            target="_blank" style="cursor: pointer;">
+                            {{ match.pitch.label }}
+                        </a>
+                    </div>
                 </div>
-                <div class="col align-self-center">
-                    <ng-container *ngIf="match.kickoff">
-                        <span>{{ match.kickoff | date:'fullDate':'':i18Service.currentLang }}, </span>
-                        <span>{{ match.kickoff | date:'shortTime':'':i18Service.currentLang }}</span>
-                    </ng-container>
-                    <span *ngIf="!match.kickoff">{{ 'NO_TIME_SET' | translate }}</span>
-                </div>
-                <div class="col-1 align-self-center">
-                    <mat-icon *ngIf="!match.pitch">location_off</mat-icon>
-                    <mat-icon *ngIf="match.pitch">location_on</mat-icon>
-                </div>
-                <div class="col align-self-center" *ngIf="!match.pitch">
-                    <span>{{ 'NO_PTICH_SET' | translate }}</span>
-                </div>
-                <div class="col align-self-center" *ngIf="match.pitch">
-                    <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}" target="_blank"
-                        style="cursor: pointer;">
-                        {{ match.pitch.label }}
-                    </a>
+                <div class="row mt-3" *ngIf="match.cancelled_at && match.cancellation_reason">
+                    <div class="col-12 text-center mb-4">
+                        {{ 'MATCH_CANCELED_AT' | translate }} {{ match.cancelled_at | date:'short':'':i18Service.currentLang }}
+                    </div>
+                    <div class="col-12">
+                        {{ match.cancellation_reason }}
+                    </div>
                 </div>
             </div>
             <div class="row card-footer justiy-content-center">
@@ -50,7 +62,8 @@
                         </i>
                     </button>
                 </div>
-                <div class="col text-center" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id) || authService.isTeamAdminForTeam(match.guest_team.id)">
+                <div class="col text-center"
+                    *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id) || authService.isTeamAdminForTeam(match.guest_team.id)">
                     <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu">
                         <mat-icon>edit</mat-icon>
                     </button>
@@ -68,5 +81,8 @@
     </button>
     <button mat-menu-item (click)="openEditTimeDialog()">
         {{ 'BUTTON.EDIT_TIME' | translate }}
+    </button>
+    <button mat-menu-item (click)="openCancelMatchDialog()">
+        {{ 'BUTTON.CANCEL_MATCH' | translate }}
     </button>
 </mat-menu>

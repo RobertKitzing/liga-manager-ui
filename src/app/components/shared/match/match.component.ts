@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Match } from 'src/api/graphql';
 import { MatchService } from '../../../services/match.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { CancelMatchDialogComponent } from '../cancel-match-dialog/cancel-match-dialog.component';
 
 @Component({
   selector: 'app-match',
@@ -45,7 +46,6 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
-          this.notify.showSuccessNotification(this.translateService.instant('RESULT_SAVE_SUCCESS'));
           this.matchUpdated.emit(this.match.id);
         }
       });
@@ -59,7 +59,6 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       async (result) => {
         if (result) {
-          this.notify.showSuccessNotification(this.translateService.instant('PITCH_SAVE_SUCCESS'));
           this.matchUpdated.emit(this.match.id);
         }
       });
@@ -73,7 +72,6 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result) {
-          this.notify.showSuccessNotification(this.translateService.instant('TIME_SAVE_SUCCESS'));
           this.matchUpdated.emit(this.match.id);
         }
       });
@@ -90,6 +88,19 @@ export class MatchComponent implements OnInit {
       },
       panelClass: 'my-full-screen-dialog'
     });
+  }
+
+  openCancelMatchDialog() {
+    const dialogRef = this.dialog.open(CancelMatchDialogComponent, {
+      data: this.match, panelClass: 'my-full-screen-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.matchUpdated.emit(this.match.id);
+        }
+      });
   }
 
   isNumber(val) {

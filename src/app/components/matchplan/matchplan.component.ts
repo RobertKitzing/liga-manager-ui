@@ -33,8 +33,7 @@ export class MatchplanComponent implements OnInit {
     public seasonService: SeasonService,
     public i18Service: I18Service,
     public matchPlanGQL: MatchPlanGQL,
-    private rankingGQL: RankingGQL,
-    private matchGQL: MatchGQL
+    private rankingGQL: RankingGQL
   ) { }
 
   ngOnInit() {
@@ -76,9 +75,10 @@ export class MatchplanComponent implements OnInit {
   }
 
   matchUpdated(matchId: string) {
+    console.log(matchId);
     this.matchPlanGQL.watch(
-      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+      { id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).refetch();
     this.rankingGQL.watch(
-      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+      { id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).refetch();
   }
 }

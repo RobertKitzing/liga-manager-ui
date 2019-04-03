@@ -21,3 +21,7 @@ mutation LocateMatch(
 ) {
     locateMatch(match_id: $match_id, pitch_id: $pitch_id)
 }
+
+mutation CancelMatch($match_id: String!, $reason: String!){
+  cancelMatch(match_id: $match_id, reason: $reason)
+}

@@ -15,6 +15,7 @@ import { ContactPersonComponent } from './contact-person/contact-person.componen
 import { EditContactComponent } from './edit-contact/edit-contact.component';
 import { EditPitchContactDialogComponent } from './edit-pitch-contact-dialog/edit-pitch-contact-dialog.component';
 import { CreatePitchDialogComponent } from './create-pitch-dialog/create-pitch-dialog.component';
+import { CancelMatchDialogComponent } from './cancel-match-dialog/cancel-match-dialog.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { CreatePitchDialogComponent } from './create-pitch-dialog/create-pitch-d
     EditmatchPitchComponent,
     SnackbarComponent,
     EditPitchContactDialogComponent,
-    CreatePitchDialogComponent
+    CreatePitchDialogComponent,
+    CancelMatchDialogComponent
   ],
   declarations: [
     MatchComponent,
@@ -46,7 +48,8 @@ import { CreatePitchDialogComponent } from './create-pitch-dialog/create-pitch-d
     ContactPersonComponent,
     EditContactComponent,
     EditPitchContactDialogComponent,
-    CreatePitchDialogComponent
+    CreatePitchDialogComponent,
+    CancelMatchDialogComponent
   ],
   exports: [
     CommonModule,
@@ -59,7 +62,8 @@ import { CreatePitchDialogComponent } from './create-pitch-dialog/create-pitch-d
     MaterialModule,
     OwlDateTimeModule,
     EditContactComponent,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    CancelMatchDialogComponent
   ]
 })
 export class SharedModule { }

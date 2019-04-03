@@ -12,6 +12,8 @@ fragment Match on Match {
     pitch {
         ...Pitch
     }
+    cancelled_at
+    cancellation_reason
 }
 
 fragment MatchDay on MatchDay {

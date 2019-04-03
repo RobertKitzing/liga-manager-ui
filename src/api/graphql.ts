@@ -70,6 +70,19 @@ export namespace LocateMatch {
   };
 }
 
+export namespace CancelMatch {
+  export type Variables = {
+    match_id: string;
+    reason: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    cancelMatch: Maybe<boolean>;
+  };
+}
+
 export namespace PasswordReset {
   export type Variables = {
     email: string;
@@ -490,6 +503,10 @@ export namespace Match {
     kickoff: Maybe<string>;
 
     pitch: Maybe<Pitch>;
+
+    cancelled_at: Maybe<string>;
+
+    cancellation_reason: Maybe<string>;
   };
 
   export type HomeTeam = Team.Fragment;
@@ -775,6 +792,8 @@ export const MatchFragment = gql`
     pitch {
       ...Pitch
     }
+    cancelled_at
+    cancellation_reason
   }
 
   ${TeamFragment}
@@ -942,6 +961,19 @@ export class LocateMatchGQL extends Apollo.Mutation<
   document: any = gql`
     mutation LocateMatch($match_id: String!, $pitch_id: String!) {
       locateMatch(match_id: $match_id, pitch_id: $pitch_id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class CancelMatchGQL extends Apollo.Mutation<
+  CancelMatch.Mutation,
+  CancelMatch.Variables
+> {
+  document: any = gql`
+    mutation CancelMatch($match_id: String!, $reason: String!) {
+      cancelMatch(match_id: $match_id, reason: $reason)
     }
   `;
 }

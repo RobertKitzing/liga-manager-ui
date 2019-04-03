@@ -1,0 +1,26 @@
+<h3 mat-dialog-title>
+  <div class="row">
+    <div class="col-12 text-center">
+      {{ 'CANCEL_MATCH' | translate }}
+    </div>
+    <div class="col-12 text-center">
+      {{ match.home_team.name}} - {{ match.guest_team.name}}
+    </div>
+  </div>
+</h3>
+<div mat-dialog-content>
+  <mat-form-field style="width: 100%">
+    <textarea matInput placeholder="{{ 'PLACEHOLDER.CANCEL_REASON' | translate }}" #reason
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="15"
+            maxlength="500"
+    ></textarea>
+    <mat-hint align="end">{{reason.value.length}} / 500</mat-hint>
+  </mat-form-field>
+</div>
+<div mat-dialog-action align="center">
+  <button class="mr-5" mat-dialog-close mat-raised-button color="primary">{{ 'BUTTON.CANCEL' | translate }} </button>
+  <button mat-raised-button color="primary" (click)="cancelMatch(reason.value)" [disabled]="!reason.value">{{ 'BUTTON.CANCEL_MATCH' | translate }} </button>
+</div>

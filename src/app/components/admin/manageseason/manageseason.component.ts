@@ -291,7 +291,7 @@ export class ManageseasonComponent implements OnInit {
       }).toPromise();
       this.notificationService.showSuccessNotification(this.translateService.instant('END_SEASON_SUCCESS'));
     } catch (error) {
-      this.notificationService.showErrorNotification(this.translateService.instant('END_SEASON_SUCCESS'), error);
+      this.notificationService.showErrorNotification(this.translateService.instant('END_SEASON_ERROR'), error);
     }
   }
 }

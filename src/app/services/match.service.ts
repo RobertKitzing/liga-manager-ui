@@ -33,6 +33,29 @@ export class MatchService {
           {
             match_id: matchId,
             ...result
+          },
+          {
+            update: (store, { data }) => {
+              const match: any = store.readFragment(
+                {
+                  fragmentName: 'Match',
+                  fragment: MatchFragment,
+                  id: `Match:${matchId}`
+                }
+              );
+              store.writeFragment(
+                {
+                  fragmentName: 'Match',
+                  fragment: MatchFragment,
+                  id: `Match:${matchId}`,
+                  data: {
+                    __typename: 'Match',
+                    ...match,
+                    ...result
+                  }
+                }
+              );
+            }
           }
         ).subscribe(
           () => {
