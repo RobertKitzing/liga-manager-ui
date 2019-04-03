@@ -209,7 +209,6 @@ export class AuthenticationService {
           }
         ).subscribe(
           (result) &#x3D;&gt; {
-            console.log(result);
             this.user &#x3D; result.data.authenticatedUser;
             resolve(true);
           },

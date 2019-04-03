@@ -167,6 +167,7 @@ import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { Team, CreateTournamentRoundGQL, TeamIdPair, AllTournamentListGQL, TournamentGQL } from &#x27;src/api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 
 export interface AddMatchData {
   round: number;
@@ -198,6 +199,7 @@ export class AddtournamentroundComponent implements OnInit {
     private translateService: TranslateService,
     private i18Service: I18Service,
     private createRoundGQL: CreateTournamentRoundGQL,
+    private notify: NotificationService,
     private tournamentQGL: TournamentGQL,
     @Inject(MAT_DIALOG_DATA) public data: AddMatchData) {
     dateTimeAdapter.setLocale(this.i18Service.currentLang);
@@ -209,7 +211,6 @@ export class AddtournamentroundComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
   addTeam() {
@@ -223,8 +224,8 @@ export class AddtournamentroundComponent implements OnInit {
     }
   }
 
-  removeTeam(tupel: TeamIdPair) {
-    this.roundTeams &#x3D; this.roundTeams.filter(t &#x3D;&gt; t.guestTeam.id !&#x3D;&#x3D; tupel.guest_team_id &amp;&amp; t.homeTeam.id !&#x3D;&#x3D; tupel.home_team_id);
+  removeTeam(index: number) {
+    this.roundTeams.splice(index, 1);
   }
 
   async createRound() {
@@ -246,9 +247,10 @@ export class AddtournamentroundComponent implements OnInit {
           ]
         }
       ).toPromise();
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;CREATE_TOURNAMENT_SUCCESS&#x27;));
       this.dialogRef.close(true);
     } catch (error) {
-      console.log(error);
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;CREATE_TOURNAMENT_ERROR&#x27;), error);
     }
   }
 

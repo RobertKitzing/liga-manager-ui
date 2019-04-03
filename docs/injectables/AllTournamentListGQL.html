@@ -130,7 +130,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1313" class="link-to-prism">src/api/graphql.ts:1313</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1351" class="link-to-prism">src/api/graphql.ts:1351</a></div>
                             </td>
                         </tr>
 
@@ -264,6 +264,21 @@ export namespace UpdatePitchContact {
     __typename?: &quot;Mutation&quot;;
 
     updatePitchContact: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace CreatePitch {
+  export type Variables &#x3D; {
+    id: string;
+    label: string;
+    longitude: number;
+    latitude: number;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    createPitch: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -1122,6 +1137,29 @@ export class UpdatePitchContactGQL extends Apollo.Mutation&lt;
         last_name: $last_name
         phone: $phone
         email: $email
+      )
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class CreatePitchGQL extends Apollo.Mutation&lt;
+  CreatePitch.Mutation,
+  CreatePitch.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation CreatePitch(
+      $id: String!
+      $label: String!
+      $longitude: Float!
+      $latitude: Float!
+    ) {
+      createPitch(
+        id: $id
+        label: $label
+        longitude: $longitude
+        latitude: $latitude
       )
     }
   &#x60;;

@@ -339,7 +339,6 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   scheduleMatches() {
 
-    console.log(this.possibleKickoffs);
     this.manageSeason.match_days.filter( x &#x3D;&gt; x.number &gt;&#x3D; this.startmatchDay).forEach(
       (matchDay) &#x3D;&gt; {
         let possibleKickoffs: IPossibleKickoffs[] &#x3D; JSON.parse(JSON.stringify(this.possibleKickoffs));
@@ -373,7 +372,6 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
     const matches &#x3D; this.manageSeason.match_days.map(x &#x3D;&gt; x.matches).reduce((acc, val) &#x3D;&gt; acc.concat(val), []);
     matches.forEach(
       async (match) &#x3D;&gt; {
-        console.log(match);
         try {
           await this.matchService.locateMatch(match.id, match.pitch);
           await this.matchService.scheduleMatch(match.id, match.kickoff);

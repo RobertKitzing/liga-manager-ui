@@ -285,13 +285,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/SharedModule.html" data-type="entity-link">SharedModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-SharedModule-be72914514e9c61fe4b8b81e51a9cc17"' : 'data-target="#xs-components-links-module-SharedModule-be72914514e9c61fe4b8b81e51a9cc17"' }>
+                                            'data-target="#components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' : 'data-target="#xs-components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SharedModule-be72914514e9c61fe4b8b81e51a9cc17"' :
-                                            'id="xs-components-links-module-SharedModule-be72914514e9c61fe4b8b81e51a9cc17"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' :
+                                            'id="xs-components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' }>
                                             <li class="link">
                                                 <a href="components/ContactComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ContactComponent</a>
@@ -299,6 +299,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                             <li class="link">
                                                 <a href="components/ContactPersonComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ContactPersonComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/CreatePitchDialogComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">CreatePitchDialogComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/EditContactComponent.html"
@@ -443,6 +447,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/CreateMatchesForSeasonGQL.html" data-type="entity-link">CreateMatchesForSeasonGQL</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/CreatePitchGQL.html" data-type="entity-link">CreatePitchGQL</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/CreateSeasonGQL.html" data-type="entity-link">CreateSeasonGQL</a>
                                 </li>
                                 <li class="link">
@@ -572,6 +579,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/AppsettingsModel.html" data-type="entity-link">AppsettingsModel</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/ContactComponentData.html" data-type="entity-link">ContactComponentData</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/DatePeriod.html" data-type="entity-link">DatePeriod</a>
