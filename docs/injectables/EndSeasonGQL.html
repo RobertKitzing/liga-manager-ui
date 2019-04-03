@@ -38,7 +38,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li>AllTeamsGQL</li>
+  <li>EndSeasonGQL</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -118,19 +118,15 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>gql&#x60;
-    query AllTeams {
-      allTeams {
-        ...Team
-      }
+    mutation EndSeason($season_id: String!) {
+      endSeason(season_id: $season_id)
     }
-
-    ${TeamFragment}
   &#x60;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1391" class="link-to-prism">src/api/graphql.ts:1391</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1158" class="link-to-prism">src/api/graphql.ts:1158</a></div>
                             </td>
                         </tr>
 
@@ -1643,7 +1639,7 @@ export class AllUsersGQL extends Apollo.Query&lt;
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'AllTeamsGQL.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'EndSeasonGQL.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

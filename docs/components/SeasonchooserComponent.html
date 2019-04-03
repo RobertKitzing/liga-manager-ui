@@ -139,6 +139,9 @@
                                     <span class="modifier">Public</span>
                                 <a href="#seasonService">seasonService</a>
                             </li>
+                            <li>
+                                <a href="#SeasonState">SeasonState</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -170,7 +173,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#filterState">filterState</a>
+                                <a href="#filterStates">filterStates</a>
                             </li>
                         </ul>
                     </td>
@@ -208,7 +211,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -264,13 +267,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="filterState"></a>
-                        <b>filterState</b>
+                        <a name="filterStates"></a>
+                        <b>filterStates</b>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>SeasonState.Progress</code>
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#SeasonState" target="_self" >Array&lt;SeasonState&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[SeasonState.Progress, SeasonState.Ended]</code>
                     </td>
                 </tr>
                         <tr>
@@ -334,8 +343,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:61</a></div>
                 </td>
             </tr>
 
@@ -404,8 +413,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="24"
-                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:24</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:26</a></div>
                 </td>
             </tr>
 
@@ -502,7 +511,33 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:22</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="SeasonState"></a>
+                        <span class="name">
+                            <b>
+                            SeasonState</b>
+                            <a href="#SeasonState"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>SeasonState</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -528,10 +563,12 @@ import { Observable } from &#x27;rxjs&#x27;;
 })
 export class SeasonchooserComponent implements OnInit {
 
-  @Input() filterState &#x3D; SeasonState.Progress;
+  @Input() filterStates: Array&lt;SeasonState&gt; &#x3D; [SeasonState.Progress, SeasonState.Ended];
   season: AllSeasonsList.AllSeasons;
   seasonList: Observable&lt;AllSeasonsList.AllSeasons[]&gt;;
   @Output() seasonChanged: EventEmitter&lt;AllSeasonsList.AllSeasons&gt; &#x3D; new EventEmitter&lt;AllSeasonsList.AllSeasons&gt;();
+
+  SeasonState &#x3D; SeasonState;
 
   constructor(
     public seasonService: SeasonService,
@@ -546,7 +583,29 @@ export class SeasonchooserComponent implements OnInit {
     );
     this.seasonList &#x3D; this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
-        ({ data }) &#x3D;&gt; data.allSeasons.filter(s &#x3D;&gt; s.state &#x3D;&#x3D;&#x3D; this.filterState)
+        ({ data }) &#x3D;&gt; {
+          let p &#x3D; data.allSeasons.filter(s &#x3D;&gt; this.filterStates.some(x &#x3D;&gt; x &#x3D;&#x3D;&#x3D; s.state));
+          p &#x3D; p.sort((a, b) &#x3D;&gt; {
+
+            const aState &#x3D; a.state.toLocaleLowerCase();
+            const bState &#x3D; b.state.toLocaleLowerCase();
+            if (aState &gt; bState) {
+              return -1;
+            }
+            if (aState &lt; bState) {
+              return 1;
+            }
+            const aName &#x3D; a.name.toLocaleLowerCase();
+            const bName &#x3D; b.name.toLocaleLowerCase();
+            if (aName &gt; bName) {
+              return 1;
+            }
+            if (aName &lt; bName) {
+              return -1;
+            }
+          });
+          return p;
+        }
       )
     );
   }
@@ -565,7 +624,7 @@ export class SeasonchooserComponent implements OnInit {
   &lt;mat-select #seasonSelect [compareWith]&#x3D;&quot;seasonService.seasonCompare&quot;
   (selectionChange)&#x3D;&quot;currentSeasonChanged($event)&quot; [(value)]&#x3D;&quot;season&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_SEASON&#x27; | translate }}&quot;&gt;
     &lt;mat-option *ngFor&#x3D;&quot;let season of seasonList | async&quot; [value]&#x3D;&quot;season&quot;&gt;
-      {{ season.name }}
+      {{ season.name }} {{ season.state !&#x3D;&#x3D; SeasonState.Progress ? (&#x27;(&#x27; + season.state + &#x27;)&#x27;) : &#x27;&#x27;  }}
     &lt;/mat-option&gt;
   &lt;/mat-select&gt;
 &lt;/mat-form-field&gt;</code></pre>
@@ -603,8 +662,8 @@ export class SeasonchooserComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-form-field style="width: 100%;">  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"  (selectionChange)="currentSeasonChanged($event)" [(value)]="season" placeholder="{{ \'PLACEHOLDER.SELECT_SEASON\' | translate }}">    <mat-option *ngFor="let season of seasonList | async" [value]="season">      {{ season.name }}    </mat-option>  </mat-select></mat-form-field></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+        var COMPONENT_TEMPLATE = '<div><mat-form-field style="width: 100%;">  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"  (selectionChange)="currentSeasonChanged($event)" [(value)]="season" placeholder="{{ \'PLACEHOLDER.SELECT_SEASON\' | translate }}">    <mat-option *ngFor="let season of seasonList | async" [value]="season">      {{ season.name }} {{ season.state !== SeasonState.Progress ? (\'(\' + season.state + \')\') : \'\'  }}    </mat-option>  </mat-select></mat-form-field></div>'
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SeasonchooserComponent'};
 </script>

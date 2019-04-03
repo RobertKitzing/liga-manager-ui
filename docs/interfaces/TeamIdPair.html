@@ -229,6 +229,19 @@ export namespace LocateMatch {
   };
 }
 
+export namespace CancelMatch {
+  export type Variables &#x3D; {
+    match_id: string;
+    reason: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    cancelMatch: Maybe&lt;boolean&gt;;
+  };
+}
+
 export namespace PasswordReset {
   export type Variables &#x3D; {
     email: string;
@@ -371,6 +384,18 @@ export namespace StartSeason {
     __typename?: &quot;Mutation&quot;;
 
     startSeason: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace EndSeason {
+  export type Variables &#x3D; {
+    season_id: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    endSeason: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -637,6 +662,10 @@ export namespace Match {
     kickoff: Maybe&lt;string&gt;;
 
     pitch: Maybe&lt;Pitch&gt;;
+
+    cancelled_at: Maybe&lt;string&gt;;
+
+    cancellation_reason: Maybe&lt;string&gt;;
   };
 
   export type HomeTeam &#x3D; Team.Fragment;
@@ -922,6 +951,8 @@ export const MatchFragment &#x3D; gql&#x60;
     pitch {
       ...Pitch
     }
+    cancelled_at
+    cancellation_reason
   }
 
   ${TeamFragment}
@@ -1095,6 +1126,19 @@ export class LocateMatchGQL extends Apollo.Mutation&lt;
 @Injectable({
   providedIn: &quot;root&quot;
 })
+export class CancelMatchGQL extends Apollo.Mutation&lt;
+  CancelMatch.Mutation,
+  CancelMatch.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation CancelMatch($match_id: String!, $reason: String!) {
+      cancelMatch(match_id: $match_id, reason: $reason)
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
 export class PasswordResetGQL extends Apollo.Mutation&lt;
   PasswordReset.Mutation,
   PasswordReset.Variables
@@ -1260,6 +1304,19 @@ export class StartSeasonGQL extends Apollo.Mutation&lt;
   document: any &#x3D; gql&#x60;
     mutation StartSeason($id: String!) {
       startSeason(season_id: $id)
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class EndSeasonGQL extends Apollo.Mutation&lt;
+  EndSeason.Mutation,
+  EndSeason.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation EndSeason($season_id: String!) {
+      endSeason(season_id: $season_id)
     }
   &#x60;;
 }

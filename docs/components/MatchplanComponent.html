@@ -213,7 +213,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, rankingGQL: <a href="../injectables/RankingGQL.html">RankingGQL</a>, matchGQL: <a href="../injectables/MatchGQL.html">MatchGQL</a>)</code>
+<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, rankingGQL: <a href="../injectables/RankingGQL.html">RankingGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -283,18 +283,6 @@
                                                     </td>
                                                     
                                                 </tr>
-                                                <tr>
-                                                        <td>matchGQL</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/MatchGQL.html" target="_self" >MatchGQL</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -335,8 +323,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:45</a></div>
                 </td>
             </tr>
 
@@ -405,8 +393,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:52</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:51</a></div>
                 </td>
             </tr>
 
@@ -475,8 +463,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:59</a></div>
                 </td>
             </tr>
 
@@ -514,8 +502,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="78"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:78</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:77</a></div>
                 </td>
             </tr>
 
@@ -584,8 +572,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">src/app/components/matchplan/matchplan.component.ts:39</a></div>
                 </td>
             </tr>
 
@@ -905,8 +893,7 @@ export class MatchplanComponent implements OnInit {
     public seasonService: SeasonService,
     public i18Service: I18Service,
     public matchPlanGQL: MatchPlanGQL,
-    private rankingGQL: RankingGQL,
-    private matchGQL: MatchGQL
+    private rankingGQL: RankingGQL
   ) { }
 
   ngOnInit() {
@@ -948,10 +935,11 @@ export class MatchplanComponent implements OnInit {
   }
 
   matchUpdated(matchId: string) {
+    console.log(matchId);
     this.matchPlanGQL.watch(
-      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+      { id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: &#x27;network-only&#x27; }).refetch();
     this.rankingGQL.watch(
-      { id: this.seasonService.currentSeason.getValue().id }).refetch();
+      { id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: &#x27;network-only&#x27; }).refetch();
   }
 }
 </code></pre>
@@ -1055,7 +1043,7 @@ export class MatchplanComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <ng-template #loading>    <mat-progress-bar *ngIf="seasonService.currentSeason | async" mode="indeterminate"></mat-progress-bar>  </ng-template>  <div class="row justify-content-center">    <div class="col-9 col-sm-4 text-center">      <app-seasonchooser (seasonChanged)="handleGetMatches()"></app-seasonchooser>    </div>    <ng-container *ngIf="(matchesGQL | async) as matches; else loading">      <div class="col-3 col-sm-2 text-right">        <mat-form-field style="max-width: 7ch;">          <mat-select #matchDaySelect [(value)]="selectedMatchDayId" (selectionChange)="handleGetMatches()" placeholder="{{ \'PLACEHOLDER.SELECT_MATCHDAY\' | translate }}">            <mat-option [value]="\'0\'">              {{ \'ALL_MATCHDAYS\' | translate }}            </mat-option>            <mat-option *ngFor="let matchDay of matches.match_days" [value]="matchDay.id">              <div *ngIf="!matchDaySelect.panelOpen">{{ matchDay.number }}</div>              <div *ngIf="matchDaySelect.panelOpen">                {{ matchDay.number }} ({{ matchDay.start_date| date:\'shortDate\':\'\':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:\'shortDate\':\'\':i18Service.currentLang }})              </div>            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="col-9 col-sm-5 text-left">        <mat-form-field style="width: 100%;">          <mat-select #teamSelect [(value)]="selectedTeamId" (selectionChange)="handleGetMatches()" placeholder="{{ \'PLACEHOLDER.SELECT_TEAM\' | translate }}">            <mat-option [value]="\'0\'">              {{ \'ALL_TEAMS\' | translate }}            </mat-option>            <mat-option *ngFor="let team of matches.teams" [value]="team.id">              {{ team.name }}            </mat-option>          </mat-select>        </mat-form-field>      </div>      <div class="col-3 col-sm-1 text-right">        <button mat-icon-button [matMenuTriggerFor]="filterMenu">          <mat-icon *ngIf="filterActive" color="primary">filter_list</mat-icon>          <mat-icon *ngIf="!filterActive">filter_list</mat-icon>        </button>        <mat-menu #filterMenu="matMenu" [overlapTrigger]="false">          <span mat-menu-item>            <mat-slide-toggle [(ngModel)]="hidePlayed">{{ \'HIDE_PLAYED_MATCHES\' | translate }}</mat-slide-toggle>          </span>        </mat-menu>      </div>    </ng-container>  </div>  <ng-container *ngIf="(matchesGQL | async) as matches">    <ng-container *ngFor="let matchDay of filterMatchDays(matches.match_days)">        <h3 class="text-center">          {{ \'MATCHDAY\' | translate:{matchDay: matchDay.number} }} ({{ matchDay.start_date| date:\'shortDate\':\'\':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:\'shortDate\':\'\':i18Service.currentLang }})        </h3>        <ng-container *ngFor="let match of filterMatches(matchDay.matches)">          <app-match [match]="match" [hideIfPlayed]="hidePlayed" (matchUpdated)="matchUpdated($event)"></app-match>        </ng-container>      </ng-container>  </ng-container></div></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MatchplanComponent'};
 </script>
