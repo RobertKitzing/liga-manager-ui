@@ -35,7 +35,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>ManagepitchesComponent</li>
+  <li>CancelMatchDialogComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -61,7 +61,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/app/components/admin/managepitches/managepitches.component.ts</code>
+    <code>src/app/components/shared/cancel-match-dialog/cancel-match-dialog.component.ts</code>
 </p>
 
 
@@ -91,19 +91,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-managepitches</code></td>
+                <td class="col-md-9"><code>app-cancel-match-dialog</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>./managepitches.component.css</code></td>
+                <td class="col-md-9"><code>./cancel-match-dialog.component.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./managepitches.component.html</code></td>
+                <td class="col-md-9"><code>./cancel-match-dialog.component.html</code></td>
             </tr>
 
 
@@ -131,7 +131,11 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#pitchService">pitchService</a>
+                                <a href="#dialogRef">dialogRef</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#match">match</a>
                             </li>
                         </ul>
                     </td>
@@ -146,14 +150,8 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#createNewPitch">createNewPitch</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Async</span>
-                                <a href="#deletePitch">deletePitch</a>
-                            </li>
-                            <li>
-                                <a href="#editPitchContact">editPitchContact</a>
+                                <a href="#cancelMatch">cancelMatch</a>
                             </li>
                             <li>
                                 <a href="#ngOnInit">ngOnInit</a>
@@ -176,12 +174,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(pitchService: <a href="../injectables/PitchService.html">PitchService</a>, dialog: MatDialog, translateService: TranslateService, notify: <a href="../injectables/NotificationService.html">NotificationService</a>)</code>
+<code>constructor(match: Match.Fragment, dialogRef: <a href="../components/CancelMatchDialogComponent.html">MatDialogRef<CancelMatchDialogComponent></a>, cancelMatchGQL: <a href="../injectables/CancelMatchGQL.html">CancelMatchGQL</a>, translateService: TranslateService, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/shared/cancel-match-dialog/cancel-match-dialog.component.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -199,10 +197,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>pitchService</td>
+                                                        <td>match</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/PitchService.html" target="_self" >PitchService</a></code>
+                                                                    <code>Match.Fragment</code>
                                                         </td>
                                                   
                                                     <td>
@@ -211,10 +209,22 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>dialog</td>
+                                                        <td>dialogRef</td>
                                                   
                                                         <td>
-                                                                    <code>MatDialog</code>
+                                                                        <code><a href="../components/CancelMatchDialogComponent.html" target="_self" >MatDialogRef&lt;CancelMatchDialogComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>cancelMatchGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CancelMatchGQL.html" target="_self" >CancelMatchGQL</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -246,6 +256,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>matchPlanGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MatchPlanGQL.html" target="_self" >MatchPlanGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>seasonService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SeasonService.html" target="_self" >SeasonService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -268,67 +302,28 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="createNewPitch"></a>
-                    <span class="name">
-                        <b>
-                            createNewPitch
-                        </b>
-                        <a href="#createNewPitch"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>createNewPitch()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:39</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="deletePitch"></a>
+                    <a name="cancelMatch"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Async</span>
-                            deletePitch
+                            cancelMatch
                         </b>
-                        <a href="#deletePitch"><span class="icon ion-ios-link"></span></a>
+                        <a href="#cancelMatch"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deletePitch(pitch: Pitch.Fragment)</code>
+                    <code>cancelMatch(reason: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">src/app/components/shared/cancel-match-dialog/cancel-match-dialog.component.ts:28</a></div>
                 </td>
             </tr>
 
@@ -348,9 +343,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>pitch</td>
+                                    <td>reason</td>
                                     <td>
-                                            <code>Pitch.Fragment</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -366,76 +361,6 @@
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="editPitchContact"></a>
-                    <span class="name">
-                        <b>
-                            editPitchContact
-                        </b>
-                        <a href="#editPitchContact"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>editPitchContact(pitch: Pitch.Fragment)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="43"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:43</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>pitch</td>
-                                    <td>
-                                            <code>Pitch.Fragment</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
                     <div class="io-description">
@@ -467,8 +392,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/app/components/shared/cancel-match-dialog/cancel-match-dialog.component.ts:25</a></div>
                 </td>
             </tr>
 
@@ -494,24 +419,61 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="pitchService"></a>
+                        <a name="dialogRef"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            pitchService</b>
-                            <a href="#pitchService"><span class="icon ion-ios-link"></span></a>
+                            dialogRef</b>
+                            <a href="#dialogRef"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../injectables/PitchService.html" target="_self" >PitchService</a></code>
+                            <i>Type : </i>        <code><a href="../components/CancelMatchDialogComponent.html" target="_self" >MatDialogRef&lt;CancelMatchDialogComponent&gt;</a></code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/shared/cancel-match-dialog/cancel-match-dialog.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="match"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            match</b>
+                            <a href="#match"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Match.Fragment</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @Inject(MAT_DIALOG_DATA)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/shared/cancel-match-dialog/cancel-match-dialog.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -524,114 +486,89 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, TemplateRef } from &#x27;@angular/core&#x27;;
-import { Observable } from &#x27;rxjs&#x27;;
-import { Pitch, PitchesGQL } from &#x27;src/api/graphql&#x27;;
-import { map } from &#x27;rxjs/operators&#x27;;
-import { PitchService } from &#x27;src/app/services/pitch.service&#x27;;
-import { MatDialog } from &#x27;@angular/material&#x27;;
-import { EditPitchContactDialogComponent } from &#x27;../../shared/edit-pitch-contact-dialog/edit-pitch-contact-dialog.component&#x27;;
-import { CreatePitchDialogComponent } from &#x27;../../shared/create-pitch-dialog/create-pitch-dialog.component&#x27;;
-import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject } from &#x27;@angular/core&#x27;;
+import { MAT_DIALOG_DATA, MatDialogRef } from &#x27;@angular/material&#x27;;
+import { Match, CancelMatchGQL, MatchPlanGQL } from &#x27;src/api/graphql&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
+import { SeasonService } from &#x27;src/app/services/season.service&#x27;;
 
 @Component({
-  selector: &#x27;app-managepitches&#x27;,
-  templateUrl: &#x27;./managepitches.component.html&#x27;,
-  styleUrls: [&#x27;./managepitches.component.css&#x27;]
+  selector: &#x27;app-cancel-match-dialog&#x27;,
+  templateUrl: &#x27;./cancel-match-dialog.component.html&#x27;,
+  styleUrls: [&#x27;./cancel-match-dialog.component.css&#x27;]
 })
-export class ManagepitchesComponent implements OnInit {
+export class CancelMatchDialogComponent implements OnInit {
 
   constructor(
-    public pitchService: PitchService,
-    private dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
+    public dialogRef: MatDialogRef&lt;CancelMatchDialogComponent&gt;,
+    private cancelMatchGQL: CancelMatchGQL,
     private translateService: TranslateService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private matchPlanGQL: MatchPlanGQL,
+    private seasonService: SeasonService
   ) { }
 
   ngOnInit() {
-
   }
 
-  async deletePitch(pitch: Pitch.Fragment) {
+  async cancelMatch(reason: string) {
+    // TODO: move to MatchServc
     try {
-      await this.pitchService.deletePitch(pitch.id);
-      this.notify.showSuccessNotification(this.translateService.instant(&#x27;DELETE_PITCH_SUCESS&#x27;));
+      await this.cancelMatchGQL.mutate({
+        match_id: this.match.id,
+        reason: reason
+      }, {
+          refetchQueries: [
+            {
+              query: this.matchPlanGQL.document,
+              variables: { id: this.seasonService.currentSeason.getValue().id}
+            }
+          ]
+        }).toPromise();
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;CANCEL_MATCH_SUCCESS&#x27;));
+      this.dialogRef.close();
     } catch (error) {
-      this.notify.showErrorNotification(this.translateService.instant(&#x27;DELETE_PITCH_ERROR&#x27;), error);
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;CANCEL_MATCH_ERROR&#x27;), error);
     }
-  }
-
-  createNewPitch() {
-    this.dialog.open(CreatePitchDialogComponent);
-  }
-
-  editPitchContact(pitch: Pitch.Fragment) {
-    this.dialog.open(EditPitchContactDialogComponent,
-      {
-        data: pitch
-      });
   }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid mt-4&quot;&gt;
-  &lt;ng-container *ngIf&#x3D;&quot;(pitchService.allPitches | async) as allPitches; else loading&quot;&gt;
-    &lt;div class&#x3D;&quot;row pb-2&quot;  style&#x3D;&quot;border-bottom: 1px solid lightgray;&quot;&gt;
-      &lt;div class&#x3D;&quot;col&quot;&gt;
-        {{ &#x27;PITCH&#x27; | translate }}
-      &lt;/div&gt;
-      &lt;div class&#x3D;&quot;col&quot;&gt;
-        {{ &#x27;CONTACT&#x27; | translate }}
-      &lt;/div&gt;
-      &lt;div class&#x3D;&quot;col-2&quot;&gt;
-        &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;createNewPitch()&quot;&gt;
-          &lt;mat-icon&gt;
-            add
-          &lt;/mat-icon&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;h3 mat-dialog-title&gt;
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 text-center&quot;&gt;
+      {{ &#x27;CANCEL_MATCH&#x27; | translate }}
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;row pb-4 pt-4 align-items-center&quot; *ngFor&#x3D;&quot;let pitch of allPitches&quot; style&#x3D;&quot;border-bottom: 1px solid lightgray;&quot;&gt;
-      &lt;div class&#x3D;&quot;col-3&quot;&gt;
-        &lt;mat-icon&gt;location_on&lt;/mat-icon&gt;
-        &lt;a href&#x3D;&quot;https://www.google.com/maps/?q&#x3D;{{ pitch.location_latitude }},{{ pitch.location_longitude }}&quot;
-          target&#x3D;&quot;_blank&quot; style&#x3D;&quot;cursor: pointer;&quot;&gt;
-          {{ pitch.label }}
-        &lt;/a&gt;
-      &lt;/div&gt;
-      &lt;div class&#x3D;&quot;col-6&quot;&gt;
-        &lt;ng-container&gt;
-          &lt;app-contact-person [contact]&#x3D;&quot;pitch.contact&quot;&gt;&lt;/app-contact-person&gt;
-        &lt;/ng-container&gt;
-      &lt;/div&gt;
-      &lt;div class&#x3D;&quot;col-3&quot;&gt;
-        &lt;button class&#x3D;&quot;mr-3&quot; mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;editPitchContact(pitch)&quot;&gt;
-          &lt;mat-icon&gt;
-            perm_contact_calendar
-          &lt;/mat-icon&gt;
-        &lt;/button&gt;
-        &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;deletePitch(pitch)&quot;&gt;
-          &lt;mat-icon&gt;
-            delete
-          &lt;/mat-icon&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-      &lt;hr&gt;
+    &lt;div class&#x3D;&quot;col-12 text-center&quot;&gt;
+      {{ match.home_team.name}} - {{ match.guest_team.name}}
     &lt;/div&gt;
-  &lt;/ng-container&gt;
-  &lt;ng-template #loading&gt;
-      &lt;mat-progress-bar mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-progress-bar&gt;
-    &lt;/ng-template&gt;
+  &lt;/div&gt;
+&lt;/h3&gt;
+&lt;div mat-dialog-content&gt;
+  &lt;mat-form-field style&#x3D;&quot;width: 100%&quot;&gt;
+    &lt;textarea matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.CANCEL_REASON&#x27; | translate }}&quot; #reason
+            cdkTextareaAutosize
+            #autosize&#x3D;&quot;cdkTextareaAutosize&quot;
+            cdkAutosizeMinRows&#x3D;&quot;3&quot;
+            cdkAutosizeMaxRows&#x3D;&quot;15&quot;
+            maxlength&#x3D;&quot;500&quot;
+    &gt;&lt;/textarea&gt;
+    &lt;mat-hint align&#x3D;&quot;end&quot;&gt;{{reason.value.length}} / 500&lt;/mat-hint&gt;
+  &lt;/mat-form-field&gt;
 &lt;/div&gt;
-</code></pre>
+&lt;div mat-dialog-action align&#x3D;&quot;center&quot;&gt;
+  &lt;button class&#x3D;&quot;mr-5&quot; mat-dialog-close mat-raised-button color&#x3D;&quot;primary&quot;&gt;{{ &#x27;BUTTON.CANCEL&#x27; | translate }} &lt;/button&gt;
+  &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;cancelMatch(reason.value)&quot; [disabled]&#x3D;&quot;!reason.value&quot;&gt;{{ &#x27;BUTTON.CANCEL_MATCH&#x27; | translate }} &lt;/button&gt;
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
-                    <code>./managepitches.component.css</code>
+                    <code>./cancel-match-dialog.component.css</code>
                 </p>
                 <pre class="line-numbers"><code class="language-scss"></code></pre>
     </div>
@@ -661,10 +598,10 @@ export class ManagepitchesComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <ng-container *ngIf="(pitchService.allPitches | async) as allPitches; else loading">    <div class="row pb-2"  style="border-bottom: 1px solid lightgray;">      <div class="col">        {{ \'PITCH\' | translate }}      </div>      <div class="col">        {{ \'CONTACT\' | translate }}      </div>      <div class="col-2">        <button mat-raised-button color="primary" (click)="createNewPitch()">          <mat-icon>            add          </mat-icon>        </button>      </div>    </div>    <div class="row pb-4 pt-4 align-items-center" *ngFor="let pitch of allPitches" style="border-bottom: 1px solid lightgray;">      <div class="col-3">        <mat-icon>location_on</mat-icon>        <a href="https://www.google.com/maps/?q={{ pitch.location_latitude }},{{ pitch.location_longitude }}"          target="_blank" style="cursor: pointer;">          {{ pitch.label }}        </a>      </div>      <div class="col-6">        <ng-container>          <app-contact-person [contact]="pitch.contact"></app-contact-person>        </ng-container>      </div>      <div class="col-3">        <button class="mr-3" mat-raised-button color="primary" (click)="editPitchContact(pitch)">          <mat-icon>            perm_contact_calendar          </mat-icon>        </button>        <button mat-raised-button color="primary" (click)="deletePitch(pitch)">          <mat-icon>            delete          </mat-icon>        </button>      </div>      <hr>    </div>  </ng-container>  <ng-template #loading>      <mat-progress-bar mode="indeterminate"></mat-progress-bar>    </ng-template></div></div>'
+        var COMPONENT_TEMPLATE = '<div><h3 mat-dialog-title>  <div class="row">    <div class="col-12 text-center">      {{ \'CANCEL_MATCH\' | translate }}    </div>    <div class="col-12 text-center">      {{ match.home_team.name}} - {{ match.guest_team.name}}    </div>  </div></h3><div mat-dialog-content>  <mat-form-field style="width: 100%">    <textarea matInput placeholder="{{ \'PLACEHOLDER.CANCEL_REASON\' | translate }}" #reason            cdkTextareaAutosize            #autosize="cdkTextareaAutosize"            cdkAutosizeMinRows="3"            cdkAutosizeMaxRows="15"            maxlength="500"    ></textarea>    <mat-hint align="end">{{reason.value.length}} / 500</mat-hint>  </mat-form-field></div><div mat-dialog-action align="center">  <button class="mr-5" mat-dialog-close mat-raised-button color="primary">{{ \'BUTTON.CANCEL\' | translate }} </button>  <button mat-raised-button color="primary" (click)="cancelMatch(reason.value)" [disabled]="!reason.value">{{ \'BUTTON.CANCEL_MATCH\' | translate }} </button></div></div>'
     var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
-    var ACTUAL_COMPONENT = {'name': 'ManagepitchesComponent'};
+    var ACTUAL_COMPONENT = {'name': 'CancelMatchDialogComponent'};
 </script>
 <script src="../js/tree.js"></script>
 
@@ -698,7 +635,7 @@ export class ManagepitchesComponent implements OnInit {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
-            var COMPODOC_CURRENT_PAGE_URL = 'ManagepitchesComponent.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'CancelMatchDialogComponent.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

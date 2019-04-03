@@ -285,13 +285,17 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/SharedModule.html" data-type="entity-link">SharedModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' : 'data-target="#xs-components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' }>
+                                            'data-target="#components-links-module-SharedModule-37d8f9e6a7b7dea120164cbd8c0124c2"' : 'data-target="#xs-components-links-module-SharedModule-37d8f9e6a7b7dea120164cbd8c0124c2"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' :
-                                            'id="xs-components-links-module-SharedModule-ecfd0a158a43940e20f2f8b92528ce21"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SharedModule-37d8f9e6a7b7dea120164cbd8c0124c2"' :
+                                            'id="xs-components-links-module-SharedModule-37d8f9e6a7b7dea120164cbd8c0124c2"' }>
+                                            <li class="link">
+                                                <a href="components/CancelMatchDialogComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">CancelMatchDialogComponent</a>
+                                            </li>
                                             <li class="link">
                                                 <a href="components/ContactComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ContactComponent</a>
@@ -444,6 +448,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/AppsettingsService.html" data-type="entity-link">AppsettingsService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/CancelMatchGQL.html" data-type="entity-link">CancelMatchGQL</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/CreateMatchesForSeasonGQL.html" data-type="entity-link">CreateMatchesForSeasonGQL</a>
                                 </li>
                                 <li class="link">
@@ -466,6 +473,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/DeletePitchGQL.html" data-type="entity-link">DeletePitchGQL</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/EndSeasonGQL.html" data-type="entity-link">EndSeasonGQL</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/EventGQL.html" data-type="entity-link">EventGQL</a>

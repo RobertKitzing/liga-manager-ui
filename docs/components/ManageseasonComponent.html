@@ -186,6 +186,10 @@
                                 <a href="#createMatchDays">createMatchDays</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#endSeason">endSeason</a>
+                            </li>
+                            <li>
                                 <a href="#manageSeasonChanged">manageSeasonChanged</a>
                             </li>
                             <li>
@@ -235,7 +239,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, teamService: <a href="../injectables/TeamService.html">TeamService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, translateService: TranslateService, matchesQL: <a href="../injectables/CreateMatchesForSeasonGQL.html">CreateMatchesForSeasonGQL</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, removeTeamGQL: <a href="../injectables/RemoveTeamFromSeasonGQL.html">RemoveTeamFromSeasonGQL</a>, addTeamGQL: <a href="../injectables/AddTeamToSeasonGQL.html">AddTeamToSeasonGQL</a>, startSeasonGQL: <a href="../injectables/StartSeasonGQL.html">StartSeasonGQL</a>, allSeasonsListGQL: <a href="../injectables/AllSeasonsListGQL.html">AllSeasonsListGQL</a>, rescheduleMatchDayGQL: <a href="../injectables/RescheduleMatchDayGQL.html">RescheduleMatchDayGQL</a>, notificationService: <a href="../injectables/NotificationService.html">NotificationService</a>)</code>
+<code>constructor(seasonService: <a href="../injectables/SeasonService.html">SeasonService</a>, teamService: <a href="../injectables/TeamService.html">TeamService</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, translateService: TranslateService, matchesQL: <a href="../injectables/CreateMatchesForSeasonGQL.html">CreateMatchesForSeasonGQL</a>, matchPlanGQL: <a href="../injectables/MatchPlanGQL.html">MatchPlanGQL</a>, removeTeamGQL: <a href="../injectables/RemoveTeamFromSeasonGQL.html">RemoveTeamFromSeasonGQL</a>, addTeamGQL: <a href="../injectables/AddTeamToSeasonGQL.html">AddTeamToSeasonGQL</a>, startSeasonGQL: <a href="../injectables/StartSeasonGQL.html">StartSeasonGQL</a>, allSeasonsListGQL: <a href="../injectables/AllSeasonsListGQL.html">AllSeasonsListGQL</a>, rescheduleMatchDayGQL: <a href="../injectables/RescheduleMatchDayGQL.html">RescheduleMatchDayGQL</a>, notificationService: <a href="../injectables/NotificationService.html">NotificationService</a>, endSeasonGQL: <a href="../injectables/EndSeasonGQL.html">EndSeasonGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -401,6 +405,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>endSeasonGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EndSeasonGQL.html" target="_self" >EndSeasonGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -443,8 +459,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="76"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:76</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:77</a></div>
                 </td>
             </tr>
 
@@ -515,8 +531,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="99"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:99</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:100</a></div>
                 </td>
             </tr>
 
@@ -585,8 +601,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="157"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:157</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="158"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:158</a></div>
                 </td>
             </tr>
 
@@ -661,6 +677,47 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="endSeason"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            endSeason
+                        </b>
+                        <a href="#endSeason"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>endSeason()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="281"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:281</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="manageSeasonChanged"></a>
                     <span class="name">
                         <b>
@@ -679,8 +736,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="85"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:85</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:86</a></div>
                 </td>
             </tr>
 
@@ -749,8 +806,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="73"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:73</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:74</a></div>
                 </td>
             </tr>
 
@@ -790,8 +847,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="123"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:123</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:124</a></div>
                 </td>
             </tr>
 
@@ -862,8 +919,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="246"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:246</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="247"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:247</a></div>
                 </td>
             </tr>
 
@@ -944,8 +1001,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="147"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:147</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:148</a></div>
                 </td>
             </tr>
 
@@ -1026,8 +1083,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="172"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:172</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="173"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:173</a></div>
                 </td>
             </tr>
 
@@ -1067,8 +1124,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="215"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:215</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="216"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:216</a></div>
                 </td>
             </tr>
 
@@ -1163,8 +1220,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="231"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:231</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="232"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:232</a></div>
                 </td>
             </tr>
 
@@ -1259,8 +1316,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="194"
-                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:194</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="195"
+                            class="link-to-prism">src/app/components/admin/manageseason/manageseason.component.ts:195</a></div>
                 </td>
             </tr>
 
@@ -1581,7 +1638,7 @@ import { Observable } from &#x27;rxjs&#x27;;
 import {
   AllSeasonsList, Match,
   MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
-  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay
+  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay, EndSeasonGQL
 } from &#x27;../../../../api/graphql&#x27;;
 import { I18Service } from &#x27;src/app/services/i18.service&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
@@ -1615,7 +1672,8 @@ export class ManageseasonComponent implements OnInit {
     private startSeasonGQL: StartSeasonGQL,
     private allSeasonsListGQL: AllSeasonsListGQL,
     private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private endSeasonGQL: EndSeasonGQL
   ) {
     this.seasonList &#x3D; this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
@@ -1625,10 +1683,10 @@ export class ManageseasonComponent implements OnInit {
               const aState &#x3D; a.state.toLocaleLowerCase();
               const bState &#x3D; b.state.toLocaleLowerCase();
               if (aState &gt; bState) {
-                return 1;
+                return -1;
               }
               if (aState &lt; bState) {
-                return -1;
+                return 1;
               }
               const aName &#x3D; a.name.toLocaleLowerCase();
               const bName &#x3D; b.name.toLocaleLowerCase();
@@ -1830,6 +1888,14 @@ export class ManageseasonComponent implements OnInit {
                 from: new Date(period.from).toDateString(),
                 to: new Date(period.to).toDateString()
               }
+            },
+            {
+              refetchQueries: [
+                {
+                  query: this.matchPlanGQL.document,
+                  variables: { id: this.manageSeasonId }
+                }
+              ]
             }
           ).toPromise();
           this.notificationService.showSuccessNotification(this.translateService.instant(&#x27;RESCHEDULE_MATCH_DAY_SUCCESS&#x27;));
@@ -1841,6 +1907,23 @@ export class ManageseasonComponent implements OnInit {
       }
     );
   }
+
+  async endSeason() {
+    try {
+      await this.endSeasonGQL.mutate({
+        season_id: this.manageSeasonId
+      }, {
+        refetchQueries: [
+          {
+            query: this.allSeasonsListGQL.document
+          }
+        ]
+      }).toPromise();
+      this.notificationService.showSuccessNotification(this.translateService.instant(&#x27;END_SEASON_SUCCESS&#x27;));
+    } catch (error) {
+      this.notificationService.showErrorNotification(this.translateService.instant(&#x27;END_SEASON_ERROR&#x27;), error);
+    }
+  }
 }
 </code></pre>
     </div>
@@ -1850,8 +1933,8 @@ export class ManageseasonComponent implements OnInit {
   &lt;div class&#x3D;&quot;row&quot;&gt;
     &lt;div class&#x3D;&quot;col-7&quot;&gt;
       &lt;mat-form-field&gt;
-        &lt;mat-select #seasonSelect [compareWith]&#x3D;&quot;seasonService.seasonCompare&quot; [(ngModel)]&#x3D;&quot;manageSeasonId&quot; (selectionChange)&#x3D;&quot;manageSeasonChanged($event)&quot;
-          placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_SEASON&#x27; | translate }}&quot;&gt;
+        &lt;mat-select #seasonSelect [compareWith]&#x3D;&quot;seasonService.seasonCompare&quot; [(ngModel)]&#x3D;&quot;manageSeasonId&quot;
+          (selectionChange)&#x3D;&quot;manageSeasonChanged($event)&quot; placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_SEASON&#x27; | translate }}&quot;&gt;
           &lt;mat-option *ngFor&#x3D;&quot;let season of seasonList | async&quot; [value]&#x3D;&quot;season.id&quot;&gt;
             {{ season.name }} | {{ season.state }}
           &lt;/mat-option&gt;
@@ -1860,8 +1943,8 @@ export class ManageseasonComponent implements OnInit {
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;col&quot;&gt;
       &lt;mat-form-field&gt;
-        &lt;input #newSeason matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.NEW_SEASON&#x27; | translate }}&quot; (keyup.enter)&#x3D;&quot;addNewSeason(newSeason.value)&quot;
-        /&gt;
+        &lt;input #newSeason matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.NEW_SEASON&#x27; | translate }}&quot;
+          (keyup.enter)&#x3D;&quot;addNewSeason(newSeason.value)&quot; /&gt;
       &lt;/mat-form-field&gt;
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;col&quot;&gt;
@@ -1890,9 +1973,8 @@ export class ManageseasonComponent implements OnInit {
             &lt;div class&#x3D;&quot;row&quot; *ngFor&#x3D;&quot;let team of teamService.allTeams | async&quot;&gt;
               &lt;div class&#x3D;&quot;col&quot;&gt;
                 &lt;button mat-icon-button (click)&#x3D;&quot;addTeamToSeason(team.id)&quot;&gt;
-                  &lt;-&lt;/button&gt;
-                    {{team.name}}
-                    &lt;mat-divider&gt;&lt;/mat-divider&gt;
+                  &lt;-&lt;/button&gt; {{team.name}} &lt;mat-divider&gt;
+                    &lt;/mat-divider&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
@@ -1902,20 +1984,22 @@ export class ManageseasonComponent implements OnInit {
         &lt;div class&#x3D;&quot;row&quot; style&#x3D;&quot;margin-top: 20px;&quot;&gt;
           &lt;div class&#x3D;&quot;col&quot;&gt;
             {{ &#x27;START_SEASON_DATE&#x27; | translate}}:
-            &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;startSeasonDate&quot; (dateTimeChange)&#x3D;&quot;createMatchDays($event, manageSeason.teams.length, manageSeason.match_days)&quot;
+            &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;startSeasonDate&quot;
+              (dateTimeChange)&#x3D;&quot;createMatchDays($event, manageSeason.teams.length, manageSeason.match_days)&quot;
               style&#x3D;&quot;display: none;&quot;&gt;
             &lt;button mat-button [owlDateTimeTrigger]&#x3D;&quot;startSeasonDate&quot;&gt;{{ &#x27;BUTTON.SET_DAY&#x27; | translate }}&lt;/button&gt;
             &lt;owl-date-time [pickerType]&#x3D;&quot;&#x27;calendar&#x27;&quot; [pickerMode]&#x3D;&quot;&#x27;dialog&#x27;&quot; #startSeasonDate&gt;&lt;/owl-date-time&gt;
           &lt;/div&gt;
           &lt;div class&#x3D;&quot;col&quot;&gt;
             &lt;mat-form-field&gt;
-              &lt;input matInput type&#x3D;&quot;number&quot; placeholder&#x3D;&quot;{{&#x27;FROM_TO_OFFSET_DAYS&#x27; | translate }}&quot; [(ngModel)]&#x3D;&quot;fromToOffset&quot; /&gt;
+              &lt;input matInput type&#x3D;&quot;number&quot; placeholder&#x3D;&quot;{{&#x27;FROM_TO_OFFSET_DAYS&#x27; | translate }}&quot;
+                [(ngModel)]&#x3D;&quot;fromToOffset&quot; /&gt;
             &lt;/mat-form-field&gt;
           &lt;/div&gt;
           &lt;div class&#x3D;&quot;col&quot;&gt;
             &lt;mat-form-field&gt;
-              &lt;input matInput type&#x3D;&quot;number&quot; placeholder&#x3D;&quot;{{&#x27;BETWEEN_MATCH_DAYS_OFFSET_DAYS&#x27; | translate }}&quot; [(ngModel)]&#x3D;&quot;betweenMatchDaysOffset&quot;
-              /&gt;
+              &lt;input matInput type&#x3D;&quot;number&quot; placeholder&#x3D;&quot;{{&#x27;BETWEEN_MATCH_DAYS_OFFSET_DAYS&#x27; | translate }}&quot;
+                [(ngModel)]&#x3D;&quot;betweenMatchDaysOffset&quot; /&gt;
             &lt;/mat-form-field&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -1929,7 +2013,8 @@ export class ManageseasonComponent implements OnInit {
           &lt;div class&#x3D;&quot;col text-left&quot;&gt;
             &lt;button mat-button [owlDateTimeTrigger]&#x3D;&quot;dtFrom&quot;&gt;{{ &#x27;BUTTON.SET_TIME&#x27; | translate }}&lt;/button&gt;
             &lt;owl-date-time [pickerType]&#x3D;&quot;&#x27;calendar&#x27;&quot; [pickerMode]&#x3D;&quot;&#x27;dialog&#x27;&quot; #dtFrom&gt;&lt;/owl-date-time&gt;
-            &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;dtFrom&quot; (dateTimeChange)&#x3D;&quot;setMatchDayFromDate(i, $event, manageSeason.match_days)&quot; style&#x3D;&quot;display: none;&quot;&gt;
+            &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;dtFrom&quot;
+              (dateTimeChange)&#x3D;&quot;setMatchDayFromDate(i, $event, manageSeason.match_days)&quot; style&#x3D;&quot;display: none;&quot;&gt;
           &lt;/div&gt;
           &lt;div class&#x3D;&quot;col&quot;&gt;
             {{ matchDay.to | date:&#x27;short&#x27;:&#x27;&#x27;:i18Service.currentLang }}
@@ -1937,11 +2022,13 @@ export class ManageseasonComponent implements OnInit {
           &lt;div class&#x3D;&quot;col text-left&quot;&gt;
             &lt;button mat-button [owlDateTimeTrigger]&#x3D;&quot;dtTo&quot;&gt;{{ &#x27;BUTTON.SET_TIME&#x27; | translate }}&lt;/button&gt;
             &lt;owl-date-time [pickerType]&#x3D;&quot;&#x27;calendar&#x27;&quot; [pickerMode]&#x3D;&quot;&#x27;dialog&#x27;&quot; #dtTo&gt;&lt;/owl-date-time&gt;
-            &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;dtTo&quot; (dateTimeChange)&#x3D;&quot;setMatchDayToDate(i, $event, manageSeason.match_days)&quot; style&#x3D;&quot;display: none;&quot;&gt;
+            &lt;input matInput #kickoffInput [owlDateTime]&#x3D;&quot;dtTo&quot;
+              (dateTimeChange)&#x3D;&quot;setMatchDayToDate(i, $event, manageSeason.match_days)&quot; style&#x3D;&quot;display: none;&quot;&gt;
           &lt;/div&gt;
         &lt;/div&gt;
         &lt;div&gt;
-          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; *ngIf&#x3D;&quot;!manageSeason.match_days&quot; (click)&#x3D;&quot;sendMatchDays()&quot;&gt;{{ &#x27;BUTTON.GENERATE_MATCHPLAN&#x27; | translate }}&lt;/button&gt;
+          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; *ngIf&#x3D;&quot;!manageSeason.match_days&quot;
+            (click)&#x3D;&quot;sendMatchDays()&quot;&gt;{{ &#x27;BUTTON.GENERATE_MATCHPLAN&#x27; | translate }}&lt;/button&gt;
         &lt;/div&gt;
       &lt;/mat-tab&gt;
       &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.MATCHES&#x27; | translate }}&quot;&gt;
@@ -1950,7 +2037,8 @@ export class ManageseasonComponent implements OnInit {
             &lt;div class&#x3D;&quot;row&quot;&gt;
               &lt;div class&#x3D;&quot;col text-center&quot;&gt;
                 &lt;h3&gt;
-                  {{ &#x27;MATCHDAY&#x27; | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date| date:&#x27;shortDate&#x27;:&#x27;&#x27;:i18Service.currentLang }}&amp;nbsp;-&amp;nbsp;{{ matchDay.end_date| date:&#x27;shortDate&#x27;:&#x27;&#x27;:i18Service.currentLang }})
+                  {{ &#x27;MATCHDAY&#x27; | translate:{ matchDay: matchDay.number } }}
+                  ({{ matchDay.start_date| date:&#x27;shortDate&#x27;:&#x27;&#x27;:i18Service.currentLang }}&amp;nbsp;-&amp;nbsp;{{ matchDay.end_date| date:&#x27;shortDate&#x27;:&#x27;&#x27;:i18Service.currentLang }})
                 &lt;/h3&gt;
               &lt;/div&gt;
             &lt;/div&gt;
@@ -1961,10 +2049,20 @@ export class ManageseasonComponent implements OnInit {
             &lt;/div&gt;
           &lt;/ng-container&gt;
         &lt;/div&gt;
-        &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;startSeason()&quot;&gt;{{ &#x27;BUTTON.START_SEASON&#x27; | translate}}&lt;/button&gt;
+        &lt;button mat-raised-button color&#x3D;&quot;primary&quot;
+          (click)&#x3D;&quot;startSeason()&quot;&gt;{{ &#x27;BUTTON.START_SEASON&#x27; | translate}}&lt;/button&gt;
       &lt;/mat-tab&gt;
       &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.MATCH_SCHEDULING&#x27; | translate }}&quot; *ngIf&#x3D;&quot;manageSeason.match_days&quot;&gt;
-          &lt;app-match-scheduling [manageSeason]&#x3D;&quot;manageSeason&quot;&gt;&lt;/app-match-scheduling&gt;
+        &lt;app-match-scheduling [manageSeason]&#x3D;&quot;manageSeason&quot;&gt;&lt;/app-match-scheduling&gt;
+      &lt;/mat-tab&gt;
+      &lt;mat-tab label&#x3D;&quot;{{ &#x27;TAB.END_SEASON&#x27; | translate }}&quot;&gt;
+          &lt;div class&#x3D;&quot;container-fluid mt-2&quot;&gt;
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;col text-center&quot;&gt;
+                  &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;endSeason()&quot;&gt;{{ &#x27;BUTTON.END_SEASON&#x27; | translate}}&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
         &lt;/mat-tab&gt;
     &lt;/mat-tab-group&gt;
   &lt;/ng-container&gt;
@@ -2006,8 +2104,8 @@ export class ManageseasonComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <div class="row">    <div class="col-7">      <mat-form-field>        <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" [(ngModel)]="manageSeasonId" (selectionChange)="manageSeasonChanged($event)"          placeholder="{{ \'PLACEHOLDER.SELECT_SEASON\' | translate }}">          <mat-option *ngFor="let season of seasonList | async" [value]="season.id">            {{ season.name }} | {{ season.state }}          </mat-option>        </mat-select>      </mat-form-field>    </div>    <div class="col">      <mat-form-field>        <input #newSeason matInput placeholder="{{ \'PLACEHOLDER.NEW_SEASON\' | translate }}" (keyup.enter)="addNewSeason(newSeason.value)"        />      </mat-form-field>    </div>    <div class="col">      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ \'BUTTON.CREATE_SEASON\' | translate        }}      </button>    </div>  </div>  <ng-container *ngIf="(manageSeason | async) as manageSeason; else loading">    <mat-tab-group (selectedTabChange)="selectedTabChanged($event, manageSeason)">      <mat-tab label="{{ \'TAB.TEAMS\'  | translate  }}">        <div class="row" style="margin-top: 20px;">          <div class="col">            <h3 translate>TEAMS_IN_SEASON</h3>            <div class="row" *ngFor="let team of manageSeason.teams">              <div class="col">                {{team.name}}                <button mat-icon-button (click)="removeTeamFromSeason(team.id)">                  -></button>                <mat-divider></mat-divider>              </div>            </div>          </div>          <div class="col">            <h3 translate>ALL_TEAMS</h3>            <div class="row" *ngFor="let team of teamService.allTeams | async">              <div class="col">                <button mat-icon-button (click)="addTeamToSeason(team.id)">                  <-</button>                    {{team.name}}                    <mat-divider></mat-divider>              </div>            </div>          </div>        </div>      </mat-tab>      <mat-tab label="{{ \'TAB.MATCH_DAYS\'  | translate  }}">        <div class="row" style="margin-top: 20px;">          <div class="col">            {{ \'START_SEASON_DATE\' | translate}}:            <input matInput #kickoffInput [owlDateTime]="startSeasonDate" (dateTimeChange)="createMatchDays($event, manageSeason.teams.length, manageSeason.match_days)"              style="display: none;">            <button mat-button [owlDateTimeTrigger]="startSeasonDate">{{ \'BUTTON.SET_DAY\' | translate }}</button>            <owl-date-time [pickerType]="\'calendar\'" [pickerMode]="\'dialog\'" #startSeasonDate></owl-date-time>          </div>          <div class="col">            <mat-form-field>              <input matInput type="number" placeholder="{{\'FROM_TO_OFFSET_DAYS\' | translate }}" [(ngModel)]="fromToOffset" />            </mat-form-field>          </div>          <div class="col">            <mat-form-field>              <input matInput type="number" placeholder="{{\'BETWEEN_MATCH_DAYS_OFFSET_DAYS\' | translate }}" [(ngModel)]="betweenMatchDaysOffset"              />            </mat-form-field>          </div>        </div>        <div *ngFor="let matchDay of newMatchDays; let i = index" class="row">          <div class="col">            {{ i + 1 }}. Spieltag          </div>          <div class="col">            {{ matchDay.from | date:\'short\':\'\':i18Service.currentLang }}          </div>          <div class="col text-left">            <button mat-button [owlDateTimeTrigger]="dtFrom">{{ \'BUTTON.SET_TIME\' | translate }}</button>            <owl-date-time [pickerType]="\'calendar\'" [pickerMode]="\'dialog\'" #dtFrom></owl-date-time>            <input matInput #kickoffInput [owlDateTime]="dtFrom" (dateTimeChange)="setMatchDayFromDate(i, $event, manageSeason.match_days)" style="display: none;">          </div>          <div class="col">            {{ matchDay.to | date:\'short\':\'\':i18Service.currentLang }}          </div>          <div class="col text-left">            <button mat-button [owlDateTimeTrigger]="dtTo">{{ \'BUTTON.SET_TIME\' | translate }}</button>            <owl-date-time [pickerType]="\'calendar\'" [pickerMode]="\'dialog\'" #dtTo></owl-date-time>            <input matInput #kickoffInput [owlDateTime]="dtTo" (dateTimeChange)="setMatchDayToDate(i, $event, manageSeason.match_days)" style="display: none;">          </div>        </div>        <div>          <button mat-raised-button color="primary" *ngIf="!manageSeason.match_days" (click)="sendMatchDays()">{{ \'BUTTON.GENERATE_MATCHPLAN\' | translate }}</button>        </div>      </mat-tab>      <mat-tab label="{{ \'TAB.MATCHES\' | translate }}">        <div class="container-fluid mt-2" style="max-height: 60vh; overflow: auto;">          <ng-container *ngFor="let matchDay of manageSeason.match_days">            <div class="row">              <div class="col text-center">                <h3>                  {{ \'MATCHDAY\' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date| date:\'shortDate\':\'\':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:\'shortDate\':\'\':i18Service.currentLang }})                </h3>              </div>            </div>            <div class="row" *ngFor="let match of matchDay.matches">              <div class="col text-center">                {{ match.home_team.name }} - {{ match.guest_team.name }}              </div>            </div>          </ng-container>        </div>        <button mat-raised-button color="primary" (click)="startSeason()">{{ \'BUTTON.START_SEASON\' | translate}}</button>      </mat-tab>      <mat-tab label="{{ \'TAB.MATCH_SCHEDULING\' | translate }}" *ngIf="manageSeason.match_days">          <app-match-scheduling [manageSeason]="manageSeason"></app-match-scheduling>        </mat-tab>    </mat-tab-group>  </ng-container>  <ng-template #loading>    <mat-progress-bar *ngIf="manageSeasonId" mode="indeterminate"></mat-progress-bar>  </ng-template></div></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <div class="row">    <div class="col-7">      <mat-form-field>        <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" [(ngModel)]="manageSeasonId"          (selectionChange)="manageSeasonChanged($event)" placeholder="{{ \'PLACEHOLDER.SELECT_SEASON\' | translate }}">          <mat-option *ngFor="let season of seasonList | async" [value]="season.id">            {{ season.name }} | {{ season.state }}          </mat-option>        </mat-select>      </mat-form-field>    </div>    <div class="col">      <mat-form-field>        <input #newSeason matInput placeholder="{{ \'PLACEHOLDER.NEW_SEASON\' | translate }}"          (keyup.enter)="addNewSeason(newSeason.value)" />      </mat-form-field>    </div>    <div class="col">      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ \'BUTTON.CREATE_SEASON\' | translate        }}      </button>    </div>  </div>  <ng-container *ngIf="(manageSeason | async) as manageSeason; else loading">    <mat-tab-group (selectedTabChange)="selectedTabChanged($event, manageSeason)">      <mat-tab label="{{ \'TAB.TEAMS\'  | translate  }}">        <div class="row" style="margin-top: 20px;">          <div class="col">            <h3 translate>TEAMS_IN_SEASON</h3>            <div class="row" *ngFor="let team of manageSeason.teams">              <div class="col">                {{team.name}}                <button mat-icon-button (click)="removeTeamFromSeason(team.id)">                  -></button>                <mat-divider></mat-divider>              </div>            </div>          </div>          <div class="col">            <h3 translate>ALL_TEAMS</h3>            <div class="row" *ngFor="let team of teamService.allTeams | async">              <div class="col">                <button mat-icon-button (click)="addTeamToSeason(team.id)">                  <-</button> {{team.name}} <mat-divider>                    </mat-divider>              </div>            </div>          </div>        </div>      </mat-tab>      <mat-tab label="{{ \'TAB.MATCH_DAYS\'  | translate  }}">        <div class="row" style="margin-top: 20px;">          <div class="col">            {{ \'START_SEASON_DATE\' | translate}}:            <input matInput #kickoffInput [owlDateTime]="startSeasonDate"              (dateTimeChange)="createMatchDays($event, manageSeason.teams.length, manageSeason.match_days)"              style="display: none;">            <button mat-button [owlDateTimeTrigger]="startSeasonDate">{{ \'BUTTON.SET_DAY\' | translate }}</button>            <owl-date-time [pickerType]="\'calendar\'" [pickerMode]="\'dialog\'" #startSeasonDate></owl-date-time>          </div>          <div class="col">            <mat-form-field>              <input matInput type="number" placeholder="{{\'FROM_TO_OFFSET_DAYS\' | translate }}"                [(ngModel)]="fromToOffset" />            </mat-form-field>          </div>          <div class="col">            <mat-form-field>              <input matInput type="number" placeholder="{{\'BETWEEN_MATCH_DAYS_OFFSET_DAYS\' | translate }}"                [(ngModel)]="betweenMatchDaysOffset" />            </mat-form-field>          </div>        </div>        <div *ngFor="let matchDay of newMatchDays; let i = index" class="row">          <div class="col">            {{ i + 1 }}. Spieltag          </div>          <div class="col">            {{ matchDay.from | date:\'short\':\'\':i18Service.currentLang }}          </div>          <div class="col text-left">            <button mat-button [owlDateTimeTrigger]="dtFrom">{{ \'BUTTON.SET_TIME\' | translate }}</button>            <owl-date-time [pickerType]="\'calendar\'" [pickerMode]="\'dialog\'" #dtFrom></owl-date-time>            <input matInput #kickoffInput [owlDateTime]="dtFrom"              (dateTimeChange)="setMatchDayFromDate(i, $event, manageSeason.match_days)" style="display: none;">          </div>          <div class="col">            {{ matchDay.to | date:\'short\':\'\':i18Service.currentLang }}          </div>          <div class="col text-left">            <button mat-button [owlDateTimeTrigger]="dtTo">{{ \'BUTTON.SET_TIME\' | translate }}</button>            <owl-date-time [pickerType]="\'calendar\'" [pickerMode]="\'dialog\'" #dtTo></owl-date-time>            <input matInput #kickoffInput [owlDateTime]="dtTo"              (dateTimeChange)="setMatchDayToDate(i, $event, manageSeason.match_days)" style="display: none;">          </div>        </div>        <div>          <button mat-raised-button color="primary" *ngIf="!manageSeason.match_days"            (click)="sendMatchDays()">{{ \'BUTTON.GENERATE_MATCHPLAN\' | translate }}</button>        </div>      </mat-tab>      <mat-tab label="{{ \'TAB.MATCHES\' | translate }}">        <div class="container-fluid mt-2" style="max-height: 60vh; overflow: auto;">          <ng-container *ngFor="let matchDay of manageSeason.match_days">            <div class="row">              <div class="col text-center">                <h3>                  {{ \'MATCHDAY\' | translate:{ matchDay: matchDay.number } }}                  ({{ matchDay.start_date| date:\'shortDate\':\'\':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:\'shortDate\':\'\':i18Service.currentLang }})                </h3>              </div>            </div>            <div class="row" *ngFor="let match of matchDay.matches">              <div class="col text-center">                {{ match.home_team.name }} - {{ match.guest_team.name }}              </div>            </div>          </ng-container>        </div>        <button mat-raised-button color="primary"          (click)="startSeason()">{{ \'BUTTON.START_SEASON\' | translate}}</button>      </mat-tab>      <mat-tab label="{{ \'TAB.MATCH_SCHEDULING\' | translate }}" *ngIf="manageSeason.match_days">        <app-match-scheduling [manageSeason]="manageSeason"></app-match-scheduling>      </mat-tab>      <mat-tab label="{{ \'TAB.END_SEASON\' | translate }}">          <div class="container-fluid mt-2">            <div class="row">              <div class="col text-center">                  <button mat-raised-button color="primary" (click)="endSeason()">{{ \'BUTTON.END_SEASON\' | translate}}</button>              </div>            </div>          </div>        </mat-tab>    </mat-tab-group>  </ng-container>  <ng-template #loading>    <mat-progress-bar *ngIf="manageSeasonId" mode="indeterminate"></mat-progress-bar>  </ng-template></div></div>'
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ManageseasonComponent'};
 </script>
