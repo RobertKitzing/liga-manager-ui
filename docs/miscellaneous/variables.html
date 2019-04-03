@@ -99,6 +99,9 @@
                             <a href="#MatchFragment" title="src/api/graphql.ts"><b>MatchFragment</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.ts)</a>
                         </li>
                         <li>
+                            <a href="#PenaltyFragment" title="src/api/graphql.ts"><b>PenaltyFragment</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.ts)</a>
+                        </li>
+                        <li>
                             <a href="#PitchFragment" title="src/api/graphql.ts"><b>PitchFragment</b>&nbsp;&nbsp;&nbsp;(src/.../graphql.ts)</a>
                         </li>
                         <li>
@@ -363,6 +366,39 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="PenaltyFragment"></a>
+                        <span class="name">
+                            <b>
+                            PenaltyFragment</b>
+                            <a href="#PenaltyFragment"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>gql&#x60;
+  fragment Penalty on RankingPenalty {
+    id
+    team {
+      ...Team
+    }
+    reason
+    created_at
+    points
+  }
+
+  ${TeamFragment}
+&#x60;</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="PitchFragment"></a>
                         <span class="name">
                             <b>
@@ -426,17 +462,13 @@
         points
       }
       penalties {
-        team {
-          ...Team
-        }
-        reason
-        created_at
-        points
+        ...Penalty
       }
     }
   }
 
   ${TeamFragment}
+  ${PenaltyFragment}
 &#x60;</code>
                         </td>
                     </tr>
