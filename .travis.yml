@@ -44,7 +44,7 @@ install:
   - nvm install 8
   - sudo gem install fastlane
   - export TAG=`grep '"version":' package.json | cut -d\" -f4`
-  - export ANDROID_VERSION_CODE=$((30000 + $TRAVIS_BUILD_NUMBER))
+  - export ANDROID_VERSION_CODE=$((40000 + $TRAVIS_BUILD_NUMBER))
   - npm -g install cordova
   - npm -g install typescript
   - npm -g install cordova-set-version
@@ -71,7 +71,7 @@ script:
   - docker build -t $DOCKER_REPO_GRAPHQL:$TAG-$TRAVIS_BUILD_NUMBER server/graphql
   - cd app
   - cordova platform add android
-  - cordova-set-version -v $TAG -b $ANDROID_VERSION_CODE ./config.xml
+  - cordova-set-version -v $TAG-$TRAVIS_BUILD_NUMBER -b $ANDROID_VERSION_CODE ./config.xml
   - cordova build android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
 
 after_success:
