@@ -5,7 +5,8 @@
     </div>
   </div>
   <ng-container *ngIf="seasonService.currentSeason">
-    <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive" style="scrollbar-x-position: top;">
+    <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive"
+      style="scrollbar-x-position: top;">
       <table class="table table-striped font-size-sm">
         <thead class="table-dark">
           <tr>
@@ -14,7 +15,7 @@
             <th class="col-1" translate>TABLE.GAMES</th>
             <th class="col-1" translate>TABLE.WIN_DRAW_LOST</th>
             <th class="col-2" translate>TABLE.TORE:TORE</th>
-            <th class="col-1" translate>TABLE.POINTS</th>
+            <th class="col-2" translate>TABLE.POINTS</th>
           </tr>
         </thead>
         <tbody class="">
@@ -25,7 +26,16 @@
               <td>{{ pos.matches }}</td>
               <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>
               <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>
-              <td>{{ pos.points }}</td>
+              <td>
+                {{ pos.points }}
+              </td>
+              <!-- <ng-container *ngIf="(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys">
+                <td valign="center" matTooltip="Info about the action">
+                  <mat-icon>
+                    warning
+                  </mat-icon>
+                </td>
+              </ng-container> -->
             </tr>
           </ng-container>
         </tbody>
@@ -37,7 +47,7 @@
   </ng-container>
   <ng-template #loading>
     <ng-container *ngIf="seasonService.currentSeason | async">
-        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </ng-container>
   </ng-template>
 </div>

@@ -5,7 +5,7 @@
         <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" [(ngModel)]="manageSeasonId"
           (selectionChange)="manageSeasonChanged($event)" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
           <mat-option *ngFor="let season of seasonList | async" [value]="season.id">
-            {{ season.name }} | {{ season.state }}
+            {{ season.name }} | {{ ('SeasonState.' + season.state) | translate }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -123,6 +123,11 @@
       </mat-tab>
       <mat-tab label="{{ 'TAB.MATCH_SCHEDULING' | translate }}" *ngIf="manageSeason.match_days">
         <app-match-scheduling [manageSeason]="manageSeason"></app-match-scheduling>
+      </mat-tab>
+      <mat-tab label="{{ 'TAB.MANAGE_PENALTY' | translate}}">
+        <ng-template matTabContent>
+          <app-manage-penalty [manageSeasonId]="manageSeason.id"></app-manage-penalty>
+        </ng-template>
       </mat-tab>
       <mat-tab label="{{ 'TAB.END_SEASON' | translate }}">
           <div class="container-fluid mt-2">

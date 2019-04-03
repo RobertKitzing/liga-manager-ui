@@ -1,0 +1,32 @@
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <mat-select #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'TEAM' | translate }}">
+          <mat-option *ngFor="let team of data.season.teams" [value]="team.id">
+            {{ team.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <input matInput type="number" placeholder="{{ 'PLACEHOLDER.PENALTY_POINTS' | translate}}"
+          [(ngModel)]="penaltyPoints" required />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <textarea matInput placeholder="{{ 'PLACEHOLDER.PENALTY_REASON' | translate }}" #reason cdkTextareaAutosize [(ngModel)]="penaltyReason"
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15" required></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" (click)="savePenalty()">{{ 'BUTTON.SAVE' | translate }}</button>
+</div>

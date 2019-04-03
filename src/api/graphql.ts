@@ -108,6 +108,35 @@ export namespace PasswordChange {
   };
 }
 
+export namespace AddRankingPenalty {
+  export type Variables = {
+    id: string;
+    season_id: string;
+    team_id: string;
+    reason: string;
+    points: number;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addRankingPenalty: Maybe<boolean>;
+  };
+}
+
+export namespace RemoveRankingPenalty {
+  export type Variables = {
+    ranking_penalty_id: string;
+    season_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    removeRankingPenalty: Maybe<boolean>;
+  };
+}
+
 export namespace DeletePitch {
   export type Variables = {
     pitch_id: string;
@@ -384,6 +413,38 @@ export namespace MatchPlan {
   };
 
   export type Season = Season.Fragment;
+}
+
+export namespace SeasonPenalties {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    season: Maybe<Season>;
+  };
+
+  export type Season = {
+    __typename?: "Season";
+
+    id: string;
+
+    teams: Maybe<(Maybe<Teams>)[]>;
+
+    ranking: Maybe<Ranking>;
+  };
+
+  export type Teams = Team.Fragment;
+
+  export type Ranking = {
+    __typename?: "Ranking";
+
+    penalties: Maybe<(Maybe<Penalties>)[]>;
+  };
+
+  export type Penalties = Penalty.Fragment;
 }
 
 export namespace Pitches {
@@ -713,10 +774,16 @@ export namespace Ranking {
 
   export type Team = Team.Fragment;
 
-  export type Penalties = {
+  export type Penalties = Penalty.Fragment;
+}
+
+export namespace Penalty {
+  export type Fragment = {
     __typename?: "RankingPenalty";
 
-    team: _Team;
+    id: string;
+
+    team: Team;
 
     reason: string;
 
@@ -725,7 +792,7 @@ export namespace Ranking {
     points: number;
   };
 
-  export type _Team = Team.Fragment;
+  export type Team = Team.Fragment;
 }
 
 // ====================================================
@@ -880,6 +947,20 @@ export const EventFragment = gql`
   }
 `;
 
+export const PenaltyFragment = gql`
+  fragment Penalty on RankingPenalty {
+    id
+    team {
+      ...Team
+    }
+    reason
+    created_at
+    points
+  }
+
+  ${TeamFragment}
+`;
+
 export const RankingFragment = gql`
   fragment Ranking on Season {
     id
@@ -900,17 +981,13 @@ export const RankingFragment = gql`
         points
       }
       penalties {
-        team {
-          ...Team
-        }
-        reason
-        created_at
-        points
+        ...Penalty
       }
     }
   }
 
   ${TeamFragment}
+  ${PenaltyFragment}
 `;
 
 // ====================================================
@@ -1000,6 +1077,50 @@ export class PasswordChangeGQL extends Apollo.Mutation<
   document: any = gql`
     mutation PasswordChange($new_password: String!) {
       changeUserPassword(new_password: $new_password)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AddRankingPenaltyGQL extends Apollo.Mutation<
+  AddRankingPenalty.Mutation,
+  AddRankingPenalty.Variables
+> {
+  document: any = gql`
+    mutation AddRankingPenalty(
+      $id: String!
+      $season_id: String!
+      $team_id: String!
+      $reason: String!
+      $points: Int!
+    ) {
+      addRankingPenalty(
+        id: $id
+        season_id: $season_id
+        team_id: $team_id
+        reason: $reason
+        points: $points
+      )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class RemoveRankingPenaltyGQL extends Apollo.Mutation<
+  RemoveRankingPenalty.Mutation,
+  RemoveRankingPenalty.Variables
+> {
+  document: any = gql`
+    mutation RemoveRankingPenalty(
+      $ranking_penalty_id: String!
+      $season_id: String!
+    ) {
+      removeRankingPenalty(
+        ranking_penalty_id: $ranking_penalty_id
+        season_id: $season_id
+      )
     }
   `;
 }
@@ -1334,6 +1455,32 @@ export class MatchPlanGQL extends Apollo.Query<
     }
 
     ${SeasonFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class SeasonPenaltiesGQL extends Apollo.Query<
+  SeasonPenalties.Query,
+  SeasonPenalties.Variables
+> {
+  document: any = gql`
+    query SeasonPenalties($id: String!) {
+      season(id: $id) {
+        id
+        teams {
+          ...Team
+        }
+        ranking {
+          penalties {
+            ...Penalty
+          }
+        }
+      }
+    }
+
+    ${TeamFragment}
+    ${PenaltyFragment}
   `;
 }
 @Injectable({

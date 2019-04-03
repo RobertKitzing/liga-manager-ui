@@ -1,0 +1,7 @@
+{
+	"SeasonState":{
+		"progress": "progress",
+		"ended": "ended",
+		"preparation": "preperation"
+	}
+}

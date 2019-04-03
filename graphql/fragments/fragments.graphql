@@ -118,12 +118,17 @@ fragment Ranking on Season {
         points
       }
       penalties {
-        team {
-          ...Team
-        }
-        reason
-        created_at
-        points
+          ...Penalty
       }
     }  
+}
+
+fragment Penalty on RankingPenalty {
+    id
+    team {
+        ...Team
+    }
+    reason
+    created_at
+    points
 }

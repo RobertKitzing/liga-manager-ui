@@ -13,6 +13,8 @@ import { RenameTeamComponent } from './manageteams/rename-team/rename-team.compo
 import { EventsModule } from './events';
 import { ManageteamsComponent } from './manageteams/manageteams.component';
 import { ManagepitchesComponent } from './managepitches/managepitches.component';
+import { ManagePenaltyComponent } from './manageseason/manage-penalty/manage-penalty.component';
+import { EditRankingPenaltyComponent } from './manageseason/manage-penalty/edit-ranking-penalty/edit-ranking-penalty.component';
 
 @NgModule({
   imports: [
@@ -31,11 +33,14 @@ import { ManagepitchesComponent } from './managepitches/managepitches.component'
     AddUserComponent,
     UserListComponent,
     RenameTeamComponent,
-    ManagepitchesComponent
+    ManagepitchesComponent,
+    ManagePenaltyComponent,
+    EditRankingPenaltyComponent
   ],
   entryComponents: [
     AddtournamentroundComponent,
-    RenameTeamComponent
+    RenameTeamComponent,
+    EditRankingPenaltyComponent
   ]
 })
 export class AdminModule { }

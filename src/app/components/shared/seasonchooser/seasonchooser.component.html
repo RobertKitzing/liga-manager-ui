@@ -2,7 +2,7 @@
   <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"
   (selectionChange)="currentSeasonChanged($event)" [(value)]="season" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
     <mat-option *ngFor="let season of seasonList | async" [value]="season">
-      {{ season.name }} {{ season.state !== SeasonState.Progress ? ('(' + season.state + ')') : ''  }}
+      {{ season.name }} {{ season.state !== SeasonState.Progress ? ('(' + ('SeasonState.' + season.state | translate) + ')') : ''  }}
     </mat-option>
   </mat-select>
 </mat-form-field>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
-import { Ranking, RankingGQL } from 'src/api/graphql';
+import { Ranking, RankingGQL, Team, Penalty } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { I18Service } from '../../services/i18.service';
@@ -37,5 +37,10 @@ export class TableComponent implements OnInit {
     this.rankingQGL = this.ranking.watch({ id: this.seasonService.currentSeason.getValue().id }).valueChanges.pipe(
       map((result) => result.data.season.ranking)
     );
+  }
+
+  getPenaltyForTeam(penalties: Penalty.Fragment[], team: Team.Fragment): Penalty.Fragment[] {
+    const p = penalties.filter(t => t.team.id === team.id);
+    return p.length === 0 ? null : p;
   }
 }
