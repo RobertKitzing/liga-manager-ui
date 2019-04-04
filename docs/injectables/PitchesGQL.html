@@ -130,7 +130,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1534" class="link-to-prism">src/api/graphql.ts:1534</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1559" class="link-to-prism">src/api/graphql.ts:1559</a></div>
                             </td>
                         </tr>
 
@@ -515,6 +515,18 @@ export namespace UpdateUser {
     __typename?: &quot;Mutation&quot;;
 
     updateUser: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace DeleteUser {
+  export type Variables &#x3D; {
+    user_id: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    deleteUser: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -1580,6 +1592,19 @@ export class UpdateUserGQL extends Apollo.Mutation&lt;
         role: $role
         team_ids: $team_ids
       )
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class DeleteUserGQL extends Apollo.Mutation&lt;
+  DeleteUser.Mutation,
+  DeleteUser.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation DeleteUser($user_id: String!) {
+      deleteUser(user_id: $user_id)
     }
   &#x60;;
 }

@@ -174,12 +174,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(allUsersGQL: <a href="../injectables/AllUsersGQL.html">AllUsersGQL</a>, dialog: MatDialog)</code>
+<code>constructor(allUsersGQL: <a href="../injectables/AllUsersGQL.html">AllUsersGQL</a>, deleteUserGQL: <a href="../injectables/DeleteUserGQL.html">DeleteUserGQL</a>, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, translateService: TranslateService, dialog: MatDialog)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -201,6 +201,42 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/AllUsersGQL.html" target="_self" >AllUsersGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>deleteUserGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DeleteUserGQL.html" target="_self" >DeleteUserGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notify</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -260,8 +296,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:34</a></div>
                 </td>
             </tr>
 
@@ -299,8 +335,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:45</a></div>
                 </td>
             </tr>
 
@@ -369,8 +405,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:32</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:38</a></div>
                 </td>
             </tr>
 
@@ -439,8 +475,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:22</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:28</a></div>
                 </td>
             </tr>
 
@@ -482,7 +518,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -496,11 +532,14 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { AllUsersGQL, User } from &#x27;src/api/graphql&#x27;;
+import { AllUsersGQL, User, DeleteUserGQL } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { MatDialog } from &#x27;@angular/material&#x27;;
 import { EditUserDialogComponent } from &#x27;../edit-user-dialog/edit-user-dialog.component&#x27;;
+import { ConfirmDialogComponent } from &#x27;src/app/components/shared/confirm-dialog/confirm-dialog.component&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 @Component({
   selector: &#x27;app-user-list&#x27;,
@@ -513,6 +552,9 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private allUsersGQL: AllUsersGQL,
+    private deleteUserGQL: DeleteUserGQL,
+    private notify: NotificationService,
+    private translateService: TranslateService,
     private dialog: MatDialog
   ) { }
 
@@ -535,6 +577,32 @@ export class UserListComponent implements OnInit {
 
   deleteUser(user: User.Fragment) {
 
+    const dialogRef &#x3D; this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: this.translateService.instant(&#x27;CONFIRM_DELETE&#x27;, { thing: user.email })
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      async (confirm) &#x3D;&gt; {
+        if (confirm) {
+          try {
+            await this.deleteUserGQL.mutate({
+              user_id: user.id
+            }, {
+                refetchQueries: [
+                  {
+                    query: this.allUsersGQL.document
+                  }
+                ]
+              }).toPromise();
+            this.notify.showSuccessNotification(this.translateService.instant(&#x27;DELETE_USER_SUCCESS&#x27;, { user: user.email }));
+          } catch (error) {
+            this.notify.showErrorNotification(this.translateService.instant(&#x27;DELETE_USER_ERROR&#x27;), error);
+          }
+        }
+      }
+    );
   }
 }
 </code></pre>
@@ -555,7 +623,7 @@ export class UserListComponent implements OnInit {
     &lt;div class&#x3D;&quot;col-4 col-md-2 col-lg-1&quot;&gt;
       {{ &#x27;USER_ROLE&#x27; | translate }}
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
       {{ &#x27;TEAMS&#x27; | translate }}
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;col-12 col-md-12 col-lg-3 text-center&quot;&gt;
@@ -567,7 +635,7 @@ export class UserListComponent implements OnInit {
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class&#x3D;&quot;row align-items-center pb-2 pt-2 border-bottom&quot; *ngFor&#x3D;&quot;let user of allUsers | async&quot;&gt;
-    &lt;div class&#x3D;&quot;col-12 col-md-4 col-lg-2&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-4 col-lg-2 text-xs-center text-sm-center text-md-right&quot;&gt;
       {{ user.email }}
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
@@ -579,7 +647,7 @@ export class UserListComponent implements OnInit {
     &lt;div class&#x3D;&quot;col-4 col-md-2 col-lg-1&quot;&gt;
       {{ user.role }}
     &lt;/div&gt;
-    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
       &lt;div class&#x3D;&quot;row&quot; *ngFor&#x3D;&quot;let team of user.teams&quot;&gt;
         &lt;div class&#x3D;&quot;col&quot;&gt;
           {{ team.name }}
@@ -635,8 +703,8 @@ export class UserListComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">  <div class="row pb-2 border-bottom">    <div class="col-12 col-md-4 col-lg-2">      {{ \'USERNAME\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'FIRST_NAME\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'LAST_NAME\' | translate }}    </div>    <div class="col-4 col-md-2 col-lg-1">      {{ \'USER_ROLE\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'TEAMS\' | translate }}    </div>    <div class="col-12 col-md-12 col-lg-3 text-center">      <button mat-raised-button color="primary" (click)="createNewUser()">        <mat-icon>          add        </mat-icon>      </button>    </div>  </div>  <div class="row align-items-center pb-2 pt-2 border-bottom" *ngFor="let user of allUsers | async">    <div class="col-12 col-md-4 col-lg-2">      {{ user.email }}    </div>    <div class="col-4 col-md-2">      {{ user.first_name }}    </div>    <div class="col-4 col-md-2">      {{ user.last_name }}    </div>    <div class="col-4 col-md-2 col-lg-1">      {{ user.role }}    </div>    <div class="col-4 col-md-2">      <div class="row" *ngFor="let team of user.teams">        <div class="col">          {{ team.name }}        </div>      </div>    </div>    <div class="col-12 col-md-12 col-lg-3 text-center">      <button mat-raised-button color="primary" class="mr-2" (click)="editUser(user)">        <mat-icon>          edit        </mat-icon>      </button>      <button mat-raised-button color="primary" (click)="deleteUser(user)">        <mat-icon>          delete        </mat-icon>      </button>    </div>  </div></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">  <div class="row pb-2 border-bottom">    <div class="col-12 col-md-4 col-lg-2">      {{ \'USERNAME\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'FIRST_NAME\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'LAST_NAME\' | translate }}    </div>    <div class="col-4 col-md-2 col-lg-1">      {{ \'USER_ROLE\' | translate }}    </div>    <div class="col-12 col-md-2">      {{ \'TEAMS\' | translate }}    </div>    <div class="col-12 col-md-12 col-lg-3 text-center">      <button mat-raised-button color="primary" (click)="createNewUser()">        <mat-icon>          add        </mat-icon>      </button>    </div>  </div>  <div class="row align-items-center pb-2 pt-2 border-bottom" *ngFor="let user of allUsers | async">    <div class="col-12 col-md-4 col-lg-2 text-xs-center text-sm-center text-md-right">      {{ user.email }}    </div>    <div class="col-4 col-md-2">      {{ user.first_name }}    </div>    <div class="col-4 col-md-2">      {{ user.last_name }}    </div>    <div class="col-4 col-md-2 col-lg-1">      {{ user.role }}    </div>    <div class="col-12 col-md-2">      <div class="row" *ngFor="let team of user.teams">        <div class="col">          {{ team.name }}        </div>      </div>    </div>    <div class="col-12 col-md-12 col-lg-3 text-center">      <button mat-raised-button color="primary" class="mr-2" (click)="editUser(user)">        <mat-icon>          edit        </mat-icon>      </button>      <button mat-raised-button color="primary" (click)="deleteUser(user)">        <mat-icon>          delete        </mat-icon>      </button>    </div>  </div></div>'
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'UserListComponent'};
 </script>
