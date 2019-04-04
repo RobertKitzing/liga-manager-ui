@@ -60,17 +60,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AdminModule.html" data-type="entity-link">AdminModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' : 'data-target="#xs-components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' }>
+                                            'data-target="#components-links-module-AdminModule-9b4f495705cbcdd3530142431058601a"' : 'data-target="#xs-components-links-module-AdminModule-9b4f495705cbcdd3530142431058601a"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' :
-                                            'id="xs-components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' }>
-                                            <li class="link">
-                                                <a href="components/AddUserComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">AddUserComponent</a>
-                                            </li>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AdminModule-9b4f495705cbcdd3530142431058601a"' :
+                                            'id="xs-components-links-module-AdminModule-9b4f495705cbcdd3530142431058601a"' }>
                                             <li class="link">
                                                 <a href="components/AddtournamentroundComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AddtournamentroundComponent</a>
@@ -82,6 +78,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                             <li class="link">
                                                 <a href="components/EditRankingPenaltyComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">EditRankingPenaltyComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/EditUserDialogComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">EditUserDialogComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/ManagePenaltyComponent.html"
@@ -571,6 +571,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UpdateTeamContactGQL.html" data-type="entity-link">UpdateTeamContactGQL</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/UpdateUserGQL.html" data-type="entity-link">UpdateUserGQL</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UserGQL.html" data-type="entity-link">UserGQL</a>

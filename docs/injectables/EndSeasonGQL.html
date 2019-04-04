@@ -126,7 +126,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1279" class="link-to-prism">src/api/graphql.ts:1279</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1296" class="link-to-prism">src/api/graphql.ts:1296</a></div>
                             </td>
                         </tr>
 
@@ -494,6 +494,23 @@ export namespace CreateUser {
     __typename?: &quot;Mutation&quot;;
 
     createUser: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace UpdateUser {
+  export type Variables &#x3D; {
+    user_id: string;
+    email?: Maybe&lt;string&gt;;
+    first_name?: Maybe&lt;string&gt;;
+    last_name?: Maybe&lt;string&gt;;
+    role?: Maybe&lt;string&gt;;
+    team_ids?: Maybe&lt;(Maybe&lt;string&gt;)[]&gt;;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    updateUser: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -1527,6 +1544,33 @@ export class CreateUserGQL extends Apollo.Mutation&lt;
         id: $id
         email: $email
         password: $password
+        first_name: $first_name
+        last_name: $last_name
+        role: $role
+        team_ids: $team_ids
+      )
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class UpdateUserGQL extends Apollo.Mutation&lt;
+  UpdateUser.Mutation,
+  UpdateUser.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation UpdateUser(
+      $user_id: String!
+      $email: String
+      $first_name: String
+      $last_name: String
+      $role: String
+      $team_ids: [String]
+    ) {
+      updateUser(
+        user_id: $user_id
+        email: $email
         first_name: $first_name
         last_name: $last_name
         role: $role

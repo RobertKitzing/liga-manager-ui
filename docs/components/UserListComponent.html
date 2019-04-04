@@ -145,6 +145,15 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#createNewUser">createNewUser</a>
+                            </li>
+                            <li>
+                                <a href="#deleteUser">deleteUser</a>
+                            </li>
+                            <li>
+                                <a href="#editUser">editUser</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                         </ul>
@@ -165,12 +174,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(allUsersGQL: <a href="../injectables/AllUsersGQL.html">AllUsersGQL</a>)</code>
+<code>constructor(allUsersGQL: <a href="../injectables/AllUsersGQL.html">AllUsersGQL</a>, dialog: MatDialog)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -192,6 +201,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/AllUsersGQL.html" target="_self" >AllUsersGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
                                                         </td>
                                                   
                                                     <td>
@@ -221,6 +242,185 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="createNewUser"></a>
+                    <span class="name">
+                        <b>
+                            createNewUser
+                        </b>
+                        <a href="#createNewUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createNewUser()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:28</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteUser"></a>
+                    <span class="name">
+                        <b>
+                            deleteUser
+                        </b>
+                        <a href="#deleteUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteUser(user: User.Fragment)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:39</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                            <code>User.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editUser"></a>
+                    <span class="name">
+                        <b>
+                            editUser
+                        </b>
+                        <a href="#editUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editUser(user: User.Fragment)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:32</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                            <code>User.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
                         <b>
@@ -239,8 +439,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:19</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:22</a></div>
                 </td>
             </tr>
 
@@ -282,7 +482,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/manageusers/user-list/user-list.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -299,6 +499,8 @@
 import { AllUsersGQL, User } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
+import { MatDialog } from &#x27;@angular/material&#x27;;
+import { EditUserDialogComponent } from &#x27;../edit-user-dialog/edit-user-dialog.component&#x27;;
 
 @Component({
   selector: &#x27;app-user-list&#x27;,
@@ -310,7 +512,8 @@ export class UserListComponent implements OnInit {
   allUsers: Observable&lt;User.Fragment[]&gt;;
 
   constructor(
-    private allUsersGQL: AllUsersGQL
+    private allUsersGQL: AllUsersGQL,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -319,60 +522,92 @@ export class UserListComponent implements OnInit {
     );
   }
 
+  createNewUser() {
+    this.dialog.open(EditUserDialogComponent);
+  }
+
+  editUser(user: User.Fragment) {
+
+    this.dialog.open(EditUserDialogComponent, {
+      data: user
+    });
+  }
+
+  deleteUser(user: User.Fragment) {
+
+  }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot;&gt;
-  &lt;table class&#x3D;&quot;table table-striped font-size-sm&quot;&gt;
-    &lt;thead class&#x3D;&quot;table-dark&quot;&gt;
-      &lt;tr&gt;
-        &lt;th translate&gt;USERNAME&lt;/th&gt;
-        &lt;th translate&gt;FIRST_NAME&lt;/th&gt;
-        &lt;th translate&gt;LAST_NAME&lt;/th&gt;
-        &lt;th translate&gt;USER_ROLE&lt;/th&gt;
-        &lt;th translate&gt;TEAMS&lt;/th&gt;
-        &lt;th&gt;&lt;/th&gt;
-      &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr *ngFor&#x3D;&quot;let user of allUsers | async&quot;&gt;
-        &lt;td&gt;
-          {{ user.email }}
-        &lt;/td&gt;
-        &lt;td&gt;
-          {{ user.first_name }}
-        &lt;/td&gt;
-        &lt;td&gt;
-          {{ user.last_name }}
-        &lt;/td&gt;
-        &lt;td&gt;
-          {{ user.role }}
-        &lt;/td&gt;
-        &lt;td&gt;
-          &lt;tr *ngFor&#x3D;&quot;let team of user.teams&quot;&gt;
-            &lt;td&gt;{{ team.name }}&lt;/td&gt;
-          &lt;/tr&gt;
-        &lt;/td&gt;
-        &lt;td&gt;
-          &lt;button mat-raised-button color&#x3D;&quot;primary&quot;&gt;
-            &lt;mat-icon&gt;
-              edit
-            &lt;/mat-icon&gt;
-          &lt;/button&gt;
-        &lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-&lt;/div&gt;</code></pre>
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+  &lt;div class&#x3D;&quot;row pb-2 border-bottom&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-4 col-lg-2&quot;&gt;
+      {{ &#x27;USERNAME&#x27; | translate }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+      {{ &#x27;FIRST_NAME&#x27; | translate }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+      {{ &#x27;LAST_NAME&#x27; | translate }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2 col-lg-1&quot;&gt;
+      {{ &#x27;USER_ROLE&#x27; | translate }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+      {{ &#x27;TEAMS&#x27; | translate }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-12 col-lg-3 text-center&quot;&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;createNewUser()&quot;&gt;
+        &lt;mat-icon&gt;
+          add
+        &lt;/mat-icon&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;row align-items-center pb-2 pt-2 border-bottom&quot; *ngFor&#x3D;&quot;let user of allUsers | async&quot;&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-4 col-lg-2&quot;&gt;
+      {{ user.email }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+      {{ user.first_name }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+      {{ user.last_name }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2 col-lg-1&quot;&gt;
+      {{ user.role }}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-4 col-md-2&quot;&gt;
+      &lt;div class&#x3D;&quot;row&quot; *ngFor&#x3D;&quot;let team of user.teams&quot;&gt;
+        &lt;div class&#x3D;&quot;col&quot;&gt;
+          {{ team.name }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col-12 col-md-12 col-lg-3 text-center&quot;&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;mr-2&quot; (click)&#x3D;&quot;editUser(user)&quot;&gt;
+        &lt;mat-icon&gt;
+          edit
+        &lt;/mat-icon&gt;
+      &lt;/button&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;deleteUser(user)&quot;&gt;
+        &lt;mat-icon&gt;
+          delete
+        &lt;/mat-icon&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
                     <code>./user-list.component.css</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss"></code></pre>
+                <pre class="line-numbers"><code class="language-scss">.border-bottom {
+    border-bottom: 1px solid lightgray;
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-tree">
@@ -400,8 +635,8 @@ export class UserListComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container">  <table class="table table-striped font-size-sm">    <thead class="table-dark">      <tr>        <th translate>USERNAME</th>        <th translate>FIRST_NAME</th>        <th translate>LAST_NAME</th>        <th translate>USER_ROLE</th>        <th translate>TEAMS</th>        <th></th>      </tr>    </thead>    <tbody>      <tr *ngFor="let user of allUsers | async">        <td>          {{ user.email }}        </td>        <td>          {{ user.first_name }}        </td>        <td>          {{ user.last_name }}        </td>        <td>          {{ user.role }}        </td>        <td>          <tr *ngFor="let team of user.teams">            <td>{{ team.name }}</td>          </tr>        </td>        <td>          <button mat-raised-button color="primary">            <mat-icon>              edit            </mat-icon>          </button>        </td>      </tr>    </tbody>  </table></div></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">  <div class="row pb-2 border-bottom">    <div class="col-12 col-md-4 col-lg-2">      {{ \'USERNAME\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'FIRST_NAME\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'LAST_NAME\' | translate }}    </div>    <div class="col-4 col-md-2 col-lg-1">      {{ \'USER_ROLE\' | translate }}    </div>    <div class="col-4 col-md-2">      {{ \'TEAMS\' | translate }}    </div>    <div class="col-12 col-md-12 col-lg-3 text-center">      <button mat-raised-button color="primary" (click)="createNewUser()">        <mat-icon>          add        </mat-icon>      </button>    </div>  </div>  <div class="row align-items-center pb-2 pt-2 border-bottom" *ngFor="let user of allUsers | async">    <div class="col-12 col-md-4 col-lg-2">      {{ user.email }}    </div>    <div class="col-4 col-md-2">      {{ user.first_name }}    </div>    <div class="col-4 col-md-2">      {{ user.last_name }}    </div>    <div class="col-4 col-md-2 col-lg-1">      {{ user.role }}    </div>    <div class="col-4 col-md-2">      <div class="row" *ngFor="let team of user.teams">        <div class="col">          {{ team.name }}        </div>      </div>    </div>    <div class="col-12 col-md-12 col-lg-3 text-center">      <button mat-raised-button color="primary" class="mr-2" (click)="editUser(user)">        <mat-icon>          edit        </mat-icon>      </button>      <button mat-raised-button color="primary" (click)="deleteUser(user)">        <mat-icon>          delete        </mat-icon>      </button>    </div>  </div></div>'
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'UserListComponent'};
 </script>
