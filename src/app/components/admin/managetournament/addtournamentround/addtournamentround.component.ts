@@ -12,8 +12,9 @@ import { NotificationService } from 'src/app/services/notification.service';
 export interface AddMatchData {
   round: number;
   tournamentId: string;
+  teams: RoundTeam[];
 }
-interface RoundTeam {
+export interface RoundTeam {
   homeTeam: Team.Fragment;
   guestTeam: Team.Fragment;
 }
@@ -48,6 +49,9 @@ export class AddtournamentroundComponent implements OnInit {
         dateTimeAdapter.setLocale(lang);
       }
     );
+    if (data.teams) {
+      this.roundTeams = data.teams;
+    }
   }
 
   ngOnInit() {

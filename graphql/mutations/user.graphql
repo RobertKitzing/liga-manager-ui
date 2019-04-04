@@ -35,3 +35,7 @@ mutation UpdateUser(
         team_ids: $team_ids
   )
 }
+
+mutation DeleteUser($user_id: String!) {
+  deleteUser(user_id: $user_id)
+}

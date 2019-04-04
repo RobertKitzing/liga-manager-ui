@@ -374,6 +374,18 @@ export namespace UpdateUser {
   };
 }
 
+export namespace DeleteUser {
+  export type Variables = {
+    user_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteUser: Maybe<boolean>;
+  };
+}
+
 export namespace Event {
   export type Variables = {
     id: string;
@@ -1436,6 +1448,19 @@ export class UpdateUserGQL extends Apollo.Mutation<
         role: $role
         team_ids: $team_ids
       )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class DeleteUserGQL extends Apollo.Mutation<
+  DeleteUser.Mutation,
+  DeleteUser.Variables
+> {
+  document: any = gql`
+    mutation DeleteUser($user_id: String!) {
+      deleteUser(user_id: $user_id)
     }
   `;
 }

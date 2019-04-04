@@ -1,0 +1,14 @@
+<div mat-dialog-title>
+  {{ 'CONFIRM_TILTE' | translate }}
+</div>
+<div mat-dialog-content>
+  {{ data.message }}
+</div>
+<div mat-dialog-actions align=center>
+  <button mat-raised-button color="primary" class="mr-2" [mat-dialog-close]="false">
+    {{ 'BUTTON.NO' | translate }}
+  </button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">
+      {{ 'BUTTON.YES' | translate }}
+  </button>
+</div>
