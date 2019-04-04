@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AllUsersGQL, User } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +15,8 @@ export class UserListComponent implements OnInit {
   allUsers: Observable<User.Fragment[]>;
 
   constructor(
-    private allUsersGQL: AllUsersGQL
+    private allUsersGQL: AllUsersGQL,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -22,4 +25,18 @@ export class UserListComponent implements OnInit {
     );
   }
 
+  createNewUser() {
+    this.dialog.open(EditUserDialogComponent);
+  }
+
+  editUser(user: User.Fragment) {
+
+    this.dialog.open(EditUserDialogComponent, {
+      data: user
+    });
+  }
+
+  deleteUser(user: User.Fragment) {
+
+  }
 }

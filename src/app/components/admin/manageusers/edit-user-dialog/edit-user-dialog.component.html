@@ -1,7 +1,7 @@
-<div class="container">
+<div mat-dialog-content>
   <div class="row">
     <div class="col">
-      <mat-form-field>
+      <mat-form-field style="width: 100%">
         <input matInput placeholder="{{ 'USERNAME' | translate }}" [formControl]="email" required />
         <mat-error *ngIf="email.invalid" translate>ERRORS.ENTER_VALID_EMAIL</mat-error>
       </mat-form-field>
@@ -19,7 +19,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="!user">
     <div class="col">
       <mat-form-field style="width: 100%">
         <input matInput placeholder="{{ 'PASSWORD' | translate }}" [formControl]="password" required />
@@ -29,7 +29,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <mat-form-field>
+      <mat-form-field style="width: 100%">
         <mat-select #home placeholder="{{ 'USER_ROLE' | translate }}" [(ngModel)]="userRole">
           <mat-option [value]="UserRole.Admin">
             {{ UserRole.Admin }}
@@ -43,8 +43,9 @@
   </div>
   <div class="row">
     <div class="col">
-      <mat-form-field>
-        <mat-select #home placeholder="{{ 'PLACEHOLDER.TEAM_NAME' | translate }}" [(ngModel)]="userTeamList" multiple (selectionChange)="onChangeTeamSelect($event)">
+      <mat-form-field style="width: 100%">
+        <mat-select #home placeholder="{{ 'PLACEHOLDER.TEAM_NAME' | translate }}" [(ngModel)]="userTeamList" multiple
+          (selectionChange)="onChangeTeamSelect($event)">
           <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team.id">
             {{team.name}}
           </mat-option>
@@ -52,16 +53,18 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <button mat-raised-button (click)="createUser()" [disabled]="email.invalid || firstName.invalid || lastName.invalid || password.invalid">
-        {{ 'BUTTON.ADD_USER' | translate}}
-      </button>
-    </div>
-    <div class="col">
-      <button mat-raised-button (click)="sendUsermail()" [disabled]="email.invalid || firstName.invalid || lastName.invalid || password.invalid">
-        {{ 'BUTTON.SEND_USER_MAIL' | translate}}
-      </button>
-    </div>
-  </div>
+</div>
+<div mat-dialog-actions align=center>
+  <button *ngIf="!user" mat-raised-button color="primary" (click)="createUser()" class="mr-2"
+    [disabled]="email.invalid || firstName.invalid || lastName.invalid || (password && password.invalid)">
+    {{ 'BUTTON.ADD_USER' | translate}}
+  </button>
+  <button *ngIf="user" mat-raised-button color="primary" (click)="updateUser()" class="mr-2"
+  [disabled]="email.invalid || firstName.invalid || lastName.invalid">
+  {{ 'BUTTON.UPDATE_USER' | translate}}
+</button>
+  <button mat-raised-button color="primary" (click)="sendUsermail()"
+    [disabled]="email.invalid || firstName.invalid || lastName.invalid || (password && password.invalid)">
+    {{ 'BUTTON.SEND_USER_MAIL' | translate}}
+  </button>
 </div>

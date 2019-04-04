@@ -1,3 +1,5 @@
 - Fix loading template on error
-- Implement RankingPenalty
-- Implement Edit User
+- Implement RankingPenalty Display
+- Redesign Dialogs
+- Cleanup Code
+- Testing

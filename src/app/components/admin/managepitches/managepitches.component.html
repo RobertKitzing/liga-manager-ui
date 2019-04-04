@@ -1,13 +1,13 @@
 <div class="container-fluid mt-4">
   <ng-container *ngIf="(pitchService.allPitches | async) as allPitches; else loading">
     <div class="row pb-2"  style="border-bottom: 1px solid lightgray;">
-      <div class="col">
+      <div class="col-3">
         {{ 'PITCH' | translate }}
       </div>
-      <div class="col">
+      <div class="col-6">
         {{ 'CONTACT' | translate }}
       </div>
-      <div class="col-2">
+      <div class="col-3">
         <button mat-raised-button color="primary" (click)="createNewPitch()">
           <mat-icon>
             add

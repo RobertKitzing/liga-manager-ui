@@ -1,42 +1,58 @@
-<div class="container">
-  <table class="table table-striped font-size-sm">
-    <thead class="table-dark">
-      <tr>
-        <th translate>USERNAME</th>
-        <th translate>FIRST_NAME</th>
-        <th translate>LAST_NAME</th>
-        <th translate>USER_ROLE</th>
-        <th translate>TEAMS</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of allUsers | async">
-        <td>
-          {{ user.email }}
-        </td>
-        <td>
-          {{ user.first_name }}
-        </td>
-        <td>
-          {{ user.last_name }}
-        </td>
-        <td>
-          {{ user.role }}
-        </td>
-        <td>
-          <tr *ngFor="let team of user.teams">
-            <td>{{ team.name }}</td>
-          </tr>
-        </td>
-        <td>
-          <button mat-raised-button color="primary">
-            <mat-icon>
-              edit
-            </mat-icon>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<div class="container-fluid">
+  <div class="row pb-2 border-bottom">
+    <div class="col-12 col-md-4 col-lg-2">
+      {{ 'USERNAME' | translate }}
+    </div>
+    <div class="col-4 col-md-2">
+      {{ 'FIRST_NAME' | translate }}
+    </div>
+    <div class="col-4 col-md-2">
+      {{ 'LAST_NAME' | translate }}
+    </div>
+    <div class="col-4 col-md-2 col-lg-1">
+      {{ 'USER_ROLE' | translate }}
+    </div>
+    <div class="col-4 col-md-2">
+      {{ 'TEAMS' | translate }}
+    </div>
+    <div class="col-12 col-md-12 col-lg-3 text-center">
+      <button mat-raised-button color="primary" (click)="createNewUser()">
+        <mat-icon>
+          add
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row align-items-center pb-2 pt-2 border-bottom" *ngFor="let user of allUsers | async">
+    <div class="col-12 col-md-4 col-lg-2">
+      {{ user.email }}
+    </div>
+    <div class="col-4 col-md-2">
+      {{ user.first_name }}
+    </div>
+    <div class="col-4 col-md-2">
+      {{ user.last_name }}
+    </div>
+    <div class="col-4 col-md-2 col-lg-1">
+      {{ user.role }}
+    </div>
+    <div class="col-4 col-md-2">
+      <div class="row" *ngFor="let team of user.teams">
+        <div class="col">
+          {{ team.name }}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-3 text-center">
+      <button mat-raised-button color="primary" class="mr-2" (click)="editUser(user)">
+        <mat-icon>
+          edit
+        </mat-icon>
+      </button>
+      <button mat-raised-button color="primary" (click)="deleteUser(user)">
+        <mat-icon>
+          delete
+        </mat-icon>
+      </button>
+    </div>
+  </div>

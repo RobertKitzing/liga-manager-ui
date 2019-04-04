@@ -357,6 +357,23 @@ export namespace CreateUser {
   };
 }
 
+export namespace UpdateUser {
+  export type Variables = {
+    user_id: string;
+    email?: Maybe<string>;
+    first_name?: Maybe<string>;
+    last_name?: Maybe<string>;
+    role?: Maybe<string>;
+    team_ids?: Maybe<(Maybe<string>)[]>;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateUser: Maybe<boolean>;
+  };
+}
+
 export namespace Event {
   export type Variables = {
     id: string;
@@ -1387,6 +1404,33 @@ export class CreateUserGQL extends Apollo.Mutation<
         id: $id
         email: $email
         password: $password
+        first_name: $first_name
+        last_name: $last_name
+        role: $role
+        team_ids: $team_ids
+      )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UpdateUserGQL extends Apollo.Mutation<
+  UpdateUser.Mutation,
+  UpdateUser.Variables
+> {
+  document: any = gql`
+    mutation UpdateUser(
+      $user_id: String!
+      $email: String
+      $first_name: String
+      $last_name: String
+      $role: String
+      $team_ids: [String]
+    ) {
+      updateUser(
+        user_id: $user_id
+        email: $email
         first_name: $first_name
         last_name: $last_name
         role: $role

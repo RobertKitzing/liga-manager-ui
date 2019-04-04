@@ -17,3 +17,21 @@ mutation CreateUser(
         team_ids: $team_ids
     )   
 }
+
+mutation UpdateUser(
+    $user_id: String!
+    $email: String
+    $first_name: String
+    $last_name: String
+    $role: String
+    $team_ids: [String]
+){
+  updateUser(
+        user_id: $user_id,
+        email: $email,
+        first_name: $first_name,
+        last_name: $last_name,
+        role: $role,
+        team_ids: $team_ids
+  )
+}
