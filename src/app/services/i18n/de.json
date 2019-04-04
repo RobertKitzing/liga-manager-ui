@@ -38,6 +38,8 @@
 	"CANCEL_MATCH_ERROR": "Fehler beim Spiel absagen",
 	"CANCEL_MATCH_SUCCESS": "Spiel abgesagt",
 	"CONFIRM_DELETE": "Willst du wirklich {{ thing }} löschen ?",
+	"CONFIRM_DELETE_PENALTY": "Willst du die Strafe wirklich entfernen?",
+	"CONFIRM_OVERWRITE_TOURNAMENT_ROUND": "Achtung, dies würde die {{ round }} überschreiben",
 	"CONFIRM_TILTE": "Wirklich ?",
 	"CONTACT": "Kontakt",
 	"CREATE_MATCH_DAYS_ERROR": "Spieltage konnten nicht angelegt werden",
@@ -166,7 +168,7 @@
 		"MATCHES": "Spiele",
 		"MATCH_DAYS": "Spieltage",
 		"MATCH_SCHEDULING": "Spiele terminieren (Beta)",
-		"PITCHES": "Spielorte",
+		"PITCHES": "Spielort Verwaltung",
 		"TEAMS": "Manschaften"
 	},
 	"TABLE": {
