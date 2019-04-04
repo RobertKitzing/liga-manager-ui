@@ -60,13 +60,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AdminModule.html" data-type="entity-link">AdminModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AdminModule-6f7b243a185a5c553f3e2aba95e5a484"' : 'data-target="#xs-components-links-module-AdminModule-6f7b243a185a5c553f3e2aba95e5a484"' }>
+                                            'data-target="#components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' : 'data-target="#xs-components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AdminModule-6f7b243a185a5c553f3e2aba95e5a484"' :
-                                            'id="xs-components-links-module-AdminModule-6f7b243a185a5c553f3e2aba95e5a484"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' :
+                                            'id="xs-components-links-module-AdminModule-71b687f615f65418d2f520a8405a60aa"' }>
                                             <li class="link">
                                                 <a href="components/AddUserComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AddUserComponent</a>
@@ -78,6 +78,14 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                             <li class="link">
                                                 <a href="components/AdminComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AdminComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/EditRankingPenaltyComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">EditRankingPenaltyComponent</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/ManagePenaltyComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ManagePenaltyComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/ManagepitchesComponent.html"
@@ -430,6 +438,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </div>
                             <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
+                                    <a href="injectables/AddRankingPenaltyGQL.html" data-type="entity-link">AddRankingPenaltyGQL</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/AddTeamToSeasonGQL.html" data-type="entity-link">AddTeamToSeasonGQL</a>
                                 </li>
                                 <li class="link">
@@ -520,6 +531,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/RedisEventGQL.html" data-type="entity-link">RedisEventGQL</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/RemoveRankingPenaltyGQL.html" data-type="entity-link">RemoveRankingPenaltyGQL</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/RemoveTeamFromSeasonGQL.html" data-type="entity-link">RemoveTeamFromSeasonGQL</a>
                                 </li>
                                 <li class="link">
@@ -530,6 +544,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/ScheduleMatchGQL.html" data-type="entity-link">ScheduleMatchGQL</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SeasonPenaltiesGQL.html" data-type="entity-link">SeasonPenaltiesGQL</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/SeasonService.html" data-type="entity-link">SeasonService</a>
@@ -595,6 +612,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/DatePeriod.html" data-type="entity-link">DatePeriod</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/EditRankingPenaltyComponentData.html" data-type="entity-link">EditRankingPenaltyComponentData</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/IntrospectionResultData.html" data-type="entity-link">IntrospectionResultData</a>
