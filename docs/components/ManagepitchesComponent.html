@@ -181,7 +181,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -286,8 +286,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:50</a></div>
                 </td>
             </tr>
 
@@ -327,8 +327,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:31</a></div>
                 </td>
             </tr>
 
@@ -397,8 +397,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="43"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:43</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:54</a></div>
                 </td>
             </tr>
 
@@ -467,8 +467,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:27</a></div>
                 </td>
             </tr>
 
@@ -511,7 +511,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/admin/managepitches/managepitches.component.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -534,6 +534,7 @@ import { EditPitchContactDialogComponent } from &#x27;../../shared/edit-pitch-co
 import { CreatePitchDialogComponent } from &#x27;../../shared/create-pitch-dialog/create-pitch-dialog.component&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { ConfirmDialogComponent } from &#x27;../../shared/confirm-dialog/confirm-dialog.component&#x27;;
 
 @Component({
   selector: &#x27;app-managepitches&#x27;,
@@ -554,12 +555,22 @@ export class ManagepitchesComponent implements OnInit {
   }
 
   async deletePitch(pitch: Pitch.Fragment) {
-    try {
-      await this.pitchService.deletePitch(pitch.id);
-      this.notify.showSuccessNotification(this.translateService.instant(&#x27;DELETE_PITCH_SUCESS&#x27;));
-    } catch (error) {
-      this.notify.showErrorNotification(this.translateService.instant(&#x27;DELETE_PITCH_ERROR&#x27;), error);
-    }
+    const dialogRef &#x3D; this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: this.translateService.instant(&#x27;CONFIRM_DELETE&#x27;, { thing: pitch.label })
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      async (confirm) &#x3D;&gt; {
+        if (confirm) {
+          try {
+            await this.pitchService.deletePitch(pitch.id);
+            this.notify.showSuccessNotification(this.translateService.instant(&#x27;DELETE_PITCH_SUCESS&#x27;));
+          } catch (error) {
+            this.notify.showErrorNotification(this.translateService.instant(&#x27;DELETE_PITCH_ERROR&#x27;), error);
+          }
+        }
+      });
   }
 
   createNewPitch() {
@@ -662,7 +673,7 @@ export class ManagepitchesComponent implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <ng-container *ngIf="(pitchService.allPitches | async) as allPitches; else loading">    <div class="row pb-2"  style="border-bottom: 1px solid lightgray;">      <div class="col-3">        {{ \'PITCH\' | translate }}      </div>      <div class="col-6">        {{ \'CONTACT\' | translate }}      </div>      <div class="col-3">        <button mat-raised-button color="primary" (click)="createNewPitch()">          <mat-icon>            add          </mat-icon>        </button>      </div>    </div>    <div class="row pb-4 pt-4 align-items-center" *ngFor="let pitch of allPitches" style="border-bottom: 1px solid lightgray;">      <div class="col-3">        <mat-icon>location_on</mat-icon>        <a href="https://www.google.com/maps/?q={{ pitch.location_latitude }},{{ pitch.location_longitude }}"          target="_blank" style="cursor: pointer;">          {{ pitch.label }}        </a>      </div>      <div class="col-6">        <ng-container>          <app-contact-person [contact]="pitch.contact"></app-contact-person>        </ng-container>      </div>      <div class="col-3">        <button class="mr-3" mat-raised-button color="primary" (click)="editPitchContact(pitch)">          <mat-icon>            perm_contact_calendar          </mat-icon>        </button>        <button mat-raised-button color="primary" (click)="deletePitch(pitch)">          <mat-icon>            delete          </mat-icon>        </button>      </div>      <hr>    </div>  </ng-container>  <ng-template #loading>      <mat-progress-bar mode="indeterminate"></mat-progress-bar>    </ng-template></div></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ManagepitchesComponent'};
 </script>

@@ -187,6 +187,10 @@
                                     <span class="modifier">Async</span>
                                 <a href="#onTournamentSelected">onTournamentSelected</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#openEditDialog">openEditDialog</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -205,12 +209,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(dialog: MatDialog, allTournamentsQGL: <a href="../injectables/AllTournamentListGQL.html">AllTournamentListGQL</a>, tournamentQGL: <a href="../injectables/TournamentGQL.html">TournamentGQL</a>, createTournament: <a href="../injectables/CreateTournamentGQL.html">CreateTournamentGQL</a>)</code>
+<code>constructor(dialog: MatDialog, allTournamentsQGL: <a href="../injectables/AllTournamentListGQL.html">AllTournamentListGQL</a>, tournamentQGL: <a href="../injectables/TournamentGQL.html">TournamentGQL</a>, createTournament: <a href="../injectables/CreateTournamentGQL.html">CreateTournamentGQL</a>, translateService: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -275,6 +279,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -317,8 +333,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:41</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:44</a></div>
                 </td>
             </tr>
 
@@ -387,8 +403,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="83"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:83</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:85</a></div>
                 </td>
             </tr>
 
@@ -426,8 +442,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="72"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:72</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:74</a></div>
                 </td>
             </tr>
 
@@ -467,8 +483,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:38</a></div>
                 </td>
             </tr>
 
@@ -506,8 +522,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:34</a></div>
                 </td>
             </tr>
 
@@ -547,8 +563,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:53</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:56</a></div>
                 </td>
             </tr>
 
@@ -559,6 +575,78 @@
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openEditDialog"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            openEditDialog
+                        </b>
+                        <a href="#openEditDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openEditDialog(teams?: <a href="../interfaces/RoundTeam.html">RoundTeam[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>teams</td>
+                                    <td>
+                                                <code><a href="../interfaces/RoundTeam.html" target="_self" >RoundTeam[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -590,7 +678,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -618,7 +706,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:25</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -645,7 +733,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -672,7 +760,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -699,7 +787,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -726,7 +814,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -758,7 +846,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -785,7 +873,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -800,11 +888,13 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { MatDialog } from &#x27;@angular/material&#x27;;
-import { AddtournamentroundComponent } from &#x27;./addtournamentround/addtournamentround.component&#x27;;
-import { AllTournamentListGQL, AllTournamentList, TournamentGQL, MatchDay, CreateTournamentGQL } from &#x27;../../../../api/graphql&#x27;;
+import { AddtournamentroundComponent, RoundTeam } from &#x27;./addtournamentround/addtournamentround.component&#x27;;
+import { AllTournamentListGQL, AllTournamentList, TournamentGQL, MatchDay, CreateTournamentGQL, Match } from &#x27;../../../../api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import * as uuidv4 from &#x27;uuid/v4&#x27;;
+import { ConfirmDialogComponent } from &#x27;../../shared/confirm-dialog/confirm-dialog.component&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 @Component({
   selector: &#x27;app-managetournament&#x27;,
@@ -825,7 +915,8 @@ export class ManagetournamentComponent implements OnInit {
     public dialog: MatDialog,
     private allTournamentsQGL: AllTournamentListGQL,
     private tournamentQGL: TournamentGQL,
-    private createTournament: CreateTournamentGQL
+    private createTournament: CreateTournamentGQL,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -863,7 +954,6 @@ export class ManagetournamentComponent implements OnInit {
           } else {
             this.manageTournamentRoundCount &#x3D; 0;
           }
-          this.createRoundNr &#x3D; this.manageTournamentRoundCount;
           return result.data.tournament.rounds;
         })
     );
@@ -882,20 +972,44 @@ export class ManagetournamentComponent implements OnInit {
 
   editRound() {
     if (this.createRoundNr &lt; this.manageTournamentRoundCount) {
-      if (!confirm(&#x27;Warning, this will override existing Round!&#x27;)) {
-        return;
-      }
-    }
-    const dialogRef &#x3D; this.dialog.open(AddtournamentroundComponent, {
-      data: { round: this.createRoundNr, tournamentId: this.manageTournamentId },
-      panelClass: &#x27;my-full-screen-dialog&#x27;
-    });
-    dialogRef.afterClosed().subscribe(
-      (result) &#x3D;&gt; {
-        if (result) {
-          // this.loadMatches(this.tournament.id);
+      const confirmDialog &#x3D; this.dialog.open(ConfirmDialogComponent, {
+        data: {
+          message: this.translateService.instant(&#x27;CONFIRM_OVERWRITE_TOURNAMENT_ROUND&#x27;, { round: this.createRoundNr })
         }
       });
+      confirmDialog.afterClosed().subscribe(
+        async (confirm) &#x3D;&gt; {
+          if (confirm) {
+            const teams: Observable&lt;RoundTeam[]&gt; &#x3D; this.manageTournamentRounds.pipe(
+              map((data) &#x3D;&gt; {
+                const round &#x3D; data.find(x &#x3D;&gt; x.number &#x3D;&#x3D;&#x3D; this.createRoundNr);
+                return round.matches.map(y &#x3D;&gt; ({homeTeam: y.home_team, guestTeam: y.guest_team}));
+              })
+            );
+            teams.subscribe(
+              (t) &#x3D;&gt; {
+                console.log(t);
+                this.openEditDialog(t);
+              }
+            );
+          }
+        }
+      );
+    } else {
+      this.openEditDialog();
+    }
+  }
+
+  private openEditDialog(teams?: RoundTeam[]) {
+    const dialogRef &#x3D; this.dialog.open(AddtournamentroundComponent, {
+      data: { round: this.createRoundNr, tournamentId: this.manageTournamentId, teams: teams },
+      panelClass: &#x27;my-full-screen-dialog&#x27;
+    });
+    dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result) {
+        // this.loadMatches(this.tournament.id);
+      }
+    });
   }
 }
 </code></pre>
@@ -929,7 +1043,7 @@ export class ManagetournamentComponent implements OnInit {
     &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
       &lt;div class&#x3D;&quot;col&quot;&gt;
         &lt;mat-form-field&gt;
-          &lt;input matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.EDIT_TOURNAMENT_ROUND&#x27; | translate }}&quot; type&#x3D;&quot;number&quot; min&#x3D;&quot;1&quot; [(ngModel)]&#x3D;&quot;createRoundNr&quot;
+          &lt;input matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.EDIT_TOURNAMENT_ROUND&#x27; | translate }}&quot; type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; [(ngModel)]&#x3D;&quot;createRoundNr&quot;
           /&gt;
         &lt;/mat-form-field&gt;
       &lt;/div&gt;
@@ -998,8 +1112,8 @@ export class ManagetournamentComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <div class="row">    <div class="col-7">      <mat-form-field>        <mat-select #tournamentSelect [(value)]="manageTournamentId" placeholder="{{ \'PLACEHOLDER.SELECT_TOURNAMENT\' | translate }}"          (selectionChange)="onTournamentSelected()">          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament.id">            {{ tournament.name }}          </mat-option>        </mat-select>      </mat-form-field>    </div>    <div class="col">      <mat-form-field>        <input #newTournament matInput placeholder="{{ \'PLACEHOLDER.NEW_TOURNAMENT\' | translate }}" (keyup.enter)="createNewTournament(newTournament.value)"        />      </mat-form-field>    </div>    <div class="col">      <button mat-raised-button color="primary" (click)="createNewTournament(newTournament.value)">{{ \'BUTTON.CREATE_TOURNAMENT\'        | translate}}</button>    </div>  </div>  <ng-container *ngIf="manageTournamentId">    <div class="row justify-content-center">      <div class="col">        <mat-form-field>          <input matInput placeholder="{{ \'PLACEHOLDER.EDIT_TOURNAMENT_ROUND\' | translate }}" type="number" min="1" [(ngModel)]="createRoundNr"          />        </mat-form-field>      </div>      <div class="col">      <button mat-raised-button color="primary" (click)="editRound()">        {{ \'BUTTON.EDIT_ROUND\' | translate }}      </button>    </div>    </div>    <div class="col">      <ng-container *ngFor="let mt of manageTournamentRounds | async">        <h3>{{ mt.number }}. {{ \'ROUND\' | translate }}</h3>        <div class="row" *ngFor="let match of mt.matches">          <div class="col">            {{ match.home_team.name }} - {{ match.guest_team.name }}          </div>        </div>      </ng-container>    </div>  </ng-container>  <!-- <div class="row">    <div class="col">      <mat-form-field>        <input matInput placeholder="{{ \'PLACEHOLDER.START_TEAM_COUNT\' | translate }}" type="number" min="4" [(ngModel)]="startTeamCount"          (change)="genRounds()" />      </mat-form-field>    </div>  </div>  <div class="row text-center" style="border: solid" *ngFor="let round of rounds">    <div class="col" *ngFor="let game of round">      {{ \'MATCH\' | translate }} {{ game }}    </div>  </div> --></div></div>'
-    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <div class="row">    <div class="col-7">      <mat-form-field>        <mat-select #tournamentSelect [(value)]="manageTournamentId" placeholder="{{ \'PLACEHOLDER.SELECT_TOURNAMENT\' | translate }}"          (selectionChange)="onTournamentSelected()">          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament.id">            {{ tournament.name }}          </mat-option>        </mat-select>      </mat-form-field>    </div>    <div class="col">      <mat-form-field>        <input #newTournament matInput placeholder="{{ \'PLACEHOLDER.NEW_TOURNAMENT\' | translate }}" (keyup.enter)="createNewTournament(newTournament.value)"        />      </mat-form-field>    </div>    <div class="col">      <button mat-raised-button color="primary" (click)="createNewTournament(newTournament.value)">{{ \'BUTTON.CREATE_TOURNAMENT\'        | translate}}</button>    </div>  </div>  <ng-container *ngIf="manageTournamentId">    <div class="row justify-content-center">      <div class="col">        <mat-form-field>          <input matInput placeholder="{{ \'PLACEHOLDER.EDIT_TOURNAMENT_ROUND\' | translate }}" type="number" min="0" [(ngModel)]="createRoundNr"          />        </mat-form-field>      </div>      <div class="col">      <button mat-raised-button color="primary" (click)="editRound()">        {{ \'BUTTON.EDIT_ROUND\' | translate }}      </button>    </div>    </div>    <div class="col">      <ng-container *ngFor="let mt of manageTournamentRounds | async">        <h3>{{ mt.number }}. {{ \'ROUND\' | translate }}</h3>        <div class="row" *ngFor="let match of mt.matches">          <div class="col">            {{ match.home_team.name }} - {{ match.guest_team.name }}          </div>        </div>      </ng-container>    </div>  </ng-container>  <!-- <div class="row">    <div class="col">      <mat-form-field>        <input matInput placeholder="{{ \'PLACEHOLDER.START_TEAM_COUNT\' | translate }}" type="number" min="4" [(ngModel)]="startTeamCount"          (change)="genRounds()" />      </mat-form-field>    </div>  </div>  <div class="row text-center" style="border: solid" *ngFor="let round of rounds">    <div class="col" *ngFor="let game of round">      {{ \'MATCH\' | translate }} {{ game }}    </div>  </div> --></div></div>'
+    var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ManagetournamentComponent'};
 </script>

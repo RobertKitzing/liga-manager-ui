@@ -38,7 +38,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li>CreateTournamentRoundGQL</li>
+  <li>DeleteUserGQL</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -118,25 +118,15 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>gql&#x60;
-    mutation CreateTournamentRound(
-      $tournament_id: String!
-      $round: Int!
-      $team_id_pairs: [TeamIdPair]!
-      $date_period: DatePeriod!
-    ) {
-      setTournamentRound(
-        tournament_id: $tournament_id
-        round: $round
-        team_id_pairs: $team_id_pairs
-        date_period: $date_period
-      )
+    mutation DeleteUser($user_id: String!) {
+      deleteUser(user_id: $user_id)
     }
   &#x60;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1382" class="link-to-prism">src/api/graphql.ts:1382</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1461" class="link-to-prism">src/api/graphql.ts:1461</a></div>
                             </td>
                         </tr>
 
@@ -1865,7 +1855,7 @@ export class AllUsersGQL extends Apollo.Query&lt;
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'CreateTournamentRoundGQL.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'DeleteUserGQL.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
