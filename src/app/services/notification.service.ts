@@ -7,7 +7,7 @@ import { SnackbarComponent } from '../components/shared/snackbar/snackbar.compon
 })
 export class NotificationService {
 
-  defaultDuration = 2500;
+  defaultDuration = 6000;
 
   constructor(
     private snackBar: MatSnackBar

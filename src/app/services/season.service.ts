@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL } from '../../api/graphql';
+import { AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL, StartSeasonGQL } from '../../api/graphql';
 import * as uuid from 'uuid/v4';
 import { LocalStorage } from 'ngx-store';
 
@@ -17,6 +17,7 @@ export class SeasonService {
 
   constructor(
     private allSeasonsListGQL: AllSeasonsListGQL,
+    private startSeasonGQL: StartSeasonGQL,
     private createSeasonGQL: CreateSeasonGQL
   ) {
     this.currentSeason.subscribe(
@@ -49,6 +50,30 @@ export class SeasonService {
             reject(error);
           }
         );
+      }
+    );
+  }
+
+  async startSeason(seasonId: string): Promise<void> {
+    return new Promise<void>(
+      async (resolve, reject) => {
+        try {
+          await this.startSeasonGQL.mutate(
+            {
+              id: seasonId
+            },
+            {
+              refetchQueries: [
+                {
+                  query: this.allSeasonsListGQL.document
+                }
+              ]
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
       }
     );
   }

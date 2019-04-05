@@ -8,10 +8,13 @@ import { Observable } from 'rxjs';
 import {
   AllSeasonsList, Match,
   MatchPlan, MatchPlanGQL, CreateMatchesForSeasonGQL, RemoveTeamFromSeasonGQL,
-  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay, EndSeasonGQL
+  AddTeamToSeasonGQL, DatePeriod, StartSeasonGQL, AllSeasonsListGQL, RescheduleMatchDayGQL, MatchDay, EndSeasonGQL, Season
 } from '../../../../api/graphql';
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { LocalStorage } from 'ngx-store';
+
+const MANAGE_SEASON_KEY = 'MANAGE_SEASON_ID_KEY';
 
 @Component({
   selector: 'app-manageseason',
@@ -28,7 +31,9 @@ export class ManageseasonComponent implements OnInit {
 
   seasonList: Observable<AllSeasonsList.AllSeasons[]>;
   manageSeason: Observable<MatchPlan.Season>;
-  manageSeasonId: string;
+
+  @LocalStorage(MANAGE_SEASON_KEY)
+  manageSeasonStore: MatchPlan.Season = null;
 
   constructor(
     public seasonService: SeasonService,
@@ -39,7 +44,6 @@ export class ManageseasonComponent implements OnInit {
     private matchPlanGQL: MatchPlanGQL,
     private removeTeamGQL: RemoveTeamFromSeasonGQL,
     private addTeamGQL: AddTeamToSeasonGQL,
-    private startSeasonGQL: StartSeasonGQL,
     private allSeasonsListGQL: AllSeasonsListGQL,
     private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
     private notificationService: NotificationService,
@@ -72,6 +76,9 @@ export class ManageseasonComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.manageSeasonStore) {
+      this.manageSeasonChanged({value: this.manageSeasonStore.id, source: null});
+    }
   }
 
   async addNewSeason(seasonName: string) {
@@ -85,7 +92,7 @@ export class ManageseasonComponent implements OnInit {
 
   manageSeasonChanged(event: MatSelectChange) {
     this.manageSeason = this.matchPlanGQL.watch({
-      id: event.value
+      id: this.manageSeasonStore.id
     }).valueChanges.pipe(
       map(({ data }) => {
         if (data.season.teams) {
@@ -102,14 +109,14 @@ export class ManageseasonComponent implements OnInit {
       try {
         await this.addTeamGQL.mutate(
           {
-            season_id: this.manageSeasonId,
+            season_id: this.manageSeasonStore.id,
             team_id: teamId
           },
           {
             refetchQueries: [
               {
                 query: this.matchPlanGQL.document,
-                variables: { id: this.manageSeasonId }
+                variables: { id: this.manageSeasonStore.id }
               }
             ]
           }
@@ -126,14 +133,14 @@ export class ManageseasonComponent implements OnInit {
       try {
         await this.removeTeamGQL.mutate(
           {
-            season_id: this.manageSeasonId,
+            season_id: this.manageSeasonStore.id,
             team_id: teamId
           },
           {
             refetchQueries: [
               {
                 query: this.matchPlanGQL.document,
-                variables: { id: this.manageSeasonId }
+                variables: { id: this.manageSeasonStore.id }
               }
             ]
           }
@@ -170,18 +177,18 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  sendMatchDays() {
+  async sendMatchDays() {
     try {
-      this.matchesQL.mutate(
+      await this.matchesQL.mutate(
         {
-          season_id: this.manageSeasonId,
+          season_id: this.manageSeasonStore.id,
           dates: this.newMatchDays
         },
         {
           refetchQueries: [
             {
               query: this.matchPlanGQL.document,
-              variables: { id: this.manageSeasonId }
+              variables: { id: this.manageSeasonStore.id }
             }
           ]
         }
@@ -194,19 +201,7 @@ export class ManageseasonComponent implements OnInit {
 
   async startSeason() {
     try {
-      await this.startSeasonGQL.mutate(
-        {
-          id: this.manageSeasonId
-        },
-        {
-          refetchQueries: [
-            {
-              query: this.matchPlanGQL.document,
-              variables: { id: this.manageSeasonId }
-            }
-          ]
-        }
-      ).toPromise();
+      await this.seasonService.startSeason(this.manageSeasonStore.id);
       this.notificationService.showSuccessNotification(this.translateService.instant('START_SEASON_SUCCESS'));
     } catch (error) {
       this.notificationService.showErrorNotification(this.translateService.instant('START_SEASON_ERROR'), error);
@@ -263,7 +258,7 @@ export class ManageseasonComponent implements OnInit {
               refetchQueries: [
                 {
                   query: this.matchPlanGQL.document,
-                  variables: { id: this.manageSeasonId }
+                  variables: { id: this.manageSeasonStore.id }
                 }
               ]
             }
@@ -281,7 +276,7 @@ export class ManageseasonComponent implements OnInit {
   async endSeason() {
     try {
       await this.endSeasonGQL.mutate({
-        season_id: this.manageSeasonId
+        season_id: this.manageSeasonStore.id
       }, {
         refetchQueries: [
           {
