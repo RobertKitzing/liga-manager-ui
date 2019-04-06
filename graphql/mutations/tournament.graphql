@@ -15,3 +15,8 @@ mutation CreateTournamentRound(
         date_period: $date_period
     )
 }
+
+
+mutation DeleteTournament($tournament_id: String!){
+  deleteTournament(tournament_id: $tournament_id)
+}

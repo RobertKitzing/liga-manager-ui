@@ -28,7 +28,7 @@ export class ManagepitchesComponent implements OnInit {
 
   }
 
-  async deletePitch(pitch: Pitch.Fragment) {
+  deletePitch(pitch: Pitch.Fragment) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: this.translateService.instant('CONFIRM_DELETE', { thing: pitch.label })

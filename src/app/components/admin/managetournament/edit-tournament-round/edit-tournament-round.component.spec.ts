@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AddtournamentroundComponent } from './addtournamentround.component';
+import { AddtournamentroundComponent } from './edit-tournament-round.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

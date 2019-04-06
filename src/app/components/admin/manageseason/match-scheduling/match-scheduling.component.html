@@ -63,8 +63,8 @@
   <ng-container *ngFor="let matchDay of manageSeason.match_days">
     <div class="row">
       <div class="col text-center">
-        <h3>{{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date | date:'short':'':i18Service.currentLang}}
-          - {{ matchDay.end_date | date:'shortDate'}})</h3>
+        <h3>{{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date | date:'shortDate':'':i18Service.currentLang}}
+          - {{ matchDay.end_date | date:'shortDate':'':i18Service.currentLang}})</h3>
       </div>
     </div>
     <div class="row" *ngFor="let match of matchDay.matches">

@@ -269,7 +269,7 @@ export namespace EndSeason {
   };
 }
 
-export namespace Teams {
+export namespace CreateTeam {
   export type Variables = {
     id: string;
     name: string;
@@ -311,6 +311,18 @@ export namespace RenameTeam {
   };
 }
 
+export namespace DeleteTeam {
+  export type Variables = {
+    team_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteTeam: Maybe<boolean>;
+  };
+}
+
 export namespace CreateTournament {
   export type Variables = {
     id?: Maybe<string>;
@@ -336,6 +348,18 @@ export namespace CreateTournamentRound {
     __typename?: "Mutation";
 
     setTournamentRound: Maybe<boolean>;
+  };
+}
+
+export namespace DeleteTournament {
+  export type Variables = {
+    tournament_id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteTournament: Maybe<boolean>;
   };
 }
 
@@ -1314,9 +1338,12 @@ export class EndSeasonGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
-export class TeamsGQL extends Apollo.Mutation<Teams.Mutation, Teams.Variables> {
+export class CreateTeamGQL extends Apollo.Mutation<
+  CreateTeam.Mutation,
+  CreateTeam.Variables
+> {
   document: any = gql`
-    mutation Teams($id: String!, $name: String!) {
+    mutation CreateTeam($id: String!, $name: String!) {
       createTeam(id: $id, name: $name)
     }
   `;
@@ -1362,6 +1389,19 @@ export class RenameTeamGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class DeleteTeamGQL extends Apollo.Mutation<
+  DeleteTeam.Mutation,
+  DeleteTeam.Variables
+> {
+  document: any = gql`
+    mutation DeleteTeam($team_id: String!) {
+      deleteTeam(team_id: $team_id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class CreateTournamentGQL extends Apollo.Mutation<
   CreateTournament.Mutation,
   CreateTournament.Variables
@@ -1392,6 +1432,19 @@ export class CreateTournamentRoundGQL extends Apollo.Mutation<
         team_id_pairs: $team_id_pairs
         date_period: $date_period
       )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class DeleteTournamentGQL extends Apollo.Mutation<
+  DeleteTournament.Mutation,
+  DeleteTournament.Variables
+> {
+  document: any = gql`
+    mutation DeleteTournament($tournament_id: String!) {
+      deleteTournament(tournament_id: $tournament_id)
     }
   `;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TeamsGQL, Team, AllTeamsGQL, RenameTeamGQL, TeamFragment } from '../../api/graphql';
+import { CreateTeamGQL, Team, AllTeamsGQL, RenameTeamGQL, TeamFragment, DeleteTeamGQL } from '../../api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as uuid from 'uuid/v4';
@@ -19,9 +19,10 @@ export class TeamService {
   );
 
   constructor(
-    private teamsQL: TeamsGQL,
+    private createTeamQL: CreateTeamGQL,
     private allTeamsGQL: AllTeamsGQL,
-    private renameTeamGQL: RenameTeamGQL
+    private renameTeamGQL: RenameTeamGQL,
+    private deleteTeamGQL: DeleteTeamGQL
   ) {
   }
 
@@ -31,35 +32,33 @@ export class TeamService {
    * @returns {Promise<boolean>}
    * @memberof TeamService
    */
-  async addNewTeam(teamName: string): Promise<void> {
+  addNewTeam(teamName: string): Promise<void> {
     return new Promise<void>(
-      (resolve, reject) => {
+      async (resolve, reject) => {
         if (!teamName) {
           reject(new Error('Empty Teamname'));
         }
-        this.teamsQL.mutate(
-          {
-            id: uuid(),
-            name: teamName
-          },
-          {
-            refetchQueries: [
-              {query: this.allTeamsGQL.document}
-            ]
-          }
-        ).subscribe(
-          (result) => {
-            resolve();
-          },
-            (error) => {
-              reject(error);
+        try {
+          await this.createTeamQL.mutate(
+            {
+              id: uuid(),
+              name: teamName
+            },
+            {
+              refetchQueries: [
+                {query: this.allTeamsGQL.document}
+              ]
             }
-        );
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
       }
     );
   }
 
-  async renameTeam(teamId: string, newName: string): Promise<void> {
+  renameTeam(teamId: string, newName: string): Promise<void> {
     return new Promise<void>(
       async (resolve, reject) => {
         try {
@@ -100,7 +99,25 @@ export class TeamService {
     );
   }
 
-  deleteTeam(team: Team.Fragment): any {
-    throw new Error("Method not implemented.");
+  deleteTeam(team: Team.Fragment): Promise<void> {
+    return new Promise<void>(
+      async (resolve, reject) => {
+        try {
+          await this.deleteTeamGQL.mutate(
+            {
+              team_id: team.id
+            },
+            {
+              refetchQueries: [
+                {query: this.allTeamsGQL.document}
+              ]
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
   }
 }

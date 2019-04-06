@@ -46,13 +46,13 @@
     <div class="row">
       <div class="col">
         {{ 'PLAN_DATE_FROM'| translate}}:
-        <input matInput #kickoffInput [owlDateTime]="planDateFrom" (dateTimeChange)="setPlanDateFrom($event)">
+        <input matInput #planDateFrom [owlDateTime]="planDateFrom" (dateTimeChange)="setPlanDateFrom($event)" [(ngModel)]="newRoundPlanDateFrom">
         <button mat-button [owlDateTimeTrigger]="planDateFrom">{{ 'BUTTON.SET_TIME' | translate}}</button>
         <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateFrom></owl-date-time>
       </div>
       <div class="col">
         {{ 'PLAN_DATE_TO'| translate}}:
-        <input matInput #kickoffInput [owlDateTime]="planDateTo" (dateTimeChange)="setPlanDateTo($event)">
+        <input matInput #planDateTo [owlDateTime]="planDateTo" (dateTimeChange)="setPlanDateTo($event)" [(ngModel)]="newRoundPlanDateTo">
         <button mat-button [owlDateTimeTrigger]="planDateTo">{{ 'BUTTON.SET_TIME' | translate}}</button>
         <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateTo></owl-date-time>
       </div>

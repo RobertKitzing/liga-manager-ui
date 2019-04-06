@@ -44,7 +44,6 @@ export class TournamentComponent implements OnInit {
   }
 
   matchUpdated(matchId: string) {
-    console.log('test', matchId);
   }
 
   tournamentChanged() {
@@ -55,7 +54,7 @@ export class TournamentComponent implements OnInit {
       }
     ).valueChanges.pipe(
       map(({ data }) => {
-        if (data.tournament.rounds) {
+        if (data.tournament && data.tournament.rounds) {
           data.tournament.rounds = data.tournament.rounds.sort((a, b) => a.number < b.number ? 1 : -1);
         }
         return data.tournament;

@@ -1,4 +1,4 @@
-mutation Teams($id: String!, $name: String!) {
+mutation CreateTeam($id: String!, $name: String!) {
     createTeam(id: $id,name: $name)
 }
 
@@ -20,4 +20,8 @@ mutation UpdateTeamContact(
 
 mutation RenameTeam($team_id: String!, $new_name: String!) {
     renameTeam(team_id: $team_id,new_name: $new_name)
+}
+
+mutation DeleteTeam($team_id: String!){
+  deleteTeam(team_id: $team_id)
 }

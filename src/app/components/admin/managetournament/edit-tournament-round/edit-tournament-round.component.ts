@@ -1,5 +1,5 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { TeamService } from '../../../../services/team.service';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 import { I18Service } from '../../../../services/i18.service';
@@ -13,17 +13,21 @@ export interface AddMatchData {
   round: number;
   tournamentId: string;
   teams: RoundTeam[];
+  dates: {from: Date, to: Date};
 }
 export interface RoundTeam {
   homeTeam: Team.Fragment;
   guestTeam: Team.Fragment;
 }
 @Component({
-  selector: 'app-addmatch',
-  templateUrl: 'addtournamentround.component.html'
+  selector: 'app-edit-tournament-round',
+  templateUrl: 'edit-tournament-round.component.html'
 })
-export class AddtournamentroundComponent implements OnInit {
+export class EditTournamentRoundComponent implements OnInit {
 
+  @ViewChild('planDateTo') planDateTo;
+  @ViewChild('planDateFrom') planDateFrom;
+  
   homeTeam: Team.Fragment;
   guestTeam: Team.Fragment;
   allTeams: Observable<Team.Fragment[]>;
@@ -34,7 +38,7 @@ export class AddtournamentroundComponent implements OnInit {
 
   constructor(
     private allTournamentsQGL: AllTournamentListGQL,
-    public dialogRef: MatDialogRef<AddtournamentroundComponent>,
+    public dialogRef: MatDialogRef<EditTournamentRoundComponent>,
     public teamService: TeamService,
     dateTimeAdapter: DateTimeAdapter<any>,
     private translateService: TranslateService,
@@ -51,6 +55,10 @@ export class AddtournamentroundComponent implements OnInit {
     );
     if (data.teams) {
       this.roundTeams = data.teams;
+    }
+    if (data.dates) {
+      this.newRoundPlanDateFrom = data.dates.from;
+      this.newRoundPlanDateTo = data.dates.to;
     }
   }
 
@@ -91,10 +99,10 @@ export class AddtournamentroundComponent implements OnInit {
           ]
         }
       ).toPromise();
-      this.notify.showSuccessNotification(this.translateService.instant('CREATE_TOURNAMENT_SUCCESS'));
+      this.notify.showSuccessNotification(this.translateService.instant('CREATE_TOURNAMENT_ROUND_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      this.notify.showErrorNotification(this.translateService.instant('CREATE_TOURNAMENT_ERROR'), error);
+      this.notify.showErrorNotification(this.translateService.instant('CREATE_TOURNAMENT__ROUND_ERROR'), error);
     }
   }
 
