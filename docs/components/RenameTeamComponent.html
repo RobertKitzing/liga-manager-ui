@@ -174,12 +174,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(dialogRef: <a href="../components/RenameTeamComponent.html">MatDialogRef<RenameTeamComponent></a>, teamService: <a href="../injectables/TeamService.html">TeamService</a>, team: Team.Fragment)</code>
+<code>constructor(dialogRef: <a href="../components/RenameTeamComponent.html">MatDialogRef<RenameTeamComponent></a>, teamService: <a href="../injectables/TeamService.html">TeamService</a>, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, translateService: TranslateService, team: Team.Fragment)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -213,6 +213,30 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notify</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -272,8 +296,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:19</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="23"
+                            class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:23</a></div>
                 </td>
             </tr>
 
@@ -313,8 +337,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="23"
-                            class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:23</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:27</a></div>
                 </td>
             </tr>
 
@@ -388,7 +412,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -425,7 +449,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/admin/manageteams/rename-team/rename-team.component.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -442,6 +466,8 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material&#x27;;
 import { Team, RenameTeamGQL, TeamFragment } from &#x27;src/api/graphql&#x27;;
 import { TeamService } from &#x27;../../../../services/team.service&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 @Component({
   selector: &#x27;app-rename-team&#x27;,
@@ -453,6 +479,8 @@ export class RenameTeamComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef&lt;RenameTeamComponent&gt;,
     private teamService: TeamService,
+    private notify: NotificationService,
+    private translateService: TranslateService,
     @Inject(MAT_DIALOG_DATA) public team: Team.Fragment
   ) { }
 
@@ -463,9 +491,10 @@ export class RenameTeamComponent implements OnInit {
   async renameTeam(newName: string) {
     try {
       await this.teamService.renameTeam(this.team.id, newName);
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;RENAME_TEAM_SUCCESS&#x27;));
       this.dialogRef.close();
     } catch (error) {
-      console.error(error);
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;RENAME_TEAM_ERROR&#x27;), error);
     }
   }
 }

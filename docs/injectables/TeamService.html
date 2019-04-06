@@ -106,6 +106,9 @@
                                 <a href="#addNewTeam">addNewTeam</a>
                             </li>
                             <li>
+                                <a href="#deleteTeam">deleteTeam</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#renameTeam">renameTeam</a>
                             </li>
@@ -277,6 +280,76 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="deleteTeam"></a>
+                    <span class="name">
+                        <b>
+                            deleteTeam
+                        </b>
+                        <a href="#deleteTeam"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteTeam(team: Team.Fragment)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">src/app/services/team.service.ts:103</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>team</td>
+                                    <td>
+                                            <code>Team.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="renameTeam"></a>
                     <span class="name">
                         <b>
@@ -347,7 +420,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -453,7 +526,7 @@ export class TeamService {
             ]
           }
         ).subscribe(
-          async (result) &#x3D;&gt; {
+          (result) &#x3D;&gt; {
             resolve();
           },
             (error) &#x3D;&gt; {
@@ -464,40 +537,49 @@ export class TeamService {
     );
   }
 
-  async renameTeam(teamId: string, newName: string) {
-    try {
-      await this.renameTeamGQL.mutate(
-        {
-          team_id: teamId,
-          new_name: newName
-        },
-        {
-          update: (store, { data }) &#x3D;&gt; {
-            const team: any &#x3D; store.readFragment(
-              {
-                fragmentName: &#x27;Team&#x27;,
-                fragment: TeamFragment,
-                id: &#x60;Team:${teamId}&#x60;
-              }
-            );
-            store.writeFragment(
-              {
-                fragmentName: &#x27;Team&#x27;,
-                fragment: TeamFragment,
-                id: &#x60;Team:${teamId}&#x60;,
-                data: {
-                  __typename: &#x27;Team&#x27;,
-                  ...team,
-                  name: newName
-                }
-              }
-            );
-          },
+  async renameTeam(teamId: string, newName: string): Promise&lt;void&gt; {
+    return new Promise&lt;void&gt;(
+      async (resolve, reject) &#x3D;&gt; {
+        try {
+          await this.renameTeamGQL.mutate(
+            {
+              team_id: teamId,
+              new_name: newName
+            },
+            {
+              update: (store, { data }) &#x3D;&gt; {
+                const team: any &#x3D; store.readFragment(
+                  {
+                    fragmentName: &#x27;Team&#x27;,
+                    fragment: TeamFragment,
+                    id: &#x60;Team:${teamId}&#x60;
+                  }
+                );
+                store.writeFragment(
+                  {
+                    fragmentName: &#x27;Team&#x27;,
+                    fragment: TeamFragment,
+                    id: &#x60;Team:${teamId}&#x60;,
+                    data: {
+                      __typename: &#x27;Team&#x27;,
+                      ...team,
+                      name: newName
+                    }
+                  }
+                );
+              },
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
         }
-      ).toPromise();
-    } catch (error) {
-      console.error(error);
-    }
+      }
+    );
+  }
+
+  deleteTeam(team: Team.Fragment): any {
+    throw new Error(&quot;Method not implemented.&quot;);
   }
 }
 </code></pre>

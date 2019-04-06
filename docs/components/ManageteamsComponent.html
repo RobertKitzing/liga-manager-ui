@@ -155,6 +155,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#deleteTeam">deleteTeam</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                             <li>
@@ -178,12 +182,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(teamService: <a href="../injectables/TeamService.html">TeamService</a>, dialog: MatDialog)</code>
+<code>constructor(teamService: <a href="../injectables/TeamService.html">TeamService</a>, dialog: MatDialog, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, translateService: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -217,6 +221,30 @@
                                                   
                                                         <td>
                                                                     <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>notify</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationService.html" target="_self" >NotificationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
                                                         </td>
                                                   
                                                     <td>
@@ -266,8 +294,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="24"
-                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:24</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:28</a></div>
                 </td>
             </tr>
 
@@ -318,6 +346,78 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="deleteTeam"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            deleteTeam
+                        </b>
+                        <a href="#deleteTeam"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteTeam(team: Team.Fragment)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:37</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>team</td>
+                                    <td>
+                                            <code>Team.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
                         <b>
@@ -338,8 +438,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="21"
-                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:21</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:25</a></div>
                 </td>
             </tr>
 
@@ -377,8 +477,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:32</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:46</a></div>
                 </td>
             </tr>
 
@@ -452,7 +552,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -480,7 +580,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/admin/manageteams/manageteams.component.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -498,6 +598,8 @@ import { TeamService } from &#x27;../../../services/team.service&#x27;;
 import { Team } from &#x27;src/api/graphql&#x27;;
 import { MatDialog } from &#x27;@angular/material&#x27;;
 import { RenameTeamComponent } from &#x27;./rename-team/rename-team.component&#x27;;
+import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 @Component({
   selector: &#x27;app-manageteams&#x27;,
@@ -508,7 +610,9 @@ export class ManageteamsComponent implements OnInit {
 
   constructor(
     public teamService: TeamService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notify: NotificationService,
+    private translateService: TranslateService
   ) {
 
   }
@@ -519,46 +623,60 @@ export class ManageteamsComponent implements OnInit {
   async addNewTeam(teamName: string) {
     try {
       await this.teamService.addNewTeam(teamName);
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;CREATE_TEAM_SUCCESS&#x27;));
     } catch (error) {
-      console.error(error);
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;CREATE_TEAM_ERROR&#x27;), error);
+    }
+  }
+
+  async deleteTeam(team: Team.Fragment) {
+    try {
+      await this.teamService.deleteTeam(team);
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;DELETE_TEAM_SUCCESS&#x27;));
+    } catch (error) {
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;DELETE_TEAM_ERROR&#x27;), error);
     }
   }
 
   openRenameTeamDialog(team: Team.Fragment) {
-    this.dialog.open(RenameTeamComponent, { data: team, minWidth: &#x27;50vw&#x27; });
+    this.dialog.open(RenameTeamComponent, { data: team});
   }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid mt-4&quot;&gt;
-  &lt;div class&#x3D;&quot;row&quot;&gt;
-    &lt;div class&#x3D;&quot;col&quot;&gt;
-      &lt;div class&#x3D;&quot;row mb-3&quot; *ngFor&#x3D;&quot;let team of teamService.allTeams | async&quot;&gt;
-        &lt;div class&#x3D;&quot;col align-self-center&quot;&gt;
-          &lt;button mat-raised-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;mr-2&quot; (click)&#x3D;&quot;openRenameTeamDialog(team)&quot;&gt;
-            &lt;mat-icon&gt;
-              edit
-            &lt;/mat-icon&gt;
-          &lt;/button&gt;
-          {{team.name}}
-        &lt;/div&gt;
-      &lt;/div&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container mt-4&quot;&gt;
+  &lt;div class&#x3D;&quot;row border-bottom pb-2&quot;&gt;
+    &lt;div class&#x3D;&quot;col-8&quot;&gt;
+      &lt;mat-form-field&gt;
+        &lt;input #newTeam matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.NEW_TEAM&#x27; | translate }}&quot;
+          (keyup.enter)&#x3D;&quot;addNewTeam(newTeam.value)&quot;&gt;
+      &lt;/mat-form-field&gt;
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;col&quot;&gt;
-      &lt;div class&#x3D;&quot;row&quot;&gt;
-        &lt;div class&#x3D;&quot;col&quot;&gt;
-          &lt;mat-form-field&gt;
-            &lt;input #newTeam matInput placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.NEW_TEAM&#x27; | translate }}&quot; (keyup.enter)&#x3D;&quot;addNewTeam(newTeam.value)&quot;&gt;
-          &lt;/mat-form-field&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class&#x3D;&quot;row&quot;&gt;
-        &lt;div class&#x3D;&quot;col&quot;&gt;
-          &lt;button mat-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;addNewTeam(newTeam.value)&quot;&gt;{{ &#x27;BUTTON.CREATE_TEAM&#x27; | translate }}&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;addNewTeam(newTeam.value)&quot;&gt;
+        &lt;mat-icon&gt;
+          add
+        &lt;/mat-icon&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;row mb-3 border-bottom  pb-4 pt-4&quot; *ngFor&#x3D;&quot;let team of teamService.allTeams | async&quot;&gt;
+    &lt;div class&#x3D;&quot;col-8&quot;&gt;
+      {{team.name}}
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;col&quot;&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;mr-2&quot; (click)&#x3D;&quot;openRenameTeamDialog(team)&quot;&gt;
+        &lt;mat-icon&gt;
+          edit
+        &lt;/mat-icon&gt;
+      &lt;/button&gt;
+      &lt;button mat-raised-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;mr-2&quot; (click)&#x3D;&quot;deleteTeam(team)&quot;&gt;
+          &lt;mat-icon&gt;
+            delete
+          &lt;/mat-icon&gt;
+        &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -596,7 +714,7 @@ export class ManageteamsComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid mt-4">  <div class="row">    <div class="col">      <div class="row mb-3" *ngFor="let team of teamService.allTeams | async">        <div class="col align-self-center">          <button mat-raised-button color="primary" class="mr-2" (click)="openRenameTeamDialog(team)">            <mat-icon>              edit            </mat-icon>          </button>          {{team.name}}        </div>      </div>    </div>    <div class="col">      <div class="row">        <div class="col">          <mat-form-field>            <input #newTeam matInput placeholder="{{ \'PLACEHOLDER.NEW_TEAM\' | translate }}" (keyup.enter)="addNewTeam(newTeam.value)">          </mat-form-field>        </div>      </div>      <div class="row">        <div class="col">          <button mat-button color="primary" (click)="addNewTeam(newTeam.value)">{{ \'BUTTON.CREATE_TEAM\' | translate }}</button>        </div>      </div>    </div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container mt-4">  <div class="row border-bottom pb-2">    <div class="col-8">      <mat-form-field>        <input #newTeam matInput placeholder="{{ \'PLACEHOLDER.NEW_TEAM\' | translate }}"          (keyup.enter)="addNewTeam(newTeam.value)">      </mat-form-field>    </div>    <div class="col">      <button mat-raised-button color="primary" (click)="addNewTeam(newTeam.value)">        <mat-icon>          add        </mat-icon>      </button>    </div>  </div>  <div class="row mb-3 border-bottom  pb-4 pt-4" *ngFor="let team of teamService.allTeams | async">    <div class="col-8">      {{team.name}}    </div>    <div class="col">      <button mat-raised-button color="primary" class="mr-2" (click)="openRenameTeamDialog(team)">        <mat-icon>          edit        </mat-icon>      </button>      <button mat-raised-button color="primary" class="mr-2" (click)="deleteTeam(team)">          <mat-icon>            delete          </mat-icon>        </button>    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AddtournamentroundComponent', 'selector': 'app-addmatch'},{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ManageteamsComponent'};
