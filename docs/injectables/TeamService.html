@@ -102,14 +102,12 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Async</span>
                                 <a href="#addNewTeam">addNewTeam</a>
                             </li>
                             <li>
                                 <a href="#deleteTeam">deleteTeam</a>
                             </li>
                             <li>
-                                    <span class="modifier">Async</span>
                                 <a href="#renameTeam">renameTeam</a>
                             </li>
                         </ul>
@@ -130,7 +128,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(teamsQL: <a href="../injectables/TeamsGQL.html">TeamsGQL</a>, allTeamsGQL: <a href="../injectables/AllTeamsGQL.html">AllTeamsGQL</a>, renameTeamGQL: <a href="../injectables/RenameTeamGQL.html">RenameTeamGQL</a>)</code>
+<code>constructor(createTeamQL: <a href="../injectables/CreateTeamGQL.html">CreateTeamGQL</a>, allTeamsGQL: <a href="../injectables/AllTeamsGQL.html">AllTeamsGQL</a>, renameTeamGQL: <a href="../injectables/RenameTeamGQL.html">RenameTeamGQL</a>, deleteTeamGQL: <a href="../injectables/DeleteTeamGQL.html">DeleteTeamGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -153,10 +151,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>teamsQL</td>
+                                                        <td>createTeamQL</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/TeamsGQL.html" target="_self" >TeamsGQL</a></code>
+                                                                        <code><a href="../injectables/CreateTeamGQL.html" target="_self" >CreateTeamGQL</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -188,6 +186,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>deleteTeamGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DeleteTeamGQL.html" target="_self" >DeleteTeamGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -209,7 +219,6 @@
                     <a name="addNewTeam"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Async</span>
                             addNewTeam
                         </b>
                         <a href="#addNewTeam"><span class="icon ion-ios-link"></span></a>
@@ -218,16 +227,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addNewTeam(teamName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>addNewTeam(teamName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="34"
-                            class="link-to-prism">src/app/services/team.service.ts:34</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">src/app/services/team.service.ts:35</a></div>
                 </td>
             </tr>
 
@@ -298,8 +306,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="103"
-                            class="link-to-prism">src/app/services/team.service.ts:103</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="102"
+                            class="link-to-prism">src/app/services/team.service.ts:102</a></div>
                 </td>
             </tr>
 
@@ -336,7 +344,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -353,7 +361,6 @@
                     <a name="renameTeam"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Async</span>
                             renameTeam
                         </b>
                         <a href="#renameTeam"><span class="icon ion-ios-link"></span></a>
@@ -362,16 +369,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>renameTeam(teamId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, newName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>renameTeam(teamId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, newName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="62"
-                            class="link-to-prism">src/app/services/team.service.ts:62</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/app/services/team.service.ts:61</a></div>
                 </td>
             </tr>
 
@@ -477,7 +483,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { TeamsGQL, Team, AllTeamsGQL, RenameTeamGQL, TeamFragment } from &#x27;../../api/graphql&#x27;;
+import { CreateTeamGQL, Team, AllTeamsGQL, RenameTeamGQL, TeamFragment, DeleteTeamGQL } from &#x27;../../api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import * as uuid from &#x27;uuid/v4&#x27;;
@@ -497,9 +503,10 @@ export class TeamService {
   );
 
   constructor(
-    private teamsQL: TeamsGQL,
+    private createTeamQL: CreateTeamGQL,
     private allTeamsGQL: AllTeamsGQL,
-    private renameTeamGQL: RenameTeamGQL
+    private renameTeamGQL: RenameTeamGQL,
+    private deleteTeamGQL: DeleteTeamGQL
   ) {
   }
 
@@ -509,35 +516,33 @@ export class TeamService {
    * @returns {Promise&lt;boolean&gt;}
    * @memberof TeamService
    */
-  async addNewTeam(teamName: string): Promise&lt;void&gt; {
+  addNewTeam(teamName: string): Promise&lt;void&gt; {
     return new Promise&lt;void&gt;(
-      (resolve, reject) &#x3D;&gt; {
+      async (resolve, reject) &#x3D;&gt; {
         if (!teamName) {
           reject(new Error(&#x27;Empty Teamname&#x27;));
         }
-        this.teamsQL.mutate(
-          {
-            id: uuid(),
-            name: teamName
-          },
-          {
-            refetchQueries: [
-              {query: this.allTeamsGQL.document}
-            ]
-          }
-        ).subscribe(
-          (result) &#x3D;&gt; {
-            resolve();
-          },
-            (error) &#x3D;&gt; {
-              reject(error);
+        try {
+          await this.createTeamQL.mutate(
+            {
+              id: uuid(),
+              name: teamName
+            },
+            {
+              refetchQueries: [
+                {query: this.allTeamsGQL.document}
+              ]
             }
-        );
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
       }
     );
   }
 
-  async renameTeam(teamId: string, newName: string): Promise&lt;void&gt; {
+  renameTeam(teamId: string, newName: string): Promise&lt;void&gt; {
     return new Promise&lt;void&gt;(
       async (resolve, reject) &#x3D;&gt; {
         try {
@@ -578,8 +583,26 @@ export class TeamService {
     );
   }
 
-  deleteTeam(team: Team.Fragment): any {
-    throw new Error(&quot;Method not implemented.&quot;);
+  deleteTeam(team: Team.Fragment): Promise&lt;void&gt; {
+    return new Promise&lt;void&gt;(
+      async (resolve, reject) &#x3D;&gt; {
+        try {
+          await this.deleteTeamGQL.mutate(
+            {
+              team_id: team.id
+            },
+            {
+              refetchQueries: [
+                {query: this.allTeamsGQL.document}
+              ]
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
   }
 }
 </code></pre>
