@@ -47,4 +47,8 @@ export class TableComponent implements OnInit {
     const p = penalties.filter(t => t.team.id === team.id);
     return p.length === 0 ? null : p;
   }
+
+  openPenaltyDialog(penalties: Penalty.Fragment[]) {
+    console.log(penalties);
+  }
 }

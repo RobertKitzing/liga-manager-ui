@@ -26,16 +26,19 @@
               <td>{{ pos.matches }}</td>
               <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>
               <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>
-              <td>
-                {{ pos.points }}
-              </td>
-              <!-- <ng-container *ngIf="(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys">
-                <td valign="center" matTooltip="Info about the action">
-                  <mat-icon>
-                    warning
-                  </mat-icon>
+              <ng-template #noPenalty>
+                <td>
+                  {{ pos.points }}
                 </td>
-              </ng-container> -->
+              </ng-template>
+              <ng-container *ngIf="(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys; else noPenalty">
+                <td valign="center">
+                  {{ pos.points }}
+                    <mat-icon [inline]="true" (click)="openPenaltyDialog(penaltys)" style="cursor: pointer;">
+                      warning
+                    </mat-icon>
+                </td>
+              </ng-container>
             </tr>
           </ng-container>
         </tbody>
