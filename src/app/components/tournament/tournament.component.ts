@@ -4,6 +4,7 @@ import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } fr
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorage } from 'ngx-store';
+import { MatchService } from 'src/app/services/match.service';
 
 export const SELECTED_TOURNAMENT_KEY = 'SELECTED_TOURNAMENT';
 
@@ -22,7 +23,8 @@ export class TournamentComponent implements OnInit {
   constructor(
     public i18Service: I18Service,
     private allTournamentQGL: AllTournamentListGQL,
-    private tournamentQGL: TournamentGQL
+    private tournamentQGL: TournamentGQL,
+    private matchService: MatchService
   ) { }
 
   ngOnInit() {
@@ -32,14 +34,17 @@ export class TournamentComponent implements OnInit {
     if (this.tournamentId) {
       this.tournamentChanged();
     }
+    this.matchService.tournamentMatchUpdated.subscribe(
+      (event) => {
+        if (event.tournamentId === this.tournamentId) {
+          this.matchUpdated(event.matchId);
+        }
+      }
+    );
   }
 
   matchUpdated(matchId: string) {
-    this.tournamentQGL.watch(
-      {
-        id: this.tournamentId
-      }
-    ).refetch();
+    console.log('test', matchId);
   }
 
   tournamentChanged() {

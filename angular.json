@@ -29,7 +29,9 @@
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/zone.js/dist/zone.js",
+              "./node_modules/reflect-metadata/Reflect.js"
             ]
           },
           "configurations": {

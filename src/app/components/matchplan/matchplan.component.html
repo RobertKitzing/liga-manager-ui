@@ -53,7 +53,7 @@
           {{ 'MATCHDAY' | translate:{matchDay: matchDay.number} }} ({{ matchDay.start_date| date:'shortDate':'':i18Service.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18Service.currentLang }})
         </h3>
         <ng-container *ngFor="let match of filterMatches(matchDay.matches)">
-          <app-match [match]="match" [hideIfPlayed]="hidePlayed" (matchUpdated)="matchUpdated($event)"></app-match>
+          <app-match [match]="match" [hideIfPlayed]="hidePlayed" [seasonId]="seasonService.currentSeason.getValue().id"></app-match>
         </ng-container>
       </ng-container>
   </ng-container>

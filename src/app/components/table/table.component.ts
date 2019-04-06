@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { I18Service } from '../../services/i18.service';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-table',
@@ -15,14 +16,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class TableComponent implements OnInit {
 
   rankingQGL: Observable<Ranking.Ranking>;
-  error: boolean;
 
   constructor(
     public seasonService: SeasonService,
     public i18Service: I18Service,
     public snackBar: MatSnackBar,
-    private ranking: RankingGQL,
-    private translateService: TranslateService
+    private matchService: MatchService,
+    private ranking: RankingGQL
   ) {
   }
 
@@ -30,10 +30,14 @@ export class TableComponent implements OnInit {
     if (this.seasonService.currentSeason.getValue()) {
       this.getRanking();
     }
+    this.matchService.seasonMatchUpdated.subscribe(
+      (event) => {
+        this.ranking.watch({ id: event.seasonId }, { fetchPolicy: 'network-only' }).refetch();
+      }
+    );
   }
 
   getRanking() {
-    this.error = false;
     this.rankingQGL = this.ranking.watch({ id: this.seasonService.currentSeason.getValue().id }).valueChanges.pipe(
       map((result) => result.data.season.ranking)
     );

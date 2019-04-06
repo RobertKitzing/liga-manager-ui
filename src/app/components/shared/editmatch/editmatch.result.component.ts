@@ -37,10 +37,10 @@ export class EditmatchResultComponent implements OnInit {
         this.notify.showSuccessNotification(this.translateService.instant('EDIT_RESULT_SUCCESS'));
         this.dialogRef.close(true);
       } catch (error) {
-        this.notify.showSuccessNotification(this.translateService.instant('EDIT_RESULT_ERROR'), error);
+        this.notify.showErrorNotification(this.translateService.instant('EDIT_RESULT_ERROR'), error);
       }
     } else {
-      this.notify.showSuccessNotification(this.translateService.instant('ENTER_VALID_RESULT'));
+      this.notify.showErrorNotification(this.translateService.instant('ENTER_VALID_RESULT'));
     }
   }
 }

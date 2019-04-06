@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MatchPlanGQL, MatchPlan, Match, MatchDay, RankingGQL, MatchGQL } from '../../../api/graphql';
 import { map } from 'rxjs/operators';
 import { LocalStorage } from 'ngx-store';
+import { MatchService } from 'src/app/services/match.service';
 
 const HIDE_PLAYED_KEY = 'HIDE_PLAYED';
 const SELECTED_MATCHDAY_KEY = 'SELECTED_MATCHDAY';
@@ -33,6 +34,7 @@ export class MatchplanComponent implements OnInit {
     public seasonService: SeasonService,
     public i18Service: I18Service,
     public matchPlanGQL: MatchPlanGQL,
+    private matchService: MatchService,
     private rankingGQL: RankingGQL
   ) { }
 
@@ -40,6 +42,11 @@ export class MatchplanComponent implements OnInit {
     if (this.seasonService.currentSeason.getValue()) {
       this.handleGetMatches();
     }
+    this.matchService.seasonMatchUpdated.subscribe(
+      (event) => {
+        this.rankingGQL.watch({ id: event.seasonId }, { fetchPolicy: 'network-only' }).refetch();
+      }
+    );
   }
 
   filterMatchDays(matchDays: MatchDay.Fragment[]): MatchDay.Fragment[] {
@@ -72,13 +79,5 @@ export class MatchplanComponent implements OnInit {
         }
       )
     );
-  }
-
-  matchUpdated(matchId: string) {
-    console.log(matchId);
-    this.matchPlanGQL.watch(
-      { id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).refetch();
-    this.rankingGQL.watch(
-      { id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).refetch();
   }
 }

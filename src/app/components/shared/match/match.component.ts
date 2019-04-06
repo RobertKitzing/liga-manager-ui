@@ -19,8 +19,9 @@ import { CancelMatchDialogComponent } from '../cancel-match-dialog/cancel-match-
 })
 export class MatchComponent implements OnInit {
 
+  @Input() seasonId: string;
+  @Input() tournamentId: string;
   @Input() match: Match.Fragment;
-  @Input() tournament: boolean;
   @Input() hideIfPlayed: boolean;
 
   @Output() matchUpdated = new EventEmitter<string>();
@@ -39,16 +40,23 @@ export class MatchComponent implements OnInit {
 
   openEditResultDialog() {
     const dialogRef = this.dialog.open(EditmatchResultComponent, {
-      data: this.match,
-      panelClass: 'my-full-screen-dialog'
+      data: this.match
     });
-
     dialogRef.afterClosed().subscribe(
-      async (result) => {
+      (result) => {
         if (result) {
-          this.matchUpdated.emit(this.match.id);
+          this.emitChanges();
         }
       });
+  }
+
+  private emitChanges() {
+    this.matchUpdated.emit(this.match.id);
+    if (this.tournamentId) {
+      this.matchService.tournamentMatchUpdated.next({ tournamentId: this.tournamentId, matchId: this.match.id });
+    } else {
+      this.matchService.seasonMatchUpdated.next({ seasonId: this.seasonId, matchId: this.match.id });
+    }
   }
 
   openEditPitchDialog() {
@@ -57,9 +65,9 @@ export class MatchComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      async (result) => {
+      (result) => {
         if (result) {
-          this.matchUpdated.emit(this.match.id);
+          this.emitChanges();
         }
       });
   }
@@ -72,7 +80,7 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result) {
-          this.matchUpdated.emit(this.match.id);
+          this.emitChanges();
         }
       });
   }
@@ -98,7 +106,7 @@ export class MatchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result) {
-          this.matchUpdated.emit(this.match.id);
+          this.emitChanges();
         }
       });
   }

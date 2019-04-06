@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { SubmitResultGQL, RankingGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, MatchPlanGQL, Match, Pitch } from '../../api/graphql';
-import { SeasonService } from './season.service';
-import { Apollo } from 'apollo-angular';
+import { SubmitResultGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch } from '../../api/graphql';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
 
+  seasonMatchUpdated = new Subject<{ seasonId, matchId }>();
+  tournamentMatchUpdated = new Subject<{ tournamentId, matchId }>();
+
   constructor(
     private submitResultGQL: SubmitResultGQL,
-    private rankingQGL: RankingGQL,
     private scheduleMatchGQL: ScheduleMatchGQL,
     private locateMatchQGL: LocateMatchGQL,
-    private seasonService: SeasonService,
-    private matchPlanGQL: MatchPlanGQL
   ) { }
 
   public isMatchPlayed(match: Match.Fragment): boolean {
@@ -28,45 +27,42 @@ export class MatchService {
   submitMatchResult(matchId: string, homeScore: number, guestScore: number): Promise<void> {
     const result = { home_score: homeScore, guest_score: guestScore };
     return new Promise<void>(
-      (resolve, reject) => {
-        this.submitResultGQL.mutate(
-          {
-            match_id: matchId,
-            ...result
-          },
-          {
-            update: (store, { data }) => {
-              const match: any = store.readFragment(
-                {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`
-                }
-              );
-              store.writeFragment(
-                {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`,
-                  data: {
-                    __typename: 'Match',
-                    ...match,
-                    ...result
+      async (resolve, reject) => {
+        try {
+          await this.submitResultGQL.mutate(
+            {
+              match_id: matchId,
+              ...result
+            },
+            {
+              update: (store, { data }) => {
+                const match: any = store.readFragment(
+                  {
+                    fragmentName: 'Match',
+                    fragment: MatchFragment,
+                    id: `Match:${matchId}`
                   }
-                }
-              );
+                );
+                store.writeFragment(
+                  {
+                    fragmentName: 'Match',
+                    fragment: MatchFragment,
+                    id: `Match:${matchId}`,
+                    data: {
+                      __typename: 'Match',
+                      ...match,
+                      ...result
+                    }
+                  }
+                );
+              }
             }
-          }
-        ).subscribe(
-          () => {
-            resolve();
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
   }
 
   scheduleMatch(matchId: string, matchKickoff: Date | string): Promise<void> {
