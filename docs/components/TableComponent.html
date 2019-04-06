@@ -165,6 +165,9 @@
                             <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
+                            <li>
+                                <a href="#openPenaltyDialog">openPenaltyDialog</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -443,6 +446,76 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openPenaltyDialog"></a>
+                    <span class="name">
+                        <b>
+                            openPenaltyDialog
+                        </b>
+                        <a href="#openPenaltyDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openPenaltyDialog(penalties: Penalty.Fragment[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/app/components/table/table.component.ts:51</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>penalties</td>
+                                    <td>
+                                            <code>Penalty.Fragment[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
     <section>
     
@@ -615,6 +688,10 @@ export class TableComponent implements OnInit {
     const p &#x3D; penalties.filter(t &#x3D;&gt; t.team.id &#x3D;&#x3D;&#x3D; team.id);
     return p.length &#x3D;&#x3D;&#x3D; 0 ? null : p;
   }
+
+  openPenaltyDialog(penalties: Penalty.Fragment[]) {
+    console.log(penalties);
+  }
 }
 </code></pre>
     </div>
@@ -648,16 +725,19 @@ export class TableComponent implements OnInit {
               &lt;td&gt;{{ pos.matches }}&lt;/td&gt;
               &lt;td&gt;{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}&lt;/td&gt;
               &lt;td&gt;{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})&lt;/td&gt;
-              &lt;td&gt;
-                {{ pos.points }}
-              &lt;/td&gt;
-              &lt;!-- &lt;ng-container *ngIf&#x3D;&quot;(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys&quot;&gt;
-                &lt;td valign&#x3D;&quot;center&quot; matTooltip&#x3D;&quot;Info about the action&quot;&gt;
-                  &lt;mat-icon&gt;
-                    warning
-                  &lt;/mat-icon&gt;
+              &lt;ng-template #noPenalty&gt;
+                &lt;td&gt;
+                  {{ pos.points }}
                 &lt;/td&gt;
-              &lt;/ng-container&gt; --&gt;
+              &lt;/ng-template&gt;
+              &lt;ng-container *ngIf&#x3D;&quot;(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys; else noPenalty&quot;&gt;
+                &lt;td valign&#x3D;&quot;center&quot;&gt;
+                  {{ pos.points }}
+                    &lt;mat-icon [inline]&#x3D;&quot;true&quot; (click)&#x3D;&quot;openPenaltyDialog(penaltys)&quot; style&#x3D;&quot;cursor: pointer;&quot;&gt;
+                      warning
+                    &lt;/mat-icon&gt;
+                &lt;/td&gt;
+              &lt;/ng-container&gt;
             &lt;/tr&gt;
           &lt;/ng-container&gt;
         &lt;/tbody&gt;
@@ -707,7 +787,7 @@ export class TableComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <div class="row text-center" style="justify-content: center;">    <div class="col-6">      <app-seasonchooser (seasonChanged)="getRanking()"></app-seasonchooser>    </div>  </div>  <ng-container *ngIf="seasonService.currentSeason">    <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive"      style="scrollbar-x-position: top;">      <table class="table table-striped font-size-sm">        <thead class="table-dark">          <tr>            <th translate style="max-width: 3ch;">TABLE.PLACE</th>            <th class="col-6" translate>TABLE.TEAM</th>            <th class="col-1" translate>TABLE.GAMES</th>            <th class="col-1" translate>TABLE.WIN_DRAW_LOST</th>            <th class="col-2" translate>TABLE.TORE:TORE</th>            <th class="col-2" translate>TABLE.POINTS</th>          </tr>        </thead>        <tbody class="">          <ng-container *ngFor="let pos of ranking.positions">            <tr>              <td>{{ pos.number }}</td>              <td>{{ pos.team.name }}</td>              <td>{{ pos.matches }}</td>              <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>              <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>              <td>                {{ pos.points }}              </td>              <!-- <ng-container *ngIf="(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys">                <td valign="center" matTooltip="Info about the action">                  <mat-icon>                    warning                  </mat-icon>                </td>              </ng-container> -->            </tr>          </ng-container>        </tbody>      </table>      <div class="text-right" *ngIf="ranking.updated_at">        {{ \'LAST_UPDATED_AT\' | translate }}: ({{ ranking.updated_at | date:\'medium\':\'\':i18Service.currentLang}})      </div>    </div>  </ng-container>  <ng-template #loading>    <ng-container *ngIf="seasonService.currentSeason | async">      <mat-progress-bar mode="indeterminate"></mat-progress-bar>    </ng-container>  </ng-template></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <div class="row text-center" style="justify-content: center;">    <div class="col-6">      <app-seasonchooser (seasonChanged)="getRanking()"></app-seasonchooser>    </div>  </div>  <ng-container *ngIf="seasonService.currentSeason">    <div *ngIf="(rankingQGL | async) as ranking; else loading" class="table-responsive"      style="scrollbar-x-position: top;">      <table class="table table-striped font-size-sm">        <thead class="table-dark">          <tr>            <th translate style="max-width: 3ch;">TABLE.PLACE</th>            <th class="col-6" translate>TABLE.TEAM</th>            <th class="col-1" translate>TABLE.GAMES</th>            <th class="col-1" translate>TABLE.WIN_DRAW_LOST</th>            <th class="col-2" translate>TABLE.TORE:TORE</th>            <th class="col-2" translate>TABLE.POINTS</th>          </tr>        </thead>        <tbody class="">          <ng-container *ngFor="let pos of ranking.positions">            <tr>              <td>{{ pos.number }}</td>              <td>{{ pos.team.name }}</td>              <td>{{ pos.matches }}</td>              <td>{{ pos.wins }}:{{ pos.draws }}:{{ pos.losses }}</td>              <td>{{ pos.scored_goals }}:{{ pos.conceded_goals }} ({{ pos.scored_goals - pos.conceded_goals }})</td>              <ng-template #noPenalty>                <td>                  {{ pos.points }}                </td>              </ng-template>              <ng-container *ngIf="(getPenaltyForTeam(ranking.penalties, pos.team)) as penaltys; else noPenalty">                <td valign="center">                  {{ pos.points }}                    <mat-icon [inline]="true" (click)="openPenaltyDialog(penaltys)" style="cursor: pointer;">                      warning                    </mat-icon>                </td>              </ng-container>            </tr>          </ng-container>        </tbody>      </table>      <div class="text-right" *ngIf="ranking.updated_at">        {{ \'LAST_UPDATED_AT\' | translate }}: ({{ ranking.updated_at | date:\'medium\':\'\':i18Service.currentLang}})      </div>    </div>  </ng-container>  <ng-template #loading>    <ng-container *ngIf="seasonService.currentSeason | async">      <mat-progress-bar mode="indeterminate"></mat-progress-bar>    </ng-container>  </ng-template></div></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditTournamentRoundComponent', 'selector': 'app-edit-tournament-round'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TableComponent'};

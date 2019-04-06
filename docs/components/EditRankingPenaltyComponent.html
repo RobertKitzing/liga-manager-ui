@@ -182,7 +182,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(data: <a href="../interfaces/EditRankingPenaltyComponentData.html">EditRankingPenaltyComponentData</a>, addPenaltyGQL: <a href="../injectables/AddRankingPenaltyGQL.html">AddRankingPenaltyGQL</a>, dialogRef: <a href="../components/EditRankingPenaltyComponent.html">MatDialogRef<EditRankingPenaltyComponent></a>, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, seasonPenaltiesGQL: <a href="../injectables/SeasonPenaltiesGQL.html">SeasonPenaltiesGQL</a>, translateService: TranslateService)</code>
+<code>constructor(data: <a href="../interfaces/EditRankingPenaltyComponentData.html">EditRankingPenaltyComponentData</a>, addPenaltyGQL: <a href="../injectables/AddRankingPenaltyGQL.html">AddRankingPenaltyGQL</a>, dialogRef: <a href="../components/EditRankingPenaltyComponent.html">MatDialogRef<EditRankingPenaltyComponent></a>, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, seasonPenaltiesGQL: <a href="../injectables/SeasonPenaltiesGQL.html">SeasonPenaltiesGQL</a>, translateService: TranslateService, rankingGQL: <a href="../injectables/RankingGQL.html">RankingGQL</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -276,6 +276,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>rankingGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/RankingGQL.html" target="_self" >RankingGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -316,8 +328,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/edit-ranking-penalty/edit-ranking-penalty.component.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/edit-ranking-penalty/edit-ranking-penalty.component.ts:36</a></div>
                 </td>
             </tr>
 
@@ -357,8 +369,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/edit-ranking-penalty/edit-ranking-penalty.component.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/edit-ranking-penalty/edit-ranking-penalty.component.ts:45</a></div>
                 </td>
             </tr>
 
@@ -542,7 +554,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
 import { MAT_DIALOG_DATA, MatSelect, MatDialogRef } from &#x27;@angular/material&#x27;;
-import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL } from &#x27;src/api/graphql&#x27;;
+import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL, RankingGQL } from &#x27;src/api/graphql&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import * as uuidv4 from &#x27;uuid/v4&#x27;;
@@ -571,7 +583,8 @@ export class EditRankingPenaltyComponent implements OnInit {
     private dialogRef: MatDialogRef&lt;EditRankingPenaltyComponent&gt;,
     private notify: NotificationService,
     private seasonPenaltiesGQL: SeasonPenaltiesGQL,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private rankingGQL: RankingGQL
   ) { }
 
   ngOnInit() {
@@ -592,13 +605,17 @@ export class EditRankingPenaltyComponent implements OnInit {
         points: this.penaltyPoints,
         reason: this.penaltyReason
       }, {
-        refetchQueries: [
-          {
-            query: this.seasonPenaltiesGQL.document,
-            variables: {id: this.data.season.id}
-          }
-        ]
-      }).toPromise();
+          refetchQueries: [
+            {
+              query: this.seasonPenaltiesGQL.document,
+              variables: { id: this.data.season.id }
+            },
+            {
+              query: this.rankingGQL.document,
+              variables: { id: this.data.season.id }
+            }
+          ]
+        }).toPromise();
       this.notify.showSuccessNotification(this.translateService.instant(&#x27;PENALTY_SAVED&#x27;));
       this.dialogRef.close(true);
     } catch (error) {
