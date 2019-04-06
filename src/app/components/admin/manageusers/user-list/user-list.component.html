@@ -1,21 +1,6 @@
 <div class="container-fluid">
-  <div class="row pb-2 border-bottom">
-    <div class="col-12 col-md-4 col-lg-2">
-      {{ 'USERNAME' | translate }}
-    </div>
-    <div class="col-4 col-md-2">
-      {{ 'FIRST_NAME' | translate }}
-    </div>
-    <div class="col-4 col-md-2">
-      {{ 'LAST_NAME' | translate }}
-    </div>
-    <div class="col-4 col-md-2 col-lg-1">
-      {{ 'USER_ROLE' | translate }}
-    </div>
-    <div class="col-12 col-md-2">
-      {{ 'TEAMS' | translate }}
-    </div>
-    <div class="col-12 col-md-12 col-lg-3 text-center">
+  <div class="row">
+    <div class="col text-right">
       <button mat-raised-button color="primary" (click)="createNewUser()">
         <mat-icon>
           add
@@ -23,20 +8,34 @@
       </button>
     </div>
   </div>
+  <div class="row pb-2 border-bottom">
+    <div class="col-12 col-md-4 col-lg-3">
+      {{ 'USERNAME' | translate }}
+    </div>
+    <div class="col-6 col-md-3 col-lg-2">
+      {{ 'FIRST_NAME' | translate }} {{ 'LAST_NAME' | translate }}
+    </div>
+    <div class="col-6 col-md-2 col-lg-1">
+      {{ 'USER_ROLE' | translate }}
+    </div>
+    <div class="col-12 col-md-3">
+      {{ 'TEAMS' | translate }}
+    </div>
+    <div class="col-12 col-md-3">
+      &nbsp;
+    </div>
+  </div>
   <div class="row align-items-center pb-2 pt-2 border-bottom" *ngFor="let user of allUsers | async">
-    <div class="col-12 col-md-4 col-lg-2 text-xs-center text-sm-center text-md-right">
+    <div class="col-12 col-md-4 col-lg-3">
       {{ user.email }}
     </div>
-    <div class="col-4 col-md-2">
-      {{ user.first_name }}
+    <div class="col-6 col-md-3 col-lg-2">
+      {{ user.first_name }} {{ user.last_name }}
     </div>
-    <div class="col-4 col-md-2">
-      {{ user.last_name }}
-    </div>
-    <div class="col-4 col-md-2 col-lg-1">
+    <div class="col-6 col-md-2 col-lg-1">
       {{ user.role }}
     </div>
-    <div class="col-12 col-md-2">
+    <div class="col-12 col-md-3">
       <div class="row" *ngFor="let team of user.teams">
         <div class="col">
           {{ team.name }}

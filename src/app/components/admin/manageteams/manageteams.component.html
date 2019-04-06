@@ -1,30 +1,34 @@
-<div class="container-fluid mt-4">
-  <div class="row">
-    <div class="col">
-      <div class="row mb-3" *ngFor="let team of teamService.allTeams | async">
-        <div class="col align-self-center">
-          <button mat-raised-button color="primary" class="mr-2" (click)="openRenameTeamDialog(team)">
-            <mat-icon>
-              edit
-            </mat-icon>
-          </button>
-          {{team.name}}
-        </div>
-      </div>
+<div class="container mt-4">
+  <div class="row border-bottom pb-2">
+    <div class="col-8">
+      <mat-form-field>
+        <input #newTeam matInput placeholder="{{ 'PLACEHOLDER.NEW_TEAM' | translate }}"
+          (keyup.enter)="addNewTeam(newTeam.value)">
+      </mat-form-field>
     </div>
     <div class="col">
-      <div class="row">
-        <div class="col">
-          <mat-form-field>
-            <input #newTeam matInput placeholder="{{ 'PLACEHOLDER.NEW_TEAM' | translate }}" (keyup.enter)="addNewTeam(newTeam.value)">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button mat-button color="primary" (click)="addNewTeam(newTeam.value)">{{ 'BUTTON.CREATE_TEAM' | translate }}</button>
-        </div>
-      </div>
+      <button mat-raised-button color="primary" (click)="addNewTeam(newTeam.value)">
+        <mat-icon>
+          add
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row mb-3 border-bottom  pb-4 pt-4" *ngFor="let team of teamService.allTeams | async">
+    <div class="col-8">
+      {{team.name}}
+    </div>
+    <div class="col">
+      <button mat-raised-button color="primary" class="mr-2" (click)="openRenameTeamDialog(team)">
+        <mat-icon>
+          edit
+        </mat-icon>
+      </button>
+      <button mat-raised-button color="primary" class="mr-2" (click)="deleteTeam(team)">
+          <mat-icon>
+            delete
+          </mat-icon>
+        </button>
     </div>
   </div>
 </div>

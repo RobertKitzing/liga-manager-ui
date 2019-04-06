@@ -48,7 +48,7 @@ export class TeamService {
             ]
           }
         ).subscribe(
-          async (result) => {
+          (result) => {
             resolve();
           },
             (error) => {
@@ -59,39 +59,48 @@ export class TeamService {
     );
   }
 
-  async renameTeam(teamId: string, newName: string) {
-    try {
-      await this.renameTeamGQL.mutate(
-        {
-          team_id: teamId,
-          new_name: newName
-        },
-        {
-          update: (store, { data }) => {
-            const team: any = store.readFragment(
-              {
-                fragmentName: 'Team',
-                fragment: TeamFragment,
-                id: `Team:${teamId}`
-              }
-            );
-            store.writeFragment(
-              {
-                fragmentName: 'Team',
-                fragment: TeamFragment,
-                id: `Team:${teamId}`,
-                data: {
-                  __typename: 'Team',
-                  ...team,
-                  name: newName
-                }
-              }
-            );
-          },
+  async renameTeam(teamId: string, newName: string): Promise<void> {
+    return new Promise<void>(
+      async (resolve, reject) => {
+        try {
+          await this.renameTeamGQL.mutate(
+            {
+              team_id: teamId,
+              new_name: newName
+            },
+            {
+              update: (store, { data }) => {
+                const team: any = store.readFragment(
+                  {
+                    fragmentName: 'Team',
+                    fragment: TeamFragment,
+                    id: `Team:${teamId}`
+                  }
+                );
+                store.writeFragment(
+                  {
+                    fragmentName: 'Team',
+                    fragment: TeamFragment,
+                    id: `Team:${teamId}`,
+                    data: {
+                      __typename: 'Team',
+                      ...team,
+                      name: newName
+                    }
+                  }
+                );
+              },
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
         }
-      ).toPromise();
-    } catch (error) {
-      console.error(error);
-    }
+      }
+    );
+  }
+
+  deleteTeam(team: Team.Fragment): any {
+    throw new Error("Method not implemented.");
   }
 }

@@ -5,21 +5,21 @@
         <app-managetournament></app-managetournament>
       </ng-template>
     </mat-tab>
-    <mat-tab label="{{ 'TAB.MANAGE_USERS' | translate }}">
-      <ng-template matTabContent>
-        <app-manageusers></app-manageusers>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="{{ 'TAB.MANAGE_TEAM' | translate }}">
-      <ng-template matTabContent>
-        <app-manageteams></app-manageteams>
-      </ng-template>
-    </mat-tab>
     <mat-tab label="{{ 'TAB.MANAGE_SEASON' | translate}}">
       <ng-template matTabContent>
         <app-manageseason></app-manageseason>
       </ng-template>
     </mat-tab>
+    <mat-tab label="{{ 'TAB.MANAGE_USERS' | translate }}">
+        <ng-template matTabContent>
+          <app-manageusers></app-manageusers>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="{{ 'TAB.MANAGE_TEAM' | translate }}">
+        <ng-template matTabContent>
+          <app-manageteams></app-manageteams>
+        </ng-template>
+      </mat-tab>
     <mat-tab label="{{ 'TAB.PITCHES' | translate}}">
       <ng-template matTabContent>
         <app-managepitches></app-managepitches>
