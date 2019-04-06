@@ -130,7 +130,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1590" class="link-to-prism">src/api/graphql.ts:1590</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1643" class="link-to-prism">src/api/graphql.ts:1643</a></div>
                             </td>
                         </tr>
 
@@ -413,7 +413,7 @@ export namespace EndSeason {
   };
 }
 
-export namespace Teams {
+export namespace CreateTeam {
   export type Variables &#x3D; {
     id: string;
     name: string;
@@ -455,6 +455,18 @@ export namespace RenameTeam {
   };
 }
 
+export namespace DeleteTeam {
+  export type Variables &#x3D; {
+    team_id: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    deleteTeam: Maybe&lt;boolean&gt;;
+  };
+}
+
 export namespace CreateTournament {
   export type Variables &#x3D; {
     id?: Maybe&lt;string&gt;;
@@ -480,6 +492,18 @@ export namespace CreateTournamentRound {
     __typename?: &quot;Mutation&quot;;
 
     setTournamentRound: Maybe&lt;boolean&gt;;
+  };
+}
+
+export namespace DeleteTournament {
+  export type Variables &#x3D; {
+    tournament_id: string;
+  };
+
+  export type Mutation &#x3D; {
+    __typename?: &quot;Mutation&quot;;
+
+    deleteTournament: Maybe&lt;boolean&gt;;
   };
 }
 
@@ -1458,9 +1482,12 @@ export class EndSeasonGQL extends Apollo.Mutation&lt;
 @Injectable({
   providedIn: &quot;root&quot;
 })
-export class TeamsGQL extends Apollo.Mutation&lt;Teams.Mutation, Teams.Variables&gt; {
+export class CreateTeamGQL extends Apollo.Mutation&lt;
+  CreateTeam.Mutation,
+  CreateTeam.Variables
+&gt; {
   document: any &#x3D; gql&#x60;
-    mutation Teams($id: String!, $name: String!) {
+    mutation CreateTeam($id: String!, $name: String!) {
       createTeam(id: $id, name: $name)
     }
   &#x60;;
@@ -1506,6 +1533,19 @@ export class RenameTeamGQL extends Apollo.Mutation&lt;
 @Injectable({
   providedIn: &quot;root&quot;
 })
+export class DeleteTeamGQL extends Apollo.Mutation&lt;
+  DeleteTeam.Mutation,
+  DeleteTeam.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation DeleteTeam($team_id: String!) {
+      deleteTeam(team_id: $team_id)
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
 export class CreateTournamentGQL extends Apollo.Mutation&lt;
   CreateTournament.Mutation,
   CreateTournament.Variables
@@ -1536,6 +1576,19 @@ export class CreateTournamentRoundGQL extends Apollo.Mutation&lt;
         team_id_pairs: $team_id_pairs
         date_period: $date_period
       )
+    }
+  &#x60;;
+}
+@Injectable({
+  providedIn: &quot;root&quot;
+})
+export class DeleteTournamentGQL extends Apollo.Mutation&lt;
+  DeleteTournament.Mutation,
+  DeleteTournament.Variables
+&gt; {
+  document: any &#x3D; gql&#x60;
+    mutation DeleteTournament($tournament_id: String!) {
+      deleteTournament(tournament_id: $tournament_id)
     }
   &#x60;;
 }

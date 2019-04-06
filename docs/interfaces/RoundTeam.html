@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/admin/managetournament/addtournamentround/addtournamentround.component.ts</code>
+            <code>src/app/components/admin/managetournament/edit-tournament-round/edit-tournament-round.component.ts</code>
         </p>
 
 
@@ -159,7 +159,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material&#x27;;
-import { Component, OnInit, Inject } from &#x27;@angular/core&#x27;;
+import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
 import { TeamService } from &#x27;../../../../services/team.service&#x27;;
 import { DateTimeAdapter } from &#x27;ng-pick-datetime&#x27;;
 import { I18Service } from &#x27;../../../../services/i18.service&#x27;;
@@ -173,17 +173,21 @@ export interface AddMatchData {
   round: number;
   tournamentId: string;
   teams: RoundTeam[];
+  dates: {from: Date, to: Date};
 }
 export interface RoundTeam {
   homeTeam: Team.Fragment;
   guestTeam: Team.Fragment;
 }
 @Component({
-  selector: &#x27;app-addmatch&#x27;,
-  templateUrl: &#x27;addtournamentround.component.html&#x27;
+  selector: &#x27;app-edit-tournament-round&#x27;,
+  templateUrl: &#x27;edit-tournament-round.component.html&#x27;
 })
-export class AddtournamentroundComponent implements OnInit {
+export class EditTournamentRoundComponent implements OnInit {
 
+  @ViewChild(&#x27;planDateTo&#x27;) planDateTo;
+  @ViewChild(&#x27;planDateFrom&#x27;) planDateFrom;
+  
   homeTeam: Team.Fragment;
   guestTeam: Team.Fragment;
   allTeams: Observable&lt;Team.Fragment[]&gt;;
@@ -194,7 +198,7 @@ export class AddtournamentroundComponent implements OnInit {
 
   constructor(
     private allTournamentsQGL: AllTournamentListGQL,
-    public dialogRef: MatDialogRef&lt;AddtournamentroundComponent&gt;,
+    public dialogRef: MatDialogRef&lt;EditTournamentRoundComponent&gt;,
     public teamService: TeamService,
     dateTimeAdapter: DateTimeAdapter&lt;any&gt;,
     private translateService: TranslateService,
@@ -211,6 +215,10 @@ export class AddtournamentroundComponent implements OnInit {
     );
     if (data.teams) {
       this.roundTeams &#x3D; data.teams;
+    }
+    if (data.dates) {
+      this.newRoundPlanDateFrom &#x3D; data.dates.from;
+      this.newRoundPlanDateTo &#x3D; data.dates.to;
     }
   }
 
@@ -251,10 +259,10 @@ export class AddtournamentroundComponent implements OnInit {
           ]
         }
       ).toPromise();
-      this.notify.showSuccessNotification(this.translateService.instant(&#x27;CREATE_TOURNAMENT_SUCCESS&#x27;));
+      this.notify.showSuccessNotification(this.translateService.instant(&#x27;CREATE_TOURNAMENT_ROUND_SUCCESS&#x27;));
       this.dialogRef.close(true);
     } catch (error) {
-      this.notify.showErrorNotification(this.translateService.instant(&#x27;CREATE_TOURNAMENT_ERROR&#x27;), error);
+      this.notify.showErrorNotification(this.translateService.instant(&#x27;CREATE_TOURNAMENT__ROUND_ERROR&#x27;), error);
     }
   }
 
