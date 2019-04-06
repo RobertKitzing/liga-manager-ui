@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatSelect, MatDialogRef } from '@angular/material';
-import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL } from 'src/api/graphql';
+import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL, RankingGQL } from 'src/api/graphql';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as uuidv4 from 'uuid/v4';
@@ -29,7 +29,8 @@ export class EditRankingPenaltyComponent implements OnInit {
     private dialogRef: MatDialogRef<EditRankingPenaltyComponent>,
     private notify: NotificationService,
     private seasonPenaltiesGQL: SeasonPenaltiesGQL,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private rankingGQL: RankingGQL
   ) { }
 
   ngOnInit() {
@@ -50,13 +51,17 @@ export class EditRankingPenaltyComponent implements OnInit {
         points: this.penaltyPoints,
         reason: this.penaltyReason
       }, {
-        refetchQueries: [
-          {
-            query: this.seasonPenaltiesGQL.document,
-            variables: {id: this.data.season.id}
-          }
-        ]
-      }).toPromise();
+          refetchQueries: [
+            {
+              query: this.seasonPenaltiesGQL.document,
+              variables: { id: this.data.season.id }
+            },
+            {
+              query: this.rankingGQL.document,
+              variables: { id: this.data.season.id }
+            }
+          ]
+        }).toPromise();
       this.notify.showSuccessNotification(this.translateService.instant('PENALTY_SAVED'));
       this.dialogRef.close(true);
     } catch (error) {

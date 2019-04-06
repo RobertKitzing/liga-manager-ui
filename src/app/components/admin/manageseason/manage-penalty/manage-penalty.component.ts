@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { SeasonPenaltiesGQL, SeasonPenalties, Penalty, RemoveRankingPenaltyGQL } from 'src/api/graphql';
+import { SeasonPenaltiesGQL, SeasonPenalties, Penalty, RemoveRankingPenaltyGQL, RankingGQL } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
@@ -21,6 +21,7 @@ export class ManagePenaltyComponent implements OnInit, OnChanges {
   penalties: Observable<SeasonPenalties.Season>;
 
   constructor(
+    private rankingGQL: RankingGQL,
     private seasonPenaltiesGQL: SeasonPenaltiesGQL,
     private removePenaltiesGQL: RemoveRankingPenaltyGQL,
     public i18Service: I18Service,
@@ -70,6 +71,10 @@ export class ManagePenaltyComponent implements OnInit, OnChanges {
                 refetchQueries: [
                   {
                     query: this.seasonPenaltiesGQL.document,
+                    variables: { id: this.manageSeasonId }
+                  },
+                  {
+                    query: this.rankingGQL.document,
                     variables: { id: this.manageSeasonId }
                   }
                 ]
