@@ -1,4 +1,4 @@
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSelectChange } from '@angular/material';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { TeamService } from '../../../../services/team.service';
 import { DateTimeAdapter } from 'ng-pick-datetime';
@@ -27,9 +27,10 @@ export class EditTournamentRoundComponent implements OnInit {
 
   @ViewChild('planDateTo') planDateTo;
   @ViewChild('planDateFrom') planDateFrom;
-  
-  homeTeam: Team.Fragment;
-  guestTeam: Team.Fragment;
+
+  @ViewChild('home') home;
+  @ViewChild('guest') guest;
+
   allTeams: Observable<Team.Fragment[]>;
 
   roundTeams: RoundTeam[] = new Array<RoundTeam>();
@@ -65,14 +66,15 @@ export class EditTournamentRoundComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTeam() {
-    if (this.homeTeam !== this.guestTeam) {
+  addTeam(homeTeam: Team.Fragment, guestTeam: Team.Fragment) {
+
+    if (homeTeam && guestTeam && homeTeam !== guestTeam) {
       this.roundTeams.push({
-        homeTeam: this.homeTeam,
-        guestTeam: this.guestTeam
+        homeTeam: homeTeam,
+        guestTeam: guestTeam
       });
-      delete this.homeTeam;
-      delete this.guestTeam;
+      this.home.value = null;
+      this.guest.value = null;
     }
   }
 
@@ -112,5 +114,9 @@ export class EditTournamentRoundComponent implements OnInit {
 
   setPlanDateTo(event: any) {
     this.newRoundPlanDateTo = event.value;
+  }
+
+  isRoundValid(): boolean {
+    return this.newRoundPlanDateFrom && this.newRoundPlanDateTo && this.roundTeams.length > 0;
   }
 }

@@ -72,10 +72,10 @@ export class ManagetournamentComponent implements OnInit {
       map(
         (result) => {
           if (result.data.tournament && result.data.tournament.rounds) {
-            this.manageTournamentRoundCount = result.data.tournament.rounds.length;
+            this.manageTournamentRoundCount = result.data.tournament.rounds.length + 1;
             return result.data.tournament.rounds.sort((a, b) => a.number < b.number ? 1 : -1);
           } else {
-            this.manageTournamentRoundCount = 0;
+            this.manageTournamentRoundCount = 1;
             return new Array<MatchDay.Fragment>();
           }
         })

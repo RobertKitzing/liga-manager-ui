@@ -1,66 +1,86 @@
-<div class="container">
-  <h3 mat-dialog-title class="text-center"> {{ 'EDIT_ROUND' | translate:{ round: data.round } }}</h3>
-  <mat-dialog-content>
-    <div class="row" *ngFor="let tupel of roundTeams; index as index">
-      <div class="col">
-        {{ tupel.homeTeam.name }}
-      </div>
-      <div class="col" style="max-width: 2ch;">
-        -
-      </div>
-      <div class="col">
-        {{ tupel.guestTeam.name }}
-      </div>
-      <div class="col" style="max-width: 5ch;">
-        <button mat-icon-button (click)="removeTeam(index)">
-          -
-        </button>
-      </div>
+<h3 mat-dialog-title class="text-center"> {{ 'EDIT_ROUND' | translate:{ round: data.round } }}</h3>
+<div mat-dialog-content>
+  <div class="row" *ngFor="let tupel of roundTeams; index as index">
+    <div class="col">
+      {{ tupel.homeTeam.name }}
     </div>
-    <div class="row align-items-center">
-      <div class="col">
-        <mat-form-field style="width: 100%">
-          <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' | translate }}" required [(ngModel)]="homeTeam">
-            <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team">
-              {{team.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col" style="max-width: 2ch;">
-        -
-      </div>
-      <div class="col">
-        <mat-form-field style="width: 100%">
-          <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' | translate }}" required [(ngModel)]="guestTeam">
-            <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team">
-              {{team.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <button mat-icon-button (click)="addTeam()">
-        +
+    <div class="col" style="max-width: 2ch;">
+      -
+    </div>
+    <div class="col">
+      {{ tupel.guestTeam.name }}
+    </div>
+    <div class="col-1 pb-2">
+      <button mat-raised-button color="primary" (click)="removeTeam(index)">
+        <mat-icon>
+          delete
+        </mat-icon>
       </button>
     </div>
-    <div class="row">
-      <div class="col">
-        {{ 'PLAN_DATE_FROM'| translate}}:
-        <input matInput #planDateFrom [owlDateTime]="planDateFrom" (dateTimeChange)="setPlanDateFrom($event)" [(ngModel)]="newRoundPlanDateFrom">
-        <button mat-button [owlDateTimeTrigger]="planDateFrom">{{ 'BUTTON.SET_TIME' | translate}}</button>
-        <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateFrom></owl-date-time>
-      </div>
-      <div class="col">
-        {{ 'PLAN_DATE_TO'| translate}}:
-        <input matInput #planDateTo [owlDateTime]="planDateTo" (dateTimeChange)="setPlanDateTo($event)" [(ngModel)]="newRoundPlanDateTo">
-        <button mat-button [owlDateTimeTrigger]="planDateTo">{{ 'BUTTON.SET_TIME' | translate}}</button>
-        <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateTo></owl-date-time>
-      </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <mat-select #home placeholder="{{ 'PLACEHOLDER.HOME_TEAM' | translate }}" required
+          (selectionChange)="addTeam(home.value, guest.value)">
+          <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team">
+            {{team.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="center">
-    <button mat-button (click)="createRound()">
-      {{ 'BUTTON.START_ROUND' | translate }}
-    </button>
-  </mat-dialog-actions>
+    <div class="col" style="max-width: 2ch;">
+      -
+    </div>
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <mat-select #guest placeholder="{{ 'PLACEHOLDER.GUEST_TEAM' | translate }}" required
+          (selectionChange)="addTeam(home.value, guest.value)">
+          <mat-option *ngFor="let team of teamService.allTeams | async" [value]="team">
+            {{team.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-1">
+      &nbsp;
+    </div>
+  </div>
+  <div class="row pb-2">
+    <div class="col-2">
+      {{ 'PLAN_DATE_FROM'| translate}}:
+    </div>
+    <div class="col-2">
+      <input matInput #planDateFrom [owlDateTime]="planDateFrom" (dateTimeChange)="setPlanDateFrom($event)"
+        [(ngModel)]="newRoundPlanDateFrom">
+    </div>
+    <div class="col-2">
+      <button mat-raised-button color="primary" [owlDateTimeTrigger]="planDateFrom">
+        <mat-icon>
+          access_time
+        </mat-icon>
+      </button>
+      <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateFrom></owl-date-time>
+    </div>
+    <div class="col-2">
+      {{ 'PLAN_DATE_TO'| translate}}:
+    </div>
+    <div class="col-2">
+      <input matInput #planDateTo [owlDateTime]="planDateTo" (dateTimeChange)="setPlanDateTo($event)"
+        [(ngModel)]="newRoundPlanDateTo">
+    </div>
+    <div class="col-2">
+      <button mat-raised-button color="primary" [owlDateTimeTrigger]="planDateTo">
+        <mat-icon>
+          access_time
+        </mat-icon>
+      </button>
+      <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateTo></owl-date-time>
+    </div>
+  </div>
 </div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" (click)="createRound()" [disabled]="!isRoundValid()">
+    {{ 'BUTTON.START_ROUND' | translate }}
+  </button>
+</mat-dialog-actions>
