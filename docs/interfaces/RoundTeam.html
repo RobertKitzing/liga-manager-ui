@@ -158,7 +158,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MatDialogRef, MAT_DIALOG_DATA, MatSelectChange } from &#x27;@angular/material&#x27;;
 import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
 import { TeamService } from &#x27;../../../../services/team.service&#x27;;
 import { DateTimeAdapter } from &#x27;ng-pick-datetime&#x27;;
@@ -187,9 +187,10 @@ export class EditTournamentRoundComponent implements OnInit {
 
   @ViewChild(&#x27;planDateTo&#x27;) planDateTo;
   @ViewChild(&#x27;planDateFrom&#x27;) planDateFrom;
-  
-  homeTeam: Team.Fragment;
-  guestTeam: Team.Fragment;
+
+  @ViewChild(&#x27;home&#x27;) home;
+  @ViewChild(&#x27;guest&#x27;) guest;
+
   allTeams: Observable&lt;Team.Fragment[]&gt;;
 
   roundTeams: RoundTeam[] &#x3D; new Array&lt;RoundTeam&gt;();
@@ -225,14 +226,15 @@ export class EditTournamentRoundComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTeam() {
-    if (this.homeTeam !&#x3D;&#x3D; this.guestTeam) {
+  addTeam(homeTeam: Team.Fragment, guestTeam: Team.Fragment) {
+
+    if (homeTeam &amp;&amp; guestTeam &amp;&amp; homeTeam !&#x3D;&#x3D; guestTeam) {
       this.roundTeams.push({
-        homeTeam: this.homeTeam,
-        guestTeam: this.guestTeam
+        homeTeam: homeTeam,
+        guestTeam: guestTeam
       });
-      delete this.homeTeam;
-      delete this.guestTeam;
+      this.home.value &#x3D; null;
+      this.guest.value &#x3D; null;
     }
   }
 
@@ -272,6 +274,10 @@ export class EditTournamentRoundComponent implements OnInit {
 
   setPlanDateTo(event: any) {
     this.newRoundPlanDateTo &#x3D; event.value;
+  }
+
+  isRoundValid(): boolean {
+    return this.newRoundPlanDateFrom &amp;&amp; this.newRoundPlanDateTo &amp;&amp; this.roundTeams.length &gt; 0;
   }
 }
 </code></pre>
