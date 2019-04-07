@@ -197,7 +197,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(seasonPenaltiesGQL: <a href="../injectables/SeasonPenaltiesGQL.html">SeasonPenaltiesGQL</a>, removePenaltiesGQL: <a href="../injectables/RemoveRankingPenaltyGQL.html">RemoveRankingPenaltyGQL</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, dialog: MatDialog, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, translateService: TranslateService)</code>
+<code>constructor(rankingGQL: <a href="../injectables/RankingGQL.html">RankingGQL</a>, seasonPenaltiesGQL: <a href="../injectables/SeasonPenaltiesGQL.html">SeasonPenaltiesGQL</a>, removePenaltiesGQL: <a href="../injectables/RemoveRankingPenaltyGQL.html">RemoveRankingPenaltyGQL</a>, i18Service: <a href="../injectables/I18Service.html">I18Service</a>, dialog: MatDialog, notify: <a href="../injectables/NotificationService.html">NotificationService</a>, translateService: TranslateService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -219,6 +219,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                                <tr>
+                                                        <td>rankingGQL</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/RankingGQL.html" target="_self" >RankingGQL</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                                 <tr>
                                                         <td>seasonPenaltiesGQL</td>
                                                   
@@ -354,8 +366,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:41</a></div>
                 </td>
             </tr>
 
@@ -393,8 +405,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:37</a></div>
                 </td>
             </tr>
 
@@ -432,8 +444,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:32</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:33</a></div>
                 </td>
             </tr>
 
@@ -471,8 +483,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:47</a></div>
                 </td>
             </tr>
 
@@ -555,8 +567,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:56</a></div>
                 </td>
             </tr>
 
@@ -630,7 +642,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/admin/manageseason/manage-penalty/manage-penalty.component.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -671,7 +683,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, OnChanges } from &#x27;@angular/core&#x27;;
-import { SeasonPenaltiesGQL, SeasonPenalties, Penalty, RemoveRankingPenaltyGQL } from &#x27;src/api/graphql&#x27;;
+import { SeasonPenaltiesGQL, SeasonPenalties, Penalty, RemoveRankingPenaltyGQL, RankingGQL } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { MatDialog } from &#x27;@angular/material&#x27;;
@@ -693,6 +705,7 @@ export class ManagePenaltyComponent implements OnInit, OnChanges {
   penalties: Observable&lt;SeasonPenalties.Season&gt;;
 
   constructor(
+    private rankingGQL: RankingGQL,
     private seasonPenaltiesGQL: SeasonPenaltiesGQL,
     private removePenaltiesGQL: RemoveRankingPenaltyGQL,
     public i18Service: I18Service,
@@ -742,6 +755,10 @@ export class ManagePenaltyComponent implements OnInit, OnChanges {
                 refetchQueries: [
                   {
                     query: this.seasonPenaltiesGQL.document,
+                    variables: { id: this.manageSeasonId }
+                  },
+                  {
+                    query: this.rankingGQL.document,
                     variables: { id: this.manageSeasonId }
                   }
                 ]

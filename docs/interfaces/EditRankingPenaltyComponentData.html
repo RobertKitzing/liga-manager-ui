@@ -160,7 +160,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
 import { MAT_DIALOG_DATA, MatSelect, MatDialogRef } from &#x27;@angular/material&#x27;;
-import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL } from &#x27;src/api/graphql&#x27;;
+import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL, RankingGQL } from &#x27;src/api/graphql&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import * as uuidv4 from &#x27;uuid/v4&#x27;;
@@ -189,7 +189,8 @@ export class EditRankingPenaltyComponent implements OnInit {
     private dialogRef: MatDialogRef&lt;EditRankingPenaltyComponent&gt;,
     private notify: NotificationService,
     private seasonPenaltiesGQL: SeasonPenaltiesGQL,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private rankingGQL: RankingGQL
   ) { }
 
   ngOnInit() {
@@ -210,13 +211,17 @@ export class EditRankingPenaltyComponent implements OnInit {
         points: this.penaltyPoints,
         reason: this.penaltyReason
       }, {
-        refetchQueries: [
-          {
-            query: this.seasonPenaltiesGQL.document,
-            variables: {id: this.data.season.id}
-          }
-        ]
-      }).toPromise();
+          refetchQueries: [
+            {
+              query: this.seasonPenaltiesGQL.document,
+              variables: { id: this.data.season.id }
+            },
+            {
+              query: this.rankingGQL.document,
+              variables: { id: this.data.season.id }
+            }
+          ]
+        }).toPromise();
       this.notify.showSuccessNotification(this.translateService.instant(&#x27;PENALTY_SAVED&#x27;));
       this.dialogRef.close(true);
     } catch (error) {
