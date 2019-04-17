@@ -134,10 +134,10 @@
                                 <a href="#i18Service">i18Service</a>
                             </li>
                             <li>
-                                <a href="#tournament">tournament</a>
+                                <a href="#selectedTournament">selectedTournament</a>
                             </li>
                             <li>
-                                <a href="#tournamentId">tournamentId</a>
+                                <a href="#tournament">tournament</a>
                             </li>
                             <li>
                                 <a href="#tournaments">tournaments</a>
@@ -166,6 +166,9 @@
                             <li>
                                 <a href="#tournamentChanged">tournamentChanged</a>
                             </li>
+                            <li>
+                                <a href="#tournamentCompare">tournamentCompare</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -184,7 +187,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(i18Service: <a href="../injectables/I18Service.html">I18Service</a>, allTournamentQGL: <a href="../injectables/AllTournamentListGQL.html">AllTournamentListGQL</a>, tournamentQGL: <a href="../injectables/TournamentGQL.html">TournamentGQL</a>, matchService: <a href="../injectables/MatchService.html">MatchService</a>)</code>
+<code>constructor(i18Service: <a href="../injectables/I18Service.html">I18Service</a>, allTournamentQGL: <a href="../injectables/AllTournamentListGQL.html">AllTournamentListGQL</a>, tournamentQGL: <a href="../injectables/TournamentGQL.html">TournamentGQL</a>, matchService: <a href="../injectables/MatchService.html">MatchService</a>, localStorageService: LocalStorageService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -254,6 +257,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>localStorageService</td>
+                                                  
+                                                        <td>
+                                                                    <code>LocalStorageService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -294,8 +309,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:75</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="79"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:79</a></div>
                 </td>
             </tr>
 
@@ -333,8 +348,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:50</a></div>
                 </td>
             </tr>
 
@@ -403,8 +418,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:31</a></div>
                 </td>
             </tr>
 
@@ -442,8 +457,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:53</a></div>
                 </td>
             </tr>
 
@@ -454,6 +469,88 @@
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tournamentCompare"></a>
+                    <span class="name">
+                        <b>
+                            tournamentCompare
+                        </b>
+                        <a href="#tournamentCompare"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>tournamentCompare(t1: AllTournamentList.AllTournaments, t2: AllTournamentList.AllTournaments)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:106</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>t1</td>
+                                    <td>
+                                            <code>AllTournamentList.AllTournaments</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>t2</td>
+                                    <td>
+                                            <code>AllTournamentList.AllTournaments</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -497,6 +594,42 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="selectedTournament"></a>
+                        <span class="name">
+                            <b>
+                            selectedTournament</b>
+                            <a href="#selectedTournament"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Tournament.Fragment</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @LocalStorage(SELECTED_TOURNAMENT_KEY)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/tournament/tournament.component.ts:21</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="tournament"></a>
                         <span class="name">
                             <b>
@@ -514,42 +647,6 @@
                         <tr>
                             <td class="col-md-4">
                                     <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/tournament/tournament.component.ts:19</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="tournamentId"></a>
-                        <span class="name">
-                            <b>
-                            tournamentId</b>
-                            <a href="#tournamentId"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <b>Decorators : </b>
-                            <br />
-                            <code>
-                                @LocalStorage(SELECTED_TOURNAMENT_KEY)<br />
-                            </code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/tournament/tournament.component.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -594,7 +691,7 @@ import { I18Service } from &#x27;../../services/i18.service&#x27;;
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
-import { LocalStorage } from &#x27;ngx-store&#x27;;
+import { LocalStorage, LocalStorageService } from &#x27;ngx-store&#x27;;
 import { MatchService } from &#x27;src/app/services/match.service&#x27;;
 
 export const SELECTED_TOURNAMENT_KEY &#x3D; &#x27;SELECTED_TOURNAMENT&#x27;;
@@ -609,25 +706,29 @@ export class TournamentComponent implements OnInit {
   tournaments: Observable&lt;AllTournamentList.AllTournaments[]&gt;;
   tournament: Observable&lt;Tournament.Fragment&gt;;
 
-  @LocalStorage(SELECTED_TOURNAMENT_KEY) tournamentId: string;
+  @LocalStorage(SELECTED_TOURNAMENT_KEY) selectedTournament: Tournament.Fragment;
 
   constructor(
     public i18Service: I18Service,
     private allTournamentQGL: AllTournamentListGQL,
     private tournamentQGL: TournamentGQL,
-    private matchService: MatchService
+    private matchService: MatchService,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit() {
     this.tournaments &#x3D; this.allTournamentQGL.watch().valueChanges.pipe(
       map(({ data }) &#x3D;&gt; data.allTournaments)
     );
-    if (this.tournamentId) {
+    if (typeof this.selectedTournament &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+      this.localStorageService.remove(SELECTED_TOURNAMENT_KEY);
+    }
+    if (this.selectedTournament) {
       this.tournamentChanged();
     }
     this.matchService.tournamentMatchUpdated.subscribe(
       (event) &#x3D;&gt; {
-        if (event.tournamentId &#x3D;&#x3D;&#x3D; this.tournamentId) {
+        if (event.tournamentId &#x3D;&#x3D;&#x3D; this.selectedTournament) {
           this.matchUpdated(event.matchId);
         }
       }
@@ -641,7 +742,7 @@ export class TournamentComponent implements OnInit {
 
     this.tournament &#x3D; this.tournamentQGL.watch(
       {
-        id: this.tournamentId
+        id: this.selectedTournament.id
       }
     ).valueChanges.pipe(
       map(({ data }) &#x3D;&gt; {
@@ -689,6 +790,10 @@ export class TournamentComponent implements OnInit {
   //     this.winnerLastRound &#x3D; this.winnerLastRound.sort((a, b) &#x3D;&gt; a.name.toLowerCase() &gt; b.name.toLowerCase() ? 1 : -1);
   //   }
   // }
+
+  tournamentCompare(t1: AllTournamentList.AllTournaments, t2: AllTournamentList.AllTournaments ) {
+    return t1 &amp;&amp; t2 &amp;&amp; t1.id &#x3D;&#x3D;&#x3D; t2.id;
+  }
 }
 </code></pre>
     </div>
@@ -698,15 +803,15 @@ export class TournamentComponent implements OnInit {
   &lt;div class&#x3D;&quot;text-center&quot;&gt;
     &lt;mat-form-field&gt;
       &lt;mat-select #tournamentSelect placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_TOURNAMENT&#x27; | translate }}&quot; (selectionChange)&#x3D;&quot;tournamentChanged()&quot;
-        [(value)]&#x3D;&quot;tournamentId&quot;&gt;
-        &lt;mat-option *ngFor&#x3D;&quot;let tournament of tournaments | async&quot; [value]&#x3D;&quot;tournament.id&quot;&gt;
+        [(value)]&#x3D;&quot;selectedTournament&quot; [compareWith]&#x3D;&quot;tournamentCompare&quot;&gt;
+        &lt;mat-option *ngFor&#x3D;&quot;let tournament of tournaments | async&quot; [value]&#x3D;&quot;tournament&quot;&gt;
           {{ tournament.name }}
         &lt;/mat-option&gt;
       &lt;/mat-select&gt;
     &lt;/mat-form-field&gt;
   &lt;/div&gt;
   &lt;ng-template #loading&gt;
-    &lt;mat-progress-bar mode&#x3D;&quot;indeterminate&quot; *ngIf&#x3D;&quot;tournamentId&quot;&gt;&lt;/mat-progress-bar&gt;
+    &lt;mat-progress-bar mode&#x3D;&quot;indeterminate&quot; *ngIf&#x3D;&quot;selectedTournament&quot;&gt;&lt;/mat-progress-bar&gt;
   &lt;/ng-template&gt;
   &lt;ng-container *ngIf&#x3D;&quot;(tournament | async) as tournament; else loading&quot;&gt;
     &lt;div *ngIf&#x3D;&quot;!tournament.rounds&quot;&gt;
@@ -771,7 +876,7 @@ export class TournamentComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid" style="margin-top: 30px;">  <div class="text-center">    <mat-form-field>      <mat-select #tournamentSelect placeholder="{{ \'PLACEHOLDER.SELECT_TOURNAMENT\' | translate }}" (selectionChange)="tournamentChanged()"        [(value)]="tournamentId">        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament.id">          {{ tournament.name }}        </mat-option>      </mat-select>    </mat-form-field>  </div>  <ng-template #loading>    <mat-progress-bar mode="indeterminate" *ngIf="tournamentId"></mat-progress-bar>  </ng-template>  <ng-container *ngIf="(tournament | async) as tournament; else loading">    <div *ngIf="!tournament.rounds">      {{ \'NO_TOURNAMENT_ROUNDS_YET\' | translate}}    </div>    <ng-container *ngFor="let round of tournament.rounds">      <!-- <div class="card" *ngIf="winnerLastRound">        <div class="card-header justify-content-center">          {{ \'WINNER_LAST_ROUND\' | translate }}        </div>        <div class="card-body justify-content-center">          <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">            {{ winner.name }}          </div>        </div>      </div> -->      <div class="text-center">        <ng-container [ngSwitch]="round.matches.length">          <h3 *ngSwitchCase="4">{{ \'VIERTELFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="2">{{ \'HALBFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="1">{{ \'FINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchDefault>{{ round.number }}. {{ \'ROUND\' | translate }}</h3>        </ng-container>        <ng-container *ngFor="let match of round.matches">          <app-match [match]="match" [tournamentId]="tournamentId"></app-match>        </ng-container>      </div>    </ng-container>  </ng-container></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid" style="margin-top: 30px;">  <div class="text-center">    <mat-form-field>      <mat-select #tournamentSelect placeholder="{{ \'PLACEHOLDER.SELECT_TOURNAMENT\' | translate }}" (selectionChange)="tournamentChanged()"        [(value)]="selectedTournament" [compareWith]="tournamentCompare">        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">          {{ tournament.name }}        </mat-option>      </mat-select>    </mat-form-field>  </div>  <ng-template #loading>    <mat-progress-bar mode="indeterminate" *ngIf="selectedTournament"></mat-progress-bar>  </ng-template>  <ng-container *ngIf="(tournament | async) as tournament; else loading">    <div *ngIf="!tournament.rounds">      {{ \'NO_TOURNAMENT_ROUNDS_YET\' | translate}}    </div>    <ng-container *ngFor="let round of tournament.rounds">      <!-- <div class="card" *ngIf="winnerLastRound">        <div class="card-header justify-content-center">          {{ \'WINNER_LAST_ROUND\' | translate }}        </div>        <div class="card-body justify-content-center">          <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">            {{ winner.name }}          </div>        </div>      </div> -->      <div class="text-center">        <ng-container [ngSwitch]="round.matches.length">          <h3 *ngSwitchCase="4">{{ \'VIERTELFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="2">{{ \'HALBFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="1">{{ \'FINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchDefault>{{ round.number }}. {{ \'ROUND\' | translate }}</h3>        </ng-container>        <ng-container *ngFor="let match of round.matches">          <app-match [match]="match" [tournamentId]="tournamentId"></app-match>        </ng-container>      </div>    </ng-container>  </ng-container></div></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditTournamentRoundComponent', 'selector': 'app-edit-tournament-round'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TournamentComponent'};
