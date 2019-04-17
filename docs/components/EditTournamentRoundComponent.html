@@ -1209,8 +1209,8 @@ export class EditTournamentRoundComponent implements OnInit {
         {
           tournament_id: this.data.tournamentId,
           date_period: {
-            from: this.newRoundPlanDateFrom,
-            to: this.newRoundPlanDateTo
+            from: new Date(this.newRoundPlanDateFrom).toDateString(),
+            to: new Date(this.newRoundPlanDateTo).toDateString()
           },
           round: this.data.round,
           team_id_pairs: this.roundTeams.map((t) &#x3D;&gt; ({ home_team_id: t.homeTeam.id, guest_team_id: t.guestTeam.id }))
