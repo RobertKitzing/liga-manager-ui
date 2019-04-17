@@ -860,7 +860,7 @@ export class AppComponent implements OnInit {
 
   loadGoogleMapsScript() {
     const googleMapsJS &#x3D; document.getElementById(&#x27;googelmapsscript&#x27;);
-    if (!googleMapsJS) {
+    if (!googleMapsJS &amp;&amp; this.appsettingsService.appsettings.googleMapsApiKey) {
       const tag &#x3D; document.createElement(&#x27;script&#x27;);
       tag.src &#x3D; &#x27;https://maps.googleapis.com/maps/api/js?key&#x3D;&#x27; + this.appsettingsService.appsettings.googleMapsApiKey + &#x27;&amp;libraries&#x3D;places&#x27;;
       tag.type &#x3D; &#x27;text/javascript&#x27;;
