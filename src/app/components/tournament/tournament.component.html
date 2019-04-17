@@ -2,15 +2,15 @@
   <div class="text-center">
     <mat-form-field>
       <mat-select #tournamentSelect placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}" (selectionChange)="tournamentChanged()"
-        [(value)]="tournamentId">
-        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament.id">
+        [(value)]="selectedTournament" [compareWith]="tournamentCompare">
+        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">
           {{ tournament.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <ng-template #loading>
-    <mat-progress-bar mode="indeterminate" *ngIf="tournamentId"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" *ngIf="selectedTournament"></mat-progress-bar>
   </ng-template>
   <ng-container *ngIf="(tournament | async) as tournament; else loading">
     <div *ngIf="!tournament.rounds">

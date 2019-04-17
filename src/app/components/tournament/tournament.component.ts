@@ -3,7 +3,7 @@ import { I18Service } from '../../services/i18.service';
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage, LocalStorageService } from 'ngx-store';
 import { MatchService } from 'src/app/services/match.service';
 
 export const SELECTED_TOURNAMENT_KEY = 'SELECTED_TOURNAMENT';
@@ -18,25 +18,29 @@ export class TournamentComponent implements OnInit {
   tournaments: Observable<AllTournamentList.AllTournaments[]>;
   tournament: Observable<Tournament.Fragment>;
 
-  @LocalStorage(SELECTED_TOURNAMENT_KEY) tournamentId: string;
+  @LocalStorage(SELECTED_TOURNAMENT_KEY) selectedTournament: Tournament.Fragment;
 
   constructor(
     public i18Service: I18Service,
     private allTournamentQGL: AllTournamentListGQL,
     private tournamentQGL: TournamentGQL,
-    private matchService: MatchService
+    private matchService: MatchService,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit() {
     this.tournaments = this.allTournamentQGL.watch().valueChanges.pipe(
       map(({ data }) => data.allTournaments)
     );
-    if (this.tournamentId) {
+    if (typeof this.selectedTournament === 'string') {
+      this.localStorageService.remove(SELECTED_TOURNAMENT_KEY);
+    }
+    if (this.selectedTournament) {
       this.tournamentChanged();
     }
     this.matchService.tournamentMatchUpdated.subscribe(
       (event) => {
-        if (event.tournamentId === this.tournamentId) {
+        if (event.tournamentId === this.selectedTournament) {
           this.matchUpdated(event.matchId);
         }
       }
@@ -50,7 +54,7 @@ export class TournamentComponent implements OnInit {
 
     this.tournament = this.tournamentQGL.watch(
       {
-        id: this.tournamentId
+        id: this.selectedTournament.id
       }
     ).valueChanges.pipe(
       map(({ data }) => {
@@ -98,4 +102,8 @@ export class TournamentComponent implements OnInit {
   //     this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
   //   }
   // }
+
+  tournamentCompare(t1: AllTournamentList.AllTournaments, t2: AllTournamentList.AllTournaments ) {
+    return t1 && t2 && t1.id === t2.id;
+  }
 }
