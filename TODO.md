@@ -1,3 +1,4 @@
+- Remove GoogleMapsApiKey from github
 - Fix loading template on error
 - Implement RankingPenalty Display
 - Redesign Dialogs

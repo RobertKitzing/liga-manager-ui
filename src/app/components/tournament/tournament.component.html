@@ -29,10 +29,10 @@
       </div> -->
       <div class="text-center">
         <ng-container [ngSwitch]="round.matches.length">
-          <h3 *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }} ({{ round.number + 1 }}. {{ 'ROUND' | translate }})</h3>
-          <h3 *ngSwitchCase="2">{{ 'HALBFINALE' | translate }} ({{ round.number + 1 }}. {{ 'ROUND' | translate }})</h3>
-          <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }} ({{ round.number + 1 }}. {{ 'ROUND' | translate }})</h3>
-          <h3 *ngSwitchDefault>{{ round.number + 1 }}. {{ 'ROUND' | translate }}</h3>
+          <h3 *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }} ({{ round.number }}. {{ 'ROUND' | translate }})</h3>
+          <h3 *ngSwitchCase="2">{{ 'HALBFINALE' | translate }} ({{ round.number }}. {{ 'ROUND' | translate }})</h3>
+          <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }} ({{ round.number }}. {{ 'ROUND' | translate }})</h3>
+          <h3 *ngSwitchDefault>{{ round.number }}. {{ 'ROUND' | translate }}</h3>
         </ng-container>
         <ng-container *ngFor="let match of round.matches">
           <app-match [match]="match" [tournamentId]="tournamentId"></app-match>
