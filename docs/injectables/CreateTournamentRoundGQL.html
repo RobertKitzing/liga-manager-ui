@@ -136,7 +136,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="1422" class="link-to-prism">src/api/graphql.ts:1422</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="1426" class="link-to-prism">src/api/graphql.ts:1426</a></div>
                             </td>
                         </tr>
 
@@ -174,6 +174,10 @@ export enum UserRole {
   TeamManager &#x3D; &quot;team_manager&quot;
 }
 
+/** The &#x60;String&#x60; scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
+export type DateTime &#x3D; any;
+
+/** The &#x60;String&#x60; scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
 export type Date &#x3D; any;
 
 // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
@@ -197,7 +201,7 @@ export namespace SubmitResult {
 export namespace ScheduleMatch {
   export type Variables &#x3D; {
     match_id: string;
-    kickoff: string;
+    kickoff: DateTime;
   };
 
   export type Mutation &#x3D; {
@@ -764,7 +768,7 @@ export namespace Match {
 
     guest_score: Maybe&lt;number&gt;;
 
-    kickoff: Maybe&lt;string&gt;;
+    kickoff: Maybe&lt;DateTime&gt;;
 
     pitch: Maybe&lt;Pitch&gt;;
 
@@ -1226,7 +1230,7 @@ export class ScheduleMatchGQL extends Apollo.Mutation&lt;
   ScheduleMatch.Variables
 &gt; {
   document: any &#x3D; gql&#x60;
-    mutation ScheduleMatch($match_id: String!, $kickoff: String!) {
+    mutation ScheduleMatch($match_id: String!, $kickoff: DateTime!) {
       scheduleMatch(match_id: $match_id, kickoff: $kickoff)
     }
   &#x60;;
