@@ -11,7 +11,7 @@ mutation SubmitResult(
 }
 mutation ScheduleMatch(
     $match_id: String!,
-    $kickoff: String!
+    $kickoff: DateTime!
 ) {
     scheduleMatch(match_id: $match_id, kickoff: $kickoff)
 }

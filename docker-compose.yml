@@ -1,5 +1,13 @@
 version: '3'
 services:
+  tests:
+    image: node:10.15.3
+    ports:
+      - "9867:9867"
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm test
   ui:
     image: node:10.15.3
     ports:
@@ -28,6 +36,11 @@ services:
       - ./env/api.env 
     depends_on:
       - mariadb
+      - redis
+  redis:
+    image: redis:4-alpine
+    ports:
+      - "127.0.0.1:6379:6379"
   mariadb:
     image: mariadb:10.3.12
     ports:

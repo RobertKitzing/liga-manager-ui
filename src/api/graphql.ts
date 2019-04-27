@@ -24,6 +24,10 @@ export enum UserRole {
   TeamManager = "team_manager"
 }
 
+/** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
+export type DateTime = any;
+
+/** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
 export type Date = any;
 
 // ====================================================
@@ -47,7 +51,7 @@ export namespace SubmitResult {
 export namespace ScheduleMatch {
   export type Variables = {
     match_id: string;
-    kickoff: string;
+    kickoff: DateTime;
   };
 
   export type Mutation = {
@@ -614,7 +618,7 @@ export namespace Match {
 
     guest_score: Maybe<number>;
 
-    kickoff: Maybe<string>;
+    kickoff: Maybe<DateTime>;
 
     pitch: Maybe<Pitch>;
 
@@ -1076,7 +1080,7 @@ export class ScheduleMatchGQL extends Apollo.Mutation<
   ScheduleMatch.Variables
 > {
   document: any = gql`
-    mutation ScheduleMatch($match_id: String!, $kickoff: String!) {
+    mutation ScheduleMatch($match_id: String!, $kickoff: DateTime!) {
       scheduleMatch(match_id: $match_id, kickoff: $kickoff)
     }
   `;
