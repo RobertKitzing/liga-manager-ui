@@ -155,9 +155,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#getWinner">getWinner</a>
-                            </li>
-                            <li>
                                 <a href="#matchUpdated">matchUpdated</a>
                             </li>
                             <li>
@@ -168,6 +165,9 @@
                             </li>
                             <li>
                                 <a href="#tournamentCompare">tournamentCompare</a>
+                            </li>
+                            <li>
+                                <a href="#winnerOfRound">winnerOfRound</a>
                             </li>
                         </ul>
                     </td>
@@ -287,45 +287,6 @@
     <h3 id="methods">
         Methods
     </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getWinner"></a>
-                    <span class="name">
-                        <b>
-                            getWinner
-                        </b>
-                        <a href="#getWinner"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getWinner()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:79</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -496,8 +457,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="106"
-                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:106</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:69</a></div>
                 </td>
             </tr>
 
@@ -547,6 +508,76 @@
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="winnerOfRound"></a>
+                    <span class="name">
+                        <b>
+                            winnerOfRound
+                        </b>
+                        <a href="#winnerOfRound"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>winnerOfRound(round: MatchDay.Fragment)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">src/app/components/tournament/tournament.component.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>round</td>
+                                    <td>
+                                            <code>MatchDay.Fragment</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>[] | null</code>
 
                     </div>
                     <div class="io-description">
@@ -688,7 +719,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { I18Service } from &#x27;../../services/i18.service&#x27;;
-import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } from &#x27;src/api/graphql&#x27;;
+import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament, Team, MatchDay } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { LocalStorage, LocalStorageService } from &#x27;ngx-store&#x27;;
@@ -752,82 +783,50 @@ export class TournamentComponent implements OnInit {
         return data.tournament;
       })
     );
-
-    // this.matches &#x3D; null;
-    // const matches &#x3D; await this.matchService.getMatchesInTournament(this.tournament.id);
-    // this.tournamentRounds &#x3D; await this.matchService.getRoundsInTournament(this.tournament.id);
-    // this.matches &#x3D; new Array&lt;MatchViewModel[]&gt;();
-    // for (let round &#x3D; 0; round &lt; this.tournamentRounds.length; round++) {
-    //   this.matches[round] &#x3D; matches.filter(m &#x3D;&gt; this.getRound(m.match_day_id).number &#x3D;&#x3D;&#x3D; (round + 1));
-    // }
-    // this.matches &#x3D; this.matches.reverse();
-    // this.getWinner();
   }
-
-  getWinner() {
-    // this.winnerLastRound &#x3D; new Array&lt;Team&gt;();
-    // if (this.matches[0]) {
-    //   this.matches[0].forEach(
-    //     (match) &#x3D;&gt; {
-    //       if (match.home_score !&#x3D; null &amp;&amp; match.guest_score !&#x3D; null &amp;&amp; match.home_score &gt;&#x3D; 0 &amp;&amp; match.guest_score &gt;&#x3D; 0) {
-    //         this.winnerLastRound.push(match.home_score &gt; match.guest_score ? match.home_team : match.guest_team);
-    //       }
-    //     });
-    //   this.winnerLastRound &#x3D; this.winnerLastRound.sort((a, b) &#x3D;&gt; a.name.toLowerCase() &gt; b.name.toLowerCase() ? 1 : -1);
-    // }
-  }
-
-  // newWinner(match: MatchViewModel) {
-  //   if (match.home_score !&#x3D; null &amp;&amp; match.guest_score !&#x3D; null &amp;&amp; match.home_score &gt;&#x3D; 0 &amp;&amp; match.guest_score &gt;&#x3D; 0) {
-  //     if (match.home_score &gt; match.guest_score) {
-  //       this.winnerLastRound &#x3D; this.winnerLastRound.filter(t &#x3D;&gt; t.id !&#x3D;&#x3D; match.guest_team_id);
-  //       this.winnerLastRound.push(match.home_team);
-  //     } else {
-  //       this.winnerLastRound &#x3D; this.winnerLastRound.filter(t &#x3D;&gt; t.id !&#x3D;&#x3D; match.home_team_id);
-  //       this.winnerLastRound.push(match.guest_team);
-  //     }
-
-  //     this.winnerLastRound &#x3D; this.winnerLastRound.sort((a, b) &#x3D;&gt; a.name.toLowerCase() &gt; b.name.toLowerCase() ? 1 : -1);
-  //   }
-  // }
 
   tournamentCompare(t1: AllTournamentList.AllTournaments, t2: AllTournamentList.AllTournaments ) {
     return t1 &amp;&amp; t2 &amp;&amp; t1.id &#x3D;&#x3D;&#x3D; t2.id;
+  }
+
+  winnerOfRound(round: MatchDay.Fragment): Team.Fragment[] | null {
+    const t &#x3D; round.matches.map(x &#x3D;&gt; {
+      if (x.home_score &gt; x.guest_score) {
+        return x.home_team;
+      } else if (x.home_score &lt; x.guest_score) {
+        return x.guest_team;
+      } else {
+        return null;
+      }
+    });
+    return t.filter(x &#x3D;&gt; x !&#x3D; null);
   }
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot; style&#x3D;&quot;margin-top: 30px;&quot;&gt;
-  &lt;div class&#x3D;&quot;text-center&quot;&gt;
-    &lt;mat-form-field&gt;
-      &lt;mat-select #tournamentSelect placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_TOURNAMENT&#x27; | translate }}&quot; (selectionChange)&#x3D;&quot;tournamentChanged()&quot;
-        [(value)]&#x3D;&quot;selectedTournament&quot; [compareWith]&#x3D;&quot;tournamentCompare&quot;&gt;
-        &lt;mat-option *ngFor&#x3D;&quot;let tournament of tournaments | async&quot; [value]&#x3D;&quot;tournament&quot;&gt;
-          {{ tournament.name }}
-        &lt;/mat-option&gt;
-      &lt;/mat-select&gt;
-    &lt;/mat-form-field&gt;
-  &lt;/div&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot; style&#x3D;&quot;margin-top: 30px;&quot;&gt;
   &lt;ng-template #loading&gt;
     &lt;mat-progress-bar mode&#x3D;&quot;indeterminate&quot; *ngIf&#x3D;&quot;selectedTournament&quot;&gt;&lt;/mat-progress-bar&gt;
   &lt;/ng-template&gt;
+  &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
+    &lt;div class&#x3D;&quot;col-9 col-sm-4 text-center&quot;&gt;
+      &lt;mat-form-field&gt;
+        &lt;mat-select #tournamentSelect placeholder&#x3D;&quot;{{ &#x27;PLACEHOLDER.SELECT_TOURNAMENT&#x27; | translate }}&quot;
+          (selectionChange)&#x3D;&quot;tournamentChanged()&quot; [(value)]&#x3D;&quot;selectedTournament&quot; [compareWith]&#x3D;&quot;tournamentCompare&quot;&gt;
+          &lt;mat-option *ngFor&#x3D;&quot;let tournament of tournaments | async&quot; [value]&#x3D;&quot;tournament&quot;&gt;
+            {{ tournament.name }}
+          &lt;/mat-option&gt;
+        &lt;/mat-select&gt;
+      &lt;/mat-form-field&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
   &lt;ng-container *ngIf&#x3D;&quot;(tournament | async) as tournament; else loading&quot;&gt;
     &lt;div *ngIf&#x3D;&quot;!tournament.rounds&quot;&gt;
       {{ &#x27;NO_TOURNAMENT_ROUNDS_YET&#x27; | translate}}
     &lt;/div&gt;
     &lt;ng-container *ngFor&#x3D;&quot;let round of tournament.rounds&quot;&gt;
-      &lt;!-- &lt;div class&#x3D;&quot;card&quot; *ngIf&#x3D;&quot;winnerLastRound&quot;&gt;
-        &lt;div class&#x3D;&quot;card-header justify-content-center&quot;&gt;
-          {{ &#x27;WINNER_LAST_ROUND&#x27; | translate }}
-        &lt;/div&gt;
-        &lt;div class&#x3D;&quot;card-body justify-content-center&quot;&gt;
-          &lt;div class&#x3D;&quot;row justify-content-center&quot; *ngFor&#x3D;&quot;let winner of winnerLastRound&quot;&gt;
-            {{ winner.name }}
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt; --&gt;
       &lt;div class&#x3D;&quot;text-center&quot;&gt;
         &lt;ng-container [ngSwitch]&#x3D;&quot;round.matches.length&quot;&gt;
           &lt;h3 *ngSwitchCase&#x3D;&quot;4&quot;&gt;{{ &#x27;VIERTELFINALE&#x27; | translate }} ({{ round.number }}. {{ &#x27;ROUND&#x27; | translate }})&lt;/h3&gt;
@@ -835,8 +834,22 @@ export class TournamentComponent implements OnInit {
           &lt;h3 *ngSwitchCase&#x3D;&quot;1&quot;&gt;{{ &#x27;FINALE&#x27; | translate }} ({{ round.number }}. {{ &#x27;ROUND&#x27; | translate }})&lt;/h3&gt;
           &lt;h3 *ngSwitchDefault&gt;{{ round.number }}. {{ &#x27;ROUND&#x27; | translate }}&lt;/h3&gt;
         &lt;/ng-container&gt;
+      &lt;/div&gt;
+      &lt;ng-container *ngIf&#x3D;&quot;(winnerOfRound(round)) as t&quot;&gt;
+        &lt;div class&#x3D;&quot;card mb-4&quot; *ngIf&#x3D;&quot;t.length &gt; 0&quot;&gt;
+          &lt;div class&#x3D;&quot;card-header justify-content-center&quot;&gt;
+            {{ &#x27;WINNER_OF_ROUND&#x27; | translate }}
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;card-body justify-content-center&quot;&gt;
+            &lt;div class&#x3D;&quot;row justify-content-center&quot; *ngFor&#x3D;&quot;let winner of t&quot;&gt;
+              {{ winner?.name }}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/ng-container&gt;
+      &lt;div class&#x3D;&quot;text-center&quot;&gt;
         &lt;ng-container *ngFor&#x3D;&quot;let match of round.matches&quot;&gt;
-          &lt;app-match [match]&#x3D;&quot;match&quot; [tournamentId]&#x3D;&quot;tournamentId&quot;&gt;&lt;/app-match&gt;
+          &lt;app-match [match]&#x3D;&quot;match&quot; [tournamentId]&#x3D;&quot;selectedTournament&quot;&gt;&lt;/app-match&gt;
         &lt;/ng-container&gt;
       &lt;/div&gt;
     &lt;/ng-container&gt;
@@ -876,7 +889,7 @@ export class TournamentComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container-fluid" style="margin-top: 30px;">  <div class="text-center">    <mat-form-field>      <mat-select #tournamentSelect placeholder="{{ \'PLACEHOLDER.SELECT_TOURNAMENT\' | translate }}" (selectionChange)="tournamentChanged()"        [(value)]="selectedTournament" [compareWith]="tournamentCompare">        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">          {{ tournament.name }}        </mat-option>      </mat-select>    </mat-form-field>  </div>  <ng-template #loading>    <mat-progress-bar mode="indeterminate" *ngIf="selectedTournament"></mat-progress-bar>  </ng-template>  <ng-container *ngIf="(tournament | async) as tournament; else loading">    <div *ngIf="!tournament.rounds">      {{ \'NO_TOURNAMENT_ROUNDS_YET\' | translate}}    </div>    <ng-container *ngFor="let round of tournament.rounds">      <!-- <div class="card" *ngIf="winnerLastRound">        <div class="card-header justify-content-center">          {{ \'WINNER_LAST_ROUND\' | translate }}        </div>        <div class="card-body justify-content-center">          <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">            {{ winner.name }}          </div>        </div>      </div> -->      <div class="text-center">        <ng-container [ngSwitch]="round.matches.length">          <h3 *ngSwitchCase="4">{{ \'VIERTELFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="2">{{ \'HALBFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="1">{{ \'FINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchDefault>{{ round.number }}. {{ \'ROUND\' | translate }}</h3>        </ng-container>        <ng-container *ngFor="let match of round.matches">          <app-match [match]="match" [tournamentId]="tournamentId"></app-match>        </ng-container>      </div>    </ng-container>  </ng-container></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container" style="margin-top: 30px;">  <ng-template #loading>    <mat-progress-bar mode="indeterminate" *ngIf="selectedTournament"></mat-progress-bar>  </ng-template>  <div class="row justify-content-center">    <div class="col-9 col-sm-4 text-center">      <mat-form-field>        <mat-select #tournamentSelect placeholder="{{ \'PLACEHOLDER.SELECT_TOURNAMENT\' | translate }}"          (selectionChange)="tournamentChanged()" [(value)]="selectedTournament" [compareWith]="tournamentCompare">          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">            {{ tournament.name }}          </mat-option>        </mat-select>      </mat-form-field>    </div>  </div>  <ng-container *ngIf="(tournament | async) as tournament; else loading">    <div *ngIf="!tournament.rounds">      {{ \'NO_TOURNAMENT_ROUNDS_YET\' | translate}}    </div>    <ng-container *ngFor="let round of tournament.rounds">      <div class="text-center">        <ng-container [ngSwitch]="round.matches.length">          <h3 *ngSwitchCase="4">{{ \'VIERTELFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="2">{{ \'HALBFINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchCase="1">{{ \'FINALE\' | translate }} ({{ round.number }}. {{ \'ROUND\' | translate }})</h3>          <h3 *ngSwitchDefault>{{ round.number }}. {{ \'ROUND\' | translate }}</h3>        </ng-container>      </div>      <ng-container *ngIf="(winnerOfRound(round)) as t">        <div class="card mb-4" *ngIf="t.length > 0">          <div class="card-header justify-content-center">            {{ \'WINNER_OF_ROUND\' | translate }}          </div>          <div class="card-body justify-content-center">            <div class="row justify-content-center" *ngFor="let winner of t">              {{ winner?.name }}            </div>          </div>        </div>      </ng-container>      <div class="text-center">        <ng-container *ngFor="let match of round.matches">          <app-match [match]="match" [tournamentId]="selectedTournament"></app-match>        </ng-container>      </div>    </ng-container>  </ng-container></div></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditTournamentRoundComponent', 'selector': 'app-edit-tournament-round'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TournamentComponent'};
