@@ -1,32 +1,24 @@
-<div class="container-fluid" style="margin-top: 30px;">
-  <div class="text-center">
-    <mat-form-field>
-      <mat-select #tournamentSelect placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}" (selectionChange)="tournamentChanged()"
-        [(value)]="selectedTournament" [compareWith]="tournamentCompare">
-        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">
-          {{ tournament.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+<div class="container" style="margin-top: 30px;">
   <ng-template #loading>
     <mat-progress-bar mode="indeterminate" *ngIf="selectedTournament"></mat-progress-bar>
   </ng-template>
+  <div class="row justify-content-center">
+    <div class="col-9 col-sm-4 text-center">
+      <mat-form-field>
+        <mat-select #tournamentSelect placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
+          (selectionChange)="tournamentChanged()" [(value)]="selectedTournament" [compareWith]="tournamentCompare">
+          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">
+            {{ tournament.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
   <ng-container *ngIf="(tournament | async) as tournament; else loading">
     <div *ngIf="!tournament.rounds">
       {{ 'NO_TOURNAMENT_ROUNDS_YET' | translate}}
     </div>
     <ng-container *ngFor="let round of tournament.rounds">
-      <!-- <div class="card" *ngIf="winnerLastRound">
-        <div class="card-header justify-content-center">
-          {{ 'WINNER_LAST_ROUND' | translate }}
-        </div>
-        <div class="card-body justify-content-center">
-          <div class="row justify-content-center" *ngFor="let winner of winnerLastRound">
-            {{ winner.name }}
-          </div>
-        </div>
-      </div> -->
       <div class="text-center">
         <ng-container [ngSwitch]="round.matches.length">
           <h3 *ngSwitchCase="4">{{ 'VIERTELFINALE' | translate }} ({{ round.number }}. {{ 'ROUND' | translate }})</h3>
@@ -34,8 +26,22 @@
           <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }} ({{ round.number }}. {{ 'ROUND' | translate }})</h3>
           <h3 *ngSwitchDefault>{{ round.number }}. {{ 'ROUND' | translate }}</h3>
         </ng-container>
+      </div>
+      <ng-container *ngIf="(winnerOfRound(round)) as t">
+        <div class="card mb-4" *ngIf="t.length > 0">
+          <div class="card-header justify-content-center">
+            {{ 'WINNER_OF_ROUND' | translate }}
+          </div>
+          <div class="card-body justify-content-center">
+            <div class="row justify-content-center" *ngFor="let winner of t">
+              {{ winner?.name }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="text-center">
         <ng-container *ngFor="let match of round.matches">
-          <app-match [match]="match" [tournamentId]="tournamentId"></app-match>
+          <app-match [match]="match" [tournamentId]="selectedTournament"></app-match>
         </ng-container>
       </div>
     </ng-container>

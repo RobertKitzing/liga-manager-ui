@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="row card-header align-items-center">
                 <div class="col-12 col-sm-4 text-center"
-                    [ngClass]="{'border border-success rounded': tournament && match.home_score > match.guest_score }">
+                    [ngClass]="{'border border-success rounded': isHomeWinner() }">
                     {{ match.home_team.name }}
                 </div>
                 <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">
@@ -15,7 +15,7 @@
                     <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>
                 </div>
                 <div class="col-12 col-sm-4 text-center"
-                    [ngClass]="{'border border-success rounded': tournament && match.home_score < match.guest_score }">
+                    [ngClass]="{'border border-success rounded': isGuestWinner() }">
                     {{ match.guest_team.name }}
                 </div>
             </div>

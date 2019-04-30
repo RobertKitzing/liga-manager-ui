@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { I18Service } from '../../services/i18.service';
-import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament } from 'src/api/graphql';
+import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament, Team, MatchDay } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorage, LocalStorageService } from 'ngx-store';
@@ -64,46 +64,22 @@ export class TournamentComponent implements OnInit {
         return data.tournament;
       })
     );
-
-    // this.matches = null;
-    // const matches = await this.matchService.getMatchesInTournament(this.tournament.id);
-    // this.tournamentRounds = await this.matchService.getRoundsInTournament(this.tournament.id);
-    // this.matches = new Array<MatchViewModel[]>();
-    // for (let round = 0; round < this.tournamentRounds.length; round++) {
-    //   this.matches[round] = matches.filter(m => this.getRound(m.match_day_id).number === (round + 1));
-    // }
-    // this.matches = this.matches.reverse();
-    // this.getWinner();
   }
-
-  getWinner() {
-    // this.winnerLastRound = new Array<Team>();
-    // if (this.matches[0]) {
-    //   this.matches[0].forEach(
-    //     (match) => {
-    //       if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
-    //         this.winnerLastRound.push(match.home_score > match.guest_score ? match.home_team : match.guest_team);
-    //       }
-    //     });
-    //   this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-    // }
-  }
-
-  // newWinner(match: MatchViewModel) {
-  //   if (match.home_score != null && match.guest_score != null && match.home_score >= 0 && match.guest_score >= 0) {
-  //     if (match.home_score > match.guest_score) {
-  //       this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.guest_team_id);
-  //       this.winnerLastRound.push(match.home_team);
-  //     } else {
-  //       this.winnerLastRound = this.winnerLastRound.filter(t => t.id !== match.home_team_id);
-  //       this.winnerLastRound.push(match.guest_team);
-  //     }
-
-  //     this.winnerLastRound = this.winnerLastRound.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
-  //   }
-  // }
 
   tournamentCompare(t1: AllTournamentList.AllTournaments, t2: AllTournamentList.AllTournaments ) {
     return t1 && t2 && t1.id === t2.id;
+  }
+
+  winnerOfRound(round: MatchDay.Fragment): Team.Fragment[] | null {
+    const t = round.matches.map(x => {
+      if (x.home_score > x.guest_score) {
+        return x.home_team;
+      } else if (x.home_score < x.guest_score) {
+        return x.guest_team;
+      } else {
+        return null;
+      }
+    });
+    return t.filter(x => x != null);
   }
 }

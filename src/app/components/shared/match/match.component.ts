@@ -111,6 +111,14 @@ export class MatchComponent implements OnInit {
       });
   }
 
+  isHomeWinner(): boolean {
+    return this.tournamentId && this.match.home_score > this.match.guest_score;
+  }
+
+  isGuestWinner(): boolean {
+    return this.tournamentId && this.match.home_score < this.match.guest_score;
+  }
+
   isNumber(val) {
     return typeof val === 'number';
   }
