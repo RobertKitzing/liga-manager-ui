@@ -170,6 +170,12 @@
                                 <a href="#emitChanges">emitChanges</a>
                             </li>
                             <li>
+                                <a href="#isGuestWinner">isGuestWinner</a>
+                            </li>
+                            <li>
+                                <a href="#isHomeWinner">isHomeWinner</a>
+                            </li>
+                            <li>
                                 <a href="#isNumber">isNumber</a>
                             </li>
                             <li>
@@ -511,6 +517,84 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="isGuestWinner"></a>
+                    <span class="name">
+                        <b>
+                            isGuestWinner
+                        </b>
+                        <a href="#isGuestWinner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isGuestWinner()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">src/app/components/shared/match/match.component.ts:118</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isHomeWinner"></a>
+                    <span class="name">
+                        <b>
+                            isHomeWinner
+                        </b>
+                        <a href="#isHomeWinner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isHomeWinner()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">src/app/components/shared/match/match.component.ts:114</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="isNumber"></a>
                     <span class="name">
                         <b>
@@ -529,8 +613,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="114"
-                            class="link-to-prism">src/app/components/shared/match/match.component.ts:114</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="122"
+                            class="link-to-prism">src/app/components/shared/match/match.component.ts:122</a></div>
                 </td>
             </tr>
 
@@ -1100,6 +1184,14 @@ export class MatchComponent implements OnInit {
       });
   }
 
+  isHomeWinner(): boolean {
+    return this.tournamentId &amp;&amp; this.match.home_score &gt; this.match.guest_score;
+  }
+
+  isGuestWinner(): boolean {
+    return this.tournamentId &amp;&amp; this.match.home_score &lt; this.match.guest_score;
+  }
+
   isNumber(val) {
     return typeof val &#x3D;&#x3D;&#x3D; &#x27;number&#x27;;
   }
@@ -1116,7 +1208,7 @@ export class MatchComponent implements OnInit {
         &lt;div class&#x3D;&quot;col-12&quot;&gt;
             &lt;div class&#x3D;&quot;row card-header align-items-center&quot;&gt;
                 &lt;div class&#x3D;&quot;col-12 col-sm-4 text-center&quot;
-                    [ngClass]&#x3D;&quot;{&#x27;border border-success rounded&#x27;: tournament &amp;&amp; match.home_score &gt; match.guest_score }&quot;&gt;
+                    [ngClass]&#x3D;&quot;{&#x27;border border-success rounded&#x27;: isHomeWinner() }&quot;&gt;
                     {{ match.home_team.name }}
                 &lt;/div&gt;
                 &lt;div class&#x3D;&quot;col-12 col-sm-4 text-center badge badge-light&quot; style&#x3D;&quot;font-size: large;&quot;&gt;
@@ -1125,7 +1217,7 @@ export class MatchComponent implements OnInit {
                     &lt;ng-template #noResult&gt;-&amp;nbsp;:&amp;nbsp;-&lt;/ng-template&gt;
                 &lt;/div&gt;
                 &lt;div class&#x3D;&quot;col-12 col-sm-4 text-center&quot;
-                    [ngClass]&#x3D;&quot;{&#x27;border border-success rounded&#x27;: tournament &amp;&amp; match.home_score &lt; match.guest_score }&quot;&gt;
+                    [ngClass]&#x3D;&quot;{&#x27;border border-success rounded&#x27;: isGuestWinner() }&quot;&gt;
                     {{ match.guest_team.name }}
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -1232,7 +1324,7 @@ export class MatchComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container" *ngIf="!hideIfPlayed || (hideIfPlayed && !matchService.isMatchPlayed(match))">    <div class="row justify-content-center" *ngIf="!match">        <mat-spinner></mat-spinner>    </div>    <div class="row card" style="margin-bottom: 15px;" *ngIf="match">        <div class="col-12">            <div class="row card-header align-items-center">                <div class="col-12 col-sm-4 text-center"                    [ngClass]="{\'border border-success rounded\': tournament && match.home_score > match.guest_score }">                    {{ match.home_team.name }}                </div>                <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">                    <span *ngIf="isNumber(match.home_score) && isNumber(match.guest_score); else noResult">{{ match.home_score                        }}&nbsp;:&nbsp;{{ match.guest_score }}</span>                    <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>                </div>                <div class="col-12 col-sm-4 text-center"                    [ngClass]="{\'border border-success rounded\': tournament && match.home_score < match.guest_score }">                    {{ match.guest_team.name }}                </div>            </div>            <div class="card-body">                <div class="row align-items-center">                    <div class="col-1 align-self-center">                        <mat-icon>access_time</mat-icon>                    </div>                    <div class="col align-self-center">                        <ng-container *ngIf="match.kickoff">                            <span>{{ match.kickoff | date:\'fullDate\':\'\':i18Service.currentLang }}, </span>                            <span>{{ match.kickoff | date:\'shortTime\':\'\':i18Service.currentLang }}</span>                        </ng-container>                        <span *ngIf="!match.kickoff">{{ \'NO_TIME_SET\' | translate }}</span>                    </div>                    <div class="col-1 align-self-center">                        <mat-icon *ngIf="!match.pitch">location_off</mat-icon>                        <mat-icon *ngIf="match.pitch">location_on</mat-icon>                    </div>                    <div class="col align-self-center" *ngIf="!match.pitch">                        <span>{{ \'NO_PTICH_SET\' | translate }}</span>                    </div>                    <div class="col align-self-center" *ngIf="match.pitch">                        <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}"                            target="_blank" style="cursor: pointer;">                            {{ match.pitch.label }}                        </a>                    </div>                </div>                <div class="row mt-3" *ngIf="match.cancelled_at && match.cancellation_reason">                    <div class="col-12 text-center mb-4">                        {{ \'MATCH_CANCELED_AT\' | translate }} {{ match.cancelled_at | date:\'short\':\'\':i18Service.currentLang }}                    </div>                    <div class="col-12">                        {{ match.cancellation_reason }}                    </div>                </div>            </div>            <div class="row card-footer justiy-content-center">                <div class="col text-center">                    <button mat-raised-button color="primary" (click)="openContactModal()">                        <i class="material-icons">                            perm_contact_calendar                        </i>                    </button>                </div>                <div class="col text-center"                    *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id) || authService.isTeamAdminForTeam(match.guest_team.id)">                    <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu">                        <mat-icon>edit</mat-icon>                    </button>                </div>            </div>        </div>    </div></div><mat-menu #editMenu [overlapTrigger]="false">    <button mat-menu-item (click)="openEditResultDialog()">        {{ \'BUTTON.EDIT_RESULT\' | translate }}    </button>    <button mat-menu-item (click)="openEditPitchDialog()">        {{ \'BUTTON.EDIT_PITCH\' | translate }}    </button>    <button mat-menu-item (click)="openEditTimeDialog()">        {{ \'BUTTON.EDIT_TIME\' | translate }}    </button>    <button mat-menu-item (click)="openCancelMatchDialog()">        {{ \'BUTTON.CANCEL_MATCH\' | translate }}    </button></mat-menu></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container" *ngIf="!hideIfPlayed || (hideIfPlayed && !matchService.isMatchPlayed(match))">    <div class="row justify-content-center" *ngIf="!match">        <mat-spinner></mat-spinner>    </div>    <div class="row card" style="margin-bottom: 15px;" *ngIf="match">        <div class="col-12">            <div class="row card-header align-items-center">                <div class="col-12 col-sm-4 text-center"                    [ngClass]="{\'border border-success rounded\': isHomeWinner() }">                    {{ match.home_team.name }}                </div>                <div class="col-12 col-sm-4 text-center badge badge-light" style="font-size: large;">                    <span *ngIf="isNumber(match.home_score) && isNumber(match.guest_score); else noResult">{{ match.home_score                        }}&nbsp;:&nbsp;{{ match.guest_score }}</span>                    <ng-template #noResult>-&nbsp;:&nbsp;-</ng-template>                </div>                <div class="col-12 col-sm-4 text-center"                    [ngClass]="{\'border border-success rounded\': isGuestWinner() }">                    {{ match.guest_team.name }}                </div>            </div>            <div class="card-body">                <div class="row align-items-center">                    <div class="col-1 align-self-center">                        <mat-icon>access_time</mat-icon>                    </div>                    <div class="col align-self-center">                        <ng-container *ngIf="match.kickoff">                            <span>{{ match.kickoff | date:\'fullDate\':\'\':i18Service.currentLang }}, </span>                            <span>{{ match.kickoff | date:\'shortTime\':\'\':i18Service.currentLang }}</span>                        </ng-container>                        <span *ngIf="!match.kickoff">{{ \'NO_TIME_SET\' | translate }}</span>                    </div>                    <div class="col-1 align-self-center">                        <mat-icon *ngIf="!match.pitch">location_off</mat-icon>                        <mat-icon *ngIf="match.pitch">location_on</mat-icon>                    </div>                    <div class="col align-self-center" *ngIf="!match.pitch">                        <span>{{ \'NO_PTICH_SET\' | translate }}</span>                    </div>                    <div class="col align-self-center" *ngIf="match.pitch">                        <a href="https://www.google.com/maps/?q={{ match.pitch.location_latitude }},{{ match.pitch.location_longitude }}"                            target="_blank" style="cursor: pointer;">                            {{ match.pitch.label }}                        </a>                    </div>                </div>                <div class="row mt-3" *ngIf="match.cancelled_at && match.cancellation_reason">                    <div class="col-12 text-center mb-4">                        {{ \'MATCH_CANCELED_AT\' | translate }} {{ match.cancelled_at | date:\'short\':\'\':i18Service.currentLang }}                    </div>                    <div class="col-12">                        {{ match.cancellation_reason }}                    </div>                </div>            </div>            <div class="row card-footer justiy-content-center">                <div class="col text-center">                    <button mat-raised-button color="primary" (click)="openContactModal()">                        <i class="material-icons">                            perm_contact_calendar                        </i>                    </button>                </div>                <div class="col text-center"                    *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id) || authService.isTeamAdminForTeam(match.guest_team.id)">                    <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu">                        <mat-icon>edit</mat-icon>                    </button>                </div>            </div>        </div>    </div></div><mat-menu #editMenu [overlapTrigger]="false">    <button mat-menu-item (click)="openEditResultDialog()">        {{ \'BUTTON.EDIT_RESULT\' | translate }}    </button>    <button mat-menu-item (click)="openEditPitchDialog()">        {{ \'BUTTON.EDIT_PITCH\' | translate }}    </button>    <button mat-menu-item (click)="openEditTimeDialog()">        {{ \'BUTTON.EDIT_TIME\' | translate }}    </button>    <button mat-menu-item (click)="openCancelMatchDialog()">        {{ \'BUTTON.CANCEL_MATCH\' | translate }}    </button></mat-menu></div>'
     var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CancelMatchDialogComponent', 'selector': 'app-cancel-match-dialog'},{'name': 'ChangepasswordComponent', 'selector': 'app-changepassword'},{'name': 'ConfirmDialogComponent', 'selector': 'app-confirm-dialog'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ContactlistComponent', 'selector': 'app-contactlist'},{'name': 'ContactPersonComponent', 'selector': 'app-contact-person'},{'name': 'CreatePitchDialogComponent', 'selector': 'app-create-pitch-dialog'},{'name': 'EditContactComponent', 'selector': 'app-edit-contact'},{'name': 'EditmatchPitchComponent', 'selector': 'app-editmatch.pitch'},{'name': 'EditmatchResultComponent', 'selector': 'app-editmatchresult'},{'name': 'EditmatchTimeComponent', 'selector': 'app-editmatch.time'},{'name': 'EditPitchContactDialogComponent', 'selector': 'app-edit-pitch-contact-dialog'},{'name': 'EditRankingPenaltyComponent', 'selector': 'app-edit-ranking-penalty'},{'name': 'EditTournamentRoundComponent', 'selector': 'app-edit-tournament-round'},{'name': 'EditUserDialogComponent', 'selector': 'app-edit-user-dialog'},{'name': 'EventsComponent', 'selector': 'app-events'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ManagePenaltyComponent', 'selector': 'app-manage-penalty'},{'name': 'ManagepitchesComponent', 'selector': 'app-managepitches'},{'name': 'ManageseasonComponent', 'selector': 'app-manageseason'},{'name': 'ManageteamsComponent', 'selector': 'app-manageteams'},{'name': 'ManagetournamentComponent', 'selector': 'app-managetournament'},{'name': 'ManageusersComponent', 'selector': 'app-manageusers'},{'name': 'MatchComponent', 'selector': 'app-match'},{'name': 'MatchplanComponent', 'selector': 'app-matchplan'},{'name': 'MatchSchedulingComponent', 'selector': 'app-match-scheduling'},{'name': 'NewpasswordComponent', 'selector': 'app-newpassword'},{'name': 'PitchesComponent', 'selector': 'app-pitches'},{'name': 'RenameTeamComponent', 'selector': 'app-rename-team'},{'name': 'SeasonchooserComponent', 'selector': 'app-seasonchooser'},{'name': 'SnackbarComponent', 'selector': 'app-snackbar'},{'name': 'TableComponent', 'selector': 'app-table'},{'name': 'TeamadminComponent', 'selector': 'app-teamadmin'},{'name': 'TeamsComponent', 'selector': 'app-teams'},{'name': 'TournamentComponent', 'selector': 'app-tournament'},{'name': 'UserListComponent', 'selector': 'app-user-list'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MatchComponent'};
