@@ -102,15 +102,16 @@ export class AuthenticationService {
           },
           {
             context: {
-              headers: oldPassword ?
-                new HttpHeaders().set('Authorization', 'Basic ' + Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword)) : null
+              headers:
+              new HttpHeaders()
+                .set('Authorization', `Basic ${Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword)}`)
             }
           }
         ).subscribe(
           (response) => {
             resolve();
           }, err => {
-            reject();
+            reject(err);
           });
       }
     );

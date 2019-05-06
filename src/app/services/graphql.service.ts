@@ -49,7 +49,7 @@ export class GraphqlService {
       });
     });
 
-    const errorHandler = onError(({ graphQLErrors, networkError }) => {
+    const errorHandler = onError(({ graphQLErrors, networkError, operation }) => {
       if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
           console.log(
@@ -60,7 +60,9 @@ export class GraphqlService {
       if (networkError) {
         switch (networkError['status']) {
           case 401:
-            this.authService.logout();
+            if (operation.operationName !== 'PasswordChange') {
+              this.authService.logout();
+            }
             break;
           default:
             this.notify.showErrorNotification(this.translationService.instant('UNKNOWN_NETWORK_ERROR'), networkError['statusText']);
@@ -71,6 +73,12 @@ export class GraphqlService {
     const auth = setContext((_, { headers }) => {
       if (!headers) {
         headers = new HttpHeaders();
+      }
+      const authHeader = headers.get('Authorization');
+      if (authHeader) {
+        return {
+          headers: headers
+        };
       }
       const token = this.authService.accessToken;
       if (token) {
