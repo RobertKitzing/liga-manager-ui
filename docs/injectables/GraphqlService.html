@@ -312,7 +312,7 @@ export class GraphqlService {
       });
     });
 
-    const errorHandler &#x3D; onError(({ graphQLErrors, networkError }) &#x3D;&gt; {
+    const errorHandler &#x3D; onError(({ graphQLErrors, networkError, operation }) &#x3D;&gt; {
       if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) &#x3D;&gt;
           console.log(
@@ -323,7 +323,9 @@ export class GraphqlService {
       if (networkError) {
         switch (networkError[&#x27;status&#x27;]) {
           case 401:
-            this.authService.logout();
+            if (operation.operationName !&#x3D;&#x3D; &#x27;PasswordChange&#x27;) {
+              this.authService.logout();
+            }
             break;
           default:
             this.notify.showErrorNotification(this.translationService.instant(&#x27;UNKNOWN_NETWORK_ERROR&#x27;), networkError[&#x27;statusText&#x27;]);
@@ -334,6 +336,12 @@ export class GraphqlService {
     const auth &#x3D; setContext((_, { headers }) &#x3D;&gt; {
       if (!headers) {
         headers &#x3D; new HttpHeaders();
+      }
+      const authHeader &#x3D; headers.get(&#x27;Authorization&#x27;);
+      if (authHeader) {
+        return {
+          headers: headers
+        };
       }
       const token &#x3D; this.authService.accessToken;
       if (token) {

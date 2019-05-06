@@ -575,8 +575,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="119"
-                            class="link-to-prism">src/app/services/authentication.service.ts:119</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">src/app/services/authentication.service.ts:120</a></div>
                 </td>
             </tr>
 
@@ -878,15 +878,16 @@ export class AuthenticationService {
           },
           {
             context: {
-              headers: oldPassword ?
-                new HttpHeaders().set(&#x27;Authorization&#x27;, &#x27;Basic &#x27; + Base64.encode(this.user.email.toLowerCase() + &#x27;:&#x27; + oldPassword)) : null
+              headers:
+              new HttpHeaders()
+                .set(&#x27;Authorization&#x27;, &#x60;Basic ${Base64.encode(this.user.email.toLowerCase() + &#x27;:&#x27; + oldPassword)}&#x60;)
             }
           }
         ).subscribe(
           (response) &#x3D;&gt; {
             resolve();
           }, err &#x3D;&gt; {
-            reject();
+            reject(err);
           });
       }
     );

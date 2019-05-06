@@ -262,15 +262,16 @@ export class AuthenticationService {
           },
           {
             context: {
-              headers: oldPassword ?
-                new HttpHeaders().set(&#x27;Authorization&#x27;, &#x27;Basic &#x27; + Base64.encode(this.user.email.toLowerCase() + &#x27;:&#x27; + oldPassword)) : null
+              headers:
+              new HttpHeaders()
+                .set(&#x27;Authorization&#x27;, &#x60;Basic ${Base64.encode(this.user.email.toLowerCase() + &#x27;:&#x27; + oldPassword)}&#x60;)
             }
           }
         ).subscribe(
           (response) &#x3D;&gt; {
             resolve();
           }, err &#x3D;&gt; {
-            reject();
+            reject(err);
           });
       }
     );
