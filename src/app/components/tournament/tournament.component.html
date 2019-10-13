@@ -26,6 +26,7 @@
           <h3 *ngSwitchCase="1">{{ 'FINALE' | translate }} ({{ round.number }}. {{ 'ROUND' | translate }})</h3>
           <h3 *ngSwitchDefault>{{ round.number }}. {{ 'ROUND' | translate }}</h3>
         </ng-container>
+        <span>{{ round.start_date | date:'shortDate':'':i18Service.currentLang}} - {{ round.end_date | date:'shortDate':'':i18Service.currentLang}}</span>
       </div>
       <ng-container *ngIf="(winnerOfRound(round)) as t">
         <div class="card mb-4" *ngIf="t.length > 0">

@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot --host '0.0.0.0' --port 3098 --disable-host-check",
+    "start": "ng serve --aot --host '0.0.0.0' --port 3098 --disable-host-check --proxy-config proxy.conf.json",
     "build": "rm -R dist && npm run build:web && npm run build:app && npm run build:server",
     "build:angular:web": "ng build --aot --prod",
     "build:angular:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./",
