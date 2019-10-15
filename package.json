@@ -75,7 +75,6 @@
     "moment": "^2.24.0",
     "ng-pick-datetime": "^7.0.0",
     "ngx-store": "^2.1.0",
-    "nswag": "^11.20.1",
     "popper.js": "^1.14.7",
     "queueing-subject": "^0.3.0",
     "rimraf": "^2.6.3",
