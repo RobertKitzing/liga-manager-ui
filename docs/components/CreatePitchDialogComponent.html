@@ -435,7 +435,7 @@
                             <b>Decorators : </b>
                             <br />
                             <code>
-                                @ViewChild(&#x27;adressAutoComplete&#x27;)<br />
+                                @ViewChild(&#x27;adressAutoComplete&#x27;, {static: true})<br />
                             </code>
                         </td>
                     </tr>
@@ -592,7 +592,7 @@
 import { FormControl, Validators, FormBuilder } from &#x27;@angular/forms&#x27;;
 import { Pitch } from &#x27;src/api/graphql&#x27;;
 import { PitchService } from &#x27;src/app/services/pitch.service&#x27;;
-import { MatDialogRef } from &#x27;@angular/material&#x27;;
+import { MatDialogRef } from &#x27;@angular/material/dialog&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
@@ -609,7 +609,7 @@ export class CreatePitchDialogComponent implements OnInit {
   newPitchLabelExist: boolean;
 
   places: google.maps.places.Autocomplete;
-  @ViewChild(&#x27;adressAutoComplete&#x27;) adressAutoComplete: any;
+  @ViewChild(&#x27;adressAutoComplete&#x27;, { static: true }) adressAutoComplete: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -755,6 +755,7 @@ export class CreatePitchDialogComponent implements OnInit {
 
 
 
+                   
 
 
 
@@ -777,6 +778,7 @@ export class CreatePitchDialogComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'CreatePitchDialogComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

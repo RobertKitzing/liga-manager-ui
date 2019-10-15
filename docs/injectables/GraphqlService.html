@@ -275,7 +275,7 @@ import { persistCache } from &#x27;apollo-cache-persist&#x27;;
 import { GraphqlSubscriptionService } from &#x27;./graphql-subscription.service&#x27;;
 import { SubscriptionClient } from &#x27;subscriptions-transport-ws&#x27;;
 import { WebSocketLink } from &#x27;apollo-link-ws&#x27;;
-import { getMainDefinition } from &#x27;apollo-utilities&#x27;;
+import { getMainDefinition, getOperationName } from &#x27;apollo-utilities&#x27;;
 import { onError } from &#x27;apollo-link-error&#x27;;
 import { NotificationService } from &#x27;./notification.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
@@ -368,7 +368,9 @@ export class GraphqlService {
       link &#x3D; split(
         // split based on operation type
         ({ query }) &#x3D;&gt; {
-          const { kind, operation } &#x3D; getMainDefinition(query);
+          const { kind } &#x3D; getMainDefinition(query);
+          const operation &#x3D; getOperationName(query);
+          // const { kind, operation } &#x3D; getMainDefinition(query);
           return kind &#x3D;&#x3D;&#x3D; &#x27;OperationDefinition&#x27; &amp;&amp; operation &#x3D;&#x3D;&#x3D; &#x27;subscription&#x27;;
         },
         wsClient,
@@ -411,6 +413,7 @@ export class GraphqlService {
 
 
 
+                   
 
 
 
@@ -433,6 +436,7 @@ export class GraphqlService {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
             var COMPODOC_CURRENT_PAGE_URL = 'GraphqlService.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

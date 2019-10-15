@@ -524,7 +524,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject } from &#x27;@angular/core&#x27;;
-import { MAT_DIALOG_DATA, MatDialogRef } from &#x27;@angular/material&#x27;;
+import { MAT_DIALOG_DATA, MatDialogRef } from &#x27;@angular/material/dialog&#x27;;
 import { MatchService } from &#x27;../../../services/match.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { Match } from &#x27;src/api/graphql&#x27;;
@@ -649,6 +649,7 @@ export class EditmatchResultComponent implements OnInit {
 
 
 
+                   
 
 
 
@@ -671,6 +672,7 @@ export class EditmatchResultComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'EditmatchResultComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

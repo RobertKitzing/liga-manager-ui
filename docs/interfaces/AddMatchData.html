@@ -222,7 +222,8 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MatDialogRef, MAT_DIALOG_DATA, MatSelectChange } from &#x27;@angular/material&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material/dialog&#x27;;
+import { MatSelectChange } from &#x27;@angular/material/select&#x27;;
 import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
 import { TeamService } from &#x27;../../../../services/team.service&#x27;;
 import { DateTimeAdapter } from &#x27;ng-pick-datetime&#x27;;
@@ -249,11 +250,11 @@ export interface RoundTeam {
 })
 export class EditTournamentRoundComponent implements OnInit {
 
-  @ViewChild(&#x27;planDateTo&#x27;) planDateTo;
-  @ViewChild(&#x27;planDateFrom&#x27;) planDateFrom;
+  @ViewChild(&#x27;planDateTo&#x27;, { static: true }) planDateTo;
+  @ViewChild(&#x27;planDateFrom&#x27;, { static: true }) planDateFrom;
 
-  @ViewChild(&#x27;home&#x27;) home;
-  @ViewChild(&#x27;guest&#x27;) guest;
+  @ViewChild(&#x27;home&#x27;, { static: true }) home;
+  @ViewChild(&#x27;guest&#x27;, { static: true }) guest;
 
   allTeams: Observable&lt;Team.Fragment[]&gt;;
 
@@ -349,6 +350,7 @@ export class EditTournamentRoundComponent implements OnInit {
 </div>
 
 
+                   
 
 
 
@@ -371,6 +373,7 @@ export class EditTournamentRoundComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'AddMatchData.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

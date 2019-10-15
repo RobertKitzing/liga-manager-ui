@@ -552,7 +552,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Output, EventEmitter, Input } from &#x27;@angular/core&#x27;;
 import { SeasonService } from &#x27;../../../services/season.service&#x27;;
-import { MatSelectChange } from &#x27;@angular/material&#x27;;
+import { MatSelectChange } from &#x27;@angular/material/select&#x27;;
 import { AllSeasonsList, SeasonState, AllSeasonsListGQL } from &#x27;src/api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
@@ -678,6 +678,7 @@ export class SeasonchooserComponent implements OnInit {
 
 
 
+                   
 
 
 
@@ -700,6 +701,7 @@ export class SeasonchooserComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'SeasonchooserComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

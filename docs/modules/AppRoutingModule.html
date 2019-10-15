@@ -83,35 +83,35 @@ export const APP_ROUTES: Routes &#x3D; [
   },
   {
     path: &#x27;table&#x27;,
-    loadChildren: &#x27;./components/table#TableModule&#x27;
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/table&#x27;).then(m &#x3D;&gt; m.TableModule)&quot;
   },
   {
     path: &#x27;matchplan&#x27;,
-    loadChildren: &#x27;./components/matchplan#MatchplanModule&#x27;
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/matchplan&#x27;).then(m &#x3D;&gt; m.MatchplanModule)&quot;
   },
   {
     path: &#x27;tournament&#x27;,
-    loadChildren: &#x27;./components/tournament#TournamentModule&#x27;
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/tournament&#x27;).then(m &#x3D;&gt; m.TournamentModule)&quot;
   },
   {
     path: &#x27;newpassword&#x27;,
-    loadChildren: &#x27;./components/newpassword#NewpasswordModule&#x27;,
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/newpassword&#x27;).then(m &#x3D;&gt; m.NewpasswordModule)&quot;,
   },
   {
     path: &#x27;contacts&#x27;,
-    loadChildren: &#x27;./components/contactlist#ContactlistModule&#x27;,
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/contactlist&#x27;).then(m &#x3D;&gt; m.ContactlistModule)&quot;,
     canLoad: [TeamadminGuard],
     canActivate: [TeamadminGuard]
   },
   {
     path: &#x27;admin&#x27;,
-    loadChildren: &#x27;./components/admin#AdminModule&#x27;,
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/admin&#x27;).then(m &#x3D;&gt; m.AdminModule)&quot;,
     canLoad: [AdminGuard],
     canActivate: [AdminGuard]
   },
   {
     path: &#x27;teamadmin&#x27;,
-    loadChildren: &#x27;./components/teamadmin#TeamadminModule&#x27;,
+    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/teamadmin&#x27;).then(m &#x3D;&gt; m.TeamadminModule)&quot;,
     canLoad: [TeamadminGuard],
     canActivate: [TeamadminGuard]
   }
@@ -139,6 +139,7 @@ export class AppRoutingModule { }
 
 
 
+                   
 
 
 
@@ -161,6 +162,7 @@ export class AppRoutingModule { }
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
             var COMPODOC_CURRENT_PAGE_URL = 'AppRoutingModule.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

@@ -526,7 +526,7 @@ import { Observable } from &#x27;rxjs&#x27;;
 import { Pitch, PitchesGQL } from &#x27;src/api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { PitchService } from &#x27;src/app/services/pitch.service&#x27;;
-import { MatDialog } from &#x27;@angular/material&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
 import { EditPitchContactDialogComponent } from &#x27;../../shared/edit-pitch-contact-dialog/edit-pitch-contact-dialog.component&#x27;;
 import { CreatePitchDialogComponent } from &#x27;../../shared/create-pitch-dialog/create-pitch-dialog.component&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
@@ -685,6 +685,7 @@ export class ManagepitchesComponent implements OnInit {
 
 
 
+                   
 
 
 
@@ -707,6 +708,7 @@ export class ManagepitchesComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'ManagepitchesComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

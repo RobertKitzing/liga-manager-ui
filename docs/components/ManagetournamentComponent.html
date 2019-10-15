@@ -1067,7 +1067,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { MatDialog } from &#x27;@angular/material&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, MatchDay, CreateTournamentGQL, DeleteTournamentGQL } from &#x27;../../../../api/graphql&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { Observable, empty } from &#x27;rxjs&#x27;;
@@ -1352,6 +1352,7 @@ export class ManagetournamentComponent implements OnInit {
 
 
 
+                   
 
 
 
@@ -1374,6 +1375,7 @@ export class ManagetournamentComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'ManagetournamentComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

@@ -645,7 +645,7 @@ import { Ranking, RankingGQL, Team, Penalty } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 import { I18Service } from &#x27;../../services/i18.service&#x27;;
-import { MatSnackBar } from &#x27;@angular/material&#x27;;
+import { MatSnackBar } from &#x27;@angular/material/snack-bar&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { MatchService } from &#x27;src/app/services/match.service&#x27;;
 
@@ -803,6 +803,7 @@ export class TableComponent implements OnInit {
 
 
 
+                   
 
 
 
@@ -825,6 +826,7 @@ export class TableComponent implements OnInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'TableComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

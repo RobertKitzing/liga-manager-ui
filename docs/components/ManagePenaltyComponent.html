@@ -686,7 +686,7 @@
 import { SeasonPenaltiesGQL, SeasonPenalties, Penalty, RemoveRankingPenaltyGQL, RankingGQL } from &#x27;src/api/graphql&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
-import { MatDialog } from &#x27;@angular/material&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
 import { EditRankingPenaltyComponent } from &#x27;./edit-ranking-penalty/edit-ranking-penalty.component&#x27;;
 import { I18Service } from &#x27;src/app/services/i18.service&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
@@ -879,6 +879,7 @@ export class ManagePenaltyComponent implements OnInit, OnChanges {
 
 
 
+                   
 
 
 
@@ -901,6 +902,7 @@ export class ManagePenaltyComponent implements OnInit, OnChanges {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'ManagePenaltyComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
