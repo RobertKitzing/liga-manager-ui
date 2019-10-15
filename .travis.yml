@@ -86,11 +86,11 @@ cache:
 script:
   # - npm run test:ci
   # - npm run codacy:coverage -- --token $CODACY_KEY
-  - npm run compodoc
-  - ./push.sh
   - npm run build:angular:app
   - npm run build:server:express
   - docker build -t $DOCKER_REPO_UI:$TAG-$TRAVIS_BUILD_NUMBER server/express
+  - npm run compodoc
+  - ./push.sh
   # - npm run build:server:graphql
   # - docker build -t $DOCKER_REPO_GRAPHQL:$TAG-$TRAVIS_BUILD_NUMBER server/graphql
   - cd app
