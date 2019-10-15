@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { MatSelectChange, MatTabChangeEvent, MatSnackBar } from '@angular/material';
+import { MatSelectChange } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { TeamService } from 'src/app/services/team.service';
 import { map } from 'rxjs/operators';

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContactComponent } from './contact.component';
 import { SharedModule } from '../shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ContactComponent', () => {

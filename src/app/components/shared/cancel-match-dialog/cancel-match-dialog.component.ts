@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Match, CancelMatchGQL, MatchPlanGQL } from 'src/api/graphql';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from 'src/app/services/notification.service';

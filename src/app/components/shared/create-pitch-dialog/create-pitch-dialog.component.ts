@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Pitch } from 'src/api/graphql';
 import { PitchService } from 'src/app/services/pitch.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -19,7 +19,7 @@ export class CreatePitchDialogComponent implements OnInit {
   newPitchLabelExist: boolean;
 
   places: google.maps.places.Autocomplete;
-  @ViewChild('adressAutoComplete') adressAutoComplete: any;
+  @ViewChild('adressAutoComplete', { static: true }) adressAutoComplete: any;
 
   constructor(
     private formBuilder: FormBuilder,

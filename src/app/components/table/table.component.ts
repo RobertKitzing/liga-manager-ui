@@ -4,7 +4,7 @@ import { Ranking, RankingGQL, Team, Penalty } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { I18Service } from '../../services/i18.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { MatchService } from 'src/app/services/match.service';
 

@@ -4,7 +4,7 @@ import { EditmatchPitchComponent } from './editmatch.pitch.component';
 import { SharedModule } from '../shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('EditmatchPitchComponent', () => {

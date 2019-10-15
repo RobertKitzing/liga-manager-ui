@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContactComponent } from '../contact/contact.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { EditmatchResultComponent } from '../editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from '../editmatch/editmatch.time.component';

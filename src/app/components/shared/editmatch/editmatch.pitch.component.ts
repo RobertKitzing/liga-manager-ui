@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { map, startWith, switchMapTo } from 'rxjs/operators';
