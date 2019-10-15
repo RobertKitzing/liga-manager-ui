@@ -12,7 +12,7 @@ import { persistCache } from 'apollo-cache-persist';
 import { GraphqlSubscriptionService } from './graphql-subscription.service';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
+import { getMainDefinition, getOperationName } from 'apollo-utilities';
 import { onError } from 'apollo-link-error';
 import { NotificationService } from './notification.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -105,7 +105,9 @@ export class GraphqlService {
       link = split(
         // split based on operation type
         ({ query }) => {
-          const { kind, operation } = getMainDefinition(query);
+          const { kind } = getMainDefinition(query);
+          const operation = getOperationName(query);
+          // const { kind, operation } = getMainDefinition(query);
           return kind === 'OperationDefinition' && operation === 'subscription';
         },
         wsClient,

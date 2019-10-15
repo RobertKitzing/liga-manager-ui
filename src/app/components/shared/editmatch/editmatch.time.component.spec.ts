@@ -5,7 +5,7 @@ import { SharedModule } from '../shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { I18Service } from '../../../services/i18.service';
 
 describe('Editmatch.TimeComponent', () => {

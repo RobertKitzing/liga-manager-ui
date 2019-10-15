@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AllUsersGQL, User, DeleteUserGQL } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/components/shared/confirm-dialog/confirm-dialog.component';
 import { NotificationService } from 'src/app/services/notification.service';

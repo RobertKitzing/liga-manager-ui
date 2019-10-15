@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatSelect, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 import { Penalty, SeasonPenalties, AddRankingPenaltyGQL, SeasonPenaltiesGQL, RankingGQL } from 'src/api/graphql';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,7 +17,7 @@ interface EditRankingPenaltyComponentData {
 })
 export class EditRankingPenaltyComponent implements OnInit {
 
-  @ViewChild('teamSelect') teamSelect: MatSelect;
+  @ViewChild('teamSelect', { static: false }) teamSelect: MatSelect;
 
   selectedTeamId: string;
 

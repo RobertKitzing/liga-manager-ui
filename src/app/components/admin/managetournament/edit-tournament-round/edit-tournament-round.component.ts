@@ -1,4 +1,5 @@
-import { MatDialogRef, MAT_DIALOG_DATA, MatSelectChange } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { TeamService } from '../../../../services/team.service';
 import { DateTimeAdapter } from 'ng-pick-datetime';
@@ -25,11 +26,11 @@ export interface RoundTeam {
 })
 export class EditTournamentRoundComponent implements OnInit {
 
-  @ViewChild('planDateTo') planDateTo;
-  @ViewChild('planDateFrom') planDateFrom;
+  @ViewChild('planDateTo', { static: true }) planDateTo;
+  @ViewChild('planDateFrom', { static: true }) planDateFrom;
 
-  @ViewChild('home') home;
-  @ViewChild('guest') guest;
+  @ViewChild('home', { static: true }) home;
+  @ViewChild('guest', { static: true }) guest;
 
   allTeams: Observable<Team.Fragment[]>;
 

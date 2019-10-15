@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { SeasonPenaltiesGQL, SeasonPenalties, Penalty, RemoveRankingPenaltyGQL, RankingGQL } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditRankingPenaltyComponent } from './edit-ranking-penalty/edit-ranking-penalty.component';
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';

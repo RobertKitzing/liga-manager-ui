@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('ChangepasswordComponent', () => {
   let component: ChangepasswordComponent;

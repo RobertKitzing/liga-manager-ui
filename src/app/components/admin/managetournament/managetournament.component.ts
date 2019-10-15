@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, MatchDay, CreateTournamentGQL, DeleteTournamentGQL } from '../../../../api/graphql';
 import { map } from 'rxjs/operators';
 import { Observable, empty } from 'rxjs';

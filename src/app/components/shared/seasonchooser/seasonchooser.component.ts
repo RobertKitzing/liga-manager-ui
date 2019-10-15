@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange } from '@angular/material/select';
 import { AllSeasonsList, SeasonState, AllSeasonsListGQL } from 'src/api/graphql';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

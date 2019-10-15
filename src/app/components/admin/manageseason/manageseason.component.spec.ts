@@ -9,7 +9,7 @@ import { SeasonService } from '../../../services/season.service';
 import { SeasonState, Team, Client, CreateSeasonBody, Season } from '../../../../api';
 import { TeamService } from '../../../services/team.service';
 import { of } from 'rxjs';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange } from '@angular/material/select';
 import { MatchSchedulingComponent } from './match-scheduling/match-scheduling.component';
 
 describe('ManageseasonComponent', () => {

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Pitch, PitchesGQL } from 'src/api/graphql';
 import { map } from 'rxjs/operators';
 import { PitchService } from 'src/app/services/pitch.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditPitchContactDialogComponent } from '../../shared/edit-pitch-contact-dialog/edit-pitch-contact-dialog.component';
 import { CreatePitchDialogComponent } from '../../shared/create-pitch-dialog/create-pitch-dialog.component';
 import { NotificationService } from 'src/app/services/notification.service';

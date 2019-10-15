@@ -11,35 +11,35 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'table',
-    loadChildren: './components/table#TableModule'
+    loadChildren: () => import('./components/table').then(m => m.TableModule)
   },
   {
     path: 'matchplan',
-    loadChildren: './components/matchplan#MatchplanModule'
+    loadChildren: () => import('./components/matchplan').then(m => m.MatchplanModule)
   },
   {
     path: 'tournament',
-    loadChildren: './components/tournament#TournamentModule'
+    loadChildren: () => import('./components/tournament').then(m => m.TournamentModule)
   },
   {
     path: 'newpassword',
-    loadChildren: './components/newpassword#NewpasswordModule',
+    loadChildren: () => import('./components/newpassword').then(m => m.NewpasswordModule),
   },
   {
     path: 'contacts',
-    loadChildren: './components/contactlist#ContactlistModule',
+    loadChildren: () => import('./components/contactlist').then(m => m.ContactlistModule),
     canLoad: [TeamadminGuard],
     canActivate: [TeamadminGuard]
   },
   {
     path: 'admin',
-    loadChildren: './components/admin#AdminModule',
+    loadChildren: () => import('./components/admin').then(m => m.AdminModule),
     canLoad: [AdminGuard],
     canActivate: [AdminGuard]
   },
   {
     path: 'teamadmin',
-    loadChildren: './components/teamadmin#TeamadminModule',
+    loadChildren: () => import('./components/teamadmin').then(m => m.TeamadminModule),
     canLoad: [TeamadminGuard],
     canActivate: [TeamadminGuard]
   }
