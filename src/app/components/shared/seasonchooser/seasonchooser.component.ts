@@ -21,15 +21,10 @@ export class SeasonchooserComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     private allSeasonsListGQL: AllSeasonsListGQL
-  ) { }
-
-  ngOnInit() {
-    this.seasonService.currentSeason.subscribe(
-      (season) => {
-        this.season = season;
-      }
-    );
-    this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
+  ) {
+    this.seasonList = this.allSeasonsListGQL.watch(null, {
+      fetchPolicy: 'network-only', // TODO: Check SeasonList Cache
+    }).valueChanges.pipe(
       map(
         ({ data }) => {
           let p = data.allSeasons.filter(s => this.filterStates.some(x => x === s.state));
@@ -55,6 +50,14 @@ export class SeasonchooserComponent implements OnInit {
           return p;
         }
       )
+    );
+  }
+
+  ngOnInit() {
+    this.seasonService.currentSeason.subscribe(
+      (season) => {
+        this.season = season;
+      }
     );
   }
 
