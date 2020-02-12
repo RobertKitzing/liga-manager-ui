@@ -24,7 +24,7 @@ export class EditmatchTimeComponent implements OnInit {
     public i18Service: I18Service,
     private dialogRef: MatDialogRef<EditmatchTimeComponent>,
     private matchService: MatchService,
-    private dateAdapter: DateAdapter<any>
+    private dateAdapter: DateAdapter<any>,
   ) {
     this.translateService.onLangChange.subscribe(
       (lang) => {
@@ -39,7 +39,6 @@ export class EditmatchTimeComponent implements OnInit {
 
   kickoffChanged() {
     try {
-      console.log(this.kickoffTime);
       if (this.kickoffTime) {
         this.kickoffDate.setHours(+this.kickoffTime.split(':')[0]);
         this.kickoffDate.setMinutes(+this.kickoffTime.split(':')[1]);
