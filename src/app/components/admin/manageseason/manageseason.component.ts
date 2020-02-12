@@ -15,6 +15,8 @@ import {
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { LocalStorage } from 'ngx-store';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
 
 const MANAGE_SEASON_KEY = 'MANAGE_SEASON_ID_KEY';
 
@@ -37,6 +39,8 @@ export class ManageseasonComponent implements OnInit {
   @LocalStorage(MANAGE_SEASON_KEY)
   manageSeasonStore: MatchPlan.Season = null;
 
+  seasonStartDate: Date;
+
   constructor(
     public seasonService: SeasonService,
     public teamService: TeamService,
@@ -49,8 +53,15 @@ export class ManageseasonComponent implements OnInit {
     private allSeasonsListGQL: AllSeasonsListGQL,
     private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
     private notificationService: NotificationService,
-    private endSeasonGQL: EndSeasonGQL
+    private endSeasonGQL: EndSeasonGQL,
+    private dateAdapter: DateAdapter<any>,
   ) {
+    this.translateService.onLangChange.subscribe(
+      (lang) => {
+        this.dateAdapter.setLocale(lang);
+      }
+    );
+    this.dateAdapter.setLocale(this.translateService.currentLang);
     this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
         ({ data }) => {
@@ -164,7 +175,7 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatchDays(startDate: any, length: number, oldMatchDays: any) {
+  createMatchDays(startDate: MatDatepickerInputEvent, length: number) {
     this.newMatchDays = new Array<DatePeriod>();
     if (length % 2 !== 0) {
       length += 1;

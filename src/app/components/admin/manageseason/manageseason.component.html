@@ -52,12 +52,12 @@
       <mat-tab label="{{ 'TAB.MATCH_DAYS'  | translate  }}">
         <div class="row" style="margin-top: 20px;">
           <div class="col">
-            {{ 'START_SEASON_DATE' | translate}}:
-            <input matInput #kickoffInput [owlDateTime]="startSeasonDate"
-              (dateTimeChange)="createMatchDays($event, manageSeason.teams.length, manageSeason.match_days)"
-              style="display: none;">
-            <button mat-button [owlDateTimeTrigger]="startSeasonDate">{{ 'BUTTON.SET_DAY' | translate }}</button>
-            <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #startSeasonDate></owl-date-time>
+            <mat-form-field class="example-full-width">
+              <input matInput [matDatepicker]="startSeasonDatePicker" placeholder="{{ 'START_SEASON_DATE' | translate }}" [(ngModel)]="seasonStartDate" required
+                (dateChange)="createMatchDays($event, manageSeason.teams.length)">
+              <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startSeasonDatePicker color="primary"></mat-datepicker>
+            </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field>
@@ -80,19 +80,19 @@
             {{ matchDay.from | date:'short':'':i18Service.currentLang }}
           </div>
           <div class="col text-left">
-            <button mat-button [owlDateTimeTrigger]="dtFrom">{{ 'BUTTON.SET_TIME' | translate }}</button>
+            <!-- <button mat-button [owlDateTimeTrigger]="dtFrom">{{ 'BUTTON.SET_TIME' | translate }}</button>
             <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #dtFrom></owl-date-time>
             <input matInput #kickoffInput [owlDateTime]="dtFrom"
-              (dateTimeChange)="setMatchDayFromDate(i, $event, manageSeason.match_days)" style="display: none;">
+              (dateTimeChange)="setMatchDayFromDate(i, $event, manageSeason.match_days)" style="display: none;"> -->
           </div>
           <div class="col">
             {{ matchDay.to | date:'short':'':i18Service.currentLang }}
           </div>
           <div class="col text-left">
-            <button mat-button [owlDateTimeTrigger]="dtTo">{{ 'BUTTON.SET_TIME' | translate }}</button>
+            <!-- <button mat-button [owlDateTimeTrigger]="dtTo">{{ 'BUTTON.SET_TIME' | translate }}</button>
             <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #dtTo></owl-date-time>
             <input matInput #kickoffInput [owlDateTime]="dtTo"
-              (dateTimeChange)="setMatchDayToDate(i, $event, manageSeason.match_days)" style="display: none;">
+              (dateTimeChange)="setMatchDayToDate(i, $event, manageSeason.match_days)" style="display: none;"> -->
           </div>
         </div>
         <div>
