@@ -112,9 +112,10 @@ export class ManagetournamentComponent implements OnInit {
                 };
               })
             );
-            teams.subscribe(
+            const sub = teams.subscribe(
               (t) => {
                 this.openEditDialog(round, t.teams, t.dates);
+                sub.unsubscribe();
               }
             );
           }
