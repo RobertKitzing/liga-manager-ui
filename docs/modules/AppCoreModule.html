@@ -71,8 +71,6 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { OwlDateTimeIntl } from &#x27;ng-pick-datetime&#x27;;
-import { CustomOwlDateTimeIntl } from &#x27;src/app/services/i18n/customowldatetimeintl&#x27;;
 import { TranslateModule } from &#x27;@ngx-translate/core&#x27;;
 
 @NgModule({
@@ -80,10 +78,6 @@ import { TranslateModule } from &#x27;@ngx-translate/core&#x27;;
     TranslateModule.forChild()
   ],
   providers: [
-    {
-      provide: OwlDateTimeIntl,
-      useClass: CustomOwlDateTimeIntl
-    }
   ]
 })
 export class AppCoreModule { }

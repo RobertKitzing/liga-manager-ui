@@ -443,8 +443,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="140"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:140</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="141"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:141</a></div>
                 </td>
             </tr>
 
@@ -745,8 +745,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="128"
-                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:128</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">src/app/components/admin/managetournament/managetournament.component.ts:129</a></div>
                 </td>
             </tr>
 
@@ -1180,9 +1180,10 @@ export class ManagetournamentComponent implements OnInit {
                 };
               })
             );
-            teams.subscribe(
+            const sub &#x3D; teams.subscribe(
               (t) &#x3D;&gt; {
                 this.openEditDialog(round, t.teams, t.dates);
+                sub.unsubscribe();
               }
             );
           }
