@@ -175,7 +175,7 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatchDays(startDate: MatDatepickerInputEvent, length: number) {
+  createMatchDays(startDate: MatDatepickerInputEvent<any>, length: number) {
     this.newMatchDays = new Array<DatePeriod>();
     if (length % 2 !== 0) {
       length += 1;
