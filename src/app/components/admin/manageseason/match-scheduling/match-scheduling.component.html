@@ -1,4 +1,7 @@
-<div class="container">
+<div>
+  Add here call to api function
+</div>
+<div class="container" *ngIf="false">
   <h2>Pitches</h2>
   <div class="row" style="justify-content: center;">
     <div class="col">
@@ -16,9 +19,9 @@
       OFFSET: <input #offset type="number" value="1">
     </div>
     <div class="col">
-      <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="addKickoffDateToPitch(offset.value, $event)" style="display: none">
+      <!-- <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="addKickoffDateToPitch(offset.value, $event)" style="display: none">
       <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate }}</button>
-      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #dt5></owl-date-time>
+      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #dt5></owl-date-time> -->
     </div>
     <div class="col">
       <button mat-raised-button color="primary" (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>
