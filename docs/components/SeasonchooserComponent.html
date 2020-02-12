@@ -343,8 +343,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="61"
-                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:61</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:62</a></div>
                 </td>
             </tr>
 
@@ -413,8 +413,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">src/app/components/shared/seasonchooser/seasonchooser.component.ts:54</a></div>
                 </td>
             </tr>
 
@@ -573,14 +573,7 @@ export class SeasonchooserComponent implements OnInit {
   constructor(
     public seasonService: SeasonService,
     private allSeasonsListGQL: AllSeasonsListGQL
-  ) { }
-
-  ngOnInit() {
-    this.seasonService.currentSeason.subscribe(
-      (season) &#x3D;&gt; {
-        this.season &#x3D; season;
-      }
-    );
+  ) {
     this.seasonList &#x3D; this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
         ({ data }) &#x3D;&gt; {
@@ -607,6 +600,14 @@ export class SeasonchooserComponent implements OnInit {
           return p;
         }
       )
+    );
+  }
+
+  ngOnInit() {
+    this.seasonService.currentSeason.subscribe(
+      (season) &#x3D;&gt; {
+        this.season &#x3D; season;
+      }
     );
   }
 

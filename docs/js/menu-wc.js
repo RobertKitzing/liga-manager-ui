@@ -132,13 +132,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' : 'data-target="#xs-components-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' }>
+                                            'data-target="#components-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' : 'data-target="#xs-components-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' :
-                                            'id="xs-components-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' :
+                                            'id="xs-components-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' }>
                                             <li class="link">
                                                 <a href="components/AppComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -155,13 +155,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' : 'data-target="#xs-injectables-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' }>
+                                        'data-target="#injectables-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' : 'data-target="#xs-injectables-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' :
-                                        'id="xs-injectables-links-module-AppModule-d9e32b7d232ea82b52fffd5b3fe0cd36"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' :
+                                        'id="xs-injectables-links-module-AppModule-db7a5b440e73fafc2d3588480b4f886f"' }>
                                         <li class="link">
                                             <a href="injectables/AuthenticationService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>AuthenticationService</a>
@@ -293,13 +293,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/SharedModule.html" data-type="entity-link">SharedModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-SharedModule-cb0b44504342f14e41e5cd8fdc8e97e1"' : 'data-target="#xs-components-links-module-SharedModule-cb0b44504342f14e41e5cd8fdc8e97e1"' }>
+                                            'data-target="#components-links-module-SharedModule-1dfd4d0c7f87747444f7fdfd624640f6"' : 'data-target="#xs-components-links-module-SharedModule-1dfd4d0c7f87747444f7fdfd624640f6"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SharedModule-cb0b44504342f14e41e5cd8fdc8e97e1"' :
-                                            'id="xs-components-links-module-SharedModule-cb0b44504342f14e41e5cd8fdc8e97e1"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SharedModule-1dfd4d0c7f87747444f7fdfd624640f6"' :
+                                            'id="xs-components-links-module-SharedModule-1dfd4d0c7f87747444f7fdfd624640f6"' }>
                                             <li class="link">
                                                 <a href="components/CancelMatchDialogComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">CancelMatchDialogComponent</a>
@@ -485,9 +485,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/CreateUserGQL.html" data-type="entity-link">CreateUserGQL</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/CustomOwlDateTimeIntl.html" data-type="entity-link">CustomOwlDateTimeIntl</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/DeletePitchGQL.html" data-type="entity-link">DeletePitchGQL</a>

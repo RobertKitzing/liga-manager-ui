@@ -159,22 +159,19 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material/dialog&#x27;;
-import { MatSelectChange } from &#x27;@angular/material/select&#x27;;
 import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
 import { TeamService } from &#x27;../../../../services/team.service&#x27;;
-import { DateTimeAdapter } from &#x27;ng-pick-datetime&#x27;;
-import { I18Service } from &#x27;../../../../services/i18.service&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { Team, CreateTournamentRoundGQL, TeamIdPair, AllTournamentListGQL, TournamentGQL } from &#x27;src/api/graphql&#x27;;
-import { map } from &#x27;rxjs/operators&#x27;;
+import { Team, CreateTournamentRoundGQL, AllTournamentListGQL, TournamentGQL } from &#x27;src/api/graphql&#x27;;
 import { NotificationService } from &#x27;src/app/services/notification.service&#x27;;
+import { DateAdapter } from &#x27;@angular/material/core&#x27;;
 
 export interface AddMatchData {
   round: number;
   tournamentId: string;
   teams: RoundTeam[];
-  dates: {from: Date, to: Date};
+  dates: { from: Date, to: Date };
 }
 export interface RoundTeam {
   homeTeam: Team.Fragment;
@@ -186,8 +183,8 @@ export interface RoundTeam {
 })
 export class EditTournamentRoundComponent implements OnInit {
 
-  @ViewChild(&#x27;planDateTo&#x27;, { static: true }) planDateTo;
-  @ViewChild(&#x27;planDateFrom&#x27;, { static: true }) planDateFrom;
+  planDateTo: Date;
+  planDateFrom: Date;
 
   @ViewChild(&#x27;home&#x27;, { static: true }) home;
   @ViewChild(&#x27;guest&#x27;, { static: true }) guest;
@@ -195,32 +192,30 @@ export class EditTournamentRoundComponent implements OnInit {
   allTeams: Observable&lt;Team.Fragment[]&gt;;
 
   roundTeams: RoundTeam[] &#x3D; new Array&lt;RoundTeam&gt;();
-  newRoundPlanDateFrom: Date;
-  newRoundPlanDateTo: Date;
 
   constructor(
     private allTournamentsQGL: AllTournamentListGQL,
     public dialogRef: MatDialogRef&lt;EditTournamentRoundComponent&gt;,
     public teamService: TeamService,
-    dateTimeAdapter: DateTimeAdapter&lt;any&gt;,
     private translateService: TranslateService,
-    private i18Service: I18Service,
     private createRoundGQL: CreateTournamentRoundGQL,
     private notify: NotificationService,
     private tournamentQGL: TournamentGQL,
+    private dateAdapter: DateAdapter&lt;any&gt;,
     @Inject(MAT_DIALOG_DATA) public data: AddMatchData) {
-    dateTimeAdapter.setLocale(this.i18Service.currentLang);
+
     this.translateService.onLangChange.subscribe(
       (lang) &#x3D;&gt; {
-        dateTimeAdapter.setLocale(lang);
+        this.dateAdapter.setLocale(lang);
       }
     );
+    this.dateAdapter.setLocale(this.translateService.currentLang);
     if (data.teams) {
       this.roundTeams &#x3D; data.teams;
     }
     if (data.dates) {
-      this.newRoundPlanDateFrom &#x3D; data.dates.from;
-      this.newRoundPlanDateTo &#x3D; data.dates.to;
+      this.planDateFrom &#x3D; data.dates.from;
+      this.planDateTo &#x3D; data.dates.to;
     }
   }
 
@@ -249,16 +244,16 @@ export class EditTournamentRoundComponent implements OnInit {
         {
           tournament_id: this.data.tournamentId,
           date_period: {
-            from: new Date(this.newRoundPlanDateFrom).toDateString(),
-            to: new Date(this.newRoundPlanDateTo).toDateString()
+            from: new Date(this.planDateFrom).toDateString(),
+            to: new Date(this.planDateTo).toDateString()
           },
           round: this.data.round,
           team_id_pairs: this.roundTeams.map((t) &#x3D;&gt; ({ home_team_id: t.homeTeam.id, guest_team_id: t.guestTeam.id }))
         },
         {
           refetchQueries: [
-            {query: this.allTournamentsQGL.document},
-            {query: this.tournamentQGL.document, variables: {id: this.data.tournamentId}}
+            { query: this.allTournamentsQGL.document },
+            { query: this.tournamentQGL.document, variables: { id: this.data.tournamentId } }
           ]
         }
       ).toPromise();
@@ -269,16 +264,8 @@ export class EditTournamentRoundComponent implements OnInit {
     }
   }
 
-  setPlanDateFrom(event: any) {
-    this.newRoundPlanDateFrom &#x3D; event.value;
-  }
-
-  setPlanDateTo(event: any) {
-    this.newRoundPlanDateTo &#x3D; event.value;
-  }
-
   isRoundValid(): boolean {
-    return this.newRoundPlanDateFrom &amp;&amp; this.newRoundPlanDateTo &amp;&amp; this.roundTeams.length &gt; 0;
+    return this.planDateFrom &amp;&amp; this.planDateTo &amp;&amp; this.roundTeams.length &gt; 0 &amp;&amp; this.planDateFrom &lt; this.planDateTo;
   }
 }
 </code></pre>
