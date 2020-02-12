@@ -598,7 +598,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>createMatchDays(startDate: MatDatepickerInputEvent, length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>createMatchDays(startDate: MatDatepickerInputEvent<any>, length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -628,7 +628,7 @@
                                 <tr>
                                     <td>startDate</td>
                                     <td>
-                                            <code>MatDatepickerInputEvent</code>
+                                            <code>MatDatepickerInputEvent&lt;any&gt;</code>
                                     </td>
 
                                     <td>
@@ -1840,7 +1840,7 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatchDays(startDate: MatDatepickerInputEvent, length: number) {
+  createMatchDays(startDate: MatDatepickerInputEvent&lt;any&gt;, length: number) {
     this.newMatchDays &#x3D; new Array&lt;DatePeriod&gt;();
     if (length % 2 !&#x3D;&#x3D; 0) {
       length +&#x3D; 1;
