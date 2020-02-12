@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/www",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -36,6 +37,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -53,6 +60,12 @@
               "buildOptimizer": true
             },
             "app": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -74,6 +87,12 @@
               "buildOptimizer": true
             },
             "app.local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -128,8 +147,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "codeCoverageExclude": [
-            ]
+            "codeCoverageExclude": []
           }
         },
         "lint": {
@@ -174,5 +192,8 @@
       }
     }
   },
-  "defaultProject": "liga-manager-ui"
+  "defaultProject": "liga-manager-ui",
+  "cli": {
+    "analytics": "9db4b62a-0dc2-4bc2-90c6-9371c30c8301"
+  }
 }

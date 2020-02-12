@@ -1,13 +1,13 @@
 version: '3'
 services:
-  tests:
-    image: node:10.15.3
-    ports:
-      - "9867:9867"
-    volumes:
-      - .:/usr/src/app
-    working_dir: /usr/src/app
-    command: npm test
+  # tests:
+  #   image: node:10.15.3
+  #   ports:
+  #     - "9867:9867"
+  #   volumes:
+  #     - .:/usr/src/app
+  #   working_dir: /usr/src/app
+  #   command: npm test
   ui:
     image: node:10.15.3
     ports:
