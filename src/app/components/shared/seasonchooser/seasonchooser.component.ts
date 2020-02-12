@@ -22,9 +22,7 @@ export class SeasonchooserComponent implements OnInit {
     public seasonService: SeasonService,
     private allSeasonsListGQL: AllSeasonsListGQL
   ) {
-    this.seasonList = this.allSeasonsListGQL.watch(null, {
-      fetchPolicy: 'network-only', // TODO: Check SeasonList Cache
-    }).valueChanges.pipe(
+    this.seasonList = this.allSeasonsListGQL.watch().valueChanges.pipe(
       map(
         ({ data }) => {
           let p = data.allSeasons.filter(s => this.filterStates.some(x => x === s.state));

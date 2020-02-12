@@ -11,10 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { I18Service } from './services/i18.service';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
-
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
 import { GraphQLModule } from './graphql.module';
 import { AuthenticationService } from './services/authentication.service';
@@ -67,7 +65,7 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
       provide: APP_INITIALIZER,
       useFactory: loadAppsettingsFactory,
       deps: [AppsettingsService], multi: true
-    }
+    },
   ],
   bootstrap: [
     AppComponent

@@ -28,7 +28,7 @@ services:
       - ui
       - api
   api:
-    image: mklocke/liga-manager-api:1.0.4
+    image: mklocke/liga-manager-api
     user: www-data
     volumes:
       - api-public:/var/www/api/public
@@ -46,7 +46,7 @@ services:
     ports:
       - "127.0.0.1:3306:3306"
     volumes:
-      - /var/lib/mysql:/var/lib/mysql
+      - ./data:/var/lib/mysql
     env_file:
       - ./env/api.env 
 volumes:

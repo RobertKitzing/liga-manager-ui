@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
-// tslint:disable-next-line:max-line-length
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -17,7 +16,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -46,7 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatNativeDateModule,
         MatListModule,
         MatTooltipModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
     ],
     exports: [
         MatCardModule,
@@ -70,7 +68,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatTabsModule,
         MatMenuModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
     ],
 })
 export class MaterialModule { }

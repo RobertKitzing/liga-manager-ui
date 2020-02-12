@@ -72,7 +72,6 @@
     "karma-firefox-launcher": "^1.2.0",
     "material-design-icons": "^3.0.1",
     "moment": "^2.24.0",
-    "ng-pick-datetime": "^7.0.0",
     "ngx-store": "^2.1.0",
     "popper.js": "^1.15.0",
     "queueing-subject": "^0.3.4",
