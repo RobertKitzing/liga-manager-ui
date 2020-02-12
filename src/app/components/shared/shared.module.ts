@@ -8,7 +8,6 @@ import { SeasonchooserComponent } from './seasonchooser/seasonchooser.component'
 import { EditmatchResultComponent } from './editmatch/editmatch.result.component';
 import { EditmatchTimeComponent } from './editmatch/editmatch.time.component';
 import { EditmatchPitchComponent } from './editmatch/editmatch.pitch.component';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TranslateModule } from '@ngx-translate/core';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { ContactPersonComponent } from './contact-person/contact-person.component';
@@ -24,8 +23,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     TranslateModule
   ],
   entryComponents: [
@@ -63,9 +60,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     FormsModule,
     SeasonchooserComponent,
     MaterialModule,
-    OwlDateTimeModule,
     EditContactComponent,
-    OwlNativeDateTimeModule,
     CancelMatchDialogComponent
   ]
 })
