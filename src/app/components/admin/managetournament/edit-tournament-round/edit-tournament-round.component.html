@@ -47,35 +47,19 @@
     </div>
   </div>
   <div class="row pb-2">
-    <div class="col-2">
-      {{ 'PLAN_DATE_FROM'| translate}}:
+    <div class="col-6">
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="planDateFromPicker" placeholder="{{ 'PLAN_DATE_FROM' | translate }}" [(ngModel)]="planDateFrom" required>
+          <mat-datepicker-toggle matSuffix [for]="planDateFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #planDateFromPicker color="primary"></mat-datepicker>
+        </mat-form-field>
     </div>
-    <div class="col-2">
-      <input matInput #planDateFrom [owlDateTime]="planDateFrom" (dateTimeChange)="setPlanDateFrom($event)"
-        [(ngModel)]="newRoundPlanDateFrom">
-    </div>
-    <div class="col-2">
-      <button mat-raised-button color="primary" [owlDateTimeTrigger]="planDateFrom">
-        <mat-icon>
-          access_time
-        </mat-icon>
-      </button>
-      <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateFrom></owl-date-time>
-    </div>
-    <div class="col-2">
-      {{ 'PLAN_DATE_TO'| translate}}:
-    </div>
-    <div class="col-2">
-      <input matInput #planDateTo [owlDateTime]="planDateTo" (dateTimeChange)="setPlanDateTo($event)"
-        [(ngModel)]="newRoundPlanDateTo">
-    </div>
-    <div class="col-2">
-      <button mat-raised-button color="primary" [owlDateTimeTrigger]="planDateTo">
-        <mat-icon>
-          access_time
-        </mat-icon>
-      </button>
-      <owl-date-time [pickerType]="'calendar'" [pickerMode]="'dialog'" #planDateTo></owl-date-time>
+    <div class="col-6">
+        <mat-form-field class="example-full-width">
+            <input matInput [matDatepicker]="planDateToPicker" placeholder="{{ 'PLAN_DATE_TO' | translate }}" [(ngModel)]="planDateTo" required>
+            <mat-datepicker-toggle matSuffix [for]="planDateToPicker"></mat-datepicker-toggle>
+            <mat-datepicker #planDateToPicker color="primary"></mat-datepicker>
+          </mat-form-field>
     </div>
   </div>
 </div>
