@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -45,7 +44,6 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
     BrowserModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule,
-    FlexLayoutModule,
     HttpClientModule,
     MaterialModule,
     AppRoutingModule,
