@@ -3,7 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from '../../api/graphql';
-import { LocalStorage, LocalStorageService } from 'ngx-store';
+import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
 
 export interface LoginContext {
   username: string;
@@ -14,7 +14,6 @@ const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 
 @Injectable({
   providedIn: 'root',
-  useExisting: AuthenticationService
 })
 export class AuthenticationService {
 
@@ -76,7 +75,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.localStorageService.remove(ACCESS_TOKEN_KEY);
+    this.localStorageService.clear(ACCESS_TOKEN_KEY);
     this.user = null;
     this.router.navigateByUrl('');
   }

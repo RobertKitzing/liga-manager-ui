@@ -4,7 +4,7 @@ import { I18Service } from '../../services/i18.service';
 import { Observable } from 'rxjs';
 import { MatchPlanGQL, MatchPlan, Match, MatchDay, RankingGQL, MatchGQL } from '../../../api/graphql';
 import { map } from 'rxjs/operators';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage } from 'ngx-webstorage';
 import { MatchService } from 'src/app/services/match.service';
 
 const HIDE_PLAYED_KEY = 'HIDE_PLAYED';

@@ -14,7 +14,7 @@ import {
 } from '../../../../api/graphql';
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage } from 'ngx-webstorage';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter } from '@angular/material/core';
 

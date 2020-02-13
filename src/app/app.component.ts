@@ -8,7 +8,7 @@ import { I18Service } from './services/i18.service';
 import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
 import { RankingGQL, MatchPlanGQL, TournamentGQL, Tournament, AllSeasonsListGQL } from 'src/api/graphql';
 import { SeasonService } from 'src/app/services/season.service';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage } from 'ngx-webstorage';
 import { SELECTED_TOURNAMENT_KEY } from './components/tournament/tournament.component';
 import { AppsettingsService } from './services/appsettings.service';
 import { GraphqlService } from './services/graphql.service';

@@ -17,7 +17,7 @@ interface EditRankingPenaltyComponentData {
 })
 export class EditRankingPenaltyComponent implements OnInit {
 
-  @ViewChild('teamSelect', { static: false }) teamSelect: MatSelect;
+  @ViewChild('teamSelect') teamSelect: MatSelect;
 
   selectedTeamId: string;
 

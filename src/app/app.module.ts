@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,8 +14,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
 import { GraphQLModule } from './graphql.module';
-import { AuthenticationService } from './services/authentication.service';
-import { WebStorageModule } from 'ngx-store';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppsettingsService } from './services/appsettings.service';
 
 registerLocaleData(localeDe);
@@ -45,17 +43,15 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
     BrowserModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule,
-    FlexLayoutModule,
     HttpClientModule,
     MaterialModule,
     AppRoutingModule,
     FormsModule,
     GraphQLModule,
-    WebStorageModule,
+    NgxWebstorageModule.forRoot(),
     ReactiveFormsModule,
   ],
   providers: [
-    AuthenticationService,
     {
       provide: APP_INITIALIZER,
       useFactory: i18ServiceFactory,
