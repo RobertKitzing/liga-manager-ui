@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import * as de from './i18n/de.json';
-import * as deCustom from './i18n/custom/de.custom.json';
-import * as en from './i18n/en.json';
-import * as enCustom from './i18n/custom/en.custom.json';
-import { LocalStorage } from 'ngx-store';
+import de from './i18n/de.json';
+import deCustom from './i18n/custom/de.custom.json';
+import en from './i18n/en.json';
+import enCustom from './i18n/custom/en.custom.json';
+import { LocalStorage } from 'ngx-webstorage';
 
 const LANG_KEY = 'LANG';
 

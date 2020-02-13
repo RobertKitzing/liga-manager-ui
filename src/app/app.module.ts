@@ -14,8 +14,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { SnackbarComponent } from './components/shared/snackbar/snackbar.component';
 import { GraphQLModule } from './graphql.module';
-import { AuthenticationService } from './services/authentication.service';
-import { WebStorageModule } from 'ngx-store';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppsettingsService } from './services/appsettings.service';
 
 registerLocaleData(localeDe);
@@ -49,11 +48,10 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
     AppRoutingModule,
     FormsModule,
     GraphQLModule,
-    WebStorageModule,
+    NgxWebstorageModule.forRoot(),
     ReactiveFormsModule,
   ],
   providers: [
-    AuthenticationService,
     {
       provide: APP_INITIALIZER,
       useFactory: i18ServiceFactory,

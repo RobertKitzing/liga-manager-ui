@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AllSeasonsList, AllSeasonsListGQL, CreateSeasonGQL, StartSeasonGQL } from '../../api/graphql';
 import * as uuid from 'uuid/v4';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage } from 'ngx-webstorage';
 
 const SELECTED_SEASON_KEY = 'SELECTED_SEASON';
 

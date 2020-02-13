@@ -3,7 +3,7 @@ import { I18Service } from '../../services/i18.service';
 import { AllTournamentListGQL, AllTournamentList, TournamentGQL, Tournament, Team, MatchDay } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LocalStorage, LocalStorageService } from 'ngx-store';
+import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
 import { MatchService } from 'src/app/services/match.service';
 
 export const SELECTED_TOURNAMENT_KEY = 'SELECTED_TOURNAMENT';
@@ -33,7 +33,7 @@ export class TournamentComponent implements OnInit {
       map(({ data }) => data.allTournaments)
     );
     if (typeof this.selectedTournament === 'string') {
-      this.localStorageService.remove(SELECTED_TOURNAMENT_KEY);
+      this.localStorageService.clear(SELECTED_TOURNAMENT_KEY);
     }
     if (this.selectedTournament) {
       this.tournamentChanged();

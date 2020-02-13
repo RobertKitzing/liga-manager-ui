@@ -6,7 +6,7 @@ import { Observable, empty } from 'rxjs';
 import * as uuidv4 from 'uuid/v4';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage } from 'ngx-webstorage';
 import { RoundTeam, EditTournamentRoundComponent } from './edit-tournament-round/edit-tournament-round.component';
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
