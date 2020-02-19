@@ -37,11 +37,5 @@ import { EditTournamentRoundComponent } from './managetournament/edit-tournament
     EditRankingPenaltyComponent,
     EditUserDialogComponent
   ],
-  entryComponents: [
-    EditTournamentRoundComponent,
-    RenameTeamComponent,
-    EditRankingPenaltyComponent,
-    EditUserDialogComponent
-  ]
 })
 export class AdminModule { }

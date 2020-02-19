@@ -25,17 +25,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MaterialModule,
     TranslateModule
   ],
-  entryComponents: [
-    ContactComponent,
-    EditmatchResultComponent,
-    EditmatchTimeComponent,
-    EditmatchPitchComponent,
-    SnackbarComponent,
-    EditPitchContactDialogComponent,
-    CreatePitchDialogComponent,
-    CancelMatchDialogComponent,
-    ConfirmDialogComponent
-  ],
   declarations: [
     MatchComponent,
     ContactComponent,

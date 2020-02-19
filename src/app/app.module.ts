@@ -29,11 +29,6 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
 
 
 @NgModule({
-  entryComponents: [
-    LoginComponent,
-    ChangepasswordComponent,
-    SnackbarComponent
-  ],
   declarations: [
     AppComponent,
     LoginComponent,
