@@ -46,4 +46,6 @@
     <allow-intent href="itms-apps:*"/>
   </platform>
   <engine name="android" spec="^7.0.0"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="android-targetSdkVersion" value="28"/>
 </widget>
