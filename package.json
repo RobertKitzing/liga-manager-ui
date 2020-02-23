@@ -6,8 +6,8 @@
     "start": "ng serve --aot --host '0.0.0.0' --port 3098 --disable-host-check --proxy-config proxy.conf.json",
     "build": "rm -R dist && npm run build:web && npm run build:app && npm run build:server",
     "build:angular:web": "ng build --aot --prod",
-    "build:angular:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./",
-    "build:app:local": "ng build --aot -c app.local --output-path app/www --delete-output-path --base-href ./",
+    "build:angular:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./ && npm run copy:appsettings:app",
+    "build:app:local": "ng build --aot -c app.local --output-path app/www --delete-output-path --base-href ./ && npm run copy:appsettings:app:local",
     "build:server:express": "rimraf server/express/dist && tsc -p server/express && cp server/express/package*.json server/express/dist && npm run build:angular:web -- ----output-path server/express/dist/www",
     "build:server:graphql": "rimraf server/graphql/dist && tsc -p server/graphql && cp server/graphql/package*.json server/graphql/dist && cp server/graphql/schema.graphql server/graphql/dist",
     "docker:build:express": "docker build -t robertkitzing/liga-manager-ui:graphql server/express",
@@ -24,7 +24,9 @@
     "extract:update": "ngx-translate-extract -m -i ./src/app -o ./src/app/services/i18n/*.json --clean --sort --format namespaced-json -m",
     "codacy:coverage": "cat ./coverage/lcov.info | codacy-coverage",
     "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -d docs",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "copy:appsettings:app": "cp src/appsettings.app.json app/www/appsettings.json",
+    "copy:appsettings:app:local": "cp src/appsettings.app.local.json app/www/appsettings.json"
   },
   "dependencies": {
     "@angular/animations": "^9.0.1",

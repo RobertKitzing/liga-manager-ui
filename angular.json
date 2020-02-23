@@ -70,10 +70,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.app.ts"
-                },
-                {
-                  "replace": "src/appsettings.json",
-                  "with": "src/appsettings.app.json"
                 }
               ],
               "optimization": true,
@@ -97,10 +93,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.app.local.ts"
-                },
-                {
-                  "replace": "src/appsettings.json",
-                  "with": "src/appsettings.app.local.json"
                 }
               ],
               "optimization": true,
