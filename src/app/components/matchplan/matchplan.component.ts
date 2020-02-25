@@ -22,9 +22,9 @@ export class MatchplanComponent implements OnInit {
 
   @LocalStorage(HIDE_PLAYED_KEY) hidePlayed: boolean;
 
-  @LocalStorage(SELECTED_MATCHDAY_KEY) selectedMatchDayId = '0';
+  @LocalStorage(SELECTED_MATCHDAY_KEY, '0') selectedMatchDayId;
 
-  @LocalStorage(SELECTED_TEAM_KEY) selectedTeamId = '0';
+  @LocalStorage(SELECTED_TEAM_KEY, '0') selectedTeamId;
 
   public get filterActive(): boolean {
     return this.hidePlayed;

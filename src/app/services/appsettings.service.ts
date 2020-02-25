@@ -20,7 +20,7 @@ export class AppsettingsService {
     try {
       this.appsettings = await this.loadAppsettings();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

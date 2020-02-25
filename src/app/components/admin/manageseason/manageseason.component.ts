@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../../services/season.service';
 import { MatSelectChange } from '@angular/material/select';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { TeamService } from 'src/app/services/team.service';
@@ -19,8 +18,18 @@ import { DateAdapter } from '@angular/material/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { PublicHolidaysService } from 'src/app/services/public-holidays.service';
+import * as momentjs from 'moment';
 
 const MANAGE_SEASON_KEY = 'MANAGE_SEASON_ID_KEY';
+
+export interface IMatchDayEvent {
+  allDay: boolean;
+  title: string;
+  matchDayIndex: number;
+  matchDayId: string;
+  start: Date;
+  end: Date;
+}
 
 @Component({
   selector: 'app-manageseason',
@@ -33,12 +42,12 @@ export class ManageseasonComponent implements OnInit {
     dayGridPlugin,
     interactionPlugin,
   ];
-  events: any[];
-  holidays: any[];
+
+  events: IMatchDayEvent[];
+  holidays: IMatchDayEvent[];
 
   matchesInSeason: Match.Fragment[];
 
-  newMatchDays: DatePeriod[];
   fromToOffset = 2;
   betweenMatchDaysOffset = 7;
 
@@ -46,9 +55,19 @@ export class ManageseasonComponent implements OnInit {
   manageSeason: Observable<MatchPlan.Season>;
 
   @LocalStorage(MANAGE_SEASON_KEY)
-  manageSeasonStore: MatchPlan.Season = null;
+  manageSeasonStore: MatchPlan.Season;
 
   seasonStartDate: Date;
+
+  get matchDays(): DatePeriod[] {
+    const days: DatePeriod[] = this.events.filter(x => x.matchDayIndex !== -1).map(
+      (event) => ({
+        from: event.start,
+        to: event.end,
+      })
+    );
+    return days;
+  }
 
   constructor(
     public seasonService: SeasonService,
@@ -103,6 +122,7 @@ export class ManageseasonComponent implements OnInit {
       this.manageSeasonChanged({value: this.manageSeasonStore.id, source: null});
     }
 
+    // TODO: Remove Magic number year
     this.holidaysService.publicHolidays(2020).subscribe(
       (result) => {
         this.holidays = result;
@@ -130,7 +150,6 @@ export class ManageseasonComponent implements OnInit {
         return data.season;
       })
     );
-    delete this.newMatchDays;
   }
 
   async addTeamToSeason(teamId: string) {
@@ -185,7 +204,17 @@ export class ManageseasonComponent implements OnInit {
     switch (event.index) {
       case 1:
         if (season.match_days) {
-          this.newMatchDays = season.match_days.map((matchDay) => ({ from: matchDay.start_date, to: matchDay.end_date }));
+          this.events = season.match_days.map(
+            (matchDay) => (
+              {
+                allDay: true,
+                title: `${matchDay.number} Spieltag`,
+                matchDayIndex: matchDay.number - 1,
+                matchDayId: matchDay.id,
+                start: new Date(matchDay.start_date),
+                end: new Date(matchDay.end_date),
+              })
+          ).concat(this.holidays);
         }
         break;
     }
@@ -193,12 +222,11 @@ export class ManageseasonComponent implements OnInit {
 
   eventDrop(event) {
     const matchDayIndex = event.event._def.extendedProps.matchDayIndex;
-    for (const matchDay of this.events.filter(
-      x => x.title.includes('Spieltag') && x.matchDayIndex >= matchDayIndex)) {
+    for (const matchDay of this.events.filter(x => x.title.includes('Spieltag') && x.matchDayIndex >= matchDayIndex)) {
 
       const md = this.events.indexOf(matchDay);
-      this.events[md].start.setDate((matchDay.start as Date).getDate() + event.delta.days);
-      this.events[md].end.setDate((matchDay.end as Date).getDate() + event.delta.days);
+      this.events[md].start = momentjs(matchDay.start).add(event.delta.days, 'days').toDate();
+      this.events[md].end = momentjs(matchDay.end).add(event.delta.days, 'days').toDate();
     }
   }
 
@@ -225,12 +253,18 @@ export class ManageseasonComponent implements OnInit {
     this.events = events.concat(this.holidays);
   }
 
+  resizeMatchDays() {
+    for (const matchDay of this.events.filter(x => x.title.includes('Spieltag'))) {
+      matchDay.end = momentjs(matchDay.start).add(this.fromToOffset, 'days').toDate();
+    }
+  }
+
   async sendMatchDays() {
     try {
       await this.matchesQL.mutate(
         {
           season_id: this.manageSeasonStore.id,
-          dates: this.newMatchDays
+          dates: this.matchDays
         },
         {
           refetchQueries: [
@@ -256,32 +290,28 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  async setMatchDayFromDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
-
+  async endSeason() {
     try {
-      if (matchDays) {
-        const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
-        await this.rescheduleMatchDay(matchDayId, { from: date.value, to: this.newMatchDays[index].to });
-      }
-      if (!this.newMatchDays[index]) {
-        this.newMatchDays[index] = <DatePeriod>{};
-      }
-      this.newMatchDays[index].from = date.value;
+      await this.endSeasonGQL.mutate({
+        season_id: this.manageSeasonStore.id
+      }, {
+        refetchQueries: [
+          {
+            query: this.allSeasonsListGQL.document
+          }
+        ]
+      }).toPromise();
+      this.notificationService.showSuccessNotification(this.translateService.instant('END_SEASON_SUCCESS'));
     } catch (error) {
-
+      this.notificationService.showErrorNotification(this.translateService.instant('END_SEASON_ERROR'), error);
     }
   }
 
-  async setMatchDayToDate(index: number, date: any, matchDays: MatchDay.Fragment[]) {
+  async rescheduleMatchDays() {
     try {
-      if (matchDays) {
-        const matchDayId = matchDays.find(x => x.number === (index + 1)).id;
-        await this.rescheduleMatchDay(matchDayId, { from: this.newMatchDays[index].from, to: date.value });
+      for (const matchDay of this.events.filter(x => x.title.includes('Spieltag'))) {
+        await this.rescheduleMatchDay(matchDay.matchDayId, {from: matchDay.start, to: matchDay.end});
       }
-      if (!this.newMatchDays[index]) {
-        this.newMatchDays[index] = <DatePeriod>{};
-      }
-      this.newMatchDays[index].to = date.value;
     } catch (error) {
 
     }
@@ -319,22 +349,5 @@ export class ManageseasonComponent implements OnInit {
         }
       }
     );
-  }
-
-  async endSeason() {
-    try {
-      await this.endSeasonGQL.mutate({
-        season_id: this.manageSeasonStore.id
-      }, {
-        refetchQueries: [
-          {
-            query: this.allSeasonsListGQL.document
-          }
-        ]
-      }).toPromise();
-      this.notificationService.showSuccessNotification(this.translateService.instant('END_SEASON_SUCCESS'));
-    } catch (error) {
-      this.notificationService.showErrorNotification(this.translateService.instant('END_SEASON_ERROR'), error);
-    }
   }
 }

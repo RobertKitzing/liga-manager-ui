@@ -21,7 +21,8 @@ export class ManagetournamentComponent implements OnInit {
 
   tournaments: Observable<AllTournamentList.AllTournaments[]>;
   @LocalStorage(MANAGE_TOURNAMENT_KEY)
-  manageTournamentId: string = null;
+  manageTournamentId: string;
+
   manageTournamentRounds: Observable<MatchDay.Fragment[]>;
   startTeamCount = 4;
   rounds: number[][];
