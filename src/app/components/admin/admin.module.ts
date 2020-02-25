@@ -15,12 +15,14 @@ import { ManagePenaltyComponent } from './manageseason/manage-penalty/manage-pen
 import { EditRankingPenaltyComponent } from './manageseason/manage-penalty/edit-ranking-penalty/edit-ranking-penalty.component';
 import { EditUserDialogComponent } from './manageusers/edit-user-dialog/edit-user-dialog.component';
 import { EditTournamentRoundComponent } from './managetournament/edit-tournament-round/edit-tournament-round.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   imports: [
     SharedModule,
     AdminRoutingModule,
-    EventsModule
+    EventsModule,
+    FullCalendarModule,
   ],
   declarations: [
     AdminComponent,

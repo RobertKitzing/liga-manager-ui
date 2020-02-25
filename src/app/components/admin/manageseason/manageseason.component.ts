@@ -15,8 +15,10 @@ import {
 import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { LocalStorage } from 'ngx-webstorage';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter } from '@angular/material/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { PublicHolidaysService } from 'src/app/services/public-holidays.service';
 
 const MANAGE_SEASON_KEY = 'MANAGE_SEASON_ID_KEY';
 
@@ -26,6 +28,13 @@ const MANAGE_SEASON_KEY = 'MANAGE_SEASON_ID_KEY';
   styleUrls: ['./manageseason.component.css']
 })
 export class ManageseasonComponent implements OnInit {
+
+  calendarPlugins = [
+    dayGridPlugin,
+    interactionPlugin,
+  ];
+  events: any[];
+  holidays: any[];
 
   matchesInSeason: Match.Fragment[];
 
@@ -55,6 +64,7 @@ export class ManageseasonComponent implements OnInit {
     private notificationService: NotificationService,
     private endSeasonGQL: EndSeasonGQL,
     private dateAdapter: DateAdapter<any>,
+    private holidaysService: PublicHolidaysService,
   ) {
     this.translateService.onLangChange.subscribe(
       (lang) => {
@@ -92,6 +102,12 @@ export class ManageseasonComponent implements OnInit {
     if (this.manageSeasonStore) {
       this.manageSeasonChanged({value: this.manageSeasonStore.id, source: null});
     }
+
+    this.holidaysService.publicHolidays(2020).subscribe(
+      (result) => {
+        this.holidays = result;
+      }
+    );
   }
 
   async addNewSeason(seasonName: string) {
@@ -175,19 +191,38 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatchDays(startDate: MatDatepickerInputEvent<any>, length: number) {
-    this.newMatchDays = new Array<DatePeriod>();
+  eventDrop(event) {
+    const matchDayIndex = event.event._def.extendedProps.matchDayIndex;
+    for (const matchDay of this.events.filter(
+      x => x.title.includes('Spieltag') && x.matchDayIndex >= matchDayIndex)) {
+
+      const md = this.events.indexOf(matchDay);
+      this.events[md].start.setDate((matchDay.start as Date).getDate() + event.delta.days);
+      this.events[md].end.setDate((matchDay.end as Date).getDate() + event.delta.days);
+    }
+  }
+
+  createMatchDays(length: number) {
+    const events = new Array<any>();
     if (length % 2 !== 0) {
       length += 1;
     }
     for (let i = 0; i < length - 1; i++) {
       const dp = <DatePeriod>{};
-      dp.from = new Date(startDate.value);
+      dp.from = new Date(this.seasonStartDate);
       dp.from.setDate(dp.from.getDate() + (i * this.betweenMatchDaysOffset));
       dp.to = new Date(dp.from);
       dp.to.setDate(dp.to.getDate() + this.fromToOffset);
-      this.newMatchDays.push(dp);
+      events.push({
+        allDay: true,
+        title: `${i + 1}.Spieltag`,
+        matchDayIndex: i,
+        start: dp.from,
+        end: dp.to,
+      });
     }
+
+    this.events = events.concat(this.holidays);
   }
 
   async sendMatchDays() {

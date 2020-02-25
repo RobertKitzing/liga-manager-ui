@@ -19,7 +19,7 @@ export class AuthenticationService {
 
   user: User.AuthenticatedUser;
 
-  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string = null;
+  @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string;
 
   public get isAuthenticated(): boolean {
     return this.user && Boolean(this.accessToken);
