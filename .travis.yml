@@ -89,6 +89,7 @@ script:
   - npm run build:angular:app
   - npm run build:server:express
   - docker build -t $DOCKER_REPO_UI:$TAG-$TRAVIS_BUILD_NUMBER server/express
+  - docker tag $DOCKER_REPO_UI:$TAG-$TRAVIS_BUILD_NUMBER $DOCKER_REPO_UI:latest
   - npm run compodoc
   - ./push.sh
   # - npm run build:server:graphql
@@ -101,6 +102,7 @@ script:
 after_success:
   - docker login -u $DOCKER_USER -p "$DOCKER_PASS"
   - docker push $DOCKER_REPO_UI:$TAG-$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_REPO_UI:latest
   # - docker push $DOCKER_REPO_GRAPHQL:$TAG-$TRAVIS_BUILD_NUMBER
   - fastlane supply init --json_key /home/travis/build/key.json -p de.wildeligamanager.bremen
   - npm run createchangelog -- -v $ANDROID_VERSION_CODE

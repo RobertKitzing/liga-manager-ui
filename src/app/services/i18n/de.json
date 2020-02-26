@@ -23,6 +23,7 @@
 		"NEXT": "weiter",
 		"NO": "nein",
 		"OK": "ok",
+		"RESCHEDULE_MATCHPLAN": "Spieltage neu terminieren",
 		"SAVE": "speichern",
 		"SEND_USER_MAIL": "Email an Benutzer",
 		"SET_DAY": "Tag auswählen",
