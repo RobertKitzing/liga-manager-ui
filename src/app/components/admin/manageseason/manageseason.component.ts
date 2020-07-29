@@ -53,11 +53,14 @@ export class ManageseasonComponent implements OnInit {
 
   seasonList: Observable<AllSeasonsList.AllSeasons[]>;
   manageSeason: Observable<MatchPlan.Season>;
+  teamsCount: number;
 
   @LocalStorage(MANAGE_SEASON_KEY)
   manageSeasonStore: MatchPlan.Season;
 
   seasonStartDate: Date;
+
+  secondHalf: boolean;
 
   get matchDays(): DatePeriod[] {
     const days: DatePeriod[] = this.events.filter(x => x.matchDayIndex !== -1).map(
@@ -146,6 +149,7 @@ export class ManageseasonComponent implements OnInit {
       map(({ data }) => {
         if (data.season.teams) {
           data.season.teams = data.season.teams.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+          this.teamsCount = data.season.teams.length;
         }
         return data.season;
       })
@@ -230,10 +234,14 @@ export class ManageseasonComponent implements OnInit {
     }
   }
 
-  createMatchDays(length: number) {
+  createMatchDays() {
     const events = new Array<any>();
+    let length = this.teamsCount;
     if (length % 2 !== 0) {
       length += 1;
+    }
+    if (this.secondHalf) {
+      length = (length * 2) - 1;
     }
     for (let i = 0; i < length - 1; i++) {
       const dp = <DatePeriod>{};
@@ -349,5 +357,9 @@ export class ManageseasonComponent implements OnInit {
         }
       }
     );
+  }
+
+  secondHalfChanged() {
+    this.createMatchDays();
   }
 }

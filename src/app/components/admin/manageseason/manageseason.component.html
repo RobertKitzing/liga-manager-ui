@@ -54,10 +54,19 @@
           <div class="col">
             <mat-form-field class="example-full-width">
               <input matInput [matDatepicker]="startSeasonDatePicker" placeholder="{{ 'START_SEASON_DATE' | translate }}" [(ngModel)]="seasonStartDate" required
-                (dateChange)="createMatchDays(manageSeason.teams.length)">
+                (dateChange)="createMatchDays()">
               <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #startSeasonDatePicker color="primary"></mat-datepicker>
             </mat-form-field>
+          </div>
+          <div class="col"
+            *ngIf="seasonStartDate">
+            <mat-slide-toggle
+              color="primary"
+              [(ngModel)]="secondHalf"
+              (change)="secondHalfChanged()">
+            {{ 'SECOND_HALF_SEASON' | translate }}
+          </mat-slide-toggle>
           </div>
           <div class="col" *ngIf="events">
             <mat-form-field>

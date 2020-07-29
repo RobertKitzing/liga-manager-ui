@@ -156,6 +156,7 @@
 	"RESCHEDULE_MATCH_DAY_ERROR_FROM_TO_SMALL": "Date from has to be bigger then Date to",
 	"RESCHEDULE_MATCH_DAY_SUCCESS": "Matchday rescheduled",
 	"ROUND": "Round",
+	"SECOND_HALF_SEASON": "1st/2nd Half",
 	"SEND_NEW_PASSWORD_MAIL_ERROR": "Email not sent",
 	"SEND_NEW_PASSWORD_MAIL_SUCCESS": "Email is on the way, please check Spam Folder also!",
 	"START_SEASON_DATE": "Start Date",

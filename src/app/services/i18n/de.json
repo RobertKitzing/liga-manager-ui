@@ -156,6 +156,7 @@
 	"RESCHEDULE_MATCH_DAY_ERROR_FROM_TO_SMALL": "Startdatum muss grösser als Enddatum sein",
 	"RESCHEDULE_MATCH_DAY_SUCCESS": "Spieltagsdatum geändert",
 	"ROUND": "Runde",
+	"SECOND_HALF_SEASON": "Hin/Rückrunde",
 	"SEND_NEW_PASSWORD_MAIL_ERROR": "Email senden fehlgeschlagen",
 	"SEND_NEW_PASSWORD_MAIL_SUCCESS": "Email ist unterwegs, bitte auch den Spamordner checken!",
 	"START_SEASON_DATE": "Saison Startdatum",
