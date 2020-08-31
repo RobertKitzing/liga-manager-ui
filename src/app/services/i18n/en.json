@@ -116,6 +116,7 @@
 	"PASSWORD_CHANGED_ERROR": "Password not changed",
 	"PASSWORD_CHANGED_SUCCESS": "Password changed",
 	"PASSWORD_FORGOT_TEXT": "Forgot Password? Please enter a new one",
+	"PASSWORD_MIN_LENGTH_6": "at least 6 characters",
 	"PASSWORD_REQUIRED": "Please enter Password",
 	"PENALTY_ERROR": "Penalty Error",
 	"PENALTY_SAVED": "Penalty saved",

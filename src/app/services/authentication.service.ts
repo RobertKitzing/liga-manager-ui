@@ -92,7 +92,7 @@ export class AuthenticationService {
     return this.isTeamAdmin && this.user.teams.find(t => t.id === teamId);
   }
 
-  changePassword(newPassword: string, oldPassword?: string): Promise<void> {
+  changePassword(newPassword: string, oldPassword: string): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
         this.changePasswordQGL.mutate(
@@ -105,6 +105,23 @@ export class AuthenticationService {
               new HttpHeaders()
                 .set('Authorization', `Basic ${Base64.encode(this.user.email.toLowerCase() + ':' + oldPassword)}`)
             }
+          }
+        ).subscribe(
+          (response) => {
+            resolve();
+          }, err => {
+            reject(err);
+          });
+      }
+    );
+  }
+
+  setPassword(newPassword: string): Promise<void> {
+    return new Promise<void>(
+      (resolve, reject) => {
+        this.changePasswordQGL.mutate(
+          {
+            new_password: newPassword
           }
         ).subscribe(
           (response) => {

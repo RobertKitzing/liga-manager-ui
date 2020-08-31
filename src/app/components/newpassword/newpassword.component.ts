@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -12,19 +12,18 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class NewpasswordComponent implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm =  new FormGroup({
+    password: new FormControl(null, [ Validators.required, Validators.minLength(6)])
+  });
+
   token: string;
 
   constructor(
     public authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private translateService: TranslateService,
     private notify: NotificationService
   ) {
-    this.loginForm = this.formBuilder.group({
-      password: ['', Validators.required],
-    });
   }
 
   ngOnInit() {
@@ -45,7 +44,7 @@ export class NewpasswordComponent implements OnInit {
 
   async submit() {
     try {
-      await this.authService.changePassword(this.loginForm.value.password);
+      await this.authService.setPassword(this.loginForm.value.password);
       this.authService.logout();
       this.notify.showSuccessNotification(this.translateService.instant('PASSWORD_CHANGED_SUCCESS'));
     } catch (error) {

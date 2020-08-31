@@ -116,6 +116,7 @@
 	"PASSWORD_CHANGED_ERROR": "Passwort ändern fehlgeschlagen",
 	"PASSWORD_CHANGED_SUCCESS": "Passwort geändert, bitte neu einloggen",
 	"PASSWORD_FORGOT_TEXT": "Passwort vergessen? Bitte ein neues Passwort eingeben",
+	"PASSWORD_MIN_LENGTH_6": "mindestens 6 Zeichen",
 	"PASSWORD_REQUIRED": "Bitte Passwort eingeben",
 	"PENALTY_ERROR": "Strafe konnte nicht gespeichert werden",
 	"PENALTY_SAVED": "Strafe gespeichert",
