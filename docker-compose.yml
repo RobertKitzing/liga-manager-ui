@@ -9,7 +9,7 @@ services:
   #   working_dir: /usr/src/app
   #   command: npm test
   ui:
-    image: node:10.15.3
+    image: node
     ports:
       - "3098:3098"
     volumes:

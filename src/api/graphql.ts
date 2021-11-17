@@ -7,6 +7,14 @@ export interface DatePeriod {
   to: Date;
 }
 
+export interface MatchAppointment {
+  kickoff: DateTime;
+
+  unavailable_team_ids: (Maybe<string>)[];
+
+  pitch_id: string;
+}
+
 export interface TeamIdPair {
   home_team_id: string;
 
@@ -25,10 +33,10 @@ export enum UserRole {
 }
 
 /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
-export type DateTime = any;
+export type Date = any;
 
 /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
-export type Date = any;
+export type DateTime = any;
 
 // ====================================================
 // Documents
@@ -84,6 +92,19 @@ export namespace CancelMatch {
     __typename?: "Mutation";
 
     cancelMatch: Maybe<boolean>;
+  };
+}
+
+export namespace ScheduleAllMatchesForSeason {
+  export type Variables = {
+    season_id: string;
+    match_appointments: (Maybe<MatchAppointment>)[];
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    scheduleAllMatchesForSeason: Maybe<boolean>;
   };
 }
 
@@ -1108,6 +1129,25 @@ export class CancelMatchGQL extends Apollo.Mutation<
   document: any = gql`
     mutation CancelMatch($match_id: String!, $reason: String!) {
       cancelMatch(match_id: $match_id, reason: $reason)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ScheduleAllMatchesForSeasonGQL extends Apollo.Mutation<
+  ScheduleAllMatchesForSeason.Mutation,
+  ScheduleAllMatchesForSeason.Variables
+> {
+  document: any = gql`
+    mutation ScheduleAllMatchesForSeason(
+      $season_id: String!
+      $match_appointments: [MatchAppointment]!
+    ) {
+      scheduleAllMatchesForSeason(
+        season_id: $season_id
+        match_appointments: $match_appointments
+      )
     }
   `;
 }

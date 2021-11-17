@@ -38,11 +38,6 @@ export interface IMatchDayEvent {
 })
 export class ManageseasonComponent implements OnInit {
 
-  calendarPlugins = [
-    dayGridPlugin,
-    interactionPlugin,
-  ];
-
   events: IMatchDayEvent[];
   holidays: IMatchDayEvent[];
 
@@ -207,12 +202,13 @@ export class ManageseasonComponent implements OnInit {
   selectedTabChanged(event: MatTabChangeEvent, season: MatchPlan.Season) {
     switch (event.index) {
       case 1:
+      case 3:
         if (season.match_days) {
           this.events = season.match_days.map(
             (matchDay) => (
               {
                 allDay: true,
-                title: `${matchDay.number} Spieltag`,
+                title: `${matchDay.number}. Spieltag`,
                 matchDayIndex: matchDay.number - 1,
                 matchDayId: matchDay.id,
                 start: new Date(matchDay.start_date),

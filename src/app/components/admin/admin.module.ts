@@ -16,6 +16,13 @@ import { EditRankingPenaltyComponent } from './manageseason/manage-penalty/edit-
 import { EditUserDialogComponent } from './manageusers/edit-user-dialog/edit-user-dialog.component';
 import { EditTournamentRoundComponent } from './managetournament/edit-tournament-round/edit-tournament-round.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   imports: [

@@ -50,49 +50,53 @@
         </div>
       </mat-tab>
       <mat-tab label="{{ 'TAB.MATCH_DAYS'  | translate  }}">
-        <div class="row" style="margin-top: 20px;">
-          <div class="col">
-            <mat-form-field class="example-full-width">
-              <input matInput [matDatepicker]="startSeasonDatePicker" placeholder="{{ 'START_SEASON_DATE' | translate }}" [(ngModel)]="seasonStartDate" required
-                (dateChange)="createMatchDays()">
-              <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #startSeasonDatePicker color="primary"></mat-datepicker>
-            </mat-form-field>
+        <div class="container">
+          <div class="row" style="margin-top: 20px;">
+            <div class="col">
+              <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="startSeasonDatePicker" placeholder="{{ 'START_SEASON_DATE' | translate }}" [(ngModel)]="seasonStartDate" required
+                  (dateChange)="createMatchDays()">
+                <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startSeasonDatePicker color="primary"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col"
+              *ngIf="seasonStartDate">
+              <mat-slide-toggle
+                color="primary"
+                [(ngModel)]="secondHalf"
+                (change)="secondHalfChanged()">
+              {{ 'SECOND_HALF_SEASON' | translate }}
+            </mat-slide-toggle>
+            </div>
+            <div class="col" *ngIf="events">
+              <mat-form-field>
+                <input matInput type="number" placeholder="{{'FROM_TO_OFFSET_DAYS' | translate }}" min="1"
+                  [(ngModel)]="fromToOffset" (change)="resizeMatchDays()" />
+              </mat-form-field>
+            </div>
+            <div class="col" *ngIf="events">
+              <mat-form-field>
+                <input matInput type="number" placeholder="{{'BETWEEN_MATCH_DAYS_OFFSET_DAYS' | translate }}"
+                  [(ngModel)]="betweenMatchDaysOffset"/>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col"
-            *ngIf="seasonStartDate">
-            <mat-slide-toggle
-              color="primary"
-              [(ngModel)]="secondHalf"
-              (change)="secondHalfChanged()">
-            {{ 'SECOND_HALF_SEASON' | translate }}
-          </mat-slide-toggle>
+          <div class="row" *ngIf="events">
+              <full-calendar defaultView="dayGridMonth" [events]="events" [firstDay]="1" [editable]="true"
+                (eventDrop)="eventDrop($event)"
+                deepChangeDetection="true"></full-calendar>
           </div>
-          <div class="col" *ngIf="events">
-            <mat-form-field>
-              <input matInput type="number" placeholder="{{'FROM_TO_OFFSET_DAYS' | translate }}" min="1"
-                [(ngModel)]="fromToOffset" (change)="resizeMatchDays()" />
-            </mat-form-field>
+          <div class="row">
+            <button mat-raised-button color="primary" *ngIf="!manageSeason.match_days" [disabled]="!events"
+              (click)="sendMatchDays()">{{ 'BUTTON.GENERATE_MATCHPLAN' | translate }}
+            </button>
           </div>
-          <div class="col" *ngIf="events">
-            <mat-form-field>
-              <input matInput type="number" placeholder="{{'BETWEEN_MATCH_DAYS_OFFSET_DAYS' | translate }}"
-                [(ngModel)]="betweenMatchDaysOffset"/>
-            </mat-form-field>
+          <div class="row">
+            <button mat-raised-button color="primary" *ngIf="manageSeason.match_days" [disabled]="!events"
+              (click)="rescheduleMatchDays()">{{ 'BUTTON.RESCHEDULE_MATCHPLAN' | translate }}
+            </button>
           </div>
-        </div>
-        <div class="col" *ngIf="events">
-            <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="events" [firstDay]="1" [editable]="true"
-              (eventDrop)="eventDrop($event)"
-              deepChangeDetection="true"></full-calendar>
-        </div>
-        <div>
-          <button mat-raised-button color="primary" *ngIf="!manageSeason.match_days" [disabled]="!events"
-            (click)="sendMatchDays()">{{ 'BUTTON.GENERATE_MATCHPLAN' | translate }}
-          </button>
-          <button mat-raised-button color="primary" *ngIf="manageSeason.match_days" [disabled]="!events"
-            (click)="rescheduleMatchDays()">{{ 'BUTTON.RESCHEDULE_MATCHPLAN' | translate }}
-          </button>
         </div>
       </mat-tab>
       <mat-tab label="{{ 'TAB.MATCHES' | translate }}">
@@ -117,7 +121,9 @@
           (click)="startSeason()">{{ 'BUTTON.START_SEASON' | translate}}</button>
       </mat-tab>
       <mat-tab label="{{ 'TAB.MATCH_SCHEDULING' | translate }}" *ngIf="manageSeason.match_days">
-        <app-match-scheduling [manageSeason]="manageSeason"></app-match-scheduling>
+        <ng-template matTabContent>
+          <app-match-scheduling [manageSeason]="manageSeason" [events]="events"></app-match-scheduling>
+        </ng-template>
       </mat-tab>
       <mat-tab label="{{ 'TAB.MANAGE_PENALTY' | translate}}">
         <ng-template matTabContent>
