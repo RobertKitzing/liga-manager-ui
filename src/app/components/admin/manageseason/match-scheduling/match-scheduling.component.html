@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container-fluid mt-4">
   <div class="row" style="justify-content: center;">
     <div class="col">
-      <mat-form-field style="width: 100%;">
-        <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete" [formControl]="newMatchPitch"
+      <mat-form-field style="width: 100%;" [formGroup]="matchAppointmentFormGroup">
+        <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete" formControlName="pitch"
         />
         <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
           <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
@@ -12,10 +12,27 @@
       </mat-form-field>
     </div>
     <div class="col">
-      <mat-form-field class="example-full-width">
-        <input matInput [matDatepicker]="newMatchDatePicker" placeholder="{{ 'NEW_KICKOFF_DATE' | translate }}" [formControl]="newMatchDate">
-        <mat-datepicker-toggle matSuffix [for]="newMatchDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #newMatchDatePicker color="primary"></mat-datepicker>
+      <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput [matDatepicker]="startDate" placeholder="{{ 'START_DATE' | translate }}" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate color="primary"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput [matDatepicker]="endDate" placeholder="{{ 'END_DATE' | translate }}" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate color="primary"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput #time type="time" placeholder="{{ 'BUTTON.SET_TIME' | translate }}" formControlName="time">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET' | translate }}" formControlName="daysOffset">
       </mat-form-field>
     </div>
     <div class="col">
@@ -25,8 +42,10 @@
       <button mat-raised-button (click)="saveMatches()">save</button>
     </div>
   </div>
-  <div class="row" *ngIf="events">
-    <full-calendar defaultView="dayGridMonth" [events]="events" [firstDay]="1" [editable]="true" [options]="calendarOptions" deepChangeDetection="true"></full-calendar>
+  <div class="row" style="justify-content: center;">
+    <div class="col-4">
+        <full-calendar [options]="calendarOptions" deepChangeDetection="true"></full-calendar>
+    </div>
   </div>
   <!-- <div class="row" *ngFor="let e of possibleKickoffs" style="border: 1px solid black">
     <div class="col">

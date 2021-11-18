@@ -3,3 +3,9 @@ query AllSeasonsList {
     ...AllSeasons
   }
 }
+
+query AllSeasonsCalendar {
+  allSeasons {
+    ...AllSeasonsCalendar
+  }
+}

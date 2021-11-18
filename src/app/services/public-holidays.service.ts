@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IMatchDayEvent } from '../components/admin/manageseason/manageseason.component';
+import { IMatchDayEvent } from './calendar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,7 @@ export class PublicHolidaysService {
                 matchDayId: '',
                 start: result[holiday].datum,
                 end: result[holiday].datum,
+                display: 'background',
               });
             }
             return holidays;

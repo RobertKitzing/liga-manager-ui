@@ -16,6 +16,19 @@ import { EditPitchContactDialogComponent } from './edit-pitch-contact-dialog/edi
 import { CreatePitchDialogComponent } from './create-pitch-dialog/create-pitch-dialog.component';
 import { CancelMatchDialogComponent } from './cancel-match-dialog/cancel-match-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  timeGridPlugin,
+  listPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   imports: [
@@ -23,7 +36,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    TranslateModule
+    TranslateModule,
+    FullCalendarModule,
   ],
   declarations: [
     MatchComponent,
@@ -50,7 +64,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     SeasonchooserComponent,
     MaterialModule,
     EditContactComponent,
-    CancelMatchDialogComponent
+    CancelMatchDialogComponent,
+    FullCalendarModule,
   ]
 })
 export class SharedModule { }

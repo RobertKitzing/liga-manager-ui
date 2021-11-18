@@ -16,20 +16,16 @@ import { EditRankingPenaltyComponent } from './manageseason/manage-penalty/edit-
 import { EditUserDialogComponent } from './manageusers/edit-user-dialog/edit-user-dialog.component';
 import { EditTournamentRoundComponent } from './managetournament/edit-tournament-round/edit-tournament-round.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import { ManageTeamsComponent } from './manageseason/manage-teams/manage-teams.component';
+import { ManageMatchDaysComponent } from './manageseason/manage-match-days/manage-match-days.component';
+import { ManageMatchesComponent } from './manageseason/manage-matches/manage-matches.component';
 
-FullCalendarModule.registerPlugins([
-  dayGridPlugin,
-  interactionPlugin
-]);
 
 @NgModule({
   imports: [
     SharedModule,
     AdminRoutingModule,
     EventsModule,
-    FullCalendarModule,
   ],
   declarations: [
     AdminComponent,
@@ -44,7 +40,10 @@ FullCalendarModule.registerPlugins([
     ManagepitchesComponent,
     ManagePenaltyComponent,
     EditRankingPenaltyComponent,
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    ManageTeamsComponent,
+    ManageMatchDaysComponent,
+    ManageMatchesComponent
   ],
 })
 export class AdminModule { }

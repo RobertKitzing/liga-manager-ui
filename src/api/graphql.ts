@@ -563,6 +563,18 @@ export namespace AllSeasonsList {
   export type AllSeasons = AllSeasons.Fragment;
 }
 
+export namespace AllSeasonsCalendar {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    allSeasons: Maybe<(Maybe<AllSeasons>)[]>;
+  };
+
+  export type AllSeasons = AllSeasonsCalendar.Fragment;
+}
+
 export namespace AllTeams {
   export type Variables = {};
 
@@ -749,6 +761,22 @@ export namespace AllSeasons {
 
     state: SeasonState;
   };
+}
+
+export namespace AllSeasonsCalendar {
+  export type Fragment = {
+    __typename?: "Season";
+
+    id: string;
+
+    name: string;
+
+    state: SeasonState;
+
+    match_days: Maybe<(Maybe<MatchDays>)[]>;
+  };
+
+  export type MatchDays = MatchDay.Fragment;
 }
 
 export namespace AllTournaments {
@@ -981,6 +1009,19 @@ export const AllSeasonsFragment = gql`
     name
     state
   }
+`;
+
+export const AllSeasonsCalendarFragment = gql`
+  fragment AllSeasonsCalendar on Season {
+    id
+    name
+    state
+    match_days {
+      ...MatchDay
+    }
+  }
+
+  ${MatchDayFragment}
 `;
 
 export const AllTournamentsFragment = gql`
@@ -1692,6 +1733,23 @@ export class AllSeasonsListGQL extends Apollo.Query<
     }
 
     ${AllSeasonsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AllSeasonsCalendarGQL extends Apollo.Query<
+  AllSeasonsCalendar.Query,
+  AllSeasonsCalendar.Variables
+> {
+  document: any = gql`
+    query AllSeasonsCalendar {
+      allSeasons {
+        ...AllSeasonsCalendar
+      }
+    }
+
+    ${AllSeasonsCalendarFragment}
   `;
 }
 @Injectable({

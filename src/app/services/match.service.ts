@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SubmitResultGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch, ScheduleAllMatchesForSeasonGQL, MatchAppointment } from '../../api/graphql';
+import { SubmitResultGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch, ScheduleAllMatchesForSeasonGQL, MatchAppointment, MatchPlanGQL } from '../../api/graphql';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class MatchService {
     private scheduleMatchGQL: ScheduleMatchGQL,
     private scheduleAllMatchesForSeasonGQL: ScheduleAllMatchesForSeasonGQL,
     private locateMatchQGL: LocateMatchGQL,
+    private matchPlanGQL: MatchPlanGQL,
   ) { }
 
   public isMatchPlayed(match: Match.Fragment): boolean {
@@ -73,6 +74,16 @@ export class MatchService {
           {
             season_id,
             match_appointments
+          },
+          {
+            refetchQueries: [
+              {
+                query: this.matchPlanGQL.document,
+                variables: {
+                  id: season_id,
+                }
+              }
+            ]
           }
         ).subscribe(
           () => {

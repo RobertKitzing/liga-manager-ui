@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row card-footer justiy-content-center">
+            <div class="row card-footer justiy-content-center" *ngIf="editable">
                 <div class="col text-center" *ngIf="authService.isAuthenticated">
                     <button mat-raised-button color="primary" (click)="openContactModal()">
                         <i class="material-icons">

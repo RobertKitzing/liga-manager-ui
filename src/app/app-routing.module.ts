@@ -18,6 +18,10 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./components/matchplan').then(m => m.MatchplanModule)
   },
   {
+    path: 'calendar',
+    loadChildren: () => import('./components/calendar').then(m => m.CalendarModule),
+  },
+  {
     path: 'tournament',
     loadChildren: () => import('./components/tournament').then(m => m.TournamentModule)
   },

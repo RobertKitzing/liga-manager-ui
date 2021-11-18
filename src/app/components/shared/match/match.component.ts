@@ -23,6 +23,7 @@ export class MatchComponent implements OnInit {
   @Input() tournamentId: string;
   @Input() match: Match.Fragment;
   @Input() hideIfPlayed: boolean;
+  @Input() editable = true;
 
   @Output() matchUpdated = new EventEmitter<string>();
 

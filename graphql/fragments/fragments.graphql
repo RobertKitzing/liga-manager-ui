@@ -69,6 +69,15 @@ fragment AllSeasons on Season {
     state
 }
 
+fragment AllSeasonsCalendar on Season {
+    id
+    name
+    state
+    match_days {
+        ...MatchDay
+    }
+}
+
 fragment AllTournaments on Tournament {
     id
     name

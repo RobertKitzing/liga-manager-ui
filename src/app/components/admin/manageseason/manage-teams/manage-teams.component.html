@@ -1,0 +1,23 @@
+<div class="container-fluid mt-4" *ngIf="manageSeason">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col">
+            <h3 translate>TEAMS_IN_SEASON</h3>
+            <div class="row" *ngFor="let team of manageSeason.teams">
+                <div class="col">
+                    {{team.name}}
+                    <button mat-icon-button (click)="removeTeamFromSeason(team.id)">-></button>
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h3 translate>ALL_TEAMS</h3>
+            <div class="row" *ngFor="let team of teamService.allTeams | async">
+                <div class="col">
+                    <button mat-icon-button (click)="addTeamToSeason(team.id)"><-</button> {{team.name}} 
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
