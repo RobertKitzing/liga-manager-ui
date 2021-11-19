@@ -3,6 +3,8 @@ on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    env:
+      DOCKER_REPO_UI: robertkitzing/liga-manager-ui
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -17,6 +19,14 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: dist-without-markdown
+        name: server-express-dist
         path: |
           server/express/dist
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: server/express
+        push: false
+        tags: 
+          - ${{ env.DOCKER_REPO_UI }}:latest
