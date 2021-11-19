@@ -599,6 +599,18 @@ export namespace AllTournamentList {
   export type AllTournaments = AllTournaments.Fragment;
 }
 
+export namespace AllTournamentCalendar {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    allTournaments: Maybe<(Maybe<AllTournaments>)[]>;
+  };
+
+  export type AllTournaments = AllTournamentsCalendar.Fragment;
+}
+
 export namespace Tournament {
   export type Variables = {
     id: string;
@@ -787,6 +799,20 @@ export namespace AllTournaments {
 
     name: string;
   };
+}
+
+export namespace AllTournamentsCalendar {
+  export type Fragment = {
+    __typename?: "Tournament";
+
+    id: string;
+
+    name: string;
+
+    rounds: Maybe<(Maybe<Rounds>)[]>;
+  };
+
+  export type Rounds = MatchDay.Fragment;
 }
 
 export namespace Tournament {
@@ -1029,6 +1055,18 @@ export const AllTournamentsFragment = gql`
     id
     name
   }
+`;
+
+export const AllTournamentsCalendarFragment = gql`
+  fragment AllTournamentsCalendar on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
+  }
+
+  ${MatchDayFragment}
 `;
 
 export const TournamentFragment = gql`
@@ -1784,6 +1822,23 @@ export class AllTournamentListGQL extends Apollo.Query<
     }
 
     ${AllTournamentsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AllTournamentCalendarGQL extends Apollo.Query<
+  AllTournamentCalendar.Query,
+  AllTournamentCalendar.Variables
+> {
+  document: any = gql`
+    query AllTournamentCalendar {
+      allTournaments {
+        ...AllTournamentsCalendar
+      }
+    }
+
+    ${AllTournamentsCalendarFragment}
   `;
 }
 @Injectable({

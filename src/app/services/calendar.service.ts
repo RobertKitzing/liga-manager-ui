@@ -15,6 +15,7 @@ export interface IMatchDayEvent {
   display?: string;
   new?: boolean;
   match?: MatchAppointment;
+  matchSeriesId?: number;
 }
 
 @Injectable({

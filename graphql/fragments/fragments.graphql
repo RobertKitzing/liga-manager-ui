@@ -83,6 +83,14 @@ fragment AllTournaments on Tournament {
     name
 }
 
+fragment AllTournamentsCalendar on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
+}
+
 fragment Tournament on Tournament {
     id
     name

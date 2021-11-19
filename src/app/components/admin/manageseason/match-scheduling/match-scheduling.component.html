@@ -36,10 +36,29 @@
       </mat-form-field>
     </div>
     <div class="col">
+      {{ matchAppointments.length }}/{{matchesCount}}
+    </div>
+    <div class="col">
       <button mat-raised-button (click)="addMatchAppointment()">addMatchAppointment</button>
     </div>
     <div class="col">
       <button mat-raised-button (click)="saveMatches()">save</button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col">
+      <div class="row" *ngFor="let matchDayEvent of matchDaySeries">
+        <div class="col">
+          <p>{{ matchDayEvent.pitch.label }}</p>
+          <p>{{ matchDayEvent.time }}</p>
+          <p>{{ matchDayEvent.startDate | date }} - {{ matchDayEvent.endDate | date }}</p>
+        </div>
+        <div class="col">
+          <button mat-raised-button (click)="removeSeries(matchDayEvent.matchSeriesId)">remove</button>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
     </div>
   </div>
   <div class="row" style="justify-content: center;">
@@ -47,64 +66,4 @@
         <full-calendar [options]="calendarOptions" deepChangeDetection="true"></full-calendar>
     </div>
   </div>
-  <!-- <div class="row" *ngFor="let e of possibleKickoffs" style="border: 1px solid black">
-    <div class="col">
-      {{ e.pitch.label }}
-    </div>
-    <div class="col">
-      {{ e.kickoffTime | date:'shortTime':'':i18Service.currentLang }}
-    </div>
-    <div class="col">
-      OFFSET: {{ e.daysOffset}}
-    </div>
-    <div class="col">
-      <div class="row" *ngFor="let d of e.teamsCanPlay">
-        <div class="col">
-          {{ d.team.name }}
-        </div>
-        <div class="col">
-          <input type="checkbox" [(ngModel)]="d.canPlay" value="true" />
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <button mat-button (click)="removePair(e.index)">Remove</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      ab Spieltag:
-    </div>
-    <div class="col">
-      <mat-select #startMatchDay [(ngModel)]="startmatchDay">
-        <mat-option *ngFor="let matchDay of manageSeason.match_days" [value]="matchDay.number">
-          {{ matchDay.number }}
-        </mat-option>
-      </mat-select>
-    </div>
-  </div>
-  <ng-container *ngFor="let matchDay of manageSeason.match_days">
-    <div class="row">
-      <div class="col text-center">
-        <h3>{{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date | date:'shortDate':'':i18Service.currentLang}}
-          - {{ matchDay.end_date | date:'shortDate':'':i18Service.currentLang}})</h3>
-      </div>
-    </div>
-    <div class="row" *ngFor="let match of matchDay.matches">
-      <div class="col">
-        {{ match.home_team.name }} - {{ match.guest_team.name }}
-      </div>
-      <div class="col" *ngIf="match.kickoff">
-        {{ match.kickoff | date:'short':'':i18Service.currentLang}}
-      </div>
-      <div class="col">
-        ({{ match.pitch?.label }})
-      </div>
-    </div>
-  </ng-container>
-  <div class="row">
-    <div class="col">
-      <button mat-button (click)="saveMatches()">save</button>
-    </div>
-  </div> -->
 </div>

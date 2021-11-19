@@ -26,7 +26,7 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   calendarOptions: CalendarOptions = {
     firstDay: 1,
-    editable: true,
+    editable: false,
     events: [],
   };
 
@@ -35,6 +35,8 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
       (event) => event.match,
     );
   }
+
+  matchDaySeries: {matchSeriesId: number, time: string, pitch: Pitch.Fragment, startDate, endDate, daysOffset}[] = [];
 
   matchAppointmentFormGroup = new FormGroup({
     pitch: new FormControl(),
@@ -48,8 +50,13 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   startmatchDay = 0;
 
-  get matchDayLength(): number {
-    return this.manageSeason.match_days[0].matches.length;
+  get matchesCount(): number {
+    let count = 0;
+    for (let md of this.manageSeason.match_days) {
+      count += md.matches.length;
+    }
+
+    return count;
   }
 
   constructor(
@@ -92,6 +99,13 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
     const h = this.matchAppointmentFormGroup.value.time.split(':')[0];
     const m = this.matchAppointmentFormGroup.value.time.split(':')[1];
+    const matchSeriesId = (this.calendarOptions.events as IMatchDayEvent[]).length + 1;
+
+    this.matchDaySeries.push({
+      ...this.matchAppointmentFormGroup.value,
+      matchSeriesId
+    });
+
     for (let current = dayjs(this.matchAppointmentFormGroup.value.startDate); dayjs(this.matchAppointmentFormGroup.value.endDate).isSameOrAfter(current); current = current.add(this.matchAppointmentFormGroup.value.daysOffset, 'day') ) {
 
       const match = {
@@ -105,6 +119,7 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
         start: match.kickoff,
         title: `${this.matchAppointmentFormGroup.value.pitch.label}`,
         match,
+        matchSeriesId,
       });
     }
   }
@@ -116,5 +131,15 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
     } catch (error) {
       this.notificationService.showErrorNotification(this.translateService.instant('CREATE_MATCH_DAYS_ERROR'), error);
     }
+  }
+
+  removeSeries(matchSeriesId: number) {
+    this.calendarOptions.events = (this.calendarOptions.events as IMatchDayEvent[]).filter(
+      (x) => x.matchSeriesId !== matchSeriesId,
+    );
+
+    this.matchDaySeries = this.matchDaySeries.filter(
+      (x) => x.matchSeriesId !== matchSeriesId,
+    );
   }
 }

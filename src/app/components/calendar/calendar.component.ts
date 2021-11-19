@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AllSeasonsCalendarGQL, SeasonState } from 'src/api/graphql';
+import { AllSeasonsCalendarGQL, AllTournamentCalendarGQL, SeasonState } from 'src/api/graphql';
 import { I18Service } from 'src/app/services/i18.service';
 
 @Component({
@@ -30,6 +30,7 @@ export class CalendarComponent implements OnInit {
   constructor(
     private i18Service: I18Service,
     private allSeasonsCalendarGQL: AllSeasonsCalendarGQL,
+    private allTournamentCalendarGQL: AllTournamentCalendarGQL,
   ) {
   }
 
@@ -67,8 +68,39 @@ export class CalendarComponent implements OnInit {
         }
       )
     ).toPromise();
-    console.log(allSeasonsCalendar);
-    this.calendarOptions.events = allSeasonsCalendar;
+    const allTournamentCalendar = await this.allTournamentCalendarGQL.fetch().pipe(
+      map(
+        (allTournaments) => {
+          const tournaments = allTournaments.data.allTournaments.filter(x => !!x.rounds);
+          let calendarEvents = [];
+          for (let tournament of tournaments) {
+            calendarEvents = calendarEvents.concat(
+              tournament.rounds.map(
+              (round) => (
+                {
+                  allDay: true,
+                  title: `${round.number}. Runde (${tournament.name})`,
+                  start: new Date(round.start_date),
+                  end: new Date(round.end_date),
+                  display: 'background',
+                })
+            ));
+            for (let round of tournament.rounds) {
+              calendarEvents = calendarEvents.concat(
+                round.matches.map(
+                  (match) => ({
+                    title: `${match.home_team.name} - ${match.guest_team.name}`,
+                    start: new Date(match.kickoff),
+                  })
+                )
+              );
+            }
+          }
+          return calendarEvents;
+        }
+      ),
+    ).toPromise();
+    this.calendarOptions.events = allSeasonsCalendar.concat(allTournamentCalendar);
   }
 
 }

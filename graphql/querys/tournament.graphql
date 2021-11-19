@@ -4,6 +4,12 @@ query AllTournamentList {
   }
 }
 
+query AllTournamentCalendar {
+  allTournaments {
+    ...AllTournamentsCalendar
+  }
+}
+
 query Tournament($id: String!) {
   tournament(id: $id) {
     ...Tournament
