@@ -1,7 +1,7 @@
-name: Main Action
+name: Main-Action
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Main-Job:
     runs-on: ubuntu-latest
     env:
       DOCKER_REPO_UI: robertkitzing/liga-manager-ui
@@ -12,6 +12,10 @@ jobs:
         node-version: '16'
         cache: 'npm'
         cache-dependency-path: ./package-lock.json
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm install
     - run: npm --prefix ./server/express install
     # - run: npm run build:angular:app
@@ -25,17 +29,22 @@ jobs:
     - name: get-npm-version
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
-    - name: Build and push
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v3 
+      with:
+        token: ${{secrets.github_token}}
+    - name: Build and push latest
       id: docker_build_latest
       uses: docker/build-push-action@v2
       with:
         context: server/express
-        push: false
+        push: true
         tags: ${{ env.DOCKER_REPO_UI }}:latest
-    - name: Build and push
+    - name: Build and push tagged
       id: docker_build_tag
       uses: docker/build-push-action@v2
       with:
         context: server/express
-        push: false
-        tags: ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}-${{ env.GITHUB_RUN_NUMBER }}
+        push: true
+        tags: ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }}
