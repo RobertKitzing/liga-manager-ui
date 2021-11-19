@@ -1,25 +1,19 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { PitchService } from '../../../../services/pitch.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { startWith, map, switchMapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { I18Service } from '../../../../services/i18.service';
-import * as momentjs from 'moment';
-import { MatchPlan, Pitch, Team } from 'src/api/graphql';
+import { MatchAppointment, MatchPlan, Pitch, Team } from 'src/api/graphql';
 import { MatchService } from 'src/app/services/match.service';
+import { CalendarOptions } from '@fullcalendar/angular';
+import * as dayjs from 'dayjs'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import { CalendarService, IMatchDayEvent } from 'src/app/services/calendar.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { TranslateService } from '@ngx-translate/core';
+dayjs.extend(isSameOrAfter);
 
-interface IPossibleKickoffs {
-  index: number;
-  kickoffTime: Date;
-  daysOffset: number;
-  pitch: Pitch.Fragment;
-  teamsCanPlay: ITeamCanPlayAtDate[];
-}
-
-interface ITeamCanPlayAtDate {
-  team: Team.Fragment;
-  canPlay: boolean;
-}
 
 @Component({
   selector: 'app-match-scheduling',
@@ -30,31 +24,68 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   @Input() manageSeason: MatchPlan.Season;
 
-  possibleKickoffs: IPossibleKickoffs[] = new Array<IPossibleKickoffs>();
+  calendarOptions: CalendarOptions = {
+    firstDay: 1,
+    editable: false,
+    events: [],
+  };
+
+  get matchAppointments(): MatchAppointment[] {
+    return (this.calendarOptions.events as IMatchDayEvent[]).filter(x => !!x.match).map(
+      (event) => event.match,
+    );
+  }
+
+  matchDaySeries: {matchSeriesId: number, time: string, pitch: Pitch.Fragment, startDate, endDate, daysOffset}[] = [];
+
+  matchAppointmentFormGroup = new FormGroup({
+    pitch: new FormControl(),
+    time: new FormControl(),
+    startDate: new FormControl(),
+    endDate: new FormControl(),
+    daysOffset: new FormControl(7),
+  });
+
   filteredPitches: Observable<Pitch.Fragment[]>;
-  newMatchPitch: FormControl = new FormControl();
+
   startmatchDay = 0;
 
-  get matchDayLength(): number {
-    return this.manageSeason.match_days[0].matches.length;
+  get matchesCount(): number {
+    let count = 0;
+    for (let md of this.manageSeason.match_days) {
+      count += md.matches.length;
+    }
+
+    return count;
   }
 
   constructor(
     public pitchService: PitchService,
     private matchService: MatchService,
-    public i18Service: I18Service
+    private calendarService: CalendarService,
+    public i18Service: I18Service,
+    private notificationService: NotificationService,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit() {
-    this.filteredPitches = this.newMatchPitch.valueChanges.pipe(
+    this.filteredPitches = this.matchAppointmentFormGroup.controls.pitch.valueChanges.pipe(
       startWith<string | Pitch.Fragment>(''),
       map(value => typeof value === 'string' ? value : value.label),
       switchMapTo(this.pitchService.allPitches),
       map(x => {
-        return (this.newMatchPitch.value && (typeof this.newMatchPitch.value === 'string')) ?
-          x.filter(y => y.label.toLowerCase().includes(this.newMatchPitch.value.toLowerCase())) : x;
+        return (this.matchAppointmentFormGroup.controls.pitch.value && (typeof this.matchAppointmentFormGroup.controls.pitch.value === 'string')) ?
+          x.filter(y => y.label.toLowerCase().includes(this.matchAppointmentFormGroup.controls.pitch.value.toLowerCase())) : x;
       })
     );
+    this.calendarService.getEvents(this.manageSeason).subscribe(
+      (events) => {
+        this.calendarOptions.events = events.map(
+          x => ({...x, display: 'background'})
+        );
+      }
+    );
+    this.calendarOptions.locale = this.i18Service.currentLang;
   }
 
   ngOnChanges() {
@@ -64,73 +95,51 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
     return pitch ? pitch.label : undefined;
   }
 
-  addKickoffDateToPitch(offset: number, event: any) {
-    if (this.newMatchPitch.value) {
-      const newElement: IPossibleKickoffs = {
-        index: this.possibleKickoffs.length,
-        pitch: this.newMatchPitch.value,
-        kickoffTime: event.value,
-        daysOffset: +offset,
-        teamsCanPlay: this.manageSeason.teams.map(x => <ITeamCanPlayAtDate>{ team: x, canPlay: true })
+  addMatchAppointment() {
+
+    const h = this.matchAppointmentFormGroup.value.time.split(':')[0];
+    const m = this.matchAppointmentFormGroup.value.time.split(':')[1];
+    const matchSeriesId = (this.calendarOptions.events as IMatchDayEvent[]).length + 1;
+
+    this.matchDaySeries.push({
+      ...this.matchAppointmentFormGroup.value,
+      matchSeriesId
+    });
+
+    for (let current = dayjs(this.matchAppointmentFormGroup.value.startDate); dayjs(this.matchAppointmentFormGroup.value.endDate).isSameOrAfter(current); current = current.add(this.matchAppointmentFormGroup.value.daysOffset, 'day') ) {
+
+      const match = {
+        kickoff: current.hour(h).minute(m).toDate(),
+        pitch_id: this.matchAppointmentFormGroup.value.pitch.id,
+        unavailable_team_ids: [],
       };
-      this.possibleKickoffs.push(newElement);
+
+      (this.calendarOptions.events as IMatchDayEvent[]).push({
+        allDay: false,
+        start: match.kickoff,
+        title: `${this.matchAppointmentFormGroup.value.pitch.label}`,
+        match,
+        matchSeriesId,
+      });
     }
   }
 
-  removePair(index: number) {
-    this.possibleKickoffs = this.possibleKickoffs.filter(x => x.index !== +index);
-  }
-
-  scheduleMatches() {
-
-    this.manageSeason.match_days.filter( x => x.number >= this.startmatchDay).forEach(
-      (matchDay) => {
-        let possibleKickoffs: IPossibleKickoffs[] = JSON.parse(JSON.stringify(this.possibleKickoffs));
-        matchDay.matches.forEach(
-          (match) => {
-            if (possibleKickoffs) {
-              possibleKickoffs = this.shuffle(possibleKickoffs);
-              let list = possibleKickoffs.filter(x => x.teamsCanPlay.find(y => y.team.id === match.home_team.id).canPlay);
-              list = list.filter(x => x.teamsCanPlay.find(y => y.team.id === match.guest_team.id).canPlay);
-              if (list[0]) {
-                if (!match.pitch && !match.kickoff) {
-                  match.pitch = list[0].pitch;
-                  const date = momentjs(matchDay.start_date).add(list[0].daysOffset, 'd').toDate();
-                  date.setUTCHours(new Date(list[0].kickoffTime).getUTCHours());
-                  date.setUTCMinutes(new Date(list[0].kickoffTime).getUTCMinutes());
-                  match.kickoff = date.toISOString();
-                }
-                possibleKickoffs = possibleKickoffs.filter(x => x.index !== list[0].index);
-              } else {
-                alert(`${matchDay.id}. Spieltag - Spiel ${match.home_team.name} - ${match.guest_team.name} konnte nicht terminiert werden`);
-                console.error('iwas passt nicht');
-              }
-            }
-          }
-        );
-      }
-    );
-  }
-
-  saveMatches() {
-    const matches = this.manageSeason.match_days.map(x => x.matches).reduce((acc, val) => acc.concat(val), []);
-    matches.forEach(
-      async (match) => {
-        try {
-          await this.matchService.locateMatch(match.id, match.pitch);
-          await this.matchService.scheduleMatch(match.id, match.kickoff);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    );
-  }
-
-  shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+  async saveMatches() {
+    try {
+      await this.matchService.scheduleAllMatchesInSeason(this.manageSeason.id, this.matchAppointments);
+      this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
+    } catch (error) {
+      this.notificationService.showErrorNotification(this.translateService.instant('CREATE_MATCH_DAYS_ERROR'), error);
     }
-    return a;
+  }
+
+  removeSeries(matchSeriesId: number) {
+    this.calendarOptions.events = (this.calendarOptions.events as IMatchDayEvent[]).filter(
+      (x) => x.matchSeriesId !== matchSeriesId,
+    );
+
+    this.matchDaySeries = this.matchDaySeries.filter(
+      (x) => x.matchSeriesId !== matchSeriesId,
+    );
   }
 }

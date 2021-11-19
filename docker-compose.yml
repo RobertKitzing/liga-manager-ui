@@ -8,8 +8,12 @@ services:
   #     - .:/usr/src/app
   #   working_dir: /usr/src/app
   #   command: npm test
+  # ui:
+  #   image: robertkitzing/liga-manager-ui:latest
+  #   ports:
+  #     - "3098:3098"
   ui:
-    image: node:10.15.3
+    image: node:lts-slim
     ports:
       - "3098:3098"
     volumes:

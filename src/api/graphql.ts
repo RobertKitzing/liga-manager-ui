@@ -7,6 +7,14 @@ export interface DatePeriod {
   to: Date;
 }
 
+export interface MatchAppointment {
+  kickoff: DateTime;
+
+  unavailable_team_ids: (Maybe<string>)[];
+
+  pitch_id: string;
+}
+
 export interface TeamIdPair {
   home_team_id: string;
 
@@ -25,10 +33,10 @@ export enum UserRole {
 }
 
 /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
-export type DateTime = any;
+export type Date = any;
 
 /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
-export type Date = any;
+export type DateTime = any;
 
 // ====================================================
 // Documents
@@ -84,6 +92,19 @@ export namespace CancelMatch {
     __typename?: "Mutation";
 
     cancelMatch: Maybe<boolean>;
+  };
+}
+
+export namespace ScheduleAllMatchesForSeason {
+  export type Variables = {
+    season_id: string;
+    match_appointments: (Maybe<MatchAppointment>)[];
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    scheduleAllMatchesForSeason: Maybe<boolean>;
   };
 }
 
@@ -542,6 +563,18 @@ export namespace AllSeasonsList {
   export type AllSeasons = AllSeasons.Fragment;
 }
 
+export namespace AllSeasonsCalendar {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    allSeasons: Maybe<(Maybe<AllSeasons>)[]>;
+  };
+
+  export type AllSeasons = AllSeasonsCalendar.Fragment;
+}
+
 export namespace AllTeams {
   export type Variables = {};
 
@@ -564,6 +597,18 @@ export namespace AllTournamentList {
   };
 
   export type AllTournaments = AllTournaments.Fragment;
+}
+
+export namespace AllTournamentCalendar {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    allTournaments: Maybe<(Maybe<AllTournaments>)[]>;
+  };
+
+  export type AllTournaments = AllTournamentsCalendar.Fragment;
 }
 
 export namespace Tournament {
@@ -730,6 +775,22 @@ export namespace AllSeasons {
   };
 }
 
+export namespace AllSeasonsCalendar {
+  export type Fragment = {
+    __typename?: "Season";
+
+    id: string;
+
+    name: string;
+
+    state: SeasonState;
+
+    match_days: Maybe<(Maybe<MatchDays>)[]>;
+  };
+
+  export type MatchDays = MatchDay.Fragment;
+}
+
 export namespace AllTournaments {
   export type Fragment = {
     __typename?: "Tournament";
@@ -738,6 +799,20 @@ export namespace AllTournaments {
 
     name: string;
   };
+}
+
+export namespace AllTournamentsCalendar {
+  export type Fragment = {
+    __typename?: "Tournament";
+
+    id: string;
+
+    name: string;
+
+    rounds: Maybe<(Maybe<Rounds>)[]>;
+  };
+
+  export type Rounds = MatchDay.Fragment;
 }
 
 export namespace Tournament {
@@ -962,11 +1037,36 @@ export const AllSeasonsFragment = gql`
   }
 `;
 
+export const AllSeasonsCalendarFragment = gql`
+  fragment AllSeasonsCalendar on Season {
+    id
+    name
+    state
+    match_days {
+      ...MatchDay
+    }
+  }
+
+  ${MatchDayFragment}
+`;
+
 export const AllTournamentsFragment = gql`
   fragment AllTournaments on Tournament {
     id
     name
   }
+`;
+
+export const AllTournamentsCalendarFragment = gql`
+  fragment AllTournamentsCalendar on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
+  }
+
+  ${MatchDayFragment}
 `;
 
 export const TournamentFragment = gql`
@@ -1108,6 +1208,25 @@ export class CancelMatchGQL extends Apollo.Mutation<
   document: any = gql`
     mutation CancelMatch($match_id: String!, $reason: String!) {
       cancelMatch(match_id: $match_id, reason: $reason)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ScheduleAllMatchesForSeasonGQL extends Apollo.Mutation<
+  ScheduleAllMatchesForSeason.Mutation,
+  ScheduleAllMatchesForSeason.Variables
+> {
+  document: any = gql`
+    mutation ScheduleAllMatchesForSeason(
+      $season_id: String!
+      $match_appointments: [MatchAppointment]!
+    ) {
+      scheduleAllMatchesForSeason(
+        season_id: $season_id
+        match_appointments: $match_appointments
+      )
     }
   `;
 }
@@ -1657,6 +1776,23 @@ export class AllSeasonsListGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class AllSeasonsCalendarGQL extends Apollo.Query<
+  AllSeasonsCalendar.Query,
+  AllSeasonsCalendar.Variables
+> {
+  document: any = gql`
+    query AllSeasonsCalendar {
+      allSeasons {
+        ...AllSeasonsCalendar
+      }
+    }
+
+    ${AllSeasonsCalendarFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class AllTeamsGQL extends Apollo.Query<
   AllTeams.Query,
   AllTeams.Variables
@@ -1686,6 +1822,23 @@ export class AllTournamentListGQL extends Apollo.Query<
     }
 
     ${AllTournamentsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AllTournamentCalendarGQL extends Apollo.Query<
+  AllTournamentCalendar.Query,
+  AllTournamentCalendar.Variables
+> {
+  document: any = gql`
+    query AllTournamentCalendar {
+      allTournaments {
+        ...AllTournamentsCalendar
+      }
+    }
+
+    ${AllTournamentsCalendarFragment}
   `;
 }
 @Injectable({

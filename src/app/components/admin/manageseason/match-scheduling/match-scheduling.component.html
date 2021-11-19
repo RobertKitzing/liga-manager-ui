@@ -1,12 +1,8 @@
-<div>
-  Add here call to api function
-</div>
-<div class="container" *ngIf="false">
-  <h2>Pitches</h2>
+<div class="container-fluid mt-4">
   <div class="row" style="justify-content: center;">
     <div class="col">
-      <mat-form-field style="width: 100%;">
-        <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete" [formControl]="newMatchPitch"
+      <mat-form-field style="width: 100%;" [formGroup]="matchAppointmentFormGroup">
+        <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete" formControlName="pitch"
         />
         <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
           <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
@@ -16,75 +12,58 @@
       </mat-form-field>
     </div>
     <div class="col">
-      OFFSET: <input #offset type="number" value="1">
+      <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput [matDatepicker]="startDate" placeholder="{{ 'START_DATE' | translate }}" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate color="primary"></mat-datepicker>
+      </mat-form-field>
     </div>
     <div class="col">
-      <!-- <input matInput #kickoffInput [owlDateTime]="dt5" (dateTimeChange)="addKickoffDateToPitch(offset.value, $event)" style="display: none">
-      <button mat-button [owlDateTimeTrigger]="dt5">{{ 'BUTTON.SET_TIME' | translate }}</button>
-      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #dt5></owl-date-time> -->
+      <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput [matDatepicker]="endDate" placeholder="{{ 'END_DATE' | translate }}" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate color="primary"></mat-datepicker>
+      </mat-form-field>
     </div>
     <div class="col">
-      <button mat-raised-button color="primary" (click)="scheduleMatches()" *ngIf="possibleKickoffs.length === matchDayLength">scheduleMatches</button>
+      <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput #time type="time" placeholder="{{ 'BUTTON.SET_TIME' | translate }}" formControlName="time">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET' | translate }}" formControlName="daysOffset">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      {{ matchAppointments.length }}/{{matchesCount}}
+    </div>
+    <div class="col">
+      <button mat-raised-button (click)="addMatchAppointment()">addMatchAppointment</button>
+    </div>
+    <div class="col">
+      <button mat-raised-button (click)="saveMatches()">save</button>
     </div>
   </div>
-  <div class="row" *ngFor="let e of possibleKickoffs" style="border: 1px solid black">
-    <div class="col">
-      {{ e.pitch.label }}
-    </div>
-    <div class="col">
-      {{ e.kickoffTime | date:'shortTime':'':i18Service.currentLang }}
-    </div>
-    <div class="col">
-      OFFSET: {{ e.daysOffset}}
-    </div>
-    <div class="col">
-      <div class="row" *ngFor="let d of e.teamsCanPlay">
-        <div class="col">
-          {{ d.team.name }}
-        </div>
-        <div class="col">
-          <input type="checkbox" [(ngModel)]="d.canPlay" value="true" />
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <button mat-button (click)="removePair(e.index)">Remove</button>
-    </div>
-  </div>
+  <mat-divider></mat-divider>
   <div class="row">
     <div class="col">
-      ab Spieltag:
-    </div>
-    <div class="col">
-      <mat-select #startMatchDay [(ngModel)]="startmatchDay">
-        <mat-option *ngFor="let matchDay of manageSeason.match_days" [value]="matchDay.number">
-          {{ matchDay.number }}
-        </mat-option>
-      </mat-select>
+      <div class="row" *ngFor="let matchDayEvent of matchDaySeries">
+        <div class="col">
+          <p>{{ matchDayEvent.pitch.label }}</p>
+          <p>{{ matchDayEvent.time }}</p>
+          <p>{{ matchDayEvent.startDate | date }} - {{ matchDayEvent.endDate | date }}</p>
+        </div>
+        <div class="col">
+          <button mat-raised-button (click)="removeSeries(matchDayEvent.matchSeriesId)">remove</button>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
     </div>
   </div>
-  <ng-container *ngFor="let matchDay of manageSeason.match_days">
-    <div class="row">
-      <div class="col text-center">
-        <h3>{{ 'MATCHDAY' | translate:{ matchDay: matchDay.number } }} ({{ matchDay.start_date | date:'shortDate':'':i18Service.currentLang}}
-          - {{ matchDay.end_date | date:'shortDate':'':i18Service.currentLang}})</h3>
-      </div>
-    </div>
-    <div class="row" *ngFor="let match of matchDay.matches">
-      <div class="col">
-        {{ match.home_team.name }} - {{ match.guest_team.name }}
-      </div>
-      <div class="col" *ngIf="match.kickoff">
-        {{ match.kickoff | date:'short':'':i18Service.currentLang}}
-      </div>
-      <div class="col">
-        ({{ match.pitch?.label }})
-      </div>
-    </div>
-  </ng-container>
-  <div class="row">
-    <div class="col">
-      <button mat-button (click)="saveMatches()">save</button>
+  <div class="row" style="justify-content: center;">
+    <div class="col-4">
+        <full-calendar [options]="calendarOptions" deepChangeDetection="true"></full-calendar>
     </div>
   </div>
 </div>

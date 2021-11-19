@@ -69,9 +69,26 @@ fragment AllSeasons on Season {
     state
 }
 
+fragment AllSeasonsCalendar on Season {
+    id
+    name
+    state
+    match_days {
+        ...MatchDay
+    }
+}
+
 fragment AllTournaments on Tournament {
     id
     name
+}
+
+fragment AllTournamentsCalendar on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
 }
 
 fragment Tournament on Tournament {

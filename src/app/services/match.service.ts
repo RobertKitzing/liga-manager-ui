@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SubmitResultGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch } from '../../api/graphql';
+import { SubmitResultGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch, ScheduleAllMatchesForSeasonGQL, MatchAppointment, MatchPlanGQL } from '../../api/graphql';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -13,7 +13,9 @@ export class MatchService {
   constructor(
     private submitResultGQL: SubmitResultGQL,
     private scheduleMatchGQL: ScheduleMatchGQL,
+    private scheduleAllMatchesForSeasonGQL: ScheduleAllMatchesForSeasonGQL,
     private locateMatchQGL: LocateMatchGQL,
+    private matchPlanGQL: MatchPlanGQL,
   ) { }
 
   public isMatchPlayed(match: Match.Fragment): boolean {
@@ -63,6 +65,36 @@ export class MatchService {
           reject(error);
         }
       });
+  }
+
+  scheduleAllMatchesInSeason(season_id: string, match_appointments: MatchAppointment[]) {
+    return new Promise<void>(
+      (resolve, reject) => {
+        this.scheduleAllMatchesForSeasonGQL.mutate(
+          {
+            season_id,
+            match_appointments
+          },
+          {
+            refetchQueries: [
+              {
+                query: this.matchPlanGQL.document,
+                variables: {
+                  id: season_id,
+                }
+              }
+            ]
+          }
+        ).subscribe(
+          () => {
+            resolve();
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      }
+    );
   }
 
   scheduleMatch(matchId: string, matchKickoff: Date | string): Promise<void> {
