@@ -23,7 +23,6 @@ export class ManageTeamsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.manageSeason);
   }
 
   async addTeamToSeason(teamId: string) {

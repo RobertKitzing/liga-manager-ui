@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { startWith, map, switchMapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { I18Service } from '../../../../services/i18.service';
-import { MatchAppointment, MatchPlan, Pitch, Team } from 'src/api/graphql';
+import { MatchAppointment, MatchDay, MatchPlan, Pitch, Team } from 'src/api/graphql';
 import { MatchService } from 'src/app/services/match.service';
 import { CalendarOptions } from '@fullcalendar/angular';
 import * as dayjs from 'dayjs'
@@ -25,6 +25,9 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
   @Input() manageSeason: MatchPlan.Season;
 
   calendarOptions: CalendarOptions = {
+    contentHeight: 'auto',
+    aspectRatio: 3,
+    expandRows: true,
     firstDay: 1,
     editable: false,
     events: [],
@@ -36,27 +39,36 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
     );
   }
 
-  matchDaySeries: {matchSeriesId: number, time: string, pitch: Pitch.Fragment, startDate, endDate, daysOffset}[] = [];
+  matchDaySeries: {matchSeriesId: number, time: string, pitch: Pitch.Fragment, matchDay: MatchDay.Fragment, unavailableTeams: string, kickoff: Date, daysOffset: number}[] = [];
 
   matchAppointmentFormGroup = new FormGroup({
     pitch: new FormControl(),
     time: new FormControl(),
-    startDate: new FormControl(),
-    endDate: new FormControl(),
-    daysOffset: new FormControl(7),
+    matchDay: new FormControl(),
+    unavailableTeams: new FormControl([]),
+    daysOffset: new FormControl(0),
   });
+
+  get kickoffDay(): Date|null {
+    if (this.matchAppointmentFormGroup.value.matchDay?.start_date && this.matchAppointmentFormGroup.value.time) {
+      const h = this.matchAppointmentFormGroup.value.time.split(':')[0];
+      const m = this.matchAppointmentFormGroup.value.time.split(':')[1];
+      return dayjs(this.matchAppointmentFormGroup.value.matchDay.start_date).add(this.matchAppointmentFormGroup.value.daysOffset, 'day').hour(h).minute(m).toDate();
+    }
+    return null;
+  }
 
   filteredPitches: Observable<Pitch.Fragment[]>;
 
   startmatchDay = 0;
 
   get matchesCount(): number {
-    let count = 0;
-    for (let md of this.manageSeason.match_days) {
-      count += md.matches.length;
-    }
+    // let count = 0;
+    // for (let md of this.manageSeason.match_days) {
+    //   count += md.matches.length;
+    // }
 
-    return count;
+    return this.manageSeason.match_days[0].matches.length;
   }
 
   constructor(
@@ -97,23 +109,22 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
 
   addMatchAppointment() {
 
-    const h = this.matchAppointmentFormGroup.value.time.split(':')[0];
-    const m = this.matchAppointmentFormGroup.value.time.split(':')[1];
-    const matchSeriesId = (this.calendarOptions.events as IMatchDayEvent[]).length + 1;
 
+    const matchSeriesId = (this.calendarOptions.events as IMatchDayEvent[]).length + 1;
+    
     this.matchDaySeries.push({
       ...this.matchAppointmentFormGroup.value,
-      matchSeriesId
+      matchSeriesId,
+      kickoff: this.kickoffDay,
+      unavailableTeams: this.matchAppointmentFormGroup.value.unavailableTeams.map(x => x.name).join(','),
     });
 
-    for (let current = dayjs(this.matchAppointmentFormGroup.value.startDate); dayjs(this.matchAppointmentFormGroup.value.endDate).isSameOrAfter(current); current = current.add(this.matchAppointmentFormGroup.value.daysOffset, 'day') ) {
-
+    // for (let current = dayjs(this.matchAppointmentFormGroup.value.startDate); dayjs(this.matchAppointmentFormGroup.value.endDate).isSameOrAfter(current); current = current.add(this.matchAppointmentFormGroup.value.daysOffset, 'day') ) {
       const match = {
-        kickoff: current.hour(h).minute(m).toDate(),
+        kickoff: this.kickoffDay,
         pitch_id: this.matchAppointmentFormGroup.value.pitch.id,
-        unavailable_team_ids: [],
+        unavailable_team_ids: this.matchAppointmentFormGroup.value.unavailableTeams.map(x => x.id),
       };
-
       (this.calendarOptions.events as IMatchDayEvent[]).push({
         allDay: false,
         start: match.kickoff,
@@ -121,7 +132,8 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
         match,
         matchSeriesId,
       });
-    }
+    // }
+    console.log(match);
   }
 
   async saveMatches() {
