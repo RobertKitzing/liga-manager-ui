@@ -30,7 +30,6 @@ jobs:
           ${{ runner.os }}-buildx-
     - run: npm install
     - run: npm --prefix ./server/express install
-    # - run: npm run build:angular:app
     - run: npm run build:server:express
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
@@ -60,3 +59,21 @@ jobs:
         context: server/express
         push: true
         tags: ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }}
+    # Android
+    - run: npm run build:angular:app
+    - name: Build Android app
+      uses: oxr463/setup-cordova@0.0.2
+      with:
+        exec: |
+          cd app && \
+          cordova platform add android && \
+          cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \
+          cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
+    # - name: Build Android app
+    #   working-directory: ./app
+    #   uses: oxr463/setup-cordova@0.0.2
+    #   with:
+    #     exec: |
+    #       cordova platform add android && \
+    #       cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \
+    #       cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
