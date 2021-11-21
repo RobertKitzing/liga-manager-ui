@@ -1,51 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget id="de.wildeligamanager.bremen" version="3.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>LiMaHB</name>
-  <description>
+    <name>LiMaHB</name>
+    <description>
         App der Wilden Liga Bremen
     </description>
-  <author email="robertkitzing.rk@googlemail.com" href="https://https://manager.wildeligabremen.de/">
+    <author email="robertkitzing.rk@googlemail.com" href="https://https://manager.wildeligabremen.de/">
         Robert Kitzing
     </author>
-  <content src="index.html"/>
-  <plugin name="cordova-plugin-whitelist" spec="1"/>
-  <plugin name="cordova-plugin-splashscreen" spec="^5.0.2"/>
-  <access origin="*"/>
-  <allow-intent href="http://*/*"/>
-  <allow-intent href="https://*/*"/>
-  <allow-intent href="tel:*"/>
-  <allow-intent href="sms:*"/>
-  <allow-intent href="mailto:*"/>
-  <allow-intent href="geo:*"/>
-  <preference name="SplashScreen" value="screen"/>
-  <platform name="android">
-    <preference name="SplashMaintainAspectRatio" value="true"/>
-    <preference name="ShowSplashScreenSpinner" value="false"/>
-    <icon density="ldpi" src="res/icon/android/ldpi.png"/>
-    <icon density="mdpi" src="res/icon/android/mdpi.png"/>
-    <icon density="hdpi" src="res/icon/android/hdpi.png"/>
-    <icon density="xhdpi" src="res/icon/android/xhdpi.png"/>
-    <icon density="xxhdpi" src="res/icon/android/xxhdpi.png"/>
-    <icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png"/>
-    <splash density="port-ldpi" src="res/screen/android/splash-port-ldpi.png"/>
-    <splash density="port-mdpi" src="res/screen/android/splash-port-mdpi.png"/>
-    <splash density="port-hdpi" src="res/screen/android/splash-port-hdpi.png"/>
-    <splash density="port-xhdpi" src="res/screen/android/splash-port-xhdpi.png"/>
-    <splash density="port-xxhdpi" src="res/screen/android/splash-port-xxhdpi.png"/>
-    <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png"/>
-    <splash density="land-ldpi" src="res/screen/android/splash-land-ldpi.png"/>
-    <splash density="land-mdpi" src="res/screen/android/splash-land-mdpi.png"/>
-    <splash density="land-hdpi" src="res/screen/android/splash-land-hdpi.png"/>
-    <splash density="land-xhdpi" src="res/screen/android/splash-land-xhdpi.png"/>
-    <splash density="land-xxhdpi" src="res/screen/android/splash-land-xxhdpi.png"/>
-    <splash density="land-xxxhdpi" src="res/screen/android/splash-land-xxxhdpi.png"/>
-    <allow-intent href="market:*"/>
-  </platform>
-  <platform name="ios">
-    <allow-intent href="itms:*"/>
-    <allow-intent href="itms-apps:*"/>
-  </platform>
-  <engine name="android" spec="^7.0.0"/>
-  <preference name="android-minSdkVersion" value="16"/>
-  <preference name="android-targetSdkVersion" value="28"/>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <preference name="SplashScreen" value="screen" />
+    <platform name="android">
+        <preference name="SplashMaintainAspectRatio" value="true" />
+        <preference name="ShowSplashScreenSpinner" value="false" />
+        <icon density="ldpi" src="res/icon/android/ldpi.png" />
+        <icon density="mdpi" src="res/icon/android/mdpi.png" />
+        <icon density="hdpi" src="res/icon/android/hdpi.png" />
+        <icon density="xhdpi" src="res/icon/android/xhdpi.png" />
+        <icon density="xxhdpi" src="res/icon/android/xxhdpi.png" />
+        <icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png" />
+        <splash density="port-ldpi" src="res/screen/android/splash-port-ldpi.png" />
+        <splash density="port-mdpi" src="res/screen/android/splash-port-mdpi.png" />
+        <splash density="port-hdpi" src="res/screen/android/splash-port-hdpi.png" />
+        <splash density="port-xhdpi" src="res/screen/android/splash-port-xhdpi.png" />
+        <splash density="port-xxhdpi" src="res/screen/android/splash-port-xxhdpi.png" />
+        <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png" />
+        <splash density="land-ldpi" src="res/screen/android/splash-land-ldpi.png" />
+        <splash density="land-mdpi" src="res/screen/android/splash-land-mdpi.png" />
+        <splash density="land-hdpi" src="res/screen/android/splash-land-hdpi.png" />
+        <splash density="land-xhdpi" src="res/screen/android/splash-land-xhdpi.png" />
+        <splash density="land-xxhdpi" src="res/screen/android/splash-land-xxhdpi.png" />
+        <splash density="land-xxxhdpi" src="res/screen/android/splash-land-xxxhdpi.png" />
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-targetSdkVersion" value="28" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
 </widget>

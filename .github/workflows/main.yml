@@ -62,7 +62,9 @@ jobs:
     # Android
     - run: npm run build:angular:app
     - name: Build Android app
-      uses: oxr463/setup-cordova@0.0.2
+      using: 'docker'
+      image: 'app/Dockerfile'
+      # uses: oxr463/setup-cordova@0.0.2
       with:
         exec: |
           cd app && \
