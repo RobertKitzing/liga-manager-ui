@@ -62,21 +62,33 @@ jobs:
     # Android
     - run: npm run build:angular:app
     - name: Build Android app
-      using: 'docker'
-      image: 'app/Dockerfile'
-      # uses: oxr463/setup-cordova@0.0.2
+      uses: oxr463/setup-cordova@0.0.2
       with:
         exec: |
+          apk del openjdk11 && \
+          apk add openjdk8 && \
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk && \
+          npm install -g cordova-set-version && \
           cd app && \
           cordova platform add android && \
-          npm install -g cordova-set-version && \
           cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \
-          cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=${{ env.ANDROID_KEYSTORE_STOREPASS }} --password=${{ env.ANDROID_KEYSTORE_PASS }} --alias=limahb
-    # - name: Build Android app
-    #   working-directory: ./app
-    #   uses: oxr463/setup-cordova@0.0.2
+          cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --password=${{ secrets.ANDROID_KEYSTORE_PASS }} --alias=limahb
+    - uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON_PLAIN_TEXT }}
+        packageName: de.wildeligamanager.bremen
+        releaseFiles: app/platforms/android/app/build/outputs/apk/release/*.apk
+        track: beta
+        inAppUpdatePriority: 5
+        status: completed
+        # userFraction: 0.33
+        # whatsNewDirectory: distribution/whatsnew
+        # mappingFile: app/build/outputs/mapping/release/mapping.txt
+    # - uses: ruby/setup-ruby@v1
     #   with:
-    #     exec: |
-    #       cordova platform add android && \
-    #       cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \
-    #       cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
+    #     ruby-version: '2.7.2'
+    # - uses: maierj/fastlane-action@v2.0.1
+    #   with:
+    #     lane: 'beta'
+    #     skip-tracking: true
+    #     subdirectory: app/platforms/android/app/build/outputs/apk/release/
