@@ -67,8 +67,9 @@ jobs:
         exec: |
           cd app && \
           cordova platform add android && \
+          npm install -g cordova-set-version && \
           cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \
-          cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=$ANDROID_KEYSTORE_STOREPASS --password=$ANDROID_KEYSTORE_PASS --alias=limahb
+          cordova build --no-telemetry android --release -- --keystore="./limahb.keystore" --storePassword=${{ env.ANDROID_KEYSTORE_STOREPASS }} --password=${{ env.ANDROID_KEYSTORE_PASS }} --alias=limahb
     # - name: Build Android app
     #   working-directory: ./app
     #   uses: oxr463/setup-cordova@0.0.2
