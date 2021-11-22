@@ -108,6 +108,19 @@ export namespace ScheduleAllMatchesForSeason {
   };
 }
 
+export namespace ScheduleAllMatchesForMatchDay {
+  export type Variables = {
+    match_day_id: string;
+    match_appointments: (Maybe<MatchAppointment>)[];
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    scheduleAllMatchesForMatchDay: Maybe<boolean>;
+  };
+}
+
 export namespace PasswordReset {
   export type Variables = {
     email: string;
@@ -1225,6 +1238,25 @@ export class ScheduleAllMatchesForSeasonGQL extends Apollo.Mutation<
     ) {
       scheduleAllMatchesForSeason(
         season_id: $season_id
+        match_appointments: $match_appointments
+      )
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ScheduleAllMatchesForMatchDayGQL extends Apollo.Mutation<
+  ScheduleAllMatchesForMatchDay.Mutation,
+  ScheduleAllMatchesForMatchDay.Variables
+> {
+  document: any = gql`
+    mutation ScheduleAllMatchesForMatchDay(
+      $match_day_id: String!
+      $match_appointments: [MatchAppointment]!
+    ) {
+      scheduleAllMatchesForMatchDay(
+        match_day_id: $match_day_id
         match_appointments: $match_appointments
       )
     }

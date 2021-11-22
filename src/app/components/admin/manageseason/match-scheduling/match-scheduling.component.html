@@ -22,7 +22,7 @@
     </div>
     <div class="col">
       <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
-        <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET' | translate }}" formControlName="daysOffset">
+        <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET_FROM_START_DAY' | translate }}" formControlName="daysOffset">
       </mat-form-field>
     </div>
     <div class="col">
@@ -49,7 +49,10 @@
       <button mat-raised-button (click)="addMatchAppointment()">addMatchAppointment</button>
     </div>
     <div class="col">
-      <button mat-raised-button (click)="saveMatches()">save all matches</button>
+      <button mat-raised-button (click)="saveAllMatchdays()">save all matchdays</button>
+    </div>
+    <div class="col">
+      <button mat-raised-button (click)="saveMatchday()">save single matchday</button>
     </div>
   </div>
   <mat-divider></mat-divider>

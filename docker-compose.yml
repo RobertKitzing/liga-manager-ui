@@ -12,6 +12,13 @@ services:
   #   image: robertkitzing/liga-manager-ui:latest
   #   ports:
   #     - "3098:3098"
+  build-app:
+    container_name: build-android
+    build: ./app
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app/app
+    command: tail -f /dev/null
   ui:
     image: node:lts-slim
     ports:
