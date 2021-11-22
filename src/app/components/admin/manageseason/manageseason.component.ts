@@ -15,8 +15,6 @@ import { I18Service } from 'src/app/services/i18.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { DateAdapter } from '@angular/material/core';
-import { PublicHolidaysService } from 'src/app/services/public-holidays.service';
-import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 
 const MANAGE_SEASON_KEY = 'MANAGE_SEASON_ID_KEY';
 const TODAY_STR = new Date().toISOString().replace(/T.*$/, '');

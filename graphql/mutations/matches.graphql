@@ -29,3 +29,7 @@ mutation CancelMatch($match_id: String!, $reason: String!){
 mutation ScheduleAllMatchesForSeason($season_id: String!, $match_appointments: [MatchAppointment]!) {
   scheduleAllMatchesForSeason(season_id: $season_id, match_appointments: $match_appointments)
 }
+
+mutation ScheduleAllMatchesForMatchDay($match_day_id: String!, $match_appointments: [MatchAppointment]!) {
+  scheduleAllMatchesForMatchDay(match_day_id: $match_day_id, match_appointments: $match_appointments)
+}

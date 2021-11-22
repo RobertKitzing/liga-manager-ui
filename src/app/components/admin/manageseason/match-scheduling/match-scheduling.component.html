@@ -13,16 +13,16 @@
     </div>
     <div class="col">
       <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
-        <input matInput [matDatepicker]="startDate" placeholder="{{ 'START_DATE' | translate }}" formControlName="startDate">
-        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-        <mat-datepicker #startDate color="primary"></mat-datepicker>
+        <mat-select formControlName="matchDay" placeholder="{{ 'PLACEHOLDER.MATCH_DAY' | translate }}">
+          <mat-option *ngFor="let matchDay of manageSeason.match_days" [value]="matchDay">
+            {{ matchDay.number }}. Spieltag
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div class="col">
-      <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
-        <input matInput [matDatepicker]="endDate" placeholder="{{ 'END_DATE' | translate }}" formControlName="endDate">
-        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-        <mat-datepicker #endDate color="primary"></mat-datepicker>
+      <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+        <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET_FROM_START_DAY' | translate }}" formControlName="daysOffset">
       </mat-form-field>
     </div>
     <div class="col">
@@ -30,9 +30,16 @@
         <input matInput #time type="time" placeholder="{{ 'BUTTON.SET_TIME' | translate }}" formControlName="time">
       </mat-form-field>
     </div>
+    <div class="col" *ngIf="kickoffDay">
+      {{ kickoffDay | date:'EEEE HH:mm':'':i18Service.currentLang }}
+    </div>
     <div class="col">
-      <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
-        <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET' | translate }}" formControlName="daysOffset">
+      <mat-form-field [formGroup]="matchAppointmentFormGroup">
+        <mat-select formControlName="unavailableTeams" [multiple]="true" placeholder="{{ 'PLACEHOLDER.EXCLUDE_TEAM' | translate }}">
+          <mat-option *ngFor="let team of manageSeason.teams" [value]="team">
+            {{ team.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div class="col">
@@ -42,28 +49,30 @@
       <button mat-raised-button (click)="addMatchAppointment()">addMatchAppointment</button>
     </div>
     <div class="col">
-      <button mat-raised-button (click)="saveMatches()">save</button>
+      <button mat-raised-button (click)="saveAllMatchdays()">save all matchdays</button>
+    </div>
+    <div class="col">
+      <button mat-raised-button (click)="saveMatchday()">save single matchday</button>
     </div>
   </div>
   <mat-divider></mat-divider>
   <div class="row">
-    <div class="col">
+    <div class="col-6">
+      <full-calendar [options]="calendarOptions" deepChangeDetection="true"></full-calendar>
+    </div>
+    <div class="col-6">
       <div class="row" *ngFor="let matchDayEvent of matchDaySeries">
         <div class="col">
           <p>{{ matchDayEvent.pitch.label }}</p>
           <p>{{ matchDayEvent.time }}</p>
-          <p>{{ matchDayEvent.startDate | date }} - {{ matchDayEvent.endDate | date }}</p>
+          <p>{{ matchDayEvent.kickoff | date:'EEEE HH:mm':'':i18Service.currentLang }}</p>
+          <p>{{ matchDayEvent.unavailableTeams }}</p>
         </div>
         <div class="col">
           <button mat-raised-button (click)="removeSeries(matchDayEvent.matchSeriesId)">remove</button>
         </div>
         <mat-divider></mat-divider>
       </div>
-    </div>
-  </div>
-  <div class="row" style="justify-content: center;">
-    <div class="col-4">
-        <full-calendar [options]="calendarOptions" deepChangeDetection="true"></full-calendar>
     </div>
   </div>
 </div>
