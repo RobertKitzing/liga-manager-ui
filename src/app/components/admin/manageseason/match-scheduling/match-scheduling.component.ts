@@ -119,26 +119,35 @@ export class MatchSchedulingComponent implements OnInit, OnChanges {
       unavailableTeams: this.matchAppointmentFormGroup.value.unavailableTeams.map(x => x.name).join(','),
     });
 
-    // for (let current = dayjs(this.matchAppointmentFormGroup.value.startDate); dayjs(this.matchAppointmentFormGroup.value.endDate).isSameOrAfter(current); current = current.add(this.matchAppointmentFormGroup.value.daysOffset, 'day') ) {
-      const match = {
-        kickoff: this.kickoffDay,
-        pitch_id: this.matchAppointmentFormGroup.value.pitch.id,
-        unavailable_team_ids: this.matchAppointmentFormGroup.value.unavailableTeams.map(x => x.id),
-      };
-      (this.calendarOptions.events as IMatchDayEvent[]).push({
-        allDay: false,
-        start: match.kickoff,
-        title: `${this.matchAppointmentFormGroup.value.pitch.label}`,
-        match,
-        matchSeriesId,
-      });
-    // }
-    console.log(match);
+    const match = {
+      kickoff: this.kickoffDay,
+      pitch_id: this.matchAppointmentFormGroup.value.pitch.id,
+      unavailable_team_ids: this.matchAppointmentFormGroup.value.unavailableTeams.map(x => x.id),
+    };
+    (this.calendarOptions.events as IMatchDayEvent[]).push({
+      allDay: false,
+      start: match.kickoff,
+      title: `${this.matchAppointmentFormGroup.value.pitch.label}`,
+      match,
+      matchSeriesId,
+    });
   }
 
-  async saveMatches() {
+  async saveAllMatchdays() {
     try {
       await this.matchService.scheduleAllMatchesInSeason(this.manageSeason.id, this.matchAppointments);
+      this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
+    } catch (error) {
+      this.notificationService.showErrorNotification(this.translateService.instant('CREATE_MATCH_DAYS_ERROR'), error);
+    }
+  }
+
+  async saveMatchday() {
+    try {
+      await this.matchService.scheduleAllMatchesForMatchday(
+        this.matchAppointmentFormGroup.value.matchDay.id,
+        this.manageSeason.id,
+        this.matchAppointments);
       this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
     } catch (error) {
       this.notificationService.showErrorNotification(this.translateService.instant('CREATE_MATCH_DAYS_ERROR'), error);
