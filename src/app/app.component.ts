@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { I18Service } from './services/i18.service';
-import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
 import { RankingGQL, MatchPlanGQL, TournamentGQL, Tournament, AllSeasonsListGQL } from 'src/api/graphql';
 import { SeasonService } from 'src/app/services/season.service';
 import { LocalStorage } from 'ngx-webstorage';
@@ -20,7 +19,7 @@ import { GraphqlService } from './services/graphql.service';
 })
 export class AppComponent implements OnInit {
 
-  @LocalStorage(SELECTED_TOURNAMENT_KEY) tournament: Tournament.Fragment;
+  // @LocalStorage(SELECTED_TOURNAMENT_KEY) tournament: Tournament;
 
   constructor(
     public authService: AuthenticationService,
@@ -33,16 +32,12 @@ export class AppComponent implements OnInit {
     public seasonService: SeasonService,
     private graphqlService: GraphqlService,
     private appsettingsService: AppsettingsService,
-    private graphqlSubscriptionService: GraphqlSubscriptionService,
     private allSeasonsListGQL: AllSeasonsListGQL,
   ) {
   }
   async ngOnInit() {
 
     this.graphqlService.createApolloLink();
-    if (this.appsettingsService.appsettings.graphqlWsUrl) {
-      this.graphqlSubscriptionService.connect();
-    }
 
     if (this.authService.accessToken) {
       this.authService.loadUser();
@@ -82,8 +77,8 @@ export class AppComponent implements OnInit {
     if (this.seasonService.currentSeason.getValue()) {
       await this.matchPlanGQL.fetch({ id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).toPromise();
     }
-    if (this.tournament.id) {
-      await this.tournamentGQL.fetch({ id: this.tournament.id }, { fetchPolicy: 'network-only' }).toPromise();
-    }
+    // if (this.tournament.id) {
+    //   await this.tournamentGQL.fetch({ id: this.tournament.id }, { fetchPolicy: 'network-only' }).toPromise();
+    // }
   }
 }
