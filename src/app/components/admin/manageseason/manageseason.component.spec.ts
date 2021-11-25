@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ManageseasonComponent } from './manageseason.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -16,7 +16,7 @@ describe('ManageseasonComponent', () => {
   let component: ManageseasonComponent;
   let fixture: ComponentFixture<ManageseasonComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         SharedModule,
@@ -43,7 +43,7 @@ describe('ManageseasonComponent', () => {
   });
 
   it('should call seasonService.loadSeasons on loadAllSeason',
-    async(() => {
+    waitForAsync(() => {
       const seasonServiceSpy = spyOn(TestBed.get(SeasonService), 'loadSeasons');
       component.loadAllSeason();
       expect(seasonServiceSpy).toHaveBeenCalledWith();

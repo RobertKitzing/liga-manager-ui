@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 
 import { ManagetournamentComponent } from './managetournament.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ describe('ManagetournamentComponent', () => {
   let component: ManagetournamentComponent;
   let fixture: ComponentFixture<ManagetournamentComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),

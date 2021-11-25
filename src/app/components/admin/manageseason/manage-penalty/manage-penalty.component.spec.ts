@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 
 import { ManagePenaltyComponent } from './manage-penalty.component';
 
@@ -6,7 +6,7 @@ describe('ManagePenaltyComponent', () => {
   let component: ManagePenaltyComponent;
   let fixture: ComponentFixture<ManagePenaltyComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ManagePenaltyComponent ]
     })

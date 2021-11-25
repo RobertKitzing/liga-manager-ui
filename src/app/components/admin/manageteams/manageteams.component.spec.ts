@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 
 import { AddteamComponent } from './addteam.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -15,7 +15,7 @@ describe('AddteamComponent', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
   });
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),

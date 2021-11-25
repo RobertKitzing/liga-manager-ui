@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 import { AddtournamentroundComponent } from './edit-tournament-round.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -10,7 +10,7 @@ describe('AddtournamentroundComponent', () => {
   let component: AddtournamentroundComponent;
   let fixture: ComponentFixture<AddtournamentroundComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),

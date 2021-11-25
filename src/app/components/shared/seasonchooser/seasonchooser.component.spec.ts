@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 
 import { SeasonchooserComponent } from './seasonchooser.component';
 import { SharedModule } from '../shared.module';
@@ -10,7 +10,7 @@ describe('SeasonchooserComponent', () => {
   let component: SeasonchooserComponent;
   let fixture: ComponentFixture<SeasonchooserComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         SharedModule,
