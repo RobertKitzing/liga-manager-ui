@@ -1,5 +1,10 @@
 {
   "compileOnSave": false,
+  "angularCompilerOptions": {
+    "strictTemplates": true,      
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true
+  },
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,

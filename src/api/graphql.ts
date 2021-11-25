@@ -1,9 +1,8 @@
 /* tslint:disable */
 /* GENERATED DO NOT EDIT */
-import {gql} from 'apollo-angular';
-
+import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-
+import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -21,78 +20,13 @@ export type Scalars = {
    * character sequences. The String type is most often used by GraphQL to
    * represent free-form human-readable text.
    */
-  DateTime: any;
+  Date: any;
   /**
    * The `String` scalar type represents textual data, represented as UTF-8
    * character sequences. The String type is most often used by GraphQL to
    * represent free-form human-readable text.
    */
-  Date: any;
-};
-
-export type Query = {
-  __typename?: 'query';
-  allPitches?: Maybe<Array<Maybe<Pitch>>>;
-  /** Get a list of all seasons */
-  allSeasons?: Maybe<Array<Maybe<Season>>>;
-  allTeams?: Maybe<Array<Maybe<Team>>>;
-  allTournaments?: Maybe<Array<Maybe<Tournament>>>;
-  allUsers?: Maybe<Array<Maybe<User>>>;
-  authenticatedUser?: Maybe<User>;
-  event?: Maybe<Event>;
-  latestEvents?: Maybe<Array<Maybe<Event>>>;
-  match?: Maybe<Match>;
-  pitch?: Maybe<Pitch>;
-  /** Get a single season */
-  season?: Maybe<Season>;
-  team?: Maybe<Team>;
-  tournament?: Maybe<Tournament>;
-};
-
-
-export type QueryEventArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryLatestEventsArgs = {
-  end_date?: InputMaybe<Scalars['Date']>;
-  start_date?: InputMaybe<Scalars['Date']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryMatchArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryPitchArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QuerySeasonArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryTeamArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryTournamentArgs = {
-  id: Scalars['String'];
-};
-
-export type Pitch = {
-  __typename?: 'Pitch';
-  contact?: Maybe<Contact>;
-  id: Scalars['String'];
-  label: Scalars['String'];
-  location_latitude: Scalars['Float'];
-  location_longitude: Scalars['Float'];
+  DateTime: any;
 };
 
 export type Contact = {
@@ -103,25 +37,16 @@ export type Contact = {
   phone: Scalars['String'];
 };
 
-export type Season = {
-  __typename?: 'Season';
-  id: Scalars['String'];
-  match_day_count: Scalars['Int'];
-  match_days?: Maybe<Array<Maybe<MatchDay>>>;
-  name: Scalars['String'];
-  ranking?: Maybe<Ranking>;
-  state: SeasonState;
-  team_count: Scalars['Int'];
-  teams?: Maybe<Array<Maybe<Team>>>;
+export type DatePeriod = {
+  from: Scalars['Date'];
+  to: Scalars['Date'];
 };
 
-export type MatchDay = {
-  __typename?: 'MatchDay';
-  end_date: Scalars['String'];
+export type Event = {
+  __typename?: 'Event';
   id: Scalars['String'];
-  matches?: Maybe<Array<Maybe<Match>>>;
-  number: Scalars['Int'];
-  start_date: Scalars['String'];
+  occurred_at: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type Match = {
@@ -137,12 +62,28 @@ export type Match = {
   pitch?: Maybe<Pitch>;
 };
 
-export type Team = {
-  __typename?: 'Team';
-  contact?: Maybe<Contact>;
-  created_at: Scalars['String'];
+export type MatchAppointment = {
+  kickoff: Scalars['DateTime'];
+  pitch_id: Scalars['String'];
+  unavailable_team_ids: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type MatchDay = {
+  __typename?: 'MatchDay';
+  end_date: Scalars['String'];
   id: Scalars['String'];
-  name: Scalars['String'];
+  matches?: Maybe<Array<Maybe<Match>>>;
+  number: Scalars['Int'];
+  start_date: Scalars['String'];
+};
+
+export type Pitch = {
+  __typename?: 'Pitch';
+  contact?: Maybe<Contact>;
+  id: Scalars['String'];
+  label: Scalars['String'];
+  location_latitude: Scalars['Float'];
+  location_longitude: Scalars['Float'];
 };
 
 export type Ranking = {
@@ -176,11 +117,36 @@ export type RankingPosition = {
   wins: Scalars['Int'];
 };
 
+export type Season = {
+  __typename?: 'Season';
+  id: Scalars['String'];
+  match_day_count: Scalars['Int'];
+  match_days?: Maybe<Array<Maybe<MatchDay>>>;
+  name: Scalars['String'];
+  ranking?: Maybe<Ranking>;
+  state: SeasonState;
+  team_count: Scalars['Int'];
+  teams?: Maybe<Array<Maybe<Team>>>;
+};
+
 export enum SeasonState {
   Ended = 'ended',
   Preparation = 'preparation',
   Progress = 'progress'
 }
+
+export type Team = {
+  __typename?: 'Team';
+  contact?: Maybe<Contact>;
+  created_at: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type TeamIdPair = {
+  guest_team_id: Scalars['String'];
+  home_team_id: Scalars['String'];
+};
 
 export type Tournament = {
   __typename?: 'Tournament';
@@ -203,13 +169,6 @@ export enum UserRole {
   Admin = 'admin',
   TeamManager = 'team_manager'
 }
-
-export type Event = {
-  __typename?: 'Event';
-  id: Scalars['String'];
-  occurred_at: Scalars['String'];
-  type: Scalars['String'];
-};
 
 export type Mutation = {
   __typename?: 'mutation';
@@ -463,20 +422,60 @@ export type MutationUpdateUserArgs = {
   user_id: Scalars['String'];
 };
 
-export type DatePeriod = {
-  from: Scalars['Date'];
-  to: Scalars['Date'];
+export type Query = {
+  __typename?: 'query';
+  allPitches?: Maybe<Array<Maybe<Pitch>>>;
+  /** Get a list of all seasons */
+  allSeasons?: Maybe<Array<Maybe<Season>>>;
+  allTeams?: Maybe<Array<Maybe<Team>>>;
+  allTournaments?: Maybe<Array<Maybe<Tournament>>>;
+  allUsers?: Maybe<Array<Maybe<User>>>;
+  authenticatedUser?: Maybe<User>;
+  event?: Maybe<Event>;
+  latestEvents?: Maybe<Array<Maybe<Event>>>;
+  match?: Maybe<Match>;
+  pitch?: Maybe<Pitch>;
+  /** Get a single season */
+  season?: Maybe<Season>;
+  team?: Maybe<Team>;
+  tournament?: Maybe<Tournament>;
 };
 
-export type MatchAppointment = {
-  kickoff: Scalars['DateTime'];
-  pitch_id: Scalars['String'];
-  unavailable_team_ids: Array<InputMaybe<Scalars['String']>>;
+
+export type QueryEventArgs = {
+  id: Scalars['String'];
 };
 
-export type TeamIdPair = {
-  guest_team_id: Scalars['String'];
-  home_team_id: Scalars['String'];
+
+export type QueryLatestEventsArgs = {
+  end_date?: InputMaybe<Scalars['Date']>;
+  start_date?: InputMaybe<Scalars['Date']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryMatchArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPitchArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QuerySeasonArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryTeamArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryTournamentArgs = {
+  id: Scalars['String'];
 };
 
 export type MatchFragment = { __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined };
@@ -1028,7 +1027,11 @@ export const RankingFragmentDoc = gql`
 ${PenaltyFragmentDoc}`;
 export const SubmitResultDocument = gql`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
-  submitMatchResult(match_id: $match_id, home_score: $home_score, guest_score: $guest_score)
+  submitMatchResult(
+    match_id: $match_id
+    home_score: $home_score
+    guest_score: $guest_score
+  )
 }
     `;
 
@@ -1092,7 +1095,10 @@ export const CancelMatchDocument = gql`
   }
 export const ScheduleAllMatchesForSeasonDocument = gql`
     mutation ScheduleAllMatchesForSeason($season_id: String!, $match_appointments: [MatchAppointment]!) {
-  scheduleAllMatchesForSeason(season_id: $season_id, match_appointments: $match_appointments)
+  scheduleAllMatchesForSeason(
+    season_id: $season_id
+    match_appointments: $match_appointments
+  )
 }
     `;
 
@@ -1108,7 +1114,10 @@ export const ScheduleAllMatchesForSeasonDocument = gql`
   }
 export const ScheduleAllMatchesForMatchDayDocument = gql`
     mutation ScheduleAllMatchesForMatchDay($match_day_id: String!, $match_appointments: [MatchAppointment]!) {
-  scheduleAllMatchesForMatchDay(match_day_id: $match_day_id, match_appointments: $match_appointments)
+  scheduleAllMatchesForMatchDay(
+    match_day_id: $match_day_id
+    match_appointments: $match_appointments
+  )
 }
     `;
 
@@ -1156,7 +1165,13 @@ export const PasswordChangeDocument = gql`
   }
 export const AddRankingPenaltyDocument = gql`
     mutation AddRankingPenalty($id: String!, $season_id: String!, $team_id: String!, $reason: String!, $points: Int!) {
-  addRankingPenalty(id: $id, season_id: $season_id, team_id: $team_id, reason: $reason, points: $points)
+  addRankingPenalty(
+    id: $id
+    season_id: $season_id
+    team_id: $team_id
+    reason: $reason
+    points: $points
+  )
 }
     `;
 
@@ -1172,7 +1187,10 @@ export const AddRankingPenaltyDocument = gql`
   }
 export const RemoveRankingPenaltyDocument = gql`
     mutation RemoveRankingPenalty($ranking_penalty_id: String!, $season_id: String!) {
-  removeRankingPenalty(ranking_penalty_id: $ranking_penalty_id, season_id: $season_id)
+  removeRankingPenalty(
+    ranking_penalty_id: $ranking_penalty_id
+    season_id: $season_id
+  )
 }
     `;
 
@@ -1204,7 +1222,13 @@ export const DeletePitchDocument = gql`
   }
 export const UpdatePitchContactDocument = gql`
     mutation UpdatePitchContact($pitch_id: String!, $first_name: String!, $last_name: String!, $phone: String!, $email: String!) {
-  updatePitchContact(pitch_id: $pitch_id, first_name: $first_name, last_name: $last_name, phone: $phone, email: $email)
+  updatePitchContact(
+    pitch_id: $pitch_id
+    first_name: $first_name
+    last_name: $last_name
+    phone: $phone
+    email: $email
+  )
 }
     `;
 
@@ -1364,7 +1388,13 @@ export const CreateTeamDocument = gql`
   }
 export const UpdateTeamContactDocument = gql`
     mutation UpdateTeamContact($team_id: String!, $first_name: String!, $last_name: String!, $phone: String!, $email: String!) {
-  updateTeamContact(team_id: $team_id, first_name: $first_name, last_name: $last_name, phone: $phone, email: $email)
+  updateTeamContact(
+    team_id: $team_id
+    first_name: $first_name
+    last_name: $last_name
+    phone: $phone
+    email: $email
+  )
 }
     `;
 
@@ -1428,7 +1458,12 @@ export const CreateTournamentDocument = gql`
   }
 export const CreateTournamentRoundDocument = gql`
     mutation CreateTournamentRound($tournament_id: String!, $round: Int!, $team_id_pairs: [TeamIdPair]!, $date_period: DatePeriod!) {
-  setTournamentRound(tournament_id: $tournament_id, round: $round, team_id_pairs: $team_id_pairs, date_period: $date_period)
+  setTournamentRound(
+    tournament_id: $tournament_id
+    round: $round
+    team_id_pairs: $team_id_pairs
+    date_period: $date_period
+  )
 }
     `;
 
@@ -1460,7 +1495,15 @@ export const DeleteTournamentDocument = gql`
   }
 export const CreateUserDocument = gql`
     mutation CreateUser($id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
-  createUser(id: $id, email: $email, password: $password, first_name: $first_name, last_name: $last_name, role: $role, team_ids: $team_ids)
+  createUser(
+    id: $id
+    email: $email
+    password: $password
+    first_name: $first_name
+    last_name: $last_name
+    role: $role
+    team_ids: $team_ids
+  )
 }
     `;
 
@@ -1476,7 +1519,14 @@ export const CreateUserDocument = gql`
   }
 export const UpdateUserDocument = gql`
     mutation UpdateUser($user_id: String!, $email: String, $first_name: String, $last_name: String, $role: String, $team_ids: [String]) {
-  updateUser(user_id: $user_id, email: $email, first_name: $first_name, last_name: $last_name, role: $role, team_ids: $team_ids)
+  updateUser(
+    user_id: $user_id
+    email: $email
+    first_name: $first_name
+    last_name: $last_name
+    role: $role
+    team_ids: $team_ids
+  )
 }
     `;
 

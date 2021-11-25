@@ -3,10 +3,10 @@
   "version": "5.1.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot --host '0.0.0.0' --port 3098 --disable-host-check --proxy-config proxy.conf.json --poll 1000",
+    "start": "ng serve --host '0.0.0.0' --port 3098 --disable-host-check --proxy-config proxy.conf.json",
     "build": "rm -R dist && npm run build:web && npm run build:app && npm run build:server",
-    "build:angular:web": "ng build --aot --configuration production",
-    "build:angular:app": "ng build --aot --c app --output-path app/www --delete-output-path --base-href ./ && npm run copy:appsettings:app",
+    "build:angular:web": "ng build --configuration production",
+    "build:angular:app": "ng build --c app --output-path app/www --delete-output-path --base-href ./ && npm run copy:appsettings:app",
     "build:app:local": "ng build --aot -c app.local --output-path app/www --delete-output-path --base-href ./ && npm run copy:appsettings:app:local",
     "build:server:express": "rimraf server/express/dist && tsc -p server/express && cp server/express/package*.json server/express/dist && npm run build:angular:web -- ----output-path server/express/dist/www",
     "build:server:graphql": "rimraf server/graphql/dist && tsc -p server/graphql && cp server/graphql/package*.json server/graphql/dist && cp server/graphql/schema.graphql server/graphql/dist",
@@ -38,6 +38,7 @@
     "@angular/platform-browser": "^13.0.2",
     "@angular/platform-browser-dynamic": "^13.0.2",
     "@angular/router": "^13.0.2",
+    "@apollo/client": "^3.0.0",
     "@fullcalendar/angular": "^5.10.1",
     "@fullcalendar/core": "^5.10.1",
     "@fullcalendar/daygrid": "^5.10.1",
@@ -75,8 +76,7 @@
     "subscriptions-transport-ws": "^0.9.16",
     "tslib": "^2.0.0",
     "uuid": "^3.3.3",
-    "zone.js": "~0.11.4",
-    "@apollo/client": "^3.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.0.3",
@@ -100,6 +100,6 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "ts-node": "~8.4.1",
     "tslint": "~6.1.0",
-    "typescript": "^4.1.6"
+    "typescript": "4.4.4"
   }
 }
