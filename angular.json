@@ -153,6 +153,7 @@
   },
   "defaultProject": "liga-manager-ui",
   "cli": {
-    "analytics": "9db4b62a-0dc2-4bc2-90c6-9371c30c8301"
+    "analytics": "9db4b62a-0dc2-4bc2-90c6-9371c30c8301",
+    "packageManager": "yarn"
   }
 }
