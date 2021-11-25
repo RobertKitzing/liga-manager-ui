@@ -22,9 +22,15 @@
       "esnext.asynciterable"
     ],
     "paths": {
-      "@api": ["api/*"],
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"]
+      "@api": [
+        "api/*"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@env/*": [
+        "environments/*"
+      ]
     }
   }
 }

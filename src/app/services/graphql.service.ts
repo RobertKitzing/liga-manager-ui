@@ -1,19 +1,26 @@
+import {Apollo} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache, ApolloLink, split} from '@apollo/client/core';
+import {setContext} from '@apollo/client/link/context';
+import {WebSocketLink} from '@apollo/client/link/ws';
+import {getMainDefinition, getOperationName} from '@apollo/client/utilities';
+import {onError} from '@apollo/client/link/error';
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+
+
+
 import { AppsettingsService } from './appsettings.service';
-import { ApolloLink, split } from 'apollo-link';
+
 import { AuthenticationService } from './authentication.service';
-import { setContext } from 'apollo-link-context';
+
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { persistCache } from 'apollo-cache-persist';
 import { GraphqlSubscriptionService } from './graphql-subscription.service';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition, getOperationName } from 'apollo-utilities';
-import { onError } from 'apollo-link-error';
+
+
+
 import { NotificationService } from './notification.service';
 import { TranslateService } from '@ngx-translate/core';
 
