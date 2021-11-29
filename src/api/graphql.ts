@@ -488,7 +488,7 @@ export type TeamFragment = { __typename?: 'Team', id: string, name: string, crea
 
 export type ContactFragment = { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string };
 
-export type SeasonFragment = { __typename?: 'Season', id: string, name: string, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined> | null | undefined, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type SeasonFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined> | null | undefined, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
 export type AllSeasonsFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState };
 
@@ -673,6 +673,13 @@ export type EndSeasonMutationVariables = Exact<{
 
 export type EndSeasonMutation = { __typename?: 'mutation', endSeason?: boolean | null | undefined };
 
+export type DeleteSeasonMutationVariables = Exact<{
+  season_id: Scalars['String'];
+}>;
+
+
+export type DeleteSeasonMutation = { __typename?: 'mutation', deleteSeason?: boolean | null | undefined };
+
 export type CreateTeamMutationVariables = Exact<{
   id: Scalars['String'];
   name: Scalars['String'];
@@ -764,6 +771,11 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'mutation', deleteUser?: boolean | null | undefined };
 
+export type CalendarQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CalendarQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined, allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+
 export type EventQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -786,13 +798,6 @@ export type MatchQueryVariables = Exact<{
 
 
 export type MatchQuery = { __typename?: 'query', match?: { __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined };
-
-export type MatchPlanQueryVariables = Exact<{
-  id: Scalars['String'];
-}>;
-
-
-export type MatchPlanQuery = { __typename?: 'query', season?: { __typename?: 'Season', id: string, name: string, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined> | null | undefined, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type SeasonPenaltiesQueryVariables = Exact<{
   id: Scalars['String'];
@@ -818,10 +823,12 @@ export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllSeasonsListQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState } | null | undefined> | null | undefined };
 
-export type AllSeasonsCalendarQueryVariables = Exact<{ [key: string]: never; }>;
+export type SeasonQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
 
 
-export type AllSeasonsCalendarQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type SeasonQuery = { __typename?: 'query', season?: { __typename?: 'Season', id: string, name: string, state: SeasonState, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined> | null | undefined, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -832,11 +839,6 @@ export type AllTournamentListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllTournamentListQuery = { __typename?: 'query', allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string } | null | undefined> | null | undefined };
-
-export type AllTournamentCalendarQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllTournamentCalendarQuery = { __typename?: 'query', allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null | undefined, guest_score?: number | null | undefined, kickoff?: any | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
 export type TournamentQueryVariables = Exact<{
   id: Scalars['String'];
@@ -919,6 +921,7 @@ export const SeasonFragmentDoc = gql`
     fragment Season on Season {
   id
   name
+  state
   teams {
     ...Team
   }
@@ -1370,6 +1373,22 @@ export const EndSeasonDocument = gql`
       super(apollo);
     }
   }
+export const DeleteSeasonDocument = gql`
+    mutation DeleteSeason($season_id: String!) {
+  deleteSeason(season_id: $season_id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSeasonGQL extends Apollo.Mutation<DeleteSeasonMutation, DeleteSeasonMutationVariables> {
+    document = DeleteSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreateTeamDocument = gql`
     mutation CreateTeam($id: String!, $name: String!) {
   createTeam(id: $id, name: $name)
@@ -1556,6 +1575,40 @@ export const DeleteUserDocument = gql`
       super(apollo);
     }
   }
+export const CalendarDocument = gql`
+    query Calendar {
+  allSeasons {
+    id
+    name
+    state
+    match_days {
+      number
+      start_date
+      end_date
+    }
+  }
+  allTournaments {
+    id
+    name
+    rounds {
+      number
+      start_date
+      end_date
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CalendarGQL extends Apollo.Query<CalendarQuery, CalendarQueryVariables> {
+    document = CalendarDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const EventDocument = gql`
     query Event($id: String!) {
   event(id: $id) {
@@ -1605,24 +1658,6 @@ export const MatchDocument = gql`
   })
   export class MatchGQL extends Apollo.Query<MatchQuery, MatchQueryVariables> {
     document = MatchDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const MatchPlanDocument = gql`
-    query MatchPlan($id: String!) {
-  season(id: $id) {
-    ...Season
-  }
-}
-    ${SeasonFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class MatchPlanGQL extends Apollo.Query<MatchPlanQuery, MatchPlanQueryVariables> {
-    document = MatchPlanDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1709,19 +1744,19 @@ export const AllSeasonsListDocument = gql`
       super(apollo);
     }
   }
-export const AllSeasonsCalendarDocument = gql`
-    query AllSeasonsCalendar {
-  allSeasons {
-    ...AllSeasonsCalendar
+export const SeasonDocument = gql`
+    query Season($id: String!) {
+  season(id: $id) {
+    ...Season
   }
 }
-    ${AllSeasonsCalendarFragmentDoc}`;
+    ${SeasonFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class AllSeasonsCalendarGQL extends Apollo.Query<AllSeasonsCalendarQuery, AllSeasonsCalendarQueryVariables> {
-    document = AllSeasonsCalendarDocument;
+  export class SeasonGQL extends Apollo.Query<SeasonQuery, SeasonQueryVariables> {
+    document = SeasonDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1758,24 +1793,6 @@ export const AllTournamentListDocument = gql`
   })
   export class AllTournamentListGQL extends Apollo.Query<AllTournamentListQuery, AllTournamentListQueryVariables> {
     document = AllTournamentListDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const AllTournamentCalendarDocument = gql`
-    query AllTournamentCalendar {
-  allTournaments {
-    ...AllTournamentsCalendar
-  }
-}
-    ${AllTournamentsCalendarFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllTournamentCalendarGQL extends Apollo.Query<AllTournamentCalendarQuery, AllTournamentCalendarQueryVariables> {
-    document = AllTournamentCalendarDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

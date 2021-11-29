@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../services/authentication.service';
   providedIn: 'root'
 })
 export class AdminGuard implements CanLoad, CanActivate {
+
   constructor(
     private authService: AuthenticationService
   ) {

@@ -4,6 +4,7 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from '../../api/graphql';
 import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
+import { firstValueFrom, tap } from 'rxjs';
 
 export interface LoginContext {
   username: string;
@@ -17,7 +18,7 @@ const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 })
 export class AuthenticationService {
 
-  user: User.AuthenticatedUser;
+  user: User;
 
   @LocalStorage(ACCESS_TOKEN_KEY) accessToken: string;
 
@@ -32,6 +33,14 @@ export class AuthenticationService {
     private resetPasswordQGL: PasswordResetGQL,
     private localStorageService: LocalStorageService
   ) {
+  }
+
+  async init() {
+    try {
+      this.user = await this.loadUser();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async loginAsync(context: LoginContext): Promise<boolean> {
@@ -59,8 +68,8 @@ export class AuthenticationService {
       });
   }
 
-  async loadUser(): Promise<User.AuthenticatedUser> {
-    return new Promise<User.AuthenticatedUser>(
+  async loadUser(): Promise<User> {
+    return new Promise<User>(
       (resolve, reject) => {
         this.userQGL.fetch().subscribe(
           (result) => {

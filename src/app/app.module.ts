@@ -16,6 +16,7 @@ import { SnackbarComponent } from './components/shared/snackbar/snackbar.compone
 import { GraphQLModule } from './graphql.module';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppsettingsService } from './services/appsettings.service';
+import { GraphqlService } from './services/graphql.service';
 
 registerLocaleData(localeDe);
 
@@ -23,7 +24,7 @@ export function i18ServiceFactory(provider: I18Service) {
   return () => provider.init();
 }
 
-export function loadAppsettingsFactory(provider: AppsettingsService) {
+export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
 }
 
@@ -54,8 +55,8 @@ export function loadAppsettingsFactory(provider: AppsettingsService) {
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: loadAppsettingsFactory,
-      deps: [AppsettingsService], multi: true
+      useFactory: graphqlFactory,
+      deps: [GraphqlService], multi: true
     },
   ],
   bootstrap: [

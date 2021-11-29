@@ -7,8 +7,6 @@ import { Injectable } from '@angular/core';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
 import { HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { persistCache } from 'apollo-cache-persist';
 import { NotificationService } from './notification.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,7 +25,8 @@ export class GraphqlService {
   ) {
   }
 
-  createApolloLink() {
+  async init() {
+    await this.appsettingsService.loadAppsettings();
     const http = this.httpLink.create({ uri: this.appsettingsService.appsettings.graphqlUrl });
 
     const afterwareLink = new ApolloLink((operation, forward) => {
@@ -90,16 +89,15 @@ export class GraphqlService {
         addTypename: true,
       }
     );
-    if (environment.persistCache) {
-      persistCache({
-        cache,
-        storage: window.localStorage,
-        key: 'graphql-cache'
-      });
-    }
     this.apollo.create({
       link: link,
       cache: cache
     });
+
+    if (this.authService.accessToken) {
+      await this.authService.loadUser();
+    }
+    
   }
+
 }

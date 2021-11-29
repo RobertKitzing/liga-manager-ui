@@ -55,6 +55,7 @@ fragment Contact on Contact {
 fragment Season on Season {
     id
     name
+    state
     teams {
         ...Team
     }

@@ -16,7 +16,7 @@ export class EditmatchResultComponent implements OnInit {
   guest_score: number;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
+    @Inject(MAT_DIALOG_DATA) public match: Match,
     private matchService: MatchService,
     private dialogRef: MatDialogRef<EditmatchResultComponent>,
     public notify: NotificationService,

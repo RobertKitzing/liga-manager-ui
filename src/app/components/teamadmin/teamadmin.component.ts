@@ -26,7 +26,7 @@ export class TeamadminComponent implements OnInit {
   ngOnInit() {
   }
 
-  async saveContact(teamId: string, contact: Contact.Fragment) {
+  async saveContact(teamId: string, contact: Contact) {
     try {
       await this.updateTeamContact.mutate(
         {

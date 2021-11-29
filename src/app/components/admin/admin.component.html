@@ -1,34 +1,19 @@
 <div class="container-fluid">
-  <mat-tab-group>
-    <mat-tab label="{{ 'TAB.MANAGE_TOURNAMENT' | translate }}" class="pb-4">
-      <ng-template matTabContent>
-        <app-managetournament></app-managetournament>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="{{ 'TAB.MANAGE_SEASON' | translate}}">
-      <ng-template matTabContent>
-        <app-manageseason></app-manageseason>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="{{ 'TAB.MANAGE_USERS' | translate }}">
-        <ng-template matTabContent>
-          <app-manageusers></app-manageusers>
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="{{ 'TAB.MANAGE_TEAM' | translate }}">
-        <ng-template matTabContent>
-          <app-manageteams></app-manageteams>
-        </ng-template>
-      </mat-tab>
-    <mat-tab label="{{ 'TAB.PITCHES' | translate}}">
-      <ng-template matTabContent>
-        <app-managepitches></app-managepitches>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="{{ 'TAB.EVENTS' | translate}}">
-      <ng-template matTabContent>
-        <app-events></app-events>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="row">
+    <div class="col">
+      <nav mat-tab-nav-bar>
+        <a mat-tab-link [routerLink]="['tournament']" routerLinkActive #tournament="routerLinkActive" [active]="tournament.isActive">{{ 'TAB.MANAGE_TOURNAMENTS' | translate }}</a>
+        <a mat-tab-link [routerLink]="['season']" routerLinkActive #season="routerLinkActive" [active]="season.isActive">{{ 'TAB.MANAGE_SEASONS' | translate }}</a>
+        <a mat-tab-link [routerLink]="['users']" routerLinkActive #users="routerLinkActive" [active]="users.isActive">{{ 'TAB.MANAGE_USERS' | translate }}</a>
+        <a mat-tab-link [routerLink]="['team']" routerLinkActive #team="routerLinkActive" [active]="team.isActive">{{ 'TAB.MANAGE_TEAM' | translate }}</a>
+        <a mat-tab-link [routerLink]="['pitches']" routerLinkActive #pitches="routerLinkActive" [active]="pitches.isActive">{{ 'TAB.PITCHES' | translate }}</a>
+        <a mat-tab-link [routerLink]="['events']" routerLinkActive #events="routerLinkActive" [active]="events.isActive">{{ 'TAB.EVENTS' | translate }}</a>
+      </nav>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

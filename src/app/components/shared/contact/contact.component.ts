@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Team, Pitch } from 'src/api/graphql';
 
 interface ContactComponentData {
-  teams: Team.Fragment[];
-  pitch: Pitch.Fragment;
+  teams: Team[];
+  pitch: Pitch;
 }
 @Component({
   selector: 'app-contact',

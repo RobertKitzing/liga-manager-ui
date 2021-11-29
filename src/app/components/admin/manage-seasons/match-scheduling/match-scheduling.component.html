@@ -1,0 +1,80 @@
+<ng-container *ngIf="(manageSeason | async) as manageSeason">
+  <div class="container-fluid mt-4">
+    <div class="row" style="justify-content: center;">
+      <div class="col">
+        <mat-form-field style="width: 100%;" [formGroup]="matchAppointmentFormGroup">
+          <input matInput placeholder="{{ 'PITCH' | translate }}" [matAutocomplete]="pitchAutoComplete" formControlName="pitch"
+          />
+          <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
+            <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
+              <span>{{ pitch.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="example-full-width"  [formGroup]="matchAppointmentFormGroup">
+          <mat-select formControlName="matchDay" placeholder="{{ 'PLACEHOLDER.MATCH_DAY' | translate }}">
+            <mat-option *ngFor="let matchDay of manageSeason.match_days" [value]="matchDay">
+              {{ matchDay.number }}. Spieltag
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+          <input matInput #time type="number" placeholder="{{ 'DAYS_OFFSET_FROM_START_DAY' | translate }}" formControlName="daysOffset">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="example-full-width text-center"  [formGroup]="matchAppointmentFormGroup">
+          <input matInput #time type="time" placeholder="{{ 'BUTTON.SET_TIME' | translate }}" formControlName="time">
+        </mat-form-field>
+      </div>
+      <div class="col" *ngIf="kickoffDay">
+        {{ kickoffDay | date:'EEEE HH:mm':'':i18Service.currentLang }}
+      </div>
+      <div class="col">
+        <mat-form-field [formGroup]="matchAppointmentFormGroup">
+          <mat-select formControlName="unavailableTeams" [multiple]="true" placeholder="{{ 'PLACEHOLDER.EXCLUDE_TEAM' | translate }}">
+            <mat-option *ngFor="let team of manageSeason.teams" [value]="team">
+              {{ team.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        {{ matchAppointments.length }}/{{manageSeason.match_days[0]?.matches?.length}}
+      </div>
+      <div class="col">
+        <button mat-raised-button (click)="addMatchAppointment()">addMatchAppointment</button>
+      </div>
+      <div class="col">
+        <button mat-raised-button (click)="saveAllMatchdays(manageSeason)">save all matchdays</button>
+      </div>
+      <div class="col">
+        <button mat-raised-button (click)="saveMatchday(manageSeason)">save single matchday</button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row">
+      <div class="col-6">
+        <full-calendar [options]="calendarOptions" [deepChangeDetection]="true"></full-calendar>
+      </div>
+      <div class="col-6">
+        <div class="row" *ngFor="let matchDayEvent of matchDaySeries">
+          <div class="col">
+            <p>{{ matchDayEvent.pitch.label }}</p>
+            <p>{{ matchDayEvent.time }}</p>
+            <p>{{ matchDayEvent.kickoff | date:'EEEE HH:mm':'':i18Service.currentLang }}</p>
+            <p>{{ matchDayEvent.unavailableTeams }}</p>
+          </div>
+          <div class="col">
+            <button mat-raised-button (click)="removeSeries(matchDayEvent.matchSeriesId)">remove</button>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,21 @@
+query Calendar {
+  allSeasons {
+    id
+    name
+    state
+    match_days {
+      number
+      start_date
+      end_date
+    }
+  }
+  allTournaments {
+    id
+    name
+    rounds {
+      number
+      start_date
+      end_date
+    }
+  }
+}

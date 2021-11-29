@@ -5,7 +5,7 @@
         <mat-form-field class="w-100">
           <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
           <mat-error *ngIf="!loginForm.controls['username'].valid">
-            <span translate>USERNAME_REQUIRED</span>
+            <span>{{ 'USERNAME_REQUIRED' | translate }}</span>
           </mat-error>
         </mat-form-field>
       </div>
@@ -16,7 +16,7 @@
           <input #password type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}"
             required />
           <mat-error *ngIf="!loginForm.controls['password'].valid">
-            <span translate>PASSWORD_REQUIRED</span>
+            <span>{{ 'PASSWORD_REQUIRED' | translate }}</span>
           </mat-error>
           <button mat-button *ngIf="password.value" matSuffix mat-icon-button
             (click)="password.type === 'password'? password.type = 'text': password.type = 'password'">

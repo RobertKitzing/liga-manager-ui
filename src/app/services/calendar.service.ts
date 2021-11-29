@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as dayjs from 'dayjs';
-import { forkJoin, Observable, of, scheduled } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MatchAppointment, MatchPlan } from 'src/api/graphql';
+import { CalendarGQL, Match, MatchAppointment, MatchDay, Season, SeasonState } from 'src/api/graphql';
 import { PublicHolidaysService } from './public-holidays.service';
 
 export interface IMatchDayEvent {
@@ -25,10 +25,51 @@ export class CalendarService {
 
   constructor(
     private holidaysService: PublicHolidaysService,
+    private calendarGQL: CalendarGQL,
   ) { }
 
-  getEvents(season: MatchPlan.Season, holidays = true): Observable<IMatchDayEvent[]> {
-    const matchDays = season?.match_days?.map(
+  getCalendarBackgroundEvents(): Observable<IMatchDayEvent[]> {
+    return this.calendarGQL.watch().valueChanges.pipe(
+      map(
+        ({ data }) => {
+          let events = new Array<IMatchDayEvent>();
+          const seasons = [...data.allSeasons].filter(x => x.state !== SeasonState.Preparation)
+          for (let season of seasons) {
+            events = events.concat(
+              season.match_days.map(
+                (matchDay) => ({
+                  allDay: true,
+                  display: 'background',
+                  title: `${matchDay.number}. Spieltag (${season.name})`,
+                  start: dayjs(matchDay.start_date).toDate(),
+                  end: dayjs(matchDay.end_date).toDate(),
+                })
+              ));
+          }
+          for (let tournament of data.allTournaments) {
+            if (!tournament.rounds) {
+              continue;
+            }
+            events =
+              events.concat(
+                tournament.rounds.map(
+                  (round) => ({
+                    allDay: true,
+                    display: 'background',
+                    title: `${round.number}. Runde (${tournament.name})`,
+                    start: dayjs(round.start_date).toDate(),
+                    end: dayjs(round.end_date).toDate(),
+                  })
+                ));
+          }
+          return events;
+        }
+      )
+    );
+  }
+
+  getEvents(match_days: MatchDay[], holidays = true): Observable<IMatchDayEvent[]> {
+    const matchDays = match_days?.map(
       (matchDay) => (
         {
           allDay: true,
