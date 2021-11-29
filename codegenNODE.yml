@@ -1,16 +1,17 @@
 overwrite: true
 schema: "server/graphql/schema.graphql"
-documents: "**/*.graphqls"
+documents: "graphql/**/*.graphqls"
 generates:
   src/api/graphqlsubs.ts:
     plugins:
-      - add: "/* tslint:disable */"
-      - "typescript-common"
-      - "typescript-client"
+      - add: 
+          content:
+            - "/* tslint:disable */"
+            - "/* GENERATED DO NOT EDIT */"
+      - "typescript"
+      - "typescript-operations"
       - "typescript-apollo-angular"
-      - "fragment-matcher"
   ./server/graphql/src/generated/types.d.ts:
     plugins:
       - add: "/* tslint:disable */"
-      - typescript-common
       - typescript-server

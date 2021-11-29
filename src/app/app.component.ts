@@ -5,13 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { I18Service } from './services/i18.service';
-import { GraphqlSubscriptionService } from 'src/app/services/graphql-subscription.service';
-import { RankingGQL, MatchPlanGQL, TournamentGQL, Tournament, AllSeasonsListGQL } from 'src/api/graphql';
+import { RankingGQL, SeasonGQL, TournamentGQL, Tournament, AllSeasonsListGQL } from 'src/api/graphql';
 import { SeasonService } from 'src/app/services/season.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { SELECTED_TOURNAMENT_KEY } from './components/tournament/tournament.component';
 import { AppsettingsService } from './services/appsettings.service';
-import { GraphqlService } from './services/graphql.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +18,7 @@ import { GraphqlService } from './services/graphql.service';
 })
 export class AppComponent implements OnInit {
 
-  @LocalStorage(SELECTED_TOURNAMENT_KEY) tournament: Tournament.Fragment;
+  // @LocalStorage(SELECTED_TOURNAMENT_KEY) tournament: Tournament;
 
   constructor(
     public authService: AuthenticationService,
@@ -28,21 +26,14 @@ export class AppComponent implements OnInit {
     public snackBar: MatSnackBar,
     private dialog: MatDialog,
     private ranking: RankingGQL,
-    private matchPlanGQL: MatchPlanGQL,
+    private seasonGQL: SeasonGQL,
     private tournamentGQL: TournamentGQL,
     public seasonService: SeasonService,
-    private graphqlService: GraphqlService,
     private appsettingsService: AppsettingsService,
-    private graphqlSubscriptionService: GraphqlSubscriptionService,
     private allSeasonsListGQL: AllSeasonsListGQL,
   ) {
   }
   async ngOnInit() {
-
-    this.graphqlService.createApolloLink();
-    if (this.appsettingsService.appsettings.graphqlWsUrl) {
-      this.graphqlSubscriptionService.connect();
-    }
 
     if (this.authService.accessToken) {
       this.authService.loadUser();
@@ -80,10 +71,10 @@ export class AppComponent implements OnInit {
       await this.ranking.fetch({ id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).toPromise();
     }
     if (this.seasonService.currentSeason.getValue()) {
-      await this.matchPlanGQL.fetch({ id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).toPromise();
+      await this.seasonGQL.fetch({ id: this.seasonService.currentSeason.getValue().id }, { fetchPolicy: 'network-only' }).toPromise();
     }
-    if (this.tournament.id) {
-      await this.tournamentGQL.fetch({ id: this.tournament.id }, { fetchPolicy: 'network-only' }).toPromise();
-    }
+    // if (this.tournament.id) {
+    //   await this.tournamentGQL.fetch({ id: this.tournament.id }, { fetchPolicy: 'network-only' }).toPromise();
+    // }
   }
 }

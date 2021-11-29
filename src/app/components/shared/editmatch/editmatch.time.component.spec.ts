@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
 
 import { EditmatchTimeComponent } from './editmatch.time.component';
 import { SharedModule } from '../shared.module';
@@ -12,7 +12,7 @@ describe('Editmatch.TimeComponent', () => {
   let component: EditmatchTimeComponent;
   let fixture: ComponentFixture<EditmatchTimeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         SharedModule,

@@ -1,20 +1,16 @@
 <div class="container" style="margin-top: 30px;">
-  <ng-template #loading>
-    <mat-progress-bar mode="indeterminate" *ngIf="selectedTournament"></mat-progress-bar>
-  </ng-template>
   <div class="row justify-content-center">
     <div class="col-9 col-sm-4 text-center">
       <mat-form-field>
-        <mat-select #tournamentSelect placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
-          (selectionChange)="tournamentChanged()" [(value)]="selectedTournament" [compareWith]="tournamentCompare">
-          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament">
+        <mat-select placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}" [formControl]="tournamentFormControl" [compareWith]="tournamentCompare">
+          <mat-option *ngFor="let tournament of tournamentService.tournaments | async" [value]="tournament">
             {{ tournament.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-  <ng-container *ngIf="(tournament | async) as tournament; else loading">
+  <ng-container *ngIf="(tournament | async) as tournament">
     <div *ngIf="!tournament.rounds">
       {{ 'NO_TOURNAMENT_ROUNDS_YET' | translate}}
     </div>
@@ -42,7 +38,7 @@
       </ng-container>
       <div class="text-center">
         <ng-container *ngFor="let match of round.matches">
-          <app-match [match]="match" [tournamentId]="selectedTournament"></app-match>
+          <app-match [match]="match" [tournamentId]="tournament.id"></app-match>
         </ng-container>
       </div>
     </ng-container>

@@ -1,5 +1,0 @@
-query MatchPlan($id: String!) {
-    season(id: $id) {
-        ...Season
-    }
-}

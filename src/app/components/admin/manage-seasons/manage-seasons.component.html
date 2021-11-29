@@ -1,0 +1,39 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-7">
+      <app-seasonchooser [filterStates]="[SeasonState.Progress, SeasonState.Ended, SeasonState.Preparation]" [mode]="'manageSeason'"></app-seasonchooser>
+    </div>
+    <div class="col">
+      <mat-form-field>
+        <input #newSeason matInput placeholder="{{ 'PLACEHOLDER.NEW_SEASON' | translate }}"
+          (keyup.enter)="addNewSeason(newSeason.value)" />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <button mat-raised-button color="primary" (click)="addNewSeason(newSeason.value)">{{ 'BUTTON.CREATE_SEASON' | translate
+        }}
+      </button>
+    </div>
+  </div>
+  <ng-container *ngIf="(manageSeason | async) as manageSeason">
+    <div class="row">
+      <div class="col">
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link [routerLink]="['teams']" routerLinkActive #teams="routerLinkActive" [active]="teams.isActive">{{ 'TAB.TEAMS' | translate }}</a>
+          <ng-container *ngIf="manageSeason.teams">
+            <a mat-tab-link [routerLink]="['match-days']" routerLinkActive #matchdays="routerLinkActive" [active]="matchdays.isActive">{{ 'TAB.MATCH_DAYS' | translate }}</a>
+            <a mat-tab-link [routerLink]="['matches']" routerLinkActive #matches="routerLinkActive" [active]="matches.isActive">{{ 'TAB.MATCHES' | translate }}</a>
+            <a mat-tab-link [routerLink]="['match-scheduling']" routerLinkActive #matchdays="routerLinkActive" [active]="matchdays.isActive">{{ 'TAB.MATCH_SCHEDULING' | translate }}</a>
+            <a mat-tab-link [routerLink]="['match-penalty']" routerLinkActive #matchdays="routerLinkActive" [active]="matchdays.isActive">{{ 'TAB.MANAGE_PENALTY' | translate }}</a>
+            <a mat-tab-link [routerLink]="['season']" routerLinkActive #matchdays="routerLinkActive" [active]="matchdays.isActive">{{ 'TAB.MANAGE_SEASON' | translate }}</a>
+          </ng-container>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </ng-container>
+</div>

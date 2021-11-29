@@ -1,0 +1,9 @@
+<div class="container-fluid mt-4" *ngIf="(manageSeason | async ) as manageSeason">
+    <div class="row">
+        <div class="col text-center">
+            <button mat-raised-button color="primary" (click)="endSeason(manageSeason)" *ngIf="manageSeason.state === SeasonState.Progress">{{ 'BUTTON.END_SEASON' | translate}}</button>
+            <button mat-raised-button color="primary" (click)="startSeason(manageSeason)" *ngIf="manageSeason.state === SeasonState.Preparation">{{ 'BUTTON.START_SEASON' | translate}}</button>
+            <button mat-raised-button color="primary" (click)="deleteSeason(manageSeason)" *ngIf="manageSeason.state === SeasonState.Preparation">{{ 'BUTTON.DELETE_SEASON' | translate}}</button>
+        </div>
+      </div>
+</div>

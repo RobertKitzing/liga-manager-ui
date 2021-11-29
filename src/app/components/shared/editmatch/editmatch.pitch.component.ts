@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { map, startWith, switchMapTo } from 'rxjs/operators';
 import { PitchService } from '../../../services/pitch.service';
 import { Match, Pitch } from 'src/api/graphql';
@@ -16,10 +16,10 @@ import { CreatePitchDialogComponent } from '../create-pitch-dialog/create-pitch-
 export class EditmatchPitchComponent implements OnInit {
 
   newMatchPitch: FormControl = new FormControl();
-  filteredPitches: Observable<Pitch.Fragment[]>;
+  filteredPitches: Observable<Pitch[]>;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
+    @Inject(MAT_DIALOG_DATA) public match: Match,
     private pitchService: PitchService,
     private matchService: MatchService,
     private dialogRef: MatDialogRef<EditmatchPitchComponent>,
@@ -29,7 +29,7 @@ export class EditmatchPitchComponent implements OnInit {
 
   ngOnInit() {
     this.filteredPitches = this.newMatchPitch.valueChanges.pipe(
-      startWith<string | Pitch.Fragment>(''),
+      startWith<string | Pitch>(''),
       map(value => typeof value === 'string' ? value : value.label),
       switchMapTo(this.pitchService.allPitches),
       map(x => {
@@ -39,11 +39,11 @@ export class EditmatchPitchComponent implements OnInit {
     );
   }
 
-  displayPitch(pitch?: Pitch.Fragment): string | undefined {
+  displayPitch(pitch?: Pitch): string | undefined {
     return pitch ? pitch.label : undefined;
   }
 
-  onPitchSelect(pitch: Pitch.Fragment) {
+  onPitchSelect(pitch: Pitch) {
     this.match.pitch = pitch;
   }
 

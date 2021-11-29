@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { UserGQL, UpdateTeamContactGQL, Contact } from 'src/api/graphql';
-import { TranslateService } from '@ngx-translate/core';
-import { NotificationService } from 'src/app/services/notification.service';
+import { Contact } from 'src/api/graphql';
 
 @Component({
   selector: 'app-edit-contact',
@@ -11,9 +9,9 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class EditContactComponent implements OnInit {
 
-  @Input() contact: Contact.Fragment;
+  @Input() contact: Contact;
 
-  @Output() contactChanged = new EventEmitter<Contact.Fragment>();
+  @Output() contactChanged = new EventEmitter<Contact>();
 
   emailFormControl: FormControl = new FormControl('', [Validators.email, Validators.required]);
 
@@ -22,6 +20,7 @@ export class EditContactComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.emailFormControl.setValue(this.contact.email);
   }
 
   emitContactChanged(firstName: string, lastName: string, email: string, phone: string) {

@@ -1,0 +1,51 @@
+<div class="container-fluid mt-4">
+    <ng-container *ngIf="{ranking: (ranking | async)} as r">
+        <div class="row mb-3">
+            <div class="col">
+                {{ 'TEAM' | translate }}
+            </div>
+            <div class="col">
+                {{ 'REASON' | translate }}
+            </div>
+            <div class="col">
+                {{ 'DATE' | translate }}
+            </div>
+            <div class="col">
+                {{ 'POINTS' | translate }}
+            </div>
+            <div class="col">
+                <button mat-raised-button color="primary" (click)="openEditDialog(r.ranking)">
+                    <mat-icon>
+                        add
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row align-items-center mb-2" *ngFor="let penalty of r.ranking?.ranking?.penalties">
+            <div class="col">
+                {{ penalty.team.name }}
+            </div>
+            <div class="col">
+                {{ penalty.reason }}
+            </div>
+            <div class="col">
+                {{ penalty.created_at | date:'medium':'':i18Service.currentLang }}
+            </div>
+            <div class="col">
+                {{ penalty.points }}
+            </div>
+            <div class="col">
+                <!-- <button mat-raised-button color="primary" (click)="openEditDialog(penalties, penalty)">
+                    <mat-icon>
+                        edit
+                    </mat-icon>
+                </button> -->
+                <button mat-raised-button color="primary" (click)="removePenalty(r.ranking, penalty)">
+                    <mat-icon>
+                        delete
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</div>

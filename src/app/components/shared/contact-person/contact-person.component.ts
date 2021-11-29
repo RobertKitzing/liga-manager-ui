@@ -8,7 +8,7 @@ import { Contact } from 'src/api/graphql';
 })
 export class ContactPersonComponent implements OnInit {
 
-  @Input() contact: Contact.Fragment;
+  @Input() contact: Contact;
 
   constructor() { }
 

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IMatchDayEvent } from './calendar.service';
+import { Cacheable, GlobalCacheConfig } from 'ts-cacheable';
+import { LocalStorageStrategy } from 'ts-cacheable'; 
+GlobalCacheConfig.storageStrategy = LocalStorageStrategy;
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,9 @@ export class PublicHolidaysService {
   ) {
   }
 
+  @Cacheable({
+    maxCacheCount: 2,
+  })
   publicHolidays(year: number, county = 'HB'): Observable<IMatchDayEvent[]> {
     return this.httpClient.get(
       `https://feiertage-api.de/api/?jahr=${year}&nur_land=${county}`

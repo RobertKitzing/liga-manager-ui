@@ -1,10 +1,8 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
 import { I18Service } from '../../../services/i18.service';
 import { MatchService } from '../../../services/match.service';
 import { Match } from 'src/api/graphql';
-import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-editmatch.time',
@@ -19,19 +17,11 @@ export class EditmatchTimeComponent implements OnInit {
   matchKickoff: Date;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public match: Match.Fragment,
-    private translateService: TranslateService,
+    @Inject(MAT_DIALOG_DATA) public match: Match,
     public i18Service: I18Service,
     private dialogRef: MatDialogRef<EditmatchTimeComponent>,
     private matchService: MatchService,
-    private dateAdapter: DateAdapter<any>,
   ) {
-    this.translateService.onLangChange.subscribe(
-      (lang) => {
-        this.dateAdapter.setLocale(lang);
-      }
-    );
-    this.dateAdapter.setLocale(this.translateService.currentLang);
   }
 
   ngOnInit() {

@@ -1,19 +1,12 @@
-import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache, ApolloLink } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
+import { Injectable } from '@angular/core';
 import { AppsettingsService } from './appsettings.service';
-import { ApolloLink, split } from 'apollo-link';
 import { AuthenticationService } from './authentication.service';
-import { setContext } from 'apollo-link-context';
 import { HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { persistCache } from 'apollo-cache-persist';
-import { GraphqlSubscriptionService } from './graphql-subscription.service';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition, getOperationName } from 'apollo-utilities';
-import { onError } from 'apollo-link-error';
 import { NotificationService } from './notification.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,13 +20,13 @@ export class GraphqlService {
     private httpLink: HttpLink,
     private authService: AuthenticationService,
     private appsettingsService: AppsettingsService,
-    private graphqlSubscriptionService: GraphqlSubscriptionService,
     private notify: NotificationService,
     private translationService: TranslateService
   ) {
   }
 
-  createApolloLink() {
+  async init() {
+    await this.appsettingsService.loadAppsettings();
     const http = this.httpLink.create({ uri: this.appsettingsService.appsettings.graphqlUrl });
 
     const afterwareLink = new ApolloLink((operation, forward) => {
@@ -91,51 +84,20 @@ export class GraphqlService {
     });
 
     let link = errorHandler.concat(afterwareLink).concat(auth).concat(http);
-    if (this.appsettingsService.appsettings.graphqlWsUrl) {
-
-      this.graphqlSubscriptionService.subscriptionClient = new SubscriptionClient(
-        this.appsettingsService.appsettings.graphqlWsUrl,
-        {
-          lazy: true,
-          reconnect: true,
-          reconnectionAttempts: 2
-        });
-      const wsClient = new WebSocketLink(this.graphqlSubscriptionService.subscriptionClient);
-
-      link = split(
-        // split based on operation type
-        ({ query }) => {
-          const { kind } = getMainDefinition(query);
-          const operation = getOperationName(query);
-          // const { kind, operation } = getMainDefinition(query);
-          return kind === 'OperationDefinition' && operation === 'subscription';
-        },
-        wsClient,
-        link,
-      );
-    }
     const cache = new InMemoryCache(
       {
         addTypename: true,
-        cacheRedirects: {
-          Query: {
-            allSeasons: (t, args, { getCacheKey }) => {
-              return getCacheKey({ __typename: 'Season' });
-            }
-          },
-        }
       }
     );
-    if (environment.persistCache) {
-      persistCache({
-        cache,
-        storage: window.localStorage,
-        key: 'graphql-cache'
-      });
-    }
     this.apollo.create({
       link: link,
       cache: cache
     });
+
+    if (this.authService.accessToken) {
+      await this.authService.loadUser();
+    }
+    
   }
+
 }

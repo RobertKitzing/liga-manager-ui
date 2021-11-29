@@ -21,7 +21,7 @@ export class MatchComponent implements OnInit {
 
   @Input() seasonId: string;
   @Input() tournamentId: string;
-  @Input() match: Match.Fragment;
+  @Input() match: Match;
   @Input() hideIfPlayed: boolean;
   @Input() editable = true;
 
@@ -53,11 +53,6 @@ export class MatchComponent implements OnInit {
 
   private emitChanges() {
     this.matchUpdated.emit(this.match.id);
-    if (this.tournamentId) {
-      this.matchService.tournamentMatchUpdated.next({ tournamentId: this.tournamentId, matchId: this.match.id });
-    } else {
-      this.matchService.seasonMatchUpdated.next({ seasonId: this.seasonId, matchId: this.match.id });
-    }
   }
 
   openEditPitchDialog() {

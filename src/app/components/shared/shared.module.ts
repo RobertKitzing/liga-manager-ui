@@ -22,6 +22,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import { DateAdapter } from '@angular/material/core';
+import { CustomDateAdapter } from './custom-date-adapter';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -66,6 +68,12 @@ FullCalendarModule.registerPlugins([
     EditContactComponent,
     CancelMatchDialogComponent,
     FullCalendarModule,
-  ]
+  ],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: CustomDateAdapter,
+    }
+  ],
 })
 export class SharedModule { }

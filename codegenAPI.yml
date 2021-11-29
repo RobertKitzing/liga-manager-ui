@@ -1,12 +1,13 @@
 overwrite: true
-schema: "http://localhost:3098/api/graphql"
+schema: "http://nginx/api/graphql"
 documents: "graphql/**/*.graphql"
 generates:
   src/api/graphql.ts:
     plugins:
-      - add: "/* tslint:disable */"
-      - "typescript-common"
-      - "typescript-client"
+      - add: 
+          content:
+            - "/* tslint:disable */"
+            - "/* GENERATED DO NOT EDIT */"
+      - "typescript"
+      - "typescript-operations"
       - "typescript-apollo-angular"
-  src/api/introspection-result.ts:
-      - "fragment-matcher"

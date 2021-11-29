@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class CreatePitchDialogComponent implements OnInit {
 
   newPitchFormControl: FormControl;
-  newPitch = <Pitch.Fragment>{};
+  newPitch = {} as Pitch;
   newPitchPlaceFormGroup: any;
   newPitchLabelExist: boolean;
 

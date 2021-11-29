@@ -1,14 +1,18 @@
 {
   "compileOnSave": false,
+  "angularCompilerOptions": {
+    "strictTemplates": true,      
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true
+  },
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,
-    "module": "esnext",
+    "module": "es2020",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -22,9 +26,15 @@
       "esnext.asynciterable"
     ],
     "paths": {
-      "@api": ["api/*"],
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"]
+      "@api": [
+        "api/*"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@env/*": [
+        "environments/*"
+      ]
     }
   }
 }

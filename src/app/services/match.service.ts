@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { SubmitResultGQL, MatchFragment, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch, ScheduleAllMatchesForSeasonGQL, MatchAppointment, MatchPlanGQL, ScheduleAllMatchesForMatchDayGQL } from '../../api/graphql';
+import { SubmitResultGQL, ScheduleMatchGQL, LocateMatchGQL, Match, Pitch, ScheduleAllMatchesForSeasonGQL, MatchAppointment, SeasonGQL, ScheduleAllMatchesForMatchDayGQL, MatchFragmentDoc, CancelMatchGQL } from '../../api/graphql';
 import { Subject } from 'rxjs';
+import { SeasonService } from './season.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
-
-  seasonMatchUpdated = new Subject<{ seasonId, matchId }>();
-  tournamentMatchUpdated = new Subject<{ tournamentId, matchId }>();
 
   constructor(
     private submitResultGQL: SubmitResultGQL,
@@ -16,10 +14,12 @@ export class MatchService {
     private scheduleAllMatchesForSeasonGQL: ScheduleAllMatchesForSeasonGQL,
     private scheduleAllMatchesForMatchDayGQL: ScheduleAllMatchesForMatchDayGQL,
     private locateMatchQGL: LocateMatchGQL,
-    private matchPlanGQL: MatchPlanGQL,
+    private seasonGQL: SeasonGQL,
+    private cancelMatchGQL: CancelMatchGQL,
+    private seasonService: SeasonService,
   ) { }
 
-  public isMatchPlayed(match: Match.Fragment): boolean {
+  public isMatchPlayed(match: Match): boolean {
     return this.isValidResult(match.home_score) && this.isValidResult(match.guest_score);
   }
 
@@ -42,14 +42,14 @@ export class MatchService {
                 const match: any = store.readFragment(
                   {
                     fragmentName: 'Match',
-                    fragment: MatchFragment,
+                    fragment: MatchFragmentDoc,
                     id: `Match:${matchId}`
                   }
                 );
                 store.writeFragment(
                   {
                     fragmentName: 'Match',
-                    fragment: MatchFragment,
+                    fragment: MatchFragmentDoc,
                     id: `Match:${matchId}`,
                     data: {
                       __typename: 'Match',
@@ -71,146 +71,157 @@ export class MatchService {
   scheduleAllMatchesInSeason(season_id: string, match_appointments: MatchAppointment[]) {
     return new Promise<void>(
       (resolve, reject) => {
-        this.scheduleAllMatchesForSeasonGQL.mutate(
-          {
-            season_id,
-            match_appointments
-          },
-          {
-            refetchQueries: [
-              {
-                query: this.matchPlanGQL.document,
-                variables: {
-                  id: season_id,
+        try {
+          this.scheduleAllMatchesForSeasonGQL.mutate(
+            {
+              season_id,
+              match_appointments
+            },
+            {
+              refetchQueries: [
+                {
+                  query: this.seasonGQL.document,
+                  variables: {
+                    id: season_id,
+                  }
                 }
-              }
-            ]
-          }
-        ).subscribe(
-          () => {
-            resolve();
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
+              ]
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
   }
 
   scheduleAllMatchesForMatchday(match_day_id: string, season_id: string, match_appointments: MatchAppointment[]) {
     return new Promise<void>(
       (resolve, reject) => {
-        this.scheduleAllMatchesForMatchDayGQL.mutate(
-          {
-            match_day_id,
-            match_appointments
-          },
-          {
-            refetchQueries: [
-              {
-                query: this.matchPlanGQL.document,
-                variables: {
-                  id: season_id,
+        try {
+          this.scheduleAllMatchesForMatchDayGQL.mutate(
+            {
+              match_day_id,
+              match_appointments
+            },
+            {
+              refetchQueries: [
+                {
+                  query: this.seasonGQL.document,
+                  variables: {
+                    id: season_id,
+                  }
                 }
-              }
-            ]
-          }
-        ).subscribe(
-          () => {
-            resolve();
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
+              ]
+            }
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
   }
 
   scheduleMatch(matchId: string, matchKickoff: Date | string): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
-        const kickoff = typeof matchKickoff === 'string' ? matchKickoff : matchKickoff.toISOString();
-        this.scheduleMatchGQL.mutate(
-          {
-            match_id: matchId,
-            kickoff: kickoff
-          },
-          {
-            update: (store, { data }) => {
-              const match: any = store.readFragment(
-                {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`
-                }
-              );
-              store.writeFragment(
-                {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`,
-                  data: {
-                    __typename: 'Match',
-                    ...match,
-                    kickoff: matchKickoff
+        try {
+          const kickoff = typeof matchKickoff === 'string' ? matchKickoff : matchKickoff.toISOString();
+          this.scheduleMatchGQL.mutate(
+            {
+              match_id: matchId,
+              kickoff: kickoff
+            },
+            {
+              update: (store, { data }) => {
+                const match: any = store.readFragment(
+                  {
+                    fragmentName: 'Match',
+                    fragment: MatchFragmentDoc,
+                    id: `Match:${matchId}`
                   }
-                }
-              );
+                );
+                store.writeFragment(
+                  {
+                    fragmentName: 'Match',
+                    fragment: MatchFragmentDoc,
+                    id: `Match:${matchId}`,
+                    data: {
+                      __typename: 'Match',
+                      ...match,
+                      kickoff: matchKickoff
+                    }
+                  }
+                );
+              }
             }
-          }
-        ).subscribe(
-          () => {
-            resolve();
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
   }
 
-  locateMatch(matchId: string, pitch: Pitch.Fragment): Promise<void> {
+  locateMatch(matchId: string, pitch: Pitch): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
-        this.locateMatchQGL.mutate(
-          {
-            match_id: matchId,
-            pitch_id: pitch.id
-          },
-          {
-            update: (store, { data }) => {
-              const match: any = store.readFragment(
-                {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`
-                }
-              );
-              store.writeFragment(
-                {
-                  fragmentName: 'Match',
-                  fragment: MatchFragment,
-                  id: `Match:${matchId}`,
-                  data: {
-                    __typename: 'Match',
-                    ...match,
-                    pitch: pitch
+        try {
+          this.locateMatchQGL.mutate(
+            {
+              match_id: matchId,
+              pitch_id: pitch.id
+            },
+            {
+              update: (store, { data }) => {
+                const match: any = store.readFragment(
+                  {
+                    fragmentName: 'Match',
+                    fragment: MatchFragmentDoc,
+                    id: `Match:${matchId}`
                   }
-                }
-              );
+                );
+                store.writeFragment(
+                  {
+                    fragmentName: 'Match',
+                    fragment: MatchFragmentDoc,
+                    id: `Match:${matchId}`,
+                    data: {
+                      __typename: 'Match',
+                      ...match,
+                      pitch: pitch
+                    }
+                  }
+                );
+              }
             }
-          }
-        ).subscribe(
-          () => {
-            resolve();
-          },
-          (error) => {
-            reject(error);
-          }
-        );
+          ).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+  }
+
+  cancelMatch(match_id: string, reason: string): Promise<void> {
+    return new Promise<void>(
+      async (resolve, reject) => {
+        try {
+          await this.cancelMatchGQL.mutate({
+            match_id,
+            reason,
+          }, {
+            refetchQueries: [
+              {
+                query: this.seasonGQL.document,
+                variables: { id: this.seasonService.currentSeason.getValue().id }
+              }
+            ]
+          }).toPromise();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
       }
     );
   }

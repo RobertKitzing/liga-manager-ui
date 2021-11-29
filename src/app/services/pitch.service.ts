@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Pitch, PitchesGQL, CreatePitchGQL, DeletePitchGQL } from 'src/api/graphql';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PitchService {
 
-  allPitches: Observable<Pitch.Fragment[]> = this.pitchesGQL.watch().valueChanges.pipe(
+  allPitches: Observable<Pitch[]> = this.pitchesGQL.watch().valueChanges.pipe(
     map(({ data }) => data.allPitches.sort((a, b) => a.label.toLowerCase() > b.label.toLowerCase() ? 1 : -1))
   );
 
@@ -42,7 +42,7 @@ export class PitchService {
     );
   }
 
-  async createNewPitch(pitch: Pitch.Fragment): Promise<void> {
+  async createNewPitch(pitch: Pitch): Promise<void> {
     return new Promise<void>(
       async (resolve, reject) => {
         try {

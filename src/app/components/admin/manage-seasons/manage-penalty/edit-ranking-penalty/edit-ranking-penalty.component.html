@@ -1,0 +1,31 @@
+<div mat-dialog-content *ngIf="data && data.season" [formGroup]="penalty">
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <mat-select placeholder="{{ 'TEAM' | translate }}" formControlName="team_id">
+          <mat-option *ngFor="let team of data.season.teams" [value]="team.id">
+            {{ team.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <input matInput type="number" placeholder="{{ 'PLACEHOLDER.PENALTY_POINTS' | translate}}" formControlName="points"/>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field style="width: 100%">
+        <textarea matInput placeholder="{{ 'PLACEHOLDER.PENALTY_REASON' | translate }}" cdkTextareaAutosize  formControlName="reason"
+          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" (click)="savePenalty()" [disabled]="!penalty.valid">{{ 'BUTTON.SAVE' | translate }}</button>
+</div>

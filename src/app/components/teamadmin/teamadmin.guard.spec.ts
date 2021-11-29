@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject, waitForAsync as  } from '@angular/core/testing';
 
 import { TeamadminGuard } from './teamadmin.guard';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

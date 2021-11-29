@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class EditPitchContactDialogComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public pitch: Pitch.Fragment,
+    @Inject(MAT_DIALOG_DATA) public pitch: Pitch,
     private notify: NotificationService,
     private dialogRef: MatDialogRef<EditPitchContactDialogComponent>,
     private translateService: TranslateService,
@@ -22,7 +22,7 @@ export class EditPitchContactDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  async contactChanged(contact: Contact.Fragment) {
+  async contactChanged(contact: Contact) {
     try {
       await this.updatePitchContactGQL.mutate(
         {
@@ -30,10 +30,10 @@ export class EditPitchContactDialogComponent implements OnInit {
           ...contact
         }
       ).toPromise();
-      this.notify.showSuccessNotification(this.translateService.instant('PITCH_CONTACT_SAVE_SUCCESS'));
+      this.notify.showSuccessNotification(this.translateService.instant('PITCH_CONTACT_SAVE_ERROR'));
       this.dialogRef.close();
     } catch (error) {
-      this.notify.showSuccessNotification(this.translateService.instant('PITCH_CONTACT_SAVE_ERROR'), error);
+      this.notify.showErrorNotification(this.translateService.instant('PITCH_CONTACT_SAVE_SUCCESS'), error);
     }
   }
 }

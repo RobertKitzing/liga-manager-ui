@@ -1,4 +1,5 @@
 /* tslint:disable */
+import {gql} from 'apollo-angular';
 export type Maybe<T> = T | null;
 
 export type DateTime = any;
@@ -34,9 +35,9 @@ export namespace RedisEvent {
 // ====================================================
 
 import { Injectable } from "@angular/core";
-import * as Apollo from "apollo-angular";
 
-import gql from "graphql-tag";
+
+
 
 // ====================================================
 // Apollo Services

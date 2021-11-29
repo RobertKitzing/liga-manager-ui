@@ -28,9 +28,9 @@ jobs:
         key: ${{ runner.os }}-buildx-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-buildx-
-    - run: npm install
-    - run: npm --prefix ./server/express install
-    - run: npm run build:server:express
+    - run: yarn install
+    - run: yarn --cwd ./server/express install
+    - run: yarn run build:server:express
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -60,7 +60,7 @@ jobs:
         push: true
         tags: ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }}
     # Android
-    - run: npm run build:angular:app
+    - run: yarn run build:angular:app
     - name: Build Android app
       uses: oxr463/setup-cordova@0.0.2
       with:
@@ -68,7 +68,7 @@ jobs:
           apk del openjdk11 && \
           apk add openjdk8 && \
           export JAVA_HOME=/usr/lib/jvm/java-8-openjdk && \
-          npm install -g cordova-set-version && \
+          yarn install -g cordova-set-version && \
           cd app && \
           cordova platform add android && \
           cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \

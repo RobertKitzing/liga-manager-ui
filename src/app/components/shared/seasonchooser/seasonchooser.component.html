@@ -1,7 +1,7 @@
 <mat-form-field style="width: 100%;">
   <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"
-  (selectionChange)="currentSeasonChanged($event)" [(value)]="season" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
-    <mat-option *ngFor="let season of seasonList | async" [value]="season">
+  (selectionChange)="currentSeasonChanged($event)" [value]="season | async" placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
+    <mat-option *ngFor="let season of filteredSeasonList | async" [value]="season">
       {{ season.name }} {{ season.state !== SeasonState.Progress ? ('(' + ('SeasonState.' + season.state | translate) + ')') : ''  }}
     </mat-option>
   </mat-select>

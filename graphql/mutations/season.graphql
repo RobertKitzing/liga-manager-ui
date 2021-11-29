@@ -44,3 +44,7 @@ mutation StartSeason($id: String!) {
 mutation EndSeason($season_id: String!) {
   endSeason(season_id: $season_id)
 }
+
+mutation DeleteSeason($season_id: String!) {
+  deleteSeason(season_id: $season_id)
+}

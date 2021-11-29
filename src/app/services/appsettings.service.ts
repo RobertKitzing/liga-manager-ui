@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom, tap } from 'rxjs';
 
 export interface AppsettingsModel {
   googleMapsApiKey: string;
@@ -16,29 +17,28 @@ export class AppsettingsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  async init() {
-    try {
-      this.appsettings = await this.loadAppsettings();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  loadAppsettings(): Promise<AppsettingsModel> {
-    return new Promise(
-      (resolve, reject) => {
-        this.httpClient.get('./appsettings.json')
-          .toPromise()
-          .then(
-            (res) => {
-              resolve(<AppsettingsModel>res);
-            }
-          ).catch(
-            (error) => {
-              reject(error);
-            }
-          );
-      }
-    );
+  loadAppsettings(): Promise<any> {
+    return firstValueFrom(this.httpClient.get('./appsettings.json').pipe(
+      tap(
+        (res) => {
+          this.appsettings = res
+        }
+      ),
+    ))
+    // return new Promise(
+    //   (resolve, reject) => {
+    //     this.httpClient.get('./appsettings.json')
+    //       .toPromise()
+    //       .then(
+    //         (res) => {
+    //           resolve(<AppsettingsModel>res);
+    //         }
+    //       ).catch(
+    //         (error) => {
+    //           reject(error);
+    //         }
+    //       );
+    //   }
+    // );
   }
 }
