@@ -65,7 +65,7 @@ jobs:
       uses: oxr463/setup-cordova@0.0.3
       with:
         exec: |
-          add nodejs yarn && \
+          apk add nodejs yarn && \
           yarn install -g cordova-set-version && \
           cd app && \
           cordova platform add android && \
