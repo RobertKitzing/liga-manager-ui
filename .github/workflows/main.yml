@@ -62,12 +62,10 @@ jobs:
     # Android
     - run: yarn run build:angular:app
     - name: Build Android app
-      uses: oxr463/setup-cordova@0.0.2
+      uses: oxr463/setup-cordova@0.0.3
       with:
         exec: |
-          apk del openjdk11 && \
-          apk add openjdk8 && \
-          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk && \
+          add nodejs yarn && \
           yarn install -g cordova-set-version && \
           cd app && \
           cordova platform add android && \
