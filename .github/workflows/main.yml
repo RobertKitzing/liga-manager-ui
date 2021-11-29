@@ -66,7 +66,7 @@ jobs:
       with:
         exec: |
           apk add nodejs yarn && \
-          yarn install -g cordova-set-version && \
+          yarn global add cordova-set-version && \
           cd app && \
           cordova platform add android && \
           cordova-set-version -v ${{ steps.package-version.outputs.current-version}}-${{ steps.buildnumber.outputs.build_number }} -b ${{ steps.buildnumber.outputs.build_number }} ./config.xml && \
