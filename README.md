@@ -15,16 +15,23 @@ docker-compose up -d
 ```
 
 ### Frontend
+
+```bash
+docker exec -it liga-manager-ui-ui-1 /bin/sh
+yarn install
+yarn start
+```
+or
+
+
+```bash
+docker exec -it liga-manager-ui-ui-1 yarn install
+```
+
 ```bash
 docker exec -it liga-manager-ui-ui-1 yarn start
 ```
 
-or
-
-```bash
-docker exec -it liga-manager-ui-ui-1 /bin/sh
-yarn start
-```
 Angular dev server should start at:
 
 http://localhost:3098/
