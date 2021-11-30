@@ -7,3 +7,30 @@
 ## Documentation
 
 https://robertkitzing.github.io/liga-manager-ui/
+
+## Development workflow
+
+```bash
+docker-compose up -d
+```
+
+### Frontend
+```bash
+docker exec -it liga-manager-ui-ui-1 yarn start
+```
+
+or
+
+```bash
+docker exec -it liga-manager-ui-ui-1 /bin/sh
+yarn start
+```
+
+
+### Backend
+
+Create Admin user:
+
+```bash
+docker exec -it liga-manager-ui-api-1 lima app:create-user
+```
