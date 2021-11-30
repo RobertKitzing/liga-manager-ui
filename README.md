@@ -25,7 +25,9 @@ or
 docker exec -it liga-manager-ui-ui-1 /bin/sh
 yarn start
 ```
+Angular dev server should start at:
 
+http://localhost:3098/
 
 ### Backend
 
