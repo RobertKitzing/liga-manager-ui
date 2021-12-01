@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as dayjs from 'dayjs';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CalendarGQL, Match, MatchAppointment, MatchDay, Season, SeasonState } from 'src/api/graphql';
+import { CalendarGQL, CalendarQueryVariables, Match, MatchAppointment, MatchDay, Season, SeasonState } from 'src/api/graphql';
 import { PublicHolidaysService } from './public-holidays.service';
 
 export interface IMatchDayEvent {
@@ -28,8 +28,8 @@ export class CalendarService {
     private calendarGQL: CalendarGQL,
   ) { }
 
-  getCalendarBackgroundEvents(): Observable<IMatchDayEvent[]> {
-    return this.calendarGQL.watch().valueChanges.pipe(
+  getCalendarEvents(params: CalendarQueryVariables): Observable<IMatchDayEvent[]> {
+    return this.calendarGQL.watch(params).valueChanges.pipe(
       map(
         ({ data }) => {
           let events = new Array<IMatchDayEvent>();
@@ -62,6 +62,15 @@ export class CalendarService {
                   })
                 ));
           }
+          events = events.concat(
+            data.matchesByKickoff.map(
+              (match) => ({
+                allDay: false,
+                title: `${match.home_team.name} - ${match.guest_team.name}`,
+                start: match.kickoff,
+              })
+            )
+          );
           return events;
         }
       )

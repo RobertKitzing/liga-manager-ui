@@ -434,6 +434,7 @@ export type Query = {
   event?: Maybe<Event>;
   latestEvents?: Maybe<Array<Maybe<Event>>>;
   match?: Maybe<Match>;
+  matchesByKickoff?: Maybe<Array<Maybe<Match>>>;
   pitch?: Maybe<Pitch>;
   /** Get a single season */
   season?: Maybe<Season>;
@@ -456,6 +457,12 @@ export type QueryLatestEventsArgs = {
 
 export type QueryMatchArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryMatchesByKickoffArgs = {
+  max_date?: InputMaybe<Scalars['DateTime']>;
+  min_date?: InputMaybe<Scalars['DateTime']>;
 };
 
 
@@ -771,10 +778,13 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'mutation', deleteUser?: boolean | null | undefined };
 
-export type CalendarQueryVariables = Exact<{ [key: string]: never; }>;
+export type CalendarQueryVariables = Exact<{
+  min_date?: InputMaybe<Scalars['DateTime']>;
+  max_date?: InputMaybe<Scalars['DateTime']>;
+}>;
 
 
-export type CalendarQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined, allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type CalendarQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined, allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined, matchesByKickoff?: Array<{ __typename?: 'Match', id: string, kickoff?: any | null | undefined, home_score?: number | null | undefined, guest_score?: number | null | undefined, cancelled_at?: string | null | undefined, cancellation_reason?: string | null | undefined, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null | undefined } | null | undefined } | null | undefined> | null | undefined };
 
 export type EventQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1576,7 +1586,7 @@ export const DeleteUserDocument = gql`
     }
   }
 export const CalendarDocument = gql`
-    query Calendar {
+    query Calendar($min_date: DateTime, $max_date: DateTime) {
   allSeasons {
     id
     name
@@ -1596,8 +1606,26 @@ export const CalendarDocument = gql`
       end_date
     }
   }
+  matchesByKickoff(min_date: $min_date, max_date: $max_date) {
+    id
+    home_team {
+      ...Team
+    }
+    guest_team {
+      ...Team
+    }
+    kickoff
+    home_score
+    guest_score
+    cancelled_at
+    cancellation_reason
+    pitch {
+      ...Pitch
+    }
+  }
 }
-    `;
+    ${TeamFragmentDoc}
+${PitchFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

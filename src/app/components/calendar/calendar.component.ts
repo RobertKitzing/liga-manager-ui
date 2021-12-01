@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
-import { tap } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import { Subject, switchMap, tap } from 'rxjs';
+import { CalendarQueryVariables } from 'src/api/graphql';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { I18Service } from 'src/app/services/i18.service';
 
@@ -11,6 +13,8 @@ import { I18Service } from 'src/app/services/i18.service';
 })
 export class CalendarComponent implements OnInit {
 
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  
   calendarOptions: CalendarOptions = {
     contentHeight: 'auto',
     aspectRatio: 3,
@@ -24,15 +28,24 @@ export class CalendarComponent implements OnInit {
     editable: false,
     events: [],
     selectMirror: true,
+    datesSet: this.viewChanged.bind(this),
   };
 
-  backgroundEvents = this.calendarService.getCalendarBackgroundEvents().pipe(
-    tap(
-      (events) => {
-        this.calendarOptions.events = events;
-      }
-    )
+  eventTrigger = new Subject<CalendarQueryVariables>();
+
+  backgroundEvents = this.eventTrigger.pipe(
+    switchMap(
+      (params) => this.calendarService.getCalendarEvents(params).pipe(
+        tap(
+          (events) => {
+            this.calendarOptions.events = events;
+          }
+        )
+      ),
+    ),
   );
+  
+  calendarApi: Calendar;
 
   constructor(
     private i18Service: I18Service,
@@ -44,4 +57,19 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions.locale = this.i18Service.currentLang;
   }
 
+  ngAfterViewInit(){
+    this.calendarApi = this.calendarComponent.getApi();
+    this.eventTrigger.next({
+      min_date: this.calendarApi.view.activeStart,
+      max_date: this.calendarApi.view.activeEnd,
+    });
+  }
+
+  viewChanged() {
+    this.calendarApi = this.calendarComponent.getApi();
+    this.eventTrigger.next({
+      min_date: this.calendarApi.view.activeStart,
+      max_date: this.calendarApi.view.activeEnd,
+    });
+  }
 }

@@ -1,4 +1,7 @@
-query Calendar {
+query Calendar(
+    $min_date: DateTime
+    $max_date: DateTime
+) {
   allSeasons {
     id
     name
@@ -16,6 +19,23 @@ query Calendar {
       number
       start_date
       end_date
+    }
+  }
+  matchesByKickoff(min_date: $min_date, max_date: $max_date){
+    id
+    home_team {
+      ...Team
+    }
+    guest_team {
+      ...Team
+    }
+    kickoff
+    home_score
+    guest_score
+    cancelled_at
+    cancellation_reason
+    pitch {
+      ...Pitch
     }
   }
 }

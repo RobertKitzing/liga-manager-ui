@@ -1,7 +1,8 @@
 <div class="container-fluid h-100" style="margin-top: 30px;">
     <div class="row">
-        <div class="col" *ngIf="backgroundEvents | async">
-            <full-calendar [options]="calendarOptions" [deepChangeDetection]="true"></full-calendar>
+        <ng-container *ngIf="backgroundEvents | async"></ng-container>
+        <div class="col">
+            <full-calendar #calendar [options]="calendarOptions" [deepChangeDetection]="true"></full-calendar>
         </div>
     </div>
 </div>
