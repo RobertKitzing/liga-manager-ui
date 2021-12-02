@@ -10,6 +10,7 @@ import { SeasonService } from 'src/app/services/season.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { SELECTED_TOURNAMENT_KEY } from './components/tournament/tournament.component';
 import { AppsettingsService } from './services/appsettings.service';
+import { LoadingIndicatorService } from './services/loading-indicator.service';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,8 @@ import { AppsettingsService } from './services/appsettings.service';
 })
 export class AppComponent implements OnInit {
 
-  // @LocalStorage(SELECTED_TOURNAMENT_KEY) tournament: Tournament;
-
   constructor(
+    public loadingIndicatorService: LoadingIndicatorService,
     public authService: AuthenticationService,
     public i18Service: I18Service,
     public snackBar: MatSnackBar,

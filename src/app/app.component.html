@@ -31,9 +31,6 @@
       </li>
     </ul>
     <div class="navbar-text d-flex justify-content-end ml-auto">
-      <!-- <div class="led-box" data-toggle="tooltip" data-placement="top" title="{{ 'LIVE_UPDATES' | translate }}">
-        <div [ngClass]="{'led-green': graphSubscription.connected, 'led-red': !graphSubscription.connected}"></div>
-      </div> -->
       <button mat-button (click)="openLoginDialog()" *ngIf="!authService.isAuthenticated">
         {{ 'BUTTON.LOGIN' | translate }}
       </button>
@@ -53,6 +50,7 @@
   </div>
 </nav>
 <div id="content">
+  <mat-progress-bar [mode]="'indeterminate'" *ngIf="loadingIndicatorService.loading | async" ></mat-progress-bar>
   <router-outlet></router-outlet>
 </div>
 <mat-menu #languageMenu="matMenu">

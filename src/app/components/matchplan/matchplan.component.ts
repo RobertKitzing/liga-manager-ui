@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { I18Service } from '../../services/i18.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MatchDayFragment, MatchFragment, SeasonFragment } from '../../../api/graphql';
 import { switchMap } from 'rxjs/operators';
 import { LocalStorage } from 'ngx-webstorage';
@@ -17,9 +17,9 @@ const SELECTED_TEAM_KEY = 'SELECTED_TEAM';
 })
 export class MatchplanComponent implements OnInit {
 
-  public season: Observable<SeasonFragment> = this.seasonService.currentSeason.pipe(
+  public season = this.seasonService.currentSeason.pipe(
     switchMap(
-      (currentSeason) => this.seasonService.getSeason({id: currentSeason.id}),
+      (currentSeason) => currentSeason?.id ? this.seasonService.getSeason({id: currentSeason.id}) : of(null),
     ),
   );
 

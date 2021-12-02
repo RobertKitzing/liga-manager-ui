@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { I18Service } from '../../services/i18.service';
 import { Tournament, Team, MatchDay } from 'src/api/graphql';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { FormControl } from '@angular/forms';
 import { switchMap, tap } from 'rxjs/operators';
@@ -17,9 +17,9 @@ export class TournamentComponent implements OnInit {
 
   tournamentFormControl = new FormControl();
 
-  tournament: Observable<Tournament> = this.tournamentService.currentTournament.pipe(
+  tournament = this.tournamentService.currentTournament.pipe(
     switchMap(
-      (tournament) => this.tournamentService.getTournament({id: tournament.id}),
+      (tournament) => tournament?.id ? this.tournamentService.getTournament({id: tournament.id}) : of(null),
     ),
     tap(
       (tournament) => {

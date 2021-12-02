@@ -4,6 +4,7 @@ import { Team, PenaltyFragment } from 'src/api/graphql';
 import { switchMap } from 'rxjs/operators';
 import { I18Service } from '../../services/i18.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -14,7 +15,7 @@ export class TableComponent implements OnInit {
 
   ranking = this.seasonService.currentSeason.pipe(
     switchMap(
-      (currentSeason) => this.seasonService.getRanking({id: currentSeason.id}),
+      (currentSeason) => currentSeason?.id ? this.seasonService.getRanking({id: currentSeason.id}) : of(null),
     ),
   );
 
@@ -29,8 +30,8 @@ export class TableComponent implements OnInit {
   }
 
   getPenaltyForTeam(penalties: PenaltyFragment[], team: Team): PenaltyFragment[] {
-    const p = penalties.filter(t => t.team.id === team.id);
-    return p.length === 0 ? null : p;
+    const p = penalties?.filter(t => t.team.id === team.id);
+    return p?.length === 0 ? null : p;
   }
 
   openPenaltyDialog(penalties: PenaltyFragment[]) {

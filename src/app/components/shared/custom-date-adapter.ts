@@ -3,7 +3,9 @@ import { NativeDateAdapter } from "@angular/material/core";
 import { TranslateService } from "@ngx-translate/core";
 import { I18Service } from "src/app/services/i18.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CustomDateAdapter extends NativeDateAdapter {
 
     constructor(
