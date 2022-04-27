@@ -1,7 +1,7 @@
 <ng-container *ngIf="(manageSeason | async) as manageSeason">
     <div class="container-fluid mt-4">
         <div class="row" style="justify-content: center;">
-            <ng-container *ngIf="!manageSeason.match_days">
+            <ng-container *ngIf="!manageSeason.match_days || manageSeason.match_days.length === 0">
                 <div class="col">
                     <mat-form-field class="example-full-width">
                         <input matInput [matDatepicker]="startSeasonDatePicker"
