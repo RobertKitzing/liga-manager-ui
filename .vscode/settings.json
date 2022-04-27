@@ -1,3 +1,18 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "lima-dev",
+            "password": "dev",
+            "username": "dev",
+            "database": "wilde-liga-bremen"
+        }
+    ]
 }
