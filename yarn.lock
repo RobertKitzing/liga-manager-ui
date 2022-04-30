@@ -7747,9 +7747,9 @@ map-stream@0.0.7:
   integrity sha1-ih8HiW2CsQkmvTdEokIACfiJdKg=
 
 marked@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npmjs.org/marked/-/marked-4.0.4.tgz"
-  integrity sha512-d8v7SensuOj+gxi0TGbqb2WtS60ycZfZuqtmAB9yz0JLotKerTob/47Qk9oLCDmn5G1dcdn3d5ydR+ih9dvS0A==
+  version "4.0.14"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.14.tgz#7a3a5fa5c80580bac78c1ed2e3b84d7bd6fc3870"
+  integrity sha512-HL5sSPE/LP6U9qKgngIIPTthuxC0jrfxpYMZ3LdGDD3vTnLs59m2Z7r6+LNDR3ToqEQdkKd6YaaEfJhodJmijQ==
 
 material-design-icons@^3.0.1:
   version "3.0.1"
