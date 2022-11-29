@@ -16,14 +16,14 @@ services:
   #   working_dir: /usr/src/app/app
   #   command: tail -f /dev/null
   ui:
-    image: node:lts-slim
+    image: node:lts-alpine
     user: 1000:1000
     ports:
       - "3098:3098"
     volumes:
       - .:/usr/src/app
     working_dir: /usr/src/app
-    command: tail -f /dev/null
+    tty: true
   nginx:
     image: nginx:stable-alpine
     ports:

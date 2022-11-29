@@ -439,6 +439,7 @@ export type Query = {
   /** Get a single season */
   season?: Maybe<Season>;
   team?: Maybe<Team>;
+  teamsByPattern?: Maybe<Array<Maybe<Team>>>;
   tournament?: Maybe<Tournament>;
 };
 
@@ -478,6 +479,11 @@ export type QuerySeasonArgs = {
 
 export type QueryTeamArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryTeamsByPatternArgs = {
+  pattern: Scalars['String'];
 };
 
 
@@ -686,6 +692,15 @@ export type DeleteSeasonMutationVariables = Exact<{
 
 
 export type DeleteSeasonMutation = { __typename?: 'mutation', deleteSeason?: boolean | null | undefined };
+
+export type ReplaceTeamInSeasonMutationVariables = Exact<{
+  season_id: Scalars['String'];
+  current_team_id: Scalars['String'];
+  replacement_team_id: Scalars['String'];
+}>;
+
+
+export type ReplaceTeamInSeasonMutation = { __typename?: 'mutation', replaceTeamInSeason?: boolean | null | undefined };
 
 export type CreateTeamMutationVariables = Exact<{
   id: Scalars['String'];
@@ -1394,6 +1409,26 @@ export const DeleteSeasonDocument = gql`
   })
   export class DeleteSeasonGQL extends Apollo.Mutation<DeleteSeasonMutation, DeleteSeasonMutationVariables> {
     document = DeleteSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ReplaceTeamInSeasonDocument = gql`
+    mutation ReplaceTeamInSeason($season_id: String!, $current_team_id: String!, $replacement_team_id: String!) {
+  replaceTeamInSeason(
+    season_id: $season_id
+    current_team_id: $current_team_id
+    replacement_team_id: $replacement_team_id
+  )
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ReplaceTeamInSeasonGQL extends Apollo.Mutation<ReplaceTeamInSeasonMutation, ReplaceTeamInSeasonMutationVariables> {
+    document = ReplaceTeamInSeasonDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

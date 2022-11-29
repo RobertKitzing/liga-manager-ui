@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>
+    {{ 'REPLACE_TEAM_IN_SEASON_DIALOG.TITLE' | translate }}
+</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>{{'REPLACE_TEAM_IN_SEASON_DIALOG.OLD_TEAM' }}</mat-label>
+        <input matInput disabled value="{{data.oldTeam.name}}">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>{{'REPLACE_TEAM_IN_SEASON_DIALOG.NEW_TEAM' }}</mat-label>
+        <mat-select [(ngModel)]="newTeam">
+            <mat-option *ngFor="let team of possibleTeams$ | async" [value]="team">
+                {{team.name}}
+                </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="center">
+    <button mat-button (click)="replaceTeamInSeason()" [disabled]="!newTeam">{{ 'BUTTON.OK' | translate }}</button>
+</div>

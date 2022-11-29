@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, switchMap } from 'rxjs';
-import { SeasonFragment } from 'src/api/graphql';
+import { Season, SeasonFragment, SeasonState, Team } from 'src/api/graphql';
+import { ReplaceTeamInSeasonDialogComponent } from 'src/app/components/shared/replace-team-in-season-dialog/replace-team-in-season-dialog.component';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SeasonService } from 'src/app/services/season.service';
 import { TeamService } from 'src/app/services/team.service';
@@ -13,6 +15,8 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class ManageSeasonTeamsComponent implements OnInit {
 
+  SeasonState = SeasonState;
+  
   manageSeason: Observable<SeasonFragment> = this.seasonService.manageSeason.pipe(
     switchMap(
       (manageSeason) => this.seasonService.getSeason({id: manageSeason.id}),
@@ -24,6 +28,7 @@ export class ManageSeasonTeamsComponent implements OnInit {
     private seasonService: SeasonService,
     private notificationService: NotificationService,
     private translateService: TranslateService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -47,4 +52,9 @@ export class ManageSeasonTeamsComponent implements OnInit {
     }
   }
 
+  openReplaceTeamInSeasonDialog(oldTeam: Team, season: SeasonFragment) {
+    this.dialog.open(ReplaceTeamInSeasonDialogComponent, {
+      data: {oldTeam, season},
+    });
+  }
 }

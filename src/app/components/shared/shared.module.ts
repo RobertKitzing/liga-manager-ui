@@ -24,6 +24,7 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { DateAdapter } from '@angular/material/core';
 import { CustomDateAdapter } from './custom-date-adapter';
+import { ReplaceTeamInSeasonDialogComponent } from './replace-team-in-season-dialog/replace-team-in-season-dialog.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -54,7 +55,8 @@ FullCalendarModule.registerPlugins([
     EditPitchContactDialogComponent,
     CreatePitchDialogComponent,
     CancelMatchDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ReplaceTeamInSeasonDialogComponent
   ],
   exports: [
     CommonModule,

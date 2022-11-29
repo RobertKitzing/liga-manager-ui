@@ -5,19 +5,35 @@
             <div class="row" *ngFor="let team of manageSeason.teams">
                 <div class="col">
                     {{team.name}}
-                    <button mat-icon-button (click)="removeTeamFromSeason(team.id, manageSeason)">-></button>
+                    <ng-container [ngSwitch]="manageSeason.state">
+                        <button mat-icon-button *ngSwitchCase="SeasonState.Progress" (click)="openReplaceTeamInSeasonDialog(team, manageSeason)">
+                            <mat-icon>
+                                compare_arrows
+                            </mat-icon>
+                        </button>
+                        <button mat-icon-button *ngSwitchDefault (click)="removeTeamFromSeason(team.id, manageSeason)">
+                            <mat-icon>
+                                arrow_forward
+                            </mat-icon>
+                        </button>
+                    </ng-container>
                     <mat-divider></mat-divider>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <h3 translate>ALL_TEAMS</h3>
-            <div class="row" *ngFor="let team of teamService.allTeams | async">
-                <div class="col">
-                    <button mat-icon-button (click)="addTeamToSeason(team.id, manageSeason)"><-</button> {{team.name}} 
-                    <mat-divider></mat-divider>
+        <ng-container *ngIf="manageSeason.state !== SeasonState.Progress">
+            <div class="col">
+                <h3 translate>ALL_TEAMS</h3>
+                <div class="row" *ngFor="let team of teamService.allTeams | async">
+                    <div class="col">
+                        <button mat-icon-button (click)="addTeamToSeason(team.id, manageSeason)">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                        {{team.name}} 
+                        <mat-divider></mat-divider>
+                    </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
     </div>
 </div>

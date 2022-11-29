@@ -48,3 +48,7 @@ mutation EndSeason($season_id: String!) {
 mutation DeleteSeason($season_id: String!) {
   deleteSeason(season_id: $season_id)
 }
+
+mutation ReplaceTeamInSeason($season_id: String!, $current_team_id: String!, $replacement_team_id: String!){
+  replaceTeamInSeason(season_id: $season_id, current_team_id: $current_team_id, replacement_team_id: $replacement_team_id)
+}
