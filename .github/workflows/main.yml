@@ -60,7 +60,7 @@ jobs:
     # Android
     - run: yarn run build:angular:app
     - name: Build Android app
-      uses: RobertKitzing/setup-cordova@0.0.4
+      uses: RobertKitzing/setup-cordova@0.0.5
       with:
         exec: |
           apk add nodejs yarn && \
