@@ -52,7 +52,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/themes/default.scss",
+                "bundleName": "default-theme",
+                "inject": false
+              },
+              {
+                "input": "src/themes/gondi.scss",
+                "bundleName": "gondi-theme",
+                "inject": false
+              }
             ],
             "scripts": []
           },
@@ -94,12 +104,6 @@
             }
           },
           "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "liga-manager-ui-v3:build"
-          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",

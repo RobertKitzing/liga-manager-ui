@@ -1,7 +1,41 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'table',
+    loadChildren: () => import('./table/table.module').then(m => m.TableModule)
+  },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
+  },
+  {
+    path: 'contacs',
+    loadChildren: () => import('./contacs/contacs.module').then(m => m.ContacsModule)
+  },
+  {
+    path: 'schedule',
+    loadChildren: () => import('./schedule/schedule.module').then(m => m.ScheduleModule)
+  },
+  {
+    path: 'tournament',
+    loadChildren: () => import('./tournament/tournament.module').then(m => m.TournamentModule)
+  },
+  {
+    path: 'teamadmin',
+    loadChildren: () => import('./team-admin/team-admin.module').then(m => m.TeamAdminModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: '',
+    redirectTo: 'table',
+    pathMatch: 'full'
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
