@@ -1,18 +1,27 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
 
+  themes = ['default', 'gondi']
+  currentTheme$ = new BehaviorSubject('default');
+
   constructor(
     @Inject(DOCUMENT) private document: Document
   ) {
-
+    this.currentTheme$.subscribe(
+      (theme) => {
+        this.loadStyle(theme)
+      }
+    );
   }
 
-  loadStyle(styleName: string) {
+  private loadStyle(styleName: string) {
     const head = this.document.getElementsByTagName('head')[0];
 
     let themeLink = this.document.getElementById(
@@ -30,8 +39,8 @@ export class ThemeService {
     }
   }
 
-  setDarkmode(b: boolean) {
-    const mode = b ? 'add' : 'remove';
+  setDarkmode(dark: boolean) {
+    const mode = dark ? 'add' : 'remove';
     this.document.body.classList[mode]('darkMode');
   }
 }

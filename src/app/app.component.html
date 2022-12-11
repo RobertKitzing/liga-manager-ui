@@ -1,40 +1,46 @@
 <mat-toolbar color="primary">
-  <nav class="flex items-center justify-between flex-wrap bg-primary p-6">
-    <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <img src="assets/wildeliga_bremen_nobg.png" class="w-40 h-40" style="height: 40px; width: 40px;">
+  <img class="mr-4" src="assets/wildeliga_bremen_nobg.png" style="height: 40px; width: 40px;">
+  <div class="flex h-full gap-4">
+    <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TABLE</a>
+    <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.SCHEDULE</a>
+    <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TOURNAMENT</a>
+    <a class="flex h-full items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.CALENDAR</a>
+    <a class="flex h-full items-center p-2" routerLink="contacs" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.CONTACTS</a>
+    <a class="flex h-full items-center p-2" routerLink="teamadmin" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TEAM_ADMIN</a>
+    <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.ADMIN</a>
+  </div>
+  <div class="flex items-center justify-end w-full">
+    <div class="flex h-full items-center p-2">
+      
     </div>
-    <div class="block lg:hidden">
-      <button class="flex items-center px-3 py-2 border rounded">
-        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-        </svg>
+    <div class="flex h-full items-center p-2">
+      <button class="bg-primary" mat-button translate>LOGIN</button>
+    </div>
+    <div class="flex h-full items-center p-2">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <div mat-menu-item>
+          <mat-slide-toggle color="primary" (change)="toggleDarkMode($event)"translate>
+            DARK_MODE
+          </mat-slide-toggle>
+        </div>
+        <button mat-menu-item [matMenuTriggerFor]="themes" translate>THEMES</button>
+      </mat-menu>
+      <mat-menu #themes="matMenu">
+        <button mat-menu-item *ngFor="let theme of themeService.themes" (click)="changeTheme(theme)" [ngClass]="{'bg-theme': theme === (themeService.currentTheme$ | async)}">{{theme}}</button>
+      </mat-menu>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-      <div class="text-sm lg:flex-grow">
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4 mat-primary" routerLink="table"
-          routerLinkActive="mat-accent" translate>MENU.TABLE</a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4" routerLink="schedule"
-          routerLinkActive="active" translate>MENU.SCHEDULE</a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4" routerLink="tournament"
-          routerLinkActive="active" translate>MENU.TOURNAMENT</a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4" routerLink="calendar"
-          routerLinkActive="active" translate>MENU.CALENDAR</a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4" routerLink="contacs"
-          routerLinkActive="active" translate>MENU.CONTACTS</a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4" routerLink="teamadmin"
-          routerLinkActive="active" translate>MENU.TEAM_ADMIN</a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 mr-4" routerLink="admin"
-          routerLinkActive="active" translate>MENU.ADMIN</a>
-      </div>
-      <div>
-        <button mat-stroked-button translate>LOGIN</button>
-      </div>
-    </div>
-  </nav>
+  </div>
 </mat-toolbar>
-<div class="h-[calc(100vh_-_64px)] mat-app-background overflow-auto">
-  <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+
+<div class="h-1 mat-app-background">
+  <mat-progress-bar *ngIf="loadingIndicatorService.loading$ | async" [mode]="'indeterminate'"></mat-progress-bar>
+</div>
+
+<div class="h-[calc(100vh_-_68px)] mat-app-background overflow-auto">
   <router-outlet></router-outlet>
 </div>
+
+<!-- *ngIf="loadingIndicator$ | async" -->

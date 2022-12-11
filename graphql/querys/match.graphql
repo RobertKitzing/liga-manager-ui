@@ -1,0 +1,5 @@
+query Match($id: String!) {
+    match(id: $id) {
+        ...Match
+    }
+}

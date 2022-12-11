@@ -1,0 +1,14 @@
+overwrite: true
+schema: "http://nginx/api/graphql"
+documents: "graphql/**/*.graphql"
+generates:
+  src/api/graphql.ts:
+    plugins:
+      - add: 
+          content:
+            - "/* tslint:disable */"
+            - "/* GENERATED DO NOT EDIT */"
+      - "typescript"
+      - "typescript-operations"
+      - typescript-apollo-angular:
+          addExplicitOverride: true

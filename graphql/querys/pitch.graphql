@@ -1,0 +1,5 @@
+query Pitches {
+    allPitches {
+        ...Pitch
+    }
+}

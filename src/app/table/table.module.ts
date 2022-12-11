@@ -13,10 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   ],
   imports: [
     CommonModule,
-    MatToolbarModule,
     TableRoutingModule,
-    MatSelectModule,
-    MatSlideToggleModule,
     MatProgressBarModule,
   ]
 })

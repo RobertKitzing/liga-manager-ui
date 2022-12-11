@@ -1,0 +1,8 @@
+subscription RedisEvent {
+    redisevent {
+        id
+        occurredAt
+        payload
+        type
+    }
+}

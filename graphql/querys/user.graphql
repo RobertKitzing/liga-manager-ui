@@ -1,0 +1,11 @@
+query User {
+     authenticatedUser {
+        ...User
+    }
+}
+
+query AllUsers {
+    allUsers {
+        ...User
+    }
+}

@@ -1,0 +1,11 @@
+query AllSeasonsList {
+  allSeasons {
+    ...AllSeasons
+  }
+}
+
+query Season($id: String!) {
+    season(id: $id) {
+        ...Season
+    }
+}

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "liga-manager-ui-v3": {
+    "liga-manager-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/liga-manager-ui-v3",
+            "outputPath": "dist/liga-manager-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -97,10 +97,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "liga-manager-ui-v3:build:production"
+              "browserTarget": "liga-manager-ui:build:production"
             },
             "development": {
-              "browserTarget": "liga-manager-ui-v3:build:development"
+              "browserTarget": "liga-manager-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -126,5 +126,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

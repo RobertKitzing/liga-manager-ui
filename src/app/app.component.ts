@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { LoadingIndicatorService } from './services/loading-indicator.service';
 import { ThemeService } from './services/theme.service';
 
 @Component({
@@ -9,11 +11,19 @@ import { ThemeService } from './services/theme.service';
 export class AppComponent implements OnInit {
 
   constructor(
-    private themeService: ThemeService,
+    public themeService: ThemeService,
+    public loadingIndicatorService: LoadingIndicatorService,
   ) { }
 
   ngOnInit(): void {
-    this.themeService.loadStyle('default')
+
   }
 
+  changeTheme(theme: string) {
+    this.themeService.currentTheme$.next(theme);
+  }
+
+  toggleDarkMode(event: MatSlideToggleChange) {
+    this.themeService.setDarkmode(event.checked);
+  }
 }

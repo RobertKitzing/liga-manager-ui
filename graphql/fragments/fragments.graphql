@@ -1,0 +1,152 @@
+fragment Match on Match {
+    id
+    home_team {
+        ...Team
+    }
+    home_score
+    guest_team {
+        ...Team
+    }
+    guest_score
+    kickoff
+    pitch {
+        ...Pitch
+    }
+    cancelled_at
+    cancellation_reason
+}
+
+fragment MatchDay on MatchDay {
+    id
+    number
+    start_date
+    end_date
+    matches {
+        ...Match
+    }
+}
+
+fragment Pitch on Pitch {
+    id
+    label
+    location_longitude
+    location_latitude
+    contact {
+        ...Contact
+    }
+}
+
+fragment Team on Team {
+    id
+    name
+    created_at
+    contact {
+        ...Contact
+    }
+}
+
+fragment Contact on Contact {
+    first_name
+    last_name
+    phone
+    email
+}
+
+fragment Season on Season {
+    id
+    name
+    state
+    teams {
+        ...Team
+    }
+    match_days {
+        ...MatchDay
+    }
+}
+
+fragment AllSeasons on Season {
+    id
+    name
+    state
+}
+
+fragment AllSeasonsCalendar on Season {
+    id
+    name
+    state
+    match_days {
+        ...MatchDay
+    }
+}
+
+fragment AllTournaments on Tournament {
+    id
+    name
+}
+
+fragment AllTournamentsCalendar on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
+}
+
+fragment Tournament on Tournament {
+    id
+    name
+    rounds {
+      ...MatchDay
+    }
+}
+
+fragment User on User {
+    id
+    email
+    teams {
+        ...Team
+    }
+    role
+    first_name
+    last_name
+}
+
+fragment Event on Event {
+    id
+    occurred_at
+    type
+}
+
+fragment Ranking on Season {
+    id
+    ranking {
+      updated_at
+      positions {
+        team {
+          ...Team
+        }
+        sort_index
+        number
+        matches
+        wins
+        draws
+        losses
+        scored_goals
+        conceded_goals
+        points
+      }
+      penalties {
+          ...Penalty
+      }
+    }  
+}
+
+fragment Penalty on RankingPenalty {
+    id
+    team {
+        ...Team
+    }
+    reason
+    created_at
+    points
+}

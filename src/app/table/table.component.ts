@@ -10,16 +10,4 @@ import { ThemeService } from '../services/theme.service';
 })
 export class TableComponent {
 
-  constructor(
-    private themeService: ThemeService,
-  ) { }
-
-  changeTheme(theme: string) {
-    this.themeService.loadStyle(theme);
-  }
-
-  toggleDarkMode(event: MatSlideToggleChange) {
-    console.log(event);
-    this.themeService.setDarkmode(event.checked)
-  }
 }

@@ -1,0 +1,11 @@
+query AllTournamentList {
+  allTournaments {
+    ...AllTournaments
+  }
+}
+
+query Tournament($id: String!) {
+  tournament(id: $id) {
+    ...Tournament
+  }
+}

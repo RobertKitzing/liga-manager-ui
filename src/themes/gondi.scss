@@ -1,16 +1,37 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
+:root {
+  --theme-primary-50: #efe0e6;
+  --theme-primary-100: #d7b3c0;
+  --theme-primary-200: #bd8096;
+  --theme-primary-300: #a34d6b;
+  --theme-primary-400: #8f264c;
+  --theme-primary-500: #7b002c;
+  --theme-primary-600: #730027;
+  --theme-primary-700: #680021;
+  --theme-primary-800: #5e001b;
+  --theme-primary-900: #4b0010;
+  --theme-primary-A100: #ff7f8e;
+  --theme-primary-A200: #ff4c61;
+  --theme-primary-A400: #ff1934;
+  --theme-primary-A700: #fe001e;
+  --theme-primary-contrast-50: #000000;
+  --theme-primary-contrast-100: #000000;
+  --theme-primary-contrast-200: #000000;
+  --theme-primary-contrast-300: #ffffff;
+  --theme-primary-contrast-400: #ffffff;
+  --theme-primary-contrast-500: #ffffff;
+  --theme-primary-contrast-600: #ffffff;
+  --theme-primary-contrast-700: #ffffff;
+  --theme-primary-contrast-800: #ffffff;
+  --theme-primary-contrast-900: #ffffff;
+  --theme-primary-contrast-A100: #000000;
+  --theme-primary-contrast-A200: #000000;
+  --theme-primary-contrast-A400: #ffffff;
+  --theme-primary-contrast-A700: #ffffff;
+}
+
 $palette: (
     50 : #efe0e6,
     100 : #d7b3c0,
@@ -75,11 +96,4 @@ $liga-manager-ui-dark-theme: mat.define-dark-theme((
 
 .darkMode {
   @include mat.all-component-colors($liga-manager-ui-dark-theme);
-}
-
-@each $hue, $color in $palette {
-  @debug "#{$hue}|$color";
-  :root {
-    --theme-color-#{$hue}: $color
-  }
 }

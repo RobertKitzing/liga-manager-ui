@@ -1,47 +1,68 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
+:root {
+  --theme-primary-50: #fffbe0;
+  --theme-primary-100: #fff5b3;
+  --theme-primary-200: #ffee80;
+  --theme-primary-300: #ffe74d;
+  --theme-primary-400: #ffe226;
+  --theme-primary-500: #ffdd00;
+  --theme-primary-600: #ffd900;
+  --theme-primary-700: #ffd400;
+  --theme-primary-800: #ffcf00;
+  --theme-primary-900: #ffc700;
+  --theme-primary-A100: #ffffff;
+  --theme-primary-A200: #fffcf2;
+  --theme-primary-A400: #ffefbf;
+  --theme-primary-A700: #ffe9a6;
+  --theme-primary-contrast-50: #000000;
+  --theme-primary-contrast-100: #000000;
+  --theme-primary-contrast-200: #000000;
+  --theme-primary-contrast-300: #000000;
+  --theme-primary-contrast-400: #000000;
+  --theme-primary-contrast-500: #000000;
+  --theme-primary-contrast-600: #000000;
+  --theme-primary-contrast-700: #000000;
+  --theme-primary-contrast-800: #000000;
+  --theme-primary-contrast-900: #000000;
+  --theme-primary-contrast-A100: #000000;
+  --theme-primary-contrast-A200: #000000;
+  --theme-primary-contrast-A400: #000000;
+  --theme-primary-contrast-A700: #000000;
+}
+
 $palette: (
-    50 : #fffbe0,
-    100 : #fff5b3,
-    200 : #ffee80,
-    300 : #ffe74d,
-    400 : #ffe226,
-    500 : #ffdd00,
-    600 : #ffd900,
-    700 : #ffd400,
-    800 : #ffcf00,
-    900 : #ffc700,
-    A100 : #ffffff,
-    A200 : #fffcf2,
-    A400 : #ffefbf,
-    A700 : #ffe9a6,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #000000,
-        900 : #000000,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+  50 : #fffbe0,
+  100 : #fff5b3,
+  200 : #ffee80,
+  300 : #ffe74d,
+  400 : #ffe226,
+  500 : #ffdd00,
+  600 : #ffd900,
+  700 : #ffd400,
+  800 : #ffcf00,
+  900 : #ffc700,
+  A100 : #ffffff,
+  A200 : #fffcf2,
+  A400 : #ffefbf,
+  A700 : #ffe9a6,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
 );
 
 $liga-manager-ui-primary: mat.define-palette($palette);
@@ -52,26 +73,22 @@ $liga-manager-ui-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$liga-manager-ui-light-theme: mat.define-light-theme((
-  color: (
-    primary: $liga-manager-ui-primary,
-    accent: $liga-manager-ui-accent,
-    warn: $liga-manager-ui-warn,
-  )
-));
+$liga-manager-ui-light-theme: mat.define-light-theme((color: (
+  primary: $liga-manager-ui-primary,
+  accent: $liga-manager-ui-accent,
+  warn: $liga-manager-ui-warn,
+)));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($liga-manager-ui-light-theme);
 
-$liga-manager-ui-dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $liga-manager-ui-primary,
-    accent: $liga-manager-ui-accent,
-    warn: $liga-manager-ui-warn,
-  )
-));
+$liga-manager-ui-dark-theme: mat.define-dark-theme((color: (
+  primary: $liga-manager-ui-primary,
+  accent: $liga-manager-ui-accent,
+  warn: $liga-manager-ui-warn,
+)));
 
 .darkMode {
   @include mat.all-component-colors($liga-manager-ui-dark-theme);

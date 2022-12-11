@@ -1,0 +1,5 @@
+query Ranking($id: String!) {
+  season(id: $id) {
+    ...Ranking
+  }
+}

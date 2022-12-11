@@ -1,0 +1,13 @@
+query SeasonPenalties($id: String!) {
+  season(id: $id){
+    id
+    teams {
+      ...Team
+    }
+    ranking {
+      penalties {
+        ...Penalty
+      }
+    }
+  }
+}
