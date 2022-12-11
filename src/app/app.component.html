@@ -1,5 +1,7 @@
 <mat-toolbar color="primary">
-  <img class="mr-4" src="assets/wildeliga_bremen_nobg.png" style="height: 40px; width: 40px;">
+  
+  <img class="mr-4 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
+  
   <div class="flex h-full gap-4">
     <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TABLE</a>
     <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.SCHEDULE</a>
@@ -14,7 +16,15 @@
       
     </div>
     <div class="flex h-full items-center p-2">
-      <button class="bg-primary" mat-button translate>LOGIN</button>
+      <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
+        <button class="bg-primary" mat-button translate (click)="openLoginDialog()">LOGIN</button>
+      </ng-container>
+      <ng-template #authenticated>
+        <button mat-button [matMenuTriggerFor]="userMenu">
+          {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
+          <mat-icon>person</mat-icon>
+        </button>
+      </ng-template>
     </div>
     <div class="flex h-full items-center p-2">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -43,4 +53,13 @@
   <router-outlet></router-outlet>
 </div>
 
-<!-- *ngIf="loadingIndicator$ | async" -->
+<mat-menu #userMenu="matMenu">
+  <mat-list>
+    <mat-list-item *ngIf="authService.user">
+      <span innerHTML="{{ 'LOGGED_IN_AS' | translate:{ email: authService.user.email } }}"></span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
+  </mat-list>
+  <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
+</mat-menu>

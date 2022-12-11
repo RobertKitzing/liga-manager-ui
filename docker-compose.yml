@@ -9,7 +9,7 @@ services:
       - .:/liga-manager-ui
     working_dir: /liga-manager-ui
     tty: true
-    # command: npm start
+    command: npm start
     
   nginx:
     image: nginx:stable-alpine

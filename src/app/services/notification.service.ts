@@ -17,7 +17,7 @@ export class NotificationService {
     this.showNotification(title, message, 'success');
   }
 
-  showErrorNotification(title: string, message?: string) {
+  showErrorNotification(title: string, message?: any) {
     this.showNotification(title, message, 'danger');
   }
 

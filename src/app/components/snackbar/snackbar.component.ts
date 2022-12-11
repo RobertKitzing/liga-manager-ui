@@ -8,7 +8,7 @@ export interface ISnackBarData {
 @Component({
   selector: 'app-snackbar',
   templateUrl: './snackbar.component.html',
-  styleUrls: ['./snackbar.component.css']
+  styleUrls: []
 })
 export class SnackbarComponent implements OnInit {
 

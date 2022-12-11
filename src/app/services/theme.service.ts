@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { LocalStorage } from 'ngx-webstorage';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -8,20 +9,25 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ThemeService {
 
-  themes = ['default', 'gondi']
-  currentTheme$ = new BehaviorSubject('default');
+  themes = ['default', 'gondi'];
+
+  @LocalStorage('THEME')
+  private currentTheme?: string;
+
+  currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
 
   constructor(
     @Inject(DOCUMENT) private document: Document
   ) {
     this.currentTheme$.subscribe(
       (theme) => {
-        this.loadStyle(theme)
+        this.loadStyle(theme);
       }
     );
   }
 
   private loadStyle(styleName: string) {
+    this.currentTheme = styleName;
     const head = this.document.getElementsByTagName('head')[0];
 
     let themeLink = this.document.getElementById(

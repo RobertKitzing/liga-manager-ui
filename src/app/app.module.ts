@@ -13,12 +13,27 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingIndicatorHttpInterceptor } from './loading-indicator-http-interceptor';
+import { ApolloModule } from 'apollo-angular'
+import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { GraphqlService } from './services/graphql.service';
 
+export function graphqlFactory(provider: GraphqlService) {
+  return () => provider.init();
+}
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
   ],
   imports: [
+    ApolloModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -29,14 +44,27 @@ import { LoadingIndicatorHttpInterceptor } from './loading-indicator-http-interc
     MatSelectModule,
     MatMenuModule,
     MatIconModule,
+    MatDialogModule,
+    MatSnackBarModule,
     HttpClientModule,
+    TranslateModule.forRoot(),
+    ReactiveFormsModule,
+    NgxWebstorageModule.forRoot(),
+    MatInputModule,
+    MatListModule,
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: graphqlFactory,
+      deps: [GraphqlService],
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingIndicatorHttpInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
