@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { TableRoutingModule } from './table-routing.module';
 import { TableComponent } from './table.component';
@@ -15,6 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CommonModule,
     TableRoutingModule,
     MatProgressBarModule,
+    MatTableModule,
   ]
 })
 export class TableModule { }

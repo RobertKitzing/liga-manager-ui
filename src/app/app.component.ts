@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute } from '@angular/router';
+import { AllSeasonsListGQL, SeasonGQL } from 'src/api/graphql';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
