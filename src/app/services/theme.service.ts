@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { LocalStorage } from 'ngx-webstorage';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -14,16 +14,33 @@ export class ThemeService {
   @LocalStorage('THEME')
   private currentTheme?: string;
 
+  @LocalStorage('DARK_MODE')
+  private darkMode?: boolean;
+
   currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
+  darkMode$ = new Subject<boolean>();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
   ) {
+    
     this.currentTheme$.subscribe(
       (theme) => {
         this.loadStyle(theme);
       }
     );
+    this.darkMode$.subscribe(
+      (dark) => {
+        this.setDarkmode(dark);
+      }
+    );
+
+    const darkModeOn =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    this.darkMode$.next(darkModeOn);
+
   }
 
   private loadStyle(styleName: string) {
@@ -45,7 +62,8 @@ export class ThemeService {
     }
   }
 
-  setDarkmode(dark: boolean) {
+  private setDarkmode(dark: boolean) {
+    this.darkMode = dark;
     const mode = dark ? 'add' : 'remove';
     this.document.body.classList[mode]('darkMode');
   }

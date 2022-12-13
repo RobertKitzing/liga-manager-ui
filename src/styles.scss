@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    .bg-primary {
-        @apply bg-theme text-theme-cdefault;
-    }
-}
-
 html,
 body {
     height: 100%;

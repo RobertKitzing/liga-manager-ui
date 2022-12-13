@@ -17,7 +17,7 @@
     </div>
     <div class="flex h-full items-center p-2">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
-        <button class="bg-primary" mat-button translate (click)="openLoginDialog()">LOGIN</button>
+        <button class="bg-theme text-theme-cdefault" mat-button translate (click)="openLoginDialog()">LOGIN</button>
       </ng-container>
       <ng-template #authenticated>
         <button mat-button [matMenuTriggerFor]="userMenu">
@@ -32,7 +32,7 @@
       </button>
       <mat-menu #menu="matMenu">
         <div mat-menu-item>
-          <mat-slide-toggle color="primary" (change)="toggleDarkMode($event)"translate>
+          <mat-slide-toggle color="primary" [formControl]="darkModeControl" translate>
             DARK_MODE
           </mat-slide-toggle>
         </div>

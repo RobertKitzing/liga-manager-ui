@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute } from '@angular/router';
-import { AllSeasonsListGQL, SeasonGQL } from 'src/api/graphql';
+import { firstValueFrom } from 'rxjs';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
@@ -14,6 +15,8 @@ import { ThemeService } from './services/theme.service';
   styles: []
 })
 export class AppComponent implements OnInit {
+
+  darkModeControl = new FormControl();
 
   constructor(
     public themeService: ThemeService,
@@ -31,6 +34,13 @@ export class AppComponent implements OnInit {
             this.changeTheme(params['theme']);
         }
       );
+    const darkMode = firstValueFrom(this.themeService.darkMode$);
+    this.darkModeControl.setValue(darkMode);
+    this.darkModeControl.valueChanges.subscribe(
+      (dark) => {
+        this.themeService.darkMode$.next(dark);
+      }
+    )
   }
 
   openLoginDialog() {
@@ -45,7 +55,4 @@ export class AppComponent implements OnInit {
     this.themeService.currentTheme$.next(theme);
   }
 
-  toggleDarkMode(event: MatSlideToggleChange) {
-    this.themeService.setDarkmode(event.checked);
-  }
 }
