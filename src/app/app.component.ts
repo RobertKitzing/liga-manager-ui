@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
+import { I18Service } from './services/i18.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
 import { ThemeService } from './services/theme.service';
 
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
     public themeService: ThemeService,
     public loadingIndicatorService: LoadingIndicatorService,
     public authService: AuthenticationService,
+    public i18Service: I18Service,
     private dialog: MatDialog,
     private route: ActivatedRoute,
   ) { }
@@ -55,4 +57,7 @@ export class AppComponent implements OnInit {
     this.themeService.currentTheme$.next(theme);
   }
 
+  changeLang(lang: string) {
+    this.i18Service.changeLang(lang);
+  }
 }

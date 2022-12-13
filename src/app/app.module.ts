@@ -11,10 +11,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingIndicatorHttpInterceptor } from './loading-indicator-http-interceptor';
 import { ApolloModule } from 'apollo-angular'
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -23,10 +23,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { GraphqlService } from './services/graphql.service';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
 }
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +53,14 @@ export function graphqlFactory(provider: GraphqlService) {
     MatDialogModule,
     MatSnackBarModule,
     HttpClientModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forRoot({
+        defaultLanguage: 'en',
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }),
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
     MatInputModule,

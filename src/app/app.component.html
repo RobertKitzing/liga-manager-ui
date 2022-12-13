@@ -27,6 +27,18 @@
       </ng-template>
     </div>
     <div class="flex h-full items-center p-2">
+      <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+        <mat-icon>language</mat-icon>
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <button mat-menu-item *ngFor="let language of i18Service.availableLang" (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language}">
+          <ng-container [ngSwitch]="language">
+            <p *ngSwitchCase="'de'">Deutsch</p>
+            <p *ngSwitchCase="'en'">English</p>
+            <p *ngSwitchCase="'ar'">الفصحى</p>
+          </ng-container>
+        </button>
+      </mat-menu>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>

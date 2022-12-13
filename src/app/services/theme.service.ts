@@ -14,9 +14,6 @@ export class ThemeService {
   @LocalStorage('THEME')
   private currentTheme?: string;
 
-  @LocalStorage('DARK_MODE')
-  private darkMode?: boolean;
-
   currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
   darkMode$ = new Subject<boolean>();
 
@@ -63,7 +60,6 @@ export class ThemeService {
   }
 
   private setDarkmode(dark: boolean) {
-    this.darkMode = dark;
     const mode = dark ? 'add' : 'remove';
     this.document.body.classList[mode]('darkMode');
   }
