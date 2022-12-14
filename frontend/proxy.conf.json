@@ -5,12 +5,11 @@
         "changeOrigin": true
     },
     "/weblate/*": {
-        "logLevel": "debug",
-        "target": "http://weblate:8080/api",
+        "target": "http://web:3098",
         "secure": false,
-        "changeOrigin": true,
-        "pathRewrite": {
-            "^/weblate": ""
-          }
+        "changeOrigin": true
+    },
+    "/appsettings.json": {
+        "target": "http://web:3098"
     }
 }

@@ -1,16 +1,33 @@
 services:
-  ui:
+  dev-ui:
     container_name: liga-manager-ui
     image: node:lts-alpine
     user: 1000:1000
     ports:
       - "4200:4200"
     volumes:
-      - .:/liga-manager-ui
+      - ./frontend:/liga-manager-ui
     working_dir: /liga-manager-ui
     tty: true
     command: npm start
-    
+  
+  web:
+    image: node:lts-alpine
+    user: 1000:1000
+    ports:
+      - "3098:3098"
+    volumes:
+      - ./web-server:/liga-manager-ui
+    working_dir: /liga-manager-ui
+    environment:
+      LISTEN_PORT: 3098
+      WEBLATE_API_KEY: "wlu_77Eo30mdCJNQL3IPgAEfWDblVOFEes58Risp"
+      GOOGLE_MAPS_API_KEY: "AIzaSyCgjoPzEQH7Hhnr6GFtkwm05xoDOQJpjBo"
+      WEBLATE_HOST: weblate
+      WEBLATE_PORT: 8080
+    tty: true
+    command: npm run start:dev
+
   nginx:
     image: nginx:stable-alpine
     ports:
@@ -19,7 +36,6 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - api-public:/var/www/api/public:ro
     depends_on:
-      - ui
       - api
   
   api:

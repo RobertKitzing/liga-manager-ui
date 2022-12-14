@@ -12,13 +12,9 @@ const LANG_KEY = 'LANG';
 })
 export class I18Service {
 
-  public availableLang$ = this.httpClient.get<any[]>('/weblate/projects/liga-manager/languages/').pipe(
-    map(
-      (res) => res.map(r => r.code)
-    )
-  );
-  
-  @LocalStorage(LANG_KEY) storedLang?: string;
+  public availableLang$ = this.httpClient.get<{ code: string, direction: string, name: string, nativeName: string }[]>('/weblate/languages');
+
+  @LocalStorage(LANG_KEY) storedLang?: { code: string, direction?: string };
 
   public get currentLang(): string {
     return this.translateService.currentLang;
@@ -30,28 +26,21 @@ export class I18Service {
     private httpClient: HttpClient,
   ) {
     if (!this.storedLang) {
-      this.storedLang = this.translateService.getBrowserLang();
+      this.storedLang = { code: this.translateService.getBrowserLang()! };
     }
     if (!this.storedLang) {
-      this.storedLang = 'de';
+      this.storedLang = { code: 'de' };
     }
     this.changeLang(this.storedLang);
   }
 
-  changeLang(lang: string) {
-    this.translateService.use(lang);
-    this.storedLang = lang;
-    switch(lang) {
-      case 'ar':
-        this.setTextDir('rtl');
-        break;
-      default:
-        this.setTextDir('ltr');
-    }
+  changeLang(param: {code: string, direction?: string}) {
+    this.translateService.use(param.code);
+    this.setTextDir(param.direction);
   }
 
-  setTextDir(dir: 'rtl' | 'ltr') {
-    this.document.body.dir = dir;
+  setTextDir(direction?: string) {
+    this.document.body.dir = direction || 'ltr';
   }
 
 }

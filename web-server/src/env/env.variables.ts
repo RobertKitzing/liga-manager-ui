@@ -16,4 +16,10 @@ export class EnvironmentVariables {
 
     @IsString()
     WEBLATE_API_KEY: string;
+
+    @IsString()
+    WEBLATE_HOST: string;
+
+    @IsString()
+    WEBLATE_PORT: string;
 }

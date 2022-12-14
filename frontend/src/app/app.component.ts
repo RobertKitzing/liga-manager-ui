@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     this.themeService.currentTheme$.next(theme);
   }
 
-  changeLang(lang: string) {
-    this.i18Service.changeLang(lang);
+  changeLang(param: {code: string, direction?: string}) {
+    this.i18Service.changeLang(param);
   }
 }
