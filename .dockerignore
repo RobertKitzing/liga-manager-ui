@@ -1,0 +1,6 @@
+frontend/data
+frontend/node_modules
+frontend/dist
+
+web-server/node_modules
+web-server/dist
