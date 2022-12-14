@@ -13,4 +13,7 @@ export class EnvironmentVariables {
 
     @IsOptional()
     GOOGLE_MAPS_API_KEY: string;
+
+    @IsString()
+    WEBLATE_API_KEY: string;
 }
