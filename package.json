@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "graphql-gen:api": "graphql-codegen --config codegenAPI.yml",
-    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/{en,de,ar}.json --clean --format json"
+    "i18n:template": "ngx-translate-extract --input ./src --output ./i18n/template.json --clean --sort --format json"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +34,7 @@
     "js-base64": "^3.7.3",
     "ngx-webstorage": "^11.1.1",
     "rxjs": "~7.5.0",
+    "tiny-json-http": "^7.4.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

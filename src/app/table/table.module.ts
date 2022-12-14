@@ -6,6 +6,7 @@ import { TableRoutingModule } from './table-routing.module';
 import { TableComponent } from './table.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     TableRoutingModule,
     MatProgressBarModule,
     MatTableModule,
+    TranslateModule.forChild(),
   ]
 })
 export class TableModule { }

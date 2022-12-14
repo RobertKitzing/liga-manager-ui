@@ -34,16 +34,40 @@ services:
       - redis
   
   redis:
-    image: redis:4-alpine
+    image: redis:alpine
   
   mariadb:
     image: mariadb:10.3.12
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/var/lib/mysql
+      - ./data/mariadb:/var/lib/mysql
     env_file:
       - ./env/api.env 
 
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: weblate
+      POSTGRES_PASSWORD: weblate
+    volumes: 
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  
+  weblate:
+    image: weblate/weblate:latest
+    ports:
+      - 8080:8080
+    environment:
+      WEBLATE_SITE_DOMAIN: weblate.example.com
+      WEBLATE_ADMIN_PASSWORD: 123456
+      REDIS_HOST: redis
+      POSTGRES_PASSWORD: weblate
+      POSTGRES_USER: weblate
+      POSTGRES_DATABASE: weblate
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+  
 volumes:
   api-public:

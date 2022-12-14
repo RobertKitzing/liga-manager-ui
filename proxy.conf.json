@@ -3,5 +3,14 @@
         "target": "http://nginx:80",
         "secure": false,
         "changeOrigin": true
-    } 
+    },
+    "/weblate/*": {
+        "logLevel": "debug",
+        "target": "http://weblate:8080/api",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/weblate": ""
+          }
+    }
 }

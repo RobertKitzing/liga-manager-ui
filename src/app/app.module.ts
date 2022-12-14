@@ -30,7 +30,7 @@ export function graphqlFactory(provider: GraphqlService) {
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, '/weblate/translations/liga-manager/template/', '/file/?format=json');
 }
 
 @NgModule({

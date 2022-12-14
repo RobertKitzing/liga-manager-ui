@@ -1,7 +1,9 @@
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorage } from 'ngx-webstorage';
+import { map } from 'rxjs';
 
 const LANG_KEY = 'LANG';
 
@@ -10,8 +12,12 @@ const LANG_KEY = 'LANG';
 })
 export class I18Service {
 
-  public availableLang: string[] = ['de', 'en', 'ar'];
-
+  public availableLang$ = this.httpClient.get<any[]>('/weblate/projects/liga-manager/languages/').pipe(
+    map(
+      (res) => res.map(r => r.code)
+    )
+  );
+  
   @LocalStorage(LANG_KEY) storedLang?: string;
 
   public get currentLang(): string {
@@ -21,6 +27,7 @@ export class I18Service {
   constructor(
     private translateService: TranslateService,
     @Inject(DOCUMENT) private document: Document,
+    private httpClient: HttpClient,
   ) {
     if (!this.storedLang) {
       this.storedLang = this.translateService.getBrowserLang();

@@ -17,10 +17,10 @@
     </div>
     <div class="flex h-full items-center p-2">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
-        <button class="bg-theme text-theme-cdefault" mat-button translate (click)="openLoginDialog()">LOGIN</button>
+        <button class="bg-theme text-theme-cdefault" mat-button translate (click)="openLoginDialog()">BUTTON.LOGIN</button>
       </ng-container>
       <ng-template #authenticated>
-        <button mat-button [matMenuTriggerFor]="userMenu">
+        <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
           {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
           <mat-icon>person</mat-icon>
         </button>
@@ -31,7 +31,7 @@
         <mat-icon>language</mat-icon>
       </button>
       <mat-menu #languageMenu="matMenu">
-        <button mat-menu-item *ngFor="let language of i18Service.availableLang" (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language}">
+        <button mat-menu-item *ngFor="let language of i18Service.availableLang$ | async" (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language}">
           <ng-container [ngSwitch]="language">
             <p *ngSwitchCase="'de'">Deutsch</p>
             <p *ngSwitchCase="'en'">English</p>
