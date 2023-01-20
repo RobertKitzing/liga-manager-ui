@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">liga-manager-ui</string>
+    <string name="title_activity_main">liga-manager-ui</string>
+    <string name="package_name">de.wildeligamanager.bremen</string>
+    <string name="custom_url_scheme">de.wildeligamanager.bremen</string>
+</resources>
