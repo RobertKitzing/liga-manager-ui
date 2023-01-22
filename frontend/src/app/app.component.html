@@ -17,7 +17,9 @@
     </div>
     <div class="flex h-full items-center p-2">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
-        <button class="bg-theme text-theme-cdefault" mat-button translate (click)="openLoginDialog()">BUTTON.LOGIN</button>
+        <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
+          <span translate>BUTTON.LOGIN</span>
+        </button>
       </ng-container>
       <ng-template #authenticated>
         <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
