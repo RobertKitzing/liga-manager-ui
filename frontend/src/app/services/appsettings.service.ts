@@ -20,7 +20,7 @@ export class AppsettingsService {
   loadAppsettings(): Promise<any> {
     return firstValueFrom(this.httpClient.get<AppsettingsModel>('./appsettings.json').pipe(
       tap(
-        (res) => {
+        (res: AppsettingsModel) => {
           this.appsettings = res
         }
       ),

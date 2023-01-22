@@ -49,8 +49,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/appsettings.json"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss",
@@ -68,7 +67,27 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "app": {
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/appsettings.app.json"
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "web": {
               "budgets": [
                 {
                   "type": "initial",
