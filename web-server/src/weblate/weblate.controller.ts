@@ -9,6 +9,8 @@ export class WeblateController {
 
     weblateHost = this.configService.get('WEBLATE_HOST');
     weblatePort = this.configService.get('WEBLATE_PORT');
+    weblateProject = this.configService.get('WEBLATE_PROJECT');
+    weblateComponent = this.configService.get('WEBLATE_COMPONENT');
 
     weblateBaseUrl = `http://${this.weblateHost}:${this.weblatePort}/api`;
 
@@ -21,12 +23,14 @@ export class WeblateController {
 
     @Get('/languages')
     async getLanguages() {
-        const langCodes = (await firstValueFrom(this.httpService.get(`${this.weblateBaseUrl}/projects/liga-manager/languages/`))).data.map(x => x.code);
+        const langCodes = (await firstValueFrom(this.httpService.get(`${this.weblateBaseUrl}/projects/${this.weblateProject}/languages/`))).data.map(x => x.code);
         
         const languages = [];
     
         for (let code of langCodes) {
             const response = await firstValueFrom(this.httpService.get(`${this.weblateBaseUrl}/languages/${code}/`));
+            const statistics = await firstValueFrom(this.httpService.get(`${this.weblateBaseUrl}/languages/${code}/statistics`));
+            console.log(statistics);
             languages.push({
                 code,
                 direction: response.data.direction,
@@ -42,6 +46,6 @@ export class WeblateController {
     getLanguage(
         @Param('code') code: string
     ) {
-        return this.httpService.get(`${this.weblateBaseUrl}/translations/liga-manager/template/${code}/file/?format=json`).pipe(map((response) => response.data));
+        return this.httpService.get(`${this.weblateBaseUrl}/translations/${this.weblateProject}/${this.weblateComponent}/${code}/file/?format=json`).pipe(map((response) => response.data));
     }
 }

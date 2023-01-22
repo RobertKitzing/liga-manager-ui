@@ -22,4 +22,10 @@ export class EnvironmentVariables {
 
     @IsString()
     WEBLATE_PORT: string;
+
+    @IsString()
+    WEBLATE_PROJECT: string = 'liga-manager';
+
+    @IsString()
+    WEBLATE_COMPONENT: string = 'ui';
 }

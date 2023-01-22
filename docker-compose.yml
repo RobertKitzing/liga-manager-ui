@@ -85,5 +85,13 @@ services:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
   
+  # weblate-wlc:
+  #   image: weblate/wlc
+  #   volumes:
+  #     - './frontend/i18n/template.json:/templates/liga-manager.json'
+  #     - './weblate-wlc.config:/home/weblate/.config/weblate'
+  #   environment:
+  #     APIKEY: wlu_FiyuaBlfWJhWImvBYPN6o434MzpEGd2RJRkW
+
 volumes:
   api-public:
