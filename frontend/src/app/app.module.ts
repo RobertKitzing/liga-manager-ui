@@ -24,13 +24,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { GraphqlService } from './services/graphql.service';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { AppsettingsService } from './services/appsettings.service';
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/weblate/language/', '');
+export function HttpLoaderFactory(http: HttpClient, appsettingsService: AppsettingsService) {
+  return new TranslateHttpLoader(http, `${appsettingsService.appsettings?.host || ''}/weblate/language/`, '');
 }
 
 @NgModule({

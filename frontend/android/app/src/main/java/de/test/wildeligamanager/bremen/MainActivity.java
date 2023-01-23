@@ -1,4 +1,4 @@
-package de.wildeligamanager.bremen;
+package de.test.wildeligamanager.bremen;
 
 import com.getcapacitor.BridgeActivity;
 
