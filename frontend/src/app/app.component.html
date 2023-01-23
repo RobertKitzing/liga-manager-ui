@@ -3,21 +3,26 @@
   <img class="mr-4 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
   
   <div class="flex h-full gap-4">
-    <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TABLE</a>
-    <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.SCHEDULE</a>
-    <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TOURNAMENT</a>
-    <a class="flex h-full items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.CALENDAR</a>
-    <a class="flex h-full items-center p-2" routerLink="contacs" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.CONTACTS</a>
-    <a class="flex h-full items-center p-2" routerLink="teamadmin" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.TEAM_ADMIN</a>
-    <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>MENU.ADMIN</a>
+    <a class="flex h-full items-center bg-theme-900 text-theme-c900  p-2">{{ currentRoute | translate }}</a>
   </div>
+
+  <div class="flex h-full gap-4 collapse">
+    <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
+    <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
+    <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
+    <a class="flex h-full items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
+    <a class="flex h-full items-center p-2" routerLink="contacs" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
+    <a class="flex h-full items-center p-2" routerLink="teamadmin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
+    <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
+  </div>
+
   <div class="flex items-center justify-end w-full">
     <div class="flex h-full items-center p-2">
       
     </div>
     <div class="flex h-full items-center p-2">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
-        <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
+        <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
           <span translate>BUTTON.LOGIN</span>
         </button>
       </ng-container>

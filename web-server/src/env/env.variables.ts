@@ -21,5 +21,5 @@ export class EnvironmentVariables {
     WEBLATE_PROJECT: string = 'liga-manager';
 
     @IsString()
-    WEBLATE_COMPONENT: string = 'ui';
+    WEBLATE_COMPONENT: string = 'liga-manager-ui';
 }

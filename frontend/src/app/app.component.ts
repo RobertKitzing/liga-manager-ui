@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
@@ -18,6 +18,9 @@ import { ThemeService } from './services/theme.service';
 export class AppComponent implements OnInit {
 
   darkModeControl = new FormControl();
+  get currentRoute() {
+    return `NAVIGATION.${this.router.url.replace('/', '').toUpperCase()}`;
+  }
 
   constructor(
     public themeService: ThemeService,
@@ -26,6 +29,7 @@ export class AppComponent implements OnInit {
     public i18Service: I18Service,
     private dialog: MatDialog,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {

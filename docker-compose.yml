@@ -25,7 +25,7 @@ services:
       GOOGLE_MAPS_API_KEY: "AIzaSyCgjoPzEQH7Hhnr6GFtkwm05xoDOQJpjBo"
       WEBLATE_HOST: weblate
       WEBLATE_PORT: 8080
-      WEBLATE_COMPONENT: template
+      WEBLATE_COMPONENT: liga-manager-ui
     tty: true
     command: npm run start:dev
 
