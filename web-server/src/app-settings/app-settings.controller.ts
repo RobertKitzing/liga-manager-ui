@@ -2,11 +2,9 @@ import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 export interface AppsettingsModel {
+    host?: string;
     googleMapsApiKey: string;
-    graphqlUrl: string;
-    graphqlWsUrl: string;
 }
-
 
 @Controller()
 export class AppSettingsController {
@@ -21,8 +19,6 @@ export class AppSettingsController {
     getAppsettings() {
         return {
             googleMapsApiKey: this.configService.get('GOOGLE_MAPS_API_KEY'),
-            graphqlUrl: this.configService.get('GRAPHQL_URL'),
-            graphqlWsUrl: this.configService.get('GRAPHQL_WS_URL'),
         }
     }
 }

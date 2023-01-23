@@ -27,8 +27,8 @@ export class GraphqlService {
   }
 
   async init() {
-    await this.appsettingsService.loadAppsettings();
-    const http = this.httpLink.create({ uri: this.appsettingsService.appsettings?.graphqlUrl });
+    await firstValueFrom(this.appsettingsService.loadAppsettings());
+    const http = this.httpLink.create({ uri: `${this.appsettingsService.appsettings?.host || ''}/api/graphql` });
 
     const afterwareLink = new ApolloLink((operation, forward) => {
       return forward(operation).map(response => {

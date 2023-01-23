@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 export interface AppsettingsModel {
   host?: string;
   googleMapsApiKey: string;
-  graphqlUrl: string;
-  graphqlWsUrl: string;
 }
 
 @Injectable({
@@ -18,13 +16,13 @@ export class AppsettingsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  loadAppsettings(): Promise<any> {
-    return firstValueFrom(this.httpClient.get<AppsettingsModel>('./appsettings.json').pipe(
+  loadAppsettings() {
+    return this.httpClient.get<AppsettingsModel>('./appsettings.json').pipe(
       tap(
         (res: AppsettingsModel) => {
           this.appsettings = res
         }
       ),
-    ))
+    )
   }
 }
