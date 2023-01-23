@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, tap } from 'rxjs';
 
 export interface AppsettingsModel {
+  host?: string;
   googleMapsApiKey: string;
   graphqlUrl: string;
   graphqlWsUrl: string;

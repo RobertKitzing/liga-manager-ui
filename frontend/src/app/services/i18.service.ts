@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorage } from 'ngx-webstorage';
 import { map } from 'rxjs';
+import { AppsettingsService } from './appsettings.service';
 
 const LANG_KEY = 'LANG';
 
@@ -12,7 +13,9 @@ const LANG_KEY = 'LANG';
 })
 export class I18Service {
 
-  public availableLang$ = this.httpClient.get<{ code: string, direction: string, name: string, nativeName: string }[]>('/weblate/languages');
+  private weblateUrl = `${this.appsettingsService.appsettings?.host || ''}/weblate/languages`;
+  
+  public availableLang$ = this.httpClient.get<{ code: string, direction: string, name: string, nativeName: string }[]>(this.weblateUrl);
 
   @LocalStorage(LANG_KEY) storedLang?: { code: string, direction?: string };
 
@@ -24,19 +27,18 @@ export class I18Service {
     private translateService: TranslateService,
     @Inject(DOCUMENT) private document: Document,
     private httpClient: HttpClient,
+    private appsettingsService: AppsettingsService,
   ) {
     if (!this.storedLang) {
       this.storedLang = { code: this.translateService.getBrowserLang()! };
     }
-    if (!this.storedLang) {
-      this.storedLang = { code: 'de' };
-    }
     this.changeLang(this.storedLang);
   }
 
-  changeLang(param: {code: string, direction?: string}) {
-    this.translateService.use(param.code);
-    this.setTextDir(param.direction);
+  changeLang({code, direction}: {code: string, direction?: string}) {
+    this.translateService.use(code);
+    this.setTextDir(direction);
+    this.storedLang = { code, direction}
   }
 
   setTextDir(direction?: string) {

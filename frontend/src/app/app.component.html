@@ -60,6 +60,9 @@
 </div>
 
 <div class="h-[calc(100vh_-_68px)] mat-app-background overflow-auto">
+  <div *ngFor="let language of i18Service.availableLang$ | async">
+    {{ language | json }}
+  </div>
   <router-outlet></router-outlet>
 </div>
 

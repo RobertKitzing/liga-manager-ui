@@ -71,7 +71,7 @@
               "assets": [
                 "src/favicon.ico",
                 "src/assets",
-                "src/appsettings.app.json"
+                "src/appsettings.json"
               ],
               "budgets": [
                 {
