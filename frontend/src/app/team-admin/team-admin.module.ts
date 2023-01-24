@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TeamAdminRoutingModule } from './team-admin-routing.module';
 import { TeamAdminComponent } from './team-admin.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { TeamAdminComponent } from './team-admin.component';
   ],
   imports: [
     CommonModule,
-    TeamAdminRoutingModule
+    TeamAdminRoutingModule,
+    MatSidenavModule,
   ]
 })
 export class TeamAdminModule { }

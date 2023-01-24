@@ -23,9 +23,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { GraphqlService } from './services/graphql.service';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppsettingsService } from './services/appsettings.service';
 import { CustomTranslateHttpLoader } from 'src/custom-translate-http-loader';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
@@ -49,6 +50,7 @@ export function graphqlFactory(provider: GraphqlService) {
     MatButtonModule,
     MatProgressBarModule,
     MatSlideToggleModule,
+    MatSidenavModule,
     MatSelectModule,
     MatMenuModule,
     MatIconModule,
@@ -56,13 +58,13 @@ export function graphqlFactory(provider: GraphqlService) {
     MatSnackBarModule,
     HttpClientModule,
     TranslateModule.forRoot({
-        defaultLanguage: 'en',
-        loader: {
-            provide: TranslateLoader,
-            useClass: CustomTranslateHttpLoader,
-            // useFactory: httpLoaderFactory,
-            deps: [HttpClient, AppsettingsService]
-        }
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useClass: CustomTranslateHttpLoader,
+        // useFactory: httpLoaderFactory,
+        deps: [HttpClient, AppsettingsService]
+      }
     }),
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),

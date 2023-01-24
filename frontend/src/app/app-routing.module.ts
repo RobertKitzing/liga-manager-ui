@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
   },
   {
-    path: 'contacs',
+    path: 'contacts',
     loadChildren: () => import('./contacs/contacs.module').then(m => m.ContacsModule)
   },
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('./tournament/tournament.module').then(m => m.TournamentModule)
   },
   {
-    path: 'teamadmin',
+    path: 'team_admin',
     loadChildren: () => import('./team-admin/team-admin.module').then(m => m.TeamAdminModule)
   },
   {
