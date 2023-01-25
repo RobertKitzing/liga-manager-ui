@@ -1,6 +1,26 @@
 <mat-toolbar color="primary">
+  <div class="flex h-full w-full items-center">
+    <img class="p-1 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
+
+    <div class="grow flex justify-center visible sm:hidden">
+      <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
+    </div>
+
+    <div class="hidden h-full sm:flex sm:visible grow">
+      <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
+      <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
+      <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
+      <a class="flex h-full items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
+      <a class="flex h-full items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
+      <a class="flex h-full items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
+      <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
+    </div>
   
-  <img class="mr-4 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <!-- <img class="mr-4 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
   
   <div class="flex h-full w-full visible sm:collapse justify-center">
     <a class="flex h-full items-center p-2">{{ currentRoute | translate }}</a>
@@ -20,7 +40,8 @@
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-  </div>
+  </div> -->
+
   <!-- <div class="flex items-center justify-end w-full">
     <div class="flex h-full items-center p-2">
       
@@ -68,13 +89,20 @@
 <mat-drawer-container class="example-container" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
     <div (click)="drawer.close()">
-      <a class="flex items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
-      <a class="flex items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
-      <a class="flex items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
-      <a class="flex items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
-      <a class="flex items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
-      <a class="flex items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
-      <a class="flex items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
+      <a class="flex items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.TABLE</a>
+      <a class="flex items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.SCHEDULE</a>
+      <a class="flex items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.TOURNAMENT</a>
+      <a class="flex items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.CALENDAR</a>
+      <a class="flex items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.CONTACTS</a>
+      <a class="flex items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.TEAM_ADMIN</a>
+      <a class="flex items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900"
+        translate>NAVIGATION.ADMIN</a>
     </div>
     <mat-divider></mat-divider>
     <div>
@@ -85,7 +113,7 @@
     <div class="h-1 mat-app-background">
       <mat-progress-bar *ngIf="loadingIndicatorService.loading$ | async" [mode]="'indeterminate'"></mat-progress-bar>
     </div>
-    
+
     <div class="h-[calc(100vh_-_68px)] mat-app-background overflow-auto">
       <router-outlet></router-outlet>
     </div>
