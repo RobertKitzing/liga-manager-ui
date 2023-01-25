@@ -18,6 +18,7 @@ import { ThemeService } from './services/theme.service';
 export class AppComponent implements OnInit {
 
   darkModeControl = new FormControl();
+
   get currentRoute() {
     return `NAVIGATION.${this.router.url.replace('/', '').toUpperCase()}`;
   }
@@ -40,8 +41,12 @@ export class AppComponent implements OnInit {
             this.changeTheme(params['theme']);
         }
       );
-    const darkMode = firstValueFrom(this.themeService.darkMode$);
-    this.darkModeControl.setValue(darkMode);
+
+    this.themeService.darkMode$.subscribe(
+      (darkMode) => {
+        this.darkModeControl.setValue(darkMode, { emitEvent: false });
+      }
+    );
     this.darkModeControl.valueChanges.subscribe(
       (dark) => {
         this.themeService.darkMode$.next(dark);
@@ -61,7 +66,7 @@ export class AppComponent implements OnInit {
     this.themeService.currentTheme$.next(theme);
   }
 
-  changeLang(param: {code: string, direction?: string}) {
+  changeLang(param: { code: string, direction?: string }) {
     this.i18Service.changeLang(param);
   }
 }

@@ -15,6 +15,20 @@
       <a class="flex h-full items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
       <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
     </div>
+    
+    <div class="hidden sm:flex sm:visible">
+      <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
+        <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
+          <span translate>BUTTON.LOGIN</span>
+        </button>
+      </ng-container>
+      <ng-template #authenticated>
+        <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
+          {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
+          <mat-icon>person</mat-icon>
+        </button>
+      </ng-template>
+    </div>
   
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
@@ -63,11 +77,7 @@
       <button mat-icon-button [matMenuTriggerFor]="languageMenu">
         <mat-icon>language</mat-icon>
       </button>
-      <mat-menu #languageMenu="matMenu">
-        <button mat-menu-item *ngFor="let language of i18Service.availableLang$ | async" (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language.code}">
-          {{ language.nativeName }} ({{ language.name }})
-        </button>
-      </mat-menu>
+      
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -79,34 +89,70 @@
         </div>
         <button mat-menu-item [matMenuTriggerFor]="themes" translate>THEMES</button>
       </mat-menu>
-      <mat-menu #themes="matMenu">
-        <button mat-menu-item *ngFor="let theme of themeService.themes" (click)="changeTheme(theme)" [ngClass]="{'bg-theme': theme === (themeService.currentTheme$ | async)}">{{theme}}</button>
-      </mat-menu>
+      
     </div>
   </div> -->
 </mat-toolbar>
 
 <mat-drawer-container class="example-container" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
-    <div (click)="drawer.close()">
+    <div class="visible sm:hidden flex justify-center m-2">
+      <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
+        <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
+          <span translate>BUTTON.LOGIN</span>
+        </button>
+      </ng-container>
+      <ng-template #authenticated>
+        <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
+          {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
+          <mat-icon>person</mat-icon>
+        </button>
+      </ng-template>
+    </div>
+    <div class="visible sm:hidden" (click)="drawer.close()">
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.TABLE</a>
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.SCHEDULE</a>
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.TOURNAMENT</a>
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.CALENDAR</a>
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.CONTACTS</a>
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.TEAM_ADMIN</a>
+      <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.ADMIN</a>
+      <mat-divider></mat-divider>
+    </div>
+    
+    <div class="p-2">
+      <mat-slide-toggle color="primary" [formControl]="darkModeControl" translate>
+        DARK_MODE
+      </mat-slide-toggle>
     </div>
     <mat-divider></mat-divider>
-    <div>
-
+    <div class="p-2 flex justify-between items-center">
+      <button class="w-full" [matMenuTriggerFor]="themes" translate>
+        THEMES
+      </button>
+      <mat-icon>arrow_drop_down</mat-icon>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="p-2 flex justify-between items-center">
+      <button class="w-full" mat-button [matMenuTriggerFor]="languageMenu" translate>
+        <mat-icon>language</mat-icon>
+        LANGUAGE
+      </button>
+      <mat-icon>arrow_drop_down</mat-icon>
     </div>
   </mat-drawer>
   <mat-drawer-content>
@@ -129,4 +175,14 @@
     <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
   </mat-list>
   <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
+</mat-menu>
+
+<mat-menu #languageMenu="matMenu">
+  <button mat-menu-item *ngFor="let language of i18Service.availableLang$ | async" (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language.code}">
+    {{ language.nativeName }} ({{ language.name }})
+  </button>
+</mat-menu>
+
+<mat-menu #themes="matMenu">
+  <button mat-menu-item *ngFor="let theme of themeService.themes" (click)="changeTheme(theme)" [ngClass]="{'bg-theme': theme === (themeService.currentTheme$ | async)}">{{theme}}</button>
 </mat-menu>
