@@ -4,37 +4,47 @@
     </ng-container>
 </ng-container> -->
 <ng-container *ngIf="ranking$ | async">
-    <div class="flex justify-center">
-        <div class="w-1/2">
-            <table mat-table [dataSource]="ranking.positions" class="mat-elevation-z8">
+    <div class="flex justify-center h-full">
+        <div class="w-full mt-5 sm:w-3/4">
+            <table mat-table [dataSource]="ranking.positions">
                 <ng-container matColumnDef="position">
                     <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>#</th>
                     <td class="w-1" mat-cell *matCellDef="let element"> {{element.sort_index}} </td>
                 </ng-container>
                 
                 <ng-container matColumnDef="team">
-                    <th class="bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef translate>TEAM_NAME</th>
-                    <td mat-cell *matCellDef="let element"> {{element.team.name}} </td>
+                    <th class="bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>
+                        <span translate>TEAM_NAME</span>
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{element.team.name}}</td>
                 </ng-container>
                 
                 <ng-container matColumnDef="games">
-                    <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef translate>GAMES</th>
-                    <td class="w-1" mat-cell *matCellDef="let element"> {{element.matches}} </td>
+                    <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>
+                        <span class="sm:hidden">{{ 'GAMES' | translate | truncate }}</span>
+                        <span class="hidden sm:flex" translate>GAMES</span>
+                    </th>
+                    <td class="w-1" mat-cell *matCellDef="let element">{{element.matches}}</td>
                 </ng-container>
                 
                 <ng-container matColumnDef="wins-draws-losses">
-                    <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef translate>WINS_DRAWS_LOSSES</th>
-                    <td class="w-1" mat-cell *matCellDef="let element"> {{element.wins}}:{{element.draws}}:{{element.losses}} </td>
+                    <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef translate>
+                        WINS_DRAWS_LOSSES
+                    </th>
+                    <td class="w-1" mat-cell *matCellDef="let element">{{element.wins}}:{{element.draws}}:{{element.losses}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="goals">
                     <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef translate>SCORED_CONCEDED</th>
-                    <td class="w-1" mat-cell *matCellDef="let element"> {{element.scored_goals}}:{{element.conceded_goals}} </td>
+                    <td class="w-1" mat-cell *matCellDef="let element">{{element.scored_goals}}:{{element.conceded_goals}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="points">
-                    <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef translate>POINTS</th>
-                    <td class="w-1" mat-cell *matCellDef="let element"> {{element.points}} </td>
+                    <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>
+                        <span class="sm:hidden"> {{ 'POINTS' | translate | truncate }} </span>
+                        <span class="hidden sm:flex" translate>POINTS</span>
+                    </th>
+                    <td class="w-1" mat-cell *matCellDef="let element">{{element.points}}</td>
                 </ng-container>
                 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -7,6 +7,8 @@ import { TableComponent } from './table.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
+import { TruncateModule } from '../truncate/truncate.module';
+import { HammerModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,10 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     TableRoutingModule,
+    TruncateModule,
     MatProgressBarModule,
     MatTableModule,
+    HammerModule,
     TranslateModule.forChild(),
   ]
 })

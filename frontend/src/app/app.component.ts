@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -9,11 +9,13 @@ import { AuthenticationService } from './services/authentication.service';
 import { I18Service } from './services/i18.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
 import { ThemeService } from './services/theme.service';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'lima-root',
   templateUrl: './app.component.html',
-  styles: []
+  styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
 
@@ -31,6 +33,7 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -68,5 +71,13 @@ export class AppComponent implements OnInit {
 
   changeLang(param: { code: string, direction?: string }) {
     this.i18Service.changeLang(param);
+  }
+
+  onSwipeLeft() {
+    this.location.back();
+  }
+
+  onSwipeRight() {
+    this.location.forward();
   }
 }

@@ -32,4 +32,5 @@ export class TableComponent {
       (ranking) => this.ranking = ranking!,
     )
   );
+  
 }

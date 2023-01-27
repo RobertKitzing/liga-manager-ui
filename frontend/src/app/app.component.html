@@ -2,11 +2,11 @@
   <div class="flex h-full w-full items-center">
     <img class="p-1 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
 
-    <div class="grow flex justify-center visible sm:hidden">
+    <div class="grow flex justify-center visible lg:hidden">
       <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
     </div>
 
-    <div class="hidden h-full sm:flex sm:visible grow">
+    <div class="hidden h-full lg:flex lg:visible grow">
       <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
       <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
       <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
@@ -16,7 +16,7 @@
       <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
     </div>
     
-    <div class="hidden sm:flex sm:visible">
+    <div class="hidden lg:flex lg:visible">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
         <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
           <span translate>BUTTON.LOGIN</span>
@@ -34,69 +34,11 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <!-- <img class="mr-4 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.png">
-  
-  <div class="flex h-full w-full visible sm:collapse justify-center">
-    <a class="flex h-full items-center p-2">{{ currentRoute | translate }}</a>
-  </div>
-
-  <div class="hidden h-full sm:flex sm:visible">
-    <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
-    <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
-    <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
-    <a class="flex h-full items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
-    <a class="flex h-full items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
-    <a class="flex h-full items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
-    <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
-  </div>
-
-  <div class="flex items-center sm:w-full justify-end">
-    <button mat-icon-button (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div> -->
-
-  <!-- <div class="flex items-center justify-end w-full">
-    <div class="flex h-full items-center p-2">
-      
-    </div>
-    <div class="flex h-full items-center p-2">
-      <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
-        <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
-          <span translate>BUTTON.LOGIN</span>
-        </button>
-      </ng-container>
-      <ng-template #authenticated>
-        <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
-          {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
-          <mat-icon>person</mat-icon>
-        </button>
-      </ng-template>
-    </div>
-    <div class="flex h-full items-center p-2">
-      <button mat-icon-button [matMenuTriggerFor]="languageMenu">
-        <mat-icon>language</mat-icon>
-      </button>
-      
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <div mat-menu-item>
-          <mat-slide-toggle color="primary" [formControl]="darkModeControl" translate>
-            DARK_MODE
-          </mat-slide-toggle>
-        </div>
-        <button mat-menu-item [matMenuTriggerFor]="themes" translate>THEMES</button>
-      </mat-menu>
-      
-    </div>
-  </div> -->
 </mat-toolbar>
 
-<mat-drawer-container class="example-container" [hasBackdrop]="true">
+<mat-drawer-container class="h-[calc(100vh_-_68px)] overflow-auto" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
-    <div class="visible sm:hidden flex justify-center m-2">
+    <div class="visible lg:hidden flex justify-center m-2">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
         <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
           <span translate>BUTTON.LOGIN</span>
@@ -109,7 +51,7 @@
         </button>
       </ng-template>
     </div>
-    <div class="visible sm:hidden" (click)="drawer.close()">
+    <div class="visible lg:hidden" (click)="drawer.close()">
       <mat-divider></mat-divider>
       <a class="flex items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900"
         translate>NAVIGATION.TABLE</a>
@@ -135,8 +77,8 @@
     </div>
     
     <div class="p-2">
-      <mat-slide-toggle color="primary" [formControl]="darkModeControl" translate>
-        DARK_MODE
+      <mat-slide-toggle color="primary" [formControl]="darkModeControl">
+        <span translate>DARK_MODE</span>
       </mat-slide-toggle>
     </div>
     <mat-divider></mat-divider>
@@ -156,11 +98,11 @@
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <div class="h-1 mat-app-background">
-      <mat-progress-bar *ngIf="loadingIndicatorService.loading$ | async" [mode]="'indeterminate'"></mat-progress-bar>
+    <div class="h-1 mat-app-background" *ngIf="(loadingIndicatorService.loading$ | async) === true">
+      <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
     </div>
 
-    <div class="h-[calc(100vh_-_68px)] mat-app-background overflow-auto">
+    <div class="mat-app-background h-full" (swipeleft)="onSwipeLeft()" (swiperight)="onSwipeRight()">
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
