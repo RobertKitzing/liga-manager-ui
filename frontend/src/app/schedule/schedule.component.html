@@ -1,0 +1,7 @@
+<ng-container *ngIf="(season$ | async) as season">
+    <ng-container *ngFor="let matchDay of season.match_days">
+        <h3 class="text-center">
+            {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date| date:'shortDate':'':i18nService.currentLang }}&nbsp;-&nbsp;{{ matchDay?.end_date| date:'shortDate':'':i18nService.currentLang }})
+        </h3>
+    </ng-container>
+</ng-container>

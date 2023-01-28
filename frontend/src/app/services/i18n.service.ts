@@ -11,7 +11,7 @@ const LANG_KEY = 'LANG';
 @Injectable({
   providedIn: 'root'
 })
-export class I18Service {
+export class I18nService {
 
   private weblateUrl = `${this.appsettingsService.appsettings?.host || ''}/weblate/languages`;
   
@@ -43,6 +43,10 @@ export class I18Service {
 
   setTextDir(direction?: string) {
     this.document.body.dir = direction || 'ltr';
+  }
+
+  clearCache() {
+    return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/weblate/clear-cache`, {});
   }
 
 }

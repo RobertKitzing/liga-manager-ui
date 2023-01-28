@@ -3,10 +3,10 @@
         {{ ranking | json }}
     </ng-container>
 </ng-container> -->
-<ng-container *ngIf="ranking$ | async">
+<ng-container *ngIf="ranking$ | async as ranking">
     <div class="flex justify-center h-full">
         <div class="w-full mt-5 sm:w-3/4">
-            <table mat-table [dataSource]="ranking.positions">
+            <table mat-table [dataSource]="ranking">
                 <ng-container matColumnDef="position">
                     <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>#</th>
                     <td class="w-1" mat-cell *matCellDef="let element"> {{element.sort_index}} </td>

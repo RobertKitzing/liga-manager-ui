@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { CACHE_MANAGER, Controller, Get, Inject, Param } from '@nestjs/common';
+import { CACHE_MANAGER, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom, map } from 'rxjs';
 import { Cache } from 'cache-manager';
@@ -31,6 +31,11 @@ export class WeblateController {
         @Inject(CACHE_MANAGER) private readonly cacheManager: Cache
     ) {
 
+    }
+
+    @Post('/clear-cache')
+    clearCache() {
+        return this.cacheManager.reset();
     }
 
     @Get('/languages')

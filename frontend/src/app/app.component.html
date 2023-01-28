@@ -90,12 +90,16 @@
     </div>
     <mat-divider></mat-divider>
     <div class="p-2 flex justify-between items-center">
-      <button class="w-full" mat-button [matMenuTriggerFor]="languageMenu" translate>
+      <button class="w-full" mat-button [matMenuTriggerFor]="languageMenu">
         <mat-icon>language</mat-icon>
-        LANGUAGE
+        <span translate>LANGUAGE</span>
       </button>
       <mat-icon>arrow_drop_down</mat-icon>
     </div>
+    <mat-divider></mat-divider>
+    <button mat-button (click)="clearCache()">
+      <span translate>BUTTON.CLEAR_TRANSLATION_CACHE</span>
+    </button>
   </mat-drawer>
   <mat-drawer-content>
     <div class="h-1" *ngIf="(loadingIndicatorService.loading$ | async) === true">

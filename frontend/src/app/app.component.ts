@@ -3,13 +3,16 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
-import { I18Service } from './services/i18.service';
+import { I18nService } from './services/i18n.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
 import { ThemeService } from './services/theme.service';
 import { Location } from '@angular/common'
+import { HttpClient } from '@angular/common/http';
+import { AllSeasonsListGQL } from 'src/api/graphql';
+import { SeasonService } from './services/season.service';
 
 @Component({
   selector: 'lima-root',
@@ -29,14 +32,15 @@ export class AppComponent implements OnInit {
     public themeService: ThemeService,
     public loadingIndicatorService: LoadingIndicatorService,
     public authService: AuthenticationService,
-    public i18Service: I18Service,
+    public i18Service: I18nService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private seasonService: SeasonService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.route.queryParams
       .subscribe(
         (params) => {
@@ -55,6 +59,7 @@ export class AppComponent implements OnInit {
         this.themeService.darkMode$.next(dark);
       }
     )
+    this.seasonService.seasonsInProgress$.pipe(take(1)).subscribe();
   }
 
   openLoginDialog() {
@@ -71,6 +76,10 @@ export class AppComponent implements OnInit {
 
   changeLang(param: { code: string, direction?: string }) {
     this.i18Service.changeLang(param);
+  }
+
+  async clearCache() {
+    await firstValueFrom(this.i18Service.clearCache());
   }
 
   onSwipeLeft() {

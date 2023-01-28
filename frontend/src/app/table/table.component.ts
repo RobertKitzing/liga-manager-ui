@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { switchMap, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { Ranking, RankingPosition } from 'src/api/graphql';
 import { RankingService } from '../services/ranking.service';
 import { SeasonService } from '../services/season.service';
@@ -15,7 +15,14 @@ export class TableComponent {
 
   displayedColumns: string[] = ['position', 'team', 'games', 'wins-draws-losses', 'goals', 'points'];
 
-  ranking!: any;
+  ranking$ = this.seasonService.currentSeason$.pipe(
+    switchMap(
+      (seasons) => this.rankingService.getRanking$({id: seasons.id!})
+    ),
+    map(
+      (ranking) => ranking?.positions
+    )
+  );
 
   constructor(
     public rankingService: RankingService,
@@ -23,14 +30,5 @@ export class TableComponent {
   ) {
 
   }
-
-  ranking$ = this.seasonService.seasonsInProgress$.pipe(
-    switchMap(
-      (seasons) => this.rankingService.getRanking$({id: seasons![0]?.id!})
-    ),
-    tap(
-      (ranking) => this.ranking = ranking!,
-    )
-  );
   
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ScheduleRoutingModule } from './schedule-routing.module';
 import { ScheduleComponent } from './schedule.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ScheduleComponent } from './schedule.component';
   ],
   imports: [
     CommonModule,
-    ScheduleRoutingModule
+    ScheduleRoutingModule,
+    TranslateModule,
   ]
 })
 export class ScheduleModule { }
