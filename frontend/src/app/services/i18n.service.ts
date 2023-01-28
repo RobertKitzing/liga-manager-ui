@@ -1,9 +1,8 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorage } from 'ngx-webstorage';
-import { map } from 'rxjs';
 import { AppsettingsService } from './appsettings.service';
 
 const LANG_KEY = 'LANG';
@@ -14,7 +13,7 @@ const LANG_KEY = 'LANG';
 export class I18nService {
 
   private weblateUrl = `${this.appsettingsService.appsettings?.host || ''}/weblate/languages`;
-  
+
   public availableLang$ = this.httpClient.get<{ code: string, direction: string, name: string, nativeName: string }[]>(this.weblateUrl);
 
   @LocalStorage(LANG_KEY) storedLang?: { code: string, direction?: string };
@@ -35,10 +34,15 @@ export class I18nService {
     this.changeLang(this.storedLang);
   }
 
-  changeLang({code, direction}: {code: string, direction?: string}) {
+  changeLang({ code, direction }: { code: string, direction?: string }) {
     this.translateService.use(code);
     this.setTextDir(direction);
-    this.storedLang = { code, direction}
+    this.storedLang = { code, direction };
+    import(`node_modules/@angular/common/locales/${code}.mjs`).then(
+      (lang) => {
+        registerLocaleData(lang.default)
+      }
+    )
   }
 
   setTextDir(direction?: string) {

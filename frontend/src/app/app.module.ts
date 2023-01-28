@@ -27,20 +27,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppsettingsService } from './services/appsettings.service';
 import { CustomTranslateHttpLoader } from 'src/custom-translate-http-loader';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { HammerModule } from "../../node_modules/@angular/platform-browser";
-
-
-import localeDe from '@angular/common/locales/de';
-import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeDe);
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
 }
-
-// export function httpLoaderFactory(http: HttpClient, appsettingsService: AppsettingsService) {
-//   return new TranslateHttpLoader(http, `${appsettingsService.appsettings?.host || ''}/weblate/language/`, '');
-// }
 
 @NgModule({
   declarations: [
@@ -62,7 +52,6 @@ export function graphqlFactory(provider: GraphqlService) {
     MatIconModule,
     MatDialogModule,
     MatSnackBarModule,
-    HammerModule,
     HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
