@@ -36,7 +36,7 @@
   </div>
 </mat-toolbar>
 
-<mat-drawer-container class="h-[calc(100vh_-_64px)] mat-app-background" [hasBackdrop]="true">
+<mat-drawer-container class="h-[calc(100vh_-_64px)]" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
     <div class="visible lg:hidden flex justify-center m-2">
       <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
