@@ -9,6 +9,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateModule } from '../truncate/truncate.module';
 import { HammerModule } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HammerModule } from '@angular/platform-browser';
     TruncateModule,
     MatProgressBarModule,
     MatTableModule,
+    MatIconModule,
     HammerModule,
     TranslateModule.forChild(),
   ]
