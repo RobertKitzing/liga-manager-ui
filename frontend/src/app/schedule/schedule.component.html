@@ -52,42 +52,12 @@
                                             <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
                                         </ng-container>
                                     </div>
-                                    <div class="flex-shrink" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
+                                    <div *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
                                         <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
                                             <mat-icon>edit</mat-icon>
                                         </button>
                                     </div>
                                 </div>
-                                <!-- <div class="col-span-3 grid justify-center gap-x-4 w-full" [ngClass]="{'grid-cols-3': authService.isAuthenticated, 'grid-cols-2': !authService.isAuthenticated}">
-                                    <div class="flex justify-center">
-                                        <div class="self-center" *ngIf="!match.pitch">
-                                            <mat-icon class="mr-2">location_off</mat-icon>
-                                            <span translate>NO_PTICH_SET</span>
-                                        </div>
-                                        <div class="self-center" *ngIf="match.pitch">
-                                            <mat-icon class="mr-2">location_on</mat-icon>
-                                            {{ match.pitch.label }}
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-center">
-                                        <div class="self-center">
-                                            <mat-icon class="mr-2">access_time</mat-icon>
-                                        </div>
-                                        <div class="self-center" *ngIf="!match.kickoff">
-                                            <span translate>NO_TIME_SET</span>
-                                        </div>
-                                        <div class="self-center" *ngIf="match.kickoff">
-                                            <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-center">
-                                        <div class="self-center" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
-                                            <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
-                                                <mat-icon>edit</mat-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                             <mat-divider class="w-full"></mat-divider>
                         </ng-container>

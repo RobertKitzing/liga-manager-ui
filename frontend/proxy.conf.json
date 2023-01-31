@@ -9,6 +9,11 @@
         "secure": false,
         "changeOrigin": true
     },
+    "/i18n/*": {
+        "target": "http://web:3098",
+        "secure": false,
+        "changeOrigin": true
+    },
     "/appsettings.json": {
         "target": "http://web:3098"
     }

@@ -71,7 +71,12 @@
               "assets": [
                 "src/favicon.ico",
                 "src/assets",
-                "src/appsettings.json"
+                "src/appsettings.json",
+                {
+                  "glob": "*.json",
+                  "input": "../web-server/client/i18n",
+                  "output": "i18n"
+                }
               ],
               "budgets": [
                 {

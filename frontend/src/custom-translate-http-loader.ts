@@ -15,7 +15,7 @@ export class CustomTranslateHttpLoader implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         return this.appsettingsService.loadAppsettings().pipe(
             switchMap(
-                () => this.httpClient.get(`${this.appsettingsService.appsettings?.host || ''}/weblate/language/${lang}`)
+                () => this.httpClient.get(`${this.appsettingsService.appsettings?.host || ''}/i18n/${lang}.json`)
             )
         )
     }
