@@ -8,15 +8,14 @@
                     date:'shortDate':'':i18nService.currentLang }})
                 </h3>
                 <div class="flex justify-center">
-                    <div class="">
+                    <div class="w-full">
                         <ng-container *ngFor="let match of matchDay?.matches">
-                            <div *ngIf="match" class="grid border-2 m-2 p-2 content-center"
-                                [ngClass]="{'grid-cols-4': authService.isAuthenticated, 'grid-cols-3': !authService.isAuthenticated}">
-                                <div class="text-right self-center">
+                            <div *ngIf="match" class="grid border-2 border-b-0 mt-2 content-center grid-cols-3">
+                                <div class="text-right self-center mr-2">
                                     {{match.home_team.name}}
                                 </div>
-                                <div class="text-center self-center">
-                                    <div class="grid grid-cols-3">
+                                <div class="text-center self-center m-2">
+                                    <div class="grid grid-cols-3 m-3 p-2">
                                         <div class="text-right">
                                             {{ match.home_score }} 0
                                         </div>
@@ -28,35 +27,69 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-left self-center">
+                                <div class="text-left self-center ml-2">
                                     {{match.guest_team.name}}
                                 </div>
-                                <div class="flex justify-end"
-                                    *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
-                                    <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
-                                        <mat-icon>edit</mat-icon>
-                                    </button>
-                                </div>
-                                <div class="col-span-3 flex mb-2">
-                                    <ng-container *ngIf="!match.pitch">
-                                        <mat-icon class="mr-2">location_off</mat-icon>
-                                        <span translate>NO_PTICH_SET</span>
-                                    </ng-container>
-                                    <ng-container *ngIf="match.pitch">
-                                        <mat-icon class="mr-2">location_on</mat-icon>
-                                        {{ match.pitch.label }}
-                                    </ng-container>
-                                </div>
-                                <div class="col-span-3 flex">
-                                    <mat-icon class="mr-2">access_time</mat-icon>
-                                    <ng-container *ngIf="!match.kickoff">
-                                        <span translate>NO_TIME_SET</span>
-                                    </ng-container>
-                                    <ng-container *ngIf="match.kickoff">
-                                        <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
-                                    </ng-container>
-                                </div>
                             </div>
+                            <div *ngIf="match" class="border-2 border-t-0 mb-2">
+                                <div class="w-full flex justify-evenly">
+                                    <div class="grid grid-rows-2 grid-flow-col gap-2">
+                                        <ng-container *ngIf="!match.pitch">
+                                            <mat-icon class="justify-self-center">location_off</mat-icon>
+                                            <span translate>NO_PTICH_SET</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="match.pitch">
+                                            <mat-icon class="justify-self-center">location_on</mat-icon>
+                                            <span>{{ match.pitch.label }}</span>
+                                        </ng-container>
+                                    </div>
+                                    <div class="grid grid-rows-2 grid-flow-col  gap-2">
+                                        <mat-icon class="justify-self-center">access_time</mat-icon>
+                                        <ng-container *ngIf="!match.kickoff">
+                                            <span translate>NO_TIME_SET</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="match.kickoff">
+                                            <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
+                                        </ng-container>
+                                    </div>
+                                    <div class="flex-shrink" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
+                                        <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-span-3 grid justify-center gap-x-4 w-full" [ngClass]="{'grid-cols-3': authService.isAuthenticated, 'grid-cols-2': !authService.isAuthenticated}">
+                                    <div class="flex justify-center">
+                                        <div class="self-center" *ngIf="!match.pitch">
+                                            <mat-icon class="mr-2">location_off</mat-icon>
+                                            <span translate>NO_PTICH_SET</span>
+                                        </div>
+                                        <div class="self-center" *ngIf="match.pitch">
+                                            <mat-icon class="mr-2">location_on</mat-icon>
+                                            {{ match.pitch.label }}
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <div class="self-center">
+                                            <mat-icon class="mr-2">access_time</mat-icon>
+                                        </div>
+                                        <div class="self-center" *ngIf="!match.kickoff">
+                                            <span translate>NO_TIME_SET</span>
+                                        </div>
+                                        <div class="self-center" *ngIf="match.kickoff">
+                                            <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <div class="self-center" *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
+                                            <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <mat-divider class="w-full"></mat-divider>
                         </ng-container>
                     </div>
                 </div>
