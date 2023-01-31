@@ -62,24 +62,7 @@
                                     <span translate>SCORED_CONCEDED</span>
                                     <span>{{element.wins}}:{{element.draws}}:{{element.losses}}</span>
                                     <span>{{element.scored_goals}}:{{element.conceded_goals}} ({{element.scored_goals - element.conceded_goals}})</span>
-                                    <!-- <div translate>WINS</div>
-                                    <div translate>DRAWS</div>
-                                    <div translate>LOSSES</div>
-                                    <div translate>SCORED_GOALS</div>
-                                    <div translate>CONCEDED_GOALS</div>
-                                    <div translate>GOAL_DIFFERENCE</div>
-                                    <div>{{element.wins}}</div>
-                                    <div>{{element.draws}}</div>
-                                    <div>{{element.losses}}</div>
-                                    <div>{{element.scored_goals}}</div>
-                                    <div>{{element.conceded_goals}}</div>
-                                    <div>{{element.scored_goals - element.conceded_goals}}</div> -->
                                 </div>
-                                <!-- <div class="grid grid-cols-2">
-                                    <div>{{element.wins}}</div>
-                                    <div>{{element.draws}}</div>
-                                    <div>{{element.losses}}</div>
-                                </div> -->
                             </div>
                         </div>
                     </td>
@@ -91,7 +74,7 @@
                     class="sm:pointer-events-none [&>td]:border-none"
                 ></tr>
 
-                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="h-0"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="h-0 sm:hidden"></tr>
             </table>
         </div>
     </div>
