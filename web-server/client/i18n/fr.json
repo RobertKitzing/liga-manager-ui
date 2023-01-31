@@ -27,5 +27,6 @@
     "NAVIGATION.TOURNAMENT": "Tournament",
     "PASSWORD": "Password",
     "PASSWORD_REQUIRED": "Password required",
-    "POINTS": "Points"
+    "POINTS": "Points",
+    "BUTTON.CANCEL_MATCH": "annuler le match"
 }
