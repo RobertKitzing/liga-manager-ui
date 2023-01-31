@@ -35,7 +35,11 @@
     </button>
   </div>
 </mat-toolbar>
-
+<mat-toolbar>
+  <ng-container *ngIf="currentSeason$ | async as currentSeason">
+    <div class="text-center w-full">{{ currentSeason.name }}</div>
+  </ng-container>
+</mat-toolbar>
 <mat-drawer-container class="h-[calc(100vh_-_64px)]" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
     <div class="visible lg:hidden flex justify-center m-2">
