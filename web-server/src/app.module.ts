@@ -4,9 +4,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import { validate } from './env/env.validation';
 import { AppSettingsController } from './app-settings/app-settings.controller';
-import { WeblateController } from './weblate/weblate.controller';
 import { HttpModule } from '@nestjs/axios';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LanguageController } from './language/language.controller';
 
 @Module({
   imports: [
@@ -23,8 +23,8 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       rootPath: join(__dirname, '..', 'client'),
     }),
   ],
-  controllers: [AppSettingsController, WeblateController],
+  controllers: [AppSettingsController, LanguageController],
   providers: [
   ],
 })
-export class AppModule {}
+export class AppModule { }

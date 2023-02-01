@@ -23,9 +23,6 @@ services:
       LISTEN_PORT: 3098
       WEBLATE_API_KEY: "wlu_hhPsSFnK8OpeaBfipWaopZnsz2rOwJtaNWRq"
       GOOGLE_MAPS_API_KEY: "AIzaSyCgjoPzEQH7Hhnr6GFtkwm05xoDOQJpjBo"
-      WEBLATE_HOST: weblate
-      WEBLATE_PORT: 8080
-      WEBLATE_COMPONENT: liga-manager-ui
     tty: true
     command: npm run start:dev
 

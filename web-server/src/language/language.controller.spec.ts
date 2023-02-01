@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WeblateController } from './weblate.controller';
+import { LanguageController } from './language.controller';
 
-describe('WeblateController', () => {
-  let controller: WeblateController;
+describe('LanguageController', () => {
+  let controller: LanguageController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [WeblateController],
+      controllers: [LanguageController],
     }).compile();
 
-    controller = module.get<WeblateController>(WeblateController);
+    controller = module.get<LanguageController>(LanguageController);
   });
 
   it('should be defined', () => {

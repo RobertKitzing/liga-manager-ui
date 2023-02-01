@@ -4,7 +4,7 @@
         "secure": false,
         "changeOrigin": true
     },
-    "/weblate/*": {
+    "/languages/*": {
         "target": "http://web:3098",
         "secure": false,
         "changeOrigin": true
