@@ -33,6 +33,10 @@ export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
 }
 
+export function httpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, `/i18n/`, '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,9 +63,9 @@ export function graphqlFactory(provider: GraphqlService) {
       defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
-        useClass: CustomTranslateHttpLoader,
-        // useFactory: httpLoaderFactory,
-        deps: [HttpClient, AppsettingsService]
+        // useClass: CustomTranslateHttpLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient]
       }
     }),
     ReactiveFormsModule,
