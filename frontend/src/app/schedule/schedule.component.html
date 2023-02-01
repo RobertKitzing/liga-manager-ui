@@ -1,15 +1,46 @@
 <div class="flex justify-center h-full">
     <div class="w-full sm:w-3/4">
+        <mat-toolbar>
+            <ng-container *ngIf="currentSeason$ | async as currentSeason">
+                <div class="text-center w-full">{{ currentSeason.name }}</div>
+            </ng-container>
+        </mat-toolbar>
         <ng-container *ngIf="(season$ | async) as season">
-            <ng-container *ngFor="let matchDay of season.match_days">
-                <h3 class="text-center bg-theme text-theme-cdefault p-4">
+            <mat-toolbar>
+                <mat-toolbar-row>
+                    <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
+                        <mat-option [value]="'0'">
+                            {{ 'ALL_MATCHDAYS' | translate }}
+                        </mat-option>
+                        <mat-option *ngFor="let matchDay of season.match_days" [value]="matchDay?.id">
+                            <ng-container *ngIf="matchDay">
+                                <div>
+                                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay.start_date| date:'shortDate':'':i18nService.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18nService.currentLang }})
+                                </div>
+                            </ng-container>
+                        </mat-option>
+                    </mat-select>
+                </mat-toolbar-row>
+                <mat-toolbar-row>
+                    <mat-select class="text-center" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
+                        <mat-option [value]="'0'">
+                            {{ 'ALL_TEAMS' | translate }}
+                        </mat-option>
+                        <mat-option *ngFor="let team of season.teams" [value]="team?.id">
+                            {{ team?.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <ng-container *ngFor="let matchDay of filterMatchDays(season.match_days!)">
+                <h3 class="text-center bg-theme text-theme-cdefault p-4" *ngIf="selectedMatchDayId === '0'">
                     {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date|
                     date:'shortDate':'':i18nService.currentLang }}&nbsp;-&nbsp;{{ matchDay?.end_date|
                     date:'shortDate':'':i18nService.currentLang }})
                 </h3>
                 <div class="flex justify-center">
                     <div class="w-full">
-                        <ng-container *ngFor="let match of matchDay?.matches">
+                        <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
                             <div *ngIf="match" class="grid border-2 border-b-0 mt-2 content-center grid-cols-3">
                                 <div class="text-right self-center mr-2">
                                     {{match.home_team.name}}

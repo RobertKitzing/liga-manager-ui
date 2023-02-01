@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TruncateModule } from '../truncate/truncate.module';
 import { HammerModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatIconModule,
     HammerModule,
+    MatToolbarModule,
     TranslateModule.forChild(),
   ]
 })

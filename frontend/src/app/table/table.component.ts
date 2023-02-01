@@ -21,6 +21,8 @@ import { SeasonService } from '../services/season.service';
 })
 export class TableComponent implements OnInit {
 
+  currentSeason$ = this.seasonService.currentSeason$;
+
   displayedColumns: string[] = ['position', 'team', 'games', 'wins-draws-losses', 'goals', 'points'];
 
   expandedElement: any;

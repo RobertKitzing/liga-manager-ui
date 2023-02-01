@@ -7,13 +7,7 @@
     </div>
 
     <div class="hidden h-full lg:flex lg:visible grow">
-      <a class="flex h-full items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
-      <a class="flex h-full items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
-      <a class="flex h-full items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
-      <a class="flex h-full items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
-      <a class="flex h-full items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
-      <a class="flex h-full items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
-      <a class="flex h-full items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
+      <lima-nav-links></lima-nav-links>
     </div>
     
     <div class="hidden lg:flex lg:visible">
@@ -50,29 +44,8 @@
         </button>
       </ng-template>
     </div>
-    <div class="visible lg:hidden" (click)="drawer.close()">
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.TABLE</a>
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.SCHEDULE</a>
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.TOURNAMENT</a>
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.CALENDAR</a>
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.CONTACTS</a>
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.TEAM_ADMIN</a>
-      <mat-divider></mat-divider>
-      <a class="flex items-center p-2" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900"
-        translate>NAVIGATION.ADMIN</a>
-      <mat-divider></mat-divider>
+    <div class="visible lg:hidden border-t-2" (click)="drawer.close()">
+      <lima-nav-links></lima-nav-links>
     </div>
     
     <div class="p-2">
@@ -101,11 +74,6 @@
     </button>
   </mat-drawer>
   <mat-drawer-content>
-    <mat-toolbar>
-      <ng-container *ngIf="currentSeason$ | async as currentSeason">
-        <div class="text-center w-full">{{ currentSeason.name }}</div>
-      </ng-container>
-    </mat-toolbar>
     <div class="h-1" *ngIf="(loadingIndicatorService.loading$ | async) === true">
       <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
     </div>

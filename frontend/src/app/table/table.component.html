@@ -3,6 +3,11 @@
         {{ ranking | json }}
     </ng-container>
 </ng-container> -->
+<mat-toolbar>
+    <ng-container *ngIf="currentSeason$ | async as currentSeason">
+        <div class="text-center w-full">{{ currentSeason.name }}</div>
+    </ng-container>
+</mat-toolbar>
 <ng-container *ngIf="ranking$ | async as ranking">
     <div class="flex justify-center h-full">
         <div class="w-full sm:w-3/4">

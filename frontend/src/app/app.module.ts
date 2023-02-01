@@ -27,6 +27,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppsettingsService } from './services/appsettings.service';
 import { CustomTranslateHttpLoader } from 'src/custom-translate-http-loader';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NavLinksComponent } from './components/nav-links/nav-links.component';
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
@@ -36,6 +37,7 @@ export function graphqlFactory(provider: GraphqlService) {
   declarations: [
     AppComponent,
     LoginComponent,
+    NavLinksComponent,
   ],
   imports: [
     ApolloModule,
