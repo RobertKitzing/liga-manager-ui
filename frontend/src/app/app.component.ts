@@ -79,10 +79,6 @@ export class AppComponent implements OnInit {
     this.i18Service.changeLang(param);
   }
 
-  async clearCache() {
-    await firstValueFrom(this.i18Service.clearCache());
-  }
-
   onSwipeLeft() {
     this.location.back();
   }

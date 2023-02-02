@@ -69,9 +69,6 @@
       <mat-icon>arrow_drop_down</mat-icon>
     </div>
     <mat-divider></mat-divider>
-    <button mat-button (click)="clearCache()">
-      <span translate>BUTTON.CLEAR_TRANSLATION_CACHE</span>
-    </button>
   </mat-drawer>
   <mat-drawer-content>
     <div class="h-1" *ngIf="(loadingIndicatorService.loading$ | async) === true">

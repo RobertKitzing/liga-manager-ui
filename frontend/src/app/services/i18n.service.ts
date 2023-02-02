@@ -47,8 +47,4 @@ export class I18nService {
     this.document.body.dir = direction || 'ltr';
   }
 
-  clearCache() {
-    return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/weblate/clear-cache`, {});
-  }
-
 }
