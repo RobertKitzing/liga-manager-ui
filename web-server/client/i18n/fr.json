@@ -28,5 +28,11 @@
     "PASSWORD": "Password",
     "PASSWORD_REQUIRED": "Password required",
     "POINTS": "Points",
-    "BUTTON.CANCEL_MATCH": "annuler le match"
+    "BUTTON.CANCEL_MATCH": "annuler le match",
+    "ALL_MATCHDAYS": "All Matchdays",
+    "ALL_TEAMS": "All Teams",
+    "PLACEHOLDER.SELECT_MATCHDAY": "Matchday",
+    "BUTTON.EDIT_PITCH": "Edit Pitch",
+    "BUTTON.EDIT_RESULT": "Edit Result",
+    "BUTTON.EDIT_TIME": "Edit Time"
 }
