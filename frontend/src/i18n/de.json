@@ -28,5 +28,14 @@
     "POINTS": "Punkte",
     "BUTTON.CHANGE_PASSWORD": "Password ändern",
     "SEND_NEW_PASSWORD_MAIL_SUCCESS": "E-Mail ist auf dem Weg",
-    "TEAM_NAME": "Manschaft"
+    "TEAM_NAME": "Manschaft",
+    "BUTTON.EDIT_PITCH": "Spielort",
+    "BUTTON.EDIT_RESULT": "Ergebniss",
+    "BUTTON.EDIT_TIME": "Zeit",
+    "NO_PTICH_SET": "wo?",
+    "NO_TIME_SET": "wann?",
+    "PLACEHOLDER.SELECT_MATCHDAY": "Spieltag",
+    "PLACEHOLDER.SELECT_TEAM": "Manschaft",
+    "ALL_TEAMS": "Alle Manschaften",
+    "ALL_MATCHDAYS": "Alle Spieltage"
 }
