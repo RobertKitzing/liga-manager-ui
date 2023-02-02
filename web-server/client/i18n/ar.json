@@ -28,5 +28,11 @@
     "USERNAME": "Username",
     "USERNAME_REQUIRED": "Username required",
     "WINS_DRAWS_LOSSES": "V:D:L",
-    "BUTTON.CANCEL_MATCH": "إلغاء المباراة"
+    "BUTTON.CANCEL_MATCH": "إلغاء المباراة",
+    "ALL_TEAMS": "All Teams",
+    "BUTTON.EDIT_RESULT": "Edit Result",
+    "BUTTON.EDIT_TIME": "Edit Time",
+    "ALL_MATCHDAYS": "All Matchdays",
+    "PLACEHOLDER.SELECT_MATCHDAY": "Matchday",
+    "BUTTON.EDIT_PITCH": "Edit Pitch"
 }
