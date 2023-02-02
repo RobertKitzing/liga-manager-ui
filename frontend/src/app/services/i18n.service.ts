@@ -12,9 +12,7 @@ const LANG_KEY = 'LANG';
 })
 export class I18nService {
 
-  private weblateUrl = `${this.appsettingsService.appsettings?.host || ''}/languages`;
-
-  public availableLang$ = this.httpClient.get<{ code: string, direction: string, name: string, nativeName: string }[]>(this.weblateUrl);
+  public availableLang$ = this.httpClient.get<{ code: string, direction: string, name: string, nativeName: string }[]>('/assets/languages.json');
 
   @LocalStorage(LANG_KEY) storedLang?: { code: string, direction?: string };
 

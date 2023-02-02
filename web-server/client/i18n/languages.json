@@ -1,0 +1,26 @@
+[
+  {
+    "code": "ar",
+    "name": "Arabic",
+    "nativeName": "العربية",
+    "direction": "rtl"
+  },
+  {
+    "code": "de",
+    "name": "German",
+    "nativeName": "Deutsch",
+    "direction": "ltr"
+  },
+  {
+    "code": "en",
+    "name": "English",
+    "nativeName": "English",
+    "direction": "ltr"
+  },
+  {
+    "code": "fr",
+    "name": "French",
+    "nativeName": "Français",
+    "direction": "ltr"
+  }
+]
