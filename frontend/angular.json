@@ -72,6 +72,7 @@
               "assets": [
                 "src/favicon.ico",
                 "src/assets",
+                "src/i18n",
                 "src/appsettings.json"
               ],
               "budgets": [
