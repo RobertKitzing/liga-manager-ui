@@ -60,7 +60,6 @@ export class AppComponent implements OnInit {
         this.themeService.darkMode$.next(dark);
       }
     )
-    this.seasonService.seasonsInProgress$.pipe(take(1)).subscribe();
   }
 
   openLoginDialog() {

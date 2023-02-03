@@ -1,103 +1,103 @@
+<mat-toolbar class="flex justify-center bg-gray-100">
+    <div class="w-full lg:w-1/2 flex justify-between">
+        <div class="w-full self-center">
+            <lima-season-chooser></lima-season-chooser>
+        </div>
+        <button class="self-center ml-4" mat-icon-button (click)="showFilter = !showFilter">
+            <mat-icon>filter_list</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<ng-container *ngIf="(season$ | async) as season">
 <div class="flex justify-center h-full">
     <div class="w-full sm:w-3/4">
-        <mat-toolbar>
-            <ng-container *ngIf="currentSeason$ | async as currentSeason">
-                <div class="text-center w-full">{{ currentSeason.name }}</div>
-            </ng-container>
-        </mat-toolbar>
-        <ng-container *ngIf="(season$ | async) as season">
-            <mat-toolbar>
-                <mat-toolbar-row>
-                    <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
-                        <mat-option [value]="'0'">
-                            {{ 'ALL_MATCHDAYS' | translate }}
-                        </mat-option>
-                        <mat-option *ngFor="let matchDay of season.match_days" [value]="matchDay?.id">
-                            <ng-container *ngIf="matchDay">
-                                <div>
-                                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay.start_date| date:'shortDate':'':i18nService.currentLang }}&nbsp;-&nbsp;{{ matchDay.end_date| date:'shortDate':'':i18nService.currentLang }})
-                                </div>
-                            </ng-container>
-                        </mat-option>
-                    </mat-select>
-                </mat-toolbar-row>
-                <mat-toolbar-row>
-                    <mat-select class="text-center" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
-                        <mat-option [value]="'0'">
-                            {{ 'ALL_TEAMS' | translate }}
-                        </mat-option>
-                        <mat-option *ngFor="let team of season.teams" [value]="team?.id">
-                            {{ team?.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-toolbar-row>
-            </mat-toolbar>
-            <ng-container *ngFor="let matchDay of filterMatchDays(season.match_days!)">
-                <h3 class="text-center bg-theme text-theme-cdefault p-4" *ngIf="selectedMatchDayId === '0'">
-                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date|
-                    date:'shortDate':'':i18nService.currentLang }}&nbsp;-&nbsp;{{ matchDay?.end_date|
-                    date:'shortDate':'':i18nService.currentLang }})
-                </h3>
-                <div class="flex justify-center">
-                    <div class="w-full">
-                        <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
-                            <div *ngIf="match" class="grid border-2 border-b-0 mt-2 content-center grid-cols-3">
-                                <div class="text-right self-center mr-2">
-                                    {{match.home_team.name}}
-                                </div>
-                                <div class="text-center self-center m-2">
-                                    <div class="grid grid-cols-3 m-3 p-2">
-                                        <div class="text-right">
-                                            {{ match.home_score }} 0
-                                        </div>
-                                        <div>
-                                            -
-                                        </div>
-                                        <div class="text-left">
-                                            {{ match.guest_score }} 0
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-left self-center ml-2">
-                                    {{match.guest_team.name}}
-                                </div>
+        <div class="w-full grid grid-cols-1 lg:grid-cols-2 bg-gray-100 p-2" *ngIf="showFilter">
+            <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
+                <mat-option [value]="'0'">
+                    {{ 'ALL_MATCHDAYS' | translate }}
+                </mat-option>
+                <mat-option *ngFor="let matchDay of season.match_days" [value]="matchDay?.id">
+                    <ng-container *ngIf="matchDay">
+                        <div>
+                            {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }})
+                        </div>
+                    </ng-container>
+                </mat-option>
+            </mat-select>
+            <mat-select class="text-center lg:pt-2" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
+                <mat-option [value]="'0'">
+                    {{ 'ALL_TEAMS' | translate }}
+                </mat-option>
+                <mat-option *ngFor="let team of season.teams" [value]="team?.id">
+                    {{ team?.name }}
+                </mat-option>
+            </mat-select>
+        </div>
+        <ng-container *ngFor="let matchDay of filterMatchDays(season.match_days!)">
+            <h3 class="text-center bg-theme text-theme-cdefault p-4" *ngIf="selectedMatchDayId === '0'">
+                {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date| customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date| customDate }})
+            </h3>
+            <div class="flex justify-center">
+                <div class="w-full">
+                    <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
+                        <div *ngIf="match" class="grid border-2 border-b-0 mt-2 content-center grid-cols-3">
+                            <div class="text-right self-center mr-2">
+                                {{match.home_team.name}}
                             </div>
-                            <div *ngIf="match" class="border-2 border-t-0 mb-2">
-                                <div class="w-full flex justify-evenly">
-                                    <div class="grid grid-rows-2 grid-flow-col gap-2">
-                                        <ng-container *ngIf="!match.pitch">
-                                            <mat-icon class="justify-self-center">location_off</mat-icon>
-                                            <span translate>NO_PTICH_SET</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="match.pitch">
-                                            <mat-icon class="justify-self-center">location_on</mat-icon>
-                                            <span>{{ match.pitch.label }}</span>
-                                        </ng-container>
+                            <div class="text-center self-center m-2">
+                                <div class="grid grid-cols-3 m-3 p-2">
+                                    <div class="text-right">
+                                        {{ match.home_score || '-' }}
                                     </div>
-                                    <div class="grid grid-rows-2 grid-flow-col  gap-2">
-                                        <mat-icon class="justify-self-center">access_time</mat-icon>
-                                        <ng-container *ngIf="!match.kickoff">
-                                            <span translate>NO_TIME_SET</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="match.kickoff">
-                                            <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
-                                        </ng-container>
+                                    <div>
+                                        :
                                     </div>
-                                    <div *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
-                                        <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
-                                            <mat-icon>edit</mat-icon>
-                                        </button>
+                                    <div class="text-left">
+                                        {{ match.guest_score|| '-' }}
                                     </div>
                                 </div>
                             </div>
-                            <mat-divider class="w-full"></mat-divider>
-                        </ng-container>
-                    </div>
+                            <div class="text-left self-center ml-2">
+                                {{match.guest_team.name}}
+                            </div>
+                        </div>
+                        <div *ngIf="match" class="border-2 border-t-0 mb-2">
+                            <div class="w-full flex justify-evenly">
+                                <div class="grid grid-rows-2 grid-flow-col gap-2">
+                                    <ng-container *ngIf="!match.pitch">
+                                        <mat-icon class="justify-self-center">location_off</mat-icon>
+                                        <span translate>NO_PTICH_SET</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="match.pitch">
+                                        <mat-icon class="justify-self-center">location_on</mat-icon>
+                                        <span>{{ match.pitch.label }}</span>
+                                    </ng-container>
+                                </div>
+                                <div class="grid grid-rows-2 grid-flow-col  gap-2">
+                                    <mat-icon class="justify-self-center">access_time</mat-icon>
+                                    <ng-container *ngIf="!match.kickoff">
+                                        <span translate>NO_TIME_SET</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="match.kickoff">
+                                        <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
+                                    </ng-container>
+                                </div>
+                                <div *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)">
+                                    <button mat-icon-button color="primary" [matMenuTriggerFor]="editMenu">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-divider class="w-full"></mat-divider>
+                    </ng-container>
                 </div>
-            </ng-container>
+            </div>
         </ng-container>
     </div>
 </div>
+</ng-container>
 
 <mat-menu #editMenu [overlapTrigger]="false">
     <button mat-menu-item (click)="openEditResultDialog()">

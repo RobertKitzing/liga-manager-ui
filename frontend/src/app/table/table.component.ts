@@ -44,6 +44,5 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.seasonService.seasonsInProgress$.pipe(take(1)).subscribe();
   }
 }

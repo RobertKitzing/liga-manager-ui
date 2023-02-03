@@ -1,0 +1,9 @@
+<div class="flex justify-center w-full">
+    <mat-select class="text-center" #seasonSelect [compareWith]="seasonService.seasonCompare"
+        (selectionChange)="currentSeasonChanged($event)" [value]="season$ | async"
+        placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
+        <mat-option *ngFor="let season of seasonList$ | async" [value]="season">
+            {{ season?.name }} {{ season?.state !== SeasonState.Progress ? ('(' + ('SeasonState.' + season?.state | translate ) + ')') : '' }}
+        </mat-option>
+    </mat-select>
+</div>

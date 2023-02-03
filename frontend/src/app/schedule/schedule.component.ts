@@ -24,6 +24,7 @@ export class ScheduleComponent implements OnInit {
 
   selectedMatchDayId = '0';
   selectedTeamId = '0'
+  showFilter = false;
 
   constructor(
     private seasonService: SeasonService,
@@ -31,9 +32,7 @@ export class ScheduleComponent implements OnInit {
     public authService: AuthenticationService,
   ) { }
 
-  ngOnInit(): void {
-    this.seasonService.seasonsInProgress$.pipe(take(1)).subscribe();
-    
+  ngOnInit(): void {    
   }
 
   filterMatchDays(matchDays: any[]): any[] {

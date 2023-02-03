@@ -11,6 +11,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomDateModule } from '../pipes/custom-date/custom-date.module';
+import { SeasonChooserModule } from '../components/season-chooser/season-chooser.module';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatToolbarModule,
     MatSelectModule,
     ReactiveFormsModule,
+    CustomDateModule,
+    SeasonChooserModule,
   ]
 })
 export class ScheduleModule { }

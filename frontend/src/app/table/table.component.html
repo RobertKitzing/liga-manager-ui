@@ -1,12 +1,7 @@
-<!-- <ng-container *ngIf="seasonService.currentSeason$ | async as currentSeason">
-    <ng-container *ngIf="rankingService.getRanking$({id: currentSeason.id}) | async as ranking">
-        {{ ranking | json }}
-    </ng-container>
-</ng-container> -->
-<mat-toolbar>
-    <ng-container *ngIf="currentSeason$ | async as currentSeason">
-        <div class="text-center w-full">{{ currentSeason.name }}</div>
-    </ng-container>
+<mat-toolbar class="flex justify-center bg-gray-100">
+    <div class="w-full lg:w-1/2">
+        <lima-season-chooser></lima-season-chooser>
+    </div>
 </mat-toolbar>
 <ng-container *ngIf="ranking$ | async as ranking">
     <div class="flex justify-center h-full">

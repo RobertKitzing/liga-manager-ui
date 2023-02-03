@@ -7,10 +7,11 @@ import { TableComponent } from './table.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { TruncateModule } from '../truncate/truncate.module';
+import { TruncateModule } from '../pipes/truncate/truncate.module';
 import { HammerModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { SeasonChooserModule } from '../components/season-chooser/season-chooser.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     HammerModule,
     MatToolbarModule,
     TranslateModule.forChild(),
+    SeasonChooserModule,
   ]
 })
 export class TableModule { }
