@@ -1,6 +1,6 @@
 <mat-toolbar class="flex justify-center bg-gray-100">
-    <div class="w-full lg:w-1/2 flex justify-between">
-        <div class="w-full self-center">
+    <div class="w-full sm:w-3/4 flex justify-between">
+        <div class="w-1/2 self-center">
             <lima-season-chooser></lima-season-chooser>
         </div>
         <button class="self-center ml-4" mat-icon-button (click)="showFilter = !showFilter">
@@ -12,7 +12,7 @@
 <ng-container *ngIf="(season$ | async) as season">
 <div class="flex justify-center h-full">
     <div class="w-full sm:w-3/4">
-        <div class="w-full grid grid-cols-1 lg:grid-cols-2 bg-gray-100 p-2" *ngIf="showFilter">
+        <div class="w-full grid grid-cols-1 lg:grid-cols-2 bg-gray-100 p-2 gap-4" *ngIf="showFilter">
             <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
                 <mat-option [value]="'0'">
                     {{ 'ALL_MATCHDAYS' | translate }}
@@ -25,7 +25,7 @@
                     </ng-container>
                 </mat-option>
             </mat-select>
-            <mat-select class="text-center lg:pt-2" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
+            <mat-select class="text-center" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
                 <mat-option [value]="'0'">
                     {{ 'ALL_TEAMS' | translate }}
                 </mat-option>

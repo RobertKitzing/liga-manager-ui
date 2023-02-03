@@ -10,7 +10,7 @@ import { SeasonService } from '../services/season.service';
   selector: 'lima-schedule',
   templateUrl: './schedule.component.html',
   styles: [
-  ]
+  ],
 })
 export class ScheduleComponent implements OnInit {
 

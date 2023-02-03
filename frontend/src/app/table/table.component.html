@@ -1,11 +1,11 @@
-<mat-toolbar class="flex justify-center bg-gray-100">
-    <div class="w-full lg:w-1/2">
-        <lima-season-chooser></lima-season-chooser>
-    </div>
-</mat-toolbar>
-<ng-container *ngIf="ranking$ | async as ranking">
-    <div class="flex justify-center h-full">
-        <div class="w-full sm:w-3/4">
+<div class="flex justify-center h-full">
+    <div class="w-full sm:w-3/4">
+        <mat-toolbar class="bg-gray-100">
+            <div class="w-full lg:w-1/2">
+                <lima-season-chooser></lima-season-chooser>
+            </div>
+        </mat-toolbar>
+        <ng-container *ngIf="ranking$ | async as ranking">
             <table mat-table [dataSource]="ranking" multiTemplateDataRows>
                 <ng-container matColumnDef="position">
                     <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>#</th>
@@ -76,6 +76,6 @@
 
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="h-0"></tr>
             </table>
-        </div>
+        </ng-container>
     </div>
-</ng-container>
+</div>
