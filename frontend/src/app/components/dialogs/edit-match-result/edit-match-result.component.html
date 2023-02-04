@@ -1,0 +1,31 @@
+<div mat-dialog-title class="flex bg-theme text-theme-cdefault p-4">
+    <div class="self-center text-center w-full grid grid-cols-1 gap-2">
+        <span class="text-lg">{{ data.match.home_team.name }} - {{ data.match.guest_team.name }}</span>
+        <span>{{ 'MATCHDAY' | translate:{matchDay: data.matchDay.number} }} ({{ data.matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ data.matchDay.end_date| customDate }})</span>
+    </div>
+</div>
+<div class="flex justify-center">
+    <div class="grid grid-cols-7 m-3 p-2">
+        <div class="col-span-3">
+            <!-- {{ (match.home_score | number) || '-' }} -->
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+                <input matInput type="number" placeholder="{{ 'PLACEHOLDER.HOME_SCORE' | translate}}"/>
+            </mat-form-field>
+        </div>
+        <div class="text-center self-center">
+            :
+        </div>
+        <div class="col-span-3">
+            <!-- {{ (match.guest_score | number) || '-' }} -->
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+                <input matInput type="number" placeholder="{{ 'PLACEHOLDER.GUEST_SCORE' | translate}}"/>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="flex justify-evenly p-2 bg-theme text-theme-cdefault">
+    <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+    <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" cdkFocusInitial>
+        {{ 'BUTTON.SAVE' | translate}}
+    </button>
+</div>

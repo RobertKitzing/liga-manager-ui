@@ -13,6 +13,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDateModule } from '../pipes/custom-date/custom-date.module';
 import { SeasonChooserModule } from '../components/season-chooser/season-chooser.module';
+import { NumberModule } from '../pipes/number/number.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditMatchResultModule } from '../components/dialogs/edit-match-result/edit-match-result.module';
 
 
 @NgModule({
@@ -32,6 +35,9 @@ import { SeasonChooserModule } from '../components/season-chooser/season-chooser
     ReactiveFormsModule,
     CustomDateModule,
     SeasonChooserModule,
+    NumberModule,
+    MatDialogModule,
+    EditMatchResultModule,
   ]
 })
 export class ScheduleModule { }
