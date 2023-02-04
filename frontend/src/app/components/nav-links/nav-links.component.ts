@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'lima-nav-links',
@@ -6,5 +7,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./nav-links.component.scss'],
 })
 export class NavLinksComponent {
+
+  constructor(
+    public authService: AuthenticationService
+  ) {
+
+  }
 
 }

@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { map, switchMap, take, tap } from 'rxjs';
+import { map, of, switchMap, take, tap } from 'rxjs';
 import { Ranking, RankingPosition } from 'src/api/graphql';
 import { RankingService } from '../services/ranking.service';
 import { SeasonService } from '../services/season.service';
@@ -29,7 +29,7 @@ export class TableComponent implements OnInit {
 
   ranking$ = this.seasonService.currentSeason$.pipe(
     switchMap(
-      (seasons) => this.rankingService.getRanking$({ id: seasons.id! })
+      (currentSeason) => currentSeason?.id ?this.rankingService.getRanking$({ id: currentSeason.id! }) : of(null)
     ),
     map(
       (ranking) => ranking?.positions

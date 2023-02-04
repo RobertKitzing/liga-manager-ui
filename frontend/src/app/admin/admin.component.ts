@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'lima-admin',
-  template: `
-    <p>
-      admin works!
-    </p>
-  `,
+  templateUrl: './admin.component.html',
   styles: [
   ]
 })

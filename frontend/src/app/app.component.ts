@@ -18,7 +18,6 @@ import { SeasonService } from './services/season.service';
   selector: 'lima-root',
   templateUrl: './app.component.html',
   styles: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
 
