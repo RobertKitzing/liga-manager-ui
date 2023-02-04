@@ -26,7 +26,7 @@ export class EnumTranslatePipe implements PipeTransform {
       case SeasonState.Progress:
         return marker('SeasonState.Progress');
       default:
-        return ''
+        throw new Error(`Unupported Enum Value ${value}`)
     }
 
   }
