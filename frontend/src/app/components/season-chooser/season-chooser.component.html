@@ -3,7 +3,16 @@
         (selectionChange)="currentSeasonChanged($event)" [value]="season$ | async"
         placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
         <mat-option *ngFor="let season of seasonList$ | async" [value]="season">
-            {{ season?.name }} {{ season?.state !== SeasonState.Progress ? ('(' + ('SeasonState.' + season?.state | translate ) + ')') : '' }}
+            <ng-container *ngIf="season">
+                <ng-container [ngSwitch]="season.state">
+                    <ng-container *ngSwitchCase="SeasonState.Progress">
+                        {{ season.name }}
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        {{ season.name }} ({{ season.state | enumTranslate }})
+                    </ng-container>
+                </ng-container>
+            </ng-container>
         </mat-option>
     </mat-select>
 </div>
