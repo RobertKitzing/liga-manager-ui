@@ -14,8 +14,16 @@ export class ThemeService {
   @LocalStorage('THEME')
   private currentTheme?: string;
 
+  @LocalStorage('DARK_MODE')
+  private darkMode?: boolean;
+
   currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
-  darkMode$ = new Subject<boolean>();
+  darkMode$ = new BehaviorSubject<boolean>(
+    (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) && this.darkMode!
+  );
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -31,13 +39,6 @@ export class ThemeService {
         this.setDarkmode(dark);
       }
     );
-
-    const darkModeOn =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    this.darkMode$.next(darkModeOn);
-
   }
 
   private loadStyle(styleName: string) {
@@ -62,5 +63,6 @@ export class ThemeService {
   private setDarkmode(dark: boolean) {
     const mode = dark ? 'add' : 'remove';
     this.document.body.classList[mode]('darkMode');
+    this.darkMode = dark;
   }
 }

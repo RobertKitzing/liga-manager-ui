@@ -21,7 +21,7 @@ import { SeasonService } from './services/season.service';
 })
 export class AppComponent implements OnInit {
 
-  darkModeControl = new FormControl();
+  darkModeControl = new FormControl(this.themeService.darkMode$.getValue());
   currentSeason$ = this.seasonService.currentSeason$;
 
   get currentRoute() {
@@ -49,14 +49,9 @@ export class AppComponent implements OnInit {
         }
       );
 
-    this.themeService.darkMode$.subscribe(
-      (darkMode) => {
-        this.darkModeControl.setValue(darkMode, { emitEvent: false });
-      }
-    );
     this.darkModeControl.valueChanges.subscribe(
       (dark) => {
-        this.themeService.darkMode$.next(dark);
+        this.themeService.darkMode$.next(dark!);
       }
     )
   }
