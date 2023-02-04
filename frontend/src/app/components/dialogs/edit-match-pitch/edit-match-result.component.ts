@@ -12,7 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   templateUrl: './edit-match-result.component.html',
   styleUrls: []
 })
-export class EditMatchResultComponent {
+export class EditMatchPitchComponent {
 
   resultFormGroup = new FormGroup({
     home_score: new FormControl(this.data.match.home_score, [Validators.required]),
@@ -23,7 +23,7 @@ export class EditMatchResultComponent {
     @Inject(MAT_DIALOG_DATA) public data: { match: Match, matchDay: MatchDay },
     private notify: NotificationService,
     private translateService: TranslateService,
-    private dialogRef: MatDialogRef<EditMatchResultComponent>,
+    private dialogRef: MatDialogRef<EditMatchPitchComponent>,
     private matchService: MatchService,
   ) {
 

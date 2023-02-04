@@ -28,6 +28,7 @@ import { AppsettingsService } from './services/appsettings.service';
 import { CustomTranslateHttpLoader } from 'src/custom-translate-http-loader';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavLinksComponent } from './components/nav-links/nav-links.component';
+import { EditMatchBaseComponent } from './components/dialogs/edit-match-base/edit-match-base.component';
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();

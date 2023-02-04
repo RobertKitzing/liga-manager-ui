@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { of, switchMap, take } from 'rxjs';
 import { Match, MatchDay, MatchDayFragment, MatchFragment } from 'src/api/graphql';
+import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-result.component';
 import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { I18nService } from '../services/i18n.service';
@@ -55,12 +56,18 @@ export class ScheduleComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  openEditPitchDialog() {
-    throw new Error('Method not implemented.');
+  openEditKickoffDialog() {
+
+  }
+
+  openEditPitchDialog(match: Match, matchDay: MatchDay) {
+    this.dialog.open(EditMatchPitchComponent, {
+      data: {match, matchDay}
+    });
   }
 
   openEditResultDialog(match: Match, matchDay: MatchDay) {
-    const dialogRef = this.dialog.open(EditMatchResultComponent, {
+    this.dialog.open(EditMatchResultComponent, {
       data: {match, matchDay}
     });
   }

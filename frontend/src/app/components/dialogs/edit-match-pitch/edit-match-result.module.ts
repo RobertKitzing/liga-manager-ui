@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditMatchResultComponent } from './edit-match-result.component';
+import { EditMatchPitchComponent } from './edit-match-result.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,7 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
 
 @NgModule({
   declarations: [
-    EditMatchResultComponent
+    EditMatchPitchComponent
   ],
   imports: [
     CommonModule,
@@ -27,4 +27,4 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
     EditMatchBaseModule,
   ]
 })
-export class EditMatchResultModule { }
+export class EditMatchPitchModule { }
