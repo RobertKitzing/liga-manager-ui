@@ -41,68 +41,70 @@
                 <div class="flex justify-center">
                     <div class="w-full">
                         <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
-                            <div class="flex border-2 border-b-0 w-full mt-2">
-                                <div *ngIf="match" class="grid mt-2 content-center grid-cols-3 w-full">
-                                    <div class="text-right self-center mr-2">
-                                        {{match.home_team.name}}
-                                    </div>
-                                    <div class="text-center self-center m-2 lg:flex lg:justify-center">
-                                        <div class="grid grid-cols-3 m-3 p-2 border-2 bg-theme-700 text-theme-c700 lg:w-1/3">
-                                            <div class="text-right">
-                                                {{ (match.home_score | number) || '-' }}
-                                            </div>
-                                            <div>
-                                                :
-                                            </div>
-                                            <div class="text-left">
-                                                {{ (match.guest_score | number) || '-' }}
+                            <div class="flex border-2 rounded-lg w-[96%] mt-2 mb-2 items-center m-auto">
+                                <div class="w-full" *ngIf="match">
+                                    <div class="grid mt-2 content-center grid-cols-3 w-full">
+                                        <div class="text-right self-center mr-2">
+                                            {{match.home_team.name}}
+                                        </div>
+                                        <div class="text-center self-center lg:flex lg:justify-center">
+                                            <div class="grid grid-cols-3 m-3 p-2 border-2 border-2 rounded-lg bg-theme-700 text-theme-c700 lg:w-1/3">
+                                                <div>
+                                                    {{ (match.home_score | number) || '-' }}
+                                                </div>
+                                                <div>
+                                                    :
+                                                </div>
+                                                <div>
+                                                    {{ (match.guest_score | number) || '-' }}
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="text-left self-center ml-2">
+                                            {{match.guest_team.name}}
+                                        </div>
                                     </div>
-                                    <div class="text-left self-center ml-2">
-                                        {{match.guest_team.name}}
+                                    <div class="w-full flex justify-evenly">
+                                        <div class="grid grid-rows-2 grid-flow-col gap-2">
+                                            <ng-container *ngIf="!match.pitch">
+                                                <mat-icon class="justify-self-center">location_off</mat-icon>
+                                                <span translate>NO_PTICH_SET</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="match.pitch">
+                                                <mat-icon class="justify-self-center">location_on</mat-icon>
+                                                <span>{{ match.pitch.label }}</span>
+                                            </ng-container>
+                                        </div>
+                                        <div class="grid grid-rows-2 grid-flow-col  gap-2">
+                                            <mat-icon class="justify-self-center">access_time</mat-icon>
+                                            <ng-container *ngIf="!match.kickoff">
+                                                <span translate>NO_TIME_SET</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="match.kickoff">
+                                                <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
+                                            </ng-container>
+                                        </div>
                                     </div>
                                 </div>
-                                <div *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)" class="m-2 relative top-10">
-                                    <button mat-mini-fab color="primary" [matMenuTriggerFor]="editMenu">
-                                        <mat-icon>edit</mat-icon>
-                                    </button>
-                                    <mat-menu #editMenu [overlapTrigger]="false">
-                                        <button mat-menu-item (click)="openEditResultDialog(match, matchDay)">
-                                            <span translate>BUTTON.EDIT_RESULT</span>
+                                <div class="flex justify-end mr-2">
+                                    <div *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)" class="m-2">
+                                        <button mat-mini-fab color="primary" [matMenuTriggerFor]="editMenu">
+                                            <mat-icon>edit</mat-icon>
                                         </button>
-                                        <button mat-menu-item (click)="openEditPitchDialog(match, matchDay)">
-                                            <span translate>BUTTON.EDIT_PITCH</span>
-                                        </button>
-                                        <button mat-menu-item (click)="openEditKickoffDialog()">
-                                            <span translate>BUTTON.EDIT_TIME</span>
-                                        </button>
-                                        <button mat-menu-item (click)="openCancelMatchDialog()">
-                                            <span translate>BUTTON.CANCEL_MATCH</span>
-                                        </button>
-                                    </mat-menu>
-                                </div>
-                            </div>
-                            <div *ngIf="match" class="border-2 border-t-0 mb-2">
-                                <div class="w-full flex justify-evenly">
-                                    <div class="grid grid-rows-2 grid-flow-col gap-2">
-                                        <ng-container *ngIf="!match.pitch">
-                                            <mat-icon class="justify-self-center">location_off</mat-icon>
-                                            <span translate>NO_PTICH_SET</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="match.pitch">
-                                            <mat-icon class="justify-self-center">location_on</mat-icon>
-                                            <span>{{ match.pitch.label }}</span>
-                                        </ng-container>
-                                    </div>
-                                    <div class="grid grid-rows-2 grid-flow-col  gap-2">
-                                        <mat-icon class="justify-self-center">access_time</mat-icon>
-                                        <ng-container *ngIf="!match.kickoff">
-                                            <span translate>NO_TIME_SET</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="match.kickoff">
-                                            <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
-                                        </ng-container>
+                                        <mat-menu #editMenu [overlapTrigger]="false">
+                                            <button mat-menu-item (click)="openEditResultDialog(match, matchDay)">
+                                                <span translate>BUTTON.EDIT_RESULT</span>
+                                            </button>
+                                            <button mat-menu-item (click)="openEditPitchDialog(match, matchDay)">
+                                                <span translate>BUTTON.EDIT_PITCH</span>
+                                            </button>
+                                            <button mat-menu-item (click)="openEditKickoffDialog()">
+                                                <span translate>BUTTON.EDIT_TIME</span>
+                                            </button>
+                                            <button mat-menu-item (click)="openCancelMatchDialog()">
+                                                <span translate>BUTTON.CANCEL_MATCH</span>
+                                            </button>
+                                        </mat-menu>
                                     </div>
                                 </div>
                             </div>
