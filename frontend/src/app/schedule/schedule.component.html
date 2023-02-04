@@ -12,7 +12,7 @@
             </div>
         </mat-toolbar>
         <ng-container *ngIf="(season$ | async) as season">
-            <div class="w-full grid grid-cols-1 lg:grid-cols-2 p-2 gap-4" *ngIf="showFilter">
+            <div class="w-full grid grid-cols-1 lg:grid-cols-2 p-2 gap-4 bg-toolbar dark:bg-toolbardark" *ngIf="showFilter">
                 <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
                     <mat-option [value]="'0'">
                         {{ 'ALL_MATCHDAYS' | translate }}
@@ -40,15 +40,15 @@
                 </h3>
                 <div class="flex justify-center">
                     <div class="w-full">
-                        <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
-                            <div class="flex border-2 rounded-lg w-[96%] mt-2 mb-2 items-center m-auto">
+                        <ng-container *ngFor="let match of filterMatches(matchDay?.matches); let i as index">
+                            <div class="flex w-[96%] mt-2 mb-2 items-center m-auto border-2 rounded-lg dark:border-toolbardark flex-col">
                                 <div class="w-full" *ngIf="match">
                                     <div class="grid mt-2 content-center grid-cols-3 w-full">
                                         <div class="text-right self-center mr-2">
                                             {{match.home_team.name}}
                                         </div>
                                         <div class="text-center self-center lg:flex lg:justify-center">
-                                            <div class="grid grid-cols-3 m-3 p-2 border-2 border-2 rounded-lg bg-theme-700 text-theme-c700 lg:w-1/3">
+                                            <div class="grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded-lg bg-theme-700 text-theme-c700 lg:w-1/3">
                                                 <div>
                                                     {{ (match.home_score | number) || '-' }}
                                                 </div>
