@@ -41,7 +41,7 @@
                 <div class="flex justify-center">
                     <div class="w-full">
                         <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
-                            <div class="flex border-2 border-b-0 w-full">
+                            <div class="flex border-2 border-b-0 w-full mt-2">
                                 <div *ngIf="match" class="grid mt-2 content-center grid-cols-3 w-full">
                                     <div class="text-right self-center mr-2">
                                         {{match.home_team.name}}
@@ -106,7 +106,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <mat-divider class="w-full"></mat-divider>
                         </ng-container>
                     </div>
                 </div>

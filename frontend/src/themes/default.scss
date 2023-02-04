@@ -90,6 +90,6 @@ $liga-manager-ui-dark-theme: mat.define-dark-theme((color: (
   warn: $liga-manager-ui-warn,
 )));
 
-.darkMode {
+.dark {
   @include mat.all-component-colors($liga-manager-ui-dark-theme);
 }

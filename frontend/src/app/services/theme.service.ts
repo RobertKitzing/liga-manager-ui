@@ -62,7 +62,7 @@ export class ThemeService {
 
   private setDarkmode(dark: boolean) {
     const mode = dark ? 'add' : 'remove';
-    this.document.body.classList[mode]('darkMode');
+    this.document.body.classList[mode]('dark');
     this.darkMode = dark;
   }
 }

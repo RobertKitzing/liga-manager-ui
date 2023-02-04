@@ -1,13 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   important: true,
-  darkMode: true,
+  darkMode: 'class',
   content: [
     "./src/**/*.{html,ts}",
   ],
   theme: {
     extend: {
       colors: {
+        toolbardark: '#212121',
+        toolbar: '#f5f5f5',
         theme: {
           DEFAULT: 'var(--theme-primary-500)',
           cdefault: 'var(--theme-primary-contrast-500)',
