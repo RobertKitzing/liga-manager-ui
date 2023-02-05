@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
-import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL } from '../../api/graphql';
+import { UserGQL, User, UserRole, PasswordChangeGQL, PasswordResetGQL, Match } from '../../api/graphql';
 import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
 import { firstValueFrom, tap } from 'rxjs';
 
@@ -78,6 +78,10 @@ export class AuthenticationService {
 
   public isTeamAdminForTeam(teamId: string) {
     return this.isTeamAdmin && this.user?.teams?.find(t => t?.id === teamId);
+  }
+
+  public canEditMatch(match: Match) {
+    return this.isAdmin || this.isTeamAdminForTeam(match.home_team.id!) || this.isTeamAdminForTeam(match.guest_team.id!);
   }
 
   changePassword(newPassword: string, oldPassword: string) {

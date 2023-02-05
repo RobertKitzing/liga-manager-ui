@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="flex border-t-2 dark:border-toolbardark w-full justify-center mt-2">
-                                    <div *ngIf="authService.isAdmin || authService.isTeamAdminForTeam(match.home_team.id!) || authService.isTeamAdminForTeam(match.guest_team.id!)" class="m-2">
+                                    <div *ngIf="authService.canEditMatch(match)" class="m-2">
                                         <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu" class="rounded">
                                             <mat-icon>edit</mat-icon>
                                             <span translate>BUTTON.EDIT</span>

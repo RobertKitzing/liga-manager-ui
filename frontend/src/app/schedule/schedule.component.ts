@@ -58,18 +58,27 @@ export class ScheduleComponent implements OnInit {
   }
 
   openEditKickoffDialog(match: Match, matchDay: MatchDay) {
+    if (!this.authService.canEditMatch(match)) {
+      return;
+    }
     this.dialog.open(EditMatchKickoffComponent, {
       data: {match, matchDay}
     });
   }
 
   openEditPitchDialog(match: Match, matchDay: MatchDay) {
+    if (!this.authService.canEditMatch(match)) {
+      return;
+    }
     this.dialog.open(EditMatchPitchComponent, {
       data: {match, matchDay}
     });
   }
 
   openEditResultDialog(match: Match, matchDay: MatchDay) {
+    if (!this.authService.canEditMatch(match)) {
+      return;
+    }
     this.dialog.open(EditMatchResultComponent, {
       data: {match, matchDay}
     });
