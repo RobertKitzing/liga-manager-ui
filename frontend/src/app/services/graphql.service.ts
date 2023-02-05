@@ -84,7 +84,7 @@ export class GraphqlService {
       }
     });
 
-    let link = errorHandler.concat(afterwareLink).concat(auth).concat(http);
+    const link = errorHandler.concat(afterwareLink).concat(auth).concat(http);
     const cache = new InMemoryCache(
       {
         addTypename: true,

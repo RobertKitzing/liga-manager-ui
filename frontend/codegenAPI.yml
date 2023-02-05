@@ -6,7 +6,7 @@ generates:
     plugins:
       - add: 
           content:
-            - "/* tslint:disable */"
+            - "/* eslint-disable */"
             - "/* GENERATED DO NOT EDIT */"
       - "typescript"
       - "typescript-operations"

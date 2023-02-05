@@ -1,0 +1,17 @@
+<lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
+    <div class="flex justify-center mt-2 flex-col" *ngIf="data.match as match">
+        <div translate class="text-center">
+            OLD_KICKOFF
+        </div>
+        <div class="flex" *ngIf="match.kickoff">
+            <mat-icon>event</mat-icon>
+            <span class="text-center ml-2">{{ match.kickoff | customDate:'medium' }}</span>
+        </div>
+    </div>
+</lima-edit-match-base>
+<ng-template #actionsTemplate>
+    <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+    <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" cdkFocusInitial [disabled]="!newKickoff.valid">
+        {{ 'BUTTON.SAVE' | translate}}
+    </button>
+</ng-template>

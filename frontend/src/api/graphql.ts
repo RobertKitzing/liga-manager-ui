@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 /* GENERATED DO NOT EDIT */
 import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';

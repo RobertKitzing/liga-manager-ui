@@ -45,7 +45,7 @@ export class ThemeService {
     this.currentTheme = styleName;
     const head = this.document.getElementsByTagName('head')[0];
 
-    let themeLink = this.document.getElementById(
+    const themeLink = this.document.getElementById(
       'client-theme'
     ) as HTMLLinkElement;
     if (themeLink) {
