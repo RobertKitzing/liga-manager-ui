@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { of, switchMap, take } from 'rxjs';
 import { Match, MatchDay, MatchDayFragment, MatchFragment } from 'src/api/graphql';
-import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-result.component';
+import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
 import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { I18nService } from '../services/i18n.service';

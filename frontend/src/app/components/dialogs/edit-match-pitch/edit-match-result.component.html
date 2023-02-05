@@ -1,9 +1,0 @@
-<lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
-    PITCH
-</lima-edit-match-base>
-<ng-template #actionsTemplate>
-    <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
-    <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" cdkFocusInitial [disabled]="!resultFormGroup.valid">
-        {{ 'BUTTON.SAVE' | translate}}
-    </button>
-</ng-template>

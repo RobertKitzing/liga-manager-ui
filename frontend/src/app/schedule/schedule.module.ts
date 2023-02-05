@@ -16,7 +16,7 @@ import { SeasonChooserModule } from '../components/season-chooser/season-chooser
 import { NumberModule } from '../pipes/number/number.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditMatchResultModule } from '../components/dialogs/edit-match-result/edit-match-result.module';
-import { EditMatchPitchModule } from '../components/dialogs/edit-match-pitch/edit-match-result.module';
+import { EditMatchPitchModule } from '../components/dialogs/edit-match-pitch/edit-match-pitch.module';
 
 
 @NgModule({

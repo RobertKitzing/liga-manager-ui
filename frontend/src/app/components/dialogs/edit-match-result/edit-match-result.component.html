@@ -2,7 +2,7 @@
     <div class="grid grid-cols-7 m-3 p-2" [formGroup]="resultFormGroup">
         <div class="col-span-3">
             <mat-form-field class="w-full" subscriptSizing="dynamic">
-                <input matInput type="number" formControlName="home_score" placeholder="{{ 'PLACEHOLDER.HOME_SCORE' | translate}}"/>
+                <input class="text-center" matInput type="number" formControlName="home_score" placeholder="{{ 'PLACEHOLDER.HOME_SCORE' | translate}}"/>
             </mat-form-field>
         </div>
         <div class="text-center self-center">
@@ -10,7 +10,7 @@
         </div>
         <div class="col-span-3">
             <mat-form-field class="w-full" subscriptSizing="dynamic">
-                <input matInput type="number" formControlName="guest_score" placeholder="{{ 'PLACEHOLDER.GUEST_SCORE' | translate}}"/>
+                <input class="text-center" matInput type="number" formControlName="guest_score" placeholder="{{ 'PLACEHOLDER.GUEST_SCORE' | translate}}"/>
             </mat-form-field>
         </div>
     </div>

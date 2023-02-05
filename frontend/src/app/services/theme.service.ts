@@ -9,7 +9,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class ThemeService {
 
-  themes = ['default', 'gondi'];
+  themes = ['default', 'gondi', 'werder'];
 
   @LocalStorage('THEME')
   private currentTheme?: string;
@@ -49,12 +49,12 @@ export class ThemeService {
       'client-theme'
     ) as HTMLLinkElement;
     if (themeLink) {
-      themeLink.href = `${styleName}-theme.css`;
+      themeLink.href = `${styleName}.css`;
     } else {
       const style = this.document.createElement('link');
       style.id = 'client-theme';
       style.rel = 'stylesheet';
-      style.href = `${styleName}-theme.css`;
+      style.href = `${styleName}.css`;
 
       head.appendChild(style);
     }

@@ -56,12 +56,14 @@
               "src/styles.scss",
               {
                 "input": "src/themes/default.scss",
-                "bundleName": "default-theme",
                 "inject": false
               },
               {
                 "input": "src/themes/gondi.scss",
-                "bundleName": "gondi-theme",
+                "inject": false
+              },
+              {
+                "input": "src/themes/werder.scss",
                 "inject": false
               }
             ],

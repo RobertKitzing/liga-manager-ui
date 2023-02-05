@@ -1,12 +1,22 @@
 <div mat-dialog-title class="flex bg-theme text-theme-cdefault p-4">
     <div class="self-center text-center w-full grid grid-cols-1 gap-2">
-        <span class="text-lg">{{ data.match.home_team.name }} - {{ data.match.guest_team.name }}</span>
         <span>{{ 'MATCHDAY' | translate:{matchDay: data.matchDay.number} }} ({{ data.matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ data.matchDay.end_date| customDate }})</span>
+        <div class="text-lg grid grid-cols-7">
+            <div class="col-span-3">
+                {{ data.match.home_team.name }}
+            </div>
+            <div>
+                -
+            </div>
+            <div class="col-span-3">
+                {{ data.match.guest_team.name }}
+            </div>
+        </div>
     </div>
 </div>
-<div class="flex justify-center">
+<div class="flex justify-center w-full">
     <ng-content></ng-content>
 </div>
-<div class="flex justify-evenly p-2 border-2">
+<div class="flex justify-evenly p-2 border-t-2 dark:border-toolbardark">
     <ng-container *ngTemplateOutlet="actionsTemplate"></ng-container>
 </div>
