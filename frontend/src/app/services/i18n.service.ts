@@ -1,6 +1,7 @@
 import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorage } from 'ngx-webstorage';
 import { AppsettingsService } from './appsettings.service';
@@ -23,8 +24,7 @@ export class I18nService {
   constructor(
     private translateService: TranslateService,
     @Inject(DOCUMENT) private document: Document,
-    private httpClient: HttpClient,
-    private appsettingsService: AppsettingsService,
+    private httpClient: HttpClient,  
   ) {
     if (!this.storedLang) {
       this.storedLang = { code: this.translateService.getBrowserLang()! };
@@ -33,12 +33,12 @@ export class I18nService {
   }
 
   changeLang({ code, direction }: { code: string, direction?: string }) {
-    this.translateService.use(code);
     this.setTextDir(direction);
     this.storedLang = { code, direction };
     import(`node_modules/@angular/common/locales/${code}.mjs`).then(
       (lang) => {
-        registerLocaleData(lang.default)
+        registerLocaleData(lang.default);
+        this.translateService.use(code);
       }
     )
   }
