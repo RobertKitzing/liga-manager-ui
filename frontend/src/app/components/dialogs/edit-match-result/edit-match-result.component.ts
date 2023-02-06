@@ -39,7 +39,7 @@ export class EditMatchResultComponent {
       this.notify.showSuccessNotification(this.translateService.instant('EDIT_RESULT_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      this.notify.showErrorNotification(this.translateService.instant('EDIT_RESULT_ERROR'), error);
+      throw error
     }
   }
 }

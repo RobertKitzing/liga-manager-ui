@@ -49,42 +49,57 @@
                                         </div>
                                         <div class="text-center self-center lg:flex lg:justify-center">
                                             <div class="grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 cursor-pointer" (click)="openEditResultDialog(match, matchDay)">
-                                                <div>
-                                                    {{ (match.home_score | number) || '-' }}
-                                                </div>
-                                                <div>
-                                                    :
-                                                </div>
-                                                <div>
-                                                    {{ (match.guest_score | number) || '-' }}
-                                                </div>
+                                                <ng-container *ngIf="!match.cancelled_at">
+                                                    <div>
+                                                        {{ (match.home_score | number) || '-' }}
+                                                    </div>
+                                                    <div>
+                                                        :
+                                                    </div>
+                                                    <div>
+                                                        {{ (match.guest_score | number) || '-' }}
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="match.cancelled_at">
+                                                    <div></div>
+                                                    <mat-icon>close</mat-icon>
+                                                    <div></div>
+                                                </ng-container>
                                             </div>
                                         </div>
                                         <div class="text-left self-center ml-2">
                                             {{match.guest_team.name}}
                                         </div>
                                     </div>
-                                    <div class="w-full flex justify-evenly">
-                                        <div class="grid grid-rows-2 grid-flow-col gap-2 cursor-pointer" (click)="openEditPitchDialog(match, matchDay)">
-                                            <ng-container *ngIf="!match.pitch">
-                                                <mat-icon class="justify-self-center">location_off</mat-icon>
-                                                <span translate>NO_PTICH_SET</span>
-                                            </ng-container>
-                                            <ng-container *ngIf="match.pitch">
-                                                <mat-icon class="justify-self-center">location_on</mat-icon>
-                                                <span>{{ match.pitch.label }}</span>
-                                            </ng-container>
+                                    <ng-container *ngIf="!match.cancelled_at">
+                                        <div class="w-full flex justify-evenly">
+                                            <div class="grid grid-rows-2 grid-flow-col gap-2 cursor-pointer" (click)="openEditPitchDialog(match, matchDay)">
+                                                <ng-container *ngIf="!match.pitch">
+                                                    <mat-icon class="justify-self-center">location_off</mat-icon>
+                                                    <span translate>NO_PTICH_SET</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="match.pitch">
+                                                    <mat-icon class="justify-self-center">location_on</mat-icon>
+                                                    <span>{{ match.pitch.label }}</span>
+                                                </ng-container>
+                                            </div>
+                                            <div class="grid grid-rows-2 grid-flow-col gap-2 cursor-pointer" (click)="openEditKickoffDialog(match, matchDay)">
+                                                <mat-icon class="justify-self-center">access_time</mat-icon>
+                                                <ng-container *ngIf="!match.kickoff">
+                                                    <span translate>NO_TIME_SET</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="match.kickoff">
+                                                    <span>{{ match.kickoff | customDate:'short' }}</span>
+                                                </ng-container>
+                                            </div>
                                         </div>
-                                        <div class="grid grid-rows-2 grid-flow-col gap-2 cursor-pointer" (click)="openEditKickoffDialog(match, matchDay)">
-                                            <mat-icon class="justify-self-center">access_time</mat-icon>
-                                            <ng-container *ngIf="!match.kickoff">
-                                                <span translate>NO_TIME_SET</span>
-                                            </ng-container>
-                                            <ng-container *ngIf="match.kickoff">
-                                                <span>{{ match.kickoff | customDate:'short' }}</span>
-                                            </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="match.cancelled_at">
+                                        <div class="text-center">
+                                            <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
+                                            <div>{{ match.cancellation_reason }}</div>
                                         </div>
-                                    </div>
+                                    </ng-container>
                                 </div>
                                 <div class="flex border-t-2 dark:border-toolbardark w-full justify-center mt-2">
                                     <div *ngIf="authService.canEditMatch(match)" class="m-2">

@@ -39,9 +39,10 @@ export class EditMatchKickoffComponent {
 
     try {
       await firstValueFrom(this.matchService.scheduleMatch({ match_id: this.data.match.id, kickoff }));
+      this.notify.showSuccessNotification(this.translateService.instant('EDIT_KICKOFF_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

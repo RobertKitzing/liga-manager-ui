@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocateMatchGQL, LocateMatchMutationVariables, Pitch, RankingGQL, ScheduleMatchGQL, ScheduleMatchMutationVariables, SeasonGQL, SubmitResultGQL, SubmitResultMutationVariables } from 'src/api/graphql';
+import { CancelMatchGQL, CancelMatchMutationVariables, LocateMatchGQL, LocateMatchMutationVariables, Pitch, RankingGQL, ScheduleMatchGQL, ScheduleMatchMutationVariables, SeasonGQL, SubmitResultGQL, SubmitResultMutationVariables } from 'src/api/graphql';
 import { SeasonService } from './season.service';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class MatchService {
     private rankingGQL: RankingGQL,
     private locateMatchQGL: LocateMatchGQL,
     private scheduleMatchGQL: ScheduleMatchGQL,
+    private cancelMatchGQL: CancelMatchGQL,
   ) { }
 
   submitMatchResult(variables: SubmitResultMutationVariables) {
@@ -48,6 +49,20 @@ export class MatchService {
         {
           query: this.seasonGQL.document, variables: {id: seasonId.id }
         },
+      ]
+    })
+  }
+
+  cancelMatch(variables: CancelMatchMutationVariables) {
+    const seasonId = this.seasonService.currentSeason$.getValue();
+    return this.cancelMatchGQL.mutate(variables, {
+      refetchQueries: [
+        {
+          query: this.seasonGQL.document, variables: {id: seasonId.id }
+        },
+        {
+          query: this.rankingGQL.document, variables: {id: seasonId.id }
+        }
       ]
     })
   }

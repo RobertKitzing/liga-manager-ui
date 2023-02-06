@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { of, switchMap, take } from 'rxjs';
 import { Match, MatchDay, MatchDayFragment, MatchFragment } from 'src/api/graphql';
+import { CancelMatchComponent } from '../components/dialogs/cancel-match/cancel-match.component';
 import { EditMatchKickoffComponent } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.component';
 import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
 import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
@@ -54,7 +55,12 @@ export class ScheduleComponent implements OnInit {
   }
 
   openCancelMatchDialog(match: Match, matchDay: MatchDay) {
-    throw new Error('Method not implemented.');
+    if (!this.authService.canEditMatch(match)) {
+      return;
+    }
+    this.dialog.open(CancelMatchComponent, {
+      data: {match, matchDay}
+    });
   }
 
   openEditKickoffDialog(match: Match, matchDay: MatchDay) {

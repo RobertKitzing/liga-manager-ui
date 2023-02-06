@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EditMatchResultModule } from '../components/dialogs/edit-match-result/edit-match-result.module';
 import { EditMatchPitchModule } from '../components/dialogs/edit-match-pitch/edit-match-pitch.module';
 import { EditMatchKickoffModule } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.module';
+import { CancelMatchModule } from '../components/dialogs/cancel-match/cancel-match.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { EditMatchKickoffModule } from '../components/dialogs/edit-match-kickoff
     EditMatchResultModule,
     EditMatchPitchModule,
     EditMatchKickoffModule,
+    CancelMatchModule,
   ]
 })
 export class ScheduleModule { }

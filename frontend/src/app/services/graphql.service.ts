@@ -10,6 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,7 @@ export class GraphqlService {
     });
 
     const errorHandler = onError(({ graphQLErrors, networkError, operation }) => {
+      const error: any = networkError;
       if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
           console.log(
@@ -51,15 +53,22 @@ export class GraphqlService {
           ),
         );
       }
-      if (networkError) {
-        switch (networkError.cause) {
+      if (error) {
+        console.log(networkError);
+        switch (error.status) {
           case 401:
             if (operation.operationName !== 'PasswordChange') {
               this.authService.logout();
             }
             break;
+          case 400:
+            error?.error?.errors?.forEach(
+              (msg: any) => {
+                this.notify.showErrorNotification(this.translationService.instant('NETWORK_ERROR'), this.translationService.instant(msg.message) || msg.message);
+            });
+            break;
           default:
-            this.notify.showErrorNotification(this.translationService.instant('UNKNOWN_NETWORK_ERROR'), networkError.message);
+            this.notify.showErrorNotification(this.translationService.instant('UNKNOWN_NETWORK_ERROR'), error.message);
         }
       }
     });

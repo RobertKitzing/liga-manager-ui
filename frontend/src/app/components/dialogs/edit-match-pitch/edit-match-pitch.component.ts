@@ -41,9 +41,10 @@ export class EditMatchPitchComponent {
   async onSaveClicked() {
     try {
       await firstValueFrom(this.matchService.locateMatch({match_id: this.data.match.id, pitch_id: this.newMatchPitch.value.id}));
+      this.notify.showSuccessNotification(this.translateService.instant('EDIT_PITCH_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 

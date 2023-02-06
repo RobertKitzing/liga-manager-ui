@@ -12,6 +12,7 @@ fragment Match on Match {
     pitch {
         ...Pitch
     }
+    cancelled
     cancelled_at
     cancellation_reason
 }
