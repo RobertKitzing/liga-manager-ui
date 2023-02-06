@@ -60,7 +60,7 @@ export function httpLoaderFactory(http: HttpClient) {
     MatSnackBarModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: 'en-GB',
       loader: {
         provide: TranslateLoader,
         // useClass: CustomTranslateHttpLoader,

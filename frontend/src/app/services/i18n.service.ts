@@ -27,7 +27,11 @@ export class I18nService {
     private httpClient: HttpClient,  
   ) {
     if (!this.storedLang) {
-      this.storedLang = { code: this.translateService.getBrowserLang()! };
+      let code = this.translateService.getBrowserLang()!;
+      if (code ===  'en') {
+        code = 'en-GB';
+      }
+      this.storedLang = { code };
     }
     this.changeLang(this.storedLang);
   }
