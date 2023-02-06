@@ -1,14 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 export interface ISnackBarData {
   title: string;
   message: string;
+  type: 'warn' | 'success'
 }
+
 @Component({
   selector: 'app-snackbar',
   templateUrl: './snackbar.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class SnackbarComponent implements OnInit {
 

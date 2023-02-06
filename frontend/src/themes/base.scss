@@ -7,6 +7,14 @@
             --theme-primary-contrast-#{$value}: #{map.get(map.get($palette, contrast), $value)};
         }
     }
+
+    @each $value,
+    $color in mat.$red-palette {
+        @if $value !='contrast' {
+            --warn-primary-#{$value}: #{map.get($palette, $value)};
+            --warn-primary-contrast-#{$value}: #{map.get(map.get($palette, contrast), $value)};
+        }
+    }
 }
 
 $liga-manager-ui-primary: mat.define-palette($palette);

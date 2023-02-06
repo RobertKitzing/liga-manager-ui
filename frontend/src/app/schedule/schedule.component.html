@@ -112,14 +112,16 @@
                                                 <mat-icon>scoreboard</mat-icon>
                                                 <span translate>BUTTON.EDIT_RESULT</span>
                                             </button>
-                                            <button mat-menu-item (click)="openEditPitchDialog(match, matchDay)">
-                                                <mat-icon>location_on</mat-icon>
-                                                <span translate>BUTTON.EDIT_PITCH</span>
-                                            </button>
-                                            <button mat-menu-item (click)="openEditKickoffDialog(match, matchDay)">
-                                                <mat-icon>event</mat-icon>
-                                                <span translate>BUTTON.EDIT_KICKOFF</span>
-                                            </button>
+                                            <ng-container *ngIf="!match.cancelled_at">
+                                                <button mat-menu-item (click)="openEditPitchDialog(match, matchDay)">
+                                                    <mat-icon>location_on</mat-icon>
+                                                    <span translate>BUTTON.EDIT_PITCH</span>
+                                                </button>
+                                                <button mat-menu-item (click)="openEditKickoffDialog(match, matchDay)">
+                                                    <mat-icon>event</mat-icon>
+                                                    <span translate>BUTTON.EDIT_KICKOFF</span>
+                                                </button>
+                                                </ng-container>
                                             <button mat-menu-item (click)="openCancelMatchDialog(match, matchDay)">
                                                 <mat-icon>close</mat-icon>
                                                 <span translate>BUTTON.CANCEL_MATCH</span>

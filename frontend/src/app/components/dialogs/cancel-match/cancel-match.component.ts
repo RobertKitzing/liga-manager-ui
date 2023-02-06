@@ -24,12 +24,8 @@ export class CancelMatchComponent {
     private dialogRef: MatDialogRef<CancelMatchComponent>,
     private matchService: MatchService,
   ) {
-
-    this.cancelMatchReason.valueChanges.subscribe(
-      () => {
-        console.log(this.cancelMatchReason.errors)
-      }
-    );
+    if (this.data.match.cancellation_reason)
+      this.cancelMatchReason.setValue(this.data.match.cancellation_reason)
   }
 
   async onSaveClicked() {

@@ -18,17 +18,18 @@ export class NotificationService {
   }
 
   showErrorNotification(title: string, message?: any) {
-    this.showNotification(title, message, 'danger');
+    this.showNotification(title, message, 'warn');
   }
 
-  private showNotification(title: string, message?: string, type?: 'danger' | 'success', duration?: number) {
+  private showNotification(title: string, message?: string, type?: 'warn' | 'success', duration?: number) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       data: {
-        title: title,
-        message: message
+        title,
+        message,
+        type
       },
       duration: duration || this.defaultDuration,
-      panelClass: ['alert', `alert-${type}`]
+      panelClass: [`bg-${type}`, `text-${type}-cdefault`, `border-2`, `dark:border-toolbardark`, `rounded`]
     });
   }
 }
