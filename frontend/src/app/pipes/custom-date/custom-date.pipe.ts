@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { I18nService } from 'src/app/services/i18n.service';
 
 @Pipe({
-  name: 'customDate'
+  name: 'customDate',
+  pure: false
 })
 export class CustomDatePipe implements PipeTransform {
 

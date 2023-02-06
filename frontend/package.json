@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "graphql-gen:api": "graphql-codegen --config codegenAPI.yml",
-    "i18n:extract": "ngx-translate-extract --input ./src --output src/i18n/en.json --clean --sort --format json",
+    "i18n:extract": "ngx-translate-extract --input ./src --output src/i18n/en-gb.json --clean --sort --format json",
+    "i18n:languages": "node get-languages.mjs",
     "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix"

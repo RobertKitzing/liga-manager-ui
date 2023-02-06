@@ -81,7 +81,7 @@
                                                 <span translate>NO_TIME_SET</span>
                                             </ng-container>
                                             <ng-container *ngIf="match.kickoff">
-                                                <span>{{ match.kickoff | date:'short':'':i18nService.currentLang }}</span>
+                                                <span>{{ match.kickoff | customDate:'short' }}</span>
                                             </ng-container>
                                         </div>
                                     </div>

@@ -6,7 +6,9 @@ const languages = [];
 
 fs.readdirSync(path).forEach(x => {
     const code = x.split('.')[0];
-    const info = languagesJS.getLanguageInfo(code);
+    const baseLang = code.split('-')[0];
+
+    const info = languagesJS.getLanguageInfo(baseLang);
     languages.push({
         code,
         ...info
