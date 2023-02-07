@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { ISnackBarData, SnackbarComponent } from '../components/snackbar/snackbar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +13,23 @@ export class NotificationService {
     private snackBar: MatSnackBar
   ) { }
 
-  showSuccessNotification(title: string, message?: string) {
-    this.showNotification(title, message, 'success');
+  showSuccessNotification(title: string, messages?: string[]) {
+    this.showNotification(title, messages, 'success');
   }
 
-  showErrorNotification(title: string, message?: any) {
-    this.showNotification(title, message, 'warn');
+  showErrorNotification(title: string, messages?: string[]) {
+    this.showNotification(title, messages, 'warn', this.defaultDuration * 2);
   }
 
-  private showNotification(title: string, message?: string, type?: 'warn' | 'success', duration?: number) {
+  private showNotification(title: string, messages?: string[], type?: 'warn' | 'success', duration?: number) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       data: {
         title,
-        message,
+        messages,
         type
-      },
+      } as ISnackBarData,
       duration: duration || this.defaultDuration,
-      panelClass: [`bg-${type}`, `text-${type}-cdefault`, `border-2`, `dark:border-toolbardark`, `rounded`]
+      panelClass: [`bg-${type}-100`, `text-${type}-c100`, `border-2`, `dark:border-toolbardark`, `rounded`]
     });
   }
 }

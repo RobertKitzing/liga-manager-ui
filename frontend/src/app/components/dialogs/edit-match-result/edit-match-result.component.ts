@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';
 import { MatchService } from 'src/app/services/match.service';
@@ -22,7 +22,6 @@ export class EditMatchResultComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { match: Match, matchDay: MatchDay },
     private notify: NotificationService,
-    private translateService: TranslateService,
     private dialogRef: MatDialogRef<EditMatchResultComponent>,
     private matchService: MatchService,
   ) {
@@ -36,10 +35,10 @@ export class EditMatchResultComponent {
         home_score: this.resultFormGroup.value.home_score!,
         guest_score: this.resultFormGroup.value.guest_score!
       }));
-      this.notify.showSuccessNotification(this.translateService.instant('EDIT_RESULT_SUCCESS'));
+      this.notify.showSuccessNotification(marker('EDIT_RESULT_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      throw error
+      // throw error
     }
   }
 }

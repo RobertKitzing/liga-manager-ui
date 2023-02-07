@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Match, MatchDay, Pitch } from 'src/api/graphql';
@@ -30,7 +31,6 @@ export class EditMatchPitchComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { match: Match, matchDay: MatchDay },
     private notify: NotificationService,
-    private translateService: TranslateService,
     private dialogRef: MatDialogRef<EditMatchPitchComponent>,
     private matchService: MatchService,
     private pitchService: PitchService,
@@ -41,10 +41,10 @@ export class EditMatchPitchComponent {
   async onSaveClicked() {
     try {
       await firstValueFrom(this.matchService.locateMatch({match_id: this.data.match.id, pitch_id: this.newMatchPitch.value.id}));
-      this.notify.showSuccessNotification(this.translateService.instant('EDIT_PITCH_SUCCESS'));
+      this.notify.showSuccessNotification(marker('EDIT_PITCH_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      throw error
+      // throw error
     }
   }
 

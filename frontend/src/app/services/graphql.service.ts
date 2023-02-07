@@ -23,7 +23,6 @@ export class GraphqlService {
     private authService: AuthenticationService,
     private appsettingsService: AppsettingsService,
     private notify: NotificationService,
-    private translationService: TranslateService
   ) {
   }
 
@@ -54,7 +53,6 @@ export class GraphqlService {
         );
       }
       if (error) {
-        console.log(networkError);
         switch (error.status) {
           case 401:
             if (operation.operationName !== 'PasswordChange') {
@@ -62,13 +60,11 @@ export class GraphqlService {
             }
             break;
           case 400:
-            error?.error?.errors?.forEach(
-              (msg: any) => {
-                this.notify.showErrorNotification(this.translationService.instant('NETWORK_ERROR'), this.translationService.instant(msg.message) || msg.message);
-            });
+            const messages = error?.error?.errors?.map((x: any) => x.message)
+            this.notify.showErrorNotification(marker('NETWORK_ERROR'), messages);
             break;
           default:
-            this.notify.showErrorNotification(this.translationService.instant('UNKNOWN_NETWORK_ERROR'), error.message);
+            this.notify.showErrorNotification(marker('UNKNOWN_NETWORK_ERROR'), error.message);
         }
       }
     });

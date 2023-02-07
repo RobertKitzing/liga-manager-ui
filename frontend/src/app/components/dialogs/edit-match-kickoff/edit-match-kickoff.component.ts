@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';
 import { MatchService } from 'src/app/services/match.service';
@@ -23,7 +22,6 @@ export class EditMatchKickoffComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { match: Match, matchDay: MatchDay },
     private notify: NotificationService,
-    private translateService: TranslateService,
     private dialogRef: MatDialogRef<EditMatchKickoffComponent>,
     private matchService: MatchService,
   ) {
@@ -39,10 +37,10 @@ export class EditMatchKickoffComponent {
 
     try {
       await firstValueFrom(this.matchService.scheduleMatch({ match_id: this.data.match.id, kickoff }));
-      this.notify.showSuccessNotification(this.translateService.instant('EDIT_KICKOFF_SUCCESS'));
+      this.notify.showSuccessNotification(marker('EDIT_KICKOFF_SUCCESS'));
       this.dialogRef.close(true);
     } catch (error) {
-      throw error
+      // throw error
     }
   }
 }

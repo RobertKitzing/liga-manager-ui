@@ -1,37 +1,43 @@
-<form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-  <div mat-dialog-content>
-    <div class="row justify-content-center">
-      <div class="col">
-        <mat-form-field class="w-full">
-          <input #username type="text" matInput formControlName="username" placeholder="{{ 'USERNAME' | translate }}" />
-          <mat-error *ngIf="!loginForm.controls['username'].valid">
-            <span translate>USERNAME_REQUIRED</span>
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col">
-        <mat-form-field class="w-full" (click)="loginForm.controls['password'].enable()">
-          <input #password type="password" matInput formControlName="password" placeholder="{{ 'PASSWORD' | translate}}"
-            required />
-          <mat-error *ngIf="!loginForm.controls['password'].valid">
-            <span translate>PASSWORD_REQUIRED</span>
-          </mat-error>
-          <button mat-button *ngIf="password.value" matSuffix
-            (click)="password.type === 'password'? password.type = 'text': password.type = 'password'">
-            <mat-icon>remove_red_eye</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
+<div mat-dialog-title class="flex bg-theme text-theme-cdefault p-4">
+  <div class="self-center text-center w-full grid grid-cols-1 gap-2" translate>
+    LOGIN
+  </div>
+</div>
+
+<div mat-dialog-content [formGroup]="loginForm" class="mt-2">
+  <div>
+    <div>
+      <mat-form-field class="w-full">
+        <mat-label translate>USERNAME</mat-label>
+        <input #username type="text" matInput formControlName="username" />
+        <mat-error *ngIf="!loginForm.controls['username'].valid">
+          <span translate>USERNAME_REQUIRED</span>
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button color="primary" (click)="passwordForgot(username.value)">
-      <span translate>FORGOT_PASSWORD</span>
-    </button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-      <span translate>BUTTON.LOGIN</span>
-    </button>
+  <div class="row justify-content-center">
+    <div class="col">
+      <mat-form-field class="w-full" (click)="loginForm.controls['password'].enable()">
+        <mat-label translate>PASSWORD</mat-label>
+        <input #password type="password" matInput formControlName="password"/>
+        <mat-error *ngIf="!loginForm.controls['password'].valid">
+          <span translate>PASSWORD_REQUIRED</span>
+        </mat-error>
+        <button mat-button *ngIf="password.value" matSuffix
+          (click)="password.type === 'password' ? password.type = 'text': password.type = 'password'">
+          <mat-icon></mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
   </div>
-</form>
+</div>
+
+<div class="flex justify-evenly p-2 border-t-2 dark:border-toolbardark">
+  <button mat-button color="primary" (click)="passwordForgot(username.value)">
+    <span translate>FORGOT_PASSWORD</span>
+  </button>
+  <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid">
+    <span translate>BUTTON.LOGIN</span>
+  </button>
+</div>
