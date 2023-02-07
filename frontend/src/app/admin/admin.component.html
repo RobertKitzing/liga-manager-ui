@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="border-t-2 dark:border-toolbardark">
+    <div class="grow flex justify-center visible lg:hidden">
+        <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
+      </div>
+  
+      <div class="hidden h-full lg:flex lg:visible grow">
+        <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
+      </div>
+
+      <button mat-icon-button (click)="drawer.toggle()" class="visible lg:hidden">
+        <mat-icon>menu</mat-icon>
+      </button>
+</mat-toolbar>
+
+<mat-drawer-container class="h-[calc(100vh_-_64px_-_64px)]" [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" [position]="'end'">
+        <div class="flex flex-col" (click)="drawer.close()">
+            <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #adminLinks>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="tournaments" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN.TOURNAMENTS</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="users" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN.USERS</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="teams" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN.TEAMS</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="pitches" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN.PITCHES</a>
+</ng-template>

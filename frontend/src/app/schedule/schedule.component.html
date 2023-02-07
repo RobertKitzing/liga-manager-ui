@@ -97,7 +97,7 @@
                                     <ng-container *ngIf="match.cancelled_at">
                                         <div class="text-center">
                                             <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
-                                            <div>{{ match.cancellation_reason }}</div>
+                                            <div class="truncate p-4">{{ match.cancellation_reason }}</div>
                                         </div>
                                     </ng-container>
                                 </div>

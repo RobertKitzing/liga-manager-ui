@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'table',
+    redirectTo: 'schedule',
     pathMatch: 'full'
   },
 ];

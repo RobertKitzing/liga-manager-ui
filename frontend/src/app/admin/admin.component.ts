@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lima-admin',
@@ -8,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class AdminComponent {
 
+  get currentRoute() {
+    const url = this.router.url.split('/')[2]
+    return `NAVIGATION.ADMIN.${url?.toUpperCase()}`;
+  }
+
+  constructor(
+    private router: Router,
+  ) {
+
+  }
 }

@@ -1,17 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, take } from 'rxjs';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
 import { I18nService } from './services/i18n.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
 import { ThemeService } from './services/theme.service';
 import { Location } from '@angular/common'
-import { HttpClient } from '@angular/common/http';
-import { AllSeasonsListGQL } from 'src/api/graphql';
 import { SeasonService } from './services/season.service';
 
 @Component({
@@ -26,7 +22,8 @@ export class AppComponent implements OnInit {
   currentSeason$ = this.seasonService.currentSeason$;
 
   get currentRoute() {
-    return `NAVIGATION.${this.router.url.replace('/', '').toUpperCase()}`;
+    const url = this.router.url.split('/')[1]
+    return `NAVIGATION.${url.toUpperCase()}`;
   }
 
   constructor(
