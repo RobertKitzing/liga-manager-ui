@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'lima-manage-teams',
@@ -7,4 +9,16 @@ import { Component } from '@angular/core';
 })
 export class ManageTeamsComponent {
 
+  displayedColumns: string[] = ['team', 'action'];
+
+  teams$ = this.teamService.allTeams$
+  newTeam = new FormControl();
+
+  constructor(
+    private teamService: TeamService,
+  ) {}
+
+  addNewTeam(name: string) {
+
+  }
 }

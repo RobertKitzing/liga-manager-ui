@@ -1,1 +1,34 @@
-<p>manage-teams works!</p>
+<div class="flex justify-center h-full">
+    <div class="w-full sm:w-3/4">
+        <div class="flex justify-between mt-4 mb-2">
+            <mat-form-field class="w-full">
+                <mat-label translate>NEW_TEAM</mat-label>
+                <input matInput #newTeam (keyup.enter)="addNewTeam(newTeam.value)">
+            </mat-form-field>
+            <button mat-icon-button (click)="addNewTeam(newTeam.value)" [disabled]="!newTeam.value">
+                <mat-icon>
+                  add
+                </mat-icon>
+            </button>
+        </div>
+        <ng-container *ngIf="teams$ | async as teams">
+            <table mat-table [dataSource]="teams">
+                <ng-container matColumnDef="team">
+                    <td class="" mat-cell *matCellDef="let team">
+                        {{team.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <td class="text-end" mat-cell *matCellDef="let team">
+                        <button mat-icon-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </ng-container>
+    </div>
+</div>

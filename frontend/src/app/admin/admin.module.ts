@@ -12,6 +12,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { ManagePitchesComponent } from './manage-pitches/manage-pitches.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -30,6 +34,9 @@ import { ManagePitchesComponent } from './manage-pitches/manage-pitches.componen
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ]
 })
 export class AdminModule { }

@@ -17,9 +17,12 @@
         </button>
       </ng-container>
       <ng-template #authenticated>
-        <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
-          {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
-          <mat-icon>person</mat-icon>
+        <button mat-stroked-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
+          <div class="flex justify-evenly gap-2">
+            <mat-icon class="">person</mat-icon>
+            {{ authService.user!.first_name }} {{ authService.user!.last_name }}
+            <mat-icon>arrow_drop_down</mat-icon>
+          </div>
         </button>
       </ng-template>
     </div>
@@ -48,7 +51,7 @@
       <lima-nav-links></lima-nav-links>
     </div>
     
-    <div class="p-2">
+    <div class="p-2 flex justify-center">
       <mat-slide-toggle color="primary" [formControl]="darkModeControl">
         <span translate>DARK_MODE</span>
       </mat-slide-toggle>
@@ -82,13 +85,9 @@
 
 <mat-menu #userMenu="matMenu">
   <mat-list>
-    <mat-list-item *ngIf="authService.user">
-      <span innerHTML="{{ 'LOGGED_IN_AS' | translate:{ email: authService.user.email } }}"></span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
     <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
+    <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
   </mat-list>
-  <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
 </mat-menu>
 
 <mat-menu #languageMenu="matMenu">

@@ -21,7 +21,12 @@ const routes: Routes = [
       {
         path: 'tournament',
         component: TournamentComponent
-      }
+      },
+      {
+        path: '',
+        redirectTo: 'table',
+        pathMatch: 'full'
+      },
     ]
   }
 ];
