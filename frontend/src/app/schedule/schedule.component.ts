@@ -2,14 +2,15 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { of, switchMap, take } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, iif, map, of, switchMap, take } from 'rxjs';
 import { Match, MatchDay, MatchDayFragment, MatchFragment } from 'src/api/graphql';
 import { CancelMatchComponent } from '../components/dialogs/cancel-match/cancel-match.component';
 import { EditMatchKickoffComponent } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.component';
 import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
 import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
+import { SeasonChooserModes } from '../components/season-chooser/season-chooser.component';
 import { AuthenticationService } from '../services/authentication.service';
-import { I18nService } from '../services/i18n.service';
 import { SeasonService } from '../services/season.service';
 
 @Component({
@@ -20,11 +21,22 @@ import { SeasonService } from '../services/season.service';
 })
 export class ScheduleComponent implements OnInit {
 
-  currentSeason$ = this.seasonService.progressSeason$;
+  seasonMode: SeasonChooserModes = 'progressSeason';
 
-  season$ = this.seasonService.progressSeason$.pipe(
+  seasonTrigger$ = new BehaviorSubject<null>(null);
+
+  season$ = this.seasonTrigger$.pipe(
     switchMap(
-      (currentSeason) => currentSeason?.id ? this.seasonService.getSeason({ id: currentSeason.id }) : of(null),
+      () => iif(
+          () => this.seasonMode === 'progressSeason',
+          this.seasonService.progressSeason$,
+          this.seasonService.historySeason$
+        )
+    ),
+    switchMap(
+      (season) => {
+        return season?.id ?this.seasonService.getSeason({ id: season.id! }) : of(null)
+      }
     ),
   );
 
@@ -35,11 +47,14 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private seasonService: SeasonService,
     private dialog: MatDialog,
-    public i18nService: I18nService,
+    private router: Router,
     public authService: AuthenticationService,
   ) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void { 
+    if (this.router.url.includes('history')) {
+      this.seasonMode = 'historySeason';
+    }   
   }
 
   filterMatchDays(matchDays: any[]): any[] {

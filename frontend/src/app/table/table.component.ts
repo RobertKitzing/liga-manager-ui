@@ -25,8 +25,6 @@ export class TableComponent implements OnInit, OnDestroy {
 
   seasonMode: SeasonChooserModes = 'progressSeason';
 
-  currentSeason$ = this.seasonService[`${this.seasonMode}$`];
-
   displayedColumns: string[] = ['position', 'team', 'games', 'wins-draws-losses', 'goals', 'points'];
 
   expandedElement!: RankingPosition;
@@ -50,28 +48,21 @@ export class TableComponent implements OnInit, OnDestroy {
       (ranking) => ranking?.positions
     )
   );
-  
-  subs: Subscription[] = []
 
   constructor(
-    public rankingService: RankingService,
-    public seasonService: SeasonService,
-    public router: Router,
+    private rankingService: RankingService,
+    private seasonService: SeasonService,
+    private router: Router,
   ) {
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(s => s?.unsubscribe());
+
   }
 
   ngOnInit(): void {
     if (this.router.url.includes('history')) {
       this.seasonMode = 'historySeason';
     }
-    this.subs.push(
-      this.currentSeason$.subscribe(
-      () => this.rankingTrigger$.next(null)
-      )
-    )
   }
 }

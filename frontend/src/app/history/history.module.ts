@@ -7,6 +7,7 @@ import { TableModule } from '../table/table.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScheduleModule } from '../schedule/schedule.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TournamentModule } from '../tournament/tournament.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ScheduleModule,
     MatToolbarModule,
     TranslateModule.forChild(),
+    TournamentModule,
   ]
 })
 export class HistoryModule { }

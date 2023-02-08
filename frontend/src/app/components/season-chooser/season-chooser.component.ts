@@ -22,7 +22,7 @@ export class SeasonChooserComponent {
       (seasonList) => {
         switch (this.mode) {
           case 'historySeason':
-            return seasonList?.filter((s) => s?.state === SeasonState.Preparation)
+            return seasonList?.filter((s) => s?.state === SeasonState.Ended)
           case 'progressSeason':
             return seasonList?.filter((s) => s?.state === SeasonState.Progress)
           default:
