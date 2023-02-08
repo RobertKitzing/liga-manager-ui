@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, map, of, switchMap, take } from 'rxjs';
-import { Match, MatchDay, MatchDayFragment, MatchFragment } from 'src/api/graphql';
+import { Match, MatchDay, MatchDayFragment, MatchFragment, Season, SeasonState } from 'src/api/graphql';
 import { CancelMatchComponent } from '../components/dialogs/cancel-match/cancel-match.component';
 import { EditMatchKickoffComponent } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.component';
 import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
@@ -48,13 +48,17 @@ export class ScheduleComponent implements OnInit {
     private seasonService: SeasonService,
     private dialog: MatDialog,
     private router: Router,
-    public authService: AuthenticationService,
+    private authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void { 
     if (this.router.url.includes('history')) {
       this.seasonMode = 'historySeason';
     }   
+  }
+
+  canEditMatch(match: Match, seasonState: SeasonState) {
+    return this.authService.canEditMatch(match) && seasonState === SeasonState.Progress;
   }
 
   filterMatchDays(matchDays: any[]): any[] {
@@ -70,36 +74,24 @@ export class ScheduleComponent implements OnInit {
   }
 
   openCancelMatchDialog(match: Match, matchDay: MatchDay) {
-    if (!this.authService.canEditMatch(match)) {
-      return;
-    }
     this.dialog.open(CancelMatchComponent, {
       data: {match, matchDay}
     });
   }
 
   openEditKickoffDialog(match: Match, matchDay: MatchDay) {
-    if (!this.authService.canEditMatch(match)) {
-      return;
-    }
     this.dialog.open(EditMatchKickoffComponent, {
       data: {match, matchDay}
     });
   }
 
   openEditPitchDialog(match: Match, matchDay: MatchDay) {
-    if (!this.authService.canEditMatch(match)) {
-      return;
-    }
     this.dialog.open(EditMatchPitchComponent, {
       data: {match, matchDay}
     });
   }
 
   openEditResultDialog(match: Match, matchDay: MatchDay) {
-    if (!this.authService.canEditMatch(match)) {
-      return;
-    }
     this.dialog.open(EditMatchResultComponent, {
       data: {match, matchDay}
     });
