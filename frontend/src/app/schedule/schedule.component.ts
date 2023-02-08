@@ -20,9 +20,9 @@ import { SeasonService } from '../services/season.service';
 })
 export class ScheduleComponent implements OnInit {
 
-  currentSeason$ = this.seasonService.currentSeason$;
+  currentSeason$ = this.seasonService.progressSeason$;
 
-  season$ = this.seasonService.currentSeason$.pipe(
+  season$ = this.seasonService.progressSeason$.pipe(
     switchMap(
       (currentSeason) => currentSeason?.id ? this.seasonService.getSeason({ id: currentSeason.id }) : of(null),
     ),

@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { Observable } from 'rxjs';
+import { filter, iif, map, Observable } from 'rxjs';
 import { AllSeasonsFragment, SeasonState } from 'src/api/graphql';
 import { SeasonService } from 'src/app/services/season.service';
+
+export type SeasonChooserModes = 'progressSeason' | 'manageSeason' | 'historySeason';
 
 @Component({
   selector: 'lima-season-chooser',
@@ -10,13 +12,25 @@ import { SeasonService } from 'src/app/services/season.service';
 })
 export class SeasonChooserComponent {
 
-  @Input() filterStates: Array<SeasonState> = [SeasonState.Progress, SeasonState.Ended];
-  @Input() mode: 'currentSeason' | 'manageSeason' = 'currentSeason';
+  @Input() mode: SeasonChooserModes = 'progressSeason';
 
   SeasonState = SeasonState;
   season$!: Observable<AllSeasonsFragment>
 
-  seasonList$ = this.seasonService.seasonList$(this.filterStates);
+  seasonList$ = this.seasonService.seasonList$.pipe(
+    map(
+      (seasonList) => {
+        switch (this.mode) {
+          case 'historySeason':
+            return seasonList?.filter((s) => s?.state === SeasonState.Preparation)
+          case 'progressSeason':
+            return seasonList?.filter((s) => s?.state === SeasonState.Progress)
+          default:
+            return seasonList
+        }
+      }
+    )
+  );
 
   constructor(
     public seasonService: SeasonService,

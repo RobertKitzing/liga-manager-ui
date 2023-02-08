@@ -32,6 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
+    path: 'history',
+    loadChildren: () => import('./history/history.module').then(m => m.HistoryModule)
+  },
+  {
     path: '',
     redirectTo: 'schedule',
     pathMatch: 'full'

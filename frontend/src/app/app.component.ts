@@ -19,7 +19,6 @@ import { SeasonService } from './services/season.service';
 export class AppComponent implements OnInit {
 
   darkModeControl = new FormControl(this.themeService.darkMode$.getValue());
-  currentSeason$ = this.seasonService.currentSeason$;
 
   get currentRoute() {
     const url = this.router.url.split('/')[1]

@@ -1,7 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-import { map, of, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, iif, map, of, Subject, Subscription, switchMap } from 'rxjs';
 import { RankingPosition } from 'src/api/graphql';
+import { SeasonChooserModes } from '../components/season-chooser/season-chooser.component';
 import { RankingService } from '../services/ranking.service';
 import { SeasonService } from '../services/season.service';
 
@@ -19,30 +21,57 @@ import { SeasonService } from '../services/season.service';
     ]),
   ],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
 
-  currentSeason$ = this.seasonService.currentSeason$;
+  seasonMode: SeasonChooserModes = 'progressSeason';
+
+  currentSeason$ = this.seasonService[`${this.seasonMode}$`];
 
   displayedColumns: string[] = ['position', 'team', 'games', 'wins-draws-losses', 'goals', 'points'];
 
   expandedElement!: RankingPosition;
 
-  ranking$ = this.seasonService.currentSeason$.pipe(
+  rankingTrigger$ = new BehaviorSubject<null>(null);
+
+  ranking$ = this.rankingTrigger$.pipe(
     switchMap(
-      (currentSeason) => currentSeason?.id ?this.rankingService.getRanking$({ id: currentSeason.id! }) : of(null)
+      () => iif(
+          () => this.seasonMode === 'progressSeason',
+          this.seasonService.progressSeason$,
+          this.seasonService.historySeason$
+        )
+    ),
+    switchMap(
+      (season) => {
+        return season?.id ?this.rankingService.getRanking$({ id: season.id! }) : of(null)
+      }
     ),
     map(
       (ranking) => ranking?.positions
     )
   );
+  
+  subs: Subscription[] = []
 
   constructor(
     public rankingService: RankingService,
     public seasonService: SeasonService,
+    public router: Router,
   ) {
+  }
 
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s?.unsubscribe());
   }
 
   ngOnInit(): void {
+    if (this.router.url.includes('history')) {
+      this.seasonMode = 'historySeason';
+    }
+    this.subs.push(
+      this.currentSeason$.subscribe(
+      () => this.rankingTrigger$.next(null)
+      )
+    )
   }
 }

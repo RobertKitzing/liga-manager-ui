@@ -3,38 +3,48 @@ import { LocalStorage } from 'ngx-webstorage';
 import { BehaviorSubject, filter, map, Subject, tap } from 'rxjs';
 import { AllSeasonsFragment, AllSeasonsListGQL, SeasonGQL, SeasonQueryVariables, SeasonState } from 'src/api/graphql';
 
-const SELECTED_SEASON_KEY = 'SELECTED_SEASON';
+const SELECTED_PROGRESS_SEASON_KEY = 'SELECTED_PROGRESS_SEASON';
+const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeasonService {
 
-  @LocalStorage(SELECTED_SEASON_KEY) _currentSeason!: AllSeasonsFragment;
+  @LocalStorage(SELECTED_PROGRESS_SEASON_KEY) progressSeason!: AllSeasonsFragment;
+  @LocalStorage(SELECTED_HISTORY_SEASON_KEY) historySeason!: AllSeasonsFragment;
 
-  currentSeason$ = new BehaviorSubject<AllSeasonsFragment>(this._currentSeason);
+  progressSeason$ = new BehaviorSubject<AllSeasonsFragment>(this.progressSeason);
+  historySeason$ = new BehaviorSubject<AllSeasonsFragment>(this.historySeason);
   manageSeason$ = new Subject<AllSeasonsFragment>();
 
   constructor(
     private allSeasonlistGQL: AllSeasonsListGQL,
     private seasonGQL: SeasonGQL,
   ) {
-    this.currentSeason$.subscribe(
+  
+    this.progressSeason$.subscribe(
       (season) => {
         if (season) {
-          this._currentSeason = season;
+          this.progressSeason = season;
+        }
+      }
+    );
+
+    this.historySeason$.subscribe(
+      (season) => {
+        if (season) {
+          this.historySeason = season;
         }
       }
     );
   }
   
-  seasonList$(states: SeasonState[]) {
-    return this.allSeasonlistGQL.watch().valueChanges.pipe(
+  seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
       map(
-        (seasons) => seasons.data.allSeasons?.filter(s => states.some( x => x === s?.state))
-      ),
+        (seasons) => seasons.data.allSeasons
+        )
     )
-  }
   
   getSeason(params: SeasonQueryVariables) {
     return this.seasonGQL.watch(params).valueChanges.pipe(
