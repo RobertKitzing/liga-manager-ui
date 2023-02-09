@@ -42,7 +42,7 @@ export class SeasonService {
   
   seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
       map(
-        (seasons) => [...seasons.data.allSeasons!]?.sort((a, b) => a?.match_days?.find(x => x?.number === 1)?.start_date! > b?.match_days?.find(x => x?.number === 1)?.start_date! ? 1 : -1 )
+        (seasons) => [...seasons.data.allSeasons!]?.sort((a, b) => a?.match_days?.find(x => x?.number === 1)?.start_date! < b?.match_days?.find(x => x?.number === 1)?.start_date! ? 1 : -1 )
       )
     )
   
