@@ -43,12 +43,12 @@
                         <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
                             <div class="flex w-[96%] mt-2 mb-2 items-center m-auto border-2 rounded dark:border-toolbardark flex-col">
                                 <div class="w-full" *ngIf="match">
-                                    <div class="grid mt-2 content-center grid-cols-3 w-full">
-                                        <div class="text-right self-center mr-2">
+                                    <div class="grid mb-2 content-center grid-cols-3 w-full gap-0 bg-toolbar dark:bg-toolbardark">
+                                        <div class="text-right self-center pl-2 break-words line-clamp-3">
                                             {{match.home_team.name}}
                                         </div>
                                         <div class="text-center self-center lg:flex lg:justify-center">
-                                            <div class="grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 cursor-pointer" (click)="canEditMatch(match, season.state) && openEditResultDialog(match, matchDay)">
+                                            <div class="grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 cursor-pointer justify-items-center" (click)="canEditMatch(match, season.state) && openEditResultDialog(match, matchDay)">
                                                 <ng-container *ngIf="!match.cancelled_at">
                                                     <div>
                                                         {{ (match.home_score | number) || '-' }}
@@ -67,7 +67,7 @@
                                                 </ng-container>
                                             </div>
                                         </div>
-                                        <div class="text-left self-center ml-2">
+                                        <div class="text-left self-center pr-2 break-words line-clamp-3">
                                             {{match.guest_team.name}}
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                     <ng-container *ngIf="match.cancelled_at">
                                         <div class="text-center">
                                             <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
-                                            <div class="truncate p-4">{{ match.cancellation_reason }}</div>
+                                            <div class="line-clamp-5">{{ match.cancellation_reason }}</div>
                                         </div>
                                     </ng-container>
                                 </div>

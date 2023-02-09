@@ -61,6 +61,7 @@
     "@angular/compiler-cli": "^15.0.0",
     "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@capacitor/cli": "latest",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.48.1",
     "@typescript-eslint/parser": "5.48.1",
