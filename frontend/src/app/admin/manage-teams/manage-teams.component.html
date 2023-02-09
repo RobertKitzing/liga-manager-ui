@@ -1,4 +1,4 @@
-<div class="flex justify-center h-full">
+    <div class="flex justify-center h-full">
     <div class="w-full sm:w-3/4">
         <div class="flex justify-between mt-4 mb-2">
             <mat-form-field class="w-full">
@@ -15,16 +15,32 @@
             <table mat-table [dataSource]="teams">
                 <ng-container matColumnDef="team">
                     <td class="" mat-cell *matCellDef="let team">
-                        {{team.name}}</td>
+                        <ng-container *ngIf="editTeamId === team.id">
+                            <mat-form-field class="w-full" subscriptSizing="dynamic">
+                                <mat-label>TEAM</mat-label>
+                                <input matInput [formControl]="newTeamName" (keyup.enter)="renameTeam(team.id, newTeamName.value)" [value]="team.name">
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf="editTeamId !== team.id">
+                            {{team.name}}
+                        </ng-container>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <td class="text-end" mat-cell *matCellDef="let team">
-                        <button mat-icon-button>
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button>
+                        <ng-container *ngIf="editTeamId !== team.id">
+                            <button mat-icon-button (click)="editTeam(team)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="editTeamId === team.id">
+                            <button mat-icon-button (click)="renameTeam(team.id, newTeamName.value)" [disabled]="!newTeamName.valid">
+                                <mat-icon>save</mat-icon>
+                            </button>
+                        </ng-container>
+                        <!-- <button mat-icon-button (click)="deleteTeam(team.id)">
                             <mat-icon>delete</mat-icon>
-                        </button>
+                        </button> -->
                     </td>
                 </ng-container>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

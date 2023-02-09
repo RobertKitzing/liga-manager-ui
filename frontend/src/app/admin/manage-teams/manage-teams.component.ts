@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
+import { Team } from 'src/api/graphql';
 import { TeamService } from 'src/app/services/team.service';
 
 @Component({
@@ -13,12 +15,29 @@ export class ManageTeamsComponent {
 
   teams$ = this.teamService.allTeams$
   newTeam = new FormControl();
+  newTeamName = new FormControl()
+
+  editTeamId = '';
 
   constructor(
     private teamService: TeamService,
   ) {}
 
-  addNewTeam(name: string) {
+  editTeam(team: Team) {
+    this.editTeamId = team.id;
+    this.newTeamName.setValue(team.name)
+  }
 
+  async addNewTeam(name: string) {
+    await firstValueFrom(this.teamService.createTeam(name));
+  }
+
+  async deleteTeam(team_id: string) {
+    await firstValueFrom(this.teamService.deleteTeam({team_id}));
+  }
+
+  async renameTeam(team_id: string, new_name: string) {
+    await firstValueFrom(this.teamService.renameTeam({team_id, new_name}));
+    this.editTeamId = ''
   }
 }
