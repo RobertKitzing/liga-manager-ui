@@ -1,7 +1,7 @@
-    <div class="flex justify-center h-full">
+<div class="flex justify-center h-full">
     <div class="w-full sm:w-3/4">
         <div class="m-4">
-            <mat-form-field class="w-full"  subscriptSizing="dynamic">
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
                 <mat-label translate>SEACH_TEAM</mat-label>
                 <input matInput [formControl]="searchTeam" />
             </mat-form-field>
@@ -23,8 +23,9 @@
                     <td mat-cell *matCellDef="let team">
                         <ng-container *ngIf="editTeamId === team.id">
                             <mat-form-field class="w-full pt-4 pb-4" subscriptSizing="dynamic">
-                                <mat-label>TEAM</mat-label>
-                                <input matInput [formControl]="newTeamName" (keyup.enter)="renameTeam(team.id, newTeamName.value!)" [value]="team.name">
+                                <mat-label translate>TEAM_NAME</mat-label>
+                                <input matInput [formControl]="newTeamName"
+                                    (keyup.enter)="renameTeam(team.id, newTeamName.value!)" [value]="team.name">
                             </mat-form-field>
                         </ng-container>
                         <ng-container *ngIf="editTeamId !== team.id">
@@ -37,19 +38,19 @@
                         <ng-container *ngIf="addTeamMode">
                             <button mat-icon-button (click)="addNewTeam(newTeam.value!)" [disabled]="!newTeam.valid">
                                 <mat-icon>
-                                  add
+                                    add
                                 </mat-icon>
                             </button>
                             <button mat-icon-button (click)="addTeamMode = false">
                                 <mat-icon>
-                                  cancel
+                                    cancel
                                 </mat-icon>
                             </button>
                         </ng-container>
                         <ng-container *ngIf="!addTeamMode">
                             <button mat-icon-button (click)="addTeamMode = true">
                                 <mat-icon>
-                                  add
+                                    add
                                 </mat-icon>
                             </button>
                         </ng-container>
@@ -61,12 +62,13 @@
                             </button>
                         </ng-container>
                         <ng-container *ngIf="editTeamId === team.id">
-                            <button mat-icon-button (click)="renameTeam(team.id, newTeamName.value!)" [disabled]="!newTeamName.valid">
+                            <button mat-icon-button (click)="renameTeam(team.id, newTeamName.value!)"
+                                [disabled]="!newTeamName.valid">
                                 <mat-icon>save</mat-icon>
                             </button>
                             <button mat-icon-button (click)="editTeamId = ''">
                                 <mat-icon>
-                                  cancel
+                                    cancel
                                 </mat-icon>
                             </button>
                         </ng-container>

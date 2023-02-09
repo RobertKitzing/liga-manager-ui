@@ -503,7 +503,7 @@ export type ContactFragment = { __typename?: 'Contact', first_name: string, last
 
 export type SeasonFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null };
 
-export type AllSeasonsFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState };
+export type AllSeasonsFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string } | null> | null };
 
 export type AllSeasonsCalendarFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null };
 
@@ -846,7 +846,7 @@ export type RankingQuery = { __typename?: 'query', season?: { __typename?: 'Seas
 export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllSeasonsListQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState } | null> | null };
+export type AllSeasonsListQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string } | null> | null } | null> | null };
 
 export type SeasonQueryVariables = Exact<{
   id: Scalars['String'];
@@ -961,6 +961,10 @@ export const AllSeasonsFragmentDoc = gql`
   id
   name
   state
+  match_days {
+    number
+    start_date
+  }
 }
     `;
 export const AllSeasonsCalendarFragmentDoc = gql`

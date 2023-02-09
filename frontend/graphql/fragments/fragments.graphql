@@ -12,7 +12,6 @@ fragment Match on Match {
     pitch {
         ...Pitch
     }
-    cancelled
     cancelled_at
     cancellation_reason
 }
@@ -69,6 +68,10 @@ fragment AllSeasons on Season {
     id
     name
     state
+    match_days {
+        number
+        start_date
+    }
 }
 
 fragment AllSeasonsCalendar on Season {
