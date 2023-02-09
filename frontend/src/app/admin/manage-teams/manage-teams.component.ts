@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
+import { filter, firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Team } from 'src/api/graphql';
 import { TeamService } from 'src/app/services/team.service';
 
@@ -13,11 +13,19 @@ export class ManageTeamsComponent {
 
   displayedColumns: string[] = ['team', 'action'];
 
-  teams$ = this.teamService.allTeams$
-  newTeam = new FormControl();
-  newTeamName = new FormControl()
+  newTeam = new FormControl('', [Validators.required]);
+  newTeamName = new FormControl('', [Validators.required])
+  searchTeam = new FormControl()
 
+  addTeamMode = false;
   editTeamId = '';
+
+  teams$ = this.searchTeam.valueChanges.pipe(
+    startWith(null),
+    switchMap(
+      (searchTerm) => !searchTerm ? this.teamService.allTeams$ : this.teamService.allTeams$.pipe(map((x) => x.filter((y) => y?.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) )))
+    )
+  );
 
   constructor(
     private teamService: TeamService,
@@ -30,6 +38,7 @@ export class ManageTeamsComponent {
 
   async addNewTeam(name: string) {
     await firstValueFrom(this.teamService.createTeam(name));
+    this.addTeamMode = false;
   }
 
   async deleteTeam(team_id: string) {
