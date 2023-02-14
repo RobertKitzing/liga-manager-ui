@@ -33,5 +33,8 @@
     "PLACEHOLDER.SELECT_MATCHDAY": "Spieltag",
     "PLACEHOLDER.SELECT_TEAM": "Manschaft",
     "ALL_TEAMS": "Alle Manschaften",
-    "ALL_MATCHDAYS": "Alle Spieltage"
+    "ALL_MATCHDAYS": "Alle Spieltage",
+    "SeasonState.Ended": "beendet",
+    "SeasonState.Preparation": "vorbereitung",
+    "SeasonState.Progress": "läuft"
 }
