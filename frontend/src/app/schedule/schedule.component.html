@@ -72,25 +72,29 @@
                                         </div>
                                     </div>
                                     <ng-container *ngIf="!match.cancelled_at">
-                                        <div class="w-full flex justify-evenly">
-                                            <div class="grid grid-rows-2 grid-flow-col gap-2 cursor-pointer" (click)="canEditMatch(match, season.state) && openEditPitchDialog(match, matchDay)">
-                                                <ng-container *ngIf="!match.pitch">
-                                                    <mat-icon class="justify-self-center">location_off</mat-icon>
-                                                    <span translate>NO_PTICH_SET</span>
-                                                </ng-container>
-                                                <ng-container *ngIf="match.pitch">
-                                                    <mat-icon class="justify-self-center">location_on</mat-icon>
-                                                    <span>{{ match.pitch.label }}</span>
-                                                </ng-container>
+                                        <div class="grid content-center grid-cols-2 w-full gap-0">
+                                            <div class="w-full">
+                                                <div class="flex flex-col items-center">
+                                                    <ng-container *ngIf="match.pitch">
+                                                        <mat-icon>location_on</mat-icon>
+                                                        <span>{{ match.pitch.label }}</span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!match.pitch">
+                                                        <mat-icon>location_off</mat-icon>
+                                                        <span translate>NO_PTICH_SET</span>
+                                                    </ng-container>
+                                                </div>
                                             </div>
-                                            <div class="grid grid-rows-2 grid-flow-col gap-2 cursor-pointer" (click)="canEditMatch(match, season.state) && openEditKickoffDialog(match, matchDay)">
-                                                <mat-icon class="justify-self-center">access_time</mat-icon>
-                                                <ng-container *ngIf="!match.kickoff">
-                                                    <span translate>NO_TIME_SET</span>
-                                                </ng-container>
-                                                <ng-container *ngIf="match.kickoff">
-                                                    <span>{{ match.kickoff | customDate:'short' }}</span>
-                                                </ng-container>
+                                            <div class="w-full">
+                                                <div class="flex flex-col items-center">
+                                                    <mat-icon>access_time</mat-icon>
+                                                    <ng-container *ngIf="!match.kickoff">
+                                                        <span translate>NO_TIME_SET</span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="match.kickoff">
+                                                        <span>{{ match.kickoff | customDate:'short' }}</span>
+                                                    </ng-container>
+                                                </div>
                                             </div>
                                         </div>
                                     </ng-container>
@@ -101,8 +105,8 @@
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="flex border-t-2 dark:border-toolbardark w-full justify-center mt-2">
-                                    <div *ngIf="canEditMatch(match, season.state)" class="m-2">
+                                <div class="flex border-t-2 dark:border-toolbardark w-full justify-center" *ngIf="canEditMatch(match, season.state)">
+                                    <div class="m-2">
                                         <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu" class="rounded">
                                             <mat-icon>edit</mat-icon>
                                             <span translate>BUTTON.EDIT</span>

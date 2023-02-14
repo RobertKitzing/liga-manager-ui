@@ -1,0 +1,48 @@
+<div mat-dialog-title class="flex bg-theme text-theme-cdefault p-4">
+    <div class="self-center text-center w-full grid grid-cols-1 gap-2 text-lg">
+        <span translate>EDIT_USER_TITLE</span>
+    </div>
+</div>
+<div class="flex justify-center w-full mt-2 mb-2">
+
+    <div [formGroup]="userFormGroup" class="flex flex-col justify-center w-full p-2">
+        <mat-form-field>
+            <mat-label translate>EMAIL</mat-label>
+            <input matInput formControlName="email" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label translate>FIRST_NAME</mat-label>
+            <input matInput formControlName="first_name" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label translate>LAST_NAME</mat-label>
+            <input matInput formControlName="last_name" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label translate>USER_ROLE</mat-label>
+            <mat-select formControlName="role" name="userRole">
+                <mat-option *ngFor="let userRole of UserRole | keyvalue" [value]="userRole.value">
+                    <span translate>UserRole.{{ userRole.key }}</span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-container *ngIf="userFormGroup.value.role === UserRole.TeamManager">
+            <mat-form-field>
+                <mat-label translate>TEAMS</mat-label>
+                <input matInput [formControl]="searchTeam"/>
+                <mat-select formControlName="team_ids" name="teams" multiple>
+                    <mat-option *ngFor="let team of allTeams$ | async" [value]="team?.id">
+                        {{ team?.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </div>
+</div>
+<div class="flex justify-evenly p-2 border-t-2 dark:border-toolbardark">
+    <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+    <button mat-stroked-button (click)="onSaveClicked()" [disabled]="!userFormGroup.valid">
+        <mat-icon>save</mat-icon>
+        {{ 'BUTTON.SAVE' | translate}}
+    </button>
+</div>

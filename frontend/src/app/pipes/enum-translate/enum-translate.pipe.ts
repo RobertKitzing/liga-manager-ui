@@ -1,9 +1,9 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { SeasonState } from 'src/api/graphql';
+import { SeasonState, UserRole } from 'src/api/graphql';
 
-type Enums = SeasonState
+type Enums = SeasonState | UserRole
 
 @Pipe({
   name: 'enumTranslate'
@@ -25,6 +25,10 @@ export class EnumTranslatePipe implements PipeTransform {
         return marker('SeasonState.Preparation');
       case SeasonState.Progress:
         return marker('SeasonState.Progress');
+      case UserRole.Admin:
+        return marker('UserRole.Admin');
+      case UserRole.TeamManager:
+        return marker('UserRole.TeamManager');
       default:
         throw new Error(`Unupported Enum Value ${value}`)
     }

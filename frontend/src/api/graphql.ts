@@ -762,7 +762,7 @@ export type DeleteTournamentMutationVariables = Exact<{
 export type DeleteTournamentMutation = { __typename?: 'mutation', deleteTournament?: boolean | null };
 
 export type CreateUserMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['String']>;
   email: Scalars['String'];
   password: Scalars['String'];
   first_name: Scalars['String'];
@@ -1562,9 +1562,9 @@ export const DeleteTournamentDocument = gql`
     }
   }
 export const CreateUserDocument = gql`
-    mutation CreateUser($id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
+    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
   createUser(
-    id: $id
+    id: $user_id
     email: $email
     password: $password
     first_name: $first_name

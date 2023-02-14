@@ -16,6 +16,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { EditUserDialogComponent } from './manage-users/edit-user-dialog/edit-user-dialog.component';
+import { EnumTranslateModule } from '../pipes/enum-translate/enum-translate.module';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -24,7 +29,8 @@ import { MatInputModule } from '@angular/material/input';
     ManageTournamentsComponent,
     ManageUsersComponent,
     ManageTeamsComponent,
-    ManagePitchesComponent
+    ManagePitchesComponent,
+    EditUserDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +43,10 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     ReactiveFormsModule,
     MatInputModule,
+    EnumTranslateModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatDialogModule,
   ]
 })
 export class AdminModule { }

@@ -1,5 +1,5 @@
 mutation CreateUser(
-    $id: String
+    $user_id: String
     $email: String!
     $password: String!
     $first_name: String!
@@ -8,7 +8,7 @@ mutation CreateUser(
     $team_ids: [String]!
 ) {
     createUser(
-        id: $id,
+        id: $user_id,
         email: $email,
         password: $password,
         first_name: $first_name,

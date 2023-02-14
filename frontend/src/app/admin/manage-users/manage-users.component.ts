@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { map, startWith, switchMap } from 'rxjs';
+import { User } from 'src/api/graphql';
 import { UserService } from 'src/app/services/user.service';
+import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 
 @Component({
   selector: 'lima-manage-users',
@@ -10,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ManageUsersComponent {
 
-  displayedColumns: string[] = ['email', 'team', 'action'];
+  displayedColumns: string[] = ['email', 'action'];
 
   searchUser = new FormControl();
 
@@ -23,7 +26,16 @@ export class ManageUsersComponent {
 
   constructor(
     private userService: UserService,
+    private dialog: MatDialog,
   ) {
 
+  }
+
+  editUser(user: User) {
+
+    this.dialog.open(EditUserDialogComponent, {
+      width: '100%',
+      data: user
+    });
   }
 }

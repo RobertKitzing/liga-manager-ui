@@ -20,6 +20,7 @@
 <ng-template #actionsTemplate>
     <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
     <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" [disabled]="!resultFormGroup.valid">
+        <mat-icon>save</mat-icon>
         {{ 'BUTTON.SAVE' | translate}}
     </button>
 </ng-template>

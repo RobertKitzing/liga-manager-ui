@@ -25,6 +25,7 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
     ReactiveFormsModule,
     MatButtonModule,
     EditMatchBaseModule,
+    MatIconModule,
   ]
 })
 export class EditMatchResultModule { }

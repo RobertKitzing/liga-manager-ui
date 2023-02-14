@@ -27,6 +27,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     EditMatchBaseModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatIconModule,
   ]
 })
 export class CancelMatchModule { }
