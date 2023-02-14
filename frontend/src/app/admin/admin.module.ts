@@ -21,6 +21,7 @@ import { EnumTranslateModule } from '../pipes/enum-translate/enum-translate.modu
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ManageSeasonsComponent } from './manage-seasons/manage-seasons.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ManageTeamsComponent,
     ManagePitchesComponent,
     EditUserDialogComponent,
+    ManageSeasonsComponent,
   ],
   imports: [
     CommonModule,

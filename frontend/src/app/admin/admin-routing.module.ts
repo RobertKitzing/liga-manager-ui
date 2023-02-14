@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AdminGuard } from './admin.guard';
 import { ManagePitchesComponent } from './manage-pitches/manage-pitches.component';
+import { ManageSeasonsComponent } from './manage-seasons/manage-seasons.component';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { ManageTournamentsComponent } from './manage-tournaments/manage-tournaments.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'pitches',
         component: ManagePitchesComponent,
+      },
+      {
+        path: 'seasons',
+        component: ManageSeasonsComponent,
       },
       {
         path: '',

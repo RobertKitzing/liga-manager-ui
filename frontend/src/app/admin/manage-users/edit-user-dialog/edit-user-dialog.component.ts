@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map, startWith, switchMap } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Maybe, Team, UpdateUserGQL, User, UserRole } from 'src/api/graphql';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
+import { v4 as uuidv4 } from 'uuid';
+import { generator } from 'ts-password-generator';
 
 @Component({
   selector: 'lima-edit-user-dialog',
@@ -25,10 +27,10 @@ export class EditUserDialogComponent implements OnInit {
   )
 
   userFormGroup = new FormGroup({
-    email: new FormControl(''),
-    first_name: new FormControl(''),
-    last_name: new FormControl(''),
-    role: new FormControl<UserRole | undefined>(undefined),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    first_name: new FormControl('', [Validators.required]),
+    last_name: new FormControl('', [Validators.required]),
+    role: new FormControl<UserRole>(UserRole.TeamManager, {nonNullable: true}),
     team_ids: new FormControl<string[]>([]),
   })
 
@@ -36,6 +38,7 @@ export class EditUserDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public user: User,
     private teamService: TeamService,
     private userService: UserService,
+    private dialogRef: MatDialogRef<EditUserDialogComponent>,
   ) {
 
   }
@@ -51,15 +54,31 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   async onSaveClicked() {
-    const t = {
-      ...this.userFormGroup.value,
-    }
-  
-    if(this.user) {
-      // await this.userService.updateUser(t)
-    } else {
 
+    try {
+      if(this.user) {
+        await firstValueFrom(this.userService.updateUser({
+          user_id: this.user.id,
+          ...this.userFormGroup.value,
+        }))
+        this.dialogRef.close();
+      } else {
+        await firstValueFrom(this.userService.createUser({
+          user_id: uuidv4(),
+          email: this.userFormGroup.value.email!,
+          first_name: this.userFormGroup.value.first_name!,
+          last_name: this.userFormGroup.value.last_name!,
+          role: this.userFormGroup.value.role!,
+          team_ids: this.userFormGroup.value.team_ids!,
+          password: generator({haveNumbers: true, haveSymbols: true}),
+        }))
+        this.userService.sendPasswordMail(this.userFormGroup.value.email!);
+        this.dialogRef.close();
+      }      
+    } catch (error) {
+      
     }
+
   }
 
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+export const NEW_PASSWORD_ROUTE = 'newpassword';
 
 const routes: Routes = [
   {
