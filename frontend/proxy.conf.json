@@ -6,5 +6,11 @@
     },
     "/appsettings.json": {
         "target": "http://web:3098"
+    },
+    "/team-logos/*": {
+        "target": "http://web:3098"
+    },
+    "/team-logo/*": {
+        "target": "http://web:3098"
     }
 }

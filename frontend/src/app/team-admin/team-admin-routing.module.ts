@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: '',
     component: TeamAdminComponent,
-    canActivate: [TeamAdminGuard, AdminGuard],
-    canActivateChild: [TeamAdminGuard, AdminGuard]
+    canActivate: [TeamAdminGuard],
+    canActivateChild: [TeamAdminGuard]
   }
 ];
 

@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
-
-export interface AppsettingsModel {
-  host?: string;
-  googleMapsApiKey: string;
-}
+import { AppsettingsModel, AppSettingsService } from 'src/api/openapi';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +10,18 @@ export class AppsettingsService {
 
   appsettings?: AppsettingsModel;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private appSettingsService: AppSettingsService
+  ) { }
 
   loadAppsettings() {
-    return this.httpClient.get<AppsettingsModel>('./appsettings.json').pipe(
-      tap(
-        (res: AppsettingsModel) => {
-          this.appsettings = res
-        }
-      ),
-    )
+    return this.appSettingsService.getAppsettings()
+      .pipe(
+        tap(
+          (res) => {
+            this.appsettings = res
+          }
+        ),
+      )
   }
 }

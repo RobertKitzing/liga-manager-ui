@@ -19,7 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   imports: [
     CommonModule,
     MatDialogModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     MatInputModule,
     CustomDateModule,
     ReactiveFormsModule,

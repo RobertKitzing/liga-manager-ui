@@ -25,7 +25,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   seasonMode: SeasonChooserModes = 'progressSeason';
 
-  displayedColumns: string[] = ['position', 'team', 'games', 'wins-draws-losses', 'goals', 'points'];
+  displayedColumns: string[] = ['position', 'logo', 'team', 'games', 'wins-draws-losses', 'goals', 'points'];
 
   expandedElement!: RankingPosition;
 

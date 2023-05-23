@@ -28,6 +28,7 @@ import { AppsettingsService } from './services/appsettings.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavLinksComponent } from './components/nav-links/nav-links.component';
 import { EditMatchBaseComponent } from './components/dialogs/edit-match-base/edit-match-base.component';
+import { BASE_PATH } from 'src/api/openapi';
 
 export function graphqlFactory(provider: GraphqlService) {
   return () => provider.init();
@@ -63,7 +64,6 @@ export function httpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'en-GB',
       loader: {
         provide: TranslateLoader,
-        // useClass: CustomTranslateHttpLoader,
         useFactory: httpLoaderFactory,
         deps: [HttpClient]
       }
@@ -85,6 +85,10 @@ export function httpLoaderFactory(http: HttpClient) {
       useClass: LoadingIndicatorHttpInterceptor,
       multi: true,
     },
+    {
+      provide: BASE_PATH,
+      useValue: ''
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -13,7 +13,7 @@ const declarations = [
   imports: [
     CommonModule,
     CustomDateModule,
-    TranslateModule,
+    TranslateModule.forChild(),
   ],
   exports: declarations
 })

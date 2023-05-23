@@ -1,6 +1,7 @@
 <div mat-dialog-title class="flex bg-theme text-theme-cdefault p-4">
     <div class="self-center text-center w-full grid grid-cols-1 gap-2 text-lg">
-        <span translate>EDIT_USER_TITLE</span>
+        <span translate *ngIf="user">EDIT_USER_TITLE</span>
+        <span translate *ngIf="!user">ADD_USER_TITLE</span>
     </div>
 </div>
 <div class="flex justify-center w-full mt-2 mb-2">

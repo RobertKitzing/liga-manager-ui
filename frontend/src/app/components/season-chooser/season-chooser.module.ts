@@ -14,7 +14,7 @@ const declarations = [
   imports: [
     CommonModule,
     MatSelectModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     EnumTranslateModule,
   ],
   exports: declarations

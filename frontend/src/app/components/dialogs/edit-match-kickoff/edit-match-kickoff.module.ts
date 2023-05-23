@@ -21,7 +21,7 @@ import { CustomDateAdapter } from 'src/app/custom-date-adapter';
   imports: [
     CommonModule,
     MatDialogModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     MatInputModule,
     CustomDateModule,
     ReactiveFormsModule,

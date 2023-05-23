@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TeamAdminRoutingModule } from './team-admin-routing.module';
 import { TeamAdminComponent } from './team-admin.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     CommonModule,
     TeamAdminRoutingModule,
     MatSidenavModule,
+    MatButtonModule,
   ]
 })
 export class TeamAdminModule { }

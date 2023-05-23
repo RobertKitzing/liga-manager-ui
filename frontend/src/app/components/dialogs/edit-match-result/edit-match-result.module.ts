@@ -19,7 +19,7 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
   imports: [
     CommonModule,
     MatDialogModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     MatInputModule,
     CustomDateModule,
     ReactiveFormsModule,

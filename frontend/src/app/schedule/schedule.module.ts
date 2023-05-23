@@ -28,7 +28,7 @@ import { CancelMatchModule } from '../components/dialogs/cancel-match/cancel-mat
   imports: [
     CommonModule,
     ScheduleRoutingModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     MatButtonModule,
     MatIconModule,
     MatMenuModule,

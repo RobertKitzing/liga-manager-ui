@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { validate } from './env/env.validation';
 import { AppSettingsController } from './app-settings/app-settings.controller';
 import { HttpModule } from '@nestjs/axios';
+import { TeamLogoController } from './team-logo/team-logo.controller';
 
 @Module({
   imports: [
@@ -17,7 +18,10 @@ import { HttpModule } from '@nestjs/axios';
       rootPath: join(__dirname, '..', 'client'),
     }),
   ],
-  controllers: [AppSettingsController],
+  controllers: [
+    AppSettingsController,
+    TeamLogoController
+  ],
   providers: [
   ],
 })
