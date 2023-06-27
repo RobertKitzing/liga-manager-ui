@@ -12,20 +12,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SeasonChooserModule } from '../components/season-chooser/season-chooser.module';
 
 @NgModule({
-  declarations: [
-    TableComponent
-  ],
-  imports: [
-    CommonModule,
-    TableRoutingModule,
-    TruncateModule,
-    MatProgressBarModule,
-    MatTableModule,
-    MatIconModule,
-    HammerModule,
-    MatToolbarModule,
-    TranslateModule.forChild(),
-    SeasonChooserModule,
-  ]
+    declarations: [TableComponent],
+    imports: [
+        CommonModule,
+        TableRoutingModule,
+        TruncateModule,
+        MatProgressBarModule,
+        MatTableModule,
+        MatIconModule,
+        HammerModule,
+        MatToolbarModule,
+        TranslateModule.forChild(),
+        SeasonChooserModule,
+    ],
 })
-export class TableModule { }
+export class TableModule {}

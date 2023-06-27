@@ -11,9 +11,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+    HttpClient,
+    HttpClientModule,
+    HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { LoadingIndicatorHttpInterceptor } from './loading-indicator-http-interceptor';
-import { ApolloModule } from 'apollo-angular'
+import { ApolloModule } from 'apollo-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
@@ -24,72 +28,66 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { GraphqlService } from './services/graphql.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AppsettingsService } from './services/appsettings.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavLinksComponent } from './components/nav-links/nav-links.component';
-import { EditMatchBaseComponent } from './components/dialogs/edit-match-base/edit-match-base.component';
 import { BASE_PATH } from 'src/api/openapi';
 
 export function graphqlFactory(provider: GraphqlService) {
-  return () => provider.init();
+    return () => provider.init();
 }
 
 export function httpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, `/i18n/`, '.json');
+    return new TranslateHttpLoader(http, `/i18n/`, '.json');
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavLinksComponent,
-  ],
-  imports: [
-    ApolloModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatSlideToggleModule,
-    MatSidenavModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatIconModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      defaultLanguage: 'en-GB',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    ReactiveFormsModule,
-    NgxWebstorageModule.forRoot(),
-    MatInputModule,
-    MatListModule,
-  ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: graphqlFactory,
-      deps: [GraphqlService],
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingIndicatorHttpInterceptor,
-      multi: true,
-    },
-    {
-      provide: BASE_PATH,
-      useValue: ''
-    }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, LoginComponent, NavLinksComponent],
+    imports: [
+        ApolloModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatProgressBarModule,
+        MatSlideToggleModule,
+        MatSidenavModule,
+        MatSelectModule,
+        MatMenuModule,
+        MatIconModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            defaultLanguage: 'en-GB',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        ReactiveFormsModule,
+        NgxWebstorageModule.forRoot(),
+        MatInputModule,
+        MatListModule,
+    ],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: graphqlFactory,
+            deps: [GraphqlService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingIndicatorHttpInterceptor,
+            multi: true,
+        },
+        {
+            provide: BASE_PATH,
+            useValue: '',
+        },
+    ],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

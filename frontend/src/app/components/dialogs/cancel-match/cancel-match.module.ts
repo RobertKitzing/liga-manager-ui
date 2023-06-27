@@ -11,23 +11,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-
 @NgModule({
-  declarations: [
-    CancelMatchComponent
-  ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    TranslateModule.forChild(),
-    MatInputModule,
-    CustomDateModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    EditMatchBaseModule,
-    MatIconModule,
-    MatAutocompleteModule,
-    MatIconModule,
-  ]
+    declarations: [CancelMatchComponent],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        TranslateModule.forChild(),
+        MatInputModule,
+        CustomDateModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        EditMatchBaseModule,
+        MatIconModule,
+        MatAutocompleteModule,
+        MatIconModule,
+    ],
 })
-export class CancelMatchModule { }
+export class CancelMatchModule {}

@@ -5,18 +5,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { EnumTranslateModule } from 'src/app/pipes/enum-translate/enum-translate.module';
 
-const declarations = [
-  SeasonChooserComponent
-]
+const declarations = [SeasonChooserComponent];
 
 @NgModule({
-  declarations,
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    TranslateModule.forChild(),
-    EnumTranslateModule,
-  ],
-  exports: declarations
+    declarations,
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        TranslateModule.forChild(),
+        EnumTranslateModule,
+    ],
+    exports: declarations,
 })
-export class SeasonChooserModule { }
+export class SeasonChooserModule {}

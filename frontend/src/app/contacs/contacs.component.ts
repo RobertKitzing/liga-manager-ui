@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lima-contacs',
-  templateUrl: './contacs.component.html',
+    selector: 'lima-contacs',
+    templateUrl: './contacs.component.html',
 })
-export class ContacsComponent {
-
-}
+export class ContacsComponent {}

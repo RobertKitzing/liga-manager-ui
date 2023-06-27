@@ -7,73 +7,64 @@ import { AuthenticationService } from './services/authentication.service';
 import { I18nService } from './services/i18n.service';
 import { LoadingIndicatorService } from './services/loading-indicator.service';
 import { ThemeService } from './services/theme.service';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 import { SeasonService } from './services/season.service';
 
 @Component({
-  selector: 'lima-root',
-  templateUrl: './app.component.html',
-  styles: [],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'lima-root',
+    templateUrl: './app.component.html',
+    styles: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
+    darkModeControl = new FormControl(this.themeService.darkMode$.getValue());
 
-  darkModeControl = new FormControl(this.themeService.darkMode$.getValue());
+    get currentRoute() {
+        const url = this.router.url.split('/')[1];
+        return `NAVIGATION.${url.toUpperCase()}`;
+    }
 
-  get currentRoute() {
-    const url = this.router.url.split('/')[1]
-    return `NAVIGATION.${url.toUpperCase()}`;
-  }
+    constructor(
+        public themeService: ThemeService,
+        public loadingIndicatorService: LoadingIndicatorService,
+        public authService: AuthenticationService,
+        public i18Service: I18nService,
+        private dialog: MatDialog,
+        private route: ActivatedRoute,
+        private router: Router,
+        private location: Location,
+        private seasonService: SeasonService
+    ) {}
 
-  constructor(
-    public themeService: ThemeService,
-    public loadingIndicatorService: LoadingIndicatorService,
-    public authService: AuthenticationService,
-    public i18Service: I18nService,
-    private dialog: MatDialog,
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location,
-    private seasonService: SeasonService,
-  ) { }
+    async ngOnInit() {
+        this.route.queryParams.subscribe((params) => {
+            if (params['theme']) this.changeTheme(params['theme']);
+        });
 
-  async ngOnInit() {
-    this.route.queryParams
-      .subscribe(
-        (params) => {
-          if (params['theme'])
-            this.changeTheme(params['theme']);
-        }
-      );
+        this.darkModeControl.valueChanges.subscribe((dark) => {
+            this.themeService.darkMode$.next(dark!);
+        });
+    }
 
-    this.darkModeControl.valueChanges.subscribe(
-      (dark) => {
-        this.themeService.darkMode$.next(dark!);
-      }
-    )
-  }
+    openLoginDialog() {
+        this.dialog.open(LoginComponent);
+    }
 
-  openLoginDialog() {
-    this.dialog.open(LoginComponent);
-  }
+    openChangePasswordDialog() {}
 
-  openChangePasswordDialog() {
+    changeTheme(theme: string) {
+        this.themeService.currentTheme$.next(theme);
+    }
 
-  }
+    changeLang(param: { code: string; direction?: string }) {
+        this.i18Service.changeLang(param);
+    }
 
-  changeTheme(theme: string) {
-    this.themeService.currentTheme$.next(theme);
-  }
+    onSwipeLeft() {
+        this.location.back();
+    }
 
-  changeLang(param: { code: string, direction?: string }) {
-    this.i18Service.changeLang(param);
-  }
-
-  onSwipeLeft() {
-    this.location.back();
-  }
-
-  onSwipeRight() {
-    this.location.forward();
-  }
+    onSwipeRight() {
+        this.location.forward();
+    }
 }

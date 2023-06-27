@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lima-tournament',
-  template: `
-    <p>
-      tournament works!
-    </p>
-  `,
-  styles: [
-  ]
+    selector: 'lima-tournament',
+    template: ` <p>tournament works!</p> `,
+    styles: [],
 })
-export class TournamentComponent {
-
-}
+export class TournamentComponent {}

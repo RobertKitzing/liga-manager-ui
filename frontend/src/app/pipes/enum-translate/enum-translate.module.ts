@@ -3,18 +3,12 @@ import { CommonModule } from '@angular/common';
 import { EnumTranslatePipe } from './enum-translate.pipe';
 import { TranslatePipe } from '@ngx-translate/core';
 
-const declarations = [
-  EnumTranslatePipe
-]
+const declarations = [EnumTranslatePipe];
 
 @NgModule({
-  declarations,
-  imports: [
-    CommonModule
-  ],
-  providers: [
-    TranslatePipe,
-  ],
-  exports: declarations
+    declarations,
+    imports: [CommonModule],
+    providers: [TranslatePipe],
+    exports: declarations,
 })
-export class EnumTranslateModule { }
+export class EnumTranslateModule {}

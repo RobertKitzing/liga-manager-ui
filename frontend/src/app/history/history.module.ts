@@ -9,19 +9,16 @@ import { ScheduleModule } from '../schedule/schedule.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TournamentModule } from '../tournament/tournament.module';
 
-
 @NgModule({
-  declarations: [
-    HistoryComponent
-  ],
-  imports: [
-    CommonModule,
-    HistoryRoutingModule,
-    TableModule,
-    ScheduleModule,
-    MatToolbarModule,
-    TranslateModule.forChild(),
-    TournamentModule,
-  ]
+    declarations: [HistoryComponent],
+    imports: [
+        CommonModule,
+        HistoryRoutingModule,
+        TableModule,
+        ScheduleModule,
+        MatToolbarModule,
+        TranslateModule.forChild(),
+        TournamentModule,
+    ],
 })
-export class HistoryModule { }
+export class HistoryModule {}

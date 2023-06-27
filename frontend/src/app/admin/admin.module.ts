@@ -13,7 +13,6 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { ManagePitchesComponent } from './manage-pitches/manage-pitches.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditUserDialogComponent } from './manage-users/edit-user-dialog/edit-user-dialog.component';
@@ -23,32 +22,31 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ManageSeasonsComponent } from './manage-seasons/manage-seasons.component';
 
-
 @NgModule({
-  declarations: [
-    AdminComponent,
-    ManageTournamentsComponent,
-    ManageUsersComponent,
-    ManageTeamsComponent,
-    ManagePitchesComponent,
-    EditUserDialogComponent,
-    ManageSeasonsComponent,
-  ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    MatToolbarModule,
-    TranslateModule.forChild(),
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatTableModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    EnumTranslateModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatDialogModule,
-  ]
+    declarations: [
+        AdminComponent,
+        ManageTournamentsComponent,
+        ManageUsersComponent,
+        ManageTeamsComponent,
+        ManagePitchesComponent,
+        EditUserDialogComponent,
+        ManageSeasonsComponent,
+    ],
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        MatToolbarModule,
+        TranslateModule.forChild(),
+        MatIconModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatTableModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        EnumTranslateModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatDialogModule,
+    ],
 })
-export class AdminModule { }
+export class AdminModule {}

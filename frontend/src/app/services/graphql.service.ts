@@ -8,102 +8,114 @@ import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
 import { HttpHeaders } from '@angular/common/http';
 import { NotificationService } from './notification.service';
-import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class GraphqlService {
+    constructor(
+        private apollo: Apollo,
+        private httpLink: HttpLink,
+        private authService: AuthenticationService,
+        private appsettingsService: AppsettingsService,
+        private notify: NotificationService
+    ) {}
 
-  constructor(
-    private apollo: Apollo,
-    private httpLink: HttpLink,
-    private authService: AuthenticationService,
-    private appsettingsService: AppsettingsService,
-    private notify: NotificationService,
-  ) {
-  }
+    async init() {
+        await firstValueFrom(this.appsettingsService.loadAppsettings());
+        const http = this.httpLink.create({
+            uri: `${
+                this.appsettingsService.appsettings?.host || ''
+            }/api/graphql`,
+        });
 
-  async init() {
-    await firstValueFrom(this.appsettingsService.loadAppsettings());
-    const http = this.httpLink.create({ uri: `${this.appsettingsService.appsettings?.host || ''}/api/graphql` });
+        const afterwareLink = new ApolloLink((operation, forward) => {
+            return forward(operation).map((response) => {
+                const {
+                    response: { headers },
+                } = operation.getContext();
+                if (headers) {
+                    const token = headers.get('x-token');
+                    if (token) {
+                        this.authService.accessToken = token;
+                    }
+                }
+                return response;
+            });
+        });
 
-    const afterwareLink = new ApolloLink((operation, forward) => {
-      return forward(operation).map(response => {
-        const { response: { headers } } = operation.getContext();
-        if (headers) {
-          const token = headers.get('x-token');
-          if (token) {
-            this.authService.accessToken = token;
-          }
-        }
-        return response;
-      });
-    });
-
-    const errorHandler = onError(({ graphQLErrors, networkError, operation }) => {
-      const error: any = networkError;
-      if (graphQLErrors) {
-        graphQLErrors.map(({ message, locations, path }) =>
-          console.log(
-            `[GraphQL error]: Message: ${message}`,
-          ),
-        );
-      }
-      if (error) {
-        switch (error.status) {
-          case 401:
-            if (operation.operationName !== 'PasswordChange') {
-              this.authService.logout();
+        const errorHandler = onError(
+            ({ graphQLErrors, networkError, operation }) => {
+                const error: any = networkError;
+                if (graphQLErrors) {
+                    graphQLErrors.map(({ message, locations, path }) =>
+                        console.log(`[GraphQL error]: Message: ${message}`)
+                    );
+                }
+                if (error) {
+                    switch (error.status) {
+                        case 401:
+                            if (operation.operationName !== 'PasswordChange') {
+                                this.authService.logout();
+                            }
+                            break;
+                        case 400:
+                            const messages = error?.error?.errors?.map(
+                                (x: any) => x.message
+                            );
+                            this.notify.showErrorNotification(
+                                marker('NETWORK_ERROR'),
+                                messages
+                            );
+                            break;
+                        default:
+                            this.notify.showErrorNotification(
+                                marker('UNKNOWN_NETWORK_ERROR'),
+                                error.message
+                            );
+                    }
+                }
             }
-            break;
-          case 400:
-            const messages = error?.error?.errors?.map((x: any) => x.message)
-            this.notify.showErrorNotification(marker('NETWORK_ERROR'), messages);
-            break;
-          default:
-            this.notify.showErrorNotification(marker('UNKNOWN_NETWORK_ERROR'), error.message);
+        );
+
+        const auth = setContext((_, { headers }) => {
+            if (!headers) {
+                headers = new HttpHeaders();
+            }
+            const authHeader = headers.get('Authorization');
+            if (authHeader) {
+                return {
+                    headers: headers,
+                };
+            }
+            const token = this.authService.accessToken;
+            if (token) {
+                return {
+                    headers: headers.get('Authorization')
+                        ? null
+                        : headers.append('Authorization', `Bearer ${token}`),
+                };
+            } else {
+                return {};
+            }
+        });
+
+        const link = errorHandler
+            .concat(afterwareLink)
+            .concat(auth)
+            .concat(http);
+        const cache = new InMemoryCache({
+            addTypename: true,
+        });
+        this.apollo.create({
+            link: link,
+            cache: cache,
+        });
+
+        if (this.authService.accessToken) {
+            await firstValueFrom(this.authService.loadUser());
         }
-      }
-    });
-
-    const auth = setContext((_, { headers }) => {
-      if (!headers) {
-        headers = new HttpHeaders();
-      }
-      const authHeader = headers.get('Authorization');
-      if (authHeader) {
-        return {
-          headers: headers
-        };
-      }
-      const token = this.authService.accessToken;
-      if (token) {
-        return {
-          headers: headers.get('Authorization') ? null : headers.append('Authorization', `Bearer ${token}`)
-        };
-      } else {
-        return {};
-      }
-    });
-
-    const link = errorHandler.concat(afterwareLink).concat(auth).concat(http);
-    const cache = new InMemoryCache(
-      {
-        addTypename: true,
-      }
-    );
-    this.apollo.create({
-      link: link,
-      cache: cache
-    });
-
-    if (this.authService.accessToken) {
-      await firstValueFrom(this.authService.loadUser());
     }
-
-  }
-
 }

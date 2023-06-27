@@ -9,43 +9,43 @@ import { ManageTournamentsComponent } from './manage-tournaments/manage-tourname
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AdminComponent,
-    canActivate: [AdminGuard],
-    canActivateChild: [AdminGuard],
-    children: [
-      {
-        path: 'tournaments',
-        component: ManageTournamentsComponent,
-      },
-      {
-        path: 'users',
-        component: ManageUsersComponent,
-      },
-      {
-        path: 'teams',
-        component: ManageTeamsComponent,
-      },
-      {
-        path: 'pitches',
-        component: ManagePitchesComponent,
-      },
-      {
-        path: 'seasons',
-        component: ManageSeasonsComponent,
-      },
-      {
+    {
         path: '',
-        redirectTo: 'tournaments',
-        pathMatch: 'full'
-      },
-    ],
-  },
+        component: AdminComponent,
+        canActivate: [AdminGuard],
+        canActivateChild: [AdminGuard],
+        children: [
+            {
+                path: 'tournaments',
+                component: ManageTournamentsComponent,
+            },
+            {
+                path: 'users',
+                component: ManageUsersComponent,
+            },
+            {
+                path: 'teams',
+                component: ManageTeamsComponent,
+            },
+            {
+                path: 'pitches',
+                component: ManagePitchesComponent,
+            },
+            {
+                path: 'seasons',
+                component: ManageSeasonsComponent,
+            },
+            {
+                path: '',
+                redirectTo: 'tournaments',
+                pathMatch: 'full',
+            },
+        ],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

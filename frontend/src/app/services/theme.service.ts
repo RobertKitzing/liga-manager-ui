@@ -1,68 +1,58 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { LocalStorage } from 'ngx-webstorage';
-import { BehaviorSubject, Subject } from 'rxjs';
-
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class ThemeService {
+    themes = ['default', 'gondi', 'werder'];
 
-  themes = ['default', 'gondi', 'werder'];
+    @LocalStorage('THEME')
+    private currentTheme?: string;
 
-  @LocalStorage('THEME')
-  private currentTheme?: string;
+    @LocalStorage('DARK_MODE')
+    private darkMode?: boolean;
 
-  @LocalStorage('DARK_MODE')
-  private darkMode?: boolean;
-
-  currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
-  darkMode$ = new BehaviorSubject<boolean>(
-    (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) && this.darkMode!
-  );
-
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-  ) {
-    
-    this.currentTheme$.subscribe(
-      (theme) => {
-        this.loadStyle(theme);
-      }
+    currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
+    darkMode$ = new BehaviorSubject<boolean>(
+        window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches &&
+            this.darkMode!
     );
-    this.darkMode$.subscribe(
-      (dark) => {
-        this.setDarkmode(dark);
-      }
-    );
-  }
 
-  private loadStyle(styleName: string) {
-    this.currentTheme = styleName;
-    const head = this.document.getElementsByTagName('head')[0];
-
-    const themeLink = this.document.getElementById(
-      'client-theme'
-    ) as HTMLLinkElement;
-    if (themeLink) {
-      themeLink.href = `${styleName}.css`;
-    } else {
-      const style = this.document.createElement('link');
-      style.id = 'client-theme';
-      style.rel = 'stylesheet';
-      style.href = `${styleName}.css`;
-
-      head.appendChild(style);
+    constructor(@Inject(DOCUMENT) private document: Document) {
+        this.currentTheme$.subscribe((theme) => {
+            this.loadStyle(theme);
+        });
+        this.darkMode$.subscribe((dark) => {
+            this.setDarkmode(dark);
+        });
     }
-  }
 
-  private setDarkmode(dark: boolean) {
-    const mode = dark ? 'add' : 'remove';
-    this.document.body.classList[mode]('dark');
-    this.darkMode = dark;
-  }
+    private loadStyle(styleName: string) {
+        this.currentTheme = styleName;
+        const head = this.document.getElementsByTagName('head')[0];
+
+        const themeLink = this.document.getElementById(
+            'client-theme'
+        ) as HTMLLinkElement;
+        if (themeLink) {
+            themeLink.href = `${styleName}.css`;
+        } else {
+            const style = this.document.createElement('link');
+            style.id = 'client-theme';
+            style.rel = 'stylesheet';
+            style.href = `${styleName}.css`;
+
+            head.appendChild(style);
+        }
+    }
+
+    private setDarkmode(dark: boolean) {
+        const mode = dark ? 'add' : 'remove';
+        this.document.body.classList[mode]('dark');
+        this.darkMode = dark;
+    }
 }

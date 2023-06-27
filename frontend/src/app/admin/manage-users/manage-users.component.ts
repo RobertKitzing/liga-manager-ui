@@ -7,46 +7,56 @@ import { UserService } from 'src/app/services/user.service';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 
 @Component({
-  selector: 'lima-manage-users',
-  templateUrl: './manage-users.component.html',
+    selector: 'lima-manage-users',
+    templateUrl: './manage-users.component.html',
 })
 export class ManageUsersComponent {
+    displayedColumns: string[] = ['email', 'action'];
 
-  displayedColumns: string[] = ['email', 'action'];
+    searchUser = new FormControl();
 
-  searchUser = new FormControl();
-
-  users$ = this.searchUser.valueChanges.pipe(
-    startWith(null),
-    switchMap(
-      (searchTerm) => !searchTerm ? this.userService.allUsers$ : this.userService.allUsers$.pipe(
-        map(
-          (x) => x.filter(
-            (y) => y?.email.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || y?.first_name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || y?.last_name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) 
-          )
+    users$ = this.searchUser.valueChanges.pipe(
+        startWith(null),
+        switchMap((searchTerm) =>
+            !searchTerm
+                ? this.userService.allUsers$
+                : this.userService.allUsers$.pipe(
+                      map((x) =>
+                          x.filter(
+                              (y) =>
+                                  y?.email
+                                      .toLocaleLowerCase()
+                                      .includes(
+                                          searchTerm.toLocaleLowerCase()
+                                      ) ||
+                                  y?.first_name
+                                      .toLocaleLowerCase()
+                                      .includes(
+                                          searchTerm.toLocaleLowerCase()
+                                      ) ||
+                                  y?.last_name
+                                      .toLocaleLowerCase()
+                                      .includes(searchTerm.toLocaleLowerCase())
+                          )
+                      )
+                  )
         )
-    )
-  );
+    );
 
-  constructor(
-    private userService: UserService,
-    private dialog: MatDialog,
-  ) {
+    constructor(private userService: UserService, private dialog: MatDialog) {}
 
-  }
+    editUser(user?: User) {
+        this.dialog.open(EditUserDialogComponent, {
+            width: '100%',
+            data: user,
+        });
+    }
 
-  editUser(user?: User) {
-    this.dialog.open(EditUserDialogComponent, {
-      width: '100%',
-      data: user
-    });
-  }
+    createUser() {
+        this.editUser();
+    }
 
-  createUser() {
-    this.editUser();
-  }
-
-  async sendPasswordMail(email: string) {
-    await firstValueFrom(this.userService.sendPasswordMail(email));
-  }
+    async sendPasswordMail(email: string) {
+        await firstValueFrom(this.userService.sendPasswordMail(email));
+    }
 }

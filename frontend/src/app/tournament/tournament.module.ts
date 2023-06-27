@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { TournamentRoutingModule } from './tournament-routing.module';
 import { TournamentComponent } from './tournament.component';
 
-
 @NgModule({
-  declarations: [
-    TournamentComponent
-  ],
-  imports: [
-    CommonModule,
-    TournamentRoutingModule
-  ]
+    declarations: [TournamentComponent],
+    imports: [CommonModule, TournamentRoutingModule],
 })
-export class TournamentModule { }
+export class TournamentModule {}

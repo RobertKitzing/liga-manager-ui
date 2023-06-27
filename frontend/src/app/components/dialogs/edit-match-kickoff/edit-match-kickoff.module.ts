@@ -13,31 +13,28 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { CustomDateAdapter } from 'src/app/custom-date-adapter';
 
-
 @NgModule({
-  declarations: [
-    EditMatchKickoffComponent
-  ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    TranslateModule.forChild(),
-    MatInputModule,
-    CustomDateModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    EditMatchBaseModule,
-    MatIconModule,
-    CustomDateModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-  ],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: CustomDateAdapter,
-    }
-  ]
+    declarations: [EditMatchKickoffComponent],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        TranslateModule.forChild(),
+        MatInputModule,
+        CustomDateModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        EditMatchBaseModule,
+        MatIconModule,
+        CustomDateModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+    ],
+    providers: [
+        {
+            provide: DateAdapter,
+            useClass: CustomDateAdapter,
+        },
+    ],
 })
-export class EditMatchKickoffModule { }
+export class EditMatchKickoffModule {}

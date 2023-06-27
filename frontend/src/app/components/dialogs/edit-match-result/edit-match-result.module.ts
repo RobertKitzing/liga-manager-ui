@@ -10,22 +10,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
 
-
-
 @NgModule({
-  declarations: [
-    EditMatchResultComponent
-  ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    TranslateModule.forChild(),
-    MatInputModule,
-    CustomDateModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    EditMatchBaseModule,
-    MatIconModule,
-  ]
+    declarations: [EditMatchResultComponent],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        TranslateModule.forChild(),
+        MatInputModule,
+        CustomDateModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        EditMatchBaseModule,
+        MatIconModule,
+    ],
 })
-export class EditMatchResultModule { }
+export class EditMatchResultModule {}

@@ -6,33 +6,33 @@ import { TournamentComponent } from '../tournament/tournament.component';
 import { HistoryComponent } from './history.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HistoryComponent,
-    children: [
-      {
-        path: 'table',
-        component: TableComponent
-      },
-      {
-        path: 'schedule',
-        component: ScheduleComponent
-      },
-      {
-        path: 'tournament',
-        component: TournamentComponent
-      },
-      {
+    {
         path: '',
-        redirectTo: 'table',
-        pathMatch: 'full'
-      },
-    ]
-  }
+        component: HistoryComponent,
+        children: [
+            {
+                path: 'table',
+                component: TableComponent,
+            },
+            {
+                path: 'schedule',
+                component: ScheduleComponent,
+            },
+            {
+                path: 'tournament',
+                component: TournamentComponent,
+            },
+            {
+                path: '',
+                redirectTo: 'table',
+                pathMatch: 'full',
+            },
+        ],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class HistoryRoutingModule { }
+export class HistoryRoutingModule {}
