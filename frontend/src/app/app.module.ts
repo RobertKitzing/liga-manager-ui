@@ -26,7 +26,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { GraphqlService } from './services/graphql.service';
+import { GraphqlService } from './services';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavLinksComponent } from './components/nav-links/nav-links.component';

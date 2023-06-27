@@ -5,13 +5,12 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, map, of, switchMap } from 'rxjs';
 import { RankingPosition } from 'src/api/graphql';
-import { SeasonChooserModes } from '../components/season-chooser/season-chooser.component';
-import { RankingService } from '../services/ranking.service';
-import { SeasonService } from '../services/season.service';
+import { SeasonChooserModes } from '../shared/components';
+import { RankingService, SeasonService } from '../services';
 
 @Component({
     selector: 'lima-table',
@@ -28,7 +27,7 @@ import { SeasonService } from '../services/season.service';
         ]),
     ],
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit {
     seasonMode: SeasonChooserModes = 'progressSeason';
 
     displayedColumns: string[] = [
@@ -55,7 +54,7 @@ export class TableComponent implements OnInit, OnDestroy {
         ),
         switchMap((season) => {
             return season?.id
-                ? this.rankingService.getRanking$({ id: season.id! })
+                ? this.rankingService.getRanking$({ id: season.id })
                 : of(null);
         }),
         map((ranking) => ranking?.positions)
@@ -66,8 +65,6 @@ export class TableComponent implements OnInit, OnDestroy {
         private seasonService: SeasonService,
         private router: Router
     ) {}
-
-    ngOnDestroy(): void {}
 
     ngOnInit(): void {
         if (this.router.url.includes('history')) {

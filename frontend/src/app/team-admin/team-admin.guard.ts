@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot,
-    UrlTree,
-} from '@angular/router';
+import { UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../services';
 
 @Injectable({
     providedIn: 'root',
@@ -17,20 +13,14 @@ export class TeamAdminGuard {
 
     constructor(private authenticationService: AuthenticationService) {}
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ):
+    canActivate():
         | Observable<boolean | UrlTree>
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
         return this.allowed;
     }
-    canActivateChild(
-        childRoute: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ):
+    canActivateChild():
         | Observable<boolean | UrlTree>
         | Promise<boolean | UrlTree>
         | boolean

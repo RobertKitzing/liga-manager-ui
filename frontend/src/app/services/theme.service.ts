@@ -13,13 +13,13 @@ export class ThemeService {
     private currentTheme?: string;
 
     @LocalStorage('DARK_MODE')
-    private darkMode?: boolean;
+    private darkMode!: boolean;
 
     currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
     darkMode$ = new BehaviorSubject<boolean>(
         window.matchMedia &&
             window.matchMedia('(prefers-color-scheme: dark)').matches &&
-            this.darkMode!
+            this.darkMode
     );
 
     constructor(@Inject(DOCUMENT) private document: Document) {

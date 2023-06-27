@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { map, Observable } from 'rxjs';
 import { AllSeasonsFragment, SeasonState } from 'src/api/graphql';
@@ -13,7 +13,7 @@ export type SeasonChooserModes =
     selector: 'lima-season-chooser',
     templateUrl: './season-chooser.component.html',
 })
-export class SeasonChooserComponent {
+export class SeasonChooserComponent implements OnInit {
     @Input() mode: SeasonChooserModes = 'progressSeason';
 
     SeasonState = SeasonState;

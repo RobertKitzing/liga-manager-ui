@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { TeamLogoService } from 'src/api/openapi';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../services';
 
 @Component({
     selector: 'lima-team-admin',
@@ -20,20 +20,25 @@ export class TeamAdminComponent {
         await firstValueFrom(this.teamService.commitPreview(teamId));
     }
 
-    async onFileSelected(event: any, teamId: string) {
-        const file: File = event.target?.files![0];
+    async onFileSelected(event: Event, teamId: string) {
+        const element = event.currentTarget as HTMLInputElement;
 
-        if (file) {
-            await firstValueFrom(this.teamService.uploadTeamLogo(teamId, file));
-            // this.fileName = file.name;
+        if (element.files) {
+            const file = element.files[0];
+            if (file) {
+                await firstValueFrom(
+                    this.teamService.uploadTeamLogo(teamId, file)
+                );
+                // this.fileName = file.name;
 
-            // const formData = new FormData();
+                // const formData = new FormData();
 
-            // formData.append("thumbnail", file);
+                // formData.append("thumbnail", file);
 
-            // const upload$ = this.http.post("/api/thumbnail-upload", formData);
+                // const upload$ = this.http.post("/api/thumbnail-upload", formData);
 
-            // upload$.subscribe();
+                // upload$.subscribe();
+            }
         }
     }
 }

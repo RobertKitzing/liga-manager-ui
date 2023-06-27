@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-    ISnackBarData,
-    SnackbarComponent,
-} from '../components/snackbar/snackbar.component';
+import { SnackBarData, SnackbarComponent } from '../shared/components/snackbar';
 
 @Injectable({
     providedIn: 'root',
@@ -37,7 +34,7 @@ export class NotificationService {
                 title,
                 messages,
                 type,
-            } as ISnackBarData,
+            } as SnackBarData,
             duration: duration || this.defaultDuration,
             panelClass: [
                 `bg-${type}-100`,

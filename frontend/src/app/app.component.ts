@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { AuthenticationService } from './services/authentication.service';
-import { I18nService } from './services/i18n.service';
-import { LoadingIndicatorService } from './services/loading-indicator.service';
-import { ThemeService } from './services/theme.service';
-import { Location } from '@angular/common';
-import { SeasonService } from './services/season.service';
+import {
+    AuthenticationService,
+    I18nService,
+    LoadingIndicatorService,
+    SeasonService,
+    ThemeService,
+} from './services';
 
 @Component({
     selector: 'lima-root',
@@ -17,7 +19,9 @@ import { SeasonService } from './services/season.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-    darkModeControl = new FormControl(this.themeService.darkMode$.getValue());
+    darkModeControl = new FormControl(this.themeService.darkMode$.getValue(), {
+        nonNullable: true,
+    });
 
     get currentRoute() {
         const url = this.router.url.split('/')[1];
@@ -42,7 +46,7 @@ export class AppComponent implements OnInit {
         });
 
         this.darkModeControl.valueChanges.subscribe((dark) => {
-            this.themeService.darkMode$.next(dark!);
+            this.themeService.darkMode$.next(dark);
         });
     }
 
@@ -50,7 +54,9 @@ export class AppComponent implements OnInit {
         this.dialog.open(LoginComponent);
     }
 
-    openChangePasswordDialog() {}
+    openChangePasswordDialog() {
+        // TODO: Add
+    }
 
     changeTheme(theme: string) {
         this.themeService.currentTheme$.next(theme);

@@ -7,9 +7,9 @@ import { CancelMatchComponent } from '../components/dialogs/cancel-match/cancel-
 import { EditMatchKickoffComponent } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.component';
 import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
 import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
-import { SeasonChooserModes } from '../components/season-chooser/season-chooser.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { SeasonService } from '../services/season.service';
+import { SeasonChooserModes } from '../shared/components/season-chooser';
 
 @Component({
     selector: 'lima-schedule',
@@ -31,7 +31,7 @@ export class ScheduleComponent implements OnInit {
         ),
         switchMap((season) => {
             return season?.id
-                ? this.seasonService.getSeason({ id: season.id! })
+                ? this.seasonService.getSeason({ id: season.id })
                 : of(null);
         })
     );

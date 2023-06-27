@@ -1,16 +1,16 @@
 <div class="lg:flex h-full">
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="table" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="schedule" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="tournament" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="calendar" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TABLE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.SCHEDULE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TOURNAMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CALENDAR }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
     <ng-container *ngIf="teamAdminGuard.allowed || adminGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="contacts" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
+        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CONTACTS }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
     </ng-container>
     <ng-container *ngIf="teamAdminGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="team_admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
+        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TEAM_ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
     </ng-container>
     <ng-container *ngIf="adminGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="admin" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
+        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
     </ng-container>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="history" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.HISTORY</a>
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.HISTORY }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.HISTORY</a>
 </div>

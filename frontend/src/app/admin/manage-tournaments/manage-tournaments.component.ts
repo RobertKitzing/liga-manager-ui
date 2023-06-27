@@ -5,5 +5,7 @@ import { Component } from '@angular/core';
     templateUrl: './manage-tournaments.component.html',
 })
 export class ManageTournamentsComponent {
-    createTournament() {}
+    createTournament() {
+        // TODO: Add something
+    }
 }

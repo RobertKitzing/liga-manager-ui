@@ -8,7 +8,7 @@ import {
     UpdateUserGQL,
     UpdateUserMutationVariables,
 } from 'src/api/graphql';
-import { NEW_PASSWORD_ROUTE } from '../app-routing.module';
+import { APP_ROUTES } from 'src/app';
 
 @Injectable({
     providedIn: 'root',
@@ -17,10 +17,16 @@ export class UserService {
     allUsers$ = this.allUsersGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allUsers),
         map((teams) => {
-            return [...teams!].sort((a, b) =>
-                a?.email.toLocaleLowerCase()! >= b?.email.toLocaleLowerCase()!
-                    ? 1
-                    : -1
+            return (
+                teams &&
+                [...teams].sort((a, b) =>
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
+                    a?.email.toLocaleLowerCase()! >=
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
+                    b?.email.toLocaleLowerCase()!
+                        ? 1
+                        : -1
+                )
             );
         })
     );
@@ -55,7 +61,7 @@ export class UserService {
     sendPasswordMail(email: string) {
         return this.resetPasswordQGL.mutate({
             email,
-            target_path: NEW_PASSWORD_ROUTE,
+            target_path: APP_ROUTES.NEW_PASSWORD_ROUTE,
         });
     }
 }
