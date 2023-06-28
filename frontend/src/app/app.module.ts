@@ -16,7 +16,7 @@ import {
     HttpClientModule,
     HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-import { LoadingIndicatorHttpInterceptor } from './loading-indicator-http-interceptor';
+import { LoadingIndicatorHttpInterceptor } from './shared/interceptors/loading-indicator-http-interceptor';
 import { ApolloModule } from 'apollo-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -26,11 +26,11 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { GraphqlService } from './services';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavLinksComponent } from './components/nav-links/nav-links.component';
 import { BASE_PATH } from 'src/api/openapi';
+import { GraphqlService } from './shared/services';
 
 export function graphqlFactory(provider: GraphqlService) {
     return () => provider.init();

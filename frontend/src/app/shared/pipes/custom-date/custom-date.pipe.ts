@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { I18nService } from 'src/app/services/i18n.service';
+import { I18nService } from '@lima/shared/services';
+
 
 @Pipe({
     name: 'customDate',

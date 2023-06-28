@@ -22,7 +22,11 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@lima/*": ["src/app/*"],
+      "@api/*": ["src/api/*"]
+    }
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

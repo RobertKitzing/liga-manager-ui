@@ -2,10 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { MatchService, NotificationService } from '@lima/shared/services';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';
-import { MatchService } from 'src/app/services/match.service';
-import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -23,7 +22,7 @@ export class EditMatchKickoffComponent {
         public data: { match: Match; matchDay: MatchDay },
         private notify: NotificationService,
         private dialogRef: MatDialogRef<EditMatchKickoffComponent>,
-        private matchService: MatchService
+        private matchService: MatchService,
     ) {}
 
     async onSaveClicked() {

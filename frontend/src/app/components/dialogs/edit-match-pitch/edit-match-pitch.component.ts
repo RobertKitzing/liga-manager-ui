@@ -2,11 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { MatchService, NotificationService, PitchService } from '@lima/shared/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Match, MatchDay, Pitch } from 'src/api/graphql';
-import { MatchService } from 'src/app/services/match.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { PitchService } from 'src/app/services/pitch.service';
 
 @Component({
     selector: 'lima-edit-match-pitch',

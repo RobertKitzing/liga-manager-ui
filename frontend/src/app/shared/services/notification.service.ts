@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarData, SnackbarComponent } from '../shared/components/snackbar';
+import { SnackBarData, SnackbarComponent } from '@lima/shared/components';
 
 @Injectable({
     providedIn: 'root',
@@ -19,7 +19,7 @@ export class NotificationService {
             title,
             messages,
             'warn',
-            this.defaultDuration * 2
+            this.defaultDuration * 2,
         );
     }
 
@@ -27,7 +27,7 @@ export class NotificationService {
         title: string,
         messages?: string[],
         type?: 'warn' | 'success',
-        duration?: number
+        duration?: number,
     ) {
         this.snackBar.openFromComponent(SnackbarComponent, {
             data: {

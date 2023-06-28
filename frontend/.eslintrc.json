@@ -8,6 +8,7 @@
       "files": [
         "*.ts"
       ],
+      "plugins": ["unused-imports"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -17,6 +18,13 @@
         "plugin:@softarc/sheriff/default"
       ],
       "rules": {
+        "comma-dangle": ["error", "always-multiline"],
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {

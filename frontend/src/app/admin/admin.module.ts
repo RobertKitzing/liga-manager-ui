@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditUserDialogComponent } from './manage-users/edit-user-dialog/edit-user-dialog.component';
-import { EnumTranslateModule } from '../pipes/enum-translate/enum-translate.module';
+import { EnumTranslateModule } from '../shared/pipes/enum-translate/enum-translate.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';

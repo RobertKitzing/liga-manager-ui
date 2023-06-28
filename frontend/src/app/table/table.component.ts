@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, iif, map, of, switchMap } from 'rxjs';
 import { RankingPosition } from 'src/api/graphql';
 import { SeasonChooserModes } from '../shared/components';
-import { RankingService, SeasonService } from '../services';
+import { RankingService, SeasonService } from '@lima/shared/services';
 
 @Component({
     selector: 'lima-table',
@@ -22,7 +22,7 @@ import { RankingService, SeasonService } from '../services';
             state('expanded', style({ height: '*' })),
             transition(
                 'expanded <=> collapsed',
-                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
             ),
         ]),
     ],
@@ -49,21 +49,21 @@ export class TableComponent implements OnInit {
             iif(
                 () => this.seasonMode === 'progressSeason',
                 this.seasonService.progressSeason$,
-                this.seasonService.historySeason$
-            )
+                this.seasonService.historySeason$,
+            ),
         ),
         switchMap((season) => {
             return season?.id
                 ? this.rankingService.getRanking$({ id: season.id })
                 : of(null);
         }),
-        map((ranking) => ranking?.positions)
+        map((ranking) => ranking?.positions),
     );
 
     constructor(
         private rankingService: RankingService,
         private seasonService: SeasonService,
-        private router: Router
+        private router: Router,
     ) {}
 
     ngOnInit(): void {

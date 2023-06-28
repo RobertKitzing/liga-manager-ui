@@ -3,10 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User, UserRole } from 'src/api/graphql';
-import { TeamService } from 'src/app/services/team.service';
-import { UserService } from 'src/app/services/user.service';
 import { v4 as uuidv4 } from 'uuid';
 import { generator } from 'ts-password-generator';
+import { TeamService, UserService } from '@lima/shared/services';
 
 @Component({
     selector: 'lima-edit-user-dialog',

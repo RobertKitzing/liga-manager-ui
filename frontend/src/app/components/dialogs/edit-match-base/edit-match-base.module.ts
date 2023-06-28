@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditMatchBaseComponent } from './edit-match-base.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { CustomDateModule } from 'src/app/pipes/custom-date/custom-date.module';
+import { CustomDateModule } from '@lima/shared/pipes';
 
 const declarations = [EditMatchBaseComponent];
 
@@ -11,4 +11,4 @@ const declarations = [EditMatchBaseComponent];
     imports: [CommonModule, CustomDateModule, TranslateModule.forChild()],
     exports: declarations,
 })
-export class EditMatchBaseModule {}
+export class EditMatchBaseModule { }

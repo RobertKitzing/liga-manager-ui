@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User } from 'src/api/graphql';
-import { UserService } from 'src/app/services/user.service';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
+import { UserService } from '@lima/shared/services';
 
 @Component({
     selector: 'lima-manage-users',
@@ -22,7 +22,7 @@ export class ManageUsersComponent {
                 ? this.userService.allUsers$
                 : this.userService.allUsers$.pipe(
                       map((x) =>
-                          x.filter(
+                          x?.filter(
                               (y) =>
                                   y?.email
                                       .toLocaleLowerCase()

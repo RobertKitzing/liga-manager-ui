@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import {
-    AuthenticationService,
-    LoginContext,
-} from '../../services/authentication.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { NotificationService } from 'src/app/services/notification.service';
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { AuthenticationService, LoginContext, NotificationService } from '@lima/shared/services';
 
 @Component({
     selector: 'lima-login',

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { TeamService } from '@lima/shared/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Team } from 'src/api/graphql';
-import { TeamService } from 'src/app/services/team.service';
 
 @Component({
     selector: 'lima-manage-teams',

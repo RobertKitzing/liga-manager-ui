@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { finalize, Observable } from 'rxjs';
-import { LoadingIndicatorService } from './services/loading-indicator.service';
+import { LoadingIndicatorService } from '@lima/shared/services';
 
 @Injectable({
     providedIn: 'root',

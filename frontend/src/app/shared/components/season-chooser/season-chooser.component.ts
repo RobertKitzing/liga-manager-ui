@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
+import { SeasonService } from '@lima/shared/services';
 import { map, Observable } from 'rxjs';
 import { AllSeasonsFragment, SeasonState } from 'src/api/graphql';
-import { SeasonService } from 'src/app/services/season.service';
 
 export type SeasonChooserModes =
     | 'progressSeason'

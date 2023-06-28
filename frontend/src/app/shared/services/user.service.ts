@@ -25,17 +25,17 @@ export class UserService {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
                     b?.email.toLocaleLowerCase()!
                         ? 1
-                        : -1
+                        : -1,
                 )
             );
-        })
+        }),
     );
 
     constructor(
         private allUsersGQL: AllUsersGQL,
         private createUserGQL: CreateUserGQL,
         private updateUserGQL: UpdateUserGQL,
-        private resetPasswordQGL: PasswordResetGQL
+        private resetPasswordQGL: PasswordResetGQL,
     ) {}
 
     createUser(variables: CreateUserMutationVariables) {

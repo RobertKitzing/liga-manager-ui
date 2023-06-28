@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { TableRoutingModule } from './table-routing.module';
-import { TableComponent } from './table.component';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { TranslateModule } from '@ngx-translate/core';
 import { HammerModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TruncateModule } from '../pipes';
-import { SeasonChooserModule } from '../shared/components';
+import { NgModule } from '@angular/core';
+import { SeasonChooserModule } from '@lima/shared/components';
+import { TableComponent } from './table.component';
+import { TableRoutingModule } from './table-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { TruncateModule } from '@lima/shared/pipes';
 
 @NgModule({
     declarations: [TableComponent],

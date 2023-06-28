@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UrlTree } from '@angular/router';
+import { AuthenticationService } from '@lima/shared/services';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
     providedIn: 'root',

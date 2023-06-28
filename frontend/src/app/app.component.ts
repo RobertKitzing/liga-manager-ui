@@ -4,13 +4,8 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import {
-    AuthenticationService,
-    I18nService,
-    LoadingIndicatorService,
-    SeasonService,
-    ThemeService,
-} from './services';
+import { AuthenticationService, I18nService, LoadingIndicatorService, SeasonService, ThemeService } from './shared/services';
+
 
 @Component({
     selector: 'lima-root',
@@ -37,7 +32,6 @@ export class AppComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private seasonService: SeasonService
     ) {}
 
     async ngOnInit() {

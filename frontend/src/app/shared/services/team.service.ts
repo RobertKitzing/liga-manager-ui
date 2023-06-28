@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TeamLogoService } from '@api/openapi';
 import { map } from 'rxjs';
 import {
     AllTeamsGQL,
@@ -20,16 +21,17 @@ export class TeamService {
             return [...teams!].sort((a, b) =>
                 a?.name.toLocaleLowerCase()! >= b?.name.toLocaleLowerCase()!
                     ? 1
-                    : -1
+                    : -1,
             );
-        })
+        }),
     );
 
     constructor(
         private allTeamsGQL: AllTeamsGQL,
         private createTeamQL: CreateTeamGQL,
         private deleteTeamGQL: DeleteTeamGQL,
-        private renameTeamGQL: RenameTeamGQL
+        private renameTeamGQL: RenameTeamGQL,
+        private teamService: TeamLogoService,
     ) {}
 
     createTeam(name: string) {
@@ -44,7 +46,7 @@ export class TeamService {
                         query: this.allTeamsGQL.document,
                     },
                 ],
-            }
+            },
         );
     }
 
@@ -67,4 +69,7 @@ export class TeamService {
             ],
         });
     }
+
+    uploadTeamLogo = this.teamService.uploadTeamLogo;
+    commitPreview = this.teamService.commitPreview;
 }

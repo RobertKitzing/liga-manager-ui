@@ -15,7 +15,7 @@
     "i18n:languages": "node get-languages.mjs",
     "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",
     "lint": "ng lint",
-    "lint:fix": "ng lint --fix"
+    "lint:fix": "ng lint --fix "
   },
   "private": true,
   "dependencies": {

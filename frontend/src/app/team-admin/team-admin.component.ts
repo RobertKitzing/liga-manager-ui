@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { TeamLogoService } from 'src/api/openapi';
-import { AuthenticationService } from '../services';
+import { AuthenticationService, TeamService } from '@lima/shared/services';
 
 @Component({
     selector: 'lima-team-admin',
@@ -13,7 +12,7 @@ export class TeamAdminComponent {
 
     constructor(
         private authenticationService: AuthenticationService,
-        private teamService: TeamLogoService
+        private teamService: TeamService,
     ) {}
 
     async commitPreview(teamId: string) {
@@ -27,7 +26,7 @@ export class TeamAdminComponent {
             const file = element.files[0];
             if (file) {
                 await firstValueFrom(
-                    this.teamService.uploadTeamLogo(teamId, file)
+                    this.teamService.uploadTeamLogo(teamId, file),
                 );
                 // this.fileName = file.name;
 

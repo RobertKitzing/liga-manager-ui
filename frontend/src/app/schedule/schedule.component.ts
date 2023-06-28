@@ -7,9 +7,8 @@ import { CancelMatchComponent } from '../components/dialogs/cancel-match/cancel-
 import { EditMatchKickoffComponent } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.component';
 import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
 import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
-import { AuthenticationService } from '../services/authentication.service';
-import { SeasonService } from '../services/season.service';
 import { SeasonChooserModes } from '../shared/components/season-chooser';
+import { AuthenticationService, SeasonService } from '@lima/shared/services';
 
 @Component({
     selector: 'lima-schedule',

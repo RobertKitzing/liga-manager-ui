@@ -2,16 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
-import {
-    UserGQL,
-    User,
-    UserRole,
-    PasswordChangeGQL,
-    PasswordResetGQL,
-    Match,
-} from '../../api/graphql';
 import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
 import { tap } from 'rxjs';
+import { Match, PasswordChangeGQL, PasswordResetGQL, User, UserGQL, UserRole } from '@api/graphql';
 
 export interface LoginContext {
     username: string;
@@ -37,7 +30,7 @@ export class AuthenticationService {
         private userQGL: UserGQL,
         private changePasswordQGL: PasswordChangeGQL,
         private resetPasswordQGL: PasswordResetGQL,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
     ) {}
 
     login(context: LoginContext) {
