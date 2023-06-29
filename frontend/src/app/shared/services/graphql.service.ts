@@ -20,7 +20,7 @@ export class GraphqlService {
         private httpLink: HttpLink,
         private authService: AuthenticationService,
         private appsettingsService: AppsettingsService,
-        private notify: NotificationService
+        private notify: NotificationService,
     ) {}
 
     async init() {
@@ -48,10 +48,11 @@ export class GraphqlService {
 
         const errorHandler = onError(
             ({ graphQLErrors, networkError, operation }) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const error: any = networkError;
                 if (graphQLErrors) {
-                    graphQLErrors.map(({ message, locations, path }) =>
-                        console.log(`[GraphQL error]: Message: ${message}`)
+                    graphQLErrors.map(({ message }) =>
+                        console.log(`[GraphQL error]: Message: ${message}`),
                     );
                 }
                 if (error) {
@@ -61,23 +62,25 @@ export class GraphqlService {
                                 this.authService.logout();
                             }
                             break;
-                        case 400:
+                        case 400: {
                             const messages = error?.error?.errors?.map(
-                                (x: any) => x.message
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                (x: any) => x.message,
                             );
                             this.notify.showErrorNotification(
                                 marker('NETWORK_ERROR'),
-                                messages
+                                messages,
                             );
                             break;
+                        }
                         default:
                             this.notify.showErrorNotification(
                                 marker('UNKNOWN_NETWORK_ERROR'),
-                                error.message
+                                error.message,
                             );
                     }
                 }
-            }
+            },
         );
 
         const auth = setContext((_, { headers }) => {

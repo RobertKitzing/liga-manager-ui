@@ -4,8 +4,12 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { AuthenticationService, I18nService, LoadingIndicatorService, SeasonService, ThemeService } from './shared/services';
-
+import {
+    AuthenticationService,
+    I18nService,
+    LoadingIndicatorService,
+    ThemeService,
+} from '@lima/shared/services';
 
 @Component({
     selector: 'lima-root',

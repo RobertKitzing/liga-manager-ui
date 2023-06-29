@@ -16,7 +16,7 @@ import {
     HttpClientModule,
     HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-import { LoadingIndicatorHttpInterceptor } from './shared/interceptors/loading-indicator-http-interceptor';
+import { LoadingIndicatorHttpInterceptor } from '@lima/shared/interceptors';
 import { ApolloModule } from 'apollo-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -26,18 +26,13 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavLinksComponent } from './components/nav-links/nav-links.component';
 import { BASE_PATH } from 'src/api/openapi';
-import { GraphqlService } from './shared/services';
+import { GraphqlService, httpLoaderFactory } from '@lima/shared/services';
 
 export function graphqlFactory(provider: GraphqlService) {
     return () => provider.init();
-}
-
-export function httpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, `/i18n/`, '.json');
 }
 
 @NgModule({

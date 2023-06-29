@@ -3,8 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorage } from 'ngx-webstorage';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const LANG_KEY = 'LANG';
+
+export function httpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, `/i18n/`, '.json');
+}
 
 @Injectable({
     providedIn: 'root',
@@ -23,10 +28,12 @@ export class I18nService {
     constructor(
         private translateService: TranslateService,
         @Inject(DOCUMENT) private document: Document,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
     ) {
         if (!this.storedLang) {
-            let code = this.translateService.getBrowserLang()!;
+            let code =
+                this.translateService.getBrowserLang() ||
+                this.translateService.defaultLang;
             if (code === 'en') {
                 code = 'en-GB';
             }
@@ -42,7 +49,7 @@ export class I18nService {
             (lang) => {
                 registerLocaleData(lang.default);
                 this.translateService.use(code);
-            }
+            },
         );
     }
 

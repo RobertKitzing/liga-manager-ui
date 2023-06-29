@@ -18,6 +18,7 @@
         "plugin:@softarc/sheriff/default"
       ],
       "rules": {
+        "curly": "error",
         "comma-dangle": ["error", "always-multiline"],
         "no-unused-vars": "off",
         "unused-imports/no-unused-imports": "error",

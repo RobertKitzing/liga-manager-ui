@@ -12,7 +12,7 @@ export const sheriffConfig: SheriffConfig = {
         },
     },
     depRules: {
-        root: ['domain:*'],
+        root: ['domain:*', 'shared:*'],
         'domain:*': [sameTag, 'shared:*'],
         'shared:*': [sameTag, 'shared:*'],
         'shared:services': ['api:*'],

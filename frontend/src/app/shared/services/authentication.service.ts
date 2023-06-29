@@ -86,15 +86,16 @@ export class AuthenticationService {
 
     public isTeamAdminForTeam(teamId: string) {
         return (
-            this.isTeamAdmin && this.user?.teams?.find((t) => t?.id === teamId)
+            this.isTeamAdmin &&
+            !!this.user?.teams?.find((t) => t?.id === teamId)
         );
     }
 
     public canEditMatch(match: Match) {
         return (
             this.isAdmin ||
-            this.isTeamAdminForTeam(match.home_team.id!) ||
-            this.isTeamAdminForTeam(match.guest_team.id!)
+            this.isTeamAdminForTeam(match.home_team.id) ||
+            this.isTeamAdminForTeam(match.guest_team.id)
         );
     }
 
@@ -108,7 +109,7 @@ export class AuthenticationService {
                     headers: new HttpHeaders().set(
                         'Authorization',
                         `Basic ${Base64.encode(
-                            this.user!.email.toLowerCase() + ':' + oldPassword,
+                            this.user?.email.toLowerCase() + ':' + oldPassword,
                         )}`,
                     ),
                 },
@@ -123,7 +124,7 @@ export class AuthenticationService {
                     new_password: newPassword,
                 })
                 .subscribe(
-                    (response) => {
+                    () => {
                         resolve();
                     },
                     (err) => {
