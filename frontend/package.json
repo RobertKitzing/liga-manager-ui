@@ -8,7 +8,7 @@
     "build:app": "ng build -c app && npx cap sync",
     "build:web:stats": "ng build -c web --stats-json",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest --coverage",
     "graphql-gen:api": "graphql-codegen --config codegenAPI.yml",
     "openapi-gen:api": "rm -R src/api/openapi && openapi-generator-cli generate -i http://localhost:3098/api-json -g typescript-angular -o src/api/openapi",
     "i18n:extract": "ngx-translate-extract --input ./src --output src/i18n/en-GB.json --clean --sort --format json",
@@ -16,6 +16,10 @@
     "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix "
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": ["<rootDir>/setup-jest.ts"]
   },
   "private": true,
   "dependencies": {
@@ -70,7 +74,7 @@
     "@softarc/eslint-plugin-sheriff": "^0.11.0",
     "@softarc/sheriff-core": "^0.11.0",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@types/jasmine": "~4.3.0",
+    "@types/jest": "^29.5.2",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "autoprefixer": "^10.4.13",
@@ -79,12 +83,8 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "jasmine-core": "~4.5.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
+    "jest": "^29.5.0",
+    "jest-preset-angular": "^13.1.1",
     "postcss": "^8.4.19",
     "prettier": "^2.8.8",
     "prettier-eslint": "^15.0.1",
