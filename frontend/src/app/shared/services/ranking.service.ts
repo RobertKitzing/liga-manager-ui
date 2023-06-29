@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { RankingGQL, RankingQueryVariables } from 'src/api/graphql';
+import { RankingByIdGQL, RankingByIdQueryVariables } from 'src/api/graphql';
 
 @Injectable({
     providedIn: 'root',
 })
 export class RankingService {
-    constructor(private rankingGQL: RankingGQL) {}
+    constructor(private rankingGQL: RankingByIdGQL) {}
 
-    getRanking$(params: RankingQueryVariables) {
+    getRanking$(params: RankingByIdQueryVariables) {
         return this.rankingGQL
             .watch(params)
             .valueChanges.pipe(map(({ data }) => data?.season?.ranking));

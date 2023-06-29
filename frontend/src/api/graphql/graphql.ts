@@ -491,35 +491,240 @@ export type QueryTournamentArgs = {
   id: Scalars['String'];
 };
 
-export type MatchFragment = { __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null };
+export type TeamFragment = (
+  { __typename?: 'Team' }
+  & Pick<Team, 'id' | 'name' | 'created_at'>
+  & { contact?: Maybe<(
+    { __typename?: 'Contact' }
+    & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+  )> }
+);
 
-export type MatchDayFragment = { __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null };
+export type ContactFragment = (
+  { __typename?: 'Contact' }
+  & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+);
 
-export type PitchFragment = { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null };
+export type PitchFragment = (
+  { __typename?: 'Pitch' }
+  & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+  & { contact?: Maybe<(
+    { __typename?: 'Contact' }
+    & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+  )> }
+);
 
-export type TeamFragment = { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null };
+export type EventFragment = (
+  { __typename?: 'Event' }
+  & Pick<Event, 'id' | 'occurred_at' | 'type'>
+);
 
-export type ContactFragment = { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string };
+export type MatchFragment = (
+  { __typename?: 'Match' }
+  & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+  & { home_team: (
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  ), guest_team: (
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  ), pitch?: Maybe<(
+    { __typename?: 'Pitch' }
+    & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  )> }
+);
 
-export type SeasonFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null };
+export type PenaltyFragment = (
+  { __typename?: 'RankingPenalty' }
+  & Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
+  & { team: (
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  ) }
+);
 
-export type AllSeasonsFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string } | null> | null };
+export type RankingFragment = (
+  { __typename?: 'Season' }
+  & Pick<Season, 'id'>
+  & { ranking?: Maybe<(
+    { __typename?: 'Ranking' }
+    & Pick<Ranking, 'updated_at'>
+    & { positions?: Maybe<Array<Maybe<(
+      { __typename?: 'RankingPosition' }
+      & Pick<RankingPosition, 'sort_index' | 'number' | 'matches' | 'wins' | 'draws' | 'losses' | 'scored_goals' | 'conceded_goals' | 'points'>
+      & { team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'created_at'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      ) }
+    )>>>, penalties?: Maybe<Array<Maybe<(
+      { __typename?: 'RankingPenalty' }
+      & Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
+      & { team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'created_at'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      ) }
+    )>>> }
+  )> }
+);
 
-export type AllSeasonsCalendarFragment = { __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null };
+export type AllSeasonsFragment = (
+  { __typename?: 'Season' }
+  & Pick<Season, 'id' | 'name' | 'state'>
+  & { match_days?: Maybe<Array<Maybe<(
+    { __typename?: 'MatchDay' }
+    & Pick<MatchDay, 'number' | 'start_date'>
+  )>>> }
+);
 
-export type AllTournamentsFragment = { __typename?: 'Tournament', id: string, name: string };
+export type SeasonFragment = (
+  { __typename?: 'Season' }
+  & Pick<Season, 'id' | 'name' | 'state'>
+  & { teams?: Maybe<Array<Maybe<(
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  )>>>, match_days?: Maybe<Array<Maybe<(
+    { __typename?: 'MatchDay' }
+    & Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+    & { matches?: Maybe<Array<Maybe<(
+      { __typename?: 'Match' }
+      & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+      & { home_team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'created_at'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      ), guest_team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'created_at'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      ), pitch?: Maybe<(
+        { __typename?: 'Pitch' }
+        & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      )> }
+    )>>> }
+  )>>> }
+);
 
-export type AllTournamentsCalendarFragment = { __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null };
+export type MatchDayFragment = (
+  { __typename?: 'MatchDay' }
+  & Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+  & { matches?: Maybe<Array<Maybe<(
+    { __typename?: 'Match' }
+    & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+    & { home_team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    ), guest_team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    ), pitch?: Maybe<(
+      { __typename?: 'Pitch' }
+      & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )> }
+  )>>> }
+);
 
-export type TournamentFragment = { __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null };
+export type AllTournamentsFragment = (
+  { __typename?: 'Tournament' }
+  & Pick<Tournament, 'id' | 'name'>
+);
 
-export type UserFragment = { __typename?: 'User', id: string, email: string, role: UserRole, first_name: string, last_name: string, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null };
+export type TournamentFragment = (
+  { __typename?: 'Tournament' }
+  & Pick<Tournament, 'id' | 'name'>
+  & { rounds?: Maybe<Array<Maybe<(
+    { __typename?: 'MatchDay' }
+    & Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+    & { matches?: Maybe<Array<Maybe<(
+      { __typename?: 'Match' }
+      & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+      & { home_team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'created_at'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      ), guest_team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'created_at'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      ), pitch?: Maybe<(
+        { __typename?: 'Pitch' }
+        & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+        & { contact?: Maybe<(
+          { __typename?: 'Contact' }
+          & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+        )> }
+      )> }
+    )>>> }
+  )>>> }
+);
 
-export type EventFragment = { __typename?: 'Event', id: string, occurred_at: string, type: string };
-
-export type RankingFragment = { __typename?: 'Season', id: string, ranking?: { __typename?: 'Ranking', updated_at?: string | null, positions?: Array<{ __typename?: 'RankingPosition', sort_index: number, number: number, matches: number, wins: number, draws: number, losses: number, scored_goals: number, conceded_goals: number, points: number, team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } } | null> | null, penalties?: Array<{ __typename?: 'RankingPenalty', id: string, reason: string, created_at: string, points: number, team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } } | null> | null } | null };
-
-export type PenaltyFragment = { __typename?: 'RankingPenalty', id: string, reason: string, created_at: string, points: number, team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } };
+export type UserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
+  & { teams?: Maybe<Array<Maybe<(
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  )>>> }
+);
 
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String'];
@@ -528,7 +733,7 @@ export type SubmitResultMutationVariables = Exact<{
 }>;
 
 
-export type SubmitResultMutation = { __typename?: 'mutation', submitMatchResult?: boolean | null };
+export type SubmitResultMutation = Pick<Mutation, 'submitMatchResult'>;
 
 export type ScheduleMatchMutationVariables = Exact<{
   match_id: Scalars['String'];
@@ -536,7 +741,7 @@ export type ScheduleMatchMutationVariables = Exact<{
 }>;
 
 
-export type ScheduleMatchMutation = { __typename?: 'mutation', scheduleMatch?: boolean | null };
+export type ScheduleMatchMutation = Pick<Mutation, 'scheduleMatch'>;
 
 export type LocateMatchMutationVariables = Exact<{
   match_id: Scalars['String'];
@@ -544,7 +749,7 @@ export type LocateMatchMutationVariables = Exact<{
 }>;
 
 
-export type LocateMatchMutation = { __typename?: 'mutation', locateMatch?: boolean | null };
+export type LocateMatchMutation = Pick<Mutation, 'locateMatch'>;
 
 export type CancelMatchMutationVariables = Exact<{
   match_id: Scalars['String'];
@@ -552,7 +757,7 @@ export type CancelMatchMutationVariables = Exact<{
 }>;
 
 
-export type CancelMatchMutation = { __typename?: 'mutation', cancelMatch?: boolean | null };
+export type CancelMatchMutation = Pick<Mutation, 'cancelMatch'>;
 
 export type ScheduleAllMatchesForSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
@@ -560,7 +765,7 @@ export type ScheduleAllMatchesForSeasonMutationVariables = Exact<{
 }>;
 
 
-export type ScheduleAllMatchesForSeasonMutation = { __typename?: 'mutation', scheduleAllMatchesForSeason?: boolean | null };
+export type ScheduleAllMatchesForSeasonMutation = Pick<Mutation, 'scheduleAllMatchesForSeason'>;
 
 export type ScheduleAllMatchesForMatchDayMutationVariables = Exact<{
   match_day_id: Scalars['String'];
@@ -568,7 +773,7 @@ export type ScheduleAllMatchesForMatchDayMutationVariables = Exact<{
 }>;
 
 
-export type ScheduleAllMatchesForMatchDayMutation = { __typename?: 'mutation', scheduleAllMatchesForMatchDay?: boolean | null };
+export type ScheduleAllMatchesForMatchDayMutation = Pick<Mutation, 'scheduleAllMatchesForMatchDay'>;
 
 export type PasswordResetMutationVariables = Exact<{
   email: Scalars['String'];
@@ -576,14 +781,14 @@ export type PasswordResetMutationVariables = Exact<{
 }>;
 
 
-export type PasswordResetMutation = { __typename?: 'mutation', sendPasswordResetMail?: boolean | null };
+export type PasswordResetMutation = Pick<Mutation, 'sendPasswordResetMail'>;
 
 export type PasswordChangeMutationVariables = Exact<{
   new_password: Scalars['String'];
 }>;
 
 
-export type PasswordChangeMutation = { __typename?: 'mutation', changeUserPassword?: boolean | null };
+export type PasswordChangeMutation = Pick<Mutation, 'changeUserPassword'>;
 
 export type AddRankingPenaltyMutationVariables = Exact<{
   id: Scalars['String'];
@@ -594,7 +799,7 @@ export type AddRankingPenaltyMutationVariables = Exact<{
 }>;
 
 
-export type AddRankingPenaltyMutation = { __typename?: 'mutation', addRankingPenalty?: boolean | null };
+export type AddRankingPenaltyMutation = Pick<Mutation, 'addRankingPenalty'>;
 
 export type RemoveRankingPenaltyMutationVariables = Exact<{
   ranking_penalty_id: Scalars['String'];
@@ -602,14 +807,14 @@ export type RemoveRankingPenaltyMutationVariables = Exact<{
 }>;
 
 
-export type RemoveRankingPenaltyMutation = { __typename?: 'mutation', removeRankingPenalty?: boolean | null };
+export type RemoveRankingPenaltyMutation = Pick<Mutation, 'removeRankingPenalty'>;
 
 export type DeletePitchMutationVariables = Exact<{
   pitch_id: Scalars['String'];
 }>;
 
 
-export type DeletePitchMutation = { __typename?: 'mutation', deletePitch?: boolean | null };
+export type DeletePitchMutation = Pick<Mutation, 'deletePitch'>;
 
 export type UpdatePitchContactMutationVariables = Exact<{
   pitch_id: Scalars['String'];
@@ -620,7 +825,7 @@ export type UpdatePitchContactMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePitchContactMutation = { __typename?: 'mutation', updatePitchContact?: boolean | null };
+export type UpdatePitchContactMutation = Pick<Mutation, 'updatePitchContact'>;
 
 export type CreatePitchMutationVariables = Exact<{
   id: Scalars['String'];
@@ -630,7 +835,7 @@ export type CreatePitchMutationVariables = Exact<{
 }>;
 
 
-export type CreatePitchMutation = { __typename?: 'mutation', createPitch?: boolean | null };
+export type CreatePitchMutation = Pick<Mutation, 'createPitch'>;
 
 export type CreateSeasonMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -638,7 +843,7 @@ export type CreateSeasonMutationVariables = Exact<{
 }>;
 
 
-export type CreateSeasonMutation = { __typename?: 'mutation', createSeason?: boolean | null };
+export type CreateSeasonMutation = Pick<Mutation, 'createSeason'>;
 
 export type AddTeamToSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
@@ -646,7 +851,7 @@ export type AddTeamToSeasonMutationVariables = Exact<{
 }>;
 
 
-export type AddTeamToSeasonMutation = { __typename?: 'mutation', addTeamToSeason?: boolean | null };
+export type AddTeamToSeasonMutation = Pick<Mutation, 'addTeamToSeason'>;
 
 export type RemoveTeamFromSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
@@ -654,7 +859,7 @@ export type RemoveTeamFromSeasonMutationVariables = Exact<{
 }>;
 
 
-export type RemoveTeamFromSeasonMutation = { __typename?: 'mutation', removeTeamFromSeason?: boolean | null };
+export type RemoveTeamFromSeasonMutation = Pick<Mutation, 'removeTeamFromSeason'>;
 
 export type CreateMatchesForSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
@@ -662,7 +867,7 @@ export type CreateMatchesForSeasonMutationVariables = Exact<{
 }>;
 
 
-export type CreateMatchesForSeasonMutation = { __typename?: 'mutation', createMatchesForSeason?: boolean | null };
+export type CreateMatchesForSeasonMutation = Pick<Mutation, 'createMatchesForSeason'>;
 
 export type RescheduleMatchDayMutationVariables = Exact<{
   match_day_id: Scalars['String'];
@@ -670,28 +875,28 @@ export type RescheduleMatchDayMutationVariables = Exact<{
 }>;
 
 
-export type RescheduleMatchDayMutation = { __typename?: 'mutation', rescheduleMatchDay?: boolean | null };
+export type RescheduleMatchDayMutation = Pick<Mutation, 'rescheduleMatchDay'>;
 
 export type StartSeasonMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type StartSeasonMutation = { __typename?: 'mutation', startSeason?: boolean | null };
+export type StartSeasonMutation = Pick<Mutation, 'startSeason'>;
 
 export type EndSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
 }>;
 
 
-export type EndSeasonMutation = { __typename?: 'mutation', endSeason?: boolean | null };
+export type EndSeasonMutation = Pick<Mutation, 'endSeason'>;
 
 export type DeleteSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
 }>;
 
 
-export type DeleteSeasonMutation = { __typename?: 'mutation', deleteSeason?: boolean | null };
+export type DeleteSeasonMutation = Pick<Mutation, 'deleteSeason'>;
 
 export type ReplaceTeamInSeasonMutationVariables = Exact<{
   season_id: Scalars['String'];
@@ -700,7 +905,7 @@ export type ReplaceTeamInSeasonMutationVariables = Exact<{
 }>;
 
 
-export type ReplaceTeamInSeasonMutation = { __typename?: 'mutation', replaceTeamInSeason?: boolean | null };
+export type ReplaceTeamInSeasonMutation = Pick<Mutation, 'replaceTeamInSeason'>;
 
 export type CreateTeamMutationVariables = Exact<{
   id: Scalars['String'];
@@ -708,7 +913,7 @@ export type CreateTeamMutationVariables = Exact<{
 }>;
 
 
-export type CreateTeamMutation = { __typename?: 'mutation', createTeam?: boolean | null };
+export type CreateTeamMutation = Pick<Mutation, 'createTeam'>;
 
 export type UpdateTeamContactMutationVariables = Exact<{
   team_id: Scalars['String'];
@@ -719,7 +924,7 @@ export type UpdateTeamContactMutationVariables = Exact<{
 }>;
 
 
-export type UpdateTeamContactMutation = { __typename?: 'mutation', updateTeamContact?: boolean | null };
+export type UpdateTeamContactMutation = Pick<Mutation, 'updateTeamContact'>;
 
 export type RenameTeamMutationVariables = Exact<{
   team_id: Scalars['String'];
@@ -727,14 +932,14 @@ export type RenameTeamMutationVariables = Exact<{
 }>;
 
 
-export type RenameTeamMutation = { __typename?: 'mutation', renameTeam?: boolean | null };
+export type RenameTeamMutation = Pick<Mutation, 'renameTeam'>;
 
 export type DeleteTeamMutationVariables = Exact<{
   team_id: Scalars['String'];
 }>;
 
 
-export type DeleteTeamMutation = { __typename?: 'mutation', deleteTeam?: boolean | null };
+export type DeleteTeamMutation = Pick<Mutation, 'deleteTeam'>;
 
 export type CreateTournamentMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -742,7 +947,7 @@ export type CreateTournamentMutationVariables = Exact<{
 }>;
 
 
-export type CreateTournamentMutation = { __typename?: 'mutation', createTournament?: boolean | null };
+export type CreateTournamentMutation = Pick<Mutation, 'createTournament'>;
 
 export type CreateTournamentRoundMutationVariables = Exact<{
   tournament_id: Scalars['String'];
@@ -752,14 +957,14 @@ export type CreateTournamentRoundMutationVariables = Exact<{
 }>;
 
 
-export type CreateTournamentRoundMutation = { __typename?: 'mutation', setTournamentRound?: boolean | null };
+export type CreateTournamentRoundMutation = Pick<Mutation, 'setTournamentRound'>;
 
 export type DeleteTournamentMutationVariables = Exact<{
   tournament_id: Scalars['String'];
 }>;
 
 
-export type DeleteTournamentMutation = { __typename?: 'mutation', deleteTournament?: boolean | null };
+export type DeleteTournamentMutation = Pick<Mutation, 'deleteTournament'>;
 
 export type CreateUserMutationVariables = Exact<{
   user_id?: InputMaybe<Scalars['String']>;
@@ -772,7 +977,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'mutation', createUser?: boolean | null };
+export type CreateUserMutation = Pick<Mutation, 'createUser'>;
 
 export type UpdateUserMutationVariables = Exact<{
   user_id: Scalars['String'];
@@ -784,14 +989,14 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'mutation', updateUser?: boolean | null };
+export type UpdateUserMutation = Pick<Mutation, 'updateUser'>;
 
 export type DeleteUserMutationVariables = Exact<{
   user_id: Scalars['String'];
 }>;
 
 
-export type DeleteUserMutation = { __typename?: 'mutation', deleteUser?: boolean | null };
+export type DeleteUserMutation = Pick<Mutation, 'deleteUser'>;
 
 export type CalendarQueryVariables = Exact<{
   min_date?: InputMaybe<Scalars['DateTime']>;
@@ -799,14 +1004,56 @@ export type CalendarQueryVariables = Exact<{
 }>;
 
 
-export type CalendarQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null> | null } | null> | null, allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', number: number, start_date: string, end_date: string } | null> | null } | null> | null, matchesByKickoff?: Array<{ __typename?: 'Match', id: string, kickoff?: any | null, home_score?: number | null, guest_score?: number | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null };
+export type CalendarQuery = { allSeasons?: Maybe<Array<Maybe<(
+    { __typename?: 'Season' }
+    & Pick<Season, 'id' | 'name' | 'state'>
+    & { match_days?: Maybe<Array<Maybe<(
+      { __typename?: 'MatchDay' }
+      & Pick<MatchDay, 'number' | 'start_date' | 'end_date'>
+    )>>> }
+  )>>>, allTournaments?: Maybe<Array<Maybe<(
+    { __typename?: 'Tournament' }
+    & Pick<Tournament, 'id' | 'name'>
+    & { rounds?: Maybe<Array<Maybe<(
+      { __typename?: 'MatchDay' }
+      & Pick<MatchDay, 'number' | 'start_date' | 'end_date'>
+    )>>> }
+  )>>>, matchesByKickoff?: Maybe<Array<Maybe<(
+    { __typename?: 'Match' }
+    & Pick<Match, 'id' | 'kickoff' | 'home_score' | 'guest_score' | 'cancelled_at' | 'cancellation_reason'>
+    & { home_team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    ), guest_team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    ), pitch?: Maybe<(
+      { __typename?: 'Pitch' }
+      & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )> }
+  )>>> };
 
-export type EventQueryVariables = Exact<{
+export type AllEventQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type EventQuery = { __typename?: 'query', event?: { __typename?: 'Event', id: string, occurred_at: string, type: string } | null };
+export type AllEventQuery = { event?: Maybe<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'occurred_at' | 'type'>
+  )> };
 
 export type LatestEventQueryVariables = Exact<{
   start_date?: InputMaybe<Scalars['Date']>;
@@ -815,72 +1062,274 @@ export type LatestEventQueryVariables = Exact<{
 }>;
 
 
-export type LatestEventQuery = { __typename?: 'query', latestEvents?: Array<{ __typename?: 'Event', id: string, occurred_at: string, type: string } | null> | null };
+export type LatestEventQuery = { latestEvents?: Maybe<Array<Maybe<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'occurred_at' | 'type'>
+  )>>> };
 
-export type MatchQueryVariables = Exact<{
+export type MatchByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type MatchQuery = { __typename?: 'query', match?: { __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null };
+export type MatchByIdQuery = { match?: Maybe<(
+    { __typename?: 'Match' }
+    & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+    & { home_team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    ), guest_team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    ), pitch?: Maybe<(
+      { __typename?: 'Pitch' }
+      & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )> }
+  )> };
 
 export type SeasonPenaltiesQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type SeasonPenaltiesQuery = { __typename?: 'query', season?: { __typename?: 'Season', id: string, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null, ranking?: { __typename?: 'Ranking', penalties?: Array<{ __typename?: 'RankingPenalty', id: string, reason: string, created_at: string, points: number, team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } } | null> | null } | null } | null };
+export type SeasonPenaltiesQuery = { season?: Maybe<(
+    { __typename?: 'Season' }
+    & Pick<Season, 'id'>
+    & { teams?: Maybe<Array<Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )>>>, ranking?: Maybe<(
+      { __typename?: 'Ranking' }
+      & { penalties?: Maybe<Array<Maybe<(
+        { __typename?: 'RankingPenalty' }
+        & Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
+        & { team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ) }
+      )>>> }
+    )> }
+  )> };
 
 export type PitchesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PitchesQuery = { __typename?: 'query', allPitches?: Array<{ __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null };
+export type PitchesQuery = { allPitches?: Maybe<Array<Maybe<(
+    { __typename?: 'Pitch' }
+    & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  )>>> };
 
-export type RankingQueryVariables = Exact<{
+export type RankingByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type RankingQuery = { __typename?: 'query', season?: { __typename?: 'Season', id: string, ranking?: { __typename?: 'Ranking', updated_at?: string | null, positions?: Array<{ __typename?: 'RankingPosition', sort_index: number, number: number, matches: number, wins: number, draws: number, losses: number, scored_goals: number, conceded_goals: number, points: number, team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } } | null> | null, penalties?: Array<{ __typename?: 'RankingPenalty', id: string, reason: string, created_at: string, points: number, team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } } | null> | null } | null } | null };
+export type RankingByIdQuery = { season?: Maybe<(
+    { __typename?: 'Season' }
+    & Pick<Season, 'id'>
+    & { ranking?: Maybe<(
+      { __typename?: 'Ranking' }
+      & Pick<Ranking, 'updated_at'>
+      & { positions?: Maybe<Array<Maybe<(
+        { __typename?: 'RankingPosition' }
+        & Pick<RankingPosition, 'sort_index' | 'number' | 'matches' | 'wins' | 'draws' | 'losses' | 'scored_goals' | 'conceded_goals' | 'points'>
+        & { team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ) }
+      )>>>, penalties?: Maybe<Array<Maybe<(
+        { __typename?: 'RankingPenalty' }
+        & Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
+        & { team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ) }
+      )>>> }
+    )> }
+  )> };
 
 export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllSeasonsListQuery = { __typename?: 'query', allSeasons?: Array<{ __typename?: 'Season', id: string, name: string, state: SeasonState, match_days?: Array<{ __typename?: 'MatchDay', number: number, start_date: string } | null> | null } | null> | null };
+export type AllSeasonsListQuery = { allSeasons?: Maybe<Array<Maybe<(
+    { __typename?: 'Season' }
+    & Pick<Season, 'id' | 'name' | 'state'>
+    & { match_days?: Maybe<Array<Maybe<(
+      { __typename?: 'MatchDay' }
+      & Pick<MatchDay, 'number' | 'start_date'>
+    )>>> }
+  )>>> };
 
-export type SeasonQueryVariables = Exact<{
+export type SeasonByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type SeasonQuery = { __typename?: 'query', season?: { __typename?: 'Season', id: string, name: string, state: SeasonState, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null, match_days?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null } | null };
+export type SeasonByIdQuery = { season?: Maybe<(
+    { __typename?: 'Season' }
+    & Pick<Season, 'id' | 'name' | 'state'>
+    & { teams?: Maybe<Array<Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )>>>, match_days?: Maybe<Array<Maybe<(
+      { __typename?: 'MatchDay' }
+      & Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+      & { matches?: Maybe<Array<Maybe<(
+        { __typename?: 'Match' }
+        & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+        & { home_team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ), guest_team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ), pitch?: Maybe<(
+          { __typename?: 'Pitch' }
+          & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        )> }
+      )>>> }
+    )>>> }
+  )> };
 
 export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTeamsQuery = { __typename?: 'query', allTeams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null };
+export type AllTeamsQuery = { allTeams?: Maybe<Array<Maybe<(
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  )>>> };
 
 export type AllTournamentListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTournamentListQuery = { __typename?: 'query', allTournaments?: Array<{ __typename?: 'Tournament', id: string, name: string } | null> | null };
+export type AllTournamentListQuery = { allTournaments?: Maybe<Array<Maybe<(
+    { __typename?: 'Tournament' }
+    & Pick<Tournament, 'id' | 'name'>
+  )>>> };
 
-export type TournamentQueryVariables = Exact<{
+export type TournamentByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type TournamentQuery = { __typename?: 'query', tournament?: { __typename?: 'Tournament', id: string, name: string, rounds?: Array<{ __typename?: 'MatchDay', id: string, number: number, start_date: string, end_date: string, matches?: Array<{ __typename?: 'Match', id: string, home_score?: number | null, guest_score?: number | null, kickoff?: any | null, cancelled_at?: string | null, cancellation_reason?: string | null, home_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, guest_team: { __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null }, pitch?: { __typename?: 'Pitch', id: string, label: string, location_longitude: number, location_latitude: number, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null } | null> | null } | null> | null } | null };
+export type TournamentByIdQuery = { tournament?: Maybe<(
+    { __typename?: 'Tournament' }
+    & Pick<Tournament, 'id' | 'name'>
+    & { rounds?: Maybe<Array<Maybe<(
+      { __typename?: 'MatchDay' }
+      & Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+      & { matches?: Maybe<Array<Maybe<(
+        { __typename?: 'Match' }
+        & Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+        & { home_team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ), guest_team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'created_at'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        ), pitch?: Maybe<(
+          { __typename?: 'Pitch' }
+          & Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+          & { contact?: Maybe<(
+            { __typename?: 'Contact' }
+            & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+          )> }
+        )> }
+      )>>> }
+    )>>> }
+  )> };
 
-export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'query', authenticatedUser?: { __typename?: 'User', id: string, email: string, role: UserRole, first_name: string, last_name: string, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null } | null };
+export type AuthenticatedUserQuery = { authenticatedUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
+    & { teams?: Maybe<Array<Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )>>> }
+  )> };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllUsersQuery = { __typename?: 'query', allUsers?: Array<{ __typename?: 'User', id: string, email: string, role: UserRole, first_name: string, last_name: string, teams?: Array<{ __typename?: 'Team', id: string, name: string, created_at: string, contact?: { __typename?: 'Contact', first_name: string, last_name: string, phone: string, email: string } | null } | null> | null } | null> | null };
+export type AllUsersQuery = { allUsers?: Maybe<Array<Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
+    & { teams?: Maybe<Array<Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name' | 'created_at'>
+      & { contact?: Maybe<(
+        { __typename?: 'Contact' }
+        & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+      )> }
+    )>>> }
+  )>>> };
 
 export const ContactFragmentDoc = gql`
     fragment Contact on Contact {
@@ -1676,8 +2125,8 @@ ${PitchFragmentDoc}`;
       super(apollo);
     }
   }
-export const EventDocument = gql`
-    query Event($id: String!) {
+export const AllEventDocument = gql`
+    query AllEvent($id: String!) {
   event(id: $id) {
     ...Event
   }
@@ -1687,8 +2136,8 @@ export const EventDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class EventGQL extends Apollo.Query<EventQuery, EventQueryVariables> {
-    override document = EventDocument;
+  export class AllEventGQL extends Apollo.Query<AllEventQuery, AllEventQueryVariables> {
+    override document = AllEventDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1712,8 +2161,8 @@ export const LatestEventDocument = gql`
       super(apollo);
     }
   }
-export const MatchDocument = gql`
-    query Match($id: String!) {
+export const MatchByIdDocument = gql`
+    query MatchById($id: String!) {
   match(id: $id) {
     ...Match
   }
@@ -1723,8 +2172,8 @@ export const MatchDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class MatchGQL extends Apollo.Query<MatchQuery, MatchQueryVariables> {
-    override document = MatchDocument;
+  export class MatchByIdGQL extends Apollo.Query<MatchByIdQuery, MatchByIdQueryVariables> {
+    override document = MatchByIdDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1775,8 +2224,8 @@ export const PitchesDocument = gql`
       super(apollo);
     }
   }
-export const RankingDocument = gql`
-    query Ranking($id: String!) {
+export const RankingByIdDocument = gql`
+    query RankingById($id: String!) {
   season(id: $id) {
     ...Ranking
   }
@@ -1786,8 +2235,8 @@ export const RankingDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class RankingGQL extends Apollo.Query<RankingQuery, RankingQueryVariables> {
-    override document = RankingDocument;
+  export class RankingByIdGQL extends Apollo.Query<RankingByIdQuery, RankingByIdQueryVariables> {
+    override document = RankingByIdDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1811,8 +2260,8 @@ export const AllSeasonsListDocument = gql`
       super(apollo);
     }
   }
-export const SeasonDocument = gql`
-    query Season($id: String!) {
+export const SeasonByIdDocument = gql`
+    query SeasonById($id: String!) {
   season(id: $id) {
     ...Season
   }
@@ -1822,8 +2271,8 @@ export const SeasonDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class SeasonGQL extends Apollo.Query<SeasonQuery, SeasonQueryVariables> {
-    override document = SeasonDocument;
+  export class SeasonByIdGQL extends Apollo.Query<SeasonByIdQuery, SeasonByIdQueryVariables> {
+    override document = SeasonByIdDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1865,8 +2314,8 @@ export const AllTournamentListDocument = gql`
       super(apollo);
     }
   }
-export const TournamentDocument = gql`
-    query Tournament($id: String!) {
+export const TournamentByIdDocument = gql`
+    query TournamentById($id: String!) {
   tournament(id: $id) {
     ...Tournament
   }
@@ -1876,15 +2325,15 @@ export const TournamentDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class TournamentGQL extends Apollo.Query<TournamentQuery, TournamentQueryVariables> {
-    override document = TournamentDocument;
+  export class TournamentByIdGQL extends Apollo.Query<TournamentByIdQuery, TournamentByIdQueryVariables> {
+    override document = TournamentByIdDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
-export const UserDocument = gql`
-    query User {
+export const AuthenticatedUserDocument = gql`
+    query AuthenticatedUser {
   authenticatedUser {
     ...User
   }
@@ -1894,8 +2343,8 @@ export const UserDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class UserGQL extends Apollo.Query<UserQuery, UserQueryVariables> {
-    override document = UserDocument;
+  export class AuthenticatedUserGQL extends Apollo.Query<AuthenticatedUserQuery, AuthenticatedUserQueryVariables> {
+    override document = AuthenticatedUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

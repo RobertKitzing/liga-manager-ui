@@ -4,7 +4,7 @@ query AllTournamentList {
   }
 }
 
-query Tournament($id: String!) {
+query TournamentById($id: String!) {
   tournament(id: $id) {
     ...Tournament
   }

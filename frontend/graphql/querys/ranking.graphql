@@ -1,4 +1,4 @@
-query Ranking($id: String!) {
+query RankingById($id: String!) {
   season(id: $id) {
     ...Ranking
   }

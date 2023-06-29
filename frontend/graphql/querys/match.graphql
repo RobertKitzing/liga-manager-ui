@@ -1,4 +1,4 @@
-query Match($id: String!) {
+query MatchById($id: String!) {
     match(id: $id) {
         ...Match
     }

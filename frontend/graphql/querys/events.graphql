@@ -1,4 +1,4 @@
-query Event($id: String!) {
+query AllEvent($id: String!) {
     event(id: $id) {
         ...Event
     }

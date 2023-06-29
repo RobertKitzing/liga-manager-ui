@@ -2,13 +2,17 @@ overwrite: true
 schema: "http://localhost/api/graphql"
 documents: "graphql/**/*.graphql"
 generates:
-  src/api/graphql.ts:
+  src/api/graphql/graphql.ts:
     plugins:
       - add: 
           content:
             - "/* eslint-disable */"
             - "/* GENERATED DO NOT EDIT */"
-      - "typescript"
-      - "typescript-operations"
+      - typescript:
+      - typescript-operations:
+          flattenGeneratedTypes: true
+          flattenGeneratedTypesIncludeFragments: true
+          skipTypeNameForRoot: true
+          preResolveTypes: false
       - typescript-apollo-angular:
           addExplicitOverride: true

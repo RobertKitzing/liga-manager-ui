@@ -4,10 +4,10 @@ import {
     CancelMatchMutationVariables,
     LocateMatchGQL,
     LocateMatchMutationVariables,
-    RankingGQL,
+    RankingByIdGQL,
     ScheduleMatchGQL,
     ScheduleMatchMutationVariables,
-    SeasonGQL,
+    SeasonByIdGQL,
     SubmitResultGQL,
     SubmitResultMutationVariables,
 } from 'src/api/graphql';
@@ -19,12 +19,12 @@ import { SeasonService } from './season.service';
 export class MatchService {
     constructor(
         private submitResultGQL: SubmitResultGQL,
-        private seasonGQL: SeasonGQL,
+        private seasonByIdGQL: SeasonByIdGQL,
         private seasonService: SeasonService,
-        private rankingGQL: RankingGQL,
+        private rankingByIdGQL: RankingByIdGQL,
         private locateMatchQGL: LocateMatchGQL,
         private scheduleMatchGQL: ScheduleMatchGQL,
-        private cancelMatchGQL: CancelMatchGQL
+        private cancelMatchGQL: CancelMatchGQL,
     ) {}
 
     submitMatchResult(variables: SubmitResultMutationVariables) {
@@ -32,11 +32,11 @@ export class MatchService {
         return this.submitResultGQL.mutate(variables, {
             refetchQueries: [
                 {
-                    query: this.seasonGQL.document,
+                    query: this.seasonByIdGQL.document,
                     variables: { id: seasonId.id },
                 },
                 {
-                    query: this.rankingGQL.document,
+                    query: this.rankingByIdGQL.document,
                     variables: { id: seasonId.id },
                 },
             ],
@@ -48,7 +48,7 @@ export class MatchService {
         return this.locateMatchQGL.mutate(variables, {
             refetchQueries: [
                 {
-                    query: this.seasonGQL.document,
+                    query: this.seasonByIdGQL.document,
                     variables: { id: seasonId.id },
                 },
             ],
@@ -60,7 +60,7 @@ export class MatchService {
         return this.scheduleMatchGQL.mutate(variables, {
             refetchQueries: [
                 {
-                    query: this.seasonGQL.document,
+                    query: this.seasonByIdGQL.document,
                     variables: { id: seasonId.id },
                 },
             ],
@@ -72,11 +72,11 @@ export class MatchService {
         return this.cancelMatchGQL.mutate(variables, {
             refetchQueries: [
                 {
-                    query: this.seasonGQL.document,
+                    query: this.seasonByIdGQL.document,
                     variables: { id: seasonId.id },
                 },
                 {
-                    query: this.rankingGQL.document,
+                    query: this.rankingByIdGQL.document,
                     variables: { id: seasonId.id },
                 },
             ],

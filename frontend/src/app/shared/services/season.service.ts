@@ -4,8 +4,8 @@ import { BehaviorSubject, map, Subject } from 'rxjs';
 import {
     AllSeasonsFragment,
     AllSeasonsListGQL,
-    SeasonGQL,
-    SeasonQueryVariables,
+    SeasonByIdGQL,
+    SeasonByIdQueryVariables,
 } from 'src/api/graphql';
 
 const SELECTED_PROGRESS_SEASON_KEY = 'SELECTED_PROGRESS_SEASON';
@@ -21,16 +21,16 @@ export class SeasonService {
     historySeason!: AllSeasonsFragment;
 
     progressSeason$ = new BehaviorSubject<AllSeasonsFragment>(
-        this.progressSeason
+        this.progressSeason,
     );
     historySeason$ = new BehaviorSubject<AllSeasonsFragment>(
-        this.historySeason
+        this.historySeason,
     );
     manageSeason$ = new Subject<AllSeasonsFragment>();
 
     constructor(
         private allSeasonlistGQL: AllSeasonsListGQL,
-        private seasonGQL: SeasonGQL
+        private seasonByIdGQL: SeasonByIdGQL,
     ) {
         this.progressSeason$.subscribe((season) => {
             if (season) {
@@ -53,13 +53,13 @@ export class SeasonService {
                     a?.match_days?.find((x) => x?.number === 1)?.start_date! <
                     b?.match_days?.find((x) => x?.number === 1)?.start_date!
                         ? 1
-                        : -1
-                )
-            )
+                        : -1,
+                ),
+            ),
         );
 
-    getSeason(params: SeasonQueryVariables) {
-        return this.seasonGQL
+    getSeason(params: SeasonByIdQueryVariables) {
+        return this.seasonByIdGQL
             .watch(params)
             .valueChanges.pipe(map(({ data }) => data.season));
     }

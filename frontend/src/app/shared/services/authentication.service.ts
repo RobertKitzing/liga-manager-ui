@@ -4,7 +4,14 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
 import { tap } from 'rxjs';
-import { Match, PasswordChangeGQL, PasswordResetGQL, User, UserGQL, UserRole } from '@api/graphql';
+import {
+    Match,
+    PasswordChangeGQL,
+    PasswordResetGQL,
+    User,
+    AuthenticatedUserGQL,
+    UserRole,
+} from '@api/graphql';
 
 export interface LoginContext {
     username: string;
@@ -27,14 +34,14 @@ export class AuthenticationService {
 
     constructor(
         private router: Router,
-        private userQGL: UserGQL,
+        private authenticatedUserGQL: AuthenticatedUserGQL,
         private changePasswordQGL: PasswordChangeGQL,
         private resetPasswordQGL: PasswordResetGQL,
         private localStorageService: LocalStorageService,
     ) {}
 
     login(context: LoginContext) {
-        return this.userQGL
+        return this.authenticatedUserGQL
             .fetch(undefined, {
                 fetchPolicy: 'network-only',
                 context: {
@@ -43,23 +50,23 @@ export class AuthenticationService {
                         `Basic ${Base64.encode(
                             context.username.toLowerCase() +
                                 ':' +
-                                context.password
-                        )}`
+                                context.password,
+                        )}`,
                     ),
                 },
             })
             .pipe(
                 tap((result) => {
                     this.user = result.data.authenticatedUser as User;
-                })
+                }),
             );
     }
 
     loadUser() {
-        return this.userQGL.fetch().pipe(
+        return this.authenticatedUserGQL.fetch().pipe(
             tap((result) => {
                 this.user = result.data.authenticatedUser as User;
-            })
+            }),
         );
     }
 
@@ -101,11 +108,11 @@ export class AuthenticationService {
                     headers: new HttpHeaders().set(
                         'Authorization',
                         `Basic ${Base64.encode(
-                            this.user!.email.toLowerCase() + ':' + oldPassword
-                        )}`
+                            this.user!.email.toLowerCase() + ':' + oldPassword,
+                        )}`,
                     ),
                 },
-            }
+            },
         );
     }
 
@@ -121,7 +128,7 @@ export class AuthenticationService {
                     },
                     (err) => {
                         reject(err);
-                    }
+                    },
                 );
         });
     }
@@ -139,7 +146,7 @@ export class AuthenticationService {
                     },
                     (error) => {
                         reject(error);
-                    }
+                    },
                 );
         });
     }

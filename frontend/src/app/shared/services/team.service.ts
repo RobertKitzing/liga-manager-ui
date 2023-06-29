@@ -8,8 +8,10 @@ import {
     DeleteTeamMutationVariables,
     RenameTeamGQL,
     RenameTeamMutationVariables,
+    Team,
 } from 'src/api/graphql';
 import { v4 as uuidv4 } from 'uuid';
+import { sortArrayBy } from '../utils';
 
 @Injectable({
     providedIn: 'root',
@@ -17,13 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class TeamService {
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
-        map((teams) => {
-            return [...teams!].sort((a, b) =>
-                a?.name.toLocaleLowerCase()! >= b?.name.toLocaleLowerCase()!
-                    ? 1
-                    : -1,
-            );
-        }),
+        map((teams) => sortArrayBy(teams as Team[], 'name')),
     );
 
     constructor(
