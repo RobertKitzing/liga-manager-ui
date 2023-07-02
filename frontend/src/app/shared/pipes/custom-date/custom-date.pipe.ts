@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { I18nService } from '@lima/shared/services';
 
-
 @Pipe({
     name: 'customDate',
     pure: false,
@@ -12,13 +11,13 @@ export class CustomDatePipe implements PipeTransform {
 
     transform(
         value: string | number | Date,
-        format = 'shortDate'
+        format = 'shortDate',
     ): string | null {
         return this.date.transform(
             value,
             format,
             undefined,
-            this.i18nService.currentLang
+            this.i18nService.currentLang,
         );
     }
 }

@@ -14,7 +14,7 @@ export class AppsettingsService {
         return this.appSettingsService.getAppsettings().pipe(
             tap((res) => {
                 this.appsettings = res;
-            })
+            }),
         );
     }
 }

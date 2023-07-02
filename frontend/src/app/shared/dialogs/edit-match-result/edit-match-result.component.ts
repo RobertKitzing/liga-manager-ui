@@ -26,20 +26,27 @@ export class EditMatchResultComponent {
         public data: { match: Match; matchDay: MatchDay },
         private notify: NotificationService,
         private dialogRef: MatDialogRef<EditMatchResultComponent>,
-        private matchService: MatchService
+        private matchService: MatchService,
     ) {}
 
     async onSaveClicked() {
         try {
-            await firstValueFrom(
-                this.matchService.submitMatchResult({
-                    match_id: this.data.match.id,
-                    home_score: this.resultFormGroup.value.home_score!,
-                    guest_score: this.resultFormGroup.value.guest_score!,
-                })
-            );
-            this.notify.showSuccessNotification(marker('EDIT_RESULT_SUCCESS'));
-            this.dialogRef.close(true);
+            if (
+                this.resultFormGroup.value.home_score &&
+                this.resultFormGroup.value.guest_score
+            ) {
+                await firstValueFrom(
+                    this.matchService.submitMatchResult({
+                        match_id: this.data.match.id,
+                        home_score: this.resultFormGroup.value.home_score,
+                        guest_score: this.resultFormGroup.value.guest_score,
+                    }),
+                );
+                this.notify.showSuccessNotification(
+                    marker('EDIT_RESULT_SUCCESS'),
+                );
+                this.dialogRef.close(true);
+            }
         } catch (error) {
             // throw error
         }

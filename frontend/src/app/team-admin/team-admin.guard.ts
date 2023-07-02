@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class TeamAdminGuard {
+    constructor(private authenticationService: AuthenticationService) {}
+
     get allowed() {
         return this.authenticationService.isTeamAdmin;
     }
-
-    constructor(private authenticationService: AuthenticationService) {}
 
     canActivate():
         | Observable<boolean | UrlTree>
@@ -20,6 +20,7 @@ export class TeamAdminGuard {
         | UrlTree {
         return this.allowed;
     }
+
     canActivateChild():
         | Observable<boolean | UrlTree>
         | Promise<boolean | UrlTree>

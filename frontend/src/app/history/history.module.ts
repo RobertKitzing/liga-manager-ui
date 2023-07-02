@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { HistoryRoutingModule } from './history-routing.module';
 import { HistoryComponent } from './history.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ScheduleModule } from '../schedule/schedule.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TournamentModule } from '../tournament/tournament.module';
 import { TableModule } from '@lima/table';
+import { ScheduleModule } from '@lima/schedule';
+import { TournamentModule } from '@lima/tournament';
 
 @NgModule({
     declarations: [HistoryComponent],

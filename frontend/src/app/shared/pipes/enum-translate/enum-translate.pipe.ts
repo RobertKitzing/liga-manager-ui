@@ -15,7 +15,7 @@ export class EnumTranslatePipe implements PipeTransform {
         return this.translatePipe.transform(this.interpretValue(value));
     }
 
-    interpretValue(value: any): string {
+    interpretValue(value: Enums): string {
         switch (value) {
             case SeasonState.Ended:
                 return marker('SeasonState.Ended');

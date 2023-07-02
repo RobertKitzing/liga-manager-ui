@@ -24,13 +24,9 @@ const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
     providedIn: 'root',
 })
 export class AuthenticationService {
-    user?: User;
-
     @LocalStorage(ACCESS_TOKEN_KEY) accessToken?: string;
 
-    public get isAuthenticated(): boolean {
-        return !!this.user && Boolean(this.accessToken);
-    }
+    user?: User;
 
     constructor(
         private router: Router,
@@ -39,6 +35,18 @@ export class AuthenticationService {
         private resetPasswordQGL: PasswordResetGQL,
         private localStorageService: LocalStorageService,
     ) {}
+
+    get isAuthenticated(): boolean {
+        return !!this.user && Boolean(this.accessToken);
+    }
+
+    get isAdmin() {
+        return this.user ? this.user.role === UserRole.Admin : false;
+    }
+
+    get isTeamAdmin() {
+        return this.user ? this.user.role === UserRole.TeamManager : false;
+    }
 
     login(context: LoginContext) {
         return this.authenticatedUserGQL
@@ -76,22 +84,14 @@ export class AuthenticationService {
         this.router.navigateByUrl('');
     }
 
-    public get isAdmin() {
-        return this.user ? this.user.role === UserRole.Admin : false;
-    }
-
-    public get isTeamAdmin() {
-        return this.user ? this.user.role === UserRole.TeamManager : false;
-    }
-
-    public isTeamAdminForTeam(teamId: string) {
+    isTeamAdminForTeam(teamId: string) {
         return (
             this.isTeamAdmin &&
             !!this.user?.teams?.find((t) => t?.id === teamId)
         );
     }
 
-    public canEditMatch(match: Match) {
+    canEditMatch(match: Match) {
         return (
             this.isAdmin ||
             this.isTeamAdminForTeam(match.home_team.id) ||

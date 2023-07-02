@@ -13,6 +13,6 @@ export class NavLinksComponent {
 
     constructor(
         public adminGuard: AdminGuard,
-        public teamAdminGuard: TeamAdminGuard
+        public teamAdminGuard: TeamAdminGuard,
     ) {}
 }

@@ -2,7 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { MatchService, NotificationService, PitchService } from '@lima/shared/services';
+import {
+    MatchService,
+    NotificationService,
+    PitchService,
+} from '@lima/shared/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Match, MatchDay, Pitch } from 'src/api/graphql';
 
@@ -24,10 +28,10 @@ export class EditMatchPitchComponent {
                 ? x?.filter((y) =>
                       y?.label
                           .toLowerCase()
-                          .includes(this.newMatchPitch.value.toLowerCase())
+                          .includes(this.newMatchPitch.value.toLowerCase()),
                   )
                 : x;
-        })
+        }),
     );
 
     constructor(
@@ -36,7 +40,7 @@ export class EditMatchPitchComponent {
         private notify: NotificationService,
         private dialogRef: MatDialogRef<EditMatchPitchComponent>,
         private matchService: MatchService,
-        private pitchService: PitchService
+        private pitchService: PitchService,
     ) {}
 
     async onSaveClicked() {
@@ -45,7 +49,7 @@ export class EditMatchPitchComponent {
                 this.matchService.locateMatch({
                     match_id: this.data.match.id,
                     pitch_id: this.newMatchPitch.value.id,
-                })
+                }),
             );
             this.notify.showSuccessNotification(marker('EDIT_PITCH_SUCCESS'));
             this.dialogRef.close(true);

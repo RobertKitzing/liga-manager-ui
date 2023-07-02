@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     HttpEvent,
     HttpHandler,
@@ -18,13 +19,13 @@ export class LoadingIndicatorHttpInterceptor implements HttpInterceptor {
 
     intercept(
         req: HttpRequest<any>,
-        next: HttpHandler
+        next: HttpHandler,
     ): Observable<HttpEvent<any>> {
         this.beginRequest();
         return next.handle(req).pipe(
             finalize(() => {
                 this.endRequest();
-            })
+            }),
         );
     }
 

@@ -22,24 +22,29 @@ export class CancelMatchComponent {
         public data: { match: Match; matchDay: MatchDay },
         private notify: NotificationService,
         private dialogRef: MatDialogRef<CancelMatchComponent>,
-        private matchService: MatchService
+        private matchService: MatchService,
     ) {
-        if (this.data.match.cancellation_reason)
+        if (this.data.match.cancellation_reason) {
             this.cancelMatchReason.setValue(
-                this.data.match.cancellation_reason
+                this.data.match.cancellation_reason,
             );
+        }
     }
 
     async onSaveClicked() {
         try {
-            await firstValueFrom(
-                this.matchService.cancelMatch({
-                    match_id: this.data.match.id,
-                    reason: this.cancelMatchReason.value!,
-                })
-            );
-            this.notify.showSuccessNotification(marker('CANCEL_MATCH_SUCCESS'));
-            this.dialogRef.close(true);
+            if (this.cancelMatchReason.value) {
+                await firstValueFrom(
+                    this.matchService.cancelMatch({
+                        match_id: this.data.match.id,
+                        reason: this.cancelMatchReason.value,
+                    }),
+                );
+                this.notify.showSuccessNotification(
+                    marker('CANCEL_MATCH_SUCCESS'),
+                );
+                this.dialogRef.close(true);
+            }
         } catch (error) {
             // throw error
         }

@@ -22,12 +22,16 @@ export class TeamService {
         map((teams) => sortArrayBy(teams as Team[], 'name')),
     );
 
+    uploadTeamLogo = this.teamLogoService.uploadTeamLogo;
+
+    commitPreview = this.teamLogoService.commitPreview;
+
     constructor(
         private allTeamsGQL: AllTeamsGQL,
         private createTeamQL: CreateTeamGQL,
         private deleteTeamGQL: DeleteTeamGQL,
         private renameTeamGQL: RenameTeamGQL,
-        private teamService: TeamLogoService,
+        private teamLogoService: TeamLogoService,
     ) {}
 
     createTeam(name: string) {
@@ -65,7 +69,4 @@ export class TeamService {
             ],
         });
     }
-
-    uploadTeamLogo = this.teamService.uploadTeamLogo;
-    commitPreview = this.teamService.commitPreview;
 }

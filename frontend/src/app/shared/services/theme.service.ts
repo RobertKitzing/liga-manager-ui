@@ -7,15 +7,16 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 export class ThemeService {
-    themes = ['default', 'gondi', 'werder'];
-
     @LocalStorage('THEME')
     private currentTheme?: string;
 
     @LocalStorage('DARK_MODE')
     private darkMode!: boolean;
 
+    themes = ['default', 'gondi', 'werder'];
+
     currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
+
     darkMode$ = new BehaviorSubject<boolean>(
         window.matchMedia &&
             window.matchMedia('(prefers-color-scheme: dark)').matches &&

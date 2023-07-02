@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ScheduleComponent } from '../schedule/schedule.component';
-import { TableComponent } from '../table/table.component';
-import { TournamentComponent } from '../tournament/tournament.component';
 import { HistoryComponent } from './history.component';
+import { TableComponent } from '@lima/table';
+import { ScheduleComponent } from '@lima/schedule';
+import { TournamentComponent } from '@lima/tournament';
 
 const routes: Routes = [
     {

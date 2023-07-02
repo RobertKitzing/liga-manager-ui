@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class AdminGuard {
+    constructor(private authenticationService: AuthenticationService) {}
+
     get allowed() {
         return this.authenticationService.isAdmin;
     }
-
-    constructor(private authenticationService: AuthenticationService) {}
 
     canActivate():
         | Observable<boolean | UrlTree>

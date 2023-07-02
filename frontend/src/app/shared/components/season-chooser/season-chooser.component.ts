@@ -17,6 +17,7 @@ export class SeasonChooserComponent implements OnInit {
     @Input() mode: SeasonChooserModes = 'progressSeason';
 
     SeasonState = SeasonState;
+
     season$!: Observable<AllSeasonsFragment>;
 
     seasonList$ = this.seasonService.seasonList$.pipe(
@@ -24,16 +25,16 @@ export class SeasonChooserComponent implements OnInit {
             switch (this.mode) {
                 case 'historySeason':
                     return seasonList?.filter(
-                        (s) => s?.state === SeasonState.Ended
+                        (s) => s?.state === SeasonState.Ended,
                     );
                 case 'progressSeason':
                     return seasonList?.filter(
-                        (s) => s?.state === SeasonState.Progress
+                        (s) => s?.state === SeasonState.Progress,
                     );
                 default:
                     return seasonList;
             }
-        })
+        }),
     );
 
     constructor(public seasonService: SeasonService) {}

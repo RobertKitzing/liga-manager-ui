@@ -12,10 +12,13 @@ export class ManageTeamsComponent {
     displayedColumns: string[] = ['team', 'action'];
 
     newTeam = new FormControl('', [Validators.required]);
+
     newTeamName = new FormControl('', [Validators.required]);
+
     searchTeam = new FormControl();
 
     addTeamMode = false;
+
     editTeamId = '';
 
     teams$ = this.searchTeam.valueChanges.pipe(
@@ -28,11 +31,11 @@ export class ManageTeamsComponent {
                           x.filter((y) =>
                               y?.name
                                   .toLocaleLowerCase()
-                                  .includes(searchTerm.toLocaleLowerCase())
-                          )
-                      )
-                  )
-        )
+                                  .includes(searchTerm.toLocaleLowerCase()),
+                          ),
+                      ),
+                  ),
+        ),
     );
 
     constructor(private teamService: TeamService) {}
@@ -53,7 +56,7 @@ export class ManageTeamsComponent {
 
     async renameTeam(team_id: string, new_name: string) {
         await firstValueFrom(
-            this.teamService.renameTeam({ team_id, new_name })
+            this.teamService.renameTeam({ team_id, new_name }),
         );
         this.editTeamId = '';
     }

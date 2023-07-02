@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
+import { EditMatchBaseModule } from '../edit-match-base';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomDateModule } from '@lima/shared/pipes';
 

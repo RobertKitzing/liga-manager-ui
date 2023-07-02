@@ -3,12 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, of, switchMap } from 'rxjs';
 import { Match, MatchDay, SeasonState } from 'src/api/graphql';
-import { CancelMatchComponent } from '../components/dialogs/cancel-match/cancel-match.component';
-import { EditMatchKickoffComponent } from '../components/dialogs/edit-match-kickoff/edit-match-kickoff.component';
-import { EditMatchPitchComponent } from '../components/dialogs/edit-match-pitch/edit-match-pitch.component';
-import { EditMatchResultComponent } from '../components/dialogs/edit-match-result/edit-match-result.component';
 import { SeasonChooserModes } from '../shared/components/season-chooser';
 import { AuthenticationService, SeasonService } from '@lima/shared/services';
+import {
+    CancelMatchComponent,
+    EditMatchKickoffComponent,
+    EditMatchPitchComponent,
+    EditMatchResultComponent,
+} from '@lima/shared/dialogs';
 
 @Component({
     selector: 'lima-schedule',
@@ -25,25 +27,27 @@ export class ScheduleComponent implements OnInit {
             iif(
                 () => this.seasonMode === 'progressSeason',
                 this.seasonService.progressSeason$,
-                this.seasonService.historySeason$
-            )
+                this.seasonService.historySeason$,
+            ),
         ),
         switchMap((season) => {
             return season?.id
                 ? this.seasonService.getSeason({ id: season.id })
                 : of(null);
-        })
+        }),
     );
 
     selectedMatchDayId = '0';
+
     selectedTeamId = '0';
+
     showFilter = false;
 
     constructor(
         private seasonService: SeasonService,
         private dialog: MatDialog,
         private router: Router,
-        private authService: AuthenticationService
+        private authService: AuthenticationService,
     ) {}
 
     ngOnInit(): void {
@@ -59,18 +63,18 @@ export class ScheduleComponent implements OnInit {
         );
     }
 
-    filterMatchDays(matchDays: any[]): any[] {
+    filterMatchDays(matchDays: MatchDay[]): MatchDay[] {
         return this.selectedMatchDayId !== '0'
             ? matchDays.filter((x) => x.id === this.selectedMatchDayId)
             : matchDays;
     }
 
-    filterMatches(matches: any[]): any[] {
+    filterMatches(matches: Match[]): Match[] {
         return this.selectedTeamId !== '0'
             ? matches.filter(
                   (x) =>
                       x.guest_team.id === this.selectedTeamId ||
-                      x.home_team.id === this.selectedTeamId
+                      x.home_team.id === this.selectedTeamId,
               )
             : matches;
     }

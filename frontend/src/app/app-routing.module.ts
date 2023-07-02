@@ -9,25 +9,20 @@ const routes: Routes = [
     },
     {
         path: APP_ROUTES.CALENDAR,
-        loadChildren: () =>
-            import('./calendar/calendar.module').then((m) => m.CalendarModule),
+        loadChildren: () => import('./calendar').then((m) => m.CalendarModule),
     },
     {
         path: APP_ROUTES.CONTACTS,
-        loadChildren: () =>
-            import('./contacs/contacs.module').then((m) => m.ContacsModule),
+        loadChildren: () => import('./contacs').then((m) => m.ContacsModule),
     },
     {
         path: APP_ROUTES.SCHEDULE,
-        loadChildren: () =>
-            import('./schedule/schedule.module').then((m) => m.ScheduleModule),
+        loadChildren: () => import('./schedule').then((m) => m.ScheduleModule),
     },
     {
         path: APP_ROUTES.TOURNAMENT,
         loadChildren: () =>
-            import('./tournament/tournament.module').then(
-                (m) => m.TournamentModule
-            ),
+            import('./tournament').then((m) => m.TournamentModule),
     },
     {
         path: APP_ROUTES.TEAM_ADMIN,
@@ -36,13 +31,11 @@ const routes: Routes = [
     },
     {
         path: APP_ROUTES.ADMIN,
-        loadChildren: () =>
-            import('./admin/admin.module').then((m) => m.AdminModule),
+        loadChildren: () => import('./admin').then((m) => m.AdminModule),
     },
     {
         path: APP_ROUTES.HISTORY,
-        loadChildren: () =>
-            import('./history/history.module').then((m) => m.HistoryModule),
+        loadChildren: () => import('./history').then((m) => m.HistoryModule),
     },
     {
         path: '',

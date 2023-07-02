@@ -11,4 +11,4 @@ const declarations = [EditMatchBaseComponent];
     imports: [CommonModule, CustomDateModule, TranslateModule.forChild()],
     exports: declarations,
 })
-export class EditMatchBaseModule { }
+export class EditMatchBaseModule {}

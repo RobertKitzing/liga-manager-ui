@@ -38,7 +38,7 @@ export class EditMatchKickoffComponent {
                 this.matchService.scheduleMatch({
                     match_id: this.data.match.id,
                     kickoff,
-                })
+                }),
             );
             this.notify.showSuccessNotification(marker('EDIT_KICKOFF_SUCCESS'));
             this.dialogRef.close(true);

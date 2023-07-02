@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -27,11 +28,11 @@ export class EditUserDialogComponent implements OnInit {
                           t.filter((x) =>
                               x?.name
                                   .toLocaleLowerCase()
-                                  .includes(searchTerm.toLocaleLowerCase())
-                          )
-                      )
-                  )
-        )
+                                  .includes(searchTerm.toLocaleLowerCase()),
+                          ),
+                      ),
+                  ),
+        ),
     );
 
     userFormGroup = new FormGroup({
@@ -48,13 +49,14 @@ export class EditUserDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public user: User,
         private teamService: TeamService,
         private userService: UserService,
-        private dialogRef: MatDialogRef<EditUserDialogComponent>
+        private dialogRef: MatDialogRef<EditUserDialogComponent>,
     ) {}
 
     ngOnInit(): void {
         if (this.user) {
             this.userFormGroup.patchValue({
                 ...this.user,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                 team_ids: this.user.teams?.map((t) => t?.id!)!,
             });
         }
@@ -66,7 +68,7 @@ export class EditUserDialogComponent implements OnInit {
                 this.userService.updateUser({
                     user_id: this.user.id,
                     ...this.userFormGroup.value,
-                })
+                }),
             );
             this.dialogRef.close();
         } else {
@@ -82,7 +84,7 @@ export class EditUserDialogComponent implements OnInit {
                         haveNumbers: true,
                         haveSymbols: true,
                     }),
-                })
+                }),
             );
             this.userService.sendPasswordMail(this.userFormGroup.value.email!);
             this.dialogRef.close();

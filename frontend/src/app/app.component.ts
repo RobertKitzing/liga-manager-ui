@@ -3,13 +3,13 @@ import { Location } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import {
     AuthenticationService,
     I18nService,
     LoadingIndicatorService,
     ThemeService,
 } from '@lima/shared/services';
+import { LoginComponent } from './shared/dialogs';
 
 @Component({
     selector: 'lima-root',
@@ -22,11 +22,6 @@ export class AppComponent implements OnInit {
         nonNullable: true,
     });
 
-    get currentRoute() {
-        const url = this.router.url.split('/')[1];
-        return `NAVIGATION.${url.toUpperCase()}`;
-    }
-
     constructor(
         public themeService: ThemeService,
         public loadingIndicatorService: LoadingIndicatorService,
@@ -38,9 +33,16 @@ export class AppComponent implements OnInit {
         private location: Location,
     ) {}
 
+    get currentRoute() {
+        const url = this.router.url.split('/')[1];
+        return `NAVIGATION.${url.toUpperCase()}`;
+    }
+
     async ngOnInit() {
         this.route.queryParams.subscribe((params) => {
-            if (params['theme']) this.changeTheme(params['theme']);
+            if (params['theme']) {
+                this.changeTheme(params['theme']);
+            }
         });
 
         this.darkModeControl.valueChanges.subscribe((dark) => {

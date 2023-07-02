@@ -15,15 +15,11 @@ export function httpLoaderFactory(http: HttpClient) {
     providedIn: 'root',
 })
 export class I18nService {
-    public availableLang$ = this.httpClient.get<
-        { code: string; direction: string; name: string; nativeName: string }[]
-    >('/assets/languages.json');
-
     @LocalStorage(LANG_KEY) storedLang?: { code: string; direction?: string };
 
-    public get currentLang(): string {
-        return this.translateService.currentLang;
-    }
+    availableLang$ = this.httpClient.get<
+        { code: string; direction: string; name: string; nativeName: string }[]
+    >('/assets/languages.json');
 
     constructor(
         private translateService: TranslateService,
@@ -40,6 +36,10 @@ export class I18nService {
             this.storedLang = { code };
         }
         this.changeLang(this.storedLang);
+    }
+
+    get currentLang(): string {
+        return this.translateService.currentLang;
     }
 
     changeLang({ code, direction }: { code: string; direction?: string }) {

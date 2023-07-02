@@ -20,16 +20,16 @@ import { LoadingIndicatorHttpInterceptor } from '@lima/shared/interceptors';
 import { ApolloModule } from 'apollo-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { NavLinksComponent } from './components/nav-links/nav-links.component';
-import { BASE_PATH } from 'src/api/openapi';
 import { GraphqlService, httpLoaderFactory } from '@lima/shared/services';
+import { LoginComponent } from '@lima/shared/dialogs';
+import { NavLinksComponent } from '@lima/shared/components';
+import { BASE_PATH } from '@api/openapi';
 
 export function graphqlFactory(provider: GraphqlService) {
     return () => provider.init();

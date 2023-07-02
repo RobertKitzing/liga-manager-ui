@@ -27,20 +27,20 @@ export class ManageUsersComponent {
                                   y?.email
                                       .toLocaleLowerCase()
                                       .includes(
-                                          searchTerm.toLocaleLowerCase()
+                                          searchTerm.toLocaleLowerCase(),
                                       ) ||
                                   y?.first_name
                                       .toLocaleLowerCase()
                                       .includes(
-                                          searchTerm.toLocaleLowerCase()
+                                          searchTerm.toLocaleLowerCase(),
                                       ) ||
                                   y?.last_name
                                       .toLocaleLowerCase()
-                                      .includes(searchTerm.toLocaleLowerCase())
-                          )
-                      )
-                  )
-        )
+                                      .includes(searchTerm.toLocaleLowerCase()),
+                          ),
+                      ),
+                  ),
+        ),
     );
 
     constructor(private userService: UserService, private dialog: MatDialog) {}

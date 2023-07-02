@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditMatchKickoffComponent } from './edit-match-kickoff.component';
+import { CancelMatchComponent } from './cancel-match.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
+import { EditMatchBaseModule } from '../edit-match-base';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomDateModule } from '@lima/shared/pipes';
-import { CustomDateAdapter } from '@lima/shared/utils';
 
 @NgModule({
-    declarations: [EditMatchKickoffComponent],
+    declarations: [CancelMatchComponent],
     imports: [
         CommonModule,
         MatDialogModule,
@@ -25,16 +23,8 @@ import { CustomDateAdapter } from '@lima/shared/utils';
         MatButtonModule,
         EditMatchBaseModule,
         MatIconModule,
-        CustomDateModule,
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-    ],
-    providers: [
-        {
-            provide: DateAdapter,
-            useClass: CustomDateAdapter,
-        },
+        MatAutocompleteModule,
+        MatIconModule,
     ],
 })
-export class EditMatchKickoffModule {}
+export class CancelMatchModule {}

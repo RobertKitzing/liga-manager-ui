@@ -18,15 +18,18 @@ const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
 export class SeasonService {
     @LocalStorage(SELECTED_PROGRESS_SEASON_KEY)
     progressSeason!: AllSeasonsFragment;
+
     @LocalStorage(SELECTED_HISTORY_SEASON_KEY)
     historySeason!: AllSeasonsFragment;
 
     progressSeason$ = new BehaviorSubject<AllSeasonsFragment>(
         this.progressSeason,
     );
+
     historySeason$ = new BehaviorSubject<AllSeasonsFragment>(
         this.historySeason,
     );
+
     manageSeason$ = new Subject<AllSeasonsFragment>();
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(

@@ -18,6 +18,9 @@
         "plugin:@softarc/sheriff/default"
       ],
       "rules": {
+        "lines-between-class-members": ["error", "always"],
+        "@typescript-eslint/explicit-member-accessibility": ["error", { "accessibility": "no-public" }],
+        "@typescript-eslint/member-ordering": "error",
         "curly": "error",
         "comma-dangle": ["error", "always-multiline"],
         "no-unused-vars": "off",

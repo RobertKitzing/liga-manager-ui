@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { AuthenticationService, LoginContext, NotificationService } from '@lima/shared/services';
+import {
+    AuthenticationService,
+    LoginContext,
+    NotificationService,
+} from '@lima/shared/services';
 
 @Component({
     selector: 'lima-login',
     templateUrl: './login.component.html',
     styleUrls: [],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
     loginForm = new FormGroup({
         username: new FormControl('', {
             nonNullable: true,
@@ -25,17 +29,15 @@ export class LoginComponent implements OnInit {
     constructor(
         private authenticationService: AuthenticationService,
         public dialogRef: MatDialogRef<LoginComponent>,
-        private notify: NotificationService
+        private notify: NotificationService,
     ) {}
-
-    ngOnInit() {}
 
     async login() {
         try {
             await firstValueFrom(
                 this.authenticationService.login(
-                    this.loginForm.value as LoginContext
-                )
+                    this.loginForm.value as LoginContext,
+                ),
             );
             this.dialogRef.close();
         } catch (error) {
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
             try {
                 await this.authenticationService.sendPasswordMail(email);
                 this.notify.showSuccessNotification(
-                    marker('SEND_NEW_PASSWORD_MAIL_SUCCESS')
+                    marker('SEND_NEW_PASSWORD_MAIL_SUCCESS'),
                 );
                 this.dialogRef.close();
             } catch (error) {
