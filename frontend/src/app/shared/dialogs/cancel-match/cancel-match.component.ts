@@ -12,6 +12,7 @@ import { Match, MatchDay } from 'src/api/graphql';
     styleUrls: [],
 })
 export class CancelMatchComponent {
+
     cancelMatchReason = new FormControl('', [
         Validators.required,
         Validators.maxLength(255),
@@ -49,4 +50,5 @@ export class CancelMatchComponent {
             // throw error
         }
     }
+
 }

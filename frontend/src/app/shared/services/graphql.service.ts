@@ -15,6 +15,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker';
     providedIn: 'root',
 })
 export class GraphqlService {
+
     constructor(
         private apollo: Apollo,
         private httpLink: HttpLink,
@@ -121,4 +122,5 @@ export class GraphqlService {
             await firstValueFrom(this.authService.loadUser());
         }
     }
+
 }

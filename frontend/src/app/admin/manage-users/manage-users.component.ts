@@ -11,6 +11,7 @@ import { UserService } from '@lima/shared/services';
     templateUrl: './manage-users.component.html',
 })
 export class ManageUsersComponent {
+
     displayedColumns: string[] = ['email', 'action'];
 
     searchUser = new FormControl();
@@ -59,4 +60,5 @@ export class ManageUsersComponent {
     async sendPasswordMail(email: string) {
         await firstValueFrom(this.userService.sendPasswordMail(email));
     }
+
 }

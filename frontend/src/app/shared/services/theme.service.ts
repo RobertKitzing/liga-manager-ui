@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 export class ThemeService {
+
     @LocalStorage('THEME')
     private currentTheme?: string;
 
@@ -56,4 +57,5 @@ export class ThemeService {
         this.document.body.classList[mode]('dark');
         this.darkMode = dark;
     }
+
 }

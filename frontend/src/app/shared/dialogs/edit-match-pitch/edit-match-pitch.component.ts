@@ -16,6 +16,7 @@ import { Match, MatchDay, Pitch } from 'src/api/graphql';
     styleUrls: [],
 })
 export class EditMatchPitchComponent {
+
     newMatchPitch = new FormControl();
 
     filteredPitches = this.newMatchPitch.valueChanges.pipe(
@@ -61,4 +62,5 @@ export class EditMatchPitchComponent {
     displayPitch(pitch?: Pitch): string {
         return pitch ? pitch.label : '';
     }
+
 }

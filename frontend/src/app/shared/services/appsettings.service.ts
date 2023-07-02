@@ -6,6 +6,7 @@ import { AppsettingsModel, AppSettingsService } from 'src/api/openapi';
     providedIn: 'root',
 })
 export class AppsettingsService {
+
     appsettings?: AppsettingsModel;
 
     constructor(private appSettingsService: AppSettingsService) {}
@@ -17,4 +18,5 @@ export class AppsettingsService {
             }),
         );
     }
+
 }

@@ -15,6 +15,7 @@ import {
     styleUrls: [],
 })
 export class LoginComponent {
+
     loginForm = new FormGroup({
         username: new FormControl('', {
             nonNullable: true,
@@ -63,4 +64,5 @@ export class LoginComponent {
             this.loginForm.controls.password.disable();
         }
     }
+
 }

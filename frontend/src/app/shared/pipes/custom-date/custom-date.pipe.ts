@@ -7,6 +7,7 @@ import { I18nService } from '@lima/shared/services';
     pure: false,
 })
 export class CustomDatePipe implements PipeTransform {
+
     constructor(private date: DatePipe, private i18nService: I18nService) {}
 
     transform(
@@ -20,4 +21,5 @@ export class CustomDatePipe implements PipeTransform {
             this.i18nService.currentLang,
         );
     }
+
 }

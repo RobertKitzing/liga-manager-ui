@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class TeamAdminGuard {
+
     constructor(private authenticationService: AuthenticationService) {}
 
     get allowed() {
@@ -28,4 +29,5 @@ export class TeamAdminGuard {
         | UrlTree {
         return this.allowed;
     }
+
 }

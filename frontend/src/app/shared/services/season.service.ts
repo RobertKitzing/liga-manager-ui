@@ -16,6 +16,7 @@ const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
     providedIn: 'root',
 })
 export class SeasonService {
+
     @LocalStorage(SELECTED_PROGRESS_SEASON_KEY)
     progressSeason!: AllSeasonsFragment;
 
@@ -78,4 +79,5 @@ export class SeasonService {
     seasonCompare(c1: Season, c2: Season) {
         return c1 && c2 && c1.id === c2.id;
     }
+
 }

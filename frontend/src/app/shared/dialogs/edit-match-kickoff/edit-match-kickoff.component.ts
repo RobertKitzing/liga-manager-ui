@@ -12,6 +12,7 @@ import { Match, MatchDay } from 'src/api/graphql';
     styleUrls: [],
 })
 export class EditMatchKickoffComponent {
+
     newKickoff = new FormGroup({
         time: new FormControl<string>('', [Validators.required]),
         date: new FormControl<Date | null>(null, [Validators.required]),
@@ -46,4 +47,5 @@ export class EditMatchKickoffComponent {
             // throw error
         }
     }
+
 }

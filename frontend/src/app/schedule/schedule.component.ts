@@ -18,6 +18,7 @@ import {
     styles: [],
 })
 export class ScheduleComponent implements OnInit {
+
     seasonMode: SeasonChooserModes = 'progressSeason';
 
     seasonTrigger$ = new BehaviorSubject<null>(null);
@@ -102,4 +103,5 @@ export class ScheduleComponent implements OnInit {
             data: { match, matchDay },
         });
     }
+
 }

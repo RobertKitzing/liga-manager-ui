@@ -14,6 +14,7 @@ import { TeamService, UserService } from '@lima/shared/services';
     styleUrls: ['./edit-user-dialog.component.scss'],
 })
 export class EditUserDialogComponent implements OnInit {
+
     UserRole = UserRole;
 
     searchTeam = new FormControl();
@@ -90,4 +91,5 @@ export class EditUserDialogComponent implements OnInit {
             this.dialogRef.close();
         }
     }
+
 }

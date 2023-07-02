@@ -14,6 +14,7 @@ import { APP_ROUTES } from 'src/app';
     providedIn: 'root',
 })
 export class UserService {
+
     allUsers$ = this.allUsersGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allUsers),
         map((teams) => {
@@ -64,4 +65,5 @@ export class UserService {
             target_path: APP_ROUTES.NEW_PASSWORD_ROUTE,
         });
     }
+
 }

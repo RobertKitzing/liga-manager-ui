@@ -12,6 +12,7 @@ import { Match, MatchDay } from 'src/api/graphql';
     styleUrls: [],
 })
 export class EditMatchResultComponent {
+
     resultFormGroup = new FormGroup({
         home_score: new FormControl(this.data.match.home_score, [
             Validators.required,
@@ -51,4 +52,5 @@ export class EditMatchResultComponent {
             // throw error
         }
     }
+
 }

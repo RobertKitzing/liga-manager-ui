@@ -9,6 +9,7 @@ type Enums = SeasonState | UserRole;
     name: 'enumTranslate',
 })
 export class EnumTranslatePipe implements PipeTransform {
+
     constructor(private translatePipe: TranslatePipe) {}
 
     transform(value: Enums): unknown {
@@ -31,4 +32,5 @@ export class EnumTranslatePipe implements PipeTransform {
                 throw new Error(`Unupported Enum Value ${value}`);
         }
     }
+
 }

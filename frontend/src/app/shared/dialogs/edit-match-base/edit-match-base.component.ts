@@ -7,7 +7,9 @@ import { Match, MatchDay } from 'src/api/graphql';
     styleUrls: [],
 })
 export class EditMatchBaseComponent {
+
     @Input() data!: { match: Match; matchDay: MatchDay };
 
     @Input() actionsTemplate!: TemplateRef<unknown>;
+
 }

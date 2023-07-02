@@ -6,6 +6,7 @@ import { RankingByIdGQL, RankingByIdQueryVariables } from 'src/api/graphql';
     providedIn: 'root',
 })
 export class RankingService {
+
     constructor(private rankingGQL: RankingByIdGQL) {}
 
     getRanking$(params: RankingByIdQueryVariables) {
@@ -13,4 +14,5 @@ export class RankingService {
             .watch(params)
             .valueChanges.pipe(map(({ data }) => data?.season?.ranking));
     }
+
 }

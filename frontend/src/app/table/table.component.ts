@@ -28,6 +28,7 @@ import { RankingService, SeasonService } from '@lima/shared/services';
     ],
 })
 export class TableComponent implements OnInit {
+
     seasonMode: SeasonChooserModes = 'progressSeason';
 
     displayedColumns: string[] = [
@@ -71,4 +72,5 @@ export class TableComponent implements OnInit {
             this.seasonMode = 'historySeason';
         }
     }
+
 }

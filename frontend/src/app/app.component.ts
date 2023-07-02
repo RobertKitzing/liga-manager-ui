@@ -18,6 +18,7 @@ import { LoginComponent } from './shared/dialogs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
+
     darkModeControl = new FormControl(this.themeService.darkMode$.getValue(), {
         nonNullable: true,
     });
@@ -73,4 +74,5 @@ export class AppComponent implements OnInit {
     onSwipeRight() {
         this.location.forward();
     }
+
 }

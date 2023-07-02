@@ -9,6 +9,7 @@ import { Team } from 'src/api/graphql';
     templateUrl: './manage-teams.component.html',
 })
 export class ManageTeamsComponent {
+
     displayedColumns: string[] = ['team', 'action'];
 
     newTeam = new FormControl('', [Validators.required]);
@@ -60,4 +61,5 @@ export class ManageTeamsComponent {
         );
         this.editTeamId = '';
     }
+
 }

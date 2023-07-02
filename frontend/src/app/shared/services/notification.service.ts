@@ -6,6 +6,7 @@ import { SnackBarData, SnackbarComponent } from '@lima/shared/components';
     providedIn: 'root',
 })
 export class NotificationService {
+
     defaultDuration = 6000;
 
     constructor(private snackBar: MatSnackBar) {}
@@ -45,4 +46,5 @@ export class NotificationService {
             ],
         });
     }
+
 }

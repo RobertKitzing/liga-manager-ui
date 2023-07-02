@@ -18,5 +18,7 @@ export interface SnackBarData {
     standalone: true,
 })
 export class SnackbarComponent {
+
     constructor(@Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData) {}
+
 }

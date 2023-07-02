@@ -17,6 +17,7 @@ import { SeasonService } from './season.service';
     providedIn: 'root',
 })
 export class MatchService {
+
     constructor(
         private submitResultGQL: SubmitResultGQL,
         private seasonByIdGQL: SeasonByIdGQL,
@@ -82,4 +83,5 @@ export class MatchService {
             ],
         });
     }
+
 }

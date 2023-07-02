@@ -17,6 +17,7 @@ import { sortArrayBy } from '../utils';
     providedIn: 'root',
 })
 export class TeamService {
+
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
         map((teams) => sortArrayBy(teams as Team[], 'name')),
@@ -69,4 +70,5 @@ export class TeamService {
             ],
         });
     }
+
 }

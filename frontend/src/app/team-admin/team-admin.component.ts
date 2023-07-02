@@ -8,6 +8,7 @@ import { AuthenticationService, TeamService } from '@lima/shared/services';
     styles: [],
 })
 export class TeamAdminComponent {
+
     teams = this.authenticationService.user?.teams;
 
     constructor(
@@ -40,4 +41,5 @@ export class TeamAdminComponent {
             }
         }
     }
+
 }

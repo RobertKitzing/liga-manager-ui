@@ -14,6 +14,7 @@ export type SeasonChooserModes =
     templateUrl: './season-chooser.component.html',
 })
 export class SeasonChooserComponent implements OnInit {
+
     @Input() mode: SeasonChooserModes = 'progressSeason';
 
     SeasonState = SeasonState;
@@ -46,4 +47,5 @@ export class SeasonChooserComponent implements OnInit {
     currentSeasonChanged(event: MatSelectChange) {
         this.seasonService[`${this.mode}$`].next(event.value);
     }
+
 }
