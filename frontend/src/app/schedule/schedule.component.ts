@@ -64,13 +64,15 @@ export class ScheduleComponent implements OnInit {
         );
     }
 
-    filterMatchDays(matchDays: MatchDay[]): MatchDay[] {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterMatchDays(matchDays: any[]): any[] {
         return this.selectedMatchDayId !== '0'
             ? matchDays.filter((x) => x.id === this.selectedMatchDayId)
             : matchDays;
     }
 
-    filterMatches(matches: Match[]): Match[] {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterMatches(matches: any[]): any[] {
         return this.selectedTeamId !== '0'
             ? matches.filter(
                   (x) =>

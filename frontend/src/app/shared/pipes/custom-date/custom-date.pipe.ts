@@ -11,7 +11,7 @@ export class CustomDatePipe implements PipeTransform {
     constructor(private date: DatePipe, private i18nService: I18nService) {}
 
     transform(
-        value: string | number | Date,
+        value: string | number | Date | undefined,
         format = 'shortDate',
     ): string | null {
         return this.date.transform(

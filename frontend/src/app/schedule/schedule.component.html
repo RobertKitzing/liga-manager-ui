@@ -36,7 +36,7 @@
             </div>
             <ng-container *ngFor="let matchDay of filterMatchDays(season.match_days!)">
                 <h3 class="text-center bg-theme text-theme-cdefault p-4" *ngIf="selectedMatchDayId === '0'">
-                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date| customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date| customDate }})
+                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date | customDate }})
                 </h3>
                 <div class="flex justify-center">
                     <div class="w-full">

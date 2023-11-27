@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { APP_ROUTES } from '@lima/app-routes';
 import { map } from 'rxjs';
 import {
     AllUsersGQL,
@@ -8,7 +9,6 @@ import {
     UpdateUserGQL,
     UpdateUserMutationVariables,
 } from 'src/api/graphql';
-import { APP_ROUTES } from 'src/app';
 
 @Injectable({
     providedIn: 'root',

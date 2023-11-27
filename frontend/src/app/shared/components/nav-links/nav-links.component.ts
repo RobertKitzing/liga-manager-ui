@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { APP_ROUTES } from 'src/app';
-import { AdminGuard } from 'src/app/admin/admin.guard';
-import { TeamAdminGuard } from 'src/app/team-admin/team-admin.guard';
+import { AdminGuard } from '@lima/admin';
+import { APP_ROUTES } from '@lima/app-routes';
+import { TeamAdminGuard } from '@lima/team-admin';
 
 @Component({
     selector: 'lima-nav-links',
