@@ -21,7 +21,6 @@ services:
     working_dir: /liga-manager-ui
     environment:
       LISTEN_PORT: 3098
-      WEBLATE_API_KEY: "wlu_hhPsSFnK8OpeaBfipWaopZnsz2rOwJtaNWRq"
       GOOGLE_MAPS_API_KEY: "AIzaSyCgjoPzEQH7Hhnr6GFtkwm05xoDOQJpjBo"
     tty: true
     command: npm run start:dev
@@ -59,30 +58,30 @@ services:
     env_file:
       - ./env/api.env 
 
-  postgres:
-    image: postgres
-    environment:
-      POSTGRES_USER: weblate
-      POSTGRES_PASSWORD: weblate
-    volumes: 
-      - ./data/postgres:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
+  # postgres:
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_USER: weblate
+  #     POSTGRES_PASSWORD: weblate
+  #   volumes: 
+  #     - ./data/postgres:/var/lib/postgresql/data
+  #   ports:
+  #     - '5432:5432'
   
-  weblate:
-    image: weblate/weblate:latest
-    ports:
-      - 8080:8080
-    environment:
-      WEBLATE_SITE_DOMAIN: weblate.example.com
-      WEBLATE_ADMIN_PASSWORD: 123456
-      REDIS_HOST: redis
-      POSTGRES_PASSWORD: weblate
-      POSTGRES_USER: weblate
-      POSTGRES_DATABASE: weblate
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      WEBLATE_API_RATELIMIT_ANON: '9999999/day'
+  # weblate:
+  #   image: weblate/weblate:latest
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     WEBLATE_SITE_DOMAIN: weblate.example.com
+  #     WEBLATE_ADMIN_PASSWORD: 123456
+  #     REDIS_HOST: redis
+  #     POSTGRES_PASSWORD: weblate
+  #     POSTGRES_USER: weblate
+  #     POSTGRES_DATABASE: weblate
+  #     POSTGRES_HOST: postgres
+  #     POSTGRES_PORT: 5432
+  #     WEBLATE_API_RATELIMIT_ANON: '9999999/day'
 
 volumes:
   api-public:
