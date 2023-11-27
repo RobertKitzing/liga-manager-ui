@@ -37,7 +37,7 @@ services:
       - api
   
   api:
-    image: mklocke/liga-manager-api
+    image: mklocke/liga-manager-api:1.12.10
     user: www-data
     volumes:
       - api-public:/var/www/api/public
@@ -83,14 +83,6 @@ services:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       WEBLATE_API_RATELIMIT_ANON: '9999999/day'
-
-  # weblate-wlc:
-  #   image: weblate/wlc
-  #   volumes:
-  #     - './frontend/i18n/template.json:/templates/liga-manager.json'
-  #     - './weblate-wlc.config:/home/weblate/.config/weblate'
-  #   environment:
-  #     APIKEY: wlu_FiyuaBlfWJhWImvBYPN6o434MzpEGd2RJRkW
 
 volumes:
   api-public:
