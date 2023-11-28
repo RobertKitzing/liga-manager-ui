@@ -1,0 +1,10 @@
+<ng-container *ngIf="teams">
+    <mat-toolbar color="primary" class="border-t-2 dark:border-toolbardark">
+        <div class="flex justify-center w-full h-full">
+            <ng-container *ngFor="let team of teams">
+                <a class="flex h-full items-center p-2" routerLink="{{team?.id}}" routerLinkActive="bg-theme-900 text-theme-c900">{{ team?.name }}</a>
+            </ng-container>
+        </div>
+    </mat-toolbar>
+</ng-container>
+<router-outlet></router-outlet>

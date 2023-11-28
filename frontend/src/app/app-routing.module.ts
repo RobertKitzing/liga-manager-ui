@@ -25,9 +25,9 @@ const routes: Routes = [
             import('./tournament').then((m) => m.TournamentModule),
     },
     {
-        path: APP_ROUTES.TEAM_ADMIN,
+        path: APP_ROUTES.TEAMS_MANAGEMENT,
         loadChildren: () =>
-            import('./team-admin').then((m) => m.TeamAdminModule),
+            import('./teams-management').then((m) => m.TeamsManagementModule),
     },
     {
         path: APP_ROUTES.ADMIN,

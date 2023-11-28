@@ -5,7 +5,7 @@ export enum APP_ROUTES {
     CONTACTS = 'contacts',
     SCHEDULE = 'schedule',
     TOURNAMENT = 'tournament',
-    TEAM_ADMIN = 'team_admin',
+    TEAMS_MANAGEMENT = 'teams_management',
     ADMIN = 'admin',
     HISTORY = 'history',
 }

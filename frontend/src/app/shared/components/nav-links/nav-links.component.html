@@ -3,11 +3,11 @@
     <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.SCHEDULE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
     <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TOURNAMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
     <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CALENDAR }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
-    <ng-container *ngIf="teamAdminGuard.allowed || adminGuard.allowed">
+    <ng-container *ngIf="teamsManagementGuard.allowed || adminGuard.allowed">
         <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CONTACTS }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
     </ng-container>
-    <ng-container *ngIf="teamAdminGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TEAM_ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAM_ADMIN</a>
+    <ng-container *ngIf="teamsManagementGuard.allowed">
+        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TEAMS_MANAGEMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAMS_MANAGEMENT</a>
     </ng-container>
     <ng-container *ngIf="adminGuard.allowed">
         <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>

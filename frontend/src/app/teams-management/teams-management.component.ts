@@ -3,11 +3,11 @@ import { firstValueFrom } from 'rxjs';
 import { AuthenticationService, TeamService } from '@lima/shared/services';
 
 @Component({
-    selector: 'lima-team-admin',
-    templateUrl: './team-admin.component.html',
+    selector: 'lima-teams-managment',
+    templateUrl: './teams-management.component.html',
     styles: [],
 })
-export class TeamAdminComponent {
+export class TeamsManagementComponent {
 
     teams = this.authenticationService.user?.teams;
 

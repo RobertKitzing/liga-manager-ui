@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminGuard } from '@lima/admin';
 import { APP_ROUTES } from '@lima/app-routes';
-import { TeamAdminGuard } from '@lima/team-admin';
+import { TeamsManagementGuard } from '@lima/teams-management';
 
 @Component({
     selector: 'lima-nav-links',
@@ -14,7 +14,7 @@ export class NavLinksComponent {
 
     constructor(
         public adminGuard: AdminGuard,
-        public teamAdminGuard: TeamAdminGuard,
+        public teamsManagementGuard: TeamsManagementGuard,
     ) {}
 
 }

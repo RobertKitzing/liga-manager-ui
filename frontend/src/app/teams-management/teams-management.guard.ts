@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root',
 })
-export class TeamAdminGuard {
+export class TeamsManagementGuard {
 
     constructor(private authenticationService: AuthenticationService) {}
 
