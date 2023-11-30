@@ -1,4 +1,8 @@
 services:
+
+  prod-ui:
+    build: .
+
   dev-ui:
     container_name: liga-manager-ui
     image: node:lts-alpine
