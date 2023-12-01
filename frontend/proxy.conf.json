@@ -7,7 +7,7 @@
     "/appsettings.json": {
         "target": "http://nginx:80"
     },
-    "/team-logo/*": {
-        "target": "http://nginx:80/*"
+    "/team-logos/*": {
+        "target": "http://nginx:80"
     }
 }

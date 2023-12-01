@@ -20,4 +20,4 @@ RUN apk add certbot certbot-nginx --no-cache
 
 COPY --chown=node:node --from=ui-builder /ui/dist/liga-manager-ui /ui
 COPY ./nginx.ui.conf /nginx-ui/nginx.ui.conf
-COPY ./team-logos /team-logos
+COPY ./assets/default_team_logo.webp /assets/default_team_logo.webp

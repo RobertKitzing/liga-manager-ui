@@ -1,3 +1,6 @@
+volumes:
+  team-logos:
+
 services:
 
   nginx:
@@ -7,6 +10,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - team-logos:/assets/team-logos
     depends_on:
       - api
 
@@ -27,6 +31,8 @@ services:
     user: www-data
     env_file:
       - ./env/api.env 
+    volumes:
+      - team-logos:/assets/team-logos
     depends_on:
       - mariadb
       - redis
