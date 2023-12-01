@@ -15,7 +15,7 @@ RUN npm run build:web
 ## PRODUCTION
 ####################
 
-FROM nginx:stable-alpine As production
+FROM nginx:stable-alpine-slim As production
 
 COPY --chown=node:node --from=ui-builder /ui/dist/liga-manager-ui /ui
 COPY ./frontend/nginx.ui.conf /nginx-ui/nginx.ui.conf
