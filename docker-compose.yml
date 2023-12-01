@@ -1,6 +1,7 @@
 services:
 
   nginx:
+    #image: robertkitzing/liga-manager-ui:next
     build: .
     ports:
       - "80:80"

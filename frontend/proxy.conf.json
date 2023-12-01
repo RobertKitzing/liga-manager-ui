@@ -5,9 +5,9 @@
         "changeOrigin": true
     },
     "/appsettings.json": {
-        "target": "http://web:3098"
+        "target": "http://nginx:80"
     },
     "/team-logo/*": {
-        "target": "http://web:3098"
+        "target": "http://nginx:80/*"
     }
 }
