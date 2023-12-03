@@ -22,10 +22,6 @@ export class TeamLogosComponent {
   ) {
   }
 
-  async commitPreview(teamId: string) {
-    await firstValueFrom(this.teamService.commitPreview(teamId));
-  }
-
   async onFileSelected(event: Event, teamId: string) {
     const element = event.currentTarget as HTMLInputElement;
     if (element.files) {

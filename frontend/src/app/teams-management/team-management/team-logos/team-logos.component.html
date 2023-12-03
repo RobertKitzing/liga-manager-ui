@@ -2,11 +2,7 @@
     <div class="grid grid-cols-3 gap-4">
         <div class="flex flex-col justify-center">
             <span translate>TEAM_LOGO.CURRENT</span>
-            <img class="w-[128px] h-[128px]" src="team-logo/{{teamId}}">
-        </div>
-        <div class="flex flex-col justify-center">
-            <span translate>TEAM_LOGO.PREVIEW</span>
-            <img class="w-[128px] h-[128px]" src="team-logo/{{teamId}}-preview">
+            <img class="w-[128px] h-[128px]" src="logos/{{teamId}}.webp">
         </div>
         <div>
             <input type="file" (change)="onFileSelected($event, teamId)">

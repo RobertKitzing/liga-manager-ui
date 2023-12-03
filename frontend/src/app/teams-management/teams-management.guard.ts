@@ -11,7 +11,7 @@ export class TeamsManagementGuard {
     constructor(private authenticationService: AuthenticationService) {}
 
     get allowed() {
-        return this.authenticationService.isTeamAdmin;
+        return this.authenticationService.isTeamAdmin || this.authenticationService.isAdmin;
     }
 
     canActivate():

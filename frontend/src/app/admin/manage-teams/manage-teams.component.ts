@@ -29,7 +29,7 @@ export class ManageTeamsComponent {
                 ? this.teamService.allTeams$
                 : this.teamService.allTeams$.pipe(
                       map((x) =>
-                          x.filter((y) =>
+                          x?.filter((y) =>
                               y?.name
                                   .toLocaleLowerCase()
                                   .includes(searchTerm.toLocaleLowerCase()),

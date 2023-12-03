@@ -29,7 +29,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { GraphqlService, httpLoaderFactory } from '@lima/shared/services';
 import { LoginComponent } from '@lima/shared/dialogs';
 import { NavLinksComponent } from '@lima/shared/components';
-import { BASE_PATH } from '@api/openapi';
 
 export function graphqlFactory(provider: GraphqlService) {
     return () => provider.init();
@@ -77,10 +76,6 @@ export function graphqlFactory(provider: GraphqlService) {
             provide: HTTP_INTERCEPTORS,
             useClass: LoadingIndicatorHttpInterceptor,
             multi: true,
-        },
-        {
-            provide: BASE_PATH,
-            useValue: '',
         },
     ],
     bootstrap: [AppComponent],

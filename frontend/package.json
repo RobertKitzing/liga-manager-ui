@@ -10,7 +10,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest --coverage",
     "graphql-gen:api": "graphql-codegen --config codegenAPI.yml",
-    "openapi-gen:api": "rm -R src/api/openapi && openapi-generator-cli generate -i http://localhost:3098/api-json -g typescript-angular -o src/api/openapi",
     "i18n:extract": "ngx-translate-extract --input ./src --output src/i18n/en-GB.json --clean --sort --format json",
     "i18n:languages": "node get-languages.mjs",
     "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",

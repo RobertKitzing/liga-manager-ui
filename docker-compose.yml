@@ -28,11 +28,10 @@ services:
 
   api:
     image: mklocke/liga-manager-api
-    user: www-data
     env_file:
       - ./env/api.env 
     volumes:
-      - team-logos:/assets/team-logos
+      - team-logos:/var/www/logos
     depends_on:
       - mariadb
       - redis

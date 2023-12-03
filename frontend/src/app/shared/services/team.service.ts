@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TeamLogoService } from '@api/openapi';
-import { map } from 'rxjs';
+import { map, of } from 'rxjs';
 import {
     AllTeamsGQL,
     CreateTeamGQL,
@@ -12,6 +11,7 @@ import {
 } from 'src/api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '../utils';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -20,19 +20,15 @@ export class TeamService {
 
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
-        map((teams) => sortArrayBy(teams as Team[], 'name')),
+        // map((teams) => sortArrayBy(teams as Team[], 'name')),
     );
-
-    uploadTeamLogo = this.teamLogoService.uploadTeamLogo;
-
-    commitPreview = this.teamLogoService.commitPreview;
 
     constructor(
         private allTeamsGQL: AllTeamsGQL,
         private createTeamQL: CreateTeamGQL,
         private deleteTeamGQL: DeleteTeamGQL,
         private renameTeamGQL: RenameTeamGQL,
-        private teamLogoService: TeamLogoService,
+        private httpClient: HttpClient,
     ) {}
 
     createTeam(name: string) {
@@ -69,6 +65,12 @@ export class TeamService {
                 },
             ],
         });
+    }
+
+    uploadTeamLogo(teamId: string, file: File) {
+        const fd = new FormData();
+        fd.append('file', file)
+        return this.httpClient.post('/api/logos', fd);
     }
 
 }

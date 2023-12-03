@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { AuthenticationService, TeamService } from '@lima/shared/services';
 
 @Component({
@@ -9,16 +9,15 @@ import { AuthenticationService, TeamService } from '@lima/shared/services';
 })
 export class TeamsManagementComponent {
 
-    teams = this.authenticationService.user?.teams;
+    teams$ = 
+        this.authenticationService.isAdmin ?
+        this.teamService.allTeams$ :
+        of(this.authenticationService.user?.teams);
 
     constructor(
         private authenticationService: AuthenticationService,
         private teamService: TeamService,
     ) {}
-
-    async commitPreview(teamId: string) {
-        await firstValueFrom(this.teamService.commitPreview(teamId));
-    }
 
     async onFileSelected(event: Event, teamId: string) {
         const element = event.currentTarget as HTMLInputElement;

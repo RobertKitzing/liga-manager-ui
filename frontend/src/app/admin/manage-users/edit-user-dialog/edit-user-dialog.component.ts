@@ -26,7 +26,7 @@ export class EditUserDialogComponent implements OnInit {
                 ? this.teamService.allTeams$
                 : this.teamService.allTeams$.pipe(
                       map((t) =>
-                          t.filter((x) =>
+                          t?.filter((x) =>
                               x?.name
                                   .toLocaleLowerCase()
                                   .includes(searchTerm.toLocaleLowerCase()),
