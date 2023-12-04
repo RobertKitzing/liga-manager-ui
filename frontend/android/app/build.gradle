@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "de.test.wildeligamanager.bremen"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "de.test.wildeligamanager.bremen"
