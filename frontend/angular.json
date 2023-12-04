@@ -121,10 +121,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "liga-manager-ui:build:production"
+              "buildTarget": "liga-manager-ui:build:production"
             },
             "development": {
-              "browserTarget": "liga-manager-ui:build:development"
+              "buildTarget": "liga-manager-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
