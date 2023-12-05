@@ -1,22 +1,18 @@
 <mat-toolbar color="primary">
   <div class="flex h-full w-full items-center">
     <img class="p-1 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.webp">
-
     <div class="grow flex justify-center visible lg:hidden">
       <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
     </div>
-
     <div class="hidden h-full lg:flex lg:visible grow">
       <lima-nav-links></lima-nav-links>
     </div>
-    
     <div class="hidden lg:flex lg:visible">
-      <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
+      @if (!authService.isAuthenticated) {
         <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
           <span translate>BUTTON.LOGIN</span>
         </button>
-      </ng-container>
-      <ng-template #authenticated>
+      } @else {
         <button mat-stroked-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
           <div class="flex justify-evenly gap-2">
             <mat-icon class="">person</mat-icon>
@@ -24,9 +20,8 @@
             <mat-icon>arrow_drop_down</mat-icon>
           </div>
         </button>
-      </ng-template>
+      }
     </div>
-  
     <button mat-icon-button (click)="drawer.toggle()" class="ml-2">
       <mat-icon>menu</mat-icon>
     </button>
@@ -35,22 +30,20 @@
 <mat-drawer-container class="h-[calc(100vh_-_64px)]" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
     <div class="visible lg:hidden flex justify-center m-2">
-      <ng-container *ngIf="!authService.isAuthenticated; else authenticated">
+      @if (!authService.isAuthenticated) {
         <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
           <span translate>BUTTON.LOGIN</span>
         </button>
-      </ng-container>
-      <ng-template #authenticated>
+      } @else {
         <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
           {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
           <mat-icon>person</mat-icon>
         </button>
-      </ng-template>
+      }
     </div>
     <div class="visible lg:hidden border-t-2 dark:border-toolbardark" (click)="drawer.close()">
       <lima-nav-links></lima-nav-links>
     </div>
-    
     <div class="p-2 flex justify-center">
       <mat-slide-toggle color="primary" [formControl]="darkModeControl">
         <span translate>DARK_MODE</span>
@@ -74,28 +67,31 @@
     <mat-divider></mat-divider>
   </mat-drawer>
   <mat-drawer-content>
-    <div class="h-1" *ngIf="(loadingIndicatorService.loading$ | async) === true">
-      <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
-    </div>
+    @if ((loadingIndicatorService.loading$ | async) === true) {
+      <div class="h-1">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+      </div>
+    }
     <div class="h-full overflow-auto" (swipeleft)="onSwipeLeft()" (swiperight)="onSwipeRight()">
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-
 <mat-menu #userMenu="matMenu">
   <mat-list>
     <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
     <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
   </mat-list>
 </mat-menu>
-
 <mat-menu #languageMenu="matMenu">
-  <button mat-menu-item *ngFor="let language of i18Service.availableLang$ | async" (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language.code}">
-    {{ language.nativeName }} ({{ language.name }})
-  </button>
+  @for (language of i18Service.availableLang$ | async; track language) {
+    <button mat-menu-item (click)="changeLang(language)" [ngClass]="{'bg-theme text-theme-cdefault': i18Service.currentLang === language.code}">
+      {{ language.nativeName }} ({{ language.name }})
+    </button>
+  }
 </mat-menu>
-
 <mat-menu #themes="matMenu">
-  <button mat-menu-item *ngFor="let theme of themeService.themes" (click)="changeTheme(theme)" [ngClass]="{'bg-theme': theme === (themeService.currentTheme$ | async)}">{{theme}}</button>
+  @for (theme of themeService.themes; track theme) {
+    <button mat-menu-item (click)="changeTheme(theme)" [ngClass]="{'bg-theme': theme === (themeService.currentTheme$ | async)}">{{theme}}</button>
+  }
 </mat-menu>

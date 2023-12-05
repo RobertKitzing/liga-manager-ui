@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ export interface SnackBarData {
     selector: 'lima-snackbar',
     templateUrl: './snackbar.component.html',
     styleUrls: [],
-    imports: [CommonModule, TranslateModule, MatDividerModule],
+    imports: [TranslateModule, MatDividerModule],
     standalone: true,
 })
 export class SnackbarComponent {

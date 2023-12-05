@@ -1,36 +1,39 @@
 <lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
-    <div class="grid grid-cols-1 gap-4" *ngIf="data.match as match">
-        <div translate class="text-center">
-            OLD_KICKOFF
+  @if (data.match; as match) {
+    <div class="grid grid-cols-1 gap-4">
+      <div translate class="text-center">
+        OLD_KICKOFF
+      </div>
+      @if (match.kickoff) {
+        <div class="flex justify-evenly">
+          <mat-icon>event</mat-icon>
+          <span class="text-center ml-2">{{ match.kickoff | customDate:'short' }}</span>
         </div>
-        <div class="flex justify-evenly" *ngIf="match.kickoff">
-            <mat-icon>event</mat-icon>
-            <span class="text-center ml-2">{{ match.kickoff | customDate:'short' }}</span>
-        </div>
-        <div translate class="text-center">
-            NEW_KICKOFF
-        </div>
-        <div>
-            <mat-form-field [formGroup]="newKickoff" class="w-full">
-                <mat-label translate>NEW_KICKOFF_TIME</mat-label>
-                <input class="text-center" matInput type="time" formControlName="time"  />
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field [formGroup]="newKickoff">
-                <mat-label translate>NEW_KICKOFF_DATE</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="date">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker></mat-datepicker>
-              </mat-form-field>
-              
-        </div>
+      }
+      <div translate class="text-center">
+        NEW_KICKOFF
+      </div>
+      <div>
+        <mat-form-field [formGroup]="newKickoff" class="w-full">
+          <mat-label translate>NEW_KICKOFF_TIME</mat-label>
+          <input class="text-center" matInput type="time" formControlName="time"  />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field [formGroup]="newKickoff">
+          <mat-label translate>NEW_KICKOFF_DATE</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
     </div>
+  }
 </lima-edit-match-base>
 <ng-template #actionsTemplate>
-    <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
-    <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" [disabled]="!newKickoff.valid">
-        <mat-icon>save</mat-icon>
-        {{ 'BUTTON.SAVE' | translate}}
-    </button>
+  <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+  <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" [disabled]="!newKickoff.valid">
+    <mat-icon>save</mat-icon>
+    {{ 'BUTTON.SAVE' | translate}}
+  </button>
 </ng-template>

@@ -3,8 +3,10 @@
     {{ data.title | translate }}
   </h1>
   <div>
-    <div class="text-center" *ngFor="let message of data.messages">
-      {{ message | translate }}
-    </div>
+    @for (message of data.messages; track message) {
+      <div class="text-center">
+        {{ message | translate }}
+      </div>
+    }
   </div>
 </div>

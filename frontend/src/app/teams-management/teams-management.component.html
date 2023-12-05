@@ -1,8 +1,8 @@
 <mat-toolbar color="primary" class="border-t-2 dark:border-toolbardark">
-    <div class="flex justify-center w-full h-full">
-        <ng-container *ngFor="let team of teams$ | async">
-            <a class="flex h-full items-center p-2" routerLink="{{team?.id}}" routerLinkActive="bg-theme-900 text-theme-c900">{{ team?.name }}</a>
-        </ng-container>
-    </div>
+  <div class="flex justify-center w-full h-full">
+    @for (team of teams$ | async; track team) {
+      <a class="flex h-full items-center p-2" routerLink="{{team?.id}}" routerLinkActive="bg-theme-900 text-theme-c900">{{ team?.name }}</a>
+    }
+  </div>
 </mat-toolbar>
 <router-outlet></router-outlet>

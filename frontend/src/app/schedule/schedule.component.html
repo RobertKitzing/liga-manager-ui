@@ -1,138 +1,148 @@
 <!-- <mat-divider></mat-divider> -->
 <div class="flex justify-center h-full">
-    <div class="w-full sm:w-3/4">
-        <mat-toolbar class="flex justify-center">
-            <div class="w-full flex justify-between">
-                <div class="w-full lg:w-1/3 self-center">
-                    <lima-season-chooser [mode]="seasonMode"></lima-season-chooser>
-                </div>
-                <button class="self-center ml-4" mat-icon-button (click)="showFilter = !showFilter">
-                    <mat-icon>filter_list</mat-icon>
-                </button>
-            </div>
-        </mat-toolbar>
-        <ng-container *ngIf="(season$ | async) as season">
-            <div class="w-full grid grid-cols-1 lg:grid-cols-2 p-2 gap-4 bg-toolbar dark:bg-toolbardark" *ngIf="showFilter">
-                <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
-                    <mat-option [value]="'0'">
-                        {{ 'ALL_MATCHDAYS' | translate }}
-                    </mat-option>
-                    <mat-option *ngFor="let matchDay of season.match_days" [value]="matchDay?.id">
-                        <ng-container *ngIf="matchDay">
+  <div class="w-full sm:w-3/4">
+    <mat-toolbar class="flex justify-center">
+      <div class="w-full flex justify-between">
+        <div class="w-full lg:w-1/3 self-center">
+          <lima-season-chooser [mode]="seasonMode"></lima-season-chooser>
+        </div>
+        <button class="self-center ml-4" mat-icon-button (click)="showFilter = !showFilter">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    @if ((season$ | async); as season) {
+      @if (showFilter) {
+        <div class="w-full grid grid-cols-1 lg:grid-cols-2 p-2 gap-4 bg-toolbar dark:bg-toolbardark">
+          <mat-select class="text-center" #matchDaySelect [(value)]="selectedMatchDayId" placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}">
+            <mat-option [value]="'0'">
+              {{ 'ALL_MATCHDAYS' | translate }}
+            </mat-option>
+            @for (matchDay of season.match_days; track matchDay) {
+              <mat-option [value]="matchDay?.id">
+                @if (matchDay) {
+                  <div>
+                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }})
+                  </div>
+                }
+              </mat-option>
+            }
+          </mat-select>
+          <mat-select class="text-center" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
+            <mat-option [value]="'0'">
+              {{ 'ALL_TEAMS' | translate }}
+            </mat-option>
+            @for (team of season.teams; track team) {
+              <mat-option [value]="team?.id">
+                {{ team?.name }}
+              </mat-option>
+            }
+          </mat-select>
+        </div>
+      }
+      @for (matchDay of filterMatchDays(season.match_days!); track matchDay) {
+        <h3 class="text-center bg-theme text-theme-cdefault p-4">
+          {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date | customDate }})
+        </h3>
+        <div class="flex justify-center">
+          <div class="w-full">
+            @for (match of filterMatches(matchDay?.matches); track match) {
+              <div class="flex w-full mt-2 items-center m-auto border-2 rounded dark:border-toolbardark flex-col">
+                @if (match) {
+                  <div class="w-full">
+                    <div class="grid p-2 content-center grid-cols-3 w-full gap-0 bg-toolbar dark:bg-toolbardark">
+                      <div class="text-center self-center pl-2 break-words line-clamp-3">
+                        <div class="grid justify-center">
+                          <img class="w-[100px] h-[100px]" src="logos/{{match.home_team.id}}.webp">
+                          <span>{{match.home_team.name}}</span>
+                        </div>
+                      </div>
+                      <div class="flex flex-col text-center">
+                        <div>
+                          @if (!match.kickoff) {
+                            <span translate>NO_TIME_SET</span>
+                          }
+                          @if (match.kickoff) {
+                            <span>{{ match.kickoff | customDate:'short' }}</span>
+                          }
+                        </div>
+                        <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 cursor-pointer justify-items-center" (click)="canEditMatch(match, season.state) && openEditResultDialog(match, matchDay)">
+                          @if (!match.cancelled_at) {
                             <div>
-                                {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }})
+                              {{ (match.home_score | number) || '-' }}
                             </div>
-                        </ng-container>
-                    </mat-option>
-                </mat-select>
-                <mat-select class="text-center" #teamSelect [(value)]="selectedTeamId" placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}">
-                    <mat-option [value]="'0'">
-                        {{ 'ALL_TEAMS' | translate }}
-                    </mat-option>
-                    <mat-option *ngFor="let team of season.teams" [value]="team?.id">
-                        {{ team?.name }}
-                    </mat-option>
-                </mat-select>
-            </div>
-            <ng-container *ngFor="let matchDay of filterMatchDays(season.match_days!)">
-                <h3 class="text-center bg-theme text-theme-cdefault p-4">
-                    {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date | customDate }})
-                </h3>
-                <div class="flex justify-center">
-                    <div class="w-full">
-                        <ng-container *ngFor="let match of filterMatches(matchDay?.matches)">
-                            <div class="flex w-full mt-2 items-center m-auto border-2 rounded dark:border-toolbardark flex-col">
-                                <div class="w-full" *ngIf="match">
-                                    <div class="grid p-2 content-center grid-cols-3 w-full gap-0 bg-toolbar dark:bg-toolbardark">
-                                        <div class="text-center self-center pl-2 break-words line-clamp-3">
-                                            <div class="grid justify-center">
-                                                <img class="w-[100px] h-[100px]" src="logos/{{match.home_team.id}}.webp">
-                                                <span>{{match.home_team.name}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col text-center">
-                                            <div>
-                                                <ng-container *ngIf="!match.kickoff">
-                                                    <span translate>NO_TIME_SET</span>
-                                                </ng-container>
-                                                <ng-container *ngIf="match.kickoff">
-                                                    <span>{{ match.kickoff | customDate:'short' }}</span>
-                                                </ng-container>
-                                            </div>
-                                            <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 cursor-pointer justify-items-center" (click)="canEditMatch(match, season.state) && openEditResultDialog(match, matchDay)">
-                                                <ng-container *ngIf="!match.cancelled_at">
-                                                    <div>
-                                                        {{ (match.home_score | number) || '-' }}
-                                                    </div>
-                                                    <div>
-                                                        :
-                                                    </div>
-                                                    <div>
-                                                        {{ (match.guest_score | number) || '-' }}
-                                                    </div>
-                                                </ng-container>
-                                                <ng-container *ngIf="match.cancelled_at">
-                                                    <div></div>
-                                                    <mat-icon>close</mat-icon>
-                                                    <div></div>
-                                                </ng-container>
-                                            </div>
-                                            <div class="flex flex-col text-center" (click)="canEditMatch(match, season.state) && openEditPitchDialog(match, matchDay)">
-                                                <ng-container *ngIf="match.pitch">
-                                                    <span class="line-clamp-5">{{ match.pitch.label }}</span>
-                                                </ng-container>
-                                                <ng-container *ngIf="!match.pitch">
-                                                    <span translate>NO_PTICH_SET</span>
-                                                </ng-container>
-                                            </div>
-                                        </div>
-                                        <div class="self-center pr-2 break-words line-clamp-3">
-                                            <div class="grid  justify-center">
-                                                <img class="w-[100px] h-[100px]" src="logos/{{match.guest_team.id}}.webp">
-                                                <span>{{match.guest_team.name}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ng-container *ngIf="match.cancelled_at">
-                                        <div class="text-center">
-                                            <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
-                                            <div class="line-clamp-5">{{ match.cancellation_reason }}</div>
-                                        </div>
-                                    </ng-container>
-                                </div>
-                                <div class="flex w-full justify-center" *ngIf="canEditMatch(match, season.state)">
-                                    <div class="m-2">
-                                        <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu" class="rounded">
-                                            <mat-icon>edit</mat-icon>
-                                            <span translate>BUTTON.EDIT</span>
-                                        </button>
-                                        <mat-menu #editMenu [overlapTrigger]="false">
-                                            <button mat-menu-item (click)="openEditResultDialog(match, matchDay)">
-                                                <mat-icon>scoreboard</mat-icon>
-                                                <span translate>BUTTON.EDIT_RESULT</span>
-                                            </button>
-                                            <ng-container *ngIf="!match.cancelled_at">
-                                                <button mat-menu-item (click)="openEditPitchDialog(match, matchDay)">
-                                                    <mat-icon>location_on</mat-icon>
-                                                    <span translate>BUTTON.EDIT_PITCH</span>
-                                                </button>
-                                                <button mat-menu-item (click)="openEditKickoffDialog(match, matchDay)">
-                                                    <mat-icon>event</mat-icon>
-                                                    <span translate>BUTTON.EDIT_KICKOFF</span>
-                                                </button>
-                                                </ng-container>
-                                            <button mat-menu-item (click)="openCancelMatchDialog(match, matchDay)">
-                                                <mat-icon>close</mat-icon>
-                                                <span translate>BUTTON.CANCEL_MATCH</span>
-                                            </button>
-                                        </mat-menu>
-                                    </div>
-                                </div>
+                            <div>
+                              :
                             </div>
-                        </ng-container>
+                            <div>
+                              {{ (match.guest_score | number) || '-' }}
+                            </div>
+                          }
+                          @if (match.cancelled_at) {
+                            <div></div>
+                            <mat-icon>close</mat-icon>
+                            <div></div>
+                          }
+                        </div>
+                        <div class="flex flex-col text-center" (click)="canEditMatch(match, season.state) && openEditPitchDialog(match, matchDay)">
+                          @if (match.pitch) {
+                            <span class="line-clamp-5">{{ match.pitch.label }}</span>
+                          }
+                          @if (!match.pitch) {
+                            <span translate>NO_PTICH_SET</span>
+                          }
+                        </div>
+                      </div>
+                      <div class="self-center pr-2 break-words line-clamp-3">
+                        <div class="grid  justify-center">
+                          <img class="w-[100px] h-[100px]" src="logos/{{match.guest_team.id}}.webp">
+                          <span>{{match.guest_team.name}}</span>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </ng-container>
-        </ng-container>
-    </div>
+                    @if (match.cancelled_at) {
+                      <div class="text-center">
+                        <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
+                        <div class="line-clamp-5">{{ match.cancellation_reason }}</div>
+                      </div>
+                    }
+                  </div>
+                }
+                @if (canEditMatch(match, season.state)) {
+                  <div class="flex w-full justify-center">
+                    <div class="m-2">
+                      <button mat-raised-button color="primary" [matMenuTriggerFor]="editMenu" class="rounded">
+                        <mat-icon>edit</mat-icon>
+                        <span translate>BUTTON.EDIT</span>
+                      </button>
+                      <mat-menu #editMenu [overlapTrigger]="false">
+                        <button mat-menu-item (click)="openEditResultDialog(match, matchDay)">
+                          <mat-icon>scoreboard</mat-icon>
+                          <span translate>BUTTON.EDIT_RESULT</span>
+                        </button>
+                        @if (!match.cancelled_at) {
+                          <button mat-menu-item (click)="openEditPitchDialog(match, matchDay)">
+                            <mat-icon>location_on</mat-icon>
+                            <span translate>BUTTON.EDIT_PITCH</span>
+                          </button>
+                          <button mat-menu-item (click)="openEditKickoffDialog(match, matchDay)">
+                            <mat-icon>event</mat-icon>
+                            <span translate>BUTTON.EDIT_KICKOFF</span>
+                          </button>
+                        }
+                        <button mat-menu-item (click)="openCancelMatchDialog(match, matchDay)">
+                          <mat-icon>close</mat-icon>
+                          <span translate>BUTTON.CANCEL_MATCH</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
 </div>

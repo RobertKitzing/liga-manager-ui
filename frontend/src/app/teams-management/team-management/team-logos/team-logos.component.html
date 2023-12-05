@@ -1,11 +1,13 @@
-<div class="flex justify-center" *ngIf="teamId$ | async as teamId">
+@if (teamId$ | async; as teamId) {
+  <div class="flex justify-center">
     <div class="grid grid-cols-3 gap-4">
-        <div class="flex flex-col justify-center">
-            <span translate>TEAM_LOGO.CURRENT</span>
-            <img class="w-[128px] h-[128px]" src="logos/{{teamId}}.webp">
-        </div>
-        <div>
-            <input type="file" (change)="onFileSelected($event, teamId)">
-        </div>
+      <div class="flex flex-col justify-center">
+        <span translate>TEAM_LOGO.CURRENT</span>
+        <img class="w-[128px] h-[128px]" src="logos/{{teamId}}.webp">
+      </div>
+      <div>
+        <input type="file" (change)="onFileSelected($event, teamId)">
+      </div>
     </div>
-</div>
+  </div>
+}

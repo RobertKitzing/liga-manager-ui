@@ -1,33 +1,37 @@
 <lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
-    <div class="grid grid-cols-1 content-center gap-2">
-        <div class="flex justify-center flex-col" *ngIf="data.match as match">
-            <div translate class="text-center">
-                OLD_PITCH
-            </div>
-            <ng-container *ngIf="!match.pitch">
-                <mat-icon class="self-center">location_off</mat-icon>
-            </ng-container>
-            <ng-container *ngIf="match.pitch">
-                <span class="text-center">{{ match.pitch.label }}</span>
-            </ng-container>
+  <div class="grid grid-cols-1 content-center gap-2">
+    @if (data.match; as match) {
+      <div class="flex justify-center flex-col">
+        <div translate class="text-center">
+          OLD_PITCH
         </div>
-        <div>
-            <mat-form-field>
-                <mat-label translate>NEW_PITCH</mat-label>
-                <input matInput [matAutocomplete]="pitchAutoComplete" [formControl]="newMatchPitch" />
-                <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
-                  <mat-option *ngFor="let pitch of filteredPitches | async" [value]="pitch">
-                    <span>{{ pitch?.label }}</span>
-                  </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </div>
+        @if (!match.pitch) {
+          <mat-icon class="self-center">location_off</mat-icon>
+        }
+        @if (match.pitch) {
+          <span class="text-center">{{ match.pitch.label }}</span>
+        }
+      </div>
+    }
+    <div>
+      <mat-form-field>
+        <mat-label translate>NEW_PITCH</mat-label>
+        <input matInput [matAutocomplete]="pitchAutoComplete" [formControl]="newMatchPitch" />
+        <mat-autocomplete #pitchAutoComplete [displayWith]="displayPitch">
+          @for (pitch of filteredPitches | async; track pitch) {
+            <mat-option [value]="pitch">
+              <span>{{ pitch?.label }}</span>
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
     </div>
+  </div>
 </lima-edit-match-base>
 <ng-template #actionsTemplate>
-    <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
-    <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" [disabled]="!newMatchPitch.valid">
-        <mat-icon>save</mat-icon>
-        {{ 'BUTTON.SAVE' | translate}}
-    </button>
+  <button mat-stroked-button mat-dialog-close>{{ 'BUTTON.CANCEL' | translate }}</button>
+  <button mat-stroked-button [mat-dialog-close]="true" (click)="onSaveClicked()" [disabled]="!newMatchPitch.valid">
+    <mat-icon>save</mat-icon>
+    {{ 'BUTTON.SAVE' | translate}}
+  </button>
 </ng-template>

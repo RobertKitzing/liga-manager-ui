@@ -18,6 +18,6 @@ RUN npm run build:web
 FROM nginx:stable-alpine-slim As production
 RUN apk add certbot certbot-nginx --no-cache
 
-COPY --chown=node:node --from=ui-builder /ui/dist/liga-manager-ui /ui
+COPY --chown=node:node --from=ui-builder /ui/dist/liga-manager-ui/browser /ui
 COPY ./nginx.ui.conf /nginx-ui/nginx.ui.conf
 COPY ./assets/default_team_logo.webp /assets/default_team_logo.webp

@@ -1,16 +1,16 @@
 <div class="lg:flex h-full">
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TABLE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.SCHEDULE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TOURNAMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CALENDAR }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
-    <ng-container *ngIf="teamsManagementGuard.allowed || adminGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CONTACTS }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
-    </ng-container>
-    <ng-container *ngIf="teamsManagementGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TEAMS_MANAGEMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAMS_MANAGEMENT</a>
-    </ng-container>
-    <ng-container *ngIf="adminGuard.allowed">
-        <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
-    </ng-container>
-    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.HISTORY }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.HISTORY</a>
+  <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TABLE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TABLE</a>
+  <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.SCHEDULE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
+  <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TOURNAMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
+  <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CALENDAR }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
+  @if (teamsManagementGuard.allowed || adminGuard.allowed) {
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CONTACTS }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
+  }
+  @if (teamsManagementGuard.allowed) {
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TEAMS_MANAGEMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAMS_MANAGEMENT</a>
+  }
+  @if (adminGuard.allowed) {
+    <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
+  }
+  <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.HISTORY }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.HISTORY</a>
 </div>

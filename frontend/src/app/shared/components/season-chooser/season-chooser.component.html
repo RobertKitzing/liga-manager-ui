@@ -1,18 +1,20 @@
 <div class="flex justify-center w-full">
-    <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"
-        (selectionChange)="currentSeasonChanged($event)" [value]="season$ | async"
-        placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
-        <mat-option *ngFor="let season of seasonList$ | async" [value]="season">
-            <ng-container *ngIf="season">
-                <ng-container [ngSwitch]="season.state">
-                    <ng-container *ngSwitchCase="SeasonState.Progress">
-                        {{ season.name }}
-                    </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        {{ season.name }} ({{ season.state | enumTranslate }})
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-        </mat-option>
-    </mat-select>
+  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"
+    (selectionChange)="currentSeasonChanged($event)" [value]="season$ | async"
+    placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
+    @for (season of seasonList$ | async; track season) {
+      <mat-option [value]="season">
+        @if (season) {
+          @switch (season.state) {
+            @case (SeasonState.Progress) {
+              {{ season.name }}
+            }
+            @default {
+              {{ season.name }} ({{ season.state | enumTranslate }})
+            }
+          }
+        }
+      </mat-option>
+    }
+  </mat-select>
 </div>
