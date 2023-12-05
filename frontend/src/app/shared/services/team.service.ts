@@ -12,6 +12,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '../utils';
 import { HttpClient } from '@angular/common/http';
+import { AppsettingsService } from './appsettings.service';
 
 @Injectable({
     providedIn: 'root',
@@ -29,6 +30,7 @@ export class TeamService {
         private deleteTeamGQL: DeleteTeamGQL,
         private renameTeamGQL: RenameTeamGQL,
         private httpClient: HttpClient,
+        private appsettingsService: AppsettingsService,
     ) {}
 
     createTeam(name: string) {
@@ -70,7 +72,7 @@ export class TeamService {
     uploadTeamLogo(teamId: string, file: File) {
         const fd = new FormData();
         fd.append('file', file)
-        return this.httpClient.post('/api/logos', fd);
+        return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, fd);
     }
 
 }
