@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamService } from '@lima/shared/services';
+import { AuthenticationService, TeamService } from '@lima/shared/services';
 import { firstValueFrom, map, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'lima-team-logo',
     templateUrl: './team-logo.component.html',
     styleUrls: ['./team-logo.component.scss'],
     standalone: true,
-    imports: [AsyncPipe],
+    imports: [
+      TranslateModule, AsyncPipe],
 })
 export class TeamLogoComponent {
 
-  teamId$ = this.activatedRoute.parent?.parent?.paramMap.pipe(
+  teamId$ = this.activatedRoute.parent?.paramMap.pipe(
     map(
       (p) => p.get('teamId'),
     ),
@@ -22,6 +24,7 @@ export class TeamLogoComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private teamService: TeamService,
+    public authenticationService: AuthenticationService,
   ) {
   }
 

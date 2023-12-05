@@ -5,9 +5,11 @@
         <span translate>TEAM_LOGO.CURRENT</span>
         <img class="w-[128px] h-[128px]" src="logos/{{teamId}}.webp">
       </div>
-      <div>
-        <input type="file" (change)="onFileSelected($event, teamId)">
-      </div>
+      @if (authenticationService.isAdmin) {
+        <div>
+          <input type="file" (change)="onFileSelected($event, teamId)">
+        </div>
+      }
     </div>
   </div>
 }

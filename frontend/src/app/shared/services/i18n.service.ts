@@ -46,12 +46,12 @@ export class I18nService {
     changeLang({ code, direction }: { code: string; direction?: string }) {
         this.setTextDir(direction);
         this.storedLang = { code, direction };
-        // import(`node_modules/@angular/common/locales/${code}.mjs`).then(
-        //     (lang) => {
-        //         registerLocaleData(lang.default);
-        //         this.translateService.use(code);
-        //     },
-        // );
+        import(/* @vite-ignore */`/assets/locales/${code}.mjs`).then(
+            (lang) => {
+                registerLocaleData(lang.default);
+                this.translateService.use(code);
+            },
+        );
     }
 
     setTextDir(direction?: string) {

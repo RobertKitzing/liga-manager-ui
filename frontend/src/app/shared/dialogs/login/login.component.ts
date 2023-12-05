@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
-import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import {
     AuthenticationService,
     LoginContext,

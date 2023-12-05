@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
-import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatchService, NotificationService } from '@lima/shared/services';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';

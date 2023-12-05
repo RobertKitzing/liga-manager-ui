@@ -49,7 +49,12 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/i18n"
+              "src/i18n",
+              {
+                "glob": "**/*.mjs",
+                "input": "node_modules/@angular/common/locales",
+                "output": "/assets/locales"
+              }
             ],
             "styles": [
               "src/styles.scss",

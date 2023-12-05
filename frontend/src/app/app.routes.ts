@@ -68,10 +68,25 @@ export const routes: Routes = [
             import('./admin').then((m) => m.AdminComponent),
         children: AdminRoutes,
     },
-    // {
-    //     // path: APP_ROUTES.HISTORY,
-    //     // loadChildren: () => import('./history').then((m) => m.HistoryModule),
-    // },
+    {
+        path: APP_ROUTES.HISTORY,
+        loadComponent: () => import('./history').then((m) => m.HistoryComponent),
+        children: [
+            {
+                path: APP_ROUTES.TABLE,
+                loadComponent: () => import('./table').then((m) => m.TableComponent),
+            },
+            {
+                path: APP_ROUTES.SCHEDULE,
+                loadComponent: () => import('./schedule').then((m) => m.ScheduleComponent),
+            },
+            {
+                path: APP_ROUTES.TOURNAMENT,
+                loadComponent: () =>
+                    import('./tournament').then((m) => m.TournamentComponent),
+            },
+        ],
+    },
     {
         path: '',
         redirectTo: APP_ROUTES.SCHEDULE,

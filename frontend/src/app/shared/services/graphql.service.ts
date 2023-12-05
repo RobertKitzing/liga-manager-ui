@@ -9,7 +9,7 @@ import { AuthenticationService } from './authentication.service';
 import { HttpHeaders } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { firstValueFrom } from 'rxjs';
-import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
 
 @Injectable({
     providedIn: 'root',

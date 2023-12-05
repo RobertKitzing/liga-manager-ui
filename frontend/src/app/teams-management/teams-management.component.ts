@@ -4,6 +4,7 @@ import { AuthenticationService, TeamService } from '@lima/shared/services';
 import { AsyncPipe } from '@angular/common';
 import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'lima-teams-managment',
@@ -11,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     styles: [],
     standalone: true,
     imports: [
+        TranslateModule,
         MatToolbarModule,
         RouterLinkActive,
         RouterLink,
