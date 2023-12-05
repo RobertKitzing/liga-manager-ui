@@ -5,7 +5,6 @@ import { ContacsRoutingModule } from './contacs-routing.module';
 import { ContacsComponent } from './contacs.component';
 
 @NgModule({
-    declarations: [ContacsComponent],
-    imports: [CommonModule, ContacsRoutingModule],
+    imports: [CommonModule, ContacsRoutingModule, ContacsComponent],
 })
 export class ContacsModule {}

@@ -4,7 +4,6 @@ import { TournamentComponent } from './tournament.component';
 import { TournamentRoutingModule } from './tournament-routing.module';
 
 @NgModule({
-    declarations: [TournamentComponent],
-    imports: [CommonModule, TournamentRoutingModule],
+    imports: [CommonModule, TournamentRoutingModule, TournamentComponent],
 })
 export class TournamentModule {}

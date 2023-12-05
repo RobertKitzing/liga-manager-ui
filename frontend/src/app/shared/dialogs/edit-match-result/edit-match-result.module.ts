@@ -11,7 +11,6 @@ import { EditMatchBaseModule } from '../edit-match-base';
 import { CustomDateModule } from '@lima/shared/pipes';
 
 @NgModule({
-    declarations: [EditMatchResultComponent],
     imports: [
         CommonModule,
         MatDialogModule,
@@ -22,6 +21,7 @@ import { CustomDateModule } from '@lima/shared/pipes';
         MatButtonModule,
         EditMatchBaseModule,
         MatIconModule,
+        EditMatchResultComponent,
     ],
 })
 export class EditMatchResultModule {}

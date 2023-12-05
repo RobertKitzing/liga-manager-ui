@@ -35,7 +35,7 @@ export function graphqlFactory(provider: GraphqlService) {
 }
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, NavLinksComponent],
+    declarations: [AppComponent],
     imports: [
         ApolloModule,
         BrowserModule,
@@ -64,6 +64,7 @@ export function graphqlFactory(provider: GraphqlService) {
         NgxWebstorageModule.forRoot(),
         MatInputModule,
         MatListModule,
+        LoginComponent, NavLinksComponent,
     ],
     providers: [
         {

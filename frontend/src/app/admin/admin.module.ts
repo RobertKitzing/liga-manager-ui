@@ -22,15 +22,6 @@ import { ManageSeasonsComponent } from './manage-seasons/manage-seasons.componen
 import { EnumTranslateModule } from '@lima/shared/pipes';
 
 @NgModule({
-    declarations: [
-        AdminComponent,
-        ManageTournamentsComponent,
-        ManageUsersComponent,
-        ManageTeamsComponent,
-        ManagePitchesComponent,
-        EditUserDialogComponent,
-        ManageSeasonsComponent,
-    ],
     imports: [
         CommonModule,
         AdminRoutingModule,
@@ -46,6 +37,13 @@ import { EnumTranslateModule } from '@lima/shared/pipes';
         MatSelectModule,
         MatOptionModule,
         MatDialogModule,
+        AdminComponent,
+        ManageTournamentsComponent,
+        ManageUsersComponent,
+        ManageTeamsComponent,
+        ManagePitchesComponent,
+        EditUserDialogComponent,
+        ManageSeasonsComponent,
     ],
 })
 export class AdminModule {}

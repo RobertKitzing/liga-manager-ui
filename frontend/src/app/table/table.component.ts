@@ -11,6 +11,12 @@ import { BehaviorSubject, iif, map, of, switchMap } from 'rxjs';
 import { RankingPosition } from 'src/api/graphql';
 import { SeasonChooserModes } from '../shared/components';
 import { RankingService, SeasonService } from '@lima/shared/services';
+import { TruncatePipe } from '../shared/pipes/truncate/truncate.pipe';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTableModule } from '@angular/material/table';
+import { SeasonChooserModule } from '../shared/components/season-chooser/season-chooser.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'lima-table',
@@ -20,11 +26,18 @@ import { RankingService, SeasonService } from '@lima/shared/services';
         trigger('detailExpand', [
             state('collapsed', style({ height: '0px', minHeight: '0' })),
             state('expanded', style({ height: '*' })),
-            transition(
-                'expanded <=> collapsed',
-                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
-            ),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
+    ],
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        SeasonChooserModule,
+        MatTableModule,
+        TranslateModule,
+        NgClass,
+        AsyncPipe,
+        TruncatePipe,
     ],
 })
 export class TableComponent implements OnInit {

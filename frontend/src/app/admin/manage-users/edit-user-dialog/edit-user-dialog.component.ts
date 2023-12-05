@@ -1,17 +1,40 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogClose } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User, UserRole } from 'src/api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { generator } from 'ts-password-generator';
 import { TeamService, UserService } from '@lima/shared/services';
+import { AsyncPipe, KeyValuePipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'lima-edit-user-dialog',
     templateUrl: './edit-user-dialog.component.html',
     styleUrls: ['./edit-user-dialog.component.scss'],
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        TranslateModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatButtonModule,
+        MatDialogClose,
+        MatIconModule,
+        AsyncPipe,
+        KeyValuePipe,
+    ],
 })
 export class EditUserDialogComponent implements OnInit {
 

@@ -4,12 +4,10 @@ import { TeamLogosComponent } from './team-logos.component';
 import { TeamLogosRoutingModule } from './team-logos-routing.module';
 
 @NgModule({
-  declarations: [
-    TeamLogosComponent,
-  ],
-  imports: [
-    TeamLogosRoutingModule,
-    CommonModule,
-  ],
+    imports: [
+        TeamLogosRoutingModule,
+        CommonModule,
+        TeamLogosComponent,
+    ],
 })
 export class TeamLogosModule { }

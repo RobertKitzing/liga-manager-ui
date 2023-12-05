@@ -11,7 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScheduleComponent } from './schedule.component';
 import { ScheduleRoutingModule } from './schedule-routing.module';
-import { CustomDateModule, NumberModule } from '@lima/shared/pipes';
+import { CustomDateModule } from '@lima/shared/pipes';
 import { SeasonChooserModule } from '@lima/shared/components';
 import {
     EditMatchResultModule,
@@ -21,26 +21,25 @@ import {
 } from '@lima/shared/dialogs';
 
 @NgModule({
-    declarations: [ScheduleComponent],
     imports: [
-        CommonModule,
-        ScheduleRoutingModule,
-        TranslateModule.forChild(),
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        MatDividerModule,
-        MatToolbarModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        CustomDateModule,
-        SeasonChooserModule,
-        NumberModule,
-        MatDialogModule,
-        EditMatchResultModule,
-        EditMatchPitchModule,
-        EditMatchKickoffModule,
-        CancelMatchModule,
-    ],
+    CommonModule,
+    ScheduleRoutingModule,
+    TranslateModule.forChild(),
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    CustomDateModule,
+    SeasonChooserModule,
+    MatDialogModule,
+    EditMatchResultModule,
+    EditMatchPitchModule,
+    EditMatchKickoffModule,
+    CancelMatchModule,
+    ScheduleComponent,
+],
 })
 export class ScheduleModule {}

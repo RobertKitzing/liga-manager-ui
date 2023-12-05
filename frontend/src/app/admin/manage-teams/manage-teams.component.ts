@@ -1,12 +1,30 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TeamService } from '@lima/shared/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Team } from 'src/api/graphql';
+import { AsyncPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     selector: 'lima-manage-teams',
     templateUrl: './manage-teams.component.html',
+    standalone: true,
+    imports: [
+        MatFormFieldModule,
+        TranslateModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        AsyncPipe,
+    ],
 })
 export class ManageTeamsComponent {
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import {
@@ -8,11 +8,27 @@ import {
     LoginContext,
     NotificationService,
 } from '@lima/shared/services';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'lima-login',
     templateUrl: './login.component.html',
     styleUrls: [],
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        TranslateModule,
+        MatDialogContent,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
 })
 export class LoginComponent {
 

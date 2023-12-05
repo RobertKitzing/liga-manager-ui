@@ -1,15 +1,36 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { MatchService, NotificationService } from '@lima/shared/services';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';
+import { CustomDateModule } from '../../pipes/custom-date/custom-date.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
     templateUrl: './edit-match-kickoff.component.html',
     styleUrls: [],
+    standalone: true,
+    imports: [
+        EditMatchBaseModule,
+        TranslateModule,
+        MatIconModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatButtonModule,
+        MatDialogClose,
+        CustomDateModule,
+    ],
 })
 export class EditMatchKickoffComponent {
 

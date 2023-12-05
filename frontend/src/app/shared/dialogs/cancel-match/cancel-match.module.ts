@@ -12,7 +12,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomDateModule } from '@lima/shared/pipes';
 
 @NgModule({
-    declarations: [CancelMatchComponent],
     imports: [
         CommonModule,
         MatDialogModule,
@@ -25,6 +24,7 @@ import { CustomDateModule } from '@lima/shared/pipes';
         MatIconModule,
         MatAutocompleteModule,
         MatIconModule,
+        CancelMatchComponent,
     ],
 })
 export class CancelMatchModule {}

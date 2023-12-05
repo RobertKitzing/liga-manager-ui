@@ -6,12 +6,12 @@ import { TeamsManagementComponent } from './teams-management.component';
 import { TeamsManagementRoutingModule } from './teams-management-routing.module';
 
 @NgModule({
-    declarations: [TeamsManagementComponent],
     imports: [
         CommonModule,
         TeamsManagementRoutingModule,
         MatButtonModule,
         MatToolbarModule,
+        TeamsManagementComponent,
     ],
 })
 export class TeamsManagementModule {}

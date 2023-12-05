@@ -1,11 +1,22 @@
 import { Component } from '@angular/core';
 import { firstValueFrom, of } from 'rxjs';
 import { AuthenticationService, TeamService } from '@lima/shared/services';
+import { AsyncPipe } from '@angular/common';
+import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'lima-teams-managment',
     templateUrl: './teams-management.component.html',
     styles: [],
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        RouterLinkActive,
+        RouterLink,
+        RouterOutlet,
+        AsyncPipe,
+    ],
 })
 export class TeamsManagementComponent {
 

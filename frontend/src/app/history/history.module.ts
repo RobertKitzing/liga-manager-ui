@@ -9,7 +9,6 @@ import { ScheduleModule } from '@lima/schedule';
 import { TournamentModule } from '@lima/tournament';
 
 @NgModule({
-    declarations: [HistoryComponent],
     imports: [
         CommonModule,
         HistoryRoutingModule,
@@ -18,6 +17,7 @@ import { TournamentModule } from '@lima/tournament';
         MatToolbarModule,
         TranslateModule.forChild(),
         TournamentModule,
+        HistoryComponent,
     ],
 })
 export class HistoryModule {}

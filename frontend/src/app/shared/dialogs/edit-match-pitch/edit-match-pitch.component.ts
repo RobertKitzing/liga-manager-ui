@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import {
     MatchService,
@@ -9,11 +9,34 @@ import {
 } from '@lima/shared/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Match, MatchDay, Pitch } from 'src/api/graphql';
+import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
 
 @Component({
     selector: 'lima-edit-match-pitch',
     templateUrl: './edit-match-pitch.component.html',
     styleUrls: [],
+    standalone: true,
+    imports: [
+        EditMatchBaseModule,
+        TranslateModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatOptionModule,
+        MatButtonModule,
+        MatDialogClose,
+        AsyncPipe,
+    ],
 })
 export class EditMatchPitchComponent {
 

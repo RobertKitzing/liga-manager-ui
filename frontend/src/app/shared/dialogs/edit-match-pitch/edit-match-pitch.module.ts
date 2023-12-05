@@ -12,7 +12,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomDateModule } from '@lima/shared/pipes';
 
 @NgModule({
-    declarations: [EditMatchPitchComponent],
     imports: [
         CommonModule,
         MatDialogModule,
@@ -24,6 +23,7 @@ import { CustomDateModule } from '@lima/shared/pipes';
         EditMatchBaseModule,
         MatIconModule,
         MatAutocompleteModule,
+        EditMatchPitchComponent,
     ],
 })
 export class EditMatchPitchModule {}

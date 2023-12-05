@@ -14,7 +14,6 @@ import { CustomDateModule } from '@lima/shared/pipes';
 import { CustomDateAdapter } from '@lima/shared/utils';
 
 @NgModule({
-    declarations: [EditMatchKickoffComponent],
     imports: [
         CommonModule,
         MatDialogModule,
@@ -29,6 +28,7 @@ import { CustomDateAdapter } from '@lima/shared/utils';
         ReactiveFormsModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        EditMatchKickoffComponent,
     ],
     providers: [
         {

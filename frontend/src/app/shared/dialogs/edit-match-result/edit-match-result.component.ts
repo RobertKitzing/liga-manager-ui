@@ -1,15 +1,32 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { MatchService, NotificationService } from '@lima/shared/services';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
 
 @Component({
     selector: 'lima-edit-match-result',
     templateUrl: './edit-match-result.component.html',
     styleUrls: [],
+    standalone: true,
+    imports: [
+        EditMatchBaseModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogClose,
+        MatIconModule,
+        TranslateModule,
+    ],
 })
 export class EditMatchResultComponent {
 

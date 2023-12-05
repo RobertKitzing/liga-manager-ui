@@ -4,12 +4,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamManagementRoutingModule } from './team-management-routing.module';
 
 @NgModule({
-  declarations: [
-    TeamManagementComponent,
-  ],
-  imports: [
-    TeamManagementRoutingModule,
-    MatToolbarModule,
-  ],
+    imports: [
+        TeamManagementRoutingModule,
+        MatToolbarModule,
+        TeamManagementComponent,
+    ],
 })
 export class TeamManagementModule { }

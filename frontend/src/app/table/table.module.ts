@@ -9,21 +9,20 @@ import { SeasonChooserModule } from '@lima/shared/components';
 import { TableComponent } from './table.component';
 import { TableRoutingModule } from './table-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TruncateModule } from '@lima/shared/pipes';
+
 
 @NgModule({
-    declarations: [TableComponent],
     imports: [
-        CommonModule,
-        TableRoutingModule,
-        TruncateModule,
-        MatProgressBarModule,
-        MatTableModule,
-        MatIconModule,
-        HammerModule,
-        MatToolbarModule,
-        TranslateModule.forChild(),
-        SeasonChooserModule,
-    ],
+    CommonModule,
+    TableRoutingModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatIconModule,
+    HammerModule,
+    MatToolbarModule,
+    TranslateModule.forChild(),
+    SeasonChooserModule,
+    TableComponent,
+],
 })
 export class TableModule {}

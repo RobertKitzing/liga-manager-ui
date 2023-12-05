@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TeamService } from '@lima/shared/services';
 import { firstValueFrom, map, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'lima-team-logos',
-  templateUrl: './team-logos.component.html',
-  styleUrls: ['./team-logos.component.scss'],
+    selector: 'lima-team-logos',
+    templateUrl: './team-logos.component.html',
+    styleUrls: ['./team-logos.component.scss'],
+    standalone: true,
+    imports: [AsyncPipe],
 })
 export class TeamLogosComponent {
 

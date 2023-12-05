@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
     selector: 'lima-calendar',
     template: ` <p>calendar works!</p> `,
     styles: [],
+    standalone: true,
 })
 export class CalendarComponent {}

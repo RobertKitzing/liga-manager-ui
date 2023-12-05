@@ -11,11 +11,37 @@ import {
     EditMatchPitchComponent,
     EditMatchResultComponent,
 } from '@lima/shared/dialogs';
+import { NumberPipe } from '../shared/pipes/number/number.pipe';
+import { CustomDateModule } from '../shared/pipes/custom-date/custom-date.module';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { SeasonChooserModule } from '../shared/components/season-chooser/season-chooser.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'lima-schedule',
     templateUrl: './schedule.component.html',
     styles: [],
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        SeasonChooserModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule,
+        MatOptionModule,
+        TranslateModule,
+        MatMenuModule,
+        AsyncPipe,
+        DecimalPipe,
+        CustomDateModule,
+        NumberPipe,
+    ],
 })
 export class ScheduleComponent implements OnInit {
 

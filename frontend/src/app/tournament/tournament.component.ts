@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
     selector: 'lima-tournament',
     template: ` <p>tournament works!</p> `,
     styles: [],
+    standalone: true,
 })
 export class TournamentComponent {}
