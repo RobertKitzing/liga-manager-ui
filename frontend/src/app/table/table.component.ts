@@ -9,14 +9,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, map, of, switchMap } from 'rxjs';
 import { RankingPosition } from 'src/api/graphql';
-import { SeasonChooserModes } from '../shared/components';
+import { SeasonChooserModes, SeasonChooserModule } from '../shared/components';
 import { RankingService, SeasonService } from '@lima/shared/services';
-import { TruncatePipe } from '../shared/pipes/truncate/truncate.pipe';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
-import { SeasonChooserModule } from '../shared/components/season-chooser/season-chooser.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TruncatePipe } from '@lima/shared/pipes';
 
 @Component({
     selector: 'lima-table',

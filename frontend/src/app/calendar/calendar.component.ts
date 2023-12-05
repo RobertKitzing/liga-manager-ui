@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'lima-calendar',
-    template: ` <p>calendar works!</p> `,
+    templateUrl: './calendar.component.html',
     styles: [],
     standalone: true,
 })

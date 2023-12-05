@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ADMIN_ROUTES } from './admin.routes';
 
 @Component({
     selector: 'lima-admin',
@@ -25,6 +26,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ],
 })
 export class AdminComponent {
+
+    ADMIN_ROUTES = ADMIN_ROUTES;
 
     constructor(private router: Router) {}
 

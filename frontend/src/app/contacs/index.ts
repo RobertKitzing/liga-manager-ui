@@ -1,1 +1,1 @@
-export * from './contacs.module';
+export * from './contacs.component';

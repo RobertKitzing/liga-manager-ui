@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
     selector: 'lima-contacs',
     templateUrl: './contacs.component.html',
     standalone: true,
+    imports: [],
 })
 export class ContacsComponent {}

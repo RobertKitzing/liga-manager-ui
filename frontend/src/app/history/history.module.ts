@@ -4,7 +4,6 @@ import { HistoryRoutingModule } from './history-routing.module';
 import { HistoryComponent } from './history.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { TableModule } from '@lima/table';
 import { ScheduleModule } from '@lima/schedule';
 import { TournamentModule } from '@lima/tournament';
 
@@ -12,7 +11,6 @@ import { TournamentModule } from '@lima/tournament';
     imports: [
         CommonModule,
         HistoryRoutingModule,
-        TableModule,
         ScheduleModule,
         MatToolbarModule,
         TranslateModule.forChild(),

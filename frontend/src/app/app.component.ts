@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { FormControl } from '@angular/forms';
+import { Location, NgClass, AsyncPipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import {
     AuthenticationService,
     I18nService,
@@ -10,12 +10,41 @@ import {
     ThemeService,
 } from '@lima/shared/services';
 import { LoginComponent } from './shared/dialogs';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { NavLinksComponent } from './shared/components/nav-links/nav-links.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'lima-root',
     templateUrl: './app.component.html',
     styles: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        NavLinksComponent,
+        MatButtonModule,
+        TranslateModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatSlideToggleModule,
+        ReactiveFormsModule,
+        MatDividerModule,
+        MatProgressBarModule,
+        RouterOutlet,
+        MatListModule,
+        NgClass,
+        AsyncPipe,
+    ],
 })
 export class AppComponent implements OnInit {
 

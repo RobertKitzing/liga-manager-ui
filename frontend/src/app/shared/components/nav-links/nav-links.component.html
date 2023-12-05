@@ -3,13 +3,13 @@
   <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.SCHEDULE }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.SCHEDULE</a>
   <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TOURNAMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TOURNAMENT</a>
   <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CALENDAR }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CALENDAR</a>
-  @if (teamsManagementGuard.allowed || adminGuard.allowed) {
+  @if (authenticationService.isTeamAdmin || authenticationService.isAdmin) {
     <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.CONTACTS }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.CONTACTS</a>
   }
-  @if (teamsManagementGuard.allowed) {
+  @if (authenticationService.isTeamAdmin || authenticationService.isAdmin) {
     <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.TEAMS_MANAGEMENT }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.TEAMS_MANAGEMENT</a>
   }
-  @if (adminGuard.allowed) {
+  @if (authenticationService.isAdmin) {
     <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.ADMIN }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.ADMIN</a>
   }
   <a class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none" routerLink="{{ APP_ROUTES.HISTORY }}" routerLinkActive="bg-theme-900 text-theme-c900" translate>NAVIGATION.HISTORY</a>

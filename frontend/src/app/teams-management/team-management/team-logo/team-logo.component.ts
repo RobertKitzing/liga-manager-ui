@@ -5,13 +5,13 @@ import { firstValueFrom, map, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'lima-team-logos',
-    templateUrl: './team-logos.component.html',
-    styleUrls: ['./team-logos.component.scss'],
+    selector: 'lima-team-logo',
+    templateUrl: './team-logo.component.html',
+    styleUrls: ['./team-logo.component.scss'],
     standalone: true,
     imports: [AsyncPipe],
 })
-export class TeamLogosComponent {
+export class TeamLogoComponent {
 
   teamId$ = this.activatedRoute.parent?.parent?.paramMap.pipe(
     map(

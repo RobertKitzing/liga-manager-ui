@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { APP_ROUTES } from '@lima/app-routes';
+import { APP_ROUTES } from '@lima/app.routes';
 import { map } from 'rxjs';
 import {
     AllUsersGQL,

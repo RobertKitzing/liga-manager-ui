@@ -75,7 +75,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let element; columns: displayedColumns;"
           (click)="expandedElement = expandedElement === element ? null : element"
-          class="sm:pointer-events-none [&>td]:border-none"
+          class="sm:pointer-events-none"
           [ngClass]="{'bg-toolbar dark:bg-toolbardark': expandedElement === element}"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="h-0 bg-toolbar dark:bg-toolbardark"></tr>
