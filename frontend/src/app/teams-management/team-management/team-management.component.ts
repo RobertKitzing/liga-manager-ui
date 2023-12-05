@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
     selector: 'lima-team-management',
     templateUrl: './team-management.component.html',
-    styleUrls: ['./team-management.component.scss'],
     standalone: true,
     imports: [
         TranslateModule,

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AppsettingsService } from '@lima/shared/services/appsettings.service';
+import { AppsettingsService } from '@lima/shared/services';
 
 @Pipe({
   name: 'teamLogo',

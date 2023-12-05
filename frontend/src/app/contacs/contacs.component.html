@@ -1,1 +1,9 @@
-Hier Liste und suche für Teams einbauen. Evtl mit archiv Funktion
+@defer () {
+    @for (team of allTeams$ | async; track team) {
+        @if (team.contact) {
+            <div>{{team.id}}</div>
+            <div>{{team.name}}</div>
+            <div>{{ team.contact | json }}</div>
+        }
+    }
+}

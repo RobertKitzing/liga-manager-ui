@@ -1251,6 +1251,20 @@ export type AllTeamsQuery = { allTeams?: Maybe<Array<Maybe<(
     )> }
   )>>> };
 
+export type TeamByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type TeamByIdQuery = { team?: Maybe<(
+    { __typename?: 'Team' }
+    & Pick<Team, 'id' | 'name' | 'created_at'>
+    & { contact?: Maybe<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>
+    )> }
+  )> };
+
 export type AllTournamentListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2291,6 +2305,24 @@ export const AllTeamsDocument = gql`
   })
   export class AllTeamsGQL extends Apollo.Query<AllTeamsQuery, AllTeamsQueryVariables> {
     override document = AllTeamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const TeamByIdDocument = gql`
+    query TeamById($id: String!) {
+  team(id: $id) {
+    ...Team
+  }
+}
+    ${TeamFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class TeamByIdGQL extends Apollo.Query<TeamByIdQuery, TeamByIdQueryVariables> {
+    override document = TeamByIdDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

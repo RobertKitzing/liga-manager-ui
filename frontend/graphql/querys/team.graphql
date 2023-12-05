@@ -3,3 +3,9 @@ query AllTeams {
         ...Team
     }
 }
+
+query TeamById($id: String!) {
+  team(id: $id) {
+    ...Team
+  }
+}

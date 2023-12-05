@@ -9,7 +9,6 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 @Component({
     selector: 'lima-team-logo',
     templateUrl: './team-logo.component.html',
-    styleUrls: ['./team-logo.component.scss'],
     standalone: true,
     imports: [
       TranslateModule, AsyncPipe, TeamLogoPipe,
