@@ -16,6 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TruncatePipe } from '@lima/shared/pipes';
+import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 
 @Component({
     selector: 'lima-table',
@@ -30,6 +31,7 @@ import { TruncatePipe } from '@lima/shared/pipes';
     ],
     standalone: true,
     imports: [
+        TeamLogoPipe,
         MatToolbarModule,
         SeasonChooserModule,
         MatTableModule,

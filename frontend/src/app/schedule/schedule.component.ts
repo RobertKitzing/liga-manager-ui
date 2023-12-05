@@ -22,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SeasonChooserModule } from '../shared/components/season-chooser/season-chooser.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 
 @Component({
     selector: 'lima-schedule',
@@ -41,6 +42,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         DecimalPipe,
         CustomDateModule,
         NumberPipe,
+        TeamLogoPipe,
     ],
 })
 export class ScheduleComponent implements OnInit {

@@ -4,6 +4,7 @@ import { AuthenticationService, TeamService } from '@lima/shared/services';
 import { firstValueFrom, map, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 
 @Component({
     selector: 'lima-team-logo',
@@ -11,7 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./team-logo.component.scss'],
     standalone: true,
     imports: [
-      TranslateModule, AsyncPipe],
+      TranslateModule, AsyncPipe, TeamLogoPipe,
+    ],
 })
 export class TeamLogoComponent {
 

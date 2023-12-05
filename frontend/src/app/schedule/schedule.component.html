@@ -53,7 +53,7 @@
                     <div class="grid p-2 content-center grid-cols-3 w-full gap-0 bg-toolbar dark:bg-toolbardark">
                       <div class="text-center self-center pl-2 break-words line-clamp-3">
                         <div class="grid justify-center">
-                          <img class="w-[100px] h-[100px]" src="logos/{{match.home_team.id}}.webp">
+                          <img class="w-[100px] h-[100px]" src="{{ match.home_team.id | teamLogo }}">
                           <span>{{match.home_team.name}}</span>
                         </div>
                       </div>
@@ -95,7 +95,7 @@
                       </div>
                       <div class="self-center pr-2 break-words line-clamp-3">
                         <div class="grid  justify-center">
-                          <img class="w-[100px] h-[100px]" src="logos/{{match.guest_team.id}}.webp">
+                          <img class="w-[100px] h-[100px]" src="{{ match.guest_team.id | teamLogo }}">
                           <span>{{match.guest_team.name}}</span>
                         </div>
                       </div>
