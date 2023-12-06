@@ -69,6 +69,7 @@
     "@angular-eslint/template-parser": "17.1.1",
     "@angular/cli": "~17.0.5",
     "@angular/compiler-cli": "^17.0.5",
+    "@capacitor/assets": "^3.0.1",
     "@capacitor/cli": "^5.0.0",
     "@openapitools/openapi-generator-cli": "^2.6.0",
     "@softarc/eslint-plugin-sheriff": "^0.11.0",
