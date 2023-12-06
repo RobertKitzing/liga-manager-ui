@@ -46,7 +46,7 @@ export class LoginComponent {
     constructor(
         private authenticationService: AuthenticationService,
         public dialogRef: MatDialogRef<LoginComponent>,
-        private notify: NotificationService,
+        private notificationService: NotificationService,
     ) {}
 
     async login() {
@@ -68,7 +68,7 @@ export class LoginComponent {
         if (email) {
             try {
                 await this.authenticationService.sendPasswordMail(email);
-                this.notify.showSuccessNotification(
+                this.notificationService.showSuccessNotification(
                     marker('SEND_NEW_PASSWORD_MAIL_SUCCESS'),
                 );
                 this.dialogRef.close();

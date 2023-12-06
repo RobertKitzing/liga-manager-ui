@@ -80,7 +80,12 @@
                 "src/favicon.ico",
                 "src/assets",
                 "src/i18n",
-                "src/appsettings.json"
+                "src/appsettings.json",
+                {
+                  "glob": "**/*.mjs",
+                  "input": "node_modules/@angular/common/locales",
+                  "output": "/assets/locales"
+                }
               ],
               "budgets": [
                 {

@@ -61,7 +61,7 @@ export class EditMatchPitchComponent {
     constructor(
         @Inject(MAT_DIALOG_DATA)
         public data: { match: Match; matchDay: MatchDay },
-        private notify: NotificationService,
+        private notificationService: NotificationService,
         private dialogRef: MatDialogRef<EditMatchPitchComponent>,
         private matchService: MatchService,
         private pitchService: PitchService,
@@ -75,7 +75,7 @@ export class EditMatchPitchComponent {
                     pitch_id: this.newMatchPitch.value.id,
                 }),
             );
-            this.notify.showSuccessNotification(marker('EDIT_PITCH_SUCCESS'));
+            this.notificationService.showSuccessNotification(marker('EDIT_PITCH_SUCCESS'));
             this.dialogRef.close(true);
         } catch (error) {
             // throw error

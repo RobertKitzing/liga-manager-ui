@@ -42,7 +42,7 @@ export class EditMatchKickoffComponent {
     constructor(
         @Inject(MAT_DIALOG_DATA)
         public data: { match: Match; matchDay: MatchDay },
-        private notify: NotificationService,
+        private notificationService: NotificationService,
         private dialogRef: MatDialogRef<EditMatchKickoffComponent>,
         private matchService: MatchService,
     ) {}
@@ -62,7 +62,7 @@ export class EditMatchKickoffComponent {
                     kickoff,
                 }),
             );
-            this.notify.showSuccessNotification(marker('EDIT_KICKOFF_SUCCESS'));
+            this.notificationService.showSuccessNotification(marker('EDIT_KICKOFF_SUCCESS'));
             this.dialogRef.close(true);
         } catch (error) {
             // throw error

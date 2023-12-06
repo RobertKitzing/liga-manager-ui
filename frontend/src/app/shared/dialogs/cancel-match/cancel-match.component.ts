@@ -40,7 +40,7 @@ export class CancelMatchComponent {
     constructor(
         @Inject(MAT_DIALOG_DATA)
         public data: { match: Match; matchDay: MatchDay },
-        private notify: NotificationService,
+        private notificationService: NotificationService,
         private dialogRef: MatDialogRef<CancelMatchComponent>,
         private matchService: MatchService,
     ) {
@@ -60,7 +60,7 @@ export class CancelMatchComponent {
                         reason: this.cancelMatchReason.value,
                     }),
                 );
-                this.notify.showSuccessNotification(
+                this.notificationService.showSuccessNotification(
                     marker('CANCEL_MATCH_SUCCESS'),
                 );
                 this.dialogRef.close(true);

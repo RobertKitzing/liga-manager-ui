@@ -4,7 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
-import { TeamService } from '@lima/shared/services';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { NotificationService, TeamService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom, map, of, switchMap, tap } from 'rxjs';
 
@@ -52,33 +53,28 @@ export class TeamContactComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private teamService: TeamService,
+    private notificationService: NotificationService,
   ) {
 
   }
 
-  // team$(id: string) {
-  //   return this.teamService.getTeamById(id).pipe(
-  //     // tap(
-  //     //   (team) => {
-  //     //     this.teamContact.setValue({
-  //     //       email: team?.contact?.email || null,
-  //     //       first_name: team?.contact?.first_name,
-  //     //       last_name: team?.contact?.last_name,
-  //     //       phone: team?.contact?.phone,
-  //     //     })
-  //     //   },
-  //     // ),
-  //   )
-  // }
-
   async updateTeamContact(team_id: string) {
-    await firstValueFrom(this.teamService.updateTeamContact({
-      team_id,
-      email: this.teamContact.value.email!,
-      first_name: this.teamContact.value.first_name,
-      last_name: this.teamContact.value.last_name,
-      phone: this.teamContact.value.phone,
-    }));
+    try {
+      await firstValueFrom(this.teamService.updateTeamContact({
+        team_id,
+        email: this.teamContact.value.email!,
+        first_name: this.teamContact.value.first_name,
+        last_name: this.teamContact.value.last_name,
+        phone: this.teamContact.value.phone,
+      }));
+      this.notificationService.showSuccessNotification(
+        marker('TEAM_CONTACT_SAVED_SUCCESS'),
+      );
+    } catch (error) {
+      this.notificationService.showErrorNotification(
+        marker('TEAM_CONTACT_SAVED_Error'),
+      );
+    }
   }
 
 }

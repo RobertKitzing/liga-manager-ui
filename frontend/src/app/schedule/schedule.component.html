@@ -54,7 +54,12 @@
                       <div class="text-center self-center pl-2 break-words line-clamp-3">
                         <div class="grid justify-center">
                           <img class="w-[100px] h-[100px]" src="{{ match.home_team.id | teamLogo }}">
-                          <span>{{match.home_team.name}}</span>
+                          <div class="grid grid-cols-2 gap-1">
+                            <span>{{ match.home_team.name }}</span>
+                            @if (match.home_team.contact) {
+                              <mat-icon>contacts</mat-icon>
+                            }
+                          </div>
                         </div>
                       </div>
                       <div class="flex flex-col text-center">

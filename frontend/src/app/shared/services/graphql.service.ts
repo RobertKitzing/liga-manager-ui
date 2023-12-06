@@ -21,7 +21,7 @@ export class GraphqlService {
         private httpLink: HttpLink,
         private authService: AuthenticationService,
         private appsettingsService: AppsettingsService,
-        private notify: NotificationService,
+        private notificationService: NotificationService,
     ) {}
 
     async init() {
@@ -68,14 +68,14 @@ export class GraphqlService {
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 (x: any) => x.message,
                             );
-                            this.notify.showErrorNotification(
+                            this.notificationService.showErrorNotification(
                                 marker('NETWORK_ERROR'),
                                 messages,
                             );
                             break;
                         }
                         default:
-                            this.notify.showErrorNotification(
+                            this.notificationService.showErrorNotification(
                                 marker('UNKNOWN_NETWORK_ERROR'),
                                 error.message,
                             );

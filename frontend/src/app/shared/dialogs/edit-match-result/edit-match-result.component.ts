@@ -42,7 +42,7 @@ export class EditMatchResultComponent {
     constructor(
         @Inject(MAT_DIALOG_DATA)
         public data: { match: Match; matchDay: MatchDay },
-        private notify: NotificationService,
+        private notificationService: NotificationService,
         private dialogRef: MatDialogRef<EditMatchResultComponent>,
         private matchService: MatchService,
     ) {}
@@ -60,7 +60,7 @@ export class EditMatchResultComponent {
                         guest_score: this.resultFormGroup.value.guest_score,
                     }),
                 );
-                this.notify.showSuccessNotification(
+                this.notificationService.showSuccessNotification(
                     marker('EDIT_RESULT_SUCCESS'),
                 );
                 this.dialogRef.close(true);

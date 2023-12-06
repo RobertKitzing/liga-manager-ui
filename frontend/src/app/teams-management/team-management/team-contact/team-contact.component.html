@@ -1,5 +1,5 @@
 @if (team$ | async; as team) {
-    <div [formGroup]="teamContact">
+    <div [formGroup]="teamContact" class="grid w-full justify-center mt-3">
         <mat-form-field>
             <mat-label translate>EMAIL</mat-label>
             <input matInput formControlName="email">
