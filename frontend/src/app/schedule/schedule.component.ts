@@ -13,7 +13,7 @@ import {
 } from '@lima/shared/dialogs';
 import { NumberPipe } from '../shared/pipes/number/number.pipe';
 import { CustomDateModule } from '../shared/pipes/custom-date/custom-date.module';
-import { AsyncPipe, DecimalPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe, JsonPipe, NgClass } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatOptionModule } from '@angular/material/core';
@@ -44,6 +44,7 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
         NumberPipe,
         TeamLogoPipe,
         JsonPipe,
+        NgClass,
     ],
 })
 export class ScheduleComponent implements OnInit {
@@ -77,7 +78,7 @@ export class ScheduleComponent implements OnInit {
         private seasonService: SeasonService,
         private dialog: MatDialog,
         private router: Router,
-        private authService: AuthenticationService,
+        public authService: AuthenticationService,
     ) {}
 
     ngOnInit(): void {
