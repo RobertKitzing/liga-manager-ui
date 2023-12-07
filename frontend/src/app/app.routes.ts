@@ -4,6 +4,11 @@ import { AuthenticationService } from './shared/services';
 import { inject } from '@angular/core';
 import { TeamManagementRoutes } from './teams-management/team-management';
 
+export const isLoggedInGuard = () => {
+    const authenticationService = inject(AuthenticationService);
+    return authenticationService.isAuthenticated;
+};
+
 export const teamAdminGuard = () => {
     const authenticationService = inject(AuthenticationService);
     return authenticationService.isTeamAdmin || authenticationService.isAdmin;
@@ -37,6 +42,7 @@ export const routes: Routes = [
     },
     {
         path: APP_ROUTES.CONTACTS,
+        canActivate: [isLoggedInGuard],
         loadComponent: () => import('./contacs').then((m) => m.ContacsComponent),
     },
     {

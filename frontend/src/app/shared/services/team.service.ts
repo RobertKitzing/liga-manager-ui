@@ -100,4 +100,9 @@ export class TeamService {
         return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, fd, { params });
     }
 
+    deleteTeamLogo(teamId: string) {
+        const params = new HttpParams().set('teamId', teamId);
+        return this.httpClient.delete(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, { params });
+    }
+
 }

@@ -1,15 +1,16 @@
 @if (teamId$ | async; as teamId) {
-  <div class="flex justify-center">
-    <div class="grid grid-cols-3 gap-4">
-      <div class="flex flex-col justify-center">
-        <span translate>TEAM_LOGO.CURRENT</span>
-        <img class="w-[128px] h-[128px]" src="{{ teamId | teamLogo }}">
+  <div class="flex justify-center items-center space-x-4">
+    <img class="w-[128px] h-[128px]" src="{{ teamId | teamLogo }}">
+    @if (authenticationService.isAdmin) {
+      <div>
+        <button class="bg-theme text-theme-cdefault" mat-button (click)="deleteTeamLogo(teamId)">
+          <mat-icon>delete</mat-icon>
+          <span translate>BUTTON.DELETE_TEAM_LOGO</span>
+        </button>
       </div>
-      @if (authenticationService.isAdmin) {
-        <div>
-          <input type="file" (change)="onFileSelected($event, teamId)">
-        </div>
-      }
-    </div>
+      <div>
+        <input type="file" (change)="onFileSelected($event, teamId)" accept=".webp">
+      </div>
+    }
   </div>
 }

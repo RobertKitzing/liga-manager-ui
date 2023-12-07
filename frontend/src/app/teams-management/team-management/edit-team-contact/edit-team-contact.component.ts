@@ -19,9 +19,9 @@ import { firstValueFrom, map, of, switchMap, tap } from 'rxjs';
     MatButtonModule,
     TranslateModule,
   ],
-  templateUrl: './team-contact.component.html',
+  templateUrl: './edit-team-contact.component.html',
 })
-export class TeamContactComponent {
+export class EditTeamContactComponent {
 
   team$ = this.activatedRoute.parent?.paramMap.pipe(
     map(

@@ -8,7 +8,7 @@ export enum TEAM_MANAGEMENT_ROUTES {
 export const TeamManagementRoutes: Routes = [
     {
         path: TEAM_MANAGEMENT_ROUTES.CONTACT,
-        loadComponent: () => import('./team-contact').then((m) => m.TeamContactComponent),
+        loadComponent: () => import('./edit-team-contact').then((m) => m.EditTeamContactComponent),
     },
     {
         path: TEAM_MANAGEMENT_ROUTES.LOGO,
