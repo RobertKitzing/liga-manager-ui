@@ -11,6 +11,7 @@ import {
 
 const SELECTED_PROGRESS_SEASON_KEY = 'SELECTED_PROGRESS_SEASON';
 const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
+const SELECTED_CONTACT_SEASON_KEY = 'SELECTED_CONTACT_SEASON_KEY';
 
 @Injectable({
     providedIn: 'root',
@@ -23,11 +24,18 @@ export class SeasonService {
     @LocalStorage(SELECTED_HISTORY_SEASON_KEY)
     historySeason!: AllSeasonsFragment;
 
+    @LocalStorage(SELECTED_CONTACT_SEASON_KEY)
+    contactSeason!: AllSeasonsFragment;
+
     progressSeason$ = new BehaviorSubject<AllSeasonsFragment>(
         this.progressSeason,
     );
 
     historySeason$ = new BehaviorSubject<AllSeasonsFragment>(
+        this.historySeason,
+    );
+
+    contactSeason$ = new BehaviorSubject<AllSeasonsFragment>(
         this.historySeason,
     );
 
@@ -66,6 +74,12 @@ export class SeasonService {
         this.historySeason$.subscribe((season) => {
             if (season) {
                 this.historySeason = season;
+            }
+        });
+
+        this.contactSeason$.subscribe((season) => {
+            if (season) {
+                this.contactSeason = season;
             }
         });
     }

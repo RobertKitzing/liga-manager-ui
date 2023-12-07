@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, of, switchMap } from 'rxjs';
 import { Match, MatchDay, SeasonState } from 'src/api/graphql';
-import { SeasonChooserModes } from '../shared/components/season-chooser';
+import { SeasonChooserComponent, SeasonChooserModes } from '../shared/components/season-chooser';
 import { AuthenticationService, SeasonService } from '@lima/shared/services';
 import {
     CancelMatchComponent,
@@ -20,7 +20,6 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SeasonChooserModule } from '../shared/components/season-chooser/season-chooser.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 
@@ -31,7 +30,7 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
     standalone: true,
     imports: [
         MatToolbarModule,
-        SeasonChooserModule,
+        SeasonChooserComponent,
         MatButtonModule,
         MatIconModule,
         MatSelectModule,

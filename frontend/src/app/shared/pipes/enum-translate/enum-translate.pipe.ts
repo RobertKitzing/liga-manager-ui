@@ -7,6 +7,7 @@ type Enums = SeasonState | UserRole;
 
 @Pipe({
     name: 'enumTranslate',
+    standalone: true,
 })
 export class EnumTranslatePipe implements PipeTransform {
 

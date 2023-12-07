@@ -1,0 +1,31 @@
+@if (team) {
+    <div class="flex flex-col">
+        <div class="bg-theme text-theme-cdefault text-center">
+            {{ team.name }}
+        </div>
+        <div class="flex justify-center">
+            <img class="w-[60px]" src="{{ team.id | teamLogo}}">
+        </div>
+        @if (team.contact) {
+        <div class="grid grid-cols-1 text-center">
+            {{ team.contact?.first_name }} {{ team.contact?.last_name }}
+        </div>
+        <div class="flex space-x-4">
+            <mat-icon>email</mat-icon>
+            <span class="grow">
+                <a href="mailto:{{ team.contact?.first_name }} {{ team.contact?.last_name }}<{{ team.contact?.email }}>">
+                    {{ team.contact?.email }}
+                </a>
+            </span>
+        </div>
+        <div class="flex space-x-4">
+            <mat-icon>phone</mat-icon>
+            <span class="grow">
+                <a href="tel:{{ team.contact?.phone }}">
+                    {{ team.contact?.phone }}
+                </a>
+            </span>
+        </div>
+        }
+    </div>
+}

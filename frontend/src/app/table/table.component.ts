@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, map, of, switchMap } from 'rxjs';
 import { RankingPosition } from 'src/api/graphql';
-import { SeasonChooserModes, SeasonChooserModule } from '../shared/components';
+import { SeasonChooserComponent, SeasonChooserModes } from '../shared/components';
 import { RankingService, SeasonService } from '@lima/shared/services';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,7 +33,7 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
     imports: [
         TeamLogoPipe,
         MatToolbarModule,
-        SeasonChooserModule,
+        SeasonChooserComponent,
         MatTableModule,
         TranslateModule,
         NgClass,

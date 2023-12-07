@@ -1,9 +1,26 @@
-@defer () {
-    @for (team of allTeams$ | async; track team) {
-        @if (team.contact) {
-            <div>{{team.id}}</div>
-            <div>{{team.name}}</div>
-            <div>{{ team.contact | json }}</div>
+<div class="flex justify-center h-full">
+    <div class="w-full sm:w-3/4">
+        <mat-toolbar class="flex justify-center">
+            <!-- <div class="w-full lg:w-1/3 self-center">
+            </div> -->
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+                <mat-label translate>SEARCH_TEAM</mat-label>
+                <input matInput [formControl]="searchTeam" />
+            </mat-form-field>
+        </mat-toolbar>
+        <!-- <div class="flex space-x-2">
+            <div class="w-full lg:w-1/3 self-center">
+                <lima-season-chooser mode="progressSeason"></lima-season-chooser>
+            </div>
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+                <mat-label translate>SEARCH_TEAM</mat-label>
+                <input matInput [formControl]="searchTeam" />
+            </mat-form-field> 
+        </div>-->
+        <div class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 gap-5">
+        @for (team of teams$ | async; track team) {
+            <lima-team-contact [team]="team"></lima-team-contact>
         }
-    }
-}
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ import {
 } from '@api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '../utils';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 
 @Injectable({
@@ -96,7 +96,8 @@ export class TeamService {
     uploadTeamLogo(teamId: string, file: File) {
         const fd = new FormData();
         fd.append('file', file)
-        return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, fd);
+        const params = new HttpParams().set('teamId', teamId);
+        return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, fd, { params });
     }
 
 }

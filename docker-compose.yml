@@ -10,7 +10,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - team-logos:/assets/team-logos
+      - team-logos:/assets/logos
     depends_on:
       - api
 
