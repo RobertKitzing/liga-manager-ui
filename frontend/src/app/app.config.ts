@@ -9,6 +9,12 @@ import { GraphqlService, httpLoaderFactory } from './shared/services';
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
+import { MatDialogConfig } from '@angular/material/dialog';
+
+export const defaultDialogConfig = {
+    // width: '50vw',
+    // height: '50vh',
+} as MatDialogConfig
 
 function graphqlFactory(provider: GraphqlService) {
     return () => provider.init();

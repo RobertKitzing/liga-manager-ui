@@ -106,7 +106,7 @@
                 }
                 @if (authService.isAuthenticated) {
                 <div class="grid grid-cols-3 w-full justify-items-center m-3">
-                  <button mat-raised-button color="primary" class="rounded">
+                  <button mat-raised-button color="primary" class="rounded" (click)="openViewContactDialog(match.home_team)">
                     <mat-icon>contacts</mat-icon>
                     <span translate>BUTTON.CONTACT</span>
                   </button>
@@ -138,7 +138,7 @@
                   } @else {
                     <div></div>
                   }
-                  <button mat-raised-button color="primary" class="rounded">
+                  <button mat-raised-button color="primary" class="rounded"  (click)="openViewContactDialog(match.guest_team)">
                     <mat-icon>contacts</mat-icon>
                     <span translate>BUTTON.CONTACT</span>
                   </button>

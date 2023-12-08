@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, iif, of, switchMap } from 'rxjs';
-import { Match, MatchDay, SeasonState } from 'src/api/graphql';
-import { SeasonChooserComponent, SeasonChooserModes } from '../shared/components/season-chooser';
 import { AuthenticationService, SeasonService } from '@lima/shared/services';
 import {
     CancelMatchComponent,
@@ -11,8 +9,6 @@ import {
     EditMatchPitchComponent,
     EditMatchResultComponent,
 } from '@lima/shared/dialogs';
-import { NumberPipe } from '../shared/pipes/number/number.pipe';
-import { CustomDateModule } from '../shared/pipes/custom-date/custom-date.module';
 import { AsyncPipe, DecimalPipe, JsonPipe, NgClass } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,6 +18,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
+import { CustomDateModule, NumberPipe } from '@lima/shared/pipes';
+import { SeasonChooserComponent, SeasonChooserModes } from '@lima/shared/components';
+import { ViewTeamContactComponent } from '@lima/shared/dialogs/view-team-contact';
+import { Match, MatchDay, SeasonState, Team } from '@api/graphql';
+import { defaultDialogConfig } from '@lima/app.config';
 
 @Component({
     selector: 'lima-schedule',
@@ -113,25 +114,36 @@ export class ScheduleComponent implements OnInit {
 
     openCancelMatchDialog(match: Match, matchDay: MatchDay) {
         this.dialog.open(CancelMatchComponent, {
+            ...defaultDialogConfig,
             data: { match, matchDay },
         });
     }
 
     openEditKickoffDialog(match: Match, matchDay: MatchDay) {
         this.dialog.open(EditMatchKickoffComponent, {
+            ...defaultDialogConfig,
             data: { match, matchDay },
         });
     }
 
     openEditPitchDialog(match: Match, matchDay: MatchDay) {
         this.dialog.open(EditMatchPitchComponent, {
+            ...defaultDialogConfig,
             data: { match, matchDay },
         });
     }
 
     openEditResultDialog(match: Match, matchDay: MatchDay) {
         this.dialog.open(EditMatchResultComponent, {
+            ...defaultDialogConfig,
             data: { match, matchDay },
+        });
+    }
+
+    openViewContactDialog(team: Team) {
+        this.dialog.open(ViewTeamContactComponent, {
+            ...defaultDialogConfig,
+            data: team,
         });
     }
 

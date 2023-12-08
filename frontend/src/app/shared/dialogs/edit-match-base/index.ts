@@ -1,1 +1,1 @@
-export * from './edit-match-base.module';
+export * from './edit-match-base.component';

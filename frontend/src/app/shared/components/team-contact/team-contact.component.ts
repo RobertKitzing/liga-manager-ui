@@ -15,5 +15,7 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 export class TeamContactComponent {
 
   @Input() team!: Team;
+  
+  @Input() showTitle = true;
 
 }

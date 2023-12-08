@@ -21,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NavLinksComponent } from './shared/components/nav-links/nav-links.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { defaultDialogConfig } from './app.config';
 
 @Component({
     selector: 'lima-root',
@@ -81,7 +82,7 @@ export class AppComponent implements OnInit {
     }
 
     openLoginDialog() {
-        this.dialog.open(LoginComponent);
+        this.dialog.open(LoginComponent, defaultDialogConfig);
     }
 
     openChangePasswordDialog() {

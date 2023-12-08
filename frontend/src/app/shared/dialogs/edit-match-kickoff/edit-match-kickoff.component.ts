@@ -5,14 +5,15 @@ import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatchService, NotificationService } from '@lima/shared/services';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay } from 'src/api/graphql';
-import { CustomDateModule } from '../../pipes/custom-date/custom-date.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
+import { CustomDateModule } from '@lima/shared/pipes';
+import { EditMatchBaseComponent } from '../edit-match-base';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -20,13 +21,14 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
     styleUrls: [],
     standalone: true,
     imports: [
-        EditMatchBaseModule,
+        EditMatchBaseComponent,
         TranslateModule,
         MatIconModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         MatInputModule,
         MatDatepickerModule,
+        MatNativeDateModule,
         MatButtonModule,
         MatDialogClose,
         CustomDateModule,

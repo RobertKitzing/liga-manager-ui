@@ -11,7 +11,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
-import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
+import { EditMatchBaseComponent } from '../edit-match-base';
 
 @Component({
     selector: 'lima-cancel-match',
@@ -19,7 +19,7 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
     styleUrls: [],
     standalone: true,
     imports: [
-        EditMatchBaseModule,
+        EditMatchBaseComponent,
         TranslateModule,
         MatFormFieldModule,
         MatInputModule,

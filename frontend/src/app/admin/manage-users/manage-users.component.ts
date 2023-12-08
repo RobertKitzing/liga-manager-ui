@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { defaultDialogConfig } from '@lima/app.config';
 
 @Component({
     selector: 'lima-manage-users',
@@ -66,7 +67,7 @@ export class ManageUsersComponent {
 
     editUser(user?: User) {
         this.dialog.open(EditUserDialogComponent, {
-            width: '100%',
+            ...defaultDialogConfig,
             data: user,
         });
     }

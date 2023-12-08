@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
+import { EditMatchBaseComponent } from '../edit-match-base';
 
 @Component({
     selector: 'lima-edit-match-result',
@@ -18,7 +18,6 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
     styleUrls: [],
     standalone: true,
     imports: [
-        EditMatchBaseModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -26,6 +25,7 @@ import { EditMatchBaseModule } from '../edit-match-base/edit-match-base.module';
         MatDialogClose,
         MatIconModule,
         TranslateModule,
+        EditMatchBaseComponent,
     ],
 })
 export class EditMatchResultComponent {
