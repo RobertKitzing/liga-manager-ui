@@ -29,6 +29,7 @@ export enum APP_ROUTES {
     TEAMS_MANAGEMENT = 'teams_management',
     ADMIN = 'admin',
     HISTORY = 'history',
+    HALL_OF_FAME = 'hall-of-fame',
 }
 
 export const routes: Routes = [
@@ -53,6 +54,11 @@ export const routes: Routes = [
         path: APP_ROUTES.TOURNAMENT,
         loadComponent: () =>
             import('./tournament').then((m) => m.TournamentComponent),
+    },
+    {
+        path: APP_ROUTES.HALL_OF_FAME,
+        loadComponent: () =>
+            import('./hall-of-fame').then((m) => m.HallOfFameComponent),
     },
     {
         path: APP_ROUTES.TEAMS_MANAGEMENT,
