@@ -14,7 +14,10 @@
     "i18n:languages": "node get-languages.mjs",
     "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",
     "lint": "ng lint",
-    "lint:fix": "ng lint --fix "
+    "lint:fix": "ng lint --fix ",
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "jest": {
     "preset": "jest-preset-angular",
@@ -71,6 +74,7 @@
     "@angular/compiler-cli": "^17.0.5",
     "@capacitor/assets": "^3.0.1",
     "@capacitor/cli": "^5.0.0",
+    "@cypress/schematic": "^2.5.1",
     "@openapitools/openapi-generator-cli": "^2.6.0",
     "@softarc/eslint-plugin-sheriff": "^0.11.0",
     "@softarc/sheriff-core": "^0.11.0",
