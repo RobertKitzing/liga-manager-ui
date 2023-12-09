@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService, NotificationService, TeamService } from '@lima/shared/services';
-import { firstValueFrom, map, of } from 'rxjs';
+import { firstValueFrom, map, of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
@@ -19,9 +19,12 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class TeamLogoComponent {
 
-  teamId$ = this.activatedRoute.parent?.paramMap.pipe(
+  team$ = this.activatedRoute.parent?.paramMap.pipe(
     map(
-      (p) => p.get('teamId'),
+      (p) => p.get('teamId')!,
+    ),
+    switchMap(
+      (teamId) => this.teamService.getTeamById(teamId),
     ),
   )
 
@@ -42,6 +45,7 @@ export class TeamLogoComponent {
           await firstValueFrom(
             this.teamService.uploadTeamLogo(teamId, file),
           );
+          this.teamService.refetchAllTeams()
           this.notificationService.showSuccessNotification(
             marker('UPLOAD_TEAM_LOGO_SUCCESS'),
           )

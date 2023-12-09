@@ -38,6 +38,14 @@ export class TeamService {
         private appsettingsService: AppsettingsService,
     ) {}
 
+    refetchAllTeams() {
+        this.allTeamsGQL.watch().refetch();
+    }
+
+    refetchTeamById(id: string) {
+        this.teamByIdGQL.watch({ id }).refetch();
+    }
+
     getTeamById(id: string) {
         return this.teamByIdGQL.watch({ id }).valueChanges.pipe(
             map(({ data }) => data.team ),

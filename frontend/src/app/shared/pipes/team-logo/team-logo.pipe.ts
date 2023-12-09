@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Team } from '@api/graphql';
 import { AppsettingsService } from '@lima/shared/services';
 
 @Pipe({
@@ -13,9 +14,9 @@ export class TeamLogoPipe implements PipeTransform {
 
   }
 
-  transform(logoId: string): string {
+  transform(team: Team): string {
     // return `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${logoId}`;
-    return `${this.appsettingsService.appsettings?.host || ''}/logos/${logoId}.webp`;
+    return `${this.appsettingsService.appsettings?.host || ''}/logos/${team.logo_id}.webp`;
   }
 
 }
