@@ -40,14 +40,14 @@ jobs:
         with:
           browser: chrome
           working-directory: frontend
-      # -
-      #   name: Build and push
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     cache-from: type=gha
-      #     cache-to: type=gha,mode=max
-      #     push: true
-      #     tags: ${{ env.DOCKER_REPO_UI }}:next
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: true
+          tags: ${{ env.DOCKER_REPO_UI }}:next
 
     
   # Main-Job:
