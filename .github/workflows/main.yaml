@@ -28,7 +28,6 @@ jobs:
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          context: .
           load: true
           tags: ${{ env.DOCKER_REPO_UI }}:test
       - name: Test
