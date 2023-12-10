@@ -36,8 +36,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
-          CYPRESS_host: localhost
-          CYPRESS_port: 80
+          CYPRESS_baseUrl: http://nginx
         with:
           browser: chrome
           record: true
