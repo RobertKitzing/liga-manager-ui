@@ -33,6 +33,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Start Services
         run: docker compose -f docker-compose.e2e.yml up -d
+      - name: Init Database
+        run: docker exec lima-api lima migrations:migrate
+      - name: Load Demo Data
+        run: docker exec lima-api lima app:db:demo-data
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
@@ -49,7 +53,6 @@ jobs:
           push: true
           tags: ${{ env.DOCKER_REPO_UI }}:next
 
-    
   # Main-Job:
   #   runs-on: ubuntu-latest
   #   env:
