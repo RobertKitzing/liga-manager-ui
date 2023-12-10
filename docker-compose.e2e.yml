@@ -23,7 +23,7 @@ services:
     image: redis:alpine
 
   mariadb:
-    image: mariadb:10.3.12
+    image: mariadb:10.11
     ports:
       - "3306:3306"
     env_file:
