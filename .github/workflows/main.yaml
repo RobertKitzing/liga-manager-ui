@@ -30,6 +30,7 @@ jobs:
           cache-to: type=gha,mode=max
           load: true
           tags: ${{ env.DOCKER_REPO_UI }}:test
+      - uses: actions/checkout@v3
       - name: Test
         uses: adambirds/docker-compose-action@v1.3.0
         with:
