@@ -3,6 +3,7 @@ import { AdminRoutes } from './admin';
 import { AuthenticationService } from './shared/services';
 import { inject } from '@angular/core';
 import { TeamManagementRoutes } from './teams-management/team-management';
+import { APP_ROUTES } from './app.routes.enum';
 
 export const isLoggedInGuard = () => {
     const authenticationService = inject(AuthenticationService);
@@ -18,19 +19,6 @@ export const adminGuard = () => {
     const authenticationService = inject(AuthenticationService);
     return authenticationService.isAdmin;
 };
-
-export enum APP_ROUTES {
-    NEW_PASSWORD_ROUTE = 'newpassword',
-    TABLE = 'table',
-    CALENDAR = 'calendar',
-    CONTACTS = 'contacts',
-    SCHEDULE = 'schedule',
-    TOURNAMENT = 'tournament',
-    TEAMS_MANAGEMENT = 'teams_management',
-    ADMIN = 'admin',
-    HISTORY = 'history',
-    HALL_OF_FAME = 'hall-of-fame',
-}
 
 export const routes: Routes = [
     {

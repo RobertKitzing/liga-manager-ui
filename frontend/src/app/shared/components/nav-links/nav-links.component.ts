@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { APP_ROUTES } from '@lima/app.routes';
+import { APP_ROUTES } from '@lima/app.routes.enum';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 import { AuthenticationService } from '@lima/shared/services';
