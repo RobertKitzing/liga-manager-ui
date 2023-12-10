@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'next'
+      
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -27,8 +28,21 @@ jobs:
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          push: true
-          tags: ${{ env.DOCKER_REPO_UI }}:next
+          context: .
+          load: true
+          tags: ${{ env.DOCKER_REPO_UI }}:test
+      - name: Test
+        uses: adambirds/docker-compose-action@v1.3.0
+        with:
+          compose-file: "./docker-compose.e2e.yml"
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+      #     push: true
+      #     tags: ${{ env.DOCKER_REPO_UI }}:next
 
     
   # Main-Job:
