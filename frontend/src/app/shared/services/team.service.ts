@@ -14,8 +14,9 @@ import {
 } from '@api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '../utils';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
     providedIn: 'root',
@@ -36,6 +37,7 @@ export class TeamService {
         private updateTeamContactGQL: UpdateTeamContactGQL,
         private httpClient: HttpClient,
         private appsettingsService: AppsettingsService,
+        private authenticationService: AuthenticationService,
     ) {}
 
     refetchAllTeams() {
@@ -105,12 +107,14 @@ export class TeamService {
         const fd = new FormData();
         fd.append('file', file)
         const params = new HttpParams().set('teamId', teamId);
-        return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, fd, { params });
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authenticationService.accessToken}`)
+        return this.httpClient.post(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, fd, { params, headers });
     }
 
     deleteTeamLogo(teamId: string) {
         const params = new HttpParams().set('teamId', teamId);
-        return this.httpClient.delete(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, { params });
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authenticationService.accessToken}`)
+        return this.httpClient.delete(`${this.appsettingsService.appsettings?.host || ''}/api/logos`, { params, headers });
     }
 
 }

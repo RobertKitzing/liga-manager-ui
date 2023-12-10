@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService, NotificationService, TeamService } from '@lima/shared/services';
-import { firstValueFrom, map, of, switchMap } from 'rxjs';
+import { firstValueFrom, map, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
@@ -14,14 +14,20 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './team-logo.component.html',
     standalone: true,
     imports: [
-      TranslateModule, AsyncPipe, TeamLogoPipe, MatButtonModule, MatIconModule
+      TranslateModule, AsyncPipe, TeamLogoPipe, MatButtonModule, MatIconModule,
     ],
 })
 export class TeamLogoComponent {
 
+  imageSrc = '';
+
   team$ = this.activatedRoute.parent?.paramMap.pipe(
     map(
-      (p) => p.get('teamId')!,
+      (p) => {
+        const teamId =  p.get('teamId')!
+        this.reloadImage(teamId);
+        return teamId;
+      },
     ),
     switchMap(
       (teamId) => this.teamService.getTeamById(teamId),
@@ -36,6 +42,10 @@ export class TeamLogoComponent {
   ) {
   }
 
+  reloadImage(teamId: string) {
+    this.imageSrc = `/api/logos?teamId=${teamId}&timestamp=${Date.now()}`
+  }
+
   async onFileSelected(event: Event, teamId: string) {
     const element = event.currentTarget as HTMLInputElement;
     if (element.files) {
@@ -45,7 +55,7 @@ export class TeamLogoComponent {
           await firstValueFrom(
             this.teamService.uploadTeamLogo(teamId, file),
           );
-          this.teamService.refetchAllTeams()
+          this.reload(teamId);
           this.notificationService.showSuccessNotification(
             marker('UPLOAD_TEAM_LOGO_SUCCESS'),
           )
@@ -64,6 +74,7 @@ export class TeamLogoComponent {
       await firstValueFrom(
         this.teamService.deleteTeamLogo(teamId),
       );
+      this.reload(teamId);
       this.notificationService.showSuccessNotification(
         marker('DELETE_TEAM_LOGO_SUCCESS'),
       )
@@ -73,6 +84,12 @@ export class TeamLogoComponent {
         marker('DELETE_TEAM_LOGO_ERROR'),
       )
     }
+  }
+
+  private reload(teamId: string) {
+    this.teamService.refetchAllTeams()
+    this.teamService.refetchTeamById(teamId);
+    this.reloadImage(teamId);
   }
 
 }
