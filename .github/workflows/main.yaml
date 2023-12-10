@@ -35,6 +35,9 @@ jobs:
         run: docker compose -f docker-compose.e2e.yml up -d
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_host: localhost
+          CYPRESS_port: 80
         with:
           browser: chrome
           record: true
