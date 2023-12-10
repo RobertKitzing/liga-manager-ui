@@ -23,18 +23,21 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       -
-        name: Build and push
+        name: Build
         uses: docker/build-push-action@v5
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           load: true
           tags: ${{ env.DOCKER_REPO_UI }}:test
-      - uses: actions/checkout@v3
-      - name: Test
-        uses: adambirds/docker-compose-action@v1.3.0
+      - name: Start Services
+        run: docker compose -f docker-compose.e2e.yml up -d
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
         with:
-          compose-file: "docker-compose.e2e.yml"
+          browser: chrome
+          record: true
+          working-directory: frontend
       # -
       #   name: Build and push
       #   uses: docker/build-push-action@v5
