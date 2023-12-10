@@ -39,6 +39,7 @@ fragment Pitch on Pitch {
 fragment Team on Team {
     id
     name
+    logo_id
     created_at
     contact {
         ...Contact
