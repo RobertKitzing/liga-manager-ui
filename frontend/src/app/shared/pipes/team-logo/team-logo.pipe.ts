@@ -16,7 +16,11 @@ export class TeamLogoPipe implements PipeTransform {
 
   transform(team: Team): string {
     // return `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${logoId}`;
-    return `${this.appsettingsService.appsettings?.host || ''}/logos/${team.logo_id}.webp`;
+    if (team.logo_id) {
+      return `${this.appsettingsService.appsettings?.host || ''}/logos/${team.logo_id}.webp`;
+    } else {
+      return '/assets/default_team_logo.webp'
+    }
   }
 
 }
