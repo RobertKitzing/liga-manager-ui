@@ -2,7 +2,7 @@ name: E2E Tests
 on:
   pull_request:
     branches:
-      - main
+      - next
 
 jobs:
   e2e:
@@ -10,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Start Services
-        run: docker compose -f docker-compose.e2e.yml up -d
+        run: docker compose -f docker-compose.e2e.yml up -d --wait --wait-timeout 30
+      - name: Init Database
+        run: docker exec lima-api lima migrations:migrate
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
       - name: Cypress run
