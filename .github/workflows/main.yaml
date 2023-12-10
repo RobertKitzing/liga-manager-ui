@@ -39,7 +39,6 @@ jobs:
           CYPRESS_baseUrl: http://localhost
         with:
           browser: chrome
-          record: true
           working-directory: frontend
       # -
       #   name: Build and push
