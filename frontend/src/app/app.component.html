@@ -9,7 +9,7 @@
     </div>
     <div class="hidden lg:flex lg:visible">
       @if (!authService.isAuthenticated) {
-        <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
+        <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()" id="login">
           <span translate>BUTTON.LOGIN</span>
         </button>
       } @else {
