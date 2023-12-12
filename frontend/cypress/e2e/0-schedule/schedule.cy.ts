@@ -1,13 +1,11 @@
-import { APP_ROUTES } from "@lima/app.routes.enum"
+import enGB from '@lima-i18n/en-GB.json';
 
-describe('Table', () => {
-    it('Should go to Table', () => {
-        cy.visit(`/${APP_ROUTES.SCHEDULE}`)
+describe('Schedule', () => {
+    it('Should go to Schedule', () => {
+        cy.visit(`/`)
+        cy.contains(enGB['NAVIGATION.SCHEDULE']).click();
         cy.get('lima-schedule').should('exist')
-    })
-    it('Should select a Season', () => {
-        cy.visit(`/${APP_ROUTES.SCHEDULE}`)
-        cy.get('mat-select').first().click().get('mat-option').first().click();
+        cy.contains(enGB['PLACEHOLDER.SELECT_SEASON']).click().get('mat-option').first().click();
         cy.get('h3').should('exist');
     })
 })
