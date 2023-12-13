@@ -1,5 +1,5 @@
 <div class="flex justify-center w-full">
-  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare"
+  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" data-cy="select-season"
     (selectionChange)="currentSeasonChanged($event)" [value]="season$ | async"
     placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
     @for (season of seasonList$ | async; track season) {
