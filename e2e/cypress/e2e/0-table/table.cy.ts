@@ -5,7 +5,7 @@ describe('Table', () => {
         cy.visit(`/`)
         cy.contains(enGB['NAVIGATION.TABLE']).click();
         cy.get('lima-table').should('exist')
-        cy.contains(enGB['PLACEHOLDER.SELECT_SEASON']).click().get('mat-option').first().click();
+        cy.get('[data-cy="select-season"]').click().get('mat-option').first().click();
         cy.get('table').should('exist');
     })
 })
