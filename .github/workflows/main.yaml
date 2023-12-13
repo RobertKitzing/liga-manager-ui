@@ -40,6 +40,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Start Services
         run: docker compose -f docker-compose.e2e.yml up -d --force-recreate
+      - name: Init DB
+        run: docker exec lima-api lima migrations:migrate --no-interaction
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
       - name: Cypress run
