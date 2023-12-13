@@ -15,9 +15,9 @@ services:
 
   api:
     container_name: lima-api
-    image: mklocke/liga-manager-api:1.13.1
+    image: mklocke/liga-manager-api
     env_file:
-      - ./env/api.env 
+      - ./env/api.env
     volumes:
       - team-logos:/var/www/logos
     depends_on:
