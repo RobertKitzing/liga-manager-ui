@@ -50,7 +50,7 @@ jobs:
           CYPRESS_baseUrl: http://localhost
         with:
           browser: chrome
-          working-directory: cypress
+          working-directory: e2e
   push:
     runs-on: ubuntu-latest
     needs: build
