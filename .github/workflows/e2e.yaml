@@ -11,8 +11,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Start Services
         run: docker compose -f docker-compose.e2e.yml up -d --wait --wait-timeout 30
-      - name: Init Database
-        run: docker exec lima-api lima migrations:migrate
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
       - name: Cypress run
@@ -21,4 +19,4 @@ jobs:
           CYPRESS_baseUrl: http://localhost
         with:
           browser: chrome
-          working-directory: frontend
+          working-directory: e2e
