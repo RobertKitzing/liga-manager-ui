@@ -47,6 +47,7 @@ jobs:
         env:
           CYPRESS_baseUrl: http://localhost
         with:
+          record: true
           browser: chrome
           working-directory: e2e
   push:
