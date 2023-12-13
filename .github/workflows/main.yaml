@@ -45,7 +45,7 @@ jobs:
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
       - name: Add Admin user
-        run: docker exec lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
+        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
       - name: List user
         run: docker exec lima-api lima app:user:list
       - name: Cypress run
