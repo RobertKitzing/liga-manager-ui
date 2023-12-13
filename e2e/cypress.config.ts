@@ -7,4 +7,7 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:4200',
   },
+  retries: {
+    runMode: 2,
+  }
 })
