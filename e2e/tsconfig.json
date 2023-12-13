@@ -3,10 +3,11 @@
     "**/*.ts"
   ],
   "compilerOptions": {
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "sourceMap": false,
     "types": ["cypress"],
-    "baseUrl": "./cypress",
+    "baseUrl": "./",
     "paths": {
       "@lima-i18n/*": ["../frontend/src/i18n/*"]
     }
