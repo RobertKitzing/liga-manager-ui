@@ -39,6 +39,6 @@ services:
   #   environment:
   #     CYPRESS_baseUrl: http://nginx
   #   volumes:
-  #     - ./frontend:/app
+  #     - ./cypress:/app
   #   depends_on:
   #     - nginx
