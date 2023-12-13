@@ -1,4 +1,4 @@
-import enGB from '@lima-i18n/en-GB.json';
+import * as enGB from '@lima-i18n/en-GB.json';
 
 describe('Schedule', () => {
     it('Should go to Schedule', () => {

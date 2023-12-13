@@ -3,7 +3,6 @@
     "**/*.ts"
   ],
   "compilerOptions": {
-    "esModuleInterop": true,
     "resolveJsonModule": true,
     "sourceMap": false,
     "types": ["cypress"],
