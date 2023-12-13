@@ -25,7 +25,6 @@
       "dom"
     ],
     "paths": {
-      "@lima-i18n/*": ["src/i18n/*"],
       "@lima/*": ["src/app/*"],
       "@api/*": ["src/api/*"]
     }

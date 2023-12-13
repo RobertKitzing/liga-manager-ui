@@ -3,7 +3,6 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "cypress:install": "cypress install",
     "cypress:open": "cypress open",
@@ -12,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^13.6.1"
+    "cypress": "^13.6.1",
+    "typescript": "~5.2.2"
   }
 }

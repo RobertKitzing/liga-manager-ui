@@ -1,0 +1,14 @@
+{
+  "include": [
+    "**/*.ts"
+  ],
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "types": ["cypress"],
+    "baseUrl": "./cypress",
+    "paths": {
+      "@lima-i18n/*": ["../frontend/src/i18n/*"]
+    }
+  }
+}

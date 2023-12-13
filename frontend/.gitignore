@@ -46,7 +46,3 @@ Thumbs.db
 
 # Data
 data
-
-# Cypress
-cypress\screenshots
-cypress\videos
