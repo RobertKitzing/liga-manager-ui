@@ -1,7 +1,33 @@
 <mat-toolbar>
-    <mat-select></mat-select>
-    <button mat-icon-button (click)="createTournament()">
-        <mat-icon>add</mat-icon>
-        <span translate>BUTTON.CREATE_NEW_TOURNAMENT</span>
-    </button>
+    <div class="w-full flex items-center space-x-4">
+        <mat-select class="w-1/2"
+            placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
+            [formControl]="selectedTournamentFC"
+        >
+        @for (tournament of tournamentService.allTournaments$ | async; track tournament) {
+            @if (tournament) {
+                <mat-option [value]="tournament">
+                    {{ tournament.name }} ({{ tournament.id }})
+                </mat-option>
+            }
+        }
+        </mat-select>
+        <button mat-stroked-button (click)="createTournament()">
+            <mat-icon>add</mat-icon>
+            <span translate>BUTTON.CREATE_NEW_TOURNAMENT</span>
+        </button>
+    </div>
 </mat-toolbar>
+
+@if (selectedTournament$ | async; as selectedTournament) {
+    @for( round of selectedTournament.rounds; track round ) {
+        @if(round) {
+            <p>{{ round.start_date | customDate }} - {{ round.end_date | customDate }}</p>
+        }
+        @for( match of round?.matches; track match ) {
+            @if(match) {
+                <p>{{ match.home_team.name }} - {{ match.guest_team.name }}</p>
+            }
+        }
+    }
+}

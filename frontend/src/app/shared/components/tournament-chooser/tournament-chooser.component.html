@@ -1,0 +1,12 @@
+<mat-select class="w-1/2"
+            placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
+            [formControl]="selectedTournamentFC"
+        >
+        @for (tournament of tournamentService.allTournaments$ | async; track tournament) {
+            @if (tournament) {
+                <mat-option [value]="tournament">
+                    {{ tournament.name }} ({{ tournament.id }})
+                </mat-option>
+            }
+        }
+</mat-select>

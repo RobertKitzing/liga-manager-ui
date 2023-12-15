@@ -11,3 +11,4 @@ export * from './user.service';
 export * from './notification.service';
 export * from './match.service';
 export * from './pitch.service';
+export * from './tournament.service';

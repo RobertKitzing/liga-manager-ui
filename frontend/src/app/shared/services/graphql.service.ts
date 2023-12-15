@@ -127,6 +127,15 @@ export class GraphqlService {
             link: link,
             cache: cache,
         });
+
+        if (this.authService.accessToken) {
+            try {
+                await firstValueFrom(this.authService.loadUser());
+            } catch (error) {
+                // Empty Catch
+            }
+
+        }
     }
 
 }

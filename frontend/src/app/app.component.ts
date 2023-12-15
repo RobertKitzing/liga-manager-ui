@@ -80,10 +80,6 @@ export class AppComponent implements OnInit {
         this.darkModeControl.valueChanges.subscribe((dark) => {
             this.themeService.darkMode$.next(dark);
         });
-
-        if (this.authService.accessToken) {
-            await firstValueFrom(this.authService.loadUser());
-        }
     }
 
     openLoginDialog() {
