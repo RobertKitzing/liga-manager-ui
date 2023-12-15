@@ -66,15 +66,17 @@
                 [disabled]="!newTeamName.valid">
                 <mat-icon>save</mat-icon>
               </button>
+              <!-- <button mat-icon-button (click)="deleteTeam(team.id)">
+                <mat-icon>
+                  delete
+                </mat-icon>
+              </button> -->
               <button mat-icon-button (click)="editTeamId = ''">
                 <mat-icon>
                   cancel
                 </mat-icon>
               </button>
             }
-            <!-- <button mat-icon-button (click)="deleteTeam(team.id)">
-            <mat-icon>delete</mat-icon>
-          </button> -->
         </td>
       </ng-container>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

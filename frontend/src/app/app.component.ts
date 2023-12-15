@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NavLinksComponent } from './shared/components/nav-links/nav-links.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { defaultDialogConfig } from './app.config';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'lima-root',
@@ -79,6 +80,10 @@ export class AppComponent implements OnInit {
         this.darkModeControl.valueChanges.subscribe((dark) => {
             this.themeService.darkMode$.next(dark);
         });
+
+        if (this.authService.accessToken) {
+            await firstValueFrom(this.authService.loadUser());
+        }
     }
 
     openLoginDialog() {

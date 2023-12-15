@@ -72,7 +72,7 @@ export class EditTeamContactComponent {
       );
     } catch (error) {
       this.notificationService.showErrorNotification(
-        marker('TEAM_CONTACT_SAVED_Error'),
+        marker('TEAM_CONTACT_SAVED_ERROR'),
       );
     }
   }

@@ -20,7 +20,7 @@ export class NotificationService {
             title,
             messages,
             'warn',
-            this.defaultDuration * 2,
+            this.defaultDuration * 200,
         );
     }
 

@@ -35,7 +35,8 @@ export class AuthenticationService {
         private changePasswordQGL: PasswordChangeGQL,
         private resetPasswordQGL: PasswordResetGQL,
         private localStorageService: LocalStorageService,
-    ) {}
+    ) {
+    }
 
     get isAuthenticated(): boolean {
         return !!this.user && Boolean(this.accessToken);

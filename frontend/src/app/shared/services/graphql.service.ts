@@ -10,6 +10,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { MatDialog } from '@angular/material/dialog';
+import { MaintenanceModeComponent } from '../dialogs';
 
 @Injectable({
     providedIn: 'root',
@@ -22,6 +24,7 @@ export class GraphqlService {
         private authService: AuthenticationService,
         private appsettingsService: AppsettingsService,
         private notificationService: NotificationService,
+        private dialog: MatDialog,
     ) {}
 
     async init() {
@@ -74,10 +77,17 @@ export class GraphqlService {
                             );
                             break;
                         }
+                        case 503: {
+                            const open = this.dialog.getDialogById('maintenance-mode');
+                            if (!open) {
+                                this.dialog.open(MaintenanceModeComponent, { id: 'maintenance-mode'});
+                            }
+                            break;
+                        }
                         default:
                             this.notificationService.showErrorNotification(
                                 marker('UNKNOWN_NETWORK_ERROR'),
-                                error.message,
+                                [error.message],
                             );
                     }
                 }
@@ -117,10 +127,6 @@ export class GraphqlService {
             link: link,
             cache: cache,
         });
-
-        if (this.authService.accessToken) {
-            await firstValueFrom(this.authService.loadUser());
-        }
     }
 
 }
