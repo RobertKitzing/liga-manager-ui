@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromD
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
 import { MatDialogConfig } from '@angular/material/dialog';
+import { MatNativeDateModule } from '@angular/material/core';
 
 export const defaultDialogConfig = {
     // width: '50vw',
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     importProvidersFrom(
+        MatNativeDateModule,
         ApolloModule,
         NgxWebstorageModule.forRoot(),
         TranslateModule.forRoot({

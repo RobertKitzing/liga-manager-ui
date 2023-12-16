@@ -1,0 +1,109 @@
+<div class="flex w-full mt-2 mb-2 items-center m-auto border-2 dark:border-toolbardark flex-col">
+    @if (match) {
+        <div class="w-full">
+            <div class="grid grid-cols-3 gap-0 bg-toolbar dark:bg-toolbardark">
+                <div class="text-center self-center pl-2 break-words line-clamp-3">
+                    <div class="grid justify-center">
+                        <img class="w-[100px] h-[100px]" src="{{ match.home_team | teamLogo }}">
+                        <div>
+                            <span>{{ match.home_team.name }}</span>
+                        </div>
+                    </div>
+                </div>
+                @if (match.cancelled_at) {
+                <div class="flex flex-col text-center">
+                    <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
+                    <div class="break-words line-clamp-5">{{ match.cancellation_reason }}</div>
+                </div>
+                } @else {
+                <div class="flex flex-col text-center">
+                    <div [ngClass]="{'cursor-pointer': canEditMatch(match)}"
+                        (click)="canEditMatch(match) && openEditKickoffDialog()">
+                        @if (!match.kickoff) {
+                        <span translate>NO_TIME_SET</span>
+                        }
+                        @if (match.kickoff) {
+                        <span>{{ match.kickoff | customDate:'short' }}</span>
+                        }
+                    </div>
+                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 justify-items-center"
+                        (click)="canEditMatch(match) && openEditResultDialog()"
+                        [ngClass]="{'cursor-pointer': canEditMatch(match)}">
+                        <div>
+                            {{ match.home_score || '-' }}
+                        </div>
+                        <div>
+                            :
+                        </div>
+                        <div>
+                            {{ match.guest_score || '-' }}
+                        </div>
+                    </div>
+                    <div class="flex flex-col text-center"
+                        (click)="canEditMatch(match) && openEditPitchDialog()"
+                        [ngClass]="{'cursor-pointer': canEditMatch(match)}">
+                        @if (match.pitch) {
+                        <span class="line-clamp-5">{{ match.pitch.label }}</span>
+                        }
+                        @if (!match.pitch) {
+                        <span translate>NO_PTICH_SET</span>
+                        }
+                    </div>
+                </div>
+                }
+                <div class="self-center pr-2 break-words line-clamp-3">
+                    <div class="grid justify-center">
+                        <img class="w-[100px] h-[100px]" src="{{ match.guest_team | teamLogo }}">
+                        <span>{{match.guest_team.name}}</span>
+                    </div>
+                </div>
+            </div>
+                @if (authService.isAuthenticated) {
+                <div class="grid grid-cols-3 gap-0">
+                    <div class="flex justify-center p-2">
+                        <button mat-raised-button color="primary" class="w-min" (click)="openViewContactDialog(match.home_team)">
+                            <mat-icon>contacts</mat-icon>
+                            <span translate>BUTTON.CONTACT</span>
+                        </button>
+                    </div>
+                    @if (canEditMatch(match)) {
+                        <div class="flex justify-center p-2">
+                            <button mat-raised-button color="primary" class="w-min" [matMenuTriggerFor]="editMenu">
+                                <mat-icon>edit</mat-icon>
+                                <span translate>BUTTON.EDIT</span>
+                            </button>
+                        </div>
+                        <mat-menu #editMenu [overlapTrigger]="false">
+                        <button mat-menu-item (click)="openEditResultDialog()">
+                            <mat-icon>scoreboard</mat-icon>
+                            <span translate>BUTTON.EDIT_RESULT</span>
+                        </button>
+                        @if (!match.cancelled_at) {
+                            <button mat-menu-item (click)="openEditPitchDialog()">
+                            <mat-icon>location_on</mat-icon>
+                            <span translate>BUTTON.EDIT_PITCH</span>
+                            </button>
+                            <button mat-menu-item (click)="openEditKickoffDialog()">
+                            <mat-icon>event</mat-icon>
+                            <span translate>BUTTON.EDIT_KICKOFF</span>
+                            </button>
+                        }
+                        <button mat-menu-item (click)="openCancelMatchDialog()">
+                            <mat-icon>close</mat-icon>
+                            <span translate>BUTTON.CANCEL_MATCH</span>
+                        </button>
+                        </mat-menu>
+                    } @else {
+                        <div></div>
+                    }
+                    <div class="flex justify-center p-2">
+                        <button mat-raised-button color="primary"  (click)="openViewContactDialog(match.guest_team)">
+                            <mat-icon>contacts</mat-icon>
+                            <span translate>BUTTON.CONTACT</span>
+                        </button>
+                    </div>
+                </div>
+                }
+        </div>
+    }
+</div>

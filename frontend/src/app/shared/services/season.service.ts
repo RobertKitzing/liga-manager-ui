@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { LocalStorage } from 'ngx-webstorage';
-import { BehaviorSubject, map, Subject } from 'rxjs';
+import { map } from 'rxjs';
 import {
     AllSeasonsFragment,
     AllSeasonsListGQL,
+    RankingByIdGQL,
     Season,
     SeasonByIdGQL,
-    SeasonByIdQueryVariables,
 } from '@api/graphql';
+import { LocalStorage } from 'ngx-webstorage';
 
 const SELECTED_PROGRESS_SEASON_KEY = 'SELECTED_PROGRESS_SEASON';
 const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
-const SELECTED_CONTACT_SEASON_KEY = 'SELECTED_CONTACT_SEASON_KEY';
 
 @Injectable({
     providedIn: 'root',
@@ -23,23 +22,6 @@ export class SeasonService {
 
     @LocalStorage(SELECTED_HISTORY_SEASON_KEY)
     historySeason!: AllSeasonsFragment;
-
-    @LocalStorage(SELECTED_CONTACT_SEASON_KEY)
-    contactSeason!: AllSeasonsFragment;
-
-    progressSeason$ = new BehaviorSubject<AllSeasonsFragment>(
-        this.progressSeason,
-    );
-
-    historySeason$ = new BehaviorSubject<AllSeasonsFragment>(
-        this.historySeason,
-    );
-
-    contactSeason$ = new BehaviorSubject<AllSeasonsFragment>(
-        this.historySeason,
-    );
-
-    manageSeason$ = new Subject<AllSeasonsFragment>();
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
         map((seasons) =>
@@ -64,30 +46,25 @@ export class SeasonService {
     constructor(
         private allSeasonlistGQL: AllSeasonsListGQL,
         private seasonByIdGQL: SeasonByIdGQL,
+        private rankingGQL: RankingByIdGQL,
     ) {
-        this.progressSeason$.subscribe((season) => {
-            if (season) {
-                this.progressSeason = season;
-            }
-        });
-
-        this.historySeason$.subscribe((season) => {
-            if (season) {
-                this.historySeason = season;
-            }
-        });
-
-        this.contactSeason$.subscribe((season) => {
-            if (season) {
-                this.contactSeason = season;
-            }
-        });
     }
 
-    getSeason(params: SeasonByIdQueryVariables) {
+    getSeasonById$(id: string) {
         return this.seasonByIdGQL
-            .watch(params)
+            .watch({ id })
             .valueChanges.pipe(map(({ data }) => data.season));
+    }
+
+    getRankingById$(id: string) {
+        return this.rankingGQL
+            .watch({ id })
+            .valueChanges.pipe(map(({ data }) => data?.season?.ranking));
+    }
+
+    refetchSeasonById(id: string) {
+        this.seasonByIdGQL.watch({ id }).refetch();
+        this.rankingGQL.watch({ id }).refetch();
     }
 
     seasonCompare(c1: Season, c2: Season) {

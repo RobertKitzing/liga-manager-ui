@@ -6,8 +6,12 @@ const declarations = [CustomDatePipe];
 
 @NgModule({
     declarations,
-    imports: [CommonModule],
-    providers: [DatePipe],
+    imports: [
+        CommonModule,
+    ],
+    providers: [
+        DatePipe,
+    ],
     exports: declarations,
 })
 export class CustomDateModule {}

@@ -13,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomDateModule } from '@lima/shared/pipes';
 import { EditMatchBaseComponent } from '../edit-match-base';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -28,7 +27,6 @@ import { MatNativeDateModule } from '@angular/material/core';
         ReactiveFormsModule,
         MatInputModule,
         MatDatepickerModule,
-        MatNativeDateModule,
         MatButtonModule,
         MatDialogClose,
         CustomDateModule,
@@ -47,7 +45,7 @@ export class EditMatchKickoffComponent {
         private notificationService: NotificationService,
         private dialogRef: MatDialogRef<EditMatchKickoffComponent>,
         private matchService: MatchService,
-    ) {}
+    ) { }
 
     async onSaveClicked() {
         const kickoff = this.newKickoff.value.date as Date;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BehaviorSubject, iif, of, switchMap } from 'rxjs';
+import { BehaviorSubject, iif, of, startWith, switchMap, tap } from 'rxjs';
 import { AuthenticationService, SeasonService } from '@lima/shared/services';
 import {
     CancelMatchComponent,
@@ -19,10 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 import { CustomDateModule, NumberPipe } from '@lima/shared/pipes';
-import { SeasonChooserComponent, SeasonChooserModes } from '@lima/shared/components';
-import { ViewTeamContactComponent } from '@lima/shared/dialogs/view-team-contact';
-import { Match, MatchDay, SeasonState, Team } from '@api/graphql';
-import { defaultDialogConfig } from '@lima/app.config';
+import { MatchComponent, SeasonChooserComponent } from '@lima/shared/components';
+import { AllSeasonsFragment, SeasonState } from '@api/graphql';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'lima-schedule',
@@ -45,28 +44,39 @@ import { defaultDialogConfig } from '@lima/app.config';
         TeamLogoPipe,
         JsonPipe,
         NgClass,
+        MatchComponent,
     ],
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent {
 
-    seasonMode: SeasonChooserModes = 'progressSeason';
+    selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.selectedSeasonLS);
 
-    seasonTrigger$ = new BehaviorSubject<null>(null);
-
-    season$ = this.seasonTrigger$.pipe(
-        switchMap(() =>
-            iif(
-                () => this.seasonMode === 'progressSeason',
-                this.seasonService.progressSeason$,
-                this.seasonService.historySeason$,
-            ),
+    season$ = this.selectedSeasonFC.valueChanges.pipe(
+        startWith(this.selectedSeasonLS),
+        tap(
+            (season) => {
+                if (season) {
+                    this.selectedSeasonLS = season;
+                }
+            },
         ),
-        switchMap((season) => {
-            return season?.id
-                ? this.seasonService.getSeason({ id: season.id })
-                : of(null);
-        }),
-    );
+        switchMap(
+            (selectedSeason) => selectedSeason ? this.seasonService.getSeasonById$(selectedSeason.id) : of(null),
+        ),
+    )
+    //     switchMap(() =>
+    //         iif(
+    //             () => this.seasonMode === 'progressSeason',
+    //             this.seasonService.progressSeason$,
+    //             this.seasonService.historySeason$,
+    //         ),
+    //     ),
+    //     switchMap((season) => {
+    //         return season?.id
+    //             ? this.seasonService.getSeasonById$(season.id)
+    //             : of(null);
+    //     }),
+    // );
 
     selectedMatchDayId = '0';
 
@@ -81,17 +91,28 @@ export class ScheduleComponent implements OnInit {
         public authService: AuthenticationService,
     ) {}
 
-    ngOnInit(): void {
+    get filterSeasonStates() {
         if (this.router.url.includes('history')) {
-            this.seasonMode = 'historySeason';
+            return [SeasonState.Ended];
+        } else {
+            return [SeasonState.Progress];
         }
     }
 
-    canEditMatch(match: Match, seasonState: SeasonState) {
-        return (
-            this.authService.canEditMatch(match) &&
-            seasonState === SeasonState.Progress
-        );
+    get selectedSeasonLS() {
+        if (this.router.url.includes('history')) {
+            return this.seasonService.historySeason;
+        } else {
+            return this.seasonService.progressSeason;
+        }
+    }
+
+    set selectedSeasonLS(season: AllSeasonsFragment) {
+        if (this.router.url.includes('history')) {
+            this.seasonService.historySeason = season;
+        } else {
+            this.seasonService.progressSeason = season;
+        }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -110,41 +131,6 @@ export class ScheduleComponent implements OnInit {
                       x.home_team.id === this.selectedTeamId,
               )
             : matches;
-    }
-
-    openCancelMatchDialog(match: Match, matchDay: MatchDay) {
-        this.dialog.open(CancelMatchComponent, {
-            ...defaultDialogConfig,
-            data: { match, matchDay },
-        });
-    }
-
-    openEditKickoffDialog(match: Match, matchDay: MatchDay) {
-        this.dialog.open(EditMatchKickoffComponent, {
-            ...defaultDialogConfig,
-            data: { match, matchDay },
-        });
-    }
-
-    openEditPitchDialog(match: Match, matchDay: MatchDay) {
-        this.dialog.open(EditMatchPitchComponent, {
-            ...defaultDialogConfig,
-            data: { match, matchDay },
-        });
-    }
-
-    openEditResultDialog(match: Match, matchDay: MatchDay) {
-        this.dialog.open(EditMatchResultComponent, {
-            ...defaultDialogConfig,
-            data: { match, matchDay },
-        });
-    }
-
-    openViewContactDialog(team: Team) {
-        this.dialog.open(ViewTeamContactComponent, {
-            ...defaultDialogConfig,
-            data: team,
-        });
     }
 
 }

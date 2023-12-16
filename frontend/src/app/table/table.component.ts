@@ -7,16 +7,17 @@ import {
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, iif, map, of, switchMap } from 'rxjs';
-import { RankingPosition } from 'src/api/graphql';
-import { SeasonChooserComponent, SeasonChooserModes } from '../shared/components';
-import { RankingService, SeasonService } from '@lima/shared/services';
+import { SeasonService } from '@lima/shared/services';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TruncatePipe } from '@lima/shared/pipes';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
+import { FormControl } from '@angular/forms';
+import { SeasonChooserComponent } from '@lima/shared/components';
+import { AllSeasonsFragment, RankingPosition, Season, SeasonState } from '@api/graphql';
+import { map, of, startWith, switchMap, tap } from 'rxjs';
 
 @Component({
     selector: 'lima-table',
@@ -41,9 +42,7 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
         TruncatePipe,
     ],
 })
-export class TableComponent implements OnInit {
-
-    seasonMode: SeasonChooserModes = 'progressSeason';
+export class TableComponent {
 
     displayedColumns: string[] = [
         'position',
@@ -57,33 +56,52 @@ export class TableComponent implements OnInit {
 
     expandedElement!: RankingPosition;
 
-    rankingTrigger$ = new BehaviorSubject<null>(null);
+    selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.selectedSeasonLS);
 
-    ranking$ = this.rankingTrigger$.pipe(
-        switchMap(() =>
-            iif(
-                () => this.seasonMode === 'progressSeason',
-                this.seasonService.progressSeason$,
-                this.seasonService.historySeason$,
-            ),
+    SeasonState = SeasonState;
+
+    ranking$ = this.selectedSeasonFC.valueChanges.pipe(
+        startWith(this.selectedSeasonLS),
+        tap(
+            (season) => {
+                if (season) {
+                    this.selectedSeasonLS = season;
+                }
+            },
         ),
-        switchMap((season) => {
-            return season?.id
-                ? this.rankingService.getRanking$({ id: season.id })
-                : of(null);
-        }),
+        switchMap(
+            (selectedSeason) => selectedSeason ? this.seasonService.getRankingById$(selectedSeason.id) : of(null),
+        ),
         map((ranking) => ranking?.positions),
     );
 
     constructor(
-        private rankingService: RankingService,
         private seasonService: SeasonService,
         private router: Router,
-    ) {}
+    ) {
+    }
 
-    ngOnInit(): void {
+    get filterSeasonStates() {
         if (this.router.url.includes('history')) {
-            this.seasonMode = 'historySeason';
+            return [SeasonState.Ended];
+        } else {
+            return [SeasonState.Progress];
+        }
+    }
+
+    get selectedSeasonLS() {
+        if (this.router.url.includes('history')) {
+            return this.seasonService.historySeason;
+        } else {
+            return this.seasonService.progressSeason;
+        }
+    }
+
+    set selectedSeasonLS(season: AllSeasonsFragment) {
+        if (this.router.url.includes('history')) {
+            this.seasonService.historySeason = season;
+        } else {
+            this.seasonService.progressSeason = season;
         }
     }
 
