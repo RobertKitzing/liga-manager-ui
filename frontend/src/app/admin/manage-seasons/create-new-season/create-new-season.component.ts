@@ -4,14 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CreateTournamentGQL } from '@api/graphql';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
-import { NotificationService, TournamentService } from '@lima/shared/services';
+import { NotificationService, SeasonService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'lima-create-new-tournament',
+  selector: 'lima-create-new-season',
   standalone: true,
   imports: [
     MatDialogTitle,
@@ -24,30 +23,30 @@ import { firstValueFrom } from 'rxjs';
     MatButtonModule,
     TranslateModule,
   ],
-  templateUrl: './create-new-tournament.component.html',
+  templateUrl: './create-new-season.component.html',
 })
-export class CreateNewTournamentComponent {
+export class CreateNewSeasonComponent {
 
   newName = new FormControl('', [Validators.required]);
 
   constructor(
-    private tournamentService: TournamentService,
+    private seasonService: SeasonService,
     private dialog: MatDialog,
     private notificationService: NotificationService,
   ) {
 
   }
 
-  async createTournament() {
+  async createSeason() {
     try {
-      await firstValueFrom(this.tournamentService.createTournament(this.newName.value!))
+      await firstValueFrom(this.seasonService.createSeason(this.newName.value!))
       this.notificationService.showSuccessNotification(
-        marker('CREATE_TOURNAMENT_SUCCESS'),
+        marker('CREATE_SEASON_SUCCESS'),
       )
       this.dialog.closeAll();
     } catch(error) {
       this.notificationService.showErrorNotification(
-        marker('CREATE_TOURNAMENT_ERROR'),
+        marker('CREATE_SEASON_ERROR'),
       )
     }
     

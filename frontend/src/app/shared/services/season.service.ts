@@ -3,6 +3,7 @@ import { map } from 'rxjs';
 import {
     AllSeasonsFragment,
     AllSeasonsListGQL,
+    CreateSeasonGQL,
     RankingByIdGQL,
     Season,
     SeasonByIdGQL,
@@ -47,7 +48,23 @@ export class SeasonService {
         private allSeasonlistGQL: AllSeasonsListGQL,
         private seasonByIdGQL: SeasonByIdGQL,
         private rankingGQL: RankingByIdGQL,
+        private createSeasonGQL: CreateSeasonGQL,
     ) {
+    }
+
+    createSeason(name: string) {
+        return this.createSeasonGQL.mutate(
+            {
+                name,
+            },
+            {
+                refetchQueries: [
+                    {
+                        query: this.allSeasonlistGQL.document,
+                    },
+                ],
+            },
+        )
     }
 
     getSeasonById$(id: string) {
@@ -62,9 +79,12 @@ export class SeasonService {
             .valueChanges.pipe(map(({ data }) => data?.season?.ranking));
     }
 
+    refetchRankingById(id: string) {
+        this.rankingGQL.watch({ id }).refetch();
+    }
+
     refetchSeasonById(id: string) {
         this.seasonByIdGQL.watch({ id }).refetch();
-        this.rankingGQL.watch({ id }).refetch();
     }
 
     seasonCompare(c1: Season, c2: Season) {

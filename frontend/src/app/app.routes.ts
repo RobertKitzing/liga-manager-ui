@@ -85,6 +85,11 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import('./tournament').then((m) => m.TournamentComponent),
             },
+            {
+                path: '',
+                redirectTo: APP_ROUTES.TABLE,
+                pathMatch: 'full',
+            },
         ],
     },
     {

@@ -31,7 +31,7 @@ export const AdminRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: ADMIN_ROUTES.TOURNAMENTS,
+        redirectTo: ADMIN_ROUTES.SEASONS,
         pathMatch: 'full',
     },
 ];

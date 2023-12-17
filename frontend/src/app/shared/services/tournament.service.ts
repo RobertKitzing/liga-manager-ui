@@ -29,11 +29,26 @@ export class TournamentService {
                 query: this.allTournamentListGQL.document,
             },
         ],
-    },
+      },
     )
   }
 
-  getTournamentById(id: string) {
+  deleteTournament(tournament_id: string) {
+    return this.deleteTournamentGQL.mutate(
+      {
+        tournament_id,
+      },
+      {
+        refetchQueries: [
+            {
+                query: this.allTournamentListGQL.document,
+            },
+        ],
+      },
+    )
+  }
+
+  getTournamentById$(id: string) {
     return this.tournamentByIdGQL.watch({ id }).valueChanges.pipe(
       map(({ data }) => data.tournament),
     )

@@ -65,6 +65,7 @@ export class TableComponent {
         tap(
             (season) => {
                 if (season) {
+                    this.seasonService.refetchRankingById(season.id)
                     this.selectedSeasonLS = season;
                 }
             },

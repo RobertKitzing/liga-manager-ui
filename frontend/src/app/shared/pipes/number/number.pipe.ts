@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NumberPipe implements PipeTransform {
 
-    transform(value: string | number): number | undefined {
-        return typeof value === 'number' ? +value : undefined;
+    transform(value: string | number | undefined | null) {
+        return typeof value === 'number' ? +value : '-';
     }
 
 }

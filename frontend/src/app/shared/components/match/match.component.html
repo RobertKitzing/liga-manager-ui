@@ -2,7 +2,7 @@
     @if (match) {
         <div class="w-full">
             <div class="grid grid-cols-3 gap-0 bg-toolbar dark:bg-toolbardark">
-                <div class="text-center self-center pl-2 break-words line-clamp-3">
+                <div class="text-center self-center pl-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isGuestWinner()}">
                     <div class="grid justify-center">
                         <img class="w-[100px] h-[100px]" src="{{ match.home_team | teamLogo }}">
                         <div>
@@ -30,13 +30,13 @@
                         (click)="canEditMatch(match) && openEditResultDialog()"
                         [ngClass]="{'cursor-pointer': canEditMatch(match)}">
                         <div>
-                            {{ match.home_score || '-' }}
+                            {{ match.home_score | number }}
                         </div>
                         <div>
                             :
                         </div>
                         <div>
-                            {{ match.guest_score || '-' }}
+                            {{ match.guest_score | number }}
                         </div>
                     </div>
                     <div class="flex flex-col text-center"
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 }
-                <div class="self-center pr-2 break-words line-clamp-3">
+                <div class="self-center pr-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isHomeWinner()}">
                     <div class="grid justify-center">
                         <img class="w-[100px] h-[100px]" src="{{ match.guest_team | teamLogo }}">
                         <span>{{match.guest_team.name}}</span>

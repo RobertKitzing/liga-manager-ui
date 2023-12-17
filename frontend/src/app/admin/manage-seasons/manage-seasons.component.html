@@ -1,11 +1,16 @@
 <mat-toolbar>
     <div class="w-full flex items-center space-x-4">
-        <div class="w-full">
+        <div class="w-1/2">
             <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC"></lima-season-chooser>
         </div>
-        <!-- <button mat-stroked-button (click)="createTournament()">
+        <button mat-stroked-button (click)="createSeason()">
             <mat-icon>add</mat-icon>
-            <span translate>BUTTON.CREATE_NEW_TOURNAMENT</span>
-        </button> -->
+            <span translate>BUTTON.CREATE_SEASON</span>
+        </button>
     </div>
 </mat-toolbar>
+
+@if (season$ | async; as season) {
+
+    {{ season.name }}
+}

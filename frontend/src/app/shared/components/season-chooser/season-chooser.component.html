@@ -2,6 +2,11 @@
   <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" data-cy="select-season"
     [formControl]="selectedSeasonFC"
     placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
+    @if (clearable) {
+      <mat-option>
+        <span translate>DESELECT_SEASON</span>
+      </mat-option>
+    }
     @for (season of seasonList$ | async; track season) {
       <mat-option [value]="season">
         @if (season) {

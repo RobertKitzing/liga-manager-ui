@@ -41,7 +41,7 @@ export class TournamentComponent {
             },
         ),
         switchMap(
-            (tournament) => tournament ? this.tournamentService.getTournamentById(tournament?.id) : of(null),
+            (tournament) => tournament ? this.tournamentService.getTournamentById$(tournament?.id) : of(null),
         ),
     );
 

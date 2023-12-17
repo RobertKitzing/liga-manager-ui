@@ -4,17 +4,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { AllTournamentListGQL, CreateTournamentGQL, Tournament } from '@api/graphql';
+import { AllTournamentsFragment, Tournament } from '@api/graphql';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateNewTournamentComponent } from './create-new-tournament/create-new-tournament.component';
+import { CreateNewTournamentComponent } from './create-new-tournament';
 import { TournamentService } from '@lima/shared/services';
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { switchMap } from 'rxjs';
+import { of, startWith, switchMap, tap } from 'rxjs';
 import { CustomDateModule } from '@lima/shared/pipes';
+import { LocalStorage } from 'ngx-webstorage';
+import { TournamentChooserComponent } from '@lima/shared/components';
 
+const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
 @Component({
     selector: 'lima-manage-tournaments',
     templateUrl: './manage-tournaments.component.html',
@@ -31,15 +34,27 @@ import { CustomDateModule } from '@lima/shared/pipes';
         AsyncPipe,
         JsonPipe,
         CustomDateModule,
+        TournamentChooserComponent,
     ],
 })
 export class ManageTournamentsComponent {
 
-    selectedTournamentFC = new FormControl();
+    @LocalStorage(SELECTED_MANAGE_TOURNAMENT_KEY)
+    manageTournament!: AllTournamentsFragment;
+
+    selectedTournamentFC = new FormControl<Tournament | null>(this.manageTournament);
 
     selectedTournament$ = this.selectedTournamentFC.valueChanges.pipe(
+        startWith(this.manageTournament),
+        tap(
+            (tournament) => {
+                if (tournament) {
+                    this.manageTournament = tournament;
+                }
+            },
+        ),
         switchMap(
-            (tournament: Tournament) => this.tournamentService.getTournamentById(tournament.id),
+            (tournament) => tournament ? this.tournamentService.getTournamentById$(tournament?.id) : of(null),
         ),
     );
 

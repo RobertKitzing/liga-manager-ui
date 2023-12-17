@@ -8,7 +8,7 @@ import { Match, MatchDay, Team } from '@api/graphql';
 import { defaultDialogConfig } from '@lima/app.config';
 import { CancelMatchComponent, EditMatchKickoffComponent, EditMatchPitchComponent, EditMatchResultComponent } from '@lima/shared/dialogs';
 import { ViewTeamContactComponent } from '@lima/shared/dialogs/view-team-contact';
-import { CustomDateModule } from '@lima/shared/pipes';
+import { CustomDateModule, NumberPipe } from '@lima/shared/pipes';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 import { AuthenticationService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    NumberPipe,
   ],
   templateUrl: './match.component.html',
 })
@@ -34,6 +35,9 @@ export class MatchComponent {
   
   @Input({ required: true })
   matchDay!: MatchDay
+
+  @Input()
+  markLooser = false;
 
   constructor(
     private dialog: MatDialog,
@@ -87,6 +91,14 @@ export class MatchComponent {
         ...defaultDialogConfig,
         data: this.dialogData,
     });
+  }
+
+  isHomeWinner(): boolean {
+    return this.markLooser && (this.match?.home_score || 0) > (this.match?.guest_score || 0);
+  }
+
+  isGuestWinner(): boolean {
+    return this.markLooser && (this.match?.home_score || 0) < (this.match?.guest_score || 0);
   }
 
 }

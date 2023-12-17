@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
-import { CustomDateModule, NumberPipe } from '@lima/shared/pipes';
+import { CustomDateModule } from '@lima/shared/pipes';
 import { MatchComponent, SeasonChooserComponent } from '@lima/shared/components';
 import { AllSeasonsFragment, SeasonState } from '@api/graphql';
 import { FormControl } from '@angular/forms';
@@ -40,7 +40,6 @@ import { FormControl } from '@angular/forms';
         AsyncPipe,
         DecimalPipe,
         CustomDateModule,
-        NumberPipe,
         TeamLogoPipe,
         JsonPipe,
         NgClass,
@@ -56,6 +55,7 @@ export class ScheduleComponent {
         tap(
             (season) => {
                 if (season) {
+                    this.seasonService.refetchSeasonById(season.id)
                     this.selectedSeasonLS = season;
                 }
             },
@@ -64,19 +64,6 @@ export class ScheduleComponent {
             (selectedSeason) => selectedSeason ? this.seasonService.getSeasonById$(selectedSeason.id) : of(null),
         ),
     )
-    //     switchMap(() =>
-    //         iif(
-    //             () => this.seasonMode === 'progressSeason',
-    //             this.seasonService.progressSeason$,
-    //             this.seasonService.historySeason$,
-    //         ),
-    //     ),
-    //     switchMap((season) => {
-    //         return season?.id
-    //             ? this.seasonService.getSeasonById$(season.id)
-    //             : of(null);
-    //     }),
-    // );
 
     selectedMatchDayId = '0';
 

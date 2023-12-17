@@ -49,15 +49,12 @@ export class EditMatchResultComponent {
 
     async onSaveClicked() {
         try {
-            if (
-                this.resultFormGroup.value.home_score &&
-                this.resultFormGroup.value.guest_score
-            ) {
+            if (this.resultFormGroup.valid) {
                 await firstValueFrom(
                     this.matchService.submitMatchResult({
                         match_id: this.data.match.id,
-                        home_score: this.resultFormGroup.value.home_score,
-                        guest_score: this.resultFormGroup.value.guest_score,
+                        home_score: this.resultFormGroup.value.home_score!,
+                        guest_score: this.resultFormGroup.value.guest_score!,
                     }),
                 );
                 this.notificationService.showSuccessNotification(

@@ -9,11 +9,11 @@
         @for( round of selectedTournament.rounds; track round ) {
           @if(round) {
             <h3 class="text-center bg-theme text-theme-cdefault p-4">
-              {{ 'TOURNAMENT_ROUND' | translate:{matchDay: round.number} }} ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{ round.end_date | customDate }})
+              {{ 'TOURNAMENT_ROUND' | translate:{round: round.number} }} ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{ round.end_date | customDate }})
             </h3>
             @for (match of round.matches; track match) {
               @if(match) {
-              <lima-match [match]="match" [matchDay]="round"></lima-match>
+              <lima-match [match]="match" [matchDay]="round" [markLooser]="true"></lima-match>
               }
             }
           }

@@ -33,6 +33,9 @@ export class SeasonChooserComponent {
     @Input()
     filterSeasonStates: SeasonState[] = [];
 
+    @Input()
+    clearable = false;
+
     SeasonState = SeasonState;
 
     seasonList$ = this.seasonService.seasonList$.pipe(
