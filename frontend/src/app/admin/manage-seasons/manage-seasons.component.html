@@ -1,7 +1,7 @@
 <mat-toolbar>
     <div class="w-full flex items-center space-x-4">
         <div class="w-1/2">
-            <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC"></lima-season-chooser>
+            <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [clearable]="true"></lima-season-chooser>
         </div>
         <button mat-stroked-button (click)="createSeason()">
             <mat-icon>add</mat-icon>
@@ -9,8 +9,22 @@
         </button>
     </div>
 </mat-toolbar>
-
 @if (season$ | async; as season) {
-
-    {{ season.name }}
+    <mat-toolbar color="primary">
+        <div class="flex h-full w-full items-center space-x-4">
+            <a class="flex h-full items-center p-2" mat-tab-link translate routerLink="{{season.id}}/{{ADMIN_ROUTES.TEAMS}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.TEAMS</a>
+            <a class="flex h-full items-center p-2" mat-tab-link translate  routerLink="{{season.id}}/{{ADMIN_ROUTES.MATCH_DAYS}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.MATCH_DAYS</a>
+        </div>
+    </mat-toolbar>
+    <div class="p-3">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" color="primary" backgroundColor="primary">
+        <mat-tab label="{{ 'TAB.ADMIN.SEASON.TEAMS' | translate }}">Content 1</mat-tab>
+        <mat-tab label="{{ 'TAB.ADMIN.SEASON.MATCH_DAYS' | translate }}">Content 2</mat-tab>
+        <mat-tab label="{{ 'TAB.ADMIN.SEASON.MATCHES' | translate }}">Content 3</mat-tab>
+        <mat-tab label="{{ 'TAB.ADMIN.SEASON.SCHEDULE_MATCHES' | translate }}">Content 3</mat-tab>
+        <mat-tab label="{{ 'TAB.ADMIN.SEASON.PENALTIES' | translate }}">Content 3</mat-tab>
+        <mat-tab label="{{ 'TAB.ADMIN.SEASON.SEASON' | translate }}">Content 3</mat-tab>
+    </mat-tab-group> -->
 }

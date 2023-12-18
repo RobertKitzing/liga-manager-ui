@@ -28,7 +28,7 @@ export type SeasonChooserModes =
 export class SeasonChooserComponent {
 
     @Input({ required: true })
-    selectedSeasonFC!: FormControl<AllSeasonsFragment | null>;
+    selectedSeasonFC!: FormControl<AllSeasonsFragment | null | undefined>;
 
     @Input()
     filterSeasonStates: SeasonState[] = [];

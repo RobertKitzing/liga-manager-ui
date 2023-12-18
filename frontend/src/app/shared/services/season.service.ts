@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import {
+    AddTeamToSeasonGQL,
+    AddTeamToSeasonMutationVariables,
     AllSeasonsFragment,
     AllSeasonsListGQL,
     CreateSeasonGQL,
     RankingByIdGQL,
+    RemoveTeamFromSeasonGQL,
+    RemoveTeamFromSeasonMutationVariables,
     Season,
     SeasonByIdGQL,
 } from '@api/graphql';
@@ -12,6 +16,7 @@ import { LocalStorage } from 'ngx-webstorage';
 
 const SELECTED_PROGRESS_SEASON_KEY = 'SELECTED_PROGRESS_SEASON';
 const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
+const SELECTED_MANAGE_SEASON_KEY = 'SELECTED_MANAGE_SEASON';
 
 @Injectable({
     providedIn: 'root',
@@ -23,6 +28,9 @@ export class SeasonService {
 
     @LocalStorage(SELECTED_HISTORY_SEASON_KEY)
     historySeason!: AllSeasonsFragment;
+
+    @LocalStorage(SELECTED_MANAGE_SEASON_KEY)
+    manageSeason: AllSeasonsFragment | undefined | null;
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
         map((seasons) =>
@@ -49,6 +57,8 @@ export class SeasonService {
         private seasonByIdGQL: SeasonByIdGQL,
         private rankingGQL: RankingByIdGQL,
         private createSeasonGQL: CreateSeasonGQL,
+        private addTeamToSeasonGQL: AddTeamToSeasonGQL,
+        private removeTeamFromSeasonGQL: RemoveTeamFromSeasonGQL,
     ) {
     }
 
@@ -89,6 +99,34 @@ export class SeasonService {
 
     seasonCompare(c1: Season, c2: Season) {
         return c1 && c2 && c1.id === c2.id;
+    }
+
+    addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
+        return this.addTeamToSeasonGQL.mutate(
+            variables,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: variables.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    removeTeamFromSeason(variables: RemoveTeamFromSeasonMutationVariables) {
+        return this.removeTeamFromSeasonGQL.mutate(
+            variables,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: variables.season_id },
+                    },
+                ],
+            },
+        );
     }
 
 }

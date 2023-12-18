@@ -1,12 +1,5 @@
 import { Routes } from "@angular/router";
-
-export enum ADMIN_ROUTES {
-    TOURNAMENTS = 'tournaments',
-    USERS = 'users',
-    TEAMS = 'teams',
-    PITCHES = 'pitches',
-    SEASONS = 'seasons',
-}
+import { ADMIN_ROUTES } from "./admin.routes.enum";
 
 export const AdminRoutes: Routes = [
     {
@@ -28,6 +21,26 @@ export const AdminRoutes: Routes = [
     {
         path: ADMIN_ROUTES.SEASONS,
         loadComponent: () => import('./manage-seasons').then((m) => m.ManageSeasonsComponent),
+        children: [
+            {
+                path: ':seasonId',
+                children: [
+                    {
+                        path: ADMIN_ROUTES.TEAMS,
+                        loadComponent: () => import('./manage-seasons/manage-teams').then((m) => m.ManageTeamsComponent),
+                    },
+                    {
+                        path: ADMIN_ROUTES.MATCH_DAYS,
+                        loadComponent: () => import('./manage-seasons/manage-matchdays').then((m) => m.ManageMatchdaysComponent),
+                    },
+                    {
+                        path: '',
+                        redirectTo: ADMIN_ROUTES.TEAMS,
+                        pathMatch: 'full',
+                    },
+                ],
+            },
+        ],
     },
     {
         path: '',

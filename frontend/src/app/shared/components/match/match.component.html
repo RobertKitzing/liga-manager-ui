@@ -26,7 +26,7 @@
                         <span>{{ match.kickoff | customDate:'short' }}</span>
                         }
                     </div>
-                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 lg:w-1/3 justify-items-center"
+                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 w-1/3 justify-items-center"
                         (click)="canEditMatch(match) && openEditResultDialog()"
                         [ngClass]="{'cursor-pointer': canEditMatch(match)}">
                         <div>

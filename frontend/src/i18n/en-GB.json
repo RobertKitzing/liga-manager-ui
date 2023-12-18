@@ -89,6 +89,8 @@
 	"SeasonState.Preparation": "preparation",
 	"SeasonState.Progress": "progress",
 	"SEND_NEW_PASSWORD_MAIL_SUCCESS": "Email is on the way",
+	"TAB.ADMIN.SEASON.MATCH_DAYS": "Matchdays",
+	"TAB.ADMIN.SEASON.TEAMS": "Teams",
 	"TEAM_CONTACT_SAVED_ERROR": "Team Contact not saved",
 	"TEAM_CONTACT_SAVED_SUCCESS": "Team Contact saved",
 	"TEAM_NAME": "Team",

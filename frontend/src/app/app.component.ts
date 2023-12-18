@@ -19,10 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NavLinksComponent } from './shared/components/nav-links/nav-links.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { defaultDialogConfig } from './app.config';
-import { firstValueFrom } from 'rxjs';
+import { NavLinksComponent } from './shared/components';
 
 @Component({
     selector: 'lima-root',

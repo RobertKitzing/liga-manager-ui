@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ADMIN_ROUTES } from './admin.routes';
+import { ADMIN_ROUTES } from './admin.routes.enum';
 
 @Component({
     selector: 'lima-admin',

@@ -7,13 +7,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllSeasonsFragment } from '@api/graphql';
 import { SeasonChooserComponent } from '@lima/shared/components';
 import { CreateNewSeasonComponent } from './create-new-season';
-import { LocalStorage } from 'ngx-webstorage';
 import { of, startWith, switchMap, tap } from 'rxjs';
 import { SeasonService } from '@lima/shared/services';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
-const SELECTED_MANAGE_SEASON_KEY = 'SELECTED_MANAGE_SEASON';
+import { Router, RouterModule } from '@angular/router';
+import { ADMIN_ROUTES } from '../admin.routes.enum';
+import { APP_ROUTES } from '@lima/app.routes.enum';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -26,32 +26,35 @@ const SELECTED_MANAGE_SEASON_KEY = 'SELECTED_MANAGE_SEASON';
         MatButtonModule,
         AsyncPipe,
         TranslateModule,
+        MatToolbarModule,
+        TranslateModule,
+        RouterModule,
     ],
 })
 export class ManageSeasonsComponent {
 
-    @LocalStorage(SELECTED_MANAGE_SEASON_KEY)
-    manageSeason!: AllSeasonsFragment;
+    ADMIN_ROUTES = ADMIN_ROUTES;
 
-    selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.manageSeason);
+    selectedSeasonFC = new FormControl<AllSeasonsFragment | undefined | null>(this.seasonService.manageSeason);
 
     season$ = this.selectedSeasonFC.valueChanges.pipe(
-        startWith(this.manageSeason),
+        startWith(this.seasonService.manageSeason),
         tap(
             (season) => {
-                if (season) {
-                    this.manageSeason = season;
+                this.seasonService.manageSeason = season;
+                if (season?.id) {
+                    this.router.navigateByUrl(`${APP_ROUTES.ADMIN}/${ADMIN_ROUTES.SEASONS}/${season.id}`);
+                } else {
+                    this.router.navigateByUrl(`${APP_ROUTES.ADMIN}/${ADMIN_ROUTES.SEASONS}`)
                 }
             },
-        ),
-        switchMap(
-            (season) => season ? this.seasonService.getSeasonById$(season?.id) : of(null),
         ),
     );
 
     constructor(
         private dialog: MatDialog,
         private seasonService: SeasonService,
+        private router: Router,
     ) {
 
     }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import {
+    AddTeamToSeasonGQL,
+    AddTeamToSeasonMutationVariables,
     AllTeamsGQL,
     CreateTeamGQL,
     DeleteTeamGQL,
