@@ -1,6 +1,6 @@
 import * as enGB from '@lima-i18n/en-GB.json';
 
-describe('Amin', () => {
+describe('Admin - Create Tournament', () => {
 
     beforeEach(
         () => {
@@ -8,7 +8,7 @@ describe('Amin', () => {
         }
     )
 
-    it('Should create a season', () => {
+    it('Should create a Tournament', () => {
         cy.visit(`/`)
         cy.contains(enGB['NAVIGATION.ADMIN']).click();
         cy.contains(enGB['NAVIGATION.ADMIN.TOURNAMENTS']).click({ force: true });

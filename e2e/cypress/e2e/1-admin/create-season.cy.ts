@@ -1,6 +1,6 @@
 import * as enGB from '@lima-i18n/en-GB.json';
 
-describe('Amin', () => {
+describe('Admin - Create Season', () => {
 
     beforeEach(
         () => {
