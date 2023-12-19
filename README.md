@@ -1,5 +1,5 @@
 [![liga-manager](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/dnpc8n&style=flat&logo=cypress)](https://cloud.cypress.io/projects/dnpc8n/runs)
-![Build](https://github.com/RobertKitzing/liga-manager-ui/actions/workflows/main.yml/badge.svg?event=push)
+![Build](https://github.com/RobertKitzing/liga-manager-ui/actions/workflows/main.yaml/badge.svg?branch=next)
 
 # Development workflow
 
