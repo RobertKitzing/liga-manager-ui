@@ -5,7 +5,9 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "sourceMap": false,
-    "types": ["cypress"],
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"],
     "baseUrl": "./",
     "paths": {
       "@lima-i18n/*": ["../frontend/src/i18n/*"]

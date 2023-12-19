@@ -13,5 +13,8 @@
   "devDependencies": {
     "cypress": "^13.6.1",
     "typescript": "~5.2.2"
+  },
+  "dependencies": {
+    "js-base64": "^3.7.5"
   }
 }

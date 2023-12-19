@@ -1,13 +1,15 @@
+import { Base64 } from 'js-base64';
+
 // ***********************************************
 // This example namespace declaration will help
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    login(email: string, password: string);
+  }
+}
 //
 // function customCommand(param: any): void {
 //   console.warn(param);
@@ -41,3 +43,36 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+const login = (username: string, password: string) => {
+    const query = `
+    {
+        authenticatedUser {
+          id
+        }
+    }
+    `
+    const body = {
+        operationName: "AuthenticatedUser",
+        query,
+        variables: {},
+    }
+    cy.request({
+        method: 'POST',
+        url: '/api/graphql',
+        body,
+        headers: {
+            'Authorization': `Basic ${Base64.encode(
+                username.toLowerCase() +
+                    ':' +
+                    password,
+            )}`
+        },
+    }).then(
+        (res) => {
+            console.log(res)
+            localStorage.setItem('ngx-webstorage|access_token', `"${res.headers['x-token']}"`)
+        }
+    )
+}
+
+Cypress.Commands.add("login", login )
