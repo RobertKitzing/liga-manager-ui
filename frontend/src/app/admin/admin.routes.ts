@@ -34,6 +34,18 @@ export const AdminRoutes: Routes = [
                         loadComponent: () => import('./manage-seasons/manage-matchdays').then((m) => m.ManageMatchdaysComponent),
                     },
                     {
+                        path: ADMIN_ROUTES.MATCHES,
+                        loadComponent: () => import('./manage-seasons/manage-matches').then((m) => m.ManageMatchesComponent),
+                    },
+                    {
+                        path: ADMIN_ROUTES.SCHEDULE_MATCHES,
+                        loadComponent: () => import('./manage-seasons/manage-schedule-matches').then((m) => m.ManageScheduleMatchesComponent),
+                    },
+                    {
+                        path: ADMIN_ROUTES.PENALTIES,
+                        loadComponent: () => import('./manage-seasons/manage-penalties').then((m) => m.ManagePenaltiesComponent),
+                    },
+                    {
                         path: '',
                         redirectTo: ADMIN_ROUTES.TEAMS,
                         pathMatch: 'full',

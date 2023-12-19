@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AllTournamentListGQL, CreateTournamentGQL, DeleteTournamentGQL, Tournament, TournamentByIdGQL } from '@api/graphql';
 import { map } from 'rxjs';
+import { sortArrayBy } from '../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ export class TournamentService {
 
   allTournaments$ = this.allTournamentListGQL.watch().valueChanges.pipe(
     map(({ data }) => data.allTournaments),
+    map((tournaments) => sortArrayBy(tournaments as Tournament[], 'name')),
   );
 
   constructor(

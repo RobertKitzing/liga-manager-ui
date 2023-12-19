@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BehaviorSubject, iif, of, startWith, switchMap, tap } from 'rxjs';
+import { of, startWith, switchMap, tap } from 'rxjs';
 import { AuthenticationService, SeasonService } from '@lima/shared/services';
-import {
-    CancelMatchComponent,
-    EditMatchKickoffComponent,
-    EditMatchPitchComponent,
-    EditMatchResultComponent,
-} from '@lima/shared/dialogs';
 import { AsyncPipe, DecimalPipe, JsonPipe, NgClass } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,6 +16,7 @@ import { CustomDateModule } from '@lima/shared/pipes';
 import { MatchComponent, SeasonChooserComponent } from '@lima/shared/components';
 import { AllSeasonsFragment, SeasonState } from '@api/graphql';
 import { FormControl } from '@angular/forms';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
     selector: 'lima-schedule',
@@ -46,7 +41,13 @@ import { FormControl } from '@angular/forms';
         MatchComponent,
     ],
 })
-export class ScheduleComponent {
+export class ScheduleComponent implements OnInit {
+
+    @LocalStorage('selectedMatchDayId', '0')
+    selectedMatchDayId!: string;
+    
+    @LocalStorage('selectedTeamId', '0')
+    selectedTeamId!: string;
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.selectedSeasonLS);
 
@@ -65,15 +66,10 @@ export class ScheduleComponent {
         ),
     )
 
-    selectedMatchDayId = '0';
-
-    selectedTeamId = '0';
-
     showFilter = false;
 
     constructor(
         private seasonService: SeasonService,
-        private dialog: MatDialog,
         private router: Router,
         public authService: AuthenticationService,
     ) {}
@@ -99,6 +95,12 @@ export class ScheduleComponent {
             this.seasonService.historySeason = season;
         } else {
             this.seasonService.progressSeason = season;
+        }
+    }
+
+    ngOnInit(): void {
+        if (this.selectedMatchDayId !== '0' || this.selectedTeamId !== '0') {
+            this.showFilter = true
         }
     }
 

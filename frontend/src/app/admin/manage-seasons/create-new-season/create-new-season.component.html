@@ -5,11 +5,11 @@
 
     <mat-form-field class="pt-5">
         <mat-label translate>PLACEHOLDER.NEW_SEASON_NAME</mat-label>
-        <input matInput [formControl]="newName">
+        <input matInput [formControl]="newName" data-cy="create-season-name">
     </mat-form-field>
 </div>
 <div mat-dialog-actions class="flex justify-center border-t-2 dark:border-toolbardark">
-    <button mat-stroked-button (click)="createSeason()" [disabled]="!newName.valid">
+    <button mat-stroked-button (click)="createSeason()" [disabled]="!newName.valid" data-cy="create-season-button">
         <span translate>BUTTON.CREATE_SEASON</span>
     </button>
 </div>
