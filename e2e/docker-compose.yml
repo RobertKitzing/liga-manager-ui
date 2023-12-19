@@ -3,7 +3,7 @@ volumes:
 
 services:
   nginx:
-    image: robertkitzing/liga-manager-ui:test
+    image: robertkitzing/liga-manager-ui:next
     ports:
       - "80:80"
     volumes:
@@ -27,7 +27,7 @@ services:
     image: redis:alpine
 
   mariadb:
-    image: mariadb:10.3.12
+    image: mariadb:10.11
     env_file:
       - ./env/api.env
 
