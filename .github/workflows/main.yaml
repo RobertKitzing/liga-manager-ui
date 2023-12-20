@@ -4,7 +4,6 @@ on:
     branches:
       - 'next'
 
-
 env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
 
@@ -29,27 +28,27 @@ jobs:
           tags: ${{ env.DOCKER_REPO_UI }}:test
           outputs: type=docker,dest=/tmp/lima.tar
 
-      # - name: Start Services
-      #   run: docker compose -f e2e/docker-compose.yml up -d --force-recreate
+      - name: Start Services
+        run: docker compose -f e2e/docker-compose.yml up -d --force-recreate
 
-      # - name: Init DB
-      #   run: docker exec lima-api lima migrations:migrate --no-interaction
+      - name: Init DB
+        run: docker exec lima-api lima migrations:migrate --no-interaction
 
-      # - name: Load Demo Data
-      #   run: docker exec lima-api lima app:db:demo-data
+      - name: Load Demo Data
+        run: docker exec lima-api lima app:db:demo-data
 
-      # - name: Add Admin user
-      #   run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
+      - name: Add Admin user
+        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
 
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v6
-      #   env:
-      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      #     CYPRESS_baseUrl: http://localhost
-      #   with:
-      #     record: true
-      #     browser: chrome
-      #     working-directory: e2e
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_baseUrl: http://localhost
+        with:
+          record: true
+          browser: chrome
+          working-directory: e2e
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -82,6 +81,11 @@ jobs:
         run: |
           docker push ${{ env.DOCKER_REPO_UI }}:next
 
+  build-app:
+    needs: e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
   # Main-Job:
   #   runs-on: ubuntu-latest
   #   env:
