@@ -113,7 +113,7 @@ jobs:
         working-directory: capacitor
         run: |
             docker load --input /tmp/lima.tar
-            docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm --entrypoint cp ${{ env.DOCKER_REPO_UI }}:test -r /ui /capacitor/
+            docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm -u $(id -u ${USER}):$(id -g ${USER}) ${{ env.DOCKER_REPO_UI }}:test cp -r /ui/. /capacitor
 
       - run: ls -la dist/liga-manager-ui
 
@@ -122,8 +122,11 @@ jobs:
           node-version: '20'
       - run: npm ci
         working-directory: capacitor
-
-        # Main-Job:
+      - run: npm run sync:prod
+        working-directory: capacitor
+      
+      - run: ls -la capacitor/android/app/src/main/assets/public
+  # Main-Job:
   #   runs-on: ubuntu-latest
   #   env:
   #     DOCKER_REPO_UI: robertkitzing/liga-manager-ui
