@@ -119,7 +119,7 @@ jobs:
         run: |
           docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm -u $(id -u ${USER}):$(id -g ${USER}) ${{ env.DOCKER_REPO_UI }}:test cp -r /ui/. /capacitor
 
-      - run: ls -la dist/liga-manager-ui
+      - run: ls -la capacitor/dist/liga-manager-ui
 
       - uses: actions/setup-node@v4
         with:
