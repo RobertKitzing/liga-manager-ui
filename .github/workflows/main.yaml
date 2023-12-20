@@ -113,7 +113,11 @@ jobs:
         working-directory: capacitor
         run: |
             docker load --input /tmp/lima.tar
-            docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm -u $(id -u ${USER}):$(id -g ${USER}) ${{ env.DOCKER_REPO_UI }}:test cp -r /ui/. /capacitor
+
+      - name: Copy UI
+        working-directory: capacitor
+        run: |
+          docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm -u $(id -u ${USER}):$(id -g ${USER}) ${{ env.DOCKER_REPO_UI }}:test cp -r /ui/. /capacitor
 
       - run: ls -la dist/liga-manager-ui
 
