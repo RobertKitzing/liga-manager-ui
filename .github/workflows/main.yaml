@@ -103,12 +103,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: lima-img
+          path: /tmp
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - run: npm ci
-        working-directory: frontend
-      - run: npm run build:app:prod
         working-directory: frontend
 
         # Main-Job:

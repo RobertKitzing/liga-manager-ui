@@ -6,8 +6,8 @@
     "start": "ng serve --host '0.0.0.0' --proxy-config proxy.conf.json",
     "build": "ng build",
     "build:web": "npm run build && copy-files-from-to --mode web",
-    "build:app:local": "npm run build && copy-files-from-to --mode local && npx cap sync",
-    "build:app:prod": "npm run build && copy-files-from-to --mode prod && npx cap sync",
+    "build:app:local": "npm run clean:dist && npm run build && copy-files-from-to --mode app-local --silent",
+    "build:app:prod": "npm run clean:dist && npm run build && copy-files-from-to --mode app-prod --silent",
     "build:web:stats": "ng build -c web --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "jest --coverage",
@@ -16,7 +16,8 @@
     "i18n:languages": "node get-languages.mjs",
     "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",
     "lint": "ng lint",
-    "lint:fix": "ng lint --fix"
+    "lint:fix": "ng lint --fix",
+    "clean:dist": "rm -R ../capacitor/dist -f"
   },
   "jest": {
     "preset": "jest-preset-angular",
@@ -28,10 +29,21 @@
     {
       "from": {
         "web": "appsettings/appsettings.web.json",
-        "local": "appsettings/appsettings.local.json",
-        "prod": "appsettings/appsettings.prod.json"
+        "app-local": "appsettings/appsettings.app-local.json",
+        "app-prod": "appsettings/appsettings.app-prod.json"
       },
-      "to": "dist/liga-manager-ui/browser/appsettings.json"
+      "to": {
+        "web": "dist/liga-manager-ui/browser/appsettings.json",
+        "app-local": "../capacitor/dist/liga-manager-ui/appsettings.json",
+        "app-prod": "../capacitor/dist/liga-manager-ui/appsettings.json"
+      }
+    },
+    {
+      "from": "dist/liga-manager-ui/browser/**/*",
+      "to": {
+        "default": "../capacitor/dist/liga-manager-ui",
+        "web": { "skip": true }
+      }
     }
   ],
   "private": true,
@@ -47,9 +59,6 @@
     "@angular/platform-browser-dynamic": "^17.0.6",
     "@angular/router": "^17.0.6",
     "@apollo/client": "^3.7.16",
-    "@capacitor/android": "^5.0.0",
-    "@capacitor/angular": "^2.0.3",
-    "@capacitor/core": "^5.0.0",
     "@colsen1991/ngx-translate-extract-marker": "^2.0.8",
     "@graphql-codegen/add": "^3.2.3",
     "@graphql-codegen/cli": "^2.16.1",
@@ -82,7 +91,6 @@
     "@angular-eslint/template-parser": "17.1.1",
     "@angular/cli": "~17.0.6",
     "@angular/compiler-cli": "^17.0.6",
-    "@capacitor/cli": "^5.0.0",
     "@openapitools/openapi-generator-cli": "^2.6.0",
     "@softarc/eslint-plugin-sheriff": "^0.11.0",
     "@softarc/sheriff-core": "^0.11.0",
