@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'de.test.wildeligamanager.bremen',
+  appId: 'de.wildeligamanager.bremen',
   appName: 'liga-manager-ui',
   webDir: 'dist/liga-manager-ui',
   plugins: {

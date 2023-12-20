@@ -134,7 +134,7 @@ jobs:
       - run: npm ci
       - run: npm run sync:prod
       - run: npm run gen:assets
-      - run: npm run build -- --keystorealias limahb --keystorepath limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_PASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }}
+      - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_PASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }}
 
       # - uses: maierj/fastlane-action@v2.0.1
       #   with:
