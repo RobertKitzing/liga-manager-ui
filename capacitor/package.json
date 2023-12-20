@@ -6,8 +6,7 @@
         "gen:assets": "npx capacitor-assets generate --android",
         "sync:local": "copy-files-from-to --mode local && npx cap sync",
         "sync:prod": "copy-files-from-to --mode prod && npx cap sync",
-        "build:dev": "npx cap build android",
-        "build:prod": "npx cap build android --prod"
+        "build": "npx cap build android"
     },
     "copyFiles": [
         {
