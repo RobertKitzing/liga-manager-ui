@@ -113,8 +113,9 @@ jobs:
         working-directory: capacitor
         run: |
             docker load --input /tmp/lima.tar
-            docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm --entrypoint cp ${{ env.DOCKER_REPO_UI }}:test -r /ui /capacitor
-            ls -la dist/liga-manager-ui
+            docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm --entrypoint cp ${{ env.DOCKER_REPO_UI }}:test -r /ui /capacitor/
+
+      - run: ls -la dist/liga-manager-ui
 
       - uses: actions/setup-node@v4
         with:
