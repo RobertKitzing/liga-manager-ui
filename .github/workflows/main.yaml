@@ -134,8 +134,13 @@ jobs:
       - run: npm ci
       - run: npm run sync:prod
       - run: npm run gen:assets
-      - run: npm run build:prod -- --keystorepath limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_PASS }}
+      - run: npm run build -- --keystorepath limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_PASS }}
 
+      # - uses: maierj/fastlane-action@v2.0.1
+      #   with:
+      #     lane: 'alpha'
+      #     skip-tracking: true
+      #     subdirectory: capacitor/android/app/build/outputs/apk/release/
   # Main-Job:
   #   runs-on: ubuntu-latest
   #   env:
