@@ -25,11 +25,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: .
+          load: true
           tags: ${{ env.DOCKER_REPO_UI }}:test
-          outputs: type=docker,dest=/tmp/lima.tar
 
       - name: Start Services
-        run: docker compose -f e2e/docker-compose.yml up -d --force-recreate
+        run: docker compose up -d --force-recreate
+        working-directory: e2e
 
       - name: Init DB
         run: docker exec lima-api lima migrations:migrate --no-interaction
@@ -49,6 +50,9 @@ jobs:
           record: true
           browser: chrome
           working-directory: e2e
+
+      - name: Save docker image
+        run: docker save ${{ env.DOCKER_REPO_UI }}:test | gzip > /tmp/lima.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
