@@ -3,8 +3,11 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
+        "gen:assets": "npx capacitor-assets generate --android",
         "sync:local": "copy-files-from-to --mode local && npx cap sync",
-        "sync:prod": "copy-files-from-to --mode prod && npx cap sync"
+        "sync:prod": "copy-files-from-to --mode prod && npx cap sync",
+        "build:dev": "npx cap build android",
+        "build:prod": "npx cap build android --prod"
     },
     "copyFiles": [
         {
@@ -20,6 +23,7 @@
     },
     "dependencies": {
         "@capacitor/android": "^5.0.0",
+        "@capacitor/assets": "^3.0.4",
         "@capacitor/core": "^5.0.0",
         "copy-files-from-to": "^3.9.1"
     },

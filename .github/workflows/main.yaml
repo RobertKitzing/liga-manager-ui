@@ -101,6 +101,9 @@ jobs:
   build-app:
     needs: e2e
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: capacitor
     steps:
       - uses: actions/checkout@v4
       - name: Download artifact
@@ -110,7 +113,6 @@ jobs:
           path: /tmp
 
       - name: Load image
-        working-directory: capacitor
         run: |
             docker load --input /tmp/lima.tar
 
@@ -119,17 +121,21 @@ jobs:
         run: |
           docker run -v $PWD/dist/liga-manager-ui:/capacitor --rm -u $(id -u ${USER}):$(id -g ${USER}) ${{ env.DOCKER_REPO_UI }}:test cp -r /ui/. /capacitor
 
-      - run: ls -la capacitor/dist/liga-manager-ui
+      - name: Setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
 
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - run: npm ci
-        working-directory: capacitor
       - run: npm run sync:prod
-        working-directory: capacitor
-      
-      - run: ls -la capacitor/android/app/src/main/assets/public
+      - run: npm run gen:assets
+      - run: npm run build:dev
+
   # Main-Job:
   #   runs-on: ubuntu-latest
   #   env:
