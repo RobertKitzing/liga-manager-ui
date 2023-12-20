@@ -9,58 +9,81 @@ env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
 
 jobs:
-  build:
+  e2e:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
+
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
       - uses: actions/checkout@v4
-      -
-        name: Build
+
+      - name: Build
         uses: docker/build-push-action@v5
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: .
-          load: true
           tags: ${{ env.DOCKER_REPO_UI }}:test
-      - name: Start Services
-        run: docker compose -f e2e/docker-compose.yml up -d --force-recreate
-      - name: Init DB
-        run: docker exec lima-api lima migrations:migrate --no-interaction
-      - name: Load Demo Data
-        run: docker exec lima-api lima app:db:demo-data
-      - name: Add Admin user
-        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
-      - name: List user
-        run: docker exec lima-api lima app:user:list
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_baseUrl: http://localhost
+          outputs: type=docker,dest=/tmp/lima.tar
+
+      # - name: Start Services
+      #   run: docker compose -f e2e/docker-compose.yml up -d --force-recreate
+
+      # - name: Init DB
+      #   run: docker exec lima-api lima migrations:migrate --no-interaction
+
+      # - name: Load Demo Data
+      #   run: docker exec lima-api lima app:db:demo-data
+
+      # - name: Add Admin user
+      #   run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
+
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v6
+      #   env:
+      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      #     CYPRESS_baseUrl: http://localhost
+      #   with:
+      #     record: true
+      #     browser: chrome
+      #     working-directory: e2e
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-          record: true
-          browser: chrome
-          working-directory: e2e
-      -
-        name: Build and push
-        uses: docker/build-push-action@v5
+          name: lima-img
+          path: /tmp/lima.tar
+
+  publish:
+    needs: e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: true
-          tags: ${{ env.DOCKER_REPO_UI }}:next
+          name: lima-img
+          path: /tmp
+      - name: Load image
+        run: |
+          docker load --input /tmp/lima.tar
+          docker image ls -a
+      # -
+      #   name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+      #     push: true
+      #     tags: ${{ env.DOCKER_REPO_UI }}:next
 
   # Main-Job:
   #   runs-on: ubuntu-latest
