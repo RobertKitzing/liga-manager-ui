@@ -8,8 +8,7 @@
         "sync:prod": "copy-files-from-to --mode prod && npx cap sync",
         "build": "npx cap build android",
         "update": "npx cap update android",
-        "set:version:android": "capacitor-set-version set:android"
-
+        "set:version:android": "node scripts/set-version.js"
     },
     "copyFiles": [
         {
@@ -28,6 +27,7 @@
         "@capacitor/assets": "^3.0.4",
         "@capacitor/core": "^5.0.0",
         "capacitor-set-version": "^2.2.0",
+        "command-line-args": "^5.2.1",
         "copy-files-from-to": "^3.9.1"
     },
     "devDependencies": {

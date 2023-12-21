@@ -147,45 +147,50 @@ jobs:
 
       - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype AAB --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
 
-      - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
-
-      - name: Create Release
-        id: android_app_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      - uses: r0adkll/upload-google-play@v1
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version }}
-          release_name: Release ${{ steps.package-version.outputs.current-version }}
-          draft: false
-          prerelease: false
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON_PLAIN_TEXT }}
+          packageName: de.wildeligamanager.bremen
+          releaseFiles: capacitor/android/app/build/outputs/bundle/release/app-release-signed.aab
+          track: alpha
+          status: completed
+          inAppUpdatePriority: 2
+          userFraction: 1
+      # - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
 
-      - name: Upload Release Asset
-        id: upload-release-asset-apk 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: capacitor/android/app/build/outputs/apk/release/app-release-signed.apk
-          asset_name: app-release-signed.apk
-          asset_content_type: application/x-authorware-bin
-
-      - name: Upload Release Asset
-        id: upload-release-asset-aab
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: capacitor/android/app/build/outputs/bundle/release/app-release-signed.aab
-          asset_name: app-release-signed.aab
-          asset_content_type: application/x-authorware-bin
-      # - uses: maierj/fastlane-action@v2.0.1
+      # - name: Create Release
+      #   id: android_app_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       #   with:
-      #     lane: 'alpha'
-      #     skip-tracking: true
-      #     subdirectory: capacitor/android/app/build/outputs/apk/release/
+      #     tag_name: ${{ steps.package-version.outputs.current-version }}
+      #     release_name: Release ${{ steps.package-version.outputs.current-version }}
+      #     draft: false
+      #     prerelease: false
+
+      # - name: Upload Release Asset
+      #   id: upload-release-asset-apk 
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+      #     asset_path: capacitor/android/app/build/outputs/apk/release/app-release-signed.apk
+      #     asset_name: app-release-signed.apk
+      #     asset_content_type: application/x-authorware-bin
+
+      # - name: Upload Release Asset
+      #   id: upload-release-asset-aab
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+      #     asset_path: capacitor/android/app/build/outputs/bundle/release/app-release-signed.aab
+      #     asset_name: app-release-signed.aab
+      #     asset_content_type: application/x-authorware-bin
+
   # Main-Job:
   #   runs-on: ubuntu-latest
   #   env:
