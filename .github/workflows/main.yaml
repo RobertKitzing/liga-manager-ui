@@ -143,7 +143,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: 'capacitor/android/.gradle'
-          key: ${{ github.sha }}
+          key: next
       
       
       - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype AAB --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
@@ -166,9 +166,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: capacitor/android/app/build/outputs/apk/release/app-release-signed.apk
-          asset_name: app-release-signed.apk
-          asset_content_type: application/vnd.android.package-archive
+          asset_path: capacitor/android/app/build/outputs/apk/release/app-release-signed.aab
+          asset_name: app-release-signed.aab
+          asset_content_type: application/x-authorware-bin
       # - uses: maierj/fastlane-action@v2.0.1
       #   with:
       #     lane: 'alpha'
