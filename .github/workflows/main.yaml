@@ -154,8 +154,7 @@ jobs:
           releaseFiles: capacitor/android/app/build/outputs/bundle/release/app-release-signed.aab
           track: alpha
           status: completed
-          inAppUpdatePriority: 2
-          userFraction: 1
+          inAppUpdatePriority: 5
       # - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
 
       # - name: Create Release
