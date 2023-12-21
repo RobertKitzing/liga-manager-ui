@@ -146,7 +146,7 @@ jobs:
           key: ${{ github.sha }}
       
       
-      - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
+      - run: npm run build -- --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype AAB --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
 
       - name: Create Release
         id: android_app_release
