@@ -6,7 +6,10 @@
         "gen:assets": "npx capacitor-assets generate --android",
         "sync:local": "copy-files-from-to --mode local && npx cap sync",
         "sync:prod": "copy-files-from-to --mode prod && npx cap sync",
-        "build": "npx cap build android"
+        "build": "npx cap build android",
+        "update": "npx cap update android",
+        "set:version:android": "capacitor-set-version set:android"
+
     },
     "copyFiles": [
         {
@@ -24,6 +27,7 @@
         "@capacitor/android": "^5.0.0",
         "@capacitor/assets": "^3.0.4",
         "@capacitor/core": "^5.0.0",
+        "capacitor-set-version": "^2.2.0",
         "copy-files-from-to": "^3.9.1"
     },
     "devDependencies": {
