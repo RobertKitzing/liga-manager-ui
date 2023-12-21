@@ -13,6 +13,7 @@ import {
     SubmitResultMutationVariables,
 } from 'src/api/graphql';
 import { SeasonService } from './season.service';
+import { map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -29,6 +30,12 @@ export class MatchService {
         private cancelMatchGQL: CancelMatchGQL,
         private matchByIdGQL: MatchByIdGQL,
     ) {}
+
+    getMatchById$(id: string) {
+        return this.matchByIdGQL.watch({ id }).valueChanges.pipe(
+            map(({ data }) => data.match ),
+        )
+    }
 
     submitMatchResult(variables: SubmitResultMutationVariables) {
         return this.submitResultGQL.mutate(variables, {

@@ -28,28 +28,28 @@ jobs:
           load: true
           tags: ${{ env.DOCKER_REPO_UI }}:test
 
-      # - name: Start Services
-      #   run: docker compose up -d --force-recreate
-      #   working-directory: e2e
+      - name: Start Services
+        run: docker compose up -d --force-recreate
+        working-directory: e2e
 
-      # - name: Init DB
-      #   run: docker exec lima-api lima migrations:migrate --no-interaction
+      - name: Init DB
+        run: docker exec lima-api lima migrations:migrate --no-interaction
 
-      # - name: Load Demo Data
-      #   run: docker exec lima-api lima app:db:demo-data
+      - name: Load Demo Data
+        run: docker exec lima-api lima app:db:demo-data
 
-      # - name: Add Admin user
-      #   run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
+      - name: Add Admin user
+        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin
 
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v6
-      #   env:
-      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      #     CYPRESS_baseUrl: http://localhost
-      #   with:
-      #     record: true
-      #     browser: chrome
-      #     working-directory: e2e
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_baseUrl: http://localhost
+        with:
+          record: true
+          browser: chrome
+          working-directory: e2e
 
       - name: Save docker image
         run: docker save ${{ env.DOCKER_REPO_UI }}:test | gzip > /tmp/lima.tar
