@@ -135,14 +135,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Generate build number
-        id: buildnumber
-        uses: einaregilsson/build-number@v3 
-
       - run: npm ci
       - run: npm run sync:prod
       - run: npm run gen:assets
-      - run: npm run set:version:android -- -v ${{ steps.package-version.outputs.current-version }} -b ${{ steps.buildnumber.outputs.build_number }}
+      - run: npm run set:version:android -- -v ${{ steps.package-version.outputs.current-version }} -b ${{ github.run_number  }}
 
       - uses: actions/cache@v3
         with:
