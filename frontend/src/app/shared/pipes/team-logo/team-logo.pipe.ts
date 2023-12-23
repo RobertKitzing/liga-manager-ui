@@ -14,12 +14,12 @@ export class TeamLogoPipe implements PipeTransform {
 
   }
 
-  transform(team: Team): string {
+  transform(team: Pick<Team, 'logo_id'>): string {
     // return `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${logoId}`;
     if (team.logo_id) {
       return `${this.appsettingsService.appsettings?.host || ''}/logos/${team.logo_id}.webp`;
     } else {
-      return '/assets/default_team_logo.webp'
+      return '/assets/default_team_logo_200x200.webp'
     }
   }
 

@@ -75,6 +75,26 @@ fragment AllSeasons on Season {
     }
 }
 
+fragment AllSeasonsHoF on Season {
+    id
+    name
+    state
+    match_days {
+        number
+        start_date
+    }
+    ranking {
+        positions {
+        team {
+            id
+            name
+            logo_id
+        }
+        sort_index
+        }
+    }
+}
+
 fragment AllSeasonsCalendar on Season {
     id
     name

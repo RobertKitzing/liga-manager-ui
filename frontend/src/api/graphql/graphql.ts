@@ -602,6 +602,25 @@ export type AllSeasonsFragment = (
   )>>> }
 );
 
+export type AllSeasonsHoFFragment = (
+  { __typename?: 'Season' }
+  & Pick<Season, 'id' | 'name' | 'state'>
+  & { match_days?: Maybe<Array<Maybe<(
+    { __typename?: 'MatchDay' }
+    & Pick<MatchDay, 'number' | 'start_date'>
+  )>>>, ranking?: Maybe<(
+    { __typename?: 'Ranking' }
+    & { positions?: Maybe<Array<Maybe<(
+      { __typename?: 'RankingPosition' }
+      & Pick<RankingPosition, 'sort_index'>
+      & { team: (
+        { __typename?: 'Team' }
+        & Pick<Team, 'id' | 'name' | 'logo_id'>
+      ) }
+    )>>> }
+  )> }
+);
+
 export type SeasonFragment = (
   { __typename?: 'Season' }
   & Pick<Season, 'id' | 'name' | 'state'>
@@ -1194,6 +1213,28 @@ export type AllSeasonsListQuery = { allSeasons?: Maybe<Array<Maybe<(
     )>>> }
   )>>> };
 
+export type HallOfFameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HallOfFameQuery = { allSeasons?: Maybe<Array<Maybe<(
+    { __typename?: 'Season' }
+    & Pick<Season, 'id' | 'name' | 'state'>
+    & { match_days?: Maybe<Array<Maybe<(
+      { __typename?: 'MatchDay' }
+      & Pick<MatchDay, 'number' | 'start_date'>
+    )>>>, ranking?: Maybe<(
+      { __typename?: 'Ranking' }
+      & { positions?: Maybe<Array<Maybe<(
+        { __typename?: 'RankingPosition' }
+        & Pick<RankingPosition, 'sort_index'>
+        & { team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id' | 'name' | 'logo_id'>
+        ) }
+      )>>> }
+    )> }
+  )>>> };
+
 export type SeasonByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1430,6 +1471,27 @@ export const AllSeasonsFragmentDoc = gql`
   match_days {
     number
     start_date
+  }
+}
+    `;
+export const AllSeasonsHoFFragmentDoc = gql`
+    fragment AllSeasonsHoF on Season {
+  id
+  name
+  state
+  match_days {
+    number
+    start_date
+  }
+  ranking {
+    positions {
+      team {
+        id
+        name
+        logo_id
+      }
+      sort_index
+    }
   }
 }
     `;
@@ -2272,6 +2334,24 @@ export const AllSeasonsListDocument = gql`
   })
   export class AllSeasonsListGQL extends Apollo.Query<AllSeasonsListQuery, AllSeasonsListQueryVariables> {
     override document = AllSeasonsListDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const HallOfFameDocument = gql`
+    query HallOfFame {
+  allSeasons {
+    ...AllSeasonsHoF
+  }
+}
+    ${AllSeasonsHoFFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class HallOfFameGQL extends Apollo.Query<HallOfFameQuery, HallOfFameQueryVariables> {
+    override document = HallOfFameDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

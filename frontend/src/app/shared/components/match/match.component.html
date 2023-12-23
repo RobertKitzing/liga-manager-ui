@@ -4,7 +4,7 @@
             <div class="grid grid-cols-3 gap-0 bg-toolbar dark:bg-toolbardark">
                 <div class="text-center self-center pl-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isGuestWinner()}">
                     <div class="flex flex-col items-center">
-                        <img class="w-[100px] h-[100px] m-3" src="{{ match.home_team | teamLogo }}">
+                        <img class="h-[100px] m-3" src="{{ match.home_team | teamLogo }}">
                         <div>
                             <span class="text-center">{{ match.home_team.name }}</span>
                         </div>
@@ -15,7 +15,7 @@
                     <h1>{{ 'MATCH_CANCELLED_ON' | translate: { time: (match.cancelled_at | customDate:'short') } }}</h1>
                 </div>
                 } @else {
-                <div class="flex flex-col text-center">
+                <div class="flex flex-col text-center items-center justify-center">
                     <div [ngClass]="{'cursor-pointer': canEditMatch(match)}"
                         (click)="canEditMatch(match) && openEditKickoffDialog()">
                         @if (!match.kickoff) {
@@ -25,7 +25,7 @@
                         <span>{{ match.kickoff | customDate:'short' }}</span>
                         }
                     </div>
-                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 w-1/3 justify-items-center"
+                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 w-full lg:w-2/3 justify-items-center"
                         (click)="canEditMatch(match) && openEditResultDialog()"
                         [ngClass]="{'cursor-pointer': canEditMatch(match)}">
                         <div>
@@ -52,7 +52,7 @@
                 }
                 <div class="self-center pr-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isHomeWinner()}">
                     <div class="flex flex-col items-center">
-                        <img class="w-[100px] h-[100px] m-3" src="{{ match.guest_team | teamLogo }}">
+                        <img class="h-[100px] m-3" src="{{ match.guest_team | teamLogo }}">
                         <span class="text-center">{{match.guest_team.name}}</span>
                     </div>
                 </div>

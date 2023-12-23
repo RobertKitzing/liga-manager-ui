@@ -1,5 +1,5 @@
 <div class="flex justify-center h-full">
-  <div class="w-full sm:w-3/4">
+  <div class="w-full lg:w-2/3">
     <mat-toolbar class="mt-2 mb-2">
       <div class="w-full lg:w-1/3">
         <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [filterSeasonStates]="filterSeasonStates"></lima-season-chooser>
@@ -16,8 +16,7 @@
             <span translate>TEAM_NAME</span>
           </th>
           <td mat-cell *matCellDef="let element">
-            <img src="{{element.team | teamLogo}}">
-            <!-- https://mdmoin07.medium.com/image-fallback-for-broken-images-angular-aa3d5538ea0 -->
+            <img class="m-2" src="{{element.team | teamLogo}}">
           </td>
         </ng-container>
         <ng-container matColumnDef="team">

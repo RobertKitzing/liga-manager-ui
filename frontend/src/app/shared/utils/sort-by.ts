@@ -1,10 +1,12 @@
-export function sortArrayBy<T>(array: T[], key: keyof T) {
+export function sortArrayBy<T>(array: T[], key: keyof T, dir: 'asc' | 'dec' = 'asc') {
     return [...array].sort((a, b) => {
+        
         if (a[key] > b[key]) {
-            return 1;
+            return dir === 'asc' ? 1 : -1;
         }
+        
         if (a[key] < b[key]) {
-            return -1;
+            return dir === 'asc' ? -1 : 1;
         }
         return 0;
     });

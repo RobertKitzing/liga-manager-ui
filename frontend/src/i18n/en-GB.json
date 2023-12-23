@@ -23,6 +23,7 @@
 	"CANCEL_MATCH_TITLE": "Cancel Match",
 	"Cancellation reason exceeds maximum length of 255": "Cancellation reason exceeds maximum length of 255",
 	"CANCELLATION_REASON": "Cancellation Reason",
+	"CHAMPIONSHIP_COUNT": "Championships",
 	"CREATE_NEW_SEASON_TITLE": "New Season",
 	"CREATE_NEW_TOURNAMENT_TITLE": "New Tournament",
 	"CREATE_SEASON_ERROR": "Season not created",

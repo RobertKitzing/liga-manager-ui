@@ -1,6 +1,6 @@
 @if (team$ | async; as team) {
   <div class="flex justify-center items-center space-x-4">
-    <img class="w-[128px] h-[128px]" src="{{imageSrc}}">
+    <img src="{{imageSrc}}">
     @if (authenticationService.isAdmin) {
       <div>
         <button class="bg-theme text-theme-cdefault" mat-button (click)="deleteTeamLogo(team.id)">

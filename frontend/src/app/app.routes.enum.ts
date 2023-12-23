@@ -8,5 +8,5 @@ export enum APP_ROUTES {
     TEAMS_MANAGEMENT = 'teams_management',
     ADMIN = 'admin',
     HISTORY = 'history',
-    HALL_OF_FAME = 'hall-of-fame',
+    HALL_OF_FAME = 'hall_of_fame',
 }
