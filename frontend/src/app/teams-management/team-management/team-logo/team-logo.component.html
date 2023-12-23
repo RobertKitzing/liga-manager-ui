@@ -1,6 +1,9 @@
 @if (team$ | async; as team) {
-  <div class="flex justify-center items-center space-x-4">
-    <img src="{{imageSrc}}">
+  <div class="flex justify-center items-center flex-col mt-3 space-y-3">
+    <div class="flex justify-center flex-col">
+      <h1 translate>CURRENT_TEAM_LOGO</h1>
+      <img src="{{imageSrc}}">
+    </div>
     @if (authenticationService.isAdmin) {
       <div>
         <button class="bg-theme text-theme-cdefault" mat-button (click)="deleteTeamLogo(team.id)">
@@ -8,7 +11,8 @@
           <span translate>BUTTON.DELETE_TEAM_LOGO</span>
         </button>
       </div>
-      <div>
+      <div class="flex justify-center flex-col space-y-3 mt-3">
+        <h1 translate>UPLOAD_TEAM_LOGO</h1>
         <input type="file" (change)="onFileSelected($event, team.id)" accept=".webp">
       </div>
     }

@@ -29,42 +29,67 @@
 </mat-toolbar>
 <mat-drawer-container class="h-[calc(100vh_-_64px)]" [hasBackdrop]="true">
   <mat-drawer #drawer [mode]="'over'" [position]="'end'">
-    <div class="visible lg:hidden flex justify-center m-2">
-      @if (!authService.isAuthenticated) {
-        <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
-          <span translate>BUTTON.LOGIN</span>
+    <div class="flex flex-col">
+      <div class="visible lg:hidden flex justify-center m-2">
+        @if (!authService.isAuthenticated) {
+          <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
+            <span translate>BUTTON.LOGIN</span>
+          </button>
+        } @else {
+          <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
+            {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
+            <mat-icon>person</mat-icon>
+          </button>
+        }
+      </div>
+      <div class="visible lg:hidden border-t-2 dark:border-toolbardark" (click)="drawer.close()">
+        <lima-nav-links></lima-nav-links>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="p-2 flex justify-between items-center border-t-2 dark:border-toolbardark">
+        <button class="w-full" [matMenuTriggerFor]="themes" translate>
+          THEMES
         </button>
-      } @else {
-        <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
-          {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
-          <mat-icon>person</mat-icon>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="p-2 flex justify-between items-center border-t-2  border-b-2 dark:border-toolbardark">
+        <button class="w-full" mat-button [matMenuTriggerFor]="languageMenu">
+          <mat-icon>language</mat-icon>
+          <span translate>LANGUAGE</span>
         </button>
-      }
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="flex-1"></div>
+      <mat-divider></mat-divider>
+      <div class="p-2 flex justify-center">
+        <mat-select [formControl]="darkModeControl"
+          placeholder="{{ 'PLACEHOLDER.DARKMODE_APPEARANCE' | translate }}"
+          [formControl]="darkModeControl">
+          <mat-option [value]="DarkModeAppearance.light">
+            <span translate>LIGHT_MODE</span>
+          </mat-option>
+          <mat-option [value]="DarkModeAppearance.dark">
+            <span translate>DARK_MODE</span>
+          </mat-option>
+          <mat-option [value]="DarkModeAppearance.system">
+            <span translate>SYSTEM_MODE</span>
+          </mat-option>
+        </mat-select>
+        <!-- <mat-radio-group color="primary" [formControl]="darkModeControl">
+          <mat-radio-button [value]="DarkModeAppearance.light" translate>
+            LIGHT_MODE
+          </mat-radio-button>
+          <mat-radio-button [value]="DarkModeAppearance.dark" translate>
+            DARK_MODE
+          </mat-radio-button>
+          <mat-radio-button [value]="DarkModeAppearance.system" translate>
+            SYSTEM_MODE
+          </mat-radio-button>
+        </mat-radio-group> -->
+      </div>
     </div>
-    <div class="visible lg:hidden border-t-2 dark:border-toolbardark" (click)="drawer.close()">
-      <lima-nav-links></lima-nav-links>
-    </div>
-    <div class="p-2 flex justify-center">
-      <mat-slide-toggle color="primary" [formControl]="darkModeControl">
-        <span translate>DARK_MODE</span>
-      </mat-slide-toggle>
-    </div>
-    <mat-divider></mat-divider>
-    <div class="p-2 flex justify-between items-center border-t-2 dark:border-toolbardark">
-      <button class="w-full" [matMenuTriggerFor]="themes" translate>
-        THEMES
-      </button>
-      <mat-icon>arrow_drop_down</mat-icon>
-    </div>
-    <mat-divider></mat-divider>
-    <div class="p-2 flex justify-between items-center border-t-2  border-b-2 dark:border-toolbardark">
-      <button class="w-full" mat-button [matMenuTriggerFor]="languageMenu">
-        <mat-icon>language</mat-icon>
-        <span translate>LANGUAGE</span>
-      </button>
-      <mat-icon>arrow_drop_down</mat-icon>
-    </div>
-    <mat-divider></mat-divider>
   </mat-drawer>
   <mat-drawer-content>
     @if ((loadingIndicatorService.loading$ | async) === true) {

@@ -22,6 +22,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { defaultDialogConfig } from './app.config';
 import { NavLinksComponent } from './shared/components';
+import { MatRadioModule } from '@angular/material/radio';
+import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'lima-root',
@@ -38,6 +41,7 @@ import { NavLinksComponent } from './shared/components';
         MatIconModule,
         MatSidenavModule,
         MatSlideToggleModule,
+        MatSelectModule,
         ReactiveFormsModule,
         MatDividerModule,
         MatProgressBarModule,
@@ -49,9 +53,9 @@ import { NavLinksComponent } from './shared/components';
 })
 export class AppComponent implements OnInit {
 
-    darkModeControl = new FormControl(this.themeService.darkMode$.getValue(), {
-        nonNullable: true,
-    });
+    DarkModeAppearance = DarkModeAppearance;
+
+    darkModeControl = new FormControl(this.themeService.darkMode);
 
     constructor(
         public themeService: ThemeService,
@@ -77,7 +81,8 @@ export class AppComponent implements OnInit {
         });
 
         this.darkModeControl.valueChanges.subscribe((dark) => {
-            this.themeService.darkMode$.next(dark);
+            this.themeService.darkMode = dark || DarkModeAppearance.system
+            DarkMode.update();
         });
     }
 

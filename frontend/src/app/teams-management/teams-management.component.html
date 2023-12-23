@@ -1,8 +1,18 @@
 <div class="w-full">
-  <div class="flex w-full h-full flex-wrap">
-      @for (team of teams$ | async; track team) {
-        <a class="flex h-full items-center p-2" routerLink="{{team?.id}}" routerLinkActive="bg-theme-900 text-theme-c900">{{ team?.name }}</a>
-      }
-  </div>
+  <mat-toolbar class="border-t-2 dark:border-toolbardark overflow-auto">
+    <div class="flex w-full h-full">
+      <div class="w-1/2 self-center">
+        @if (teams$ | async; as teams) {
+          @if (teams.length > 1) {
+            <lima-team-chooser [selectedTeamFC]="selectedTeamFC" [teams]="teams"></lima-team-chooser>
+          } @else {
+            <div>{{ teams[0]?.name }}</div>
+          }
+        }
+      </div>
+    </div>
+  </mat-toolbar>
 </div>
+@if (selectedTeam$ | async) {
+}
 <router-outlet></router-outlet>
