@@ -65,7 +65,7 @@ export class HallOfFameComponent {
             }
           }
         }
-        this.winner = sortArrayBy(this.winner, 'winnerCount', 'dec')
+        this.winner = sortArrayBy(this.winner, 'winnerCount', 'desc')
       },
     ),
   )

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllTournamentsFragment, Match, Tournament } from '@api/graphql';
 import { TournamentChooserComponent, MatchComponent } from '@lima/shared/components';
-import { CustomDateModule } from '@lima/shared/pipes';
+import { CustomDateModule, SortByPipe } from '@lima/shared/pipes';
 import { TournamentService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorage } from 'ngx-webstorage';
@@ -21,6 +21,7 @@ import { of, startWith, switchMap, tap } from 'rxjs';
         TranslateModule,
         CustomDateModule,
         MatchComponent,
+        SortByPipe,
     ],
     standalone: true,
 })

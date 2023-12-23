@@ -6,7 +6,7 @@
         @for (tournament of tournamentService.allTournaments$ | async; track tournament) {
             @if (tournament) {
                 <mat-option [value]="tournament">
-                    {{ tournament.name }} ({{ tournament.id }})
+                    {{ tournament.name }}
                 </mat-option>
             }
         }

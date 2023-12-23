@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, iif, of, tap } from 'rxjs';
 import { AuthenticationService, TeamService } from '@lima/shared/services';
 import { AsyncPipe } from '@angular/common';
-import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLinkActive, RouterLink, RouterOutlet, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormControl } from '@angular/forms';
+import { Team } from '@api/graphql';
+import { TeamChooserComponent } from '@lima/shared/components';
+import { APP_ROUTES } from '@lima/app.routes.enum';
 
 @Component({
     selector: 'lima-teams-managment',
@@ -18,40 +22,46 @@ import { TranslateModule } from '@ngx-translate/core';
         RouterLink,
         RouterOutlet,
         AsyncPipe,
+        TeamChooserComponent,
     ],
 })
 export class TeamsManagementComponent {
 
+    selectedTeamFC = new FormControl<Team | null>(null);
+
+    selectedTeam$ = this.selectedTeamFC.valueChanges.pipe(
+        tap(
+            (team) => {
+                console.log(team)
+                if (team?.id) {
+                    this.router.navigateByUrl(`${APP_ROUTES.TEAMS_MANAGEMENT}/${team.id}`);
+                } else {
+                    this.router.navigateByUrl(`${APP_ROUTES.TEAMS_MANAGEMENT}`)
+                }
+            },
+        ),
+    );
+
     teams$ = 
-        this.authenticationService.isAdmin ?
-        this.teamService.allTeams$ :
-        of(this.authenticationService.user?.teams);
+        iif(
+            () => this.authenticationService.isAdmin,
+            this.teamService.allTeams$,
+            of(this.authenticationService.user?.teams),
+        ).pipe(
+            tap(
+                (teams) => {
+                    if (!this.selectedTeamFC.value) {
+                        this.selectedTeamFC.setValue(teams![0])
+                        this.router.navigateByUrl(`${APP_ROUTES.TEAMS_MANAGEMENT}/${teams![0]?.id}`);
+                    }
+                },
+            ),
+        )
 
     constructor(
         private authenticationService: AuthenticationService,
         private teamService: TeamService,
+        private router: Router,
     ) {}
-
-    async onFileSelected(event: Event, teamId: string) {
-        const element = event.currentTarget as HTMLInputElement;
-
-        if (element.files) {
-            const file = element.files[0];
-            if (file) {
-                await firstValueFrom(
-                    this.teamService.uploadTeamLogo(teamId, file),
-                );
-                // this.fileName = file.name;
-
-                // const formData = new FormData();
-
-                // formData.append("thumbnail", file);
-
-                // const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-                // upload$.subscribe();
-            }
-        }
-    }
 
 }

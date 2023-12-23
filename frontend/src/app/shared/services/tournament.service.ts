@@ -10,7 +10,7 @@ export class TournamentService {
 
   allTournaments$ = this.allTournamentListGQL.watch().valueChanges.pipe(
     map(({ data }) => data.allTournaments),
-    map((tournaments) => sortArrayBy(tournaments as Tournament[], 'name')),
+    map((tournaments) => sortArrayBy(tournaments as Tournament[], 'name', 'desc')),
   );
 
   constructor(
@@ -58,6 +58,6 @@ export class TournamentService {
 
   tournamentCompare(c1: Tournament, c2: Tournament) {
     return c1 && c2 && c1.id === c2.id;
-}
+  }
 
 }

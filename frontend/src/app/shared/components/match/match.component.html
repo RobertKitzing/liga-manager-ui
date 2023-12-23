@@ -4,10 +4,11 @@
             <div class="grid grid-cols-3 gap-0 bg-toolbar dark:bg-toolbardark">
                 <div class="text-center self-center pl-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isGuestWinner()}">
                     <div class="flex flex-col items-center">
-                        <img class="h-[100px] m-3" src="{{ match.home_team | teamLogo }}">
-                        <div>
-                            <span class="text-center">{{ match.home_team.name }}</span>
-                        </div>
+                        @defer (on viewport) {
+                            <img class="h-[100px]" src="{{ match.home_team | teamLogo }}">
+                        } @placeholder {
+                            <div></div>
+                        }
                     </div>
                 </div>
                 @if (match.cancelled_at) {
@@ -16,15 +17,6 @@
                 </div>
                 } @else {
                 <div class="flex flex-col text-center items-center justify-center">
-                    <div [ngClass]="{'cursor-pointer': canEditMatch(match)}"
-                        (click)="canEditMatch(match) && openEditKickoffDialog()">
-                        @if (!match.kickoff) {
-                        <span translate>NO_TIME_SET</span>
-                        }
-                        @if (match.kickoff) {
-                        <span>{{ match.kickoff | customDate:'short' }}</span>
-                        }
-                    </div>
                     <div class="self-center grid grid-cols-3 m-3 p-2 border-2 dark:border-toolbardark rounded bg-theme-700 text-theme-c700 w-full lg:w-2/3 justify-items-center"
                         (click)="canEditMatch(match) && openEditResultDialog()"
                         [ngClass]="{'cursor-pointer': canEditMatch(match)}">
@@ -38,33 +30,56 @@
                             {{ match.guest_score | number }}
                         </div>
                     </div>
-                    <div class="flex flex-col text-center"
-                        (click)="canEditMatch(match) && openEditPitchDialog()"
-                        [ngClass]="{'cursor-pointer': canEditMatch(match)}">
-                        @if (match.pitch) {
-                        <span class="line-clamp-5">{{ match.pitch.label }}</span>
-                        }
-                        @if (!match.pitch) {
-                        <span translate>NO_PTICH_SET</span>
-                        }
-                    </div>
                 </div>
                 }
                 <div class="self-center pr-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isHomeWinner()}">
                     <div class="flex flex-col items-center">
                         <img class="h-[100px] m-3" src="{{ match.guest_team | teamLogo }}">
-                        <span class="text-center">{{match.guest_team.name}}</span>
                     </div>
                 </div>
             </div>
-                @if (match.cancelled_at) {
-                    <div class="break-words line-clamp-5 bg-toolbar dark:bg-toolbardark p-3 border-t-2 border-b-2 dark:border-toolbardark">
-                        <h1 translate>CANCELLATION_REASON</h1>
-                        {{ match.cancellation_reason }}
+            <div class="grid grid-cols-3 gap-0 bg-toolbar dark:bg-toolbardark pb-3">
+                <span class="text-center">{{ match.home_team.name }}</span>
+                <div></div>
+                <span class="text-center">{{ match.guest_team.name }}</span>
+            </div>
+            <div class="grid grid-cols-2 border-b-2 dark:border-toolbardark">
+            @if (match.cancelled_at) {
+                <div class="break-words line-clamp-5 p-2">
+                    <h1 translate>CANCELLATION_REASON</h1>
+                    <span>{{ match.cancellation_reason }}</span>
+                </div>
+            } @else {
+                <div [ngClass]="{'cursor-pointer': canEditMatch(match)}"
+                    (click)="canEditMatch(match) && openEditKickoffDialog()"
+                    class="border-r-2 dark:border-toolbardark">
+                    <div class="flex items-center flex-col space-y-2 text-center p-2">
+                    @if (!match.kickoff) {
+                        <mat-icon>access_time</mat-icon>
+                        <span translate>NO_TIME_SET</span>
+                    } @else {
+                        <mat-icon>access_time</mat-icon>
+                        <span class="line-clamp-5">{{ match.kickoff | customDate:'short' }}</span>
+                    }
                     </div>
-                }
-                @if (authService.isAuthenticated) {
-                <div class="grid grid-cols-3 gap-0">
+                </div>
+                <div class="flex flex-col text-center"
+                    (click)="canEditMatch(match) && openEditPitchDialog()"
+                    [ngClass]="{'cursor-pointer': canEditMatch(match)}">
+                    <div class="flex items-center flex-col space-y-2 text-center p-2">
+                    @if (!match.pitch) {
+                        <mat-icon>location_off</mat-icon>
+                        <span translate>NO_PTICH_SET</span>
+                    } @else {
+                        <mat-icon>location_on</mat-icon>
+                        <span class="line-clamp-5">{{ match.pitch.label }}</span>
+                    }
+                    </div>
+                </div>
+            }
+            </div>
+            @if (authService.isAuthenticated) {
+                <div class="grid grid-cols-3 gap-0 ">
                     <div class="flex justify-center p-2">
                         <button mat-raised-button color="primary" class="w-min" (click)="openViewContactDialog(match.home_team)">
                             <mat-icon>contacts</mat-icon>
@@ -108,7 +123,7 @@
                         </button>
                     </div>
                 </div>
-                }
+            }
         </div>
     }
 </div>

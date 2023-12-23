@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
 import { Match, MatchDay, Team } from '@api/graphql';
 import { defaultDialogConfig } from '@lima/app.config';
 import { CancelMatchComponent, EditMatchKickoffComponent, EditMatchPitchComponent, EditMatchResultComponent } from '@lima/shared/dialogs';
@@ -41,6 +42,7 @@ export class MatchComponent {
 
   constructor(
     private dialog: MatDialog,
+    private router: Router,
     public authService: AuthenticationService,
   ) {
   }
@@ -53,6 +55,9 @@ export class MatchComponent {
   }
 
   canEditMatch(match: Match) {
+    if (this.router.url.includes('history')) {
+      return false;
+    }
     return (
         this.authService.canEditMatch(match)
     );

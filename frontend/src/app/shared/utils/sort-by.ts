@@ -1,4 +1,4 @@
-export function sortArrayBy<T>(array: T[], key: keyof T, dir: 'asc' | 'dec' = 'asc') {
+export function sortArrayBy<T>(array: T[], key: keyof T, dir: 'asc' | 'desc' = 'asc') {
     return [...array].sort((a, b) => {
         
         if (a[key] > b[key]) {
