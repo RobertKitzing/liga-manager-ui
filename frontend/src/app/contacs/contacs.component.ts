@@ -6,10 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { SeasonChooserComponent, TeamContactComponent, TournamentChooserComponent } from '@lima/shared/components';
 import { SeasonService, TeamService, TournamentService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
-import {  Observable, combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllSeasonsFragment, SeasonState, Team } from '@api/graphql';
+import { AllSeasonsFragment, SeasonState } from '@api/graphql';
+import { SortByPipe } from '@lima/shared/pipes';
 
 @Component({
     selector: 'lima-contacs',
@@ -28,6 +29,7 @@ import { AllSeasonsFragment, SeasonState, Team } from '@api/graphql';
         SeasonChooserComponent,
         MatToolbarModule,
         TournamentChooserComponent,
+        SortByPipe,
     ],
 })
 export class ContacsComponent {
@@ -51,7 +53,9 @@ export class ContacsComponent {
                 } else {
                     teams$ = this.seasonService.getSeasonById$(selectedSeason.id).pipe(map((season) => season?.teams ))
                 }
-                return teams$.pipe(map((teams) => !searchTeam ? teams : teams?.filter((t) => t?.name.toLowerCase().includes(searchTeam) )))
+                return teams$.pipe(
+                    map((teams) => !searchTeam ? teams : teams?.filter((t) => t?.name.toLowerCase().includes(searchTeam) )),
+                )
             },
         ),
         tap(

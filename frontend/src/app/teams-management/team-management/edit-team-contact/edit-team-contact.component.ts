@@ -32,7 +32,7 @@ export class EditTeamContactComponent {
             tap(
               (team) => {
                 this.teamContact.patchValue({
-                  email: team?.contact?.email || null,
+                  email: team?.contact?.email,
                   first_name: team?.contact?.first_name,
                   last_name: team?.contact?.last_name,
                   phone: team?.contact?.phone,
@@ -45,9 +45,9 @@ export class EditTeamContactComponent {
 
   teamContact = new FormGroup({
     email: new FormControl('', [Validators.email]),
-    first_name: new FormControl(),
-    last_name: new FormControl(),
-    phone: new FormControl(),
+    first_name: new FormControl('', [Validators.required]),
+    last_name: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -63,9 +63,9 @@ export class EditTeamContactComponent {
       await firstValueFrom(this.teamService.updateTeamContact({
         team_id,
         email: this.teamContact.value.email!,
-        first_name: this.teamContact.value.first_name,
-        last_name: this.teamContact.value.last_name,
-        phone: this.teamContact.value.phone,
+        first_name: this.teamContact.value.first_name!,
+        last_name: this.teamContact.value.last_name!,
+        phone: this.teamContact.value.phone!,
       }));
       this.notificationService.showSuccessNotification(
         marker('TEAM_CONTACT_SAVED_SUCCESS'),

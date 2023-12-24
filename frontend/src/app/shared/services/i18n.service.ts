@@ -7,6 +7,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const LANG_KEY = 'LANG';
 
+export interface StoredLang { code: string; direction?: string }
+
 export function httpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, `/i18n/`, '.json');
 }
@@ -16,7 +18,7 @@ export function httpLoaderFactory(http: HttpClient) {
 })
 export class I18nService {
 
-    @LocalStorage(LANG_KEY) storedLang?: { code: string; direction?: string };
+    @LocalStorage(LANG_KEY) storedLang?: StoredLang;
 
     availableLang$ = this.httpClient.get<
         { code: string; direction: string; name: string; nativeName: string }[]

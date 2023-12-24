@@ -7,6 +7,7 @@ import {
     AuthenticationService,
     I18nService,
     LoadingIndicatorService,
+    StoredLang,
     ThemeService,
 } from '@lima/shared/services';
 import { LoginComponent } from './shared/dialogs';
@@ -22,7 +23,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { defaultDialogConfig } from './app.config';
 import { NavLinksComponent } from './shared/components';
-import { MatRadioModule } from '@angular/material/radio';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -57,6 +57,10 @@ export class AppComponent implements OnInit {
 
     darkModeControl = new FormControl(this.themeService.darkMode);
 
+    languageControl = new FormControl<StoredLang | undefined>(this.i18Service.storedLang);
+
+    themeControl = new FormControl(this.themeService.currentTheme$.getValue());
+
     constructor(
         public themeService: ThemeService,
         public loadingIndicatorService: LoadingIndicatorService,
@@ -80,10 +84,24 @@ export class AppComponent implements OnInit {
             }
         });
 
-        this.darkModeControl.valueChanges.subscribe((dark) => {
-            this.themeService.darkMode = dark || DarkModeAppearance.system
-            DarkMode.update();
-        });
+        this.darkModeControl.valueChanges.subscribe(
+            (dark) => {
+                this.themeService.darkMode = dark || DarkModeAppearance.system
+                DarkMode.update();
+            },
+        );
+
+        this.languageControl.valueChanges.subscribe(
+            (lang) => {
+                this.changeLang(lang!);
+            },
+        )
+
+        this.themeControl.valueChanges.subscribe(
+            (theme) => {
+                this.changeTheme(theme || 'default')
+            },
+        )
     }
 
     openLoginDialog() {
@@ -108,6 +126,10 @@ export class AppComponent implements OnInit {
 
     onSwipeRight() {
         this.location.forward();
+    }
+
+    languageCompare(c1: StoredLang, c2: StoredLang) {
+        return c1 && c2 && c1.code === c2.code;
     }
 
 }
