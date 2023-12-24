@@ -51,8 +51,7 @@
       </div>
       <div class="p-2 flex justify-center">
         <mat-icon class="mr-2">palette</mat-icon>
-        <mat-select [formControl]="themeControl"
-          placeholder="{{ 'PLACEHOLDER.THEMES' | translate }}">
+        <mat-select [formControl]="themeControl">
           @for (theme of themeService.themes; track theme) {
             <mat-option [value]="theme">{{ theme }}</mat-option>
           }
@@ -61,8 +60,7 @@
       <div class="p-2 flex justify-center">
         <mat-icon class="mr-2">language</mat-icon>
         <mat-select [formControl]="languageControl"
-          [compareWith]="languageCompare"
-          placeholder="{{ 'PLACEHOLDER.LANGUAGE' | translate }}">
+          [compareWith]="languageCompare">
           @for (language of i18Service.availableLang$ | async; track language) {
             <mat-option [value]="language">{{ language.nativeName }} ({{ language.name }})</mat-option>
           }
@@ -71,7 +69,6 @@
       <div class="p-2 flex justify-center">
         <mat-icon class="mr-2">dark_mode</mat-icon>
         <mat-select [formControl]="darkModeControl"
-          placeholder="{{ 'PLACEHOLDER.DARKMODE_APPEARANCE' | translate }}"
           [formControl]="darkModeControl">
           <mat-option [value]="DarkModeAppearance.light">
             <span translate>LIGHT_MODE</span>

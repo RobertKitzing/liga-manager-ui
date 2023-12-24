@@ -4,8 +4,7 @@
             <h1 translate>TEAMS_IN_SEASON</h1>
             @for (team of season.teams; track team) {
                 @if (team) {
-                    <div class="flex items-center m-3">
-                        <p>{{ team.name }}</p>
+                    <div class="flex items-center m-3 space-x-3">
                         @switch (season.state) {
                             @case (SeasonState.Preparation) {
                                 <button mat-icon-button (click)="removeTeamFromSeason({ team_id: team.id, season_id: season.id })">
@@ -15,7 +14,8 @@
                             @case (SeasonState.Progress) {
                                 <mat-icon>compare_arrows</mat-icon>
                             }
-                        } 
+                        }
+                        <p>{{ team.name }}</p>
                     </div>
                 }
             }

@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import {
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
     AllSeasonsFragment,
     AllSeasonsListGQL,
     CreateSeasonGQL,
+    DeleteSeasonGQL,
+    EndSeasonGQL,
     RankingByIdGQL,
     RemoveTeamFromSeasonGQL,
     RemoveTeamFromSeasonMutationVariables,
     Season,
     SeasonByIdGQL,
+    StartSeasonGQL,
 } from '@api/graphql';
 import { LocalStorage } from 'ngx-webstorage';
 
@@ -59,6 +62,9 @@ export class SeasonService {
         private createSeasonGQL: CreateSeasonGQL,
         private addTeamToSeasonGQL: AddTeamToSeasonGQL,
         private removeTeamFromSeasonGQL: RemoveTeamFromSeasonGQL,
+        private startSeasonGQL: StartSeasonGQL,
+        private deleteSeasonGQL: DeleteSeasonGQL,
+        private endSeasonGQL: EndSeasonGQL,
     ) {
     }
 
@@ -126,6 +132,57 @@ export class SeasonService {
                     },
                 ],
             },
+        );
+    }
+
+    startSeason(seasonId: string) {
+        return firstValueFrom(
+            this.startSeasonGQL.mutate(
+                {
+                    id: seasonId,
+                },
+                {
+                    refetchQueries: [
+                        {
+                            query: this.allSeasonlistGQL.document,
+                        },
+                    ],
+                },
+            ),
+        );
+    }
+
+    endSeason(season_id: string) {
+        return firstValueFrom(
+            this.endSeasonGQL.mutate(
+                {
+                    season_id,
+                },
+                {
+                    refetchQueries: [
+                        {
+                            query: this.allSeasonlistGQL.document,
+                        },
+                    ],
+                },
+            ),
+        );
+    }
+
+    deleteSeason(season_id: string) {
+        return firstValueFrom(
+            this.deleteSeasonGQL.mutate(
+                {
+                    season_id,
+                },
+                {
+                    refetchQueries: [
+                        {
+                            query: this.allSeasonlistGQL.document,
+                        },
+                    ],
+                },
+            ),
         );
     }
 

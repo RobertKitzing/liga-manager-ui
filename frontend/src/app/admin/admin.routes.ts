@@ -46,6 +46,10 @@ export const AdminRoutes: Routes = [
                         loadComponent: () => import('./manage-seasons/manage-penalties').then((m) => m.ManagePenaltiesComponent),
                     },
                     {
+                        path: ADMIN_ROUTES.START_STOP,
+                        loadComponent: () => import('./manage-seasons/manage-start-stop').then((m) => m.ManageStartStopComponent),
+                    },
+                    {
                         path: '',
                         redirectTo: ADMIN_ROUTES.TEAMS,
                         pathMatch: 'full',

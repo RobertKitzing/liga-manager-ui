@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllSeasonsFragment } from '@api/graphql';
+import { AllSeasonsFragment, SeasonState } from '@api/graphql';
 import { SeasonChooserComponent } from '@lima/shared/components';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { of, startWith, switchMap, tap } from 'rxjs';
@@ -34,6 +34,8 @@ import { APP_ROUTES } from '@lima/app.routes.enum';
 export class ManageSeasonsComponent {
 
     ADMIN_ROUTES = ADMIN_ROUTES;
+
+    SeasonState = SeasonState;
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment | undefined | null>(this.seasonService.manageSeason);
 

@@ -1,7 +1,7 @@
 <mat-toolbar>
     <div class="w-full flex items-center space-x-4">
         <div class="w-1/2">
-            <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [clearable]="true"></lima-season-chooser>
+            <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [clearable]="true" [filterSeasonStates]="[SeasonState.Preparation, SeasonState.Progress]"></lima-season-chooser>
         </div>
         <button mat-stroked-button (click)="createSeason()">
             <mat-icon>add</mat-icon>
@@ -17,17 +17,10 @@
             <a class="flex h-full items-center p-2" mat-tab-link translate  routerLink="{{season.id}}/{{ADMIN_ROUTES.MATCHES}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.MATCHES</a>
             <a class="flex h-full items-center p-2" mat-tab-link translate  routerLink="{{season.id}}/{{ADMIN_ROUTES.SCHEDULE_MATCHES}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a>
             <a class="flex h-full items-center p-2" mat-tab-link translate  routerLink="{{season.id}}/{{ADMIN_ROUTES.PENALTIES}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.PENALTIES</a>
+            <a class="flex h-full items-center p-2" mat-tab-link translate  routerLink="{{season.id}}/{{ADMIN_ROUTES.START_STOP}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.START_STOP</a>
         </div>
     </mat-toolbar>
     <div class="p-3">
         <router-outlet></router-outlet>
     </div>
-    <!-- <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" color="primary" backgroundColor="primary">
-        <mat-tab label="{{ 'TAB.ADMIN.SEASON.TEAMS' | translate }}">Content 1</mat-tab>
-        <mat-tab label="{{ 'TAB.ADMIN.SEASON.MATCH_DAYS' | translate }}">Content 2</mat-tab>
-        <mat-tab label="{{ 'TAB.ADMIN.SEASON.MATCHES' | translate }}">Content 3</mat-tab>
-        <mat-tab label="{{ 'TAB.ADMIN.SEASON.SCHEDULE_MATCHES' | translate }}">Content 3</mat-tab>
-        <mat-tab label="{{ 'TAB.ADMIN.SEASON.PENALTIES' | translate }}">Content 3</mat-tab>
-        <mat-tab label="{{ 'TAB.ADMIN.SEASON.SEASON' | translate }}">Content 3</mat-tab>
-    </mat-tab-group> -->
 }

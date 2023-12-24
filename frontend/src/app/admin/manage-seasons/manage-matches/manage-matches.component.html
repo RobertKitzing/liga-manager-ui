@@ -1,3 +1,21 @@
 @if (season$ | async; as season) {
-    {{ season.name }}
+    <div class="flex flex-wrap w-full">
+    @for (matchDay of season.match_days; track matchDay) {
+        <div class="border-2 m-3">
+        <h3 class="text-center bg-theme text-theme-cdefault p-4">
+          {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date | customDate }})
+        </h3>
+        <div class="flex justify-center">
+          <div class="w-full grid grid-cols-2 gap-3 m-3">
+            @for (match of matchDay?.matches; track match) {
+                @if (match && matchDay) {
+                    <span class="text-right">{{ match.home_team.name }}</span>
+                    <span class="text-left">{{ match.guest_team.name }}</span>
+                }
+            }
+          </div>
+        </div>
+        </div>
+      }
+    </div>
 }

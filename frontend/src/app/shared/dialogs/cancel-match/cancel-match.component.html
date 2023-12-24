@@ -4,11 +4,14 @@
       <div translate class="text-center">
         CANCEL_MATCH_TITLE
       </div>
+      <div translate class="text-center">
+        CANCEL_MATCH_HINT
+      </div>
     </div>
     <div>
       <mat-form-field class="w-full" subscriptSizing="dynamic">
         <mat-label translate>CANCEL_MATCH_REASON</mat-label>
-        <textarea   matInput
+        <textarea matInput
           #reason
           [formControl]="cancelMatchReason"
           cdkTextareaAutosize
