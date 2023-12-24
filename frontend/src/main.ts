@@ -10,12 +10,17 @@ export function getAppearancePref(): DarkModeGetterResult {
   return JSON.parse(appearance)
 }
 
+export function setAppearancePref(appearance: DarkModeAppearance) {
+  localStorage.setItem(ls_key, appearance)
+}
+
 bootstrapApplication(AppComponent, appConfig)
   .then(
     () => {
       DarkMode.init({
         cssClass: 'dark',
         getter: getAppearancePref,
+        setter: setAppearancePref,
       })
     },
   )
