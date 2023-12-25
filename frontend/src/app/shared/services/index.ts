@@ -11,3 +11,5 @@ export * from './notification.service';
 export * from './match.service';
 export * from './pitch.service';
 export * from './tournament.service';
+export * from './public-holidays.service';
+export * from './calendar.service';
