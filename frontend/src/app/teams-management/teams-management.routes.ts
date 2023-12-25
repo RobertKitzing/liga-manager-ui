@@ -1,5 +1,4 @@
 import { Routes } from "@angular/router";
-import { teamManagementResolver } from "./team-management/team-management.resolver";
 
 export enum TEAM_MANAGEMENT_ROUTES {
     LOGO = 'logo',
@@ -10,9 +9,6 @@ export const TeamsManagementRoutes: Routes = [
     {
         path: ':teamId',
         loadComponent: () => import('./team-management').then((m) => m.TeamManagementComponent),
-        resolve: {
-            team: teamManagementResolver,
-        },
         children: [
             {
                 path: TEAM_MANAGEMENT_ROUTES.CONTACT,

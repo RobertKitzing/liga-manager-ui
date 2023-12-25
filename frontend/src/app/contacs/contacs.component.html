@@ -10,10 +10,12 @@
             </div>
         </mat-toolbar>
         <div class="flex flex-wrap">
-            @for (team of teams$ | async | sortBy:'name'; track team) {
-                <div class="p-2 w-1/2 lg:w-1/3 max-w-1/3 border-2 dark:border-toolbardark">
-                    <lima-team-contact [team]="team"></lima-team-contact>
-                </div>
+            @if(teams$ | async; as teams) {
+                @for (team of teams | sortBy:'name'; track team) {
+                    <div class="p-2 w-1/2 lg:w-1/3 max-w-1/3 border-2 dark:border-toolbardark">
+                        <lima-team-contact [team]="team"></lima-team-contact>
+                    </div>
+                }
             }
         </div>
     </div>
