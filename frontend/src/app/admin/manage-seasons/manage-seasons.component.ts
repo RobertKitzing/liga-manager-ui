@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { ADMIN_ROUTES } from '../admin.routes.enum';
 import { APP_ROUTES } from '@lima/app.routes.enum';
+import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -33,7 +34,7 @@ import { APP_ROUTES } from '@lima/app.routes.enum';
 })
 export class ManageSeasonsComponent {
 
-    ADMIN_ROUTES = ADMIN_ROUTES;
+    MANAGE_SEASON_ROUTES = MANAGE_SEASON_ROUTES;
 
     SeasonState = SeasonState;
 

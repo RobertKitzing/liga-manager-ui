@@ -58,28 +58,7 @@ export class ContacsComponent {
                 )
             },
         ),
-        tap(
-            console.log,
-        ),
     );
-    //  = this.selectedSeasonFC.valueChanges.pipe(
-    // teams$ = this.searchTeam.valueChanges.pipe(
-    //     startWith(null),
-    //     switchMap(
-    //         (searchTerm) =>
-    //             !searchTerm
-    //                 ? this.teamService.allTeams$
-    //                 : this.teamService.allTeams$.pipe(
-    //                     map((x) =>
-    //                         x?.filter((y) =>
-    //                             y?.name
-    //                                 .toLocaleLowerCase()
-    //                                 .includes(searchTerm.toLocaleLowerCase()),
-    //                         ),
-    //                     ),
-    //                 ),
-    //     ),
-    // );
 
     season$ = this.selectedSeasonFC.valueChanges.pipe(
         switchMap(

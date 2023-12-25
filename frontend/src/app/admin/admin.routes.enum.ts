@@ -4,9 +4,4 @@ export enum ADMIN_ROUTES {
     TEAMS = 'teams',
     PITCHES = 'pitches',
     SEASONS = 'seasons',
-    MATCH_DAYS = 'matchdays',
-    MATCHES = 'matches',
-    SCHEDULE_MATCHES = 'schedule-matches',
-    PENALTIES = 'penalties',
-    START_STOP = 'start_stop',
 }

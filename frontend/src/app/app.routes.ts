@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminRoutes } from './admin';
 import { AuthenticationService } from './shared/services';
 import { inject } from '@angular/core';
-import { TeamManagementRoutes } from './teams-management/team-management';
+import { TeamsManagementRoutes } from './teams-management';
 import { APP_ROUTES } from './app.routes.enum';
 
 export const isLoggedInGuard = () => {
@@ -53,13 +53,7 @@ export const routes: Routes = [
         canActivate: [teamAdminGuard],
         loadComponent: () =>
             import('./teams-management').then((m) => m.TeamsManagementComponent),
-        children: [
-            {
-                path: ':teamId',
-                loadComponent: () => import('./teams-management/team-management').then((m) => m.TeamManagementComponent),
-                children: TeamManagementRoutes,
-            },
-        ],
+        children: TeamsManagementRoutes,
     },
     {
         path: APP_ROUTES.ADMIN,

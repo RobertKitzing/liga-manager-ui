@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TEAM_MANAGEMENT_ROUTES } from './team-management.routes';
 import { TranslateModule } from '@ngx-translate/core';
+import { TEAM_MANAGEMENT_ROUTES } from '../teams-management.routes';
 
 @Component({
     selector: 'lima-team-management',
