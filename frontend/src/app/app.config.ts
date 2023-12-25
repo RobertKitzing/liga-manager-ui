@@ -5,20 +5,33 @@ import { routes } from './app.routes';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { ApolloModule } from 'apollo-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { GraphqlService, httpLoaderFactory } from './shared/services';
+import { GraphqlService, ThemeService, httpLoaderFactory } from './shared/services';
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DarkMode } from '@aparajita/capacitor-dark-mode';
 
 export const defaultDialogConfig = {
     // width: '50vw',
     // height: '50vh',
 } as MatDialogConfig
 
-function graphqlFactory(provider: GraphqlService) {
-    return () => provider.init();
+function appInitFactory(
+    graphqlService: GraphqlService,
+    themeService: ThemeService,
+) {
+    return () => {
+        return Promise.all([
+            DarkMode.init({
+                cssClass: 'dark',
+                getter: () => themeService.darkMode,
+                setter: (appearance) => { themeService.darkMode = appearance },
+            }),
+            graphqlService.init(),
+        ])
+    };
 }
 
 export const appConfig: ApplicationConfig = {
@@ -39,8 +52,11 @@ export const appConfig: ApplicationConfig = {
     ),
     {
         provide: APP_INITIALIZER,
-        useFactory: graphqlFactory,
-        deps: [GraphqlService],
+        useFactory: appInitFactory,
+        deps: [
+            GraphqlService,
+            ThemeService,
+        ],
         multi: true,
     },
     {
