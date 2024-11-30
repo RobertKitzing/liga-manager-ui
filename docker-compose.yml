@@ -15,7 +15,6 @@ services:
       - api
 
   dev-ui:
-    container_name: liga-manager-ui
     image: node:lts-alpine
     user: 1000:1000
     ports:
@@ -27,7 +26,7 @@ services:
     command: npm start
 
   api:
-    image: mklocke/liga-manager-api
+    image: mklocke/liga-manager-api:latest
     env_file:
       - ./env/api.env 
     volumes:
