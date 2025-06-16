@@ -10,20 +10,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'lima-create-new-season',
-  standalone: true,
-  imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatIconModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    TranslateModule,
-  ],
-  templateUrl: './create-new-season.component.html',
+    selector: 'lima-create-new-season',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatIconModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        TranslateModule,
+    ],
+    templateUrl: './create-new-season.component.html'
 })
 export class CreateNewSeasonComponent {
 

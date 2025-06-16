@@ -9,14 +9,14 @@ import { APP_ROUTES } from '@lima/app.routes.enum';
 import { ADMIN_ROUTES } from '@lima/admin/admin.routes.enum';
 
 @Component({
-  selector: 'lima-manage-start-stop',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    TranslateModule,
-    MatButtonModule,
-  ],
-  templateUrl: './manage-start-stop.component.html',
+    selector: 'lima-manage-start-stop',
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        TranslateModule,
+        MatButtonModule,
+    ],
+    templateUrl: './manage-start-stop.component.html',
 })
 export class ManageStartStopComponent extends ManageSeasonBase {
 

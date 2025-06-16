@@ -32,7 +32,6 @@ const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
         ReactiveFormsModule,
         TranslateModule,
         AsyncPipe,
-        JsonPipe,
         CustomDateModule,
         TournamentChooserComponent,
     ],

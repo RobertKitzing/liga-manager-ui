@@ -6,7 +6,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 @Component({
     selector: 'lima-history',
     templateUrl: './history.component.html',
-    standalone: true,
     imports: [
         MatToolbarModule,
         RouterLink,
@@ -14,5 +13,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         TranslateModule,
         RouterOutlet,
     ],
+    standalone: true,
 })
 export class HistoryComponent {}

@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { HallOfFameGQL, SeasonState, Team } from '@api/graphql';
@@ -8,16 +8,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { map, tap } from 'rxjs';
 
 @Component({
-  selector: 'lima-hall-of-fame',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    JsonPipe,
-    TeamLogoPipe,
-    MatTableModule,
-    TranslateModule,
-  ],
-  templateUrl: './hall-of-fame.component.html',
+    selector: 'lima-hall-of-fame',
+    imports: [
+        AsyncPipe,
+        TeamLogoPipe,
+        MatTableModule,
+        TranslateModule,
+    ],
+    standalone: true,
+    templateUrl: './hall-of-fame.component.html',
 })
 export class HallOfFameComponent {
 

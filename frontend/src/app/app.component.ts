@@ -47,7 +47,6 @@ import { MatSelectModule } from '@angular/material/select';
         MatProgressBarModule,
         RouterOutlet,
         MatListModule,
-        NgClass,
         AsyncPipe,
     ],
 })

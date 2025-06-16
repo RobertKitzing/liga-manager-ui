@@ -8,14 +8,14 @@ import { firstValueFrom } from 'rxjs';
 import { AddTeamToSeasonMutationVariables } from '@api/graphql';
 
 @Component({
-  selector: 'lima-manage-teams',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  templateUrl: './manage-teams.component.html',
+    selector: 'lima-manage-teams',
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        MatButtonModule,
+        MatIconModule,
+    ],
+    templateUrl: './manage-teams.component.html',
 })
 export class ManageTeamsComponent extends ManageSeasonBase {
 

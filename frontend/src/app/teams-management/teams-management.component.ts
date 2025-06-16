@@ -19,8 +19,6 @@ import { Team } from '@api/graphql';
     imports: [
         TranslateModule,
         MatToolbarModule,
-        RouterLinkActive,
-        RouterLink,
         RouterOutlet,
         AsyncPipe,
         TeamChooserComponent,

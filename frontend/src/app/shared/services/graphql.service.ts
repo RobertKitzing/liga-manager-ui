@@ -123,6 +123,7 @@ export class GraphqlService {
         const cache = new InMemoryCache({
             addTypename: true,
         });
+
         this.apollo.create({
             link: link,
             cache: cache,

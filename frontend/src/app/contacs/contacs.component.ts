@@ -15,10 +15,8 @@ import { SortByPipe } from '@lima/shared/pipes';
 @Component({
     selector: 'lima-contacs',
     templateUrl: './contacs.component.html',
-    standalone: true,
     imports: [
         AsyncPipe,
-        JsonPipe,
         TeamContactComponent,
         MatFormFieldModule,
         MatInputModule,
@@ -28,9 +26,9 @@ import { SortByPipe } from '@lima/shared/pipes';
         FormsModule,
         SeasonChooserComponent,
         MatToolbarModule,
-        TournamentChooserComponent,
         SortByPipe,
     ],
+    standalone: true,
 })
 export class ContacsComponent {
 

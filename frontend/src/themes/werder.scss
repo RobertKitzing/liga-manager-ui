@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @use "sass:map";
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 $palette: (
     50 : #e0efe8,
@@ -34,5 +35,3 @@ $palette: (
         A700 : #000000,
     )
 );
-
-@import 'base';

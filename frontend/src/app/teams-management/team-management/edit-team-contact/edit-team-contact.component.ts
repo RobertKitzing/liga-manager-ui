@@ -10,16 +10,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom, map, of, switchMap, tap } from 'rxjs';
 
 @Component({
-  selector: 'lima-team-contact',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    TranslateModule,
-  ],
-  templateUrl: './edit-team-contact.component.html',
+    selector: 'lima-team-contact',
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatButtonModule,
+        TranslateModule,
+    ],
+    templateUrl: './edit-team-contact.component.html',
 })
 export class EditTeamContactComponent {
 

@@ -11,11 +11,11 @@ import { Subject, switchMap, tap } from 'rxjs';
     selector: 'lima-calendar',
     templateUrl: './calendar.component.html',
     styles: [],
-    standalone: true,
     imports: [
         AsyncPipe,
         FullCalendarModule,
     ],
+    standalone: true,
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
 

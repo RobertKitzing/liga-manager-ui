@@ -15,19 +15,19 @@ import { AuthenticationService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'lima-match',
-  standalone: true,
-  imports: [
-    TranslateModule,
-    CustomDateModule,
-    TeamLogoPipe,
-    NgClass,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    NumberPipe,
-  ],
-  templateUrl: './match.component.html',
+    selector: 'lima-match',
+    standalone: true,
+    imports: [
+        TranslateModule,
+        CustomDateModule,
+        TeamLogoPipe,
+        NgClass,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        NumberPipe,
+    ],
+    templateUrl: './match.component.html',
 })
 export class MatchComponent {
 

@@ -5,14 +5,14 @@ import { TeamContactComponent } from '@lima/shared/components';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'lima-view-team-contact',
-  standalone: true,
-  imports: [
-    TeamContactComponent,
-    MatDialogModule,
-    TranslateModule,
-  ],
-  templateUrl: './view-team-contact.component.html',
+    selector: 'lima-view-team-contact',
+    standalone: true,
+    imports: [
+        TeamContactComponent,
+        MatDialogModule,
+        TranslateModule,
+    ],
+    templateUrl: './view-team-contact.component.html',
 })
 export class ViewTeamContactComponent {
 

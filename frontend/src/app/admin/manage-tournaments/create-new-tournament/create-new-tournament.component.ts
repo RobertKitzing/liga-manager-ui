@@ -11,20 +11,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'lima-create-new-tournament',
-  standalone: true,
-  imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatIconModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    TranslateModule,
-  ],
-  templateUrl: './create-new-tournament.component.html',
+    selector: 'lima-create-new-tournament',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatIconModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        TranslateModule,
+    ],
+    templateUrl: './create-new-tournament.component.html',
 })
 export class CreateNewTournamentComponent {
 

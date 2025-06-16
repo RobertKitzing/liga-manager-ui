@@ -14,7 +14,10 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './team-logo.component.html',
     standalone: true,
     imports: [
-      TranslateModule, AsyncPipe, TeamLogoPipe, MatButtonModule, MatIconModule,
+        TranslateModule,
+        AsyncPipe,
+        MatButtonModule,
+        MatIconModule,
     ],
 })
 export class TeamLogoComponent {

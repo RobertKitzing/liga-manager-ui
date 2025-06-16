@@ -7,15 +7,15 @@ import { TeamService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'lima-team-chooser',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ReactiveFormsModule,
-    MatSelectModule,
-    TranslateModule,
-  ],
-  templateUrl: './team-chooser.component.html',
+    selector: 'lima-team-chooser',
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        ReactiveFormsModule,
+        MatSelectModule,
+        TranslateModule,
+    ],
+    templateUrl: './team-chooser.component.html',
 })
 export class TeamChooserComponent {
 
