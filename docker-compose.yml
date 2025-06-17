@@ -4,8 +4,8 @@ volumes:
 services:
 
   nginx:
-    #image: robertkitzing/liga-manager-ui:next
-    build: .
+    image: robertkitzing/liga-manager-ui:next
+    #build: .
     ports:
       - "80:80"
     volumes:

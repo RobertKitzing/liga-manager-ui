@@ -1,3 +1,4 @@
 {
-    "tailwindCSS.lint.invalidConfigPath": "ignore"
+    "tailwindCSS.lint.invalidConfigPath": "ignore",
+    "css.customData": [".vscode/tailwind.json"]
 }

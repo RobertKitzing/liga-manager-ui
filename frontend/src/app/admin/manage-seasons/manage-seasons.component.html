@@ -10,7 +10,7 @@
     </div>
 </mat-toolbar>
 @if (season$ | async; as season) {
-    <mat-toolbar color="primary">
+    <mat-toolbar>
         <div class="flex h-full w-full items-center space-x-4">
             <a class="flex h-full items-center p-2" mat-tab-link translate routerLink="{{season.id}}/{{MANAGE_SEASON_ROUTES.TEAMS}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.TEAMS</a>
             <a class="flex h-full items-center p-2" mat-tab-link translate  routerLink="{{season.id}}/{{MANAGE_SEASON_ROUTES.MATCH_DAYS}}" routerLinkActive="bg-theme-900 text-theme-c900">TAB.ADMIN.SEASON.MATCH_DAYS</a>

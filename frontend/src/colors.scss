@@ -1,0 +1,7 @@
+.bg-theme {
+    @apply bg-(--mat-sys-primary)
+}
+
+.text-theme-cdefault {
+    @apply text-(--mat-sys-on-primary)
+}

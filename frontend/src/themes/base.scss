@@ -9,6 +9,10 @@ html {
             typography: Roboto,
             density: 0,
         ));
+
+    @media (prefers-contrast: more) {
+        @include theme.high-contrast-overrides(light);
+    }
 }
 
 body {
@@ -16,18 +20,15 @@ body {
 
     &.dark {
         @include apply-dark-mode;
+        @media (prefers-contrast: more) {
+            @include theme.high-contrast-overrides(dark);
+        }
     }
 }
 
 :root {
-
-    @each $value, $color in map.get(theme.$primary-palette, primary) {
-        --theme-primary-#{$value}: #{$color};
-    }
-    // @each $value, $color in $palette {
-    //     @if $value !='contrast' {
-    //         --theme-primary-#{$value}: #{map.get($palette, $value)};
-    //         --theme-primary-contrast-#{$value}: #{map.get(map.get($palette, contrast), $value)};
-    //     }
-    // }
+    @include mat.toolbar-overrides((
+      container-background-color: var(--mat-sys-primary-container),
+      container-text-color: var(--mat-sys-on-primary-container),
+    ));
 }
