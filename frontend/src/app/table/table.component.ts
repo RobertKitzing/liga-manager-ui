@@ -5,7 +5,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@lima/shared/services';
 import { NgClass, AsyncPipe } from '@angular/common';
@@ -16,8 +16,9 @@ import { TruncatePipe } from '@lima/shared/pipes';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 import { FormControl } from '@angular/forms';
 import { SeasonChooserComponent } from '@lima/shared/components';
-import { AllSeasonsFragment, RankingPosition, Season, SeasonState } from '@api/graphql';
+import { AllSeasonsFragment, RankingPosition, SeasonState } from '@api/graphql';
 import { map, of, startWith, switchMap, tap } from 'rxjs';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'lima-table',
@@ -40,6 +41,9 @@ import { map, of, startWith, switchMap, tap } from 'rxjs';
         NgClass,
         AsyncPipe,
         TruncatePipe,
+    ],
+    providers: [
+        provideAnimations(),
     ],
 })
 export class TableComponent {

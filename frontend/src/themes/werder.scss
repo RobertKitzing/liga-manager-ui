@@ -1,37 +1,6 @@
 @use '@angular/material' as mat;
 @use "sass:map";
-@include mat.elevation-classes();
-@include mat.app-background();
 
-$palette: (
-    50 : #e0efe8,
-    100 : #b3d6c6,
-    200 : #80bba1,
-    300 : #4d9f7b,
-    400 : #268b5e,
-    500 : #007642,
-    600 : #006e3c,
-    700 : #006333,
-    800 : #00592b,
-    900 : #00461d,
-    A100 : #7affa4,
-    A200 : #47ff81,
-    A400 : #14ff5e,
-    A700 : #00fa4f,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
+@use './_theme-colors-werder' as theme;
+
+@import './base.scss';

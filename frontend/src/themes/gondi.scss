@@ -1,37 +1,6 @@
 @use '@angular/material' as mat;
 @use "sass:map";
-@include mat.elevation-classes();
-@include mat.app-background();
 
-$palette: (
-    50 : #efe0e6,
-    100 : #d7b3c0,
-    200 : #bd8096,
-    300 : #a34d6b,
-    400 : #8f264c,
-    500 : #7b002c,
-    600 : #730027,
-    700 : #680021,
-    800 : #5e001b,
-    900 : #4b0010,
-    A100 : #ff7f8e,
-    A200 : #ff4c61,
-    A400 : #ff1934,
-    A700 : #fe001e,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
+@use './_theme-colors-gondi' as theme;
+
+@import './base.scss';

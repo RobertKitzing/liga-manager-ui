@@ -1,53 +1,33 @@
-:root {
+@mixin apply-dark-mode {
+    color-scheme: dark;
+}
 
-    @each $value,
-    $color in $palette {
-        @if $value !='contrast' {
-            --theme-primary-#{$value}: #{map.get($palette, $value)};
-            --theme-primary-contrast-#{$value}: #{map.get(map.get($palette, contrast), $value)};
-        }
-    }
+html {
+    @include mat.theme((color: (primary: theme.$primary-palette,
+                tertiary: theme.$tertiary-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+}
 
-    @each $value,
-    $color in mat.$red-palette {
-        @if $value !='contrast' {
-            --warn-primary-#{$value}: #{map.get(mat.$red-palette, $value)};
-            --warn-primary-contrast-#{$value}: #{map.get(map.get(mat.$red-palette, contrast), $value)};
-        }
-    }
+body {
+    margin: 0;
 
-    @each $value,
-    $color in mat.$green-palette {
-        @if $value !='contrast' {
-            --success-primary-#{$value}: #{map.get(mat.$green-palette, $value)};
-            --success-primary-contrast-#{$value}: #{map.get(map.get(mat.$green-palette, contrast), $value)};
-        }
+    &.dark {
+        @include apply-dark-mode;
     }
 }
 
-$liga-manager-ui-primary: mat.define-palette($palette);
-$liga-manager-ui-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+:root {
 
-// The warn palette is optional (defaults to red).
-$liga-manager-ui-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$liga-manager-ui-light-theme: mat.define-light-theme((color: (primary: $liga-manager-ui-primary,
-                accent: $liga-manager-ui-accent,
-                warn: $liga-manager-ui-warn,
-            )));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($liga-manager-ui-light-theme);
-
-$liga-manager-ui-dark-theme: mat.define-dark-theme((color: (primary: $liga-manager-ui-primary,
-                accent: $liga-manager-ui-accent,
-                warn: $liga-manager-ui-warn,
-            )));
-
-.dark {
-    @include mat.all-component-colors($liga-manager-ui-dark-theme);
+    @each $value, $color in map.get(theme.$primary-palette, primary) {
+        --theme-primary-#{$value}: #{$color};
+    }
+    // @each $value, $color in $palette {
+    //     @if $value !='contrast' {
+    //         --theme-primary-#{$value}: #{map.get($palette, $value)};
+    //         --theme-primary-contrast-#{$value}: #{map.get(map.get($palette, contrast), $value)};
+    //     }
+    // }
 }

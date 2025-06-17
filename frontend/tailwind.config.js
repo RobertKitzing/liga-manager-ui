@@ -13,6 +13,9 @@ module.exports = {
     'border-2',
     'rounded'
   ],
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
   theme: {
     extend: {
       colors: {
