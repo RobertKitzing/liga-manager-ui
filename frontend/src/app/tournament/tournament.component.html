@@ -1,15 +1,17 @@
 <div class="flex justify-center h-full">
     <div class="w-full lg:w-2/3">
-      <mat-toolbar class="mt-2 mb-2">
-        <div class="w-full lg:w-1/3">
-          <lima-tournament-chooser [selectedTournamentFC]="selectedTournamentFC"></lima-tournament-chooser>
-        </div>
-      </mat-toolbar>
+      <div class="mt-2 mb-2">
+        <mat-toolbar>
+          <div class="w-full lg:w-1/3">
+            <lima-tournament-chooser [selectedTournamentFC]="selectedTournamentFC"></lima-tournament-chooser>
+          </div>
+        </mat-toolbar>
+      </div>
       @if (selectedTournament$ | async; as selectedTournament) {
         @if(selectedTournament.rounds) {
           @for( round of selectedTournament.rounds | sortBy:'number':'desc'; track round ) {
             @if(round) {
-              <h3 class="text-center bg-theme text-theme-cdefault p-4">
+              <h3 class="text-center primary-bg-text p-4">
                 {{ 'TOURNAMENT_ROUND' | translate:{round: round.number} }} ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{ round.end_date | customDate }})
               </h3>
               @for (match of round.matches; track match) {

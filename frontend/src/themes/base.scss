@@ -27,8 +27,17 @@ body {
 }
 
 :root {
+
     @include mat.toolbar-overrides((
-      container-background-color: var(--mat-sys-primary-container),
-      container-text-color: var(--mat-sys-on-primary-container),
+      container-background-color: var(--mat-sys-primary),
+      container-text-color: var(--mat-sys-on-primary),
     ));
+
+    mat-toolbar {
+        @include mat.select-overrides((
+            panel-background-color: var(--mat-sys-primary),
+            enabled-trigger-text-color: var(--mat-sys-on-primary),
+            enabled-arrow-color: var(--mat-sys-on-primary),
+        ));
+    }
 }

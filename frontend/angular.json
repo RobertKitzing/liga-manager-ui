@@ -51,7 +51,7 @@
               "src/assets",
               "src/i18n",
               {
-                "glob": "**/*.mjs",
+                "glob": "**/*.js",
                 "input": "node_modules/@angular/common/locales",
                 "output": "/assets/locales"
               }
@@ -106,7 +106,8 @@
               "buildTarget": "liga-manager-ui:build:production"
             },
             "development": {
-              "buildTarget": "liga-manager-ui:build:development"
+              "buildTarget": "liga-manager-ui:build:development",
+              "hmr": false
             }
           },
           "defaultConfiguration": "development"

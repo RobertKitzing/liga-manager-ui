@@ -48,7 +48,7 @@ export class I18nService {
     changeLang({ code, direction }: { code: string; direction?: string }) {
         this.setTextDir(direction);
         this.storedLang = { code, direction };
-        import(/* @vite-ignore */`/assets/locales/${code}.mjs`).then(
+        import(/* @vite-ignore */`/assets/locales/${code}.js`).then(
             (lang) => {
                 registerLocaleData(lang.default);
                 this.translateService.use(code);

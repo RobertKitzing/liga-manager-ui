@@ -6,7 +6,7 @@
     </div>
     @if (authenticationService.isAdmin) {
       <div>
-        <button class="bg-theme text-theme-cdefault" mat-button (click)="deleteTeamLogo(team.id)">
+        <button class="primary-bg-text" mat-button (click)="deleteTeamLogo(team.id)">
           <mat-icon>delete</mat-icon>
           <span translate>BUTTON.DELETE_TEAM_LOGO</span>
         </button>

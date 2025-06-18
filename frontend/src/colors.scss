@@ -1,7 +1,15 @@
-.bg-theme {
-    @apply bg-(--mat-sys-primary)
+.primary-bg-text {
+    @apply bg-(--mat-sys-primary) text-(--mat-sys-on-primary)
 }
 
-.text-theme-cdefault {
-    @apply text-(--mat-sys-on-primary)
+.primary-container {
+    @apply bg-(--mat-sys-primary-container) text-(--mat-sys-on-primary-container)
+}
+
+.surface-dim {
+    @apply bg-(--mat-sys-surface-dim) text-(--mat-sys-on-surface-dim)
+}
+
+.surface-container {
+    @apply bg-(--mat-sys-surface-container) text-(--mat-sys-on-surface-container)
 }

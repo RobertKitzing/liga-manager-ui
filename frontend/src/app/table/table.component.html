@@ -1,41 +1,43 @@
-<div class="flex justify-center h-full">
+<div class="flex justify-center h-full surface-container">
   <div class="w-full lg:w-2/3">
-    <mat-toolbar class="mt-2 mb-2">
-      <div class="w-full lg:w-1/3">
-        <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [filterSeasonStates]="filterSeasonStates"></lima-season-chooser>
-      </div>
-    </mat-toolbar>
+    <div class="mt-2 mb-2">
+      <mat-toolbar>
+        <div class="w-full">
+          <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [filterSeasonStates]="filterSeasonStates"></lima-season-chooser>
+        </div>
+      </mat-toolbar>
+    </div>
     @if (ranking$ | async; as ranking) {
       <table mat-table [dataSource]="ranking" multiTemplateDataRows>
         <ng-container matColumnDef="position">
-          <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>#</th>
+          <th class="w-1" mat-header-cell *matHeaderCellDef>#</th>
           <td class="w-1" mat-cell *matCellDef="let element">{{element.sort_index}}</td>
         </ng-container>
         <ng-container matColumnDef="logo">
-          <th class="bg-theme text-theme-cdefault w-[60px]" mat-header-cell *matHeaderCellDef>
-            <span translate>TEAM_NAME</span>
+          <th class="w-[80px]" mat-header-cell *matHeaderCellDef>
+            <span></span>
           </th>
           <td mat-cell *matCellDef="let element">
             <img class="m-2" src="{{element.team | teamLogo}}">
           </td>
         </ng-container>
         <ng-container matColumnDef="team">
-          <th class="bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>
-            <!-- <span translate>TEAM_NAME</span> -->
+          <th  mat-header-cell *matHeaderCellDef>
+            <span translate>TEAM_NAME</span>
           </th>
           <td mat-cell *matCellDef="let element">
             {{element.team.name}}
           </td>
         </ng-container>
         <ng-container matColumnDef="games">
-          <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>
+          <th class="w-1" mat-header-cell *matHeaderCellDef>
             <span class="sm:hidden">{{ 'GAMES' | translate | truncate }}</span>
             <span class="hidden sm:flex" translate>GAMES</span>
           </th>
           <td class="w-1" mat-cell *matCellDef="let element">{{element.matches}}</td>
         </ng-container>
         <ng-container matColumnDef="wins-draws-losses">
-          <th class="w-1 bg-theme text-theme-cdefault hidden sm:table-cell" mat-header-cell *matHeaderCellDef>
+          <th class="w-1 hidden sm:table-cell" mat-header-cell *matHeaderCellDef>
             <span translate>WINS_DRAWS_LOSSES</span>
           </th>
           <td class="w-1 hidden sm:table-cell" mat-cell *matCellDef="let element">
@@ -43,7 +45,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="goals">
-          <th class="w-1 bg-theme text-theme-cdefault hidden sm:table-cell" mat-header-cell *matHeaderCellDef>
+          <th class="w-1 hidden sm:table-cell" mat-header-cell *matHeaderCellDef>
             <span translate>SCORED_CONCEDED</span>
           </th>
           <td class="w-1 hidden sm:table-cell" mat-cell *matCellDef="let element">
@@ -51,7 +53,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="points">
-          <th class="w-1 bg-theme text-theme-cdefault" mat-header-cell *matHeaderCellDef>
+          <th class="w-1" mat-header-cell *matHeaderCellDef>
             <span class="sm:hidden"> {{ 'POINTS' | translate | truncate }} </span>
             <span class="hidden sm:flex" translate>POINTS</span>
           </th>

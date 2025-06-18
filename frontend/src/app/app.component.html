@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <div class="flex h-full w-full items-center primary-container">
+  <div class="flex h-full w-full items-center">
     <img class="p-1 w-[60px] h-[60px]" src="assets/wildeliga_bremen_nobg.webp">
     <div class="grow flex justify-center visible lg:hidden">
       <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
@@ -9,11 +9,11 @@
     </div>
     <div class="hidden lg:flex lg:visible">
       @if (!authService.isAuthenticated) {
-        <button class="bg-theme text-theme-cdefault" mat-stroked-button (click)="openLoginDialog()">
+        <button class="primary-bg-text" mat-stroked-button (click)="openLoginDialog()">
           <span translate>BUTTON.LOGIN</span>
         </button>
       } @else {
-        <button mat-stroked-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
+        <button mat-stroked-button class="primary-bg-text" [matMenuTriggerFor]="userMenu">
           <div class="flex justify-evenly gap-2">
             <mat-icon class="">person</mat-icon>
             {{ authService.user!.first_name }} {{ authService.user!.last_name }}
@@ -32,11 +32,11 @@
     <div class="flex flex-col w-full">
       <div class="visible lg:hidden flex justify-center m-2">
         @if (!authService.isAuthenticated) {
-          <button class="bg-theme text-theme-cdefault" mat-button (click)="openLoginDialog()">
+          <button class="primary-bg-text" mat-button (click)="openLoginDialog()">
             <span translate>BUTTON.LOGIN</span>
           </button>
         } @else {
-          <button mat-button class="bg-theme text-theme-cdefault" [matMenuTriggerFor]="userMenu">
+          <button mat-button class="primary-bg-text" [matMenuTriggerFor]="userMenu">
             {{ authService.user!.first_name[0] }}.{{ authService.user!.last_name[0] }}
             <mat-icon>person</mat-icon>
           </button>

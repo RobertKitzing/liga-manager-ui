@@ -2,7 +2,7 @@
     <div class="flex flex-wrap w-full">
     @for (matchDay of season.match_days; track matchDay) {
         <div class="border-2 m-3">
-        <h3 class="text-center bg-theme text-theme-cdefault p-4">
+        <h3 class="text-center primary-bg-text p-4">
           {{ 'MATCHDAY' | translate:{matchDay: matchDay?.number} }} ({{ matchDay?.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay?.end_date | customDate }})
         </h3>
         <div class="flex justify-center">
