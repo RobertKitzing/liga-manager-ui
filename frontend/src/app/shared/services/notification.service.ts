@@ -19,7 +19,7 @@ export class NotificationService {
         this.showNotification(
             title,
             messages,
-            'warn',
+            'error',
             this.defaultDuration * 200,
         );
     }
@@ -27,7 +27,7 @@ export class NotificationService {
     private showNotification(
         title: string,
         messages?: string[],
-        type?: 'warn' | 'success',
+        type?: 'error' | 'success',
         duration?: number,
     ) {
         this.snackBar.openFromComponent(SnackbarComponent, {
@@ -38,8 +38,7 @@ export class NotificationService {
             } as SnackBarData,
             duration: duration || this.defaultDuration,
             panelClass: [
-                `bg-${type}-100`,
-                `text-${type}-c100`,
+                `mat-sys-${type}`,
                 `border-2`,
                 `dark:border-toolbardark`,
                 `rounded`,

@@ -3,7 +3,7 @@
 <div class="w-full lg:w-1/3 p-2 m-auto">
     <table mat-table [dataSource]="winner">
         <ng-container matColumnDef="logo">
-            <th class="w-1 primary-bg-text" mat-header-cell *matHeaderCellDef>
+            <th class="w-1 mat-sys-primary" mat-header-cell *matHeaderCellDef>
                 <span translate>TEAM_NAME</span>
             </th>
             <td class="w-1" mat-cell *matCellDef="let element">
@@ -11,7 +11,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="team">
-            <th class="primary-bg-text" mat-header-cell *matHeaderCellDef>
+            <th class="mat-sys-primary" mat-header-cell *matHeaderCellDef>
             </th>
             <td class="" mat-cell *matCellDef="let element">
                 <div class="flex items-center flex-row">
@@ -20,7 +20,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="winnerCount">
-            <th class="w-1 primary-bg-text text-center" mat-header-cell *matHeaderCellDef>
+            <th class="w-1 mat-sys-primary text-center" mat-header-cell *matHeaderCellDef>
                 <span translate>CHAMPIONSHIP_COUNT</span>
             </th>
             <td class="w-1 text-center" mat-cell *matCellDef="let element">{{element.winnerCount}}</td>

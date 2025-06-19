@@ -11,7 +11,7 @@
         @if(selectedTournament.rounds) {
           @for( round of selectedTournament.rounds | sortBy:'number':'desc'; track round ) {
             @if(round) {
-              <h3 class="text-center primary-bg-text p-4">
+              <h3 class="text-center mat-sys-primary p-4">
                 {{ 'TOURNAMENT_ROUND' | translate:{round: round.number} }} ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{ round.end_date | customDate }})
               </h3>
               @for (match of round.matches; track match) {

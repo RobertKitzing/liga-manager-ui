@@ -1,7 +1,7 @@
 <div class="flex w-full mt-2 mb-2 items-center m-auto border-2 flex-col">
     @if (match) {
         <div class="w-full">
-            <div class="grid grid-cols-3 gap-0 surface-dim">
+            <div class="grid grid-cols-3 gap-0 mat-sys-surface-dim">
                 <div class="text-center self-center pl-2 break-words line-clamp-3" [ngClass]="{'opacity-10': isGuestWinner()}">
                     <div class="flex flex-col items-center">
                         @defer (on viewport) {
@@ -17,7 +17,7 @@
                 </div>
                 } @else {
                 <div class="flex flex-col text-center items-center justify-center">
-                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 rounded w-full lg:w-2/3 justify-items-center primary-bg-text"
+                    <div class="self-center grid grid-cols-3 m-3 p-2 border-2 rounded w-full lg:w-2/3 justify-items-center mat-sys-primary"
                         (click)="canEditMatch(match) && openEditResultDialog()"
                         [ngClass]="{'cursor-pointer': canEditMatch(match)}">
                         <div>
@@ -38,12 +38,12 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-3 gap-0 pb-3 surface-dim">
+            <div class="grid grid-cols-3 gap-0 pb-3 mat-sys-surface-dim">
                 <span class="text-center">{{ match.home_team.name }}</span>
                 <div></div>
                 <span class="text-center">{{ match.guest_team.name }}</span>
             </div>
-            <div class="grid grid-cols-2 border-b-2 surface-container">
+            <div class="grid grid-cols-2 border-b-2 mat-sys-surface-container">
             @if (match.cancelled_at) {
                 <div class="break-words line-clamp-5 p-2">
                     <h1 translate>CANCELLATION_REASON</h1>
