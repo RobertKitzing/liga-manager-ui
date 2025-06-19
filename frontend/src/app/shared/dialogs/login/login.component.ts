@@ -4,9 +4,9 @@ import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/materia
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import {
-    AuthenticationService,
     LoginContext,
     NotificationService,
+    UserService,
 } from '@lima/shared/services';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,7 +44,7 @@ export class LoginComponent {
     });
 
     constructor(
-        private authenticationService: AuthenticationService,
+        private userService: UserService,
         public dialogRef: MatDialogRef<LoginComponent>,
         private notificationService: NotificationService,
     ) {}
@@ -52,7 +52,7 @@ export class LoginComponent {
     async login() {
         try {
             await firstValueFrom(
-                this.authenticationService.login(
+                this.userService.login(
                     this.loginForm.value as LoginContext,
                 ),
             );
@@ -67,7 +67,7 @@ export class LoginComponent {
     async passwordForgot(email: string) {
         if (email) {
             try {
-                await this.authenticationService.sendPasswordMail(email);
+                await this.userService.sendPasswordMail(email);
                 this.notificationService.showSuccessNotification(
                     marker('SEND_NEW_PASSWORD_MAIL_SUCCESS'),
                 );

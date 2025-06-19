@@ -106,8 +106,7 @@
               "buildTarget": "liga-manager-ui:build:production"
             },
             "development": {
-              "buildTarget": "liga-manager-ui:build:development",
-              "hmr": false
+              "buildTarget": "liga-manager-ui:build:development"
             }
           },
           "defaultConfiguration": "development"

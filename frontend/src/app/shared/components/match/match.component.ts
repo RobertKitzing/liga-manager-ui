@@ -11,7 +11,7 @@ import { CancelMatchComponent, EditMatchKickoffComponent, EditMatchPitchComponen
 import { ViewTeamContactComponent } from '@lima/shared/dialogs/view-team-contact';
 import { CustomDateModule, NumberPipe } from '@lima/shared/pipes';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
-import { AuthenticationService } from '@lima/shared/services';
+import { AuthenticationService, UserService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -44,6 +44,7 @@ export class MatchComponent {
     private dialog: MatDialog,
     private router: Router,
     public authService: AuthenticationService,
+    private userService: UserService,
   ) {
   }
 
@@ -59,7 +60,7 @@ export class MatchComponent {
       return false;
     }
     return (
-        this.authService.canEditMatch(match)
+        this.userService.canEditMatch(match)
     );
   }
 

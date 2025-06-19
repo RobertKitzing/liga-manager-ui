@@ -2,7 +2,7 @@ import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer }
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { GraphqlService, ThemeService, httpLoaderFactory } from './shared/services';
+import { AppsettingsService, ThemeService, httpLoaderFactory } from './shared/services';
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
@@ -10,9 +10,8 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DarkMode } from '@aparajita/capacitor-dark-mode';
 import { provideApollo } from 'apollo-angular';
-import { InMemoryCache } from '@apollo/client/cache';
-import { HttpLink } from '@apollo/client/core';
 import { provideNgxWebstorage, withLocalStorage } from 'ngx-webstorage';
+import { apolloFactory } from './apllo.factory';
 
 export const defaultDialogConfig = {
     // width: '50vw',
@@ -20,7 +19,7 @@ export const defaultDialogConfig = {
 } as MatDialogConfig
 
 function appInitFactory(
-    graphqlService: GraphqlService,
+    appsettingsService: AppsettingsService,
     themeService: ThemeService,
 ) {
     return () => {
@@ -30,7 +29,7 @@ function appInitFactory(
                 getter: () => themeService.darkMode,
                 setter: (appearance) => { themeService.darkMode = appearance },
             }),
-            // graphqlService.init(),
+            appsettingsService.loadAppsettings(),
         ])
     };
 }
@@ -41,15 +40,7 @@ export const appConfig: ApplicationConfig = {
     provideNgxWebstorage(
         withLocalStorage(),
     ),
-    provideApollo(
-        () => {
-            // const httpLink = inject(HttpLink);
-            return {
-                link: new HttpLink({ uri: '/api/graphql'}),
-                cache: new InMemoryCache(),
-            }
-        },
-    ),
+    provideApollo(apolloFactory),
     importProvidersFrom(
         MatNativeDateModule,
         TranslateModule.forRoot({
@@ -62,7 +53,7 @@ export const appConfig: ApplicationConfig = {
         }),
     ),
     provideAppInitializer(() => {
-        const initializerFn = (appInitFactory)(inject(GraphqlService), inject(ThemeService));
+        const initializerFn = (appInitFactory)(inject(AppsettingsService), inject(ThemeService));
         return initializerFn();
       }),
     {

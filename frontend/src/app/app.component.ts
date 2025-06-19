@@ -9,6 +9,7 @@ import {
     LoadingIndicatorService,
     StoredLang,
     ThemeService,
+    UserService,
 } from '@lima/shared/services';
 import { LoginComponent } from './shared/dialogs';
 import { MatListModule } from '@angular/material/list';
@@ -25,6 +26,7 @@ import { defaultDialogConfig } from './app.config';
 import { NavLinksComponent } from './shared/components';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'lima-root',
@@ -69,6 +71,7 @@ export class AppComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
+        private userService: UserService,
     ) {}
 
     get currentRoute() {
@@ -77,6 +80,9 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
+
+        firstValueFrom(this.userService.loadUser());
+
         this.route.queryParams.subscribe((params) => {
             if (params['theme']) {
                 this.changeTheme(params['theme']);

@@ -29,15 +29,6 @@ export class AuthenticationService {
 
     user?: User;
 
-    constructor(
-        private router: Router,
-        private authenticatedUserGQL: AuthenticatedUserGQL,
-        private changePasswordQGL: PasswordChangeGQL,
-        private resetPasswordQGL: PasswordResetGQL,
-        private localStorageService: LocalStorageService,
-    ) {
-    }
-
     get isAuthenticated(): boolean {
         return !!this.user && Boolean(this.accessToken);
     }
@@ -50,34 +41,11 @@ export class AuthenticationService {
         return this.user ? this.user.role === UserRole.TeamManager : false;
     }
 
-    login(context: LoginContext) {
-        return this.authenticatedUserGQL
-            .fetch(undefined, {
-                fetchPolicy: 'network-only',
-                context: {
-                    headers: new HttpHeaders().set(
-                        'Authorization',
-                        `Basic ${Base64.encode(
-                            context.username.toLowerCase() +
-                                ':' +
-                                context.password,
-                        )}`,
-                    ),
-                },
-            })
-            .pipe(
-                tap((result) => {
-                    this.user = result.data.authenticatedUser as User;
-                }),
-            );
-    }
+    constructor(
+        private router: Router,
+        private localStorageService: LocalStorageService,
+    ) {
 
-    loadUser() {
-        return this.authenticatedUserGQL.fetch().pipe(
-            tap((result) => {
-                this.user = result.data.authenticatedUser as User;
-            }),
-        );
     }
 
     logout() {
@@ -85,73 +53,5 @@ export class AuthenticationService {
         this.user = undefined;
         this.router.navigateByUrl('');
     }
-
-    isTeamAdminForTeam(teamId: string) {
-        return (
-            this.isTeamAdmin &&
-            !!this.user?.teams?.find((t) => t?.id === teamId)
-        );
-    }
-
-    canEditMatch(match: Match) {
-        return (
-            this.isAdmin ||
-            this.isTeamAdminForTeam(match.home_team.id) ||
-            this.isTeamAdminForTeam(match.guest_team.id)
-        );
-    }
-
-    changePassword(newPassword: string, oldPassword: string) {
-        return this.changePasswordQGL.mutate(
-            {
-                new_password: newPassword,
-            },
-            {
-                context: {
-                    headers: new HttpHeaders().set(
-                        'Authorization',
-                        `Basic ${Base64.encode(
-                            this.user?.email.toLowerCase() + ':' + oldPassword,
-                        )}`,
-                    ),
-                },
-            },
-        );
-    }
-
-    setPassword(newPassword: string): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            this.changePasswordQGL
-                .mutate({
-                    new_password: newPassword,
-                })
-                .subscribe(
-                    () => {
-                        resolve();
-                    },
-                    (err) => {
-                        reject(err);
-                    },
-                );
-        });
-    }
-
-    sendPasswordMail(email: string): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            this.resetPasswordQGL
-                .mutate({
-                    email: email,
-                    target_path: 'newpassword',
-                })
-                .subscribe(
-                    () => {
-                        resolve();
-                    },
-                    (error) => {
-                        reject(error);
-                    },
-                );
-        });
-    }
-
+    
 }

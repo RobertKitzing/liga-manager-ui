@@ -15,17 +15,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /**
-   * The `String` scalar type represents textual data, represented as UTF-8
-   * character sequences. The String type is most often used by GraphQL to
-   * represent free-form human-readable text.
-   */
   Date: any;
-  /**
-   * The `String` scalar type represents textual data, represented as UTF-8
-   * character sequences. The String type is most often used by GraphQL to
-   * represent free-form human-readable text.
-   */
   DateTime: any;
 };
 
@@ -163,9 +153,15 @@ export type User = {
   first_name: Scalars['String'];
   id: Scalars['String'];
   last_name: Scalars['String'];
+  locale?: Maybe<UserLocale>;
   role: UserRole;
   teams?: Maybe<Array<Maybe<Team>>>;
 };
+
+export enum UserLocale {
+  De = 'de',
+  En = 'en'
+}
 
 export enum UserRole {
   Admin = 'admin',
@@ -274,6 +270,7 @@ export type MutationCreateUserArgs = {
   first_name: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   last_name: Scalars['String'];
+  locale?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role: Scalars['String'];
   team_ids: Array<InputMaybe<Scalars['String']>>;
@@ -360,7 +357,8 @@ export type MutationScheduleAllMatchesForSeasonArgs = {
 
 
 export type MutationScheduleMatchArgs = {
-  kickoff: Scalars['DateTime'];
+  kickoff?: InputMaybe<Scalars['DateTime']>;
+  match_day_id?: InputMaybe<Scalars['String']>;
   match_id: Scalars['String'];
 };
 
@@ -419,6 +417,7 @@ export type MutationUpdateUserArgs = {
   email?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   last_name?: InputMaybe<Scalars['String']>;
+  locale?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Scalars['String']>;
   team_ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   user_id: Scalars['String'];
