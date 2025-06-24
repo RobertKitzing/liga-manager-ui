@@ -32,9 +32,6 @@ jobs:
         run: docker compose up -d --force-recreate
         working-directory: e2e
 
-      - name: Init DB
-        run: docker exec lima-api lima migrations:migrate --no-interaction
-
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
 
