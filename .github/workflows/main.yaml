@@ -55,7 +55,7 @@ jobs:
         run: docker save ${{ env.DOCKER_REPO_UI }}:test | gzip > /tmp/lima.tar
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: lima-img
           path: /tmp/lima.tar
