@@ -11,8 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { CustomDateModule } from '@lima/shared/pipes';
 import { EditMatchBaseComponent } from '../edit-match-base';
+import { CustomDatePipe } from '@lima/shared/pipes';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -29,7 +29,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
         MatDatepickerModule,
         MatButtonModule,
         MatDialogClose,
-        CustomDateModule,
+        CustomDatePipe,
     ],
 })
 export class EditMatchKickoffComponent {

@@ -13,7 +13,7 @@ import { CreateNewTournamentComponent } from './create-new-tournament';
 import { TournamentService } from '@lima/shared/services';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { of, startWith, switchMap, tap } from 'rxjs';
-import { CustomDateModule } from '@lima/shared/pipes';
+import { CustomDatePipe } from '@lima/shared/pipes';
 import { LocalStorage } from 'ngx-webstorage';
 import { TournamentChooserComponent } from '@lima/shared/components';
 
@@ -32,7 +32,7 @@ const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
         ReactiveFormsModule,
         TranslateModule,
         AsyncPipe,
-        CustomDateModule,
+        CustomDatePipe,
         TournamentChooserComponent,
     ],
 })

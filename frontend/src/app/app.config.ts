@@ -12,6 +12,7 @@ import { DarkMode } from '@aparajita/capacitor-dark-mode';
 import { provideApollo } from 'apollo-angular';
 import { provideNgxWebstorage, withLocalStorage } from 'ngx-webstorage';
 import { apolloFactory } from './apllo.factory';
+import { DatePipe } from '@angular/common';
 
 export const defaultDialogConfig = {
     // width: '50vw',
@@ -36,6 +37,7 @@ function appInitFactory(
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    DatePipe,
     provideRouter(routes),
     provideNgxWebstorage(
         withLocalStorage(),

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { CustomDateModule } from '@lima/shared/pipes';
 import { TranslateModule } from '@ngx-translate/core';
 import { Match, MatchDay } from 'src/api/graphql';
 
@@ -12,7 +11,6 @@ import { Match, MatchDay } from 'src/api/graphql';
     standalone: true,
     imports: [
         TranslateModule,
-        CustomDateModule,
         CommonModule,
         MatDialogModule,
     ],

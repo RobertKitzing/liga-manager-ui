@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ManageSeasonBase } from '../manage-season.base';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { CustomDateModule } from '@lima/shared/pipes';
+import { CustomDatePipe } from '@lima/shared/pipes';
 
 @Component({
     selector: 'lima-manage-matches',
@@ -10,7 +10,7 @@ import { CustomDateModule } from '@lima/shared/pipes';
     imports: [
         AsyncPipe,
         TranslateModule,
-        CustomDateModule,
+        CustomDatePipe,
     ],
     templateUrl: './manage-matches.component.html',
 })

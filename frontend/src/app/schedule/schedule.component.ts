@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
-import { CustomDateModule } from '@lima/shared/pipes';
+import { CustomDatePipe } from '@lima/shared/pipes';
 import { MatchComponent, SeasonChooserComponent } from '@lima/shared/components';
 import { AllSeasonsFragment, SeasonState } from '@api/graphql';
 import { FormControl } from '@angular/forms';
@@ -32,7 +32,7 @@ import { LocalStorage } from 'ngx-webstorage';
         TranslateModule,
         MatMenuModule,
         AsyncPipe,
-        CustomDateModule,
+        CustomDatePipe,
         NgClass,
         MatchComponent,
     ],

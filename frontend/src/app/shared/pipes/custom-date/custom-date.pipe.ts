@@ -5,7 +5,6 @@ import { I18nService } from '@lima/shared/services';
 @Pipe({
     name: 'customDate',
     pure: false,
-    standalone: false,
 })
 export class CustomDatePipe implements PipeTransform {
 

@@ -9,7 +9,7 @@ import { Match, MatchDay, Team } from '@api/graphql';
 import { defaultDialogConfig } from '@lima/app.config';
 import { CancelMatchComponent, EditMatchKickoffComponent, EditMatchPitchComponent, EditMatchResultComponent } from '@lima/shared/dialogs';
 import { ViewTeamContactComponent } from '@lima/shared/dialogs/view-team-contact';
-import { CustomDateModule, NumberPipe } from '@lima/shared/pipes';
+import { CustomDatePipe, NumberPipe } from '@lima/shared/pipes';
 import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 import { AuthenticationService, UserService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     standalone: true,
     imports: [
         TranslateModule,
-        CustomDateModule,
+        CustomDatePipe,
         TeamLogoPipe,
         NgClass,
         MatIconModule,
