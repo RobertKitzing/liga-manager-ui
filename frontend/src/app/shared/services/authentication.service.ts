@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
@@ -29,9 +29,7 @@ export class AuthenticationService {
 
     user?: User;
 
-    get isAuthenticated(): boolean {
-        return !!this.user && Boolean(this.accessToken);
-    }
+    isAuthenticated = signal(false);
 
     get isAdmin() {
         return this.user ? this.user.role === UserRole.Admin : false;
@@ -51,6 +49,7 @@ export class AuthenticationService {
     logout() {
         this.localStorageService.clear(ACCESS_TOKEN_KEY);
         this.user = undefined;
+        this.isAuthenticated.set(false);
         this.router.navigateByUrl('');
     }
     

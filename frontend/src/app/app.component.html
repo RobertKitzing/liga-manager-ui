@@ -8,12 +8,12 @@
         <lima-nav-links></lima-nav-links>
     </div>
     <div class="hidden lg:flex lg:visible">
-      @if (!authService.isAuthenticated) {
-        <button class="mat-sys-primary" mat-stroked-button (click)="openLoginDialog()">
+      @if (!authService.isAuthenticated()) {
+        <button class="mat-sys-primary" mat-stroked-button (click)="openLoginDialog()" data-cy="login">
           <span translate>BUTTON.LOGIN</span>
         </button>
       } @else {
-        <button mat-stroked-button class="mat-sys-primary" [matMenuTriggerFor]="userMenu">
+        <button mat-stroked-button class="mat-sys-primary" [matMenuTriggerFor]="userMenu" data-cy="user-menu">
           <div class="flex justify-evenly gap-2">
             <mat-icon class="">person</mat-icon>
             {{ authService.user!.first_name }} {{ authService.user!.last_name }}
@@ -31,7 +31,7 @@
   <mat-drawer #drawer [mode]="'over'" [position]="'end'" class="w-1/2 lg:w-1/4">
     <div class="flex flex-col w-full">
       <div class="visible lg:hidden flex justify-center m-2">
-        @if (!authService.isAuthenticated) {
+        @if (!authService.isAuthenticated()) {
           <button class="mat-sys-primary" mat-button (click)="openLoginDialog()">
             <span translate>BUTTON.LOGIN</span>
           </button>
@@ -97,6 +97,6 @@
 <mat-menu #userMenu="matMenu">
   <mat-list>
     <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
-    <button mat-menu-item (click)="authService.logout()">{{ 'BUTTON.LOGOUT' | translate }}</button>
+    <button mat-menu-item (click)="authService.logout()" data-cy="logout">{{ 'BUTTON.LOGOUT' | translate }}</button>
   </mat-list>
 </mat-menu>

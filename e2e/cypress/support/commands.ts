@@ -69,7 +69,6 @@ const login = (username: string, password: string) => {
         },
     }).then(
         (res) => {
-            console.log(res)
             localStorage.setItem('ngx-webstorage|access_token', `"${res.headers['x-token']}"`)
         }
     )

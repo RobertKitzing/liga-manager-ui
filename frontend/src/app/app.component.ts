@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
-
+        
         firstValueFrom(this.userService.loadUser());
 
         this.route.queryParams.subscribe((params) => {

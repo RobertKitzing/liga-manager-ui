@@ -7,7 +7,6 @@ import { marker } from "@colsen1991/ngx-translate-extract-marker";
 import { MatDialog } from "@angular/material/dialog";
 import { MaintenanceModeComponent } from "./shared/dialogs";
 import { setContext } from "@apollo/client/link/context";
-import { HttpHeaders } from "@angular/common/http";
 import { Base64 } from "js-base64";
 
 export function apolloFactory() {
@@ -36,6 +35,7 @@ export function apolloFactory() {
 
     const errorHandler = onError(
         ({ graphQLErrors, networkError, operation }) => {
+            console.log(graphQLErrors, networkError, operation);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const error: any = networkError;
             if (graphQLErrors) {
@@ -44,6 +44,7 @@ export function apolloFactory() {
                 );
             }
             if (error) {
+                console.log(error)
                 switch (error.status) {
                     case 401:
                         if (operation.operationName !== 'PasswordChange') {
@@ -79,20 +80,23 @@ export function apolloFactory() {
     );
 
     const auth = setContext((_, { loginContext: lc }) => {
-        let authHeader = '';
 
         if (lc) {
             const loginContext = lc as LoginContext;
             const base64 = Base64.encode(`${loginContext.username.toLowerCase()}:${loginContext.password}`);
-            authHeader = `Basic ${base64}`;
-        } else {
-            const token = authenticationService.accessToken;
-            authHeader = `Bearer ${token}`;
+            return {
+                headers: { 'Authorization': `Basic ${base64}` },
+            };
+        }
+        const token = authenticationService.accessToken;
+        if (token) {
+            return {
+                headers: { 'Authorization': `Bearer ${token}` },
+            };
         }
 
-        return {
-            headers: { 'Authorization': authHeader },
-        };
+        return {};
+
     });
 
     return {

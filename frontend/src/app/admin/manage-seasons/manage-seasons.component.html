@@ -3,7 +3,7 @@
         <div class="w-1/2">
             <lima-season-chooser [selectedSeasonFC]="selectedSeasonFC" [clearable]="true" [filterSeasonStates]="[SeasonState.Preparation, SeasonState.Progress]"></lima-season-chooser>
         </div>
-        <button mat-stroked-button (click)="createSeason()">
+        <button mat-stroked-button (click)="createSeason()" data-cy="create-season-button">
             <mat-icon>add</mat-icon>
             <span translate>BUTTON.CREATE_SEASON</span>
         </button>

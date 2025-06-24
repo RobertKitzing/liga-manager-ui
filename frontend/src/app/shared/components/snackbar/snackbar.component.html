@@ -1,4 +1,9 @@
-<div class="notification">
+<div class="notification relative">
+  <div class="absolute top-0 right-0">
+    <button mat-icon-button (click)="snackBarRef.dismiss()">
+        <mat-icon>close</mat-icon>
+    </button>
+  </div>
   <h1 class="mb-3 text-center">
     {{ data.title | translate }}
   </h1>

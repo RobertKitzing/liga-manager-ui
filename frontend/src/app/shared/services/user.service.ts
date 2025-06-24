@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APP_ROUTES } from '@lima/app.routes.enum';
 import { Base64 } from 'js-base64';
-import { map, tap } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 import {
     AllUsersGQL,
     AuthenticatedUserGQL,
@@ -77,7 +77,6 @@ export class UserService {
     }
 
     login(context: LoginContext) {
-        console.log(context);
         return this.authenticatedUserGQL
             .fetch(undefined, {
                 fetchPolicy: 'network-only',
@@ -87,16 +86,20 @@ export class UserService {
             })
             .pipe(
                 tap((result) => {
-                    console.log(result);
                     this.authenticationService.user = result.data.authenticatedUser as User;
+                    this.authenticationService.isAuthenticated.set(true)
                 }),
             );
     }
 
     loadUser() {
+        if (!this.authenticationService.accessToken) {
+            return of();
+        }
         return this.authenticatedUserGQL.fetch().pipe(
             tap((result) => {
                 this.authenticationService.user = result.data.authenticatedUser as User;
+                this.authenticationService.isAuthenticated.set(true);
             }),
         );
     }
