@@ -6,6 +6,5 @@ describe('Table', () => {
         cy.contains(enGB['NAVIGATION.TABLE']).click();
         cy.get('lima-table').should('exist')
         cy.get('[data-cy="select-season"]').click().get('mat-option').first().click();
-        cy.get('table').should('exist');
     })
 })

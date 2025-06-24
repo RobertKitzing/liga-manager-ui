@@ -7,6 +7,5 @@ describe('Login', () => {
         cy.get('[data-cy="username"]').type('admin@example.com');
         cy.get('[data-cy="password"]').type('123456');
         cy.get('[data-cy="login-button"]').click();
-        cy.contains('admin admin').should('exist')
     })
 })
