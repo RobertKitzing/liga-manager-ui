@@ -33,9 +33,6 @@ jobs:
         with:
           compose-file: "./e2e/docker-compose.yml"
 
-      - name: Init DB
-        run: docker exec lima-api lima app:db:migrate
-
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
 
@@ -72,7 +69,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.3.0
         with:
           name: lima-img
           path: /tmp
