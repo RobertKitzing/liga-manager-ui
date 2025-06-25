@@ -9,11 +9,11 @@
     </div>
     <div class="hidden lg:flex lg:visible">
       @if (!authService.isAuthenticated()) {
-        <button class="mat-sys-primary" mat-stroked-button (click)="openLoginDialog()" data-cy="login">
+        <button class="mat-sys-primary" mat-stroked-button (click)="openLoginDialog()" cySelector="button-login">
           <span translate>BUTTON.LOGIN</span>
         </button>
       } @else {
-        <button mat-stroked-button class="mat-sys-primary" [matMenuTriggerFor]="userMenu" data-cy="user-menu">
+        <button mat-stroked-button class="mat-sys-primary" [matMenuTriggerFor]="userMenu" cySelector="button-user-menu">
           <div class="flex justify-evenly gap-2">
             <mat-icon class="">person</mat-icon>
             {{ authService.user!.first_name }} {{ authService.user!.last_name }}
@@ -97,6 +97,6 @@
 <mat-menu #userMenu="matMenu">
   <mat-list>
     <button mat-menu-item (click)="openChangePasswordDialog()">{{ 'BUTTON.CHANGE_PASSWORD' | translate }}</button>
-    <button mat-menu-item (click)="authService.logout()" data-cy="logout">{{ 'BUTTON.LOGOUT' | translate }}</button>
+    <button mat-menu-item (click)="authService.logout()" cySelector="button-logout">{{ 'BUTTON.LOGOUT' | translate }}</button>
   </mat-list>
 </mat-menu>

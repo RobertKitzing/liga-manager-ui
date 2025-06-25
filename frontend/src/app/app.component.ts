@@ -27,6 +27,7 @@ import { NavLinksComponent } from './shared/components';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
 import { firstValueFrom } from 'rxjs';
+import { CypressSelectorDirective } from './shared/directives';
 
 @Component({
     selector: 'lima-root',
@@ -50,6 +51,7 @@ import { firstValueFrom } from 'rxjs';
         RouterOutlet,
         MatListModule,
         AsyncPipe,
+        CypressSelectorDirective,
     ],
 })
 export class AppComponent implements OnInit {

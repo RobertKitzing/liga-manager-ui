@@ -8,7 +8,7 @@
     <div>
       <mat-form-field class="w-full">
         <mat-label translate>USERNAME</mat-label>
-        <input #username type="text" matInput formControlName="username" data-cy="username" />
+        <input #username type="text" matInput formControlName="username" cySelector="input-username" />
         @if (!loginForm.controls['username'].valid) {
           <mat-error>
             <span translate>USERNAME_REQUIRED</span>
@@ -21,7 +21,7 @@
     <div class="col">
       <mat-form-field class="w-full" (click)="loginForm.controls['password'].enable()">
         <mat-label translate>PASSWORD</mat-label>
-        <input #password type="password" matInput formControlName="password" data-cy="password"/>
+        <input #password type="password" matInput formControlName="password" cySelector="input-password"/>
         @if (!loginForm.controls['password'].valid) {
           <mat-error>
             <span translate>PASSWORD_REQUIRED</span>
@@ -41,7 +41,7 @@
   <button mat-button color="primary" (click)="passwordForgot(username.value)">
     <span translate>FORGOT_PASSWORD</span>
   </button>
-  <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid" data-cy="submit-login">
+  <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid" cySelector="button-login-submit">
     <span translate>BUTTON.LOGIN</span>
   </button>
 </div>

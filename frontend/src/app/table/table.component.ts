@@ -5,7 +5,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@lima/shared/services';
 import { NgClass, AsyncPipe } from '@angular/common';
@@ -17,8 +17,9 @@ import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 import { FormControl } from '@angular/forms';
 import { SeasonChooserComponent } from '@lima/shared/components';
 import { AllSeasonsFragment, RankingPosition, SeasonState } from '@api/graphql';
-import { map, of, startWith, switchMap, tap } from 'rxjs';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { BehaviorSubject, map, of, startWith, switchMap, tap } from 'rxjs';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-table',
@@ -41,9 +42,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         NgClass,
         AsyncPipe,
         TruncatePipe,
-    ],
-    providers: [
-        provideAnimations(),
+        MatSortModule,
+        CypressSelectorDirective,
     ],
 })
 export class TableComponent {
@@ -55,30 +55,57 @@ export class TableComponent {
         'games',
         'wins-draws-losses',
         'goals',
+        'goaldiff',
         'points',
     ];
 
-    expandedElement!: RankingPosition;
+    expandedElement = signal<RankingPosition | undefined>(undefined);
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.selectedSeasonLS);
+    sortRanking = new BehaviorSubject<Sort>( { active: 'sort_index', direction: 'asc' } );
 
     SeasonState = SeasonState;
 
-    ranking$ = this.selectedSeasonFC.valueChanges.pipe(
-        startWith(this.selectedSeasonLS),
-        tap(
-            (season) => {
-                if (season) {
-                    this.seasonService.refetchRankingById(season.id)
-                    this.selectedSeasonLS = season;
-                }
-            },
-        ),
+    ranking$ = this.sortRanking.pipe(
         switchMap(
-            (selectedSeason) => selectedSeason ? this.seasonService.getRankingById$(selectedSeason.id) : of(null),
+            (sort) => 
+                this.selectedSeasonFC.valueChanges.pipe(
+                startWith(this.selectedSeasonLS),
+                tap(
+                    (season) => {
+                        if (season) {
+                            this.seasonService.refetchRankingById(season.id)
+                            this.selectedSeasonLS = season;
+                        }
+                    },
+                ),
+                switchMap(
+                    (selectedSeason) => selectedSeason ? this.seasonService.getRankingById$(selectedSeason.id) : of(null),
+                ),
+                map((ranking) => {
+                    if (!sort.direction) {
+                        return ranking?.positions
+                    }
+
+                    return [...ranking?.positions || []].sort(
+                        (a, b) => {
+                            const isAsc = sort.direction === 'asc';
+                            switch (sort.active) {
+                                case 'sort_index':
+                                    return this.compare(a?.sort_index || 0, b?.sort_index || 0, isAsc);
+                                case 'team_name':
+                                    return this.compare(a?.team.name || '', b?.team.name || '', isAsc);
+                                case 'matches':
+                                    return this.compare(a?.matches || 0, b?.matches || 0, isAsc);
+                                default:
+                                    return 0;
+                            }
+                        }
+                    )
+                }),
+            )
         ),
-        map((ranking) => ranking?.positions),
-    );
+    )
 
     constructor(
         private seasonService: SeasonService,
@@ -108,6 +135,14 @@ export class TableComponent {
         } else {
             this.seasonService.progressSeason = season;
         }
+    }
+
+    sortData(event: Sort) {
+        this.sortRanking.next(event)
+    }
+
+    compare(a: number | string, b: number | string, isAsc: boolean) {
+        return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 
 }

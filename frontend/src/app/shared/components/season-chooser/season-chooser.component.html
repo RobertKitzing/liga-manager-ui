@@ -1,5 +1,5 @@
 <div class="flex justify-center w-full">
-  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" data-cy="select-season"
+  <mat-select #seasonSelect [compareWith]="seasonService.seasonCompare" cySelector="select-season"
     [formControl]="selectedSeasonFC"
     placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}">
     @if (clearable) {

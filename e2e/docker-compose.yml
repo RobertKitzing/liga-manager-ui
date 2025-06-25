@@ -23,6 +23,7 @@ services:
     depends_on:
       - mariadb
       - redis
+
   redis:
     image: redis:alpine
 

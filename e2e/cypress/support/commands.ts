@@ -1,15 +1,11 @@
 import { Base64 } from 'js-base64';
+import { CySelectors } from '@lima/app/shared/directives/cypress-selector/cypress-selector.directive';
 
 // ***********************************************
 // This example namespace declaration will help
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-declare namespace Cypress {
-  interface Chainable<Subject = any> {
-    login(email: string, password: string);
-  }
-}
 //
 // function customCommand(param: any): void {
 //   console.warn(param);
@@ -75,3 +71,7 @@ const login = (username: string, password: string) => {
 }
 
 Cypress.Commands.add("login", login )
+
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+  return cy.get(`[data-cy="${selector}"]`, ...args)
+})

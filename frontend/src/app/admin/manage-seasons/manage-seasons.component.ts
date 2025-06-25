@@ -15,6 +15,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ADMIN_ROUTES } from '../admin.routes.enum';
 import { APP_ROUTES } from '@lima/app.routes.enum';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -30,6 +31,7 @@ import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
         MatToolbarModule,
         TranslateModule,
         RouterModule,
+        CypressSelectorDirective,
     ],
 })
 export class ManageSeasonsComponent {

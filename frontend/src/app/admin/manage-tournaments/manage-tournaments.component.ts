@@ -16,6 +16,7 @@ import { of, startWith, switchMap, tap } from 'rxjs';
 import { CustomDatePipe } from '@lima/shared/pipes';
 import { LocalStorage } from 'ngx-webstorage';
 import { TournamentChooserComponent } from '@lima/shared/components';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
 @Component({
@@ -34,6 +35,7 @@ const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
         AsyncPipe,
         CustomDatePipe,
         TournamentChooserComponent,
+        CypressSelectorDirective,
     ],
 })
 export class ManageTournamentsComponent {

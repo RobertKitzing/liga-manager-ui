@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-login',
@@ -28,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
         MatInputModule,
         MatButtonModule,
         MatIconModule,
+        CypressSelectorDirective,
     ],
 })
 export class LoginComponent {

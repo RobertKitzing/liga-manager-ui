@@ -3,6 +3,7 @@ import { APP_ROUTES } from '@lima/app.routes.enum';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 import { AuthenticationService } from '@lima/shared/services';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-nav-links',
@@ -13,6 +14,7 @@ import { AuthenticationService } from '@lima/shared/services';
         RouterLinkActive,
         TranslateModule,
         RouterLink,
+        CypressSelectorDirective,
     ],
 })
 export class NavLinksComponent {

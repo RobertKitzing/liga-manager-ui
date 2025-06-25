@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ADMIN_ROUTES } from './admin.routes.enum';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-admin',
@@ -23,6 +24,7 @@ import { ADMIN_ROUTES } from './admin.routes.enum';
         RouterLink,
         RouterLinkActive,
         TranslateModule,
+        CypressSelectorDirective,
     ],
 })
 export class AdminComponent {

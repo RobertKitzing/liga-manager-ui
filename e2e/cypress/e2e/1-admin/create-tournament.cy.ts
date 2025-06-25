@@ -10,11 +10,11 @@ describe('Admin - Create Tournament', () => {
 
     it('Should create a Tournament', () => {
         cy.visit(`/`)
-        cy.get('[data-cy="route-admin"]').first().click();
-        cy.get('[data-cy="route-admin-tournaments"]').first().click();
-        cy.get('[data-cy="create-tournament-button"]').click();
-        cy.get('[data-cy="create-tournament-name"]').type('new-tournament');
-        cy.get('[data-cy="create-tournament-submit-button"]').click();
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-tournaments').first().click();
+        cy.getBySel('button-create-tournament').click();
+        cy.getBySel('input-create-tournament-name').type('new-tournament');
+        cy.getBySel('button-create-tournament-submit').click();
         cy.contains(enGB['CREATE_TOURNAMENT_SUCCESS']).should('exist');
     })
 })

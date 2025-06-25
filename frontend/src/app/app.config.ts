@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppsettingsService, ThemeService, httpLoaderFactory } from './shared/services';
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -64,6 +64,6 @@ export const appConfig: ApplicationConfig = {
         multi: true,
     },
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations(),
+    provideAnimationsAsync(),
   ],
 };

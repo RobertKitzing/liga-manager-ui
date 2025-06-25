@@ -1,4 +1,7 @@
 {
     "tailwindCSS.lint.invalidConfigPath": "ignore",
-    "css.customData": [".vscode/tailwind.json"]
+    "css.customData": [".vscode/tailwind.json"],
+    "eslint.workingDirectories": [
+        "./frontent"
+    ]
 }

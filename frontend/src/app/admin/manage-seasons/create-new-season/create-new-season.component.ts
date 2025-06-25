@@ -5,6 +5,7 @@ import { MatDialog, MatDialogActions, MatDialogContent, MatDialogTitle } from '@
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 import { NotificationService, SeasonService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
@@ -22,34 +23,35 @@ import { firstValueFrom } from 'rxjs';
         ReactiveFormsModule,
         MatButtonModule,
         TranslateModule,
+        CypressSelectorDirective,
     ],
-    templateUrl: './create-new-season.component.html'
+    templateUrl: './create-new-season.component.html',
 })
 export class CreateNewSeasonComponent {
 
-  newName = new FormControl('', [Validators.required]);
+    newName = new FormControl('', [Validators.required]);
 
-  constructor(
+    constructor(
     private seasonService: SeasonService,
     private dialog: MatDialog,
     private notificationService: NotificationService,
-  ) {
+    ) {
 
-  }
-
-  async createSeason() {
-    try {
-      await firstValueFrom(this.seasonService.createSeason(this.newName.value!))
-      this.notificationService.showSuccessNotification(
-        marker('CREATE_SEASON_SUCCESS'),
-      )
-      this.dialog.closeAll();
-    } catch(error) {
-      this.notificationService.showErrorNotification(
-        marker('CREATE_SEASON_ERROR'),
-      )
     }
+
+    async createSeason() {
+        try {
+            await firstValueFrom(this.seasonService.createSeason(this.newName.value!))
+            this.notificationService.showSuccessNotification(
+                marker('CREATE_SEASON_SUCCESS'),
+            )
+            this.dialog.closeAll();
+        } catch(error) {
+            this.notificationService.showErrorNotification(
+                marker('CREATE_SEASON_ERROR'),
+            )
+        }
     
-  }
+    }
 
 }

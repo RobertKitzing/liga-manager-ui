@@ -16,6 +16,7 @@ import { MatchComponent, SeasonChooserComponent } from '@lima/shared/components'
 import { AllSeasonsFragment, SeasonState } from '@api/graphql';
 import { FormControl } from '@angular/forms';
 import { LocalStorage } from 'ngx-webstorage';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-schedule',
