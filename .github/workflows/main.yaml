@@ -31,7 +31,7 @@ jobs:
       - name: Start Services
         uses: hoverkraft-tech/compose-action@v2.2.0
         with:
-          compose-file: "./e2e/docker-compose.yaml"
+          compose-file: "./e2e/docker-compose.yml"
 
       - name: Init DB
         run: docker exec lima-api lima app:db:migrate
