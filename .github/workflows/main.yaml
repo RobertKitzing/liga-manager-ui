@@ -30,6 +30,9 @@ jobs:
 
       - name: Start Services
         uses: hoverkraft-tech/compose-action@v2.2.0
+        env:
+          UI_TAG: 'test'
+          API_TAG: 'latest'
         with:
           compose-file: "./e2e/docker-compose.yml"
 

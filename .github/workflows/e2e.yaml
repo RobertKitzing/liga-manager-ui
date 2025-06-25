@@ -1,22 +1,37 @@
 name: E2E Tests
 on:
-  pull_request:
-    branches:
-      - next
-
+  workflow_dispatch:
+    inputs:
+      ui-image-tag:
+        description: 'Tag for the UI Image'
+        required: true
+        default: 'next'
+      api-image-tag:
+        description: 'Tag for the API Image'
+        required: true
+        default: 'latest'
 jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Start Services
-        run: docker compose -f docker-compose.e2e.yml up -d --wait --wait-timeout 30
+        uses: hoverkraft-tech/compose-action@v2.2.0
+        env:
+          UI_TAG: ${{ github.event.inputs.ui-image-tag }}
+          API_TAG: ${{ github.event.inputs.api-image-tag }}
+        with:
+          compose-file: "./e2e/docker-compose.yml"
       - name: Load Demo Data
         run: docker exec lima-api lima app:db:demo-data
+      - name: Add Admin user
+        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_baseUrl: http://localhost
         with:
+          record: true
           browser: chrome
           working-directory: e2e

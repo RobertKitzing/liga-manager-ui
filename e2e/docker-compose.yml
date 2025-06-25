@@ -3,7 +3,7 @@ volumes:
 
 services:
   nginx:
-    image: robertkitzing/liga-manager-ui:test
+    image: robertkitzing/liga-manager-ui:${UI_TAG}
     ports:
       - "80:80"
     volumes:
@@ -15,7 +15,7 @@ services:
 
   api:
     container_name: lima-api
-    image: mklocke/liga-manager-api:latest
+    image: mklocke/liga-manager-api:${API_TAG}
     env_file:
       - ./env/api.env
     volumes:
@@ -31,15 +31,3 @@ services:
     image: mariadb:10.11
     env_file:
       - ./env/api.env
-
-  # cypress:
-  #   container_name: cypress
-  #   image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
-  #   tty: true
-  #   working_dir: /app
-  #   environment:
-  #     CYPRESS_baseUrl: http://nginx
-  #   volumes:
-  #     - ./cypress:/app
-  #   depends_on:
-  #     - nginx
