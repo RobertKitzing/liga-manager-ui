@@ -1,10 +1,11 @@
 import * as enGB from '@lima-i18n/en-GB.json';
+import { Users } from 'cypress/support/values';
 
 describe('Admin - Create Season', () => {
 
     beforeEach(
         () => {
-            cy.login('admin@example.com', '123456')
+            cy.login(Users.admin.username, Users.admin.password)
         }
     )
 

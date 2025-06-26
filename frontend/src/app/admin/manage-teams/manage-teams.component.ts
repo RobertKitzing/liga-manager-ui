@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -24,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatButtonModule,
         MatIconModule,
         AsyncPipe,
+        CypressSelectorDirective,
     ],
 })
 export class ManageTeamsComponent {
@@ -46,14 +48,14 @@ export class ManageTeamsComponent {
             !searchTerm
                 ? this.teamService.allTeams$
                 : this.teamService.allTeams$.pipe(
-                      map((x) =>
-                          x?.filter((y) =>
-                              y?.name
-                                  .toLocaleLowerCase()
-                                  .includes(searchTerm.toLocaleLowerCase()),
-                          ),
-                      ),
-                  ),
+                    map((x) =>
+                        x?.filter((y) =>
+                            y?.name
+                                .toLocaleLowerCase()
+                                .includes(searchTerm.toLocaleLowerCase()),
+                        ),
+                    ),
+                ),
         ),
     );
 
@@ -70,6 +72,7 @@ export class ManageTeamsComponent {
     }
 
     async deleteTeam(team_id: string) {
+        console.log(team_id);
         await firstValueFrom(this.teamService.deleteTeam({ team_id }));
     }
 

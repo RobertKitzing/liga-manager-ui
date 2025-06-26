@@ -18,6 +18,7 @@
                 } @else {
                 <div class="flex flex-col text-center items-center justify-center">
                     <div class="self-center grid grid-cols-3 m-3 p-2 border-2 rounded w-full lg:w-2/3 justify-items-center mat-sys-primary"
+                        cySelector="button-edit-match-result"
                         (click)="canEditMatch(match) && openEditResultDialog()"
                         [ngClass]="{'cursor-pointer': canEditMatch(match)}">
                         <div>
@@ -100,8 +101,8 @@
                         </button>
                         @if (!match.cancelled_at) {
                             <button mat-menu-item (click)="openEditPitchDialog()">
-                            <mat-icon>location_on</mat-icon>
-                            <span translate>BUTTON.EDIT_PITCH</span>
+                                <mat-icon>location_on</mat-icon>
+                                <span translate>BUTTON.EDIT_PITCH</span>
                             </button>
                             <button mat-menu-item (click)="openEditKickoffDialog()">
                             <mat-icon>event</mat-icon>

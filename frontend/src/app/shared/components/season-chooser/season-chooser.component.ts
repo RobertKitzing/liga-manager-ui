@@ -25,6 +25,7 @@ export type SeasonChooserModes =
         TranslateModule,
         ReactiveFormsModule,
         CypressSelectorDirective,
+        TranslateModule,
     ],
 })
 export class SeasonChooserComponent {
@@ -42,7 +43,7 @@ export class SeasonChooserComponent {
 
     seasonList$ = this.seasonService.seasonList$.pipe(
         map(
-            (seasonList) => seasonList.filter((season) => this.filterSeasonStates.length > 0 ? this.filterSeasonStates.includes(season?.state!) : true),
+            (seasonList) => seasonList.filter((season) => this.filterSeasonStates.length > 0 ? (season?.state && this.filterSeasonStates.includes(season?.state)) : true) || [],
         ),
     );
 

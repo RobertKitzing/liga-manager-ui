@@ -137,21 +137,11 @@ export class UserService {
         );
     }
 
-    setPassword(newPassword: string): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            this.changePasswordQGL
-                .mutate({
-                    new_password: newPassword,
-                })
-                .subscribe(
-                    () => {
-                        resolve();
-                    },
-                    (err) => {
-                        reject(err);
-                    },
-                );
-        });
+    setPassword(newPassword: string) {
+        return this.changePasswordQGL
+            .mutate({
+                new_password: newPassword,
+            })
     }
 
 }

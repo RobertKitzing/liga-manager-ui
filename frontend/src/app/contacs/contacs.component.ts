@@ -1,12 +1,12 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { SeasonChooserComponent, TeamContactComponent, TournamentChooserComponent } from '@lima/shared/components';
+import { SeasonChooserComponent, TeamContactComponent } from '@lima/shared/components';
 import { SeasonService, TeamService, TournamentService } from '@lima/shared/services';
 import { TranslateModule } from '@ngx-translate/core';
-import { combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllSeasonsFragment, SeasonState } from '@api/graphql';
@@ -28,7 +28,6 @@ import { SortByPipe } from '@lima/shared/pipes';
         MatToolbarModule,
         SortByPipe,
     ],
-    standalone: true,
 })
 export class ContacsComponent {
 
@@ -44,7 +43,6 @@ export class ContacsComponent {
     ]).pipe(
         switchMap(
             ([searchTeam, selectedSeason]) => {
-                console.log(searchTeam, selectedSeason);
                 let teams$;
                 if (!selectedSeason) {
                     teams$ = this.teamService.allTeams$;

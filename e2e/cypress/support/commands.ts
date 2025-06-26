@@ -1,6 +1,4 @@
 import { Base64 } from 'js-base64';
-import { CySelectors } from '@lima/app/shared/directives/cypress-selector/cypress-selector.directive';
-
 // ***********************************************
 // This example namespace declaration will help
 // with Intellisense and code completion in your

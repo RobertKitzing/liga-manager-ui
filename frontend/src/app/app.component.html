@@ -8,17 +8,17 @@
         <lima-nav-links></lima-nav-links>
     </div>
     <div class="hidden lg:flex lg:visible">
-      @if (!authService.isAuthenticated()) {
-        <button class="mat-sys-primary" mat-stroked-button (click)="openLoginDialog()" cySelector="button-login">
-          <span translate>BUTTON.LOGIN</span>
-        </button>
-      } @else {
+      @if (currentUser() && authService.isAuthenticated()) {
         <button mat-stroked-button class="mat-sys-primary" [matMenuTriggerFor]="userMenu" cySelector="button-user-menu">
           <div class="flex justify-evenly gap-2">
             <mat-icon class="">person</mat-icon>
             {{ authService.user!.first_name }} {{ authService.user!.last_name }}
             <mat-icon>arrow_drop_down</mat-icon>
           </div>
+        </button>
+      } @else {
+        <button class="mat-sys-primary" mat-stroked-button (click)="openLoginDialog()" cySelector="button-login">
+          <span translate>BUTTON.LOGIN</span>
         </button>
       }
     </div>

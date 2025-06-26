@@ -22,8 +22,6 @@ jobs:
           API_TAG: ${{ github.event.inputs.api-image-tag }}
         with:
           compose-file: "./e2e/docker-compose.yml"
-      - name: Load Demo Data
-        run: docker exec lima-api lima app:db:demo-data
       - name: Add Admin user
         run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
       - name: Cypress run

@@ -13,7 +13,7 @@
             @if (addTeamMode) {
               <mat-form-field class="w-full">
                 <mat-label translate>NEW_TEAM</mat-label>
-                <input matInput [formControl]="newTeam" (keyup.enter)="addNewTeam(newTeam.value!)">
+                <input matInput [formControl]="newTeam" (keyup.enter)="addNewTeam(newTeam.value!)" cySelector="input-create-team-name">
               </mat-form-field>
             }
             @if (!addTeamMode) {
@@ -25,7 +25,8 @@
               <mat-form-field class="w-full pt-4 pb-4" subscriptSizing="dynamic">
                 <mat-label translate>TEAM_NAME</mat-label>
                 <input matInput [formControl]="newTeamName"
-                  (keyup.enter)="renameTeam(team.id, newTeamName.value!)" [value]="team.name">
+                  (keyup.enter)="renameTeam(team.id, newTeamName.value!)" [value]="team.name"
+                  >
               </mat-form-field>
             }
             @if (editTeamId !== team.id) {
@@ -36,7 +37,7 @@
         <ng-container matColumnDef="action">
           <th class="text-end" mat-header-cell *matHeaderCellDef>
             @if (addTeamMode) {
-              <button mat-icon-button (click)="addNewTeam(newTeam.value!)" [disabled]="!newTeam.valid">
+              <button mat-icon-button (click)="addNewTeam(newTeam.value!)" [disabled]="!newTeam.valid" cySelector="button-create-team-submit">
                 <mat-icon>
                   add
                 </mat-icon>
@@ -48,7 +49,7 @@
               </button>
             }
             @if (!addTeamMode) {
-              <button mat-icon-button (click)="addTeamMode = true">
+              <button mat-icon-button (click)="addTeamMode = true" cySelector="button-create-team">
                 <mat-icon>
                   add
                 </mat-icon>
@@ -66,11 +67,11 @@
                 [disabled]="!newTeamName.valid">
                 <mat-icon>save</mat-icon>
               </button>
-              <!-- <button mat-icon-button (click)="deleteTeam(team.id)">
+              <button mat-icon-button (click)="deleteTeam(team.id)">
                 <mat-icon>
                   delete
                 </mat-icon>
-              </button> -->
+              </button>
               <button mat-icon-button (click)="editTeamId = ''">
                 <mat-icon>
                   cancel

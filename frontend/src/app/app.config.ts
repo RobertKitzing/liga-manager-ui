@@ -1,7 +1,7 @@
 import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { AppsettingsService, ThemeService, httpLoaderFactory } from './shared/services';
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -36,34 +36,35 @@ function appInitFactory(
 }
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    DatePipe,
-    provideRouter(routes),
-    provideNgxWebstorage(
-        withLocalStorage(),
-    ),
-    provideApollo(apolloFactory),
-    importProvidersFrom(
-        MatNativeDateModule,
-        TranslateModule.forRoot({
-            defaultLanguage: 'en-GB',
-            loader: {
-                provide: TranslateLoader,
-                useFactory: httpLoaderFactory,
-                deps: [HttpClient],
-            },
+    providers: [
+        DatePipe,
+        TranslatePipe,
+        provideRouter(routes),
+        provideNgxWebstorage(
+            withLocalStorage(),
+        ),
+        provideApollo(apolloFactory),
+        importProvidersFrom(
+            MatNativeDateModule,
+            TranslateModule.forRoot({
+                defaultLanguage: 'en-GB',
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: httpLoaderFactory,
+                    deps: [HttpClient],
+                },
+            }),
+        ),
+        provideAppInitializer(() => {
+            const initializerFn = (appInitFactory)(inject(AppsettingsService), inject(ThemeService));
+            return initializerFn();
         }),
-    ),
-    provideAppInitializer(() => {
-        const initializerFn = (appInitFactory)(inject(AppsettingsService), inject(ThemeService));
-        return initializerFn();
-      }),
-    {
-        provide: HTTP_INTERCEPTORS,
-        useClass: LoadingIndicatorHttpInterceptor,
-        multi: true,
-    },
-    provideHttpClient(withInterceptorsFromDi()),
-    provideAnimationsAsync(),
-  ],
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingIndicatorHttpInterceptor,
+            multi: true,
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideAnimationsAsync(),
+    ],
 };

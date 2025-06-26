@@ -31,19 +31,19 @@ export class AuthenticationService {
 
     isAuthenticated = signal(false);
 
+    constructor(
+        private router: Router,
+        private localStorageService: LocalStorageService,
+    ) {
+
+    }
+
     get isAdmin() {
         return this.user ? this.user.role === UserRole.Admin : false;
     }
 
     get isTeamAdmin() {
         return this.user ? this.user.role === UserRole.TeamManager : false;
-    }
-
-    constructor(
-        private router: Router,
-        private localStorageService: LocalStorageService,
-    ) {
-
     }
 
     logout() {

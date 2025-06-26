@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Location, NgClass, AsyncPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ import { defaultDialogConfig } from './app.config';
 import { NavLinksComponent } from './shared/components';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
-import { firstValueFrom } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CypressSelectorDirective } from './shared/directives';
 
 @Component({
@@ -64,6 +64,10 @@ export class AppComponent implements OnInit {
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
 
+    userService = inject(UserService);
+
+    currentUser = toSignal(this.userService.loadUser());
+
     constructor(
         public themeService: ThemeService,
         public loadingIndicatorService: LoadingIndicatorService,
@@ -73,7 +77,6 @@ export class AppComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private userService: UserService,
     ) {}
 
     get currentRoute() {
@@ -82,8 +85,6 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
-        
-        firstValueFrom(this.userService.loadUser());
 
         this.route.queryParams.subscribe((params) => {
             if (params['theme']) {

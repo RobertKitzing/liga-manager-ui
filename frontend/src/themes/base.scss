@@ -40,7 +40,11 @@ body {
         @include mat.select-overrides((
             panel-background-color: var(--mat-sys-primary),
             enabled-trigger-text-color: var(--mat-sys-on-primary),
+            placeholder-text-color: var(--mat-sys-on-primary),
             enabled-arrow-color: var(--mat-sys-on-primary),
+        ));
+        @include mat.icon-overrides((
+            color: var(--mat-sys-on-primary),
         ));
     }
 }

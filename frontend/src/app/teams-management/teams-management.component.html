@@ -1,7 +1,7 @@
 <div class="w-full">
-  <mat-toolbar class="border-t-2 dark:border-toolbardark overflow-auto">
+  <mat-toolbar class="border-t-2">
     <div class="flex w-full h-full">
-      <div class="w-1/2 self-center">
+      <div class="w-full self-center">
         @if (teams$ | async; as teams) {
           @if (teams.length > 1) {
             <lima-team-chooser [selectedTeamFC]="selectedTeamFC" [teams]="teams"></lima-team-chooser>

@@ -2,21 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, startWith, switchMap, tap } from 'rxjs';
 import { AuthenticationService, SeasonService } from '@lima/shared/services';
-import { AsyncPipe, DecimalPipe, JsonPipe, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TeamLogoPipe } from '@lima/shared/pipes/team-logo';
 import { CustomDatePipe } from '@lima/shared/pipes';
 import { MatchComponent, SeasonChooserComponent } from '@lima/shared/components';
 import { AllSeasonsFragment, SeasonState } from '@api/graphql';
 import { FormControl } from '@angular/forms';
 import { LocalStorage } from 'ngx-webstorage';
-import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-schedule',
@@ -41,10 +39,10 @@ import { CypressSelectorDirective } from '@lima/shared/directives';
 export class ScheduleComponent implements OnInit {
 
     @LocalStorage('selectedMatchDayId', '0')
-    selectedMatchDayId!: string;
+        selectedMatchDayId!: string;
     
     @LocalStorage('selectedTeamId', '0')
-    selectedTeamId!: string;
+        selectedTeamId!: string;
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.selectedSeasonLS);
 
@@ -112,10 +110,10 @@ export class ScheduleComponent implements OnInit {
     filterMatches(matches: any[]): any[] {
         return this.selectedTeamId !== '0'
             ? matches.filter(
-                  (x) =>
-                      x.guest_team.id === this.selectedTeamId ||
+                (x) =>
+                    x.guest_team.id === this.selectedTeamId ||
                       x.home_team.id === this.selectedTeamId,
-              )
+            )
             : matches;
     }
 

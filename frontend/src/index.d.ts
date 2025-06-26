@@ -1,16 +1,24 @@
 type CySelectors =
     'button-create-season' |
     'button-create-season-submit' |
+    'button-create-team' |
+    'button-create-team-submit' |
     'button-create-tournament' |
     'button-create-tournament-submit' |
+    'button-delete-team' |
+    'button-edit-match-result' |
+    'button-edit-match-result-submit' |
     'button-login' |
     'button-login-submit' |
     'button-logout' |
     'button-user-menu' |
     'input-create-season-name' |
+    'input-create-team-name' |
     'input-create-tournament-name' |
     'input-password' |
     'input-username' |
+    'input-home-score' |
+    'input-guest-score' |
     'route-admin' |
     'route-admin-pitches' |
     'route-admin-seasons' |

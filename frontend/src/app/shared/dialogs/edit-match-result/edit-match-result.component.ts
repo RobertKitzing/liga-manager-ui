@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EditMatchBaseComponent } from '../edit-match-base';
+import { CypressSelectorDirective } from '@lima/shared/directives';
 
 @Component({
     selector: 'lima-edit-match-result',
@@ -26,6 +27,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
         MatIconModule,
         TranslateModule,
         EditMatchBaseComponent,
+        CypressSelectorDirective,
     ],
 })
 export class EditMatchResultComponent {

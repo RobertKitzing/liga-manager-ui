@@ -20,17 +20,17 @@ import { map, tap } from 'rxjs';
 })
 export class HallOfFameComponent {
 
-  displayedColumns = ['logo', 'team', 'winnerCount']
+    displayedColumns = ['logo', 'team', 'winnerCount']
 
-  winner!: {
+    winner!: {
     team: Pick<Team, 'id' | 'name' | 'logo_id'>,
     winnerCount: number,
   }[]
 
-  seasons$ = this.hof.watch().valueChanges.pipe(
-    map((data) => data.data.allSeasons),
-    map((seasons) => seasons?.filter((s) => s?.state === SeasonState.Ended)),
-    map((seasons) =>
+    seasons$ = this.hof.watch().valueChanges.pipe(
+        map((data) => data.data.allSeasons),
+        map((seasons) => seasons?.filter((s) => s?.state === SeasonState.Ended)),
+        map((seasons) =>
             [...seasons || []]?.sort((a, b) => {
                 const aStartDate =
                     a?.match_days?.find((x) => x?.number === 1)?.start_date ||
@@ -47,70 +47,70 @@ export class HallOfFameComponent {
                 return 0;
             }),
         ),
-    tap(
-      (seasons) => {
-        this.winner = []
-        for (const season of seasons) {
-          const winnerTeam = season?.ranking?.positions![0]?.team;
-          if (winnerTeam) {
-            const t = this.winner.find((w) => w.team.id === winnerTeam.id)
-            if (!t) {
-              this.winner.push({
-                team: winnerTeam,
-                winnerCount: 1,
-              })
-            } else {
-              t.winnerCount++
-            }
-          }
-        }
-        this.winner = sortArrayBy(this.winner, 'winnerCount', 'desc')
-      },
-    ),
-  )
+        tap(
+            (seasons) => {
+                this.winner = []
+                for (const season of seasons) {
+                    const winnerTeam = season?.ranking?.positions![0]?.team;
+                    if (winnerTeam) {
+                        const t = this.winner.find((w) => w.team.id === winnerTeam.id)
+                        if (!t) {
+                            this.winner.push({
+                                team: winnerTeam,
+                                winnerCount: 1,
+                            })
+                        } else {
+                            t.winnerCount++
+                        }
+                    }
+                }
+                this.winner = sortArrayBy(this.winner, 'winnerCount', 'desc')
+            },
+        ),
+    )
   
-  constructor(
+    constructor(
     private hof: HallOfFameGQL,
-  ) {
+    ) {
 
-  }
-
-  getFirstRank() {
-    const firstWinnerCount = this.winner[0].winnerCount;
-    return this.winner.filter((x) => x.winnerCount === firstWinnerCount)
-  }
-
-  getSecondRank() {
-    const firstWinnerCount = this.winner[0].winnerCount;
-    let secondWinnerCount = 0;
-    for( const t of this.winner) {
-      if (t.winnerCount < firstWinnerCount) {
-        secondWinnerCount = t.winnerCount;
-        break;
-      }
     }
-    return this.winner.filter((x) => x.winnerCount === secondWinnerCount)
-  }
 
-  getThirdRank() {
-    const firstWinnerCount = this.winner[0].winnerCount;
-    let secondWinnerCount = 0;
-    for( const t of this.winner) {
-      if (t.winnerCount < firstWinnerCount) {
-        secondWinnerCount = t.winnerCount;
-        break;
-      }
+    getFirstRank() {
+        const firstWinnerCount = this.winner[0].winnerCount;
+        return this.winner.filter((x) => x.winnerCount === firstWinnerCount)
     }
-    let thirdWinnerCount = 0;
-    for( const t of this.winner) {
-      if (t.winnerCount < secondWinnerCount) {
-        thirdWinnerCount = t.winnerCount;
-        break;
-      }
+
+    getSecondRank() {
+        const firstWinnerCount = this.winner[0].winnerCount;
+        let secondWinnerCount = 0;
+        for( const t of this.winner) {
+            if (t.winnerCount < firstWinnerCount) {
+                secondWinnerCount = t.winnerCount;
+                break;
+            }
+        }
+        return this.winner.filter((x) => x.winnerCount === secondWinnerCount)
     }
-    return this.winner.filter((x) => x.winnerCount === thirdWinnerCount)
-      .concat(this.winner.filter((x) => x.winnerCount === thirdWinnerCount))
-      .concat(this.winner.filter((x) => x.winnerCount === thirdWinnerCount))
-  }
+
+    getThirdRank() {
+        const firstWinnerCount = this.winner[0].winnerCount;
+        let secondWinnerCount = 0;
+        for( const t of this.winner) {
+            if (t.winnerCount < firstWinnerCount) {
+                secondWinnerCount = t.winnerCount;
+                break;
+            }
+        }
+        let thirdWinnerCount = 0;
+        for( const t of this.winner) {
+            if (t.winnerCount < secondWinnerCount) {
+                thirdWinnerCount = t.winnerCount;
+                break;
+            }
+        }
+        return this.winner.filter((x) => x.winnerCount === thirdWinnerCount)
+            .concat(this.winner.filter((x) => x.winnerCount === thirdWinnerCount))
+            .concat(this.winner.filter((x) => x.winnerCount === thirdWinnerCount))
+    }
 
 }

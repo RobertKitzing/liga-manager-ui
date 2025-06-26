@@ -9,7 +9,7 @@ import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@lima/shared/services';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TruncatePipe } from '@lima/shared/pipes';
@@ -62,6 +62,7 @@ export class TableComponent {
     expandedElement = signal<RankingPosition | undefined>(undefined);
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment>(this.selectedSeasonLS);
+
     sortRanking = new BehaviorSubject<Sort>( { active: 'sort_index', direction: 'asc' } );
 
     SeasonState = SeasonState;
@@ -70,40 +71,44 @@ export class TableComponent {
         switchMap(
             (sort) => 
                 this.selectedSeasonFC.valueChanges.pipe(
-                startWith(this.selectedSeasonLS),
-                tap(
-                    (season) => {
-                        if (season) {
-                            this.seasonService.refetchRankingById(season.id)
-                            this.selectedSeasonLS = season;
+                    startWith(this.selectedSeasonLS),
+                    tap(
+                        (season) => {
+                            if (season) {
+                                this.seasonService.refetchRankingById(season.id)
+                                this.selectedSeasonLS = season;
+                            }
+                        },
+                    ),
+                    switchMap(
+                        (selectedSeason) => selectedSeason ? this.seasonService.getRankingById$(selectedSeason.id) : of(null),
+                    ),
+                    map((ranking) => {
+                        if (!sort.direction) {
+                            return ranking?.positions
                         }
-                    },
-                ),
-                switchMap(
-                    (selectedSeason) => selectedSeason ? this.seasonService.getRankingById$(selectedSeason.id) : of(null),
-                ),
-                map((ranking) => {
-                    if (!sort.direction) {
-                        return ranking?.positions
-                    }
 
-                    return [...ranking?.positions || []].sort(
-                        (a, b) => {
-                            const isAsc = sort.direction === 'asc';
-                            switch (sort.active) {
+                        return [...ranking?.positions || []].sort(
+                            (a, b) => {
+                                const isAsc = sort.direction === 'asc';
+                                switch (sort.active) {
                                 case 'sort_index':
                                     return this.compare(a?.sort_index || 0, b?.sort_index || 0, isAsc);
                                 case 'team_name':
                                     return this.compare(a?.team.name || '', b?.team.name || '', isAsc);
                                 case 'matches':
                                     return this.compare(a?.matches || 0, b?.matches || 0, isAsc);
+                                case 'goaldiff':
+                                    const agd = a?.scored_goals! - a?.conceded_goals!
+                                    const bgd = b?.scored_goals! - b?.conceded_goals!
+                                    return this.compare(agd, bgd, isAsc);
                                 default:
                                     return 0;
-                            }
-                        }
-                    )
-                }),
-            )
+                                }
+                            },
+                        )
+                    }),
+                ),
         ),
     )
 
