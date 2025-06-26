@@ -86,8 +86,7 @@ export class UserService {
             })
             .pipe(
                 tap((result) => {
-                    this.authenticationService.user = result.data.authenticatedUser as User;
-                    this.authenticationService.isAuthenticated.set(true)
+                    this.authenticationService.user.set(result.data.authenticatedUser as User);
                 }),
             );
     }
@@ -98,8 +97,7 @@ export class UserService {
         }
         return this.authenticatedUserGQL.fetch().pipe(
             tap((result) => {
-                this.authenticationService.user = result.data.authenticatedUser as User;
-                this.authenticationService.isAuthenticated.set(true);
+                this.authenticationService.user.set(result.data.authenticatedUser as User);
             }),
         );
     }
@@ -107,7 +105,7 @@ export class UserService {
     isTeamAdminForTeam(teamId: string) {
         return (
             this.authenticationService.isTeamAdmin &&
-            !!this.authenticationService.user?.teams?.find((t) => t?.id === teamId)
+            !!this.authenticationService.user()?.teams?.find((t) => t?.id === teamId)
         );
     }
 
@@ -129,7 +127,7 @@ export class UserService {
                     headers: new HttpHeaders().set(
                         'Authorization',
                         `Basic ${Base64.encode(
-                            this.authenticationService.user?.email.toLowerCase() + ':' + oldPassword,
+                            this.authenticationService.user()?.email.toLowerCase() + ':' + oldPassword,
                         )}`,
                     ),
                 },

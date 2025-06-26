@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { Location, NgClass, AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Location, AsyncPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -9,7 +9,6 @@ import {
     LoadingIndicatorService,
     StoredLang,
     ThemeService,
-    UserService,
 } from '@lima/shared/services';
 import { LoginComponent } from './shared/dialogs';
 import { MatListModule } from '@angular/material/list';
@@ -26,7 +25,6 @@ import { defaultDialogConfig } from './app.config';
 import { NavLinksComponent } from './shared/components';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CypressSelectorDirective } from './shared/directives';
 
 @Component({
@@ -63,10 +61,6 @@ export class AppComponent implements OnInit {
     languageControl = new FormControl<StoredLang | undefined>(this.i18Service.storedLang);
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
-
-    userService = inject(UserService);
-
-    currentUser = toSignal(this.userService.loadUser());
 
     constructor(
         public themeService: ThemeService,

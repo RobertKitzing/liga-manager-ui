@@ -7,7 +7,7 @@ import { APP_ROUTES } from './app.routes.enum';
 
 export const isLoggedInGuard = () => {
     const authenticationService = inject(AuthenticationService);
-    return authenticationService.isAuthenticated;
+    return authenticationService.user();
 };
 
 export const teamAdminGuard = () => {

@@ -49,7 +49,7 @@ export class TeamsManagementComponent {
         iif(
             () => this.authenticationService.isAdmin,
             this.teamService.allTeams$,
-            of(this.authenticationService.user?.teams),
+            of(this.authenticationService.user()?.teams),
         ).pipe(
             tap(
                 (teams) => {
