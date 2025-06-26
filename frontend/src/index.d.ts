@@ -1,4 +1,5 @@
 type CySelectors =
+    'button-add-team-to-season' |
     'button-create-season' |
     'button-create-season-submit' |
     'button-create-team' |

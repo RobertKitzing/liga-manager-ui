@@ -33,7 +33,7 @@ export class SeasonService {
     historySeason!: AllSeasonsFragment;
 
     @LocalStorage(SELECTED_MANAGE_SEASON_KEY)
-    manageSeason: AllSeasonsFragment | undefined | null;
+    manageSeason: Season | AllSeasonsFragment | undefined | null;
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
         map((seasons) =>
