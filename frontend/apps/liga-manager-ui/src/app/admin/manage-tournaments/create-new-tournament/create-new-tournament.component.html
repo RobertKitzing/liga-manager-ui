@@ -1,0 +1,26 @@
+<div mat-dialog-title translate class="flex mat-sys-primary items-center">
+    CREATE_NEW_TOURNAMENT_TITLE
+</div>
+<div mat-dialog-content class="flex justify-center items-center">
+    <mat-form-field class="pt-5">
+        <mat-label translate>PLACEHOLDER.NEW_TOURNAMENT_NAME</mat-label>
+        <input
+            matInput
+            [formControl]="newName"
+            cySelector="input-create-tournament-name"
+        />
+    </mat-form-field>
+</div>
+<div
+    mat-dialog-actions
+    class="flex justify-center border-t-2 dark:border-toolbardark"
+>
+    <button
+        mat-stroked-button
+        (click)="createTournament()"
+        [disabled]="!newName.valid"
+        cySelector="button-create-tournament-submit"
+    >
+        <span translate>BUTTON.CREATE_TOURNAMENT</span>
+    </button>
+</div>

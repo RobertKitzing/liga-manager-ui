@@ -1,41 +1,38 @@
-query Calendar(
-    $min_date: DateTime
-    $max_date: DateTime
-) {
-  allSeasons {
-    id
-    name
-    state
-    match_days {
-      number
-      start_date
-      end_date
+query Calendar($min_date: DateTime, $max_date: DateTime) {
+    allSeasons {
+        id
+        name
+        state
+        match_days {
+            number
+            start_date
+            end_date
+        }
     }
-  }
-  allTournaments {
-    id
-    name
-    rounds {
-      number
-      start_date
-      end_date
+    allTournaments {
+        id
+        name
+        rounds {
+            number
+            start_date
+            end_date
+        }
     }
-  }
-  matchesByKickoff(min_date: $min_date, max_date: $max_date){
-    id
-    home_team {
-      ...Team
+    matchesByKickoff(min_date: $min_date, max_date: $max_date) {
+        id
+        home_team {
+            ...Team
+        }
+        guest_team {
+            ...Team
+        }
+        kickoff
+        home_score
+        guest_score
+        cancelled_at
+        cancellation_reason
+        pitch {
+            ...Pitch
+        }
     }
-    guest_team {
-      ...Team
-    }
-    kickoff
-    home_score
-    guest_score
-    cancelled_at
-    cancellation_reason
-    pitch {
-      ...Pitch
-    }
-  }
 }

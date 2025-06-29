@@ -1,0 +1,78 @@
+<div class="lg:flex h-full text-lg">
+    <a
+        cySelector="route-table"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.TABLE }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.TABLE</a
+    >
+    <a
+        cySelector="route-schedule"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.SCHEDULE }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.SCHEDULE</a
+    >
+    <a
+        cySelector="route-tournament"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.TOURNAMENT }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.TOURNAMENT</a
+    >
+    <a
+        cySelector="route-calendar"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.CALENDAR }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.CALENDAR</a
+    >
+    <a
+        cySelector="route-hall_of_fame"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.HALL_OF_FAME }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.HALL_OF_FAME</a
+    >
+    <a
+        cySelector="route-history"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.HISTORY }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.HISTORY</a
+    >
+    @if (authenticationService.isTeamAdmin || authenticationService.isAdmin) {
+    <a
+        cySelector="route-contacts"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.CONTACTS }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.CONTACTS</a
+    >
+    } @if (authenticationService.isTeamAdmin || authenticationService.isAdmin) {
+    <a
+        cySelector="route-teams_management"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.TEAMS_MANAGEMENT }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.TEAMS_MANAGEMENT</a
+    >
+    } @if (authenticationService.isAdmin) {
+    <a
+        cySelector="route-admin"
+        class="flex h-full items-center p-2 border-b-2 lg:border-none"
+        routerLink="{{ APP_ROUTES.ADMIN }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.ADMIN</a
+    >
+    }
+</div>

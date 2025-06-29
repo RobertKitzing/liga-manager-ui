@@ -5,7 +5,7 @@ query AllTeams {
 }
 
 query TeamById($id: String!) {
-  team(id: $id) {
-    ...Team
-  }
+    team(id: $id) {
+        ...Team
+    }
 }

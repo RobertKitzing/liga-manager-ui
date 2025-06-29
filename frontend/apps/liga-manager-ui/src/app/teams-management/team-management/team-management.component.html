@@ -1,0 +1,19 @@
+<mat-toolbar class="border-t-2">
+    <div class="flex h-full w-full items-center text-lg">
+        <a
+            class="flex h-full items-center p-2"
+            routerLink="{{ TEAM_MANAGEMENT_ROUTES.CONTACT }}"
+            routerLinkActive="mat-sys-primary-container"
+            translate
+            >NAVIGATION.TEAMS_MANAGEMENT.CONTACT</a
+        >
+        <a
+            class="flex h-full items-center p-2"
+            routerLink="{{ TEAM_MANAGEMENT_ROUTES.LOGO }}"
+            routerLinkActive="mat-sys-primary-container"
+            translate
+            >NAVIGATION.TEAMS_MANAGEMENT.TEAM_LOGOS</a
+        >
+    </div>
+</mat-toolbar>
+<router-outlet></router-outlet>

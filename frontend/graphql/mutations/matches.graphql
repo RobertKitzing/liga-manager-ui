@@ -1,6 +1,6 @@
 mutation SubmitResult(
-    $match_id: String!,
-    $home_score: Int!,
+    $match_id: String!
+    $home_score: Int!
     $guest_score: Int!
 ) {
     submitMatchResult(
@@ -9,27 +9,33 @@ mutation SubmitResult(
         guest_score: $guest_score
     )
 }
-mutation ScheduleMatch(
-    $match_id: String!,
-    $kickoff: DateTime!
-) {
+mutation ScheduleMatch($match_id: String!, $kickoff: DateTime!) {
     scheduleMatch(match_id: $match_id, kickoff: $kickoff)
 }
-mutation LocateMatch(
-    $match_id: String!,
-    $pitch_id: String!
-) {
+mutation LocateMatch($match_id: String!, $pitch_id: String!) {
     locateMatch(match_id: $match_id, pitch_id: $pitch_id)
 }
 
-mutation CancelMatch($match_id: String!, $reason: String!){
-  cancelMatch(match_id: $match_id, reason: $reason)
+mutation CancelMatch($match_id: String!, $reason: String!) {
+    cancelMatch(match_id: $match_id, reason: $reason)
 }
 
-mutation ScheduleAllMatchesForSeason($season_id: String!, $match_appointments: [MatchAppointment]!) {
-  scheduleAllMatchesForSeason(season_id: $season_id, match_appointments: $match_appointments)
+mutation ScheduleAllMatchesForSeason(
+    $season_id: String!
+    $match_appointments: [MatchAppointment]!
+) {
+    scheduleAllMatchesForSeason(
+        season_id: $season_id
+        match_appointments: $match_appointments
+    )
 }
 
-mutation ScheduleAllMatchesForMatchDay($match_day_id: String!, $match_appointments: [MatchAppointment]!) {
-  scheduleAllMatchesForMatchDay(match_day_id: $match_day_id, match_appointments: $match_appointments)
+mutation ScheduleAllMatchesForMatchDay(
+    $match_day_id: String!
+    $match_appointments: [MatchAppointment]!
+) {
+    scheduleAllMatchesForMatchDay(
+        match_day_id: $match_day_id
+        match_appointments: $match_appointments
+    )
 }

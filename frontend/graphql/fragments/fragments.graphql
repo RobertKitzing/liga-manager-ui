@@ -85,12 +85,12 @@ fragment AllSeasonsHoF on Season {
     }
     ranking {
         positions {
-        team {
-            id
-            name
-            logo_id
-        }
-        sort_index
+            team {
+                id
+                name
+                logo_id
+            }
+            sort_index
         }
     }
 }
@@ -113,7 +113,7 @@ fragment AllTournamentsCalendar on Tournament {
     id
     name
     rounds {
-      ...MatchDay
+        ...MatchDay
     }
 }
 
@@ -121,7 +121,7 @@ fragment Tournament on Tournament {
     id
     name
     rounds {
-      ...MatchDay
+        ...MatchDay
     }
 }
 
@@ -145,25 +145,25 @@ fragment Event on Event {
 fragment Ranking on Season {
     id
     ranking {
-      updated_at
-      positions {
-        team {
-          ...Team
+        updated_at
+        positions {
+            team {
+                ...Team
+            }
+            sort_index
+            number
+            matches
+            wins
+            draws
+            losses
+            scored_goals
+            conceded_goals
+            points
         }
-        sort_index
-        number
-        matches
-        wins
-        draws
-        losses
-        scored_goals
-        conceded_goals
-        points
-      }
-      penalties {
-          ...Penalty
-      }
-    }  
+        penalties {
+            ...Penalty
+        }
+    }
 }
 
 fragment Penalty on RankingPenalty {

@@ -1,0 +1,40 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "./dist/out-tsc",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "declaration": false,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "ES2022",
+        "module": "ES2022",
+        "useDefineForClassFields": false,
+        "esModuleInterop": true,
+        "lib": ["ES2022", "dom"],
+        "paths": {
+            "@liga-manager-api/graphql": ["apps/liga-manager-ui/src/api/graphql/index.ts"],
+            "@liga-manager-ui/dialogs": ["apps/liga-manager-ui/src/app/shared/dialogs/index.ts"],
+            "@liga-manager-ui/directives": ["apps/liga-manager-ui/src/app/shared/directives/index.ts"],
+            "@liga-manager-ui/services": ["apps/liga-manager-ui/src/app/shared/services/index.ts"],
+            "@liga-manager-ui/components": ["apps/liga-manager-ui/src/app/shared/components/index.ts"],
+            "@liga-manager-ui/pipes": ["apps/liga-manager-ui/src/app/shared/pipes/index.ts"],
+            "@liga-manager-ui/utils": ["apps/liga-manager-ui/src/app/shared/utils/index.ts"],
+            "@liga-manager-ui": ["apps/liga-manager-ui/src/app/index.ts"],
+        },
+        "rootDir": "."
+    },
+    "angularCompilerOptions": {
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    },
+    "exclude": ["node_modules", "tmp"]
+}

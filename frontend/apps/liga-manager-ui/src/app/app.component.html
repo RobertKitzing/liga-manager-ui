@@ -1,0 +1,157 @@
+<mat-toolbar>
+    <div class="flex h-full w-full items-center">
+        <img
+            class="p-1 w-[60px] h-[60px]"
+            src="assets/wildeliga_bremen_nobg.webp"
+        />
+        <div class="grow flex justify-center visible lg:hidden">
+            <a class="flex h-full items-center">{{
+                currentRoute | translate
+            }}</a>
+        </div>
+        <div class="hidden h-full lg:flex lg:visible grow">
+            <lima-nav-links></lima-nav-links>
+        </div>
+        <div class="hidden lg:flex lg:visible">
+            @if (authService.user()) {
+            <button
+                mat-stroked-button
+                class="mat-sys-primary"
+                [matMenuTriggerFor]="userMenu"
+                cySelector="button-user-menu"
+            >
+                <div class="flex justify-evenly gap-2">
+                    <mat-icon class="">person</mat-icon>
+                    {{ authService.user()?.first_name }}
+                    {{ authService.user()?.last_name }}
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </div>
+            </button>
+            } @else {
+            <button
+                class="mat-sys-primary"
+                mat-stroked-button
+                (click)="openLoginDialog()"
+                cySelector="button-login"
+            >
+                <span translate>BUTTON.LOGIN</span>
+            </button>
+            }
+        </div>
+        <button mat-icon-button (click)="drawer.toggle()" class="ml-2">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<mat-drawer-container class="h-[calc(100vh_-_64px)]" [hasBackdrop]="true">
+    <mat-drawer
+        #drawer
+        [mode]="'over'"
+        [position]="'end'"
+        class="w-1/2 lg:w-1/4"
+    >
+        <div class="flex flex-col w-full">
+            <div class="visible lg:hidden flex justify-center m-2">
+                @if (!authService.user()) {
+                <button
+                    class="mat-sys-primary"
+                    mat-button
+                    (click)="openLoginDialog()"
+                >
+                    <span translate>BUTTON.LOGIN</span>
+                </button>
+                } @else {
+                <button
+                    mat-button
+                    class="mat-sys-primary"
+                    [matMenuTriggerFor]="userMenu"
+                >
+                    {{ (authService.user()?.first_name)![0] }}.{{
+                        (authService.user()?.last_name)![0]
+                    }}
+                    <mat-icon>person</mat-icon>
+                </button>
+                }
+            </div>
+            <div
+                class="visible lg:hidden border-t-2 dark:border-toolbardark"
+                (click)="drawer.close()"
+            >
+                <lima-nav-links></lima-nav-links>
+            </div>
+            <div class="p-2 flex justify-center items-center space-x-2">
+                <mat-icon>settings</mat-icon>
+                <span translate>SETTINGS</span>
+            </div>
+            <div class="p-2 flex justify-center">
+                <mat-icon class="mr-2">palette</mat-icon>
+                <mat-select [formControl]="themeControl">
+                    @for (theme of themeService.themes; track theme) {
+                    <mat-option [value]="theme">{{ theme }}</mat-option>
+                    }
+                </mat-select>
+            </div>
+            <div class="p-2 flex justify-center">
+                <mat-icon class="mr-2">language</mat-icon>
+                <mat-select
+                    [formControl]="languageControl"
+                    [compareWith]="languageCompare"
+                >
+                    @for (language of i18Service.availableLang$ | async; track
+                    language) {
+                    <mat-option [value]="language"
+                        >{{ language.nativeName }} ({{
+                            language.name
+                        }})</mat-option
+                    >
+                    }
+                </mat-select>
+            </div>
+            <div class="p-2 flex justify-center">
+                <mat-icon class="mr-2">dark_mode</mat-icon>
+                <mat-select
+                    [formControl]="darkModeControl"
+                    [formControl]="darkModeControl"
+                >
+                    <mat-option [value]="DarkModeAppearance.light">
+                        <span translate>LIGHT_MODE</span>
+                    </mat-option>
+                    <mat-option [value]="DarkModeAppearance.dark">
+                        <span translate>DARK_MODE</span>
+                    </mat-option>
+                    <mat-option [value]="DarkModeAppearance.system">
+                        <span translate>SYSTEM_MODE</span>
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        @if ((loadingIndicatorService.loading$ | async) === true) {
+        <div class="h-1">
+            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+        </div>
+        }
+        <div
+            class="h-full overflow-auto"
+            (swipeleft)="onSwipeLeft()"
+            (swiperight)="onSwipeRight()"
+        >
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+<mat-menu #userMenu="matMenu">
+    <mat-list>
+        <button mat-menu-item (click)="openChangePasswordDialog()">
+            {{ "BUTTON.CHANGE_PASSWORD" | translate }}
+        </button>
+        <button
+            mat-menu-item
+            (click)="authService.logout()"
+            cySelector="button-logout"
+        >
+            {{ "BUTTON.LOGOUT" | translate }}
+        </button>
+    </mat-list>
+</mat-menu>

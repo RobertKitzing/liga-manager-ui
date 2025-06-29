@@ -1,8 +1,25 @@
-
-mutation AddRankingPenalty($id: String!, $season_id: String!, $team_id: String!, $reason: String!, $points: Int!) {
-  addRankingPenalty(id: $id, season_id: $season_id, team_id: $team_id, reason: $reason, points: $points)
+mutation AddRankingPenalty(
+    $id: String!
+    $season_id: String!
+    $team_id: String!
+    $reason: String!
+    $points: Int!
+) {
+    addRankingPenalty(
+        id: $id
+        season_id: $season_id
+        team_id: $team_id
+        reason: $reason
+        points: $points
+    )
 }
 
-mutation RemoveRankingPenalty($ranking_penalty_id: String!, $season_id: String!){
-  removeRankingPenalty(ranking_penalty_id: $ranking_penalty_id, season_id: $season_id)
+mutation RemoveRankingPenalty(
+    $ranking_penalty_id: String!
+    $season_id: String!
+) {
+    removeRankingPenalty(
+        ranking_penalty_id: $ranking_penalty_id
+        season_id: $season_id
+    )
 }

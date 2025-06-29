@@ -1,0 +1,9 @@
+<div mat-dialog-title class="mat-sys-primary text-center">
+    {{ data.name }}
+</div>
+<mat-dialog-content>
+    <lima-team-contact [team]="data" [showTitle]="false"></lima-team-contact>
+</mat-dialog-content>
+<div class="flex justify-evenly p-2 border-t-2 dark:border-toolbardark">
+    <button mat-stroked-button mat-dialog-close translate>BUTTON.CLOSE</button>
+</div>

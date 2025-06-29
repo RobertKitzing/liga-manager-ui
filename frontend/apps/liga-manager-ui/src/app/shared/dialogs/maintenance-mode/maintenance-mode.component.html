@@ -1,0 +1,14 @@
+<div mat-dialog-title class="flex mat-sys-primary p-4">
+    <div class="self-center text-center w-full grid grid-cols-1 gap-2">
+        <h1 class="text-2xl" translate>MAINTENANCE_ACTIVE_TITLE</h1>
+    </div>
+</div>
+<div mat-dialog-content class="flex space-x-4 mt-4">
+    <mat-icon> engineering </mat-icon>
+    <span class="grow" translate>MAINTENANCE_ACTIVE_BODY</span>
+</div>
+<div class="flex justify-evenly p-2 border-t-2 dark:border-toolbardark">
+    <button mat-raised-button color="primary" (click)="reload()">
+        <span translate>BUTTON.RELOAD_PAGE</span>
+    </button>
+</div>

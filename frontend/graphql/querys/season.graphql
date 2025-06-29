@@ -1,13 +1,13 @@
 query AllSeasonsList {
-  allSeasons {
-    ...AllSeasons
-  }
+    allSeasons {
+        ...AllSeasons
+    }
 }
 
 query HallOfFame {
-  allSeasons {
-    ...AllSeasonsHoF
-  }
+    allSeasons {
+        ...AllSeasonsHoF
+    }
 }
 
 query SeasonById($id: String!) {

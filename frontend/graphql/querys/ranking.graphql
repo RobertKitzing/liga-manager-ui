@@ -1,5 +1,5 @@
 query RankingById($id: String!) {
-  season(id: $id) {
-    ...Ranking
-  }
+    season(id: $id) {
+        ...Ranking
+    }
 }

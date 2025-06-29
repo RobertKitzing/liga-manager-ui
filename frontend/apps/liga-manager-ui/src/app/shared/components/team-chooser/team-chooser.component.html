@@ -1,0 +1,12 @@
+<mat-select
+    placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
+    [formControl]="selectedTeamFC"
+    [compareWith]="teamService.teamCompare"
+>
+    @for (team of teams || (teamService.allTeams$ | async); track team) { @if
+    (team) {
+    <mat-option [value]="team">
+        {{ team.name }}
+    </mat-option>
+    } }
+</mat-select>

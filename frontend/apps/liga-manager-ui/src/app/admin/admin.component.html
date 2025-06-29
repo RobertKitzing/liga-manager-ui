@@ -1,0 +1,70 @@
+<mat-toolbar class="border-t-2 dark:border-toolbardark">
+    <div class="grow flex justify-center visible lg:hidden">
+        <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
+    </div>
+
+    <div class="hidden h-full lg:flex lg:visible grow">
+        <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
+    </div>
+
+    <button mat-icon-button (click)="drawer.toggle()" class="visible lg:hidden">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-drawer-container
+    class="h-[calc(100vh_-_64px_-_64px)]"
+    [hasBackdrop]="true"
+>
+    <mat-drawer #drawer [mode]="'over'" [position]="'end'">
+        <div class="flex flex-col" (click)="drawer.close()">
+            <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #adminLinks>
+    <a
+        cySelector="route-admin-seasons"
+        class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none"
+        routerLink="{{ ADMIN_ROUTES.SEASONS }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.ADMIN.SEASONS</a
+    >
+    <a
+        cySelector="route-admin-tournaments"
+        class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none"
+        routerLink="{{ ADMIN_ROUTES.TOURNAMENTS }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.ADMIN.TOURNAMENTS</a
+    >
+    <a
+        cySelector="route-admin-users"
+        class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none"
+        routerLink="{{ ADMIN_ROUTES.USERS }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.ADMIN.USERS</a
+    >
+    <a
+        cySelector="route-admin-teams"
+        class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none"
+        routerLink="{{ ADMIN_ROUTES.TEAMS }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.ADMIN.TEAMS</a
+    >
+    <a
+        cySelector="route-admin-pitches"
+        class="flex h-full items-center p-2 border-b-2 dark:border-toolbardark lg:border-none"
+        routerLink="{{ ADMIN_ROUTES.PITCHES }}"
+        routerLinkActive="mat-sys-primary-container"
+        translate
+        >NAVIGATION.ADMIN.PITCHES</a
+    >
+</ng-template>

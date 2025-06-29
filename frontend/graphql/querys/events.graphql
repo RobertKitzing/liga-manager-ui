@@ -4,16 +4,8 @@ query AllEvent($id: String!) {
     }
 }
 
-query LatestEvent(
-    $start_date: Date
-    $end_date: Date
-    $type: String
-) {
-    latestEvents(
-        start_date: $start_date
-        end_date: $end_date
-        type: $type
-    ) {
+query LatestEvent($start_date: Date, $end_date: Date, $type: String) {
+    latestEvents(start_date: $start_date, end_date: $end_date, type: $type) {
         ...Event
     }
 }
