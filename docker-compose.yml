@@ -23,7 +23,7 @@ services:
       - ./frontend:/liga-manager-ui
     working_dir: /liga-manager-ui
     tty: true
-    command: npm start
+    command: nx run liga-manager-ui:serve:development
 
   api:
     image: mklocke/liga-manager-api:latest

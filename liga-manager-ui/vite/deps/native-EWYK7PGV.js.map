@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../node_modules/@aparajita/capacitor-dark-mode/dist/esm/native.js"],
+  "sourcesContent": ["import { DarkModeBase } from './base';\n// eslint-disable-next-line import/prefer-default-export\nexport class DarkModeNative extends DarkModeBase {\n  constructor(capProxy) {\n    super();\n    this.setNativeDarkModeListener = capProxy.setNativeDarkModeListener;\n    this.isDarkMode = capProxy.isDarkMode;\n  }\n  async registerDarkModeListener() {\n    /*\n      On native platforms we use two listeners:\n           - A listener for dynamic appearance changes within the app.\n      - A resume listener to check if the appearance has changed since the app was suspended.\n    */\n    const onChange = data => {\n      this.update(data).catch(console.error);\n    };\n    await this.setNativeDarkModeListener({}, onChange);\n    this.registeredListener = true;\n  }\n  // @native(promise)\n  async isDarkMode() {\n    // Never called, but we have to satisfy TS\n    return Promise.resolve({\n      dark: false\n    });\n  }\n}"],
+  "mappings": ";;;;;;;;;AAEO,IAAM,iBAAN,cAA6B,aAAa;AAAA,EAC/C,YAAY,UAAU;AACpB,UAAM;AACN,SAAK,4BAA4B,SAAS;AAC1C,SAAK,aAAa,SAAS;AAAA,EAC7B;AAAA,EACM,2BAA2B;AAAA;AAM/B,YAAM,WAAW,UAAQ;AACvB,aAAK,OAAO,IAAI,EAAE,MAAM,QAAQ,KAAK;AAAA,MACvC;AACA,YAAM,KAAK,0BAA0B,CAAC,GAAG,QAAQ;AACjD,WAAK,qBAAqB;AAAA,IAC5B;AAAA;AAAA;AAAA,EAEM,aAAa;AAAA;AAEjB,aAAO,QAAQ,QAAQ;AAAA,QACrB,MAAM;AAAA,MACR,CAAC;AAAA,IACH;AAAA;AACF;",
+  "names": []
+}
