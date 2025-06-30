@@ -72,6 +72,7 @@
         "@graphql-codegen/typescript-operations": "^2.5.10",
         "@ngx-translate/core": "^14.0.0",
         "@ngx-translate/http-loader": "^7.0.0",
+        "@nx/eslint-plugin": "^21.2.1",
         "@tailwindcss/postcss": "^4.1.10",
         "@types/node": "^20.10.0",
         "@types/uuid": "^9.0.0",

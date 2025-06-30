@@ -98,10 +98,14 @@
             "executor": "@angular/build:dev-server",
             "configurations": {
                 "production": {
-                    "buildTarget": "liga-manager-ui:build:production"
+                    "buildTarget": "liga-manager-ui:build:production",
+                    "host": "0.0.0.0",
+                    "proxyConfig": "{projectRoot}/proxy.conf.json"
                 },
                 "development": {
-                    "buildTarget": "liga-manager-ui:build:development"
+                    "buildTarget": "liga-manager-ui:build:development",
+                    "host": "0.0.0.0",
+                    "proxyConfig": "{projectRoot}/proxy.conf.json"
                 }
             },
             "defaultConfiguration": "development"

@@ -20,10 +20,9 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./frontend:/liga-manager-ui
+      - .:/liga-manager-ui
     working_dir: /liga-manager-ui
-    tty: true
-    command: nx run liga-manager-ui:serve:development
+    command: npx nx run liga-manager-ui:serve:development
 
   api:
     image: mklocke/liga-manager-api:latest
