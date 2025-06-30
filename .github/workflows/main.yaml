@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'next'
+      - 'next_nx'
 
 env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
