@@ -30,8 +30,9 @@
                 "curly": "error",
                 "comma-dangle": ["error", "always-multiline"],
                 "no-unused-vars": "off",
+                "unused-imports/no-unused-vars": "off",
                 "unused-imports/no-unused-imports": "error",
-                "unused-imports/no-unused-vars": [
+                "@typescript-eslint/no-unused-vars": [
                     "warn",
                     {
                         "vars": "all",

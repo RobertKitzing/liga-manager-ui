@@ -71,7 +71,7 @@ export class EditTeamContactComponent {
             this.notificationService.showSuccessNotification(
                 marker('TEAM_CONTACT_SAVED_SUCCESS'),
             );
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 marker('TEAM_CONTACT_SAVED_ERROR'),
             );

@@ -66,7 +66,7 @@ export class LoginComponent {
                 this.userService.login(this.loginForm.value as LoginContext),
             );
             this.dialogRef.close();
-        } catch (error) {
+        } catch (_error) {
             this.loginForm.controls.password.setValue('');
             this.loginForm.controls.username.setErrors({ required: true });
             this.loginForm.controls.password.setErrors({ required: true });
@@ -81,7 +81,7 @@ export class LoginComponent {
                     marker('SEND_NEW_PASSWORD_MAIL_SUCCESS'),
                 );
                 this.dialogRef.close();
-            } catch (error) {
+            } catch (_error) {
                 // throw error;
             }
         } else {

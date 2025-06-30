@@ -75,7 +75,7 @@ export class EditMatchKickoffComponent {
                 marker('EDIT_KICKOFF_SUCCESS'),
             );
             this.dialogRef.close(true);
-        } catch (error) {
+        } catch (_error) {
             // throw error
         }
     }

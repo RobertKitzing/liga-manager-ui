@@ -83,7 +83,7 @@ export class EditMatchPitchComponent {
                 marker('EDIT_PITCH_SUCCESS'),
             );
             this.dialogRef.close(true);
-        } catch (error) {
+        } catch (_error) {
             // throw error
         }
     }

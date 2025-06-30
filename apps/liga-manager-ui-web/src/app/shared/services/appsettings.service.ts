@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 
 export interface AppsettingsModel {
@@ -11,9 +11,10 @@ export interface AppsettingsModel {
     providedIn: 'root',
 })
 export class AppsettingsService {
+
     appsettings?: AppsettingsModel;
 
-    constructor(private httpClient: HttpClient) {}
+    private httpClient = inject(HttpClient);
 
     loadAppsettings() {
         return this.httpClient.get<AppsettingsModel>('./appsettings.json').pipe(
@@ -22,4 +23,5 @@ export class AppsettingsService {
             }),
         );
     }
+
 }

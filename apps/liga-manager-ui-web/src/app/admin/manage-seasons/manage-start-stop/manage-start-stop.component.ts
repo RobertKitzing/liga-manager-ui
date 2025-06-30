@@ -24,7 +24,7 @@ export class ManageStartStopComponent extends ManageSeasonBase {
             this.notificationService.showSuccessNotification(
                 this.translateService.instant('START_SEASON_SUCCESS'),
             );
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 this.translateService.instant('START_SEASON_ERROR'),
             );
@@ -37,7 +37,7 @@ export class ManageStartStopComponent extends ManageSeasonBase {
             this.notificationService.showSuccessNotification(
                 this.translateService.instant('START_SEASON_SUCCESS'),
             );
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 this.translateService.instant('START_SEASON_ERROR'),
             );
@@ -53,7 +53,7 @@ export class ManageStartStopComponent extends ManageSeasonBase {
             this.router.navigateByUrl(
                 `${APP_ROUTES.ADMIN}/${ADMIN_ROUTES.SEASONS}`,
             );
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 this.translateService.instant('START_SEASON_ERROR'),
             );

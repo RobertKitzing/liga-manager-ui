@@ -56,7 +56,7 @@ export class CreateNewSeasonComponent {
                 marker('CREATE_SEASON_SUCCESS'),
             );
             this.dialog.closeAll();
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 marker('CREATE_SEASON_ERROR'),
             );

@@ -28,7 +28,7 @@ export class ManageTeamsComponent extends ManageSeasonBase {
     async addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
         try {
             await firstValueFrom(this.seasonService.addTeamToSeason(variables));
-        } catch (error) {
+        } catch (_error) {
             //
         }
     }
@@ -38,7 +38,7 @@ export class ManageTeamsComponent extends ManageSeasonBase {
             await firstValueFrom(
                 this.seasonService.removeTeamFromSeason(variables),
             );
-        } catch (error) {
+        } catch (_error) {
             //
         }
     }

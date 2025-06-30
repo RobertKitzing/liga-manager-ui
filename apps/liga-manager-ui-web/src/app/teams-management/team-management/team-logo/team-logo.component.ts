@@ -56,7 +56,7 @@ export class TeamLogoComponent {
                     this.notificationService.showSuccessNotification(
                         marker('UPLOAD_TEAM_LOGO_SUCCESS'),
                     );
-                } catch (error) {
+                } catch (_error) {
                     this.notificationService.showErrorNotification(
                         marker('UPLOAD_TEAM_LOGO_ERROR'),
                     );
@@ -72,7 +72,7 @@ export class TeamLogoComponent {
             this.notificationService.showSuccessNotification(
                 marker('DELETE_TEAM_LOGO_SUCCESS'),
             );
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 marker('DELETE_TEAM_LOGO_ERROR'),
             );

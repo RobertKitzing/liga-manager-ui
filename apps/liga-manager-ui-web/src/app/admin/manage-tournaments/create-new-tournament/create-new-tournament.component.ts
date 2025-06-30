@@ -56,7 +56,7 @@ export class CreateNewTournamentComponent {
                 marker('CREATE_TOURNAMENT_SUCCESS'),
             );
             this.dialog.closeAll();
-        } catch (error) {
+        } catch (_error) {
             this.notificationService.showErrorNotification(
                 marker('CREATE_TOURNAMENT_ERROR'),
             );
