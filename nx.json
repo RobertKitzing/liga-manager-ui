@@ -46,7 +46,7 @@
             "inputs": ["production", "^production"]
         }
     },
-    "nxCloudId": "6862899012bcfa45577a73e5",
+    "nxCloudId": "68628888680b52f2fda2e82e",
     "plugins": [
         {
             "plugin": "@nx-tools/nx-container",
