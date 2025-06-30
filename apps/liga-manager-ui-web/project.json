@@ -34,6 +34,10 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
+      "dependsOn": [
+        "i18n-extract",
+        "i18n-languages"
+      ],
       "options": {
         "outputPath": "dist/apps/liga-manager-ui-web",
         "index": "apps/liga-manager-ui-web/src/index.html",
@@ -70,7 +74,7 @@
         "browser": "apps/liga-manager-ui-web/src/main.ts"
       },
       "configurations": {
-        "web": {
+        "production": {
           "budgets": [
             {
               "type": "initial",
@@ -92,7 +96,7 @@
           "namedChunks": true
         }
       },
-      "defaultConfiguration": "web",
+      "defaultConfiguration": "production",
       "outputs": [
         "{options.outputPath}"
       ]
@@ -117,25 +121,17 @@
         ]
       }
     },
-    "container": {
-      "executor": "@nx-tools/nx-container:build",
-      "dependsOn": ["build:web"],
-      "defaultConfiguration": "local",
-       "options": {
-        "engine": "docker",
-        "context": ".",
-        "file": "{workspaceRoot}/Dockerfile"
-      },
-      "configurations": {
-        "local": {
-          "tags": ["liga-manager-ui-web:latest"],
-          "push": false
-        },
-        "test": {
-          "tags": ["liga-manager-ui-web:test"],
-          "push": false
-        }
-      }
+    "i18n-extract": {
+      "cache": true,
+      "inputs": ["{projectRoot}/src"],
+      "outputs": ["{projectRoot}/src/i18n/en-GB.json"],
+      "command": "npx ngx-translate-extract --input {projectRoot}/src --output {projectRoot}/src/i18n/en-GB.json --clean --sort --format json"
+    },
+    "i18n-languages": {
+      "cache": true,
+      "inputs": ["{projectRoot}/src/i18n"],
+      "outputs": ["{projectRoot}/src/assets/languages.json"],
+      "command": "node {projectRoot}/get-languages.mjs"
     }
   }
 }

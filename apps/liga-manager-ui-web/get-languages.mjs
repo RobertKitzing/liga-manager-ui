@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as languagesJS from "languages";
 
-const path = "src/i18n";
+const path = "apps/liga-manager-ui-web/src/i18n";
 const languages = [];
 
 fs.readdirSync(path).forEach((x) => {
@@ -15,4 +15,4 @@ fs.readdirSync(path).forEach((x) => {
     });
 });
 const data = JSON.stringify(languages, null, 2);
-fs.writeFileSync("src/assets/languages.json", data);
+fs.writeFileSync("apps/liga-manager-ui-web/src/assets/languages.json", data);

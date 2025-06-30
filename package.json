@@ -2,20 +2,8 @@
     "name": "liga-manager-ui",
     "version": "5.4.39",
     "scripts": {
-        "ng": "ng",
-        "start": "nx serve --host '0.0.0.0' --proxy-config proxy.conf.json",
-        "build": "nx build",
-        "build:web": "npm run build && copy-files-from-to --mode web",
         "build:app:local": "npm run clean:dist && npm run build && copy-files-from-to --mode app-local --silent",
         "build:app:prod": "npm run clean:dist && npm run build && copy-files-from-to --mode app-prod --silent",
-        "build:web:stats": "nx build -c web --stats-json",
-        "watch": "nx build --watch --configuration development",
-        "test": "jest --coverage",
-        "i18n:extract": "ngx-translate-extract --input ./src --output src/i18n/en-GB.json --clean --sort --format json",
-        "i18n:languages": "node get-languages.mjs",
-        "analyze": "npx webpack-bundle-analyzer dist/liga-manager-ui/stats.json",
-        "lint": "nx lint",
-        "lint:fix": "nx lint --fix",
         "clean:dist": "rimraf ../capacitor/dist"
     },
     "jest": {

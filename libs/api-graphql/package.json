@@ -1,11 +1,13 @@
 {
     "name": "@liga-manager-api/graphql",
-    "version": "0.0.1",
+    "version": "5.4.39",
     "scripts": {
         "graphql-gen:api": "graphql-codegen --config codegenAPI.yml"
     },
     "peerDependencies": {
-        "@graphql-codegen/cli": "^5.0.7"
+        "@angular/core": "^19.2.14",
+        "@graphql-codegen/cli": "^5.0.7",
+        "apollo-angular": "^11.0.0"
     },
     "sideEffects": false
 }

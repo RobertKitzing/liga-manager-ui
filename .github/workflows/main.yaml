@@ -59,7 +59,12 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:web
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: liga-manager-ui-web
+          path: dist/apps/liga-manager-ui-web
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:
