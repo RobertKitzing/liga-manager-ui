@@ -3,7 +3,7 @@ volumes:
 
 services:
   nginx:
-    image: robertkitzing/liga-manager-ui:${UI_TAG}
+    image: ${UI_IMAGE}:${UI_TAG}
     ports:
       - "80:80"
     volumes:

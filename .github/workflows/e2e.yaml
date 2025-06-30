@@ -2,6 +2,10 @@ name: E2E Tests
 on:
   workflow_dispatch:
     inputs:
+      ui-image:
+        description: 'UI Image'
+        required: true
+        default: robertkitzing/liga-manager-ui
       ui-image-tag:
         description: 'Tag for the UI Image'
         required: true
@@ -18,6 +22,7 @@ jobs:
       - name: Start Services
         uses: hoverkraft-tech/compose-action@v2.2.0
         env:
+          UI_IMAGE: ${{ github.event.inputs.ui-image }}
           UI_TAG: ${{ github.event.inputs.ui-image-tag }}
           API_TAG: ${{ github.event.inputs.api-image-tag }}
         with:

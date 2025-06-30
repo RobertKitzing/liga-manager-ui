@@ -130,6 +130,10 @@
         "local": {
           "tags": ["liga-manager-ui-web:latest"],
           "push": false
+        },
+        "test": {
+          "tags": ["liga-manager-ui-web:test"],
+          "push": false
         }
       }
     }
