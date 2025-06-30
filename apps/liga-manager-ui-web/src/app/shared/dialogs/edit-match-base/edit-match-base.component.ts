@@ -12,7 +12,9 @@ import { Match, MatchDay } from '@liga-manager-api/graphql';
     imports: [TranslateModule, CommonModule, MatDialogModule],
 })
 export class EditMatchBaseComponent {
+
     @Input() data!: { match: Match; matchDay: MatchDay };
 
     @Input() actionsTemplate!: TemplateRef<unknown>;
+
 }

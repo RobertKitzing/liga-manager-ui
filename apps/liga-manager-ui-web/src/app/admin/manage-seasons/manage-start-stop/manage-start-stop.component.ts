@@ -13,6 +13,7 @@ import { APP_ROUTES, ADMIN_ROUTES } from '@liga-manager-ui';
     templateUrl: './manage-start-stop.component.html',
 })
 export class ManageStartStopComponent extends ManageSeasonBase {
+
     notificationService = inject(NotificationService);
 
     translateService = inject(TranslateService);
@@ -58,4 +59,5 @@ export class ManageStartStopComponent extends ManageSeasonBase {
             );
         }
     }
+
 }

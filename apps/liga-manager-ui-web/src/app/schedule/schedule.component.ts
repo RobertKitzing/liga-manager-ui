@@ -4,7 +4,7 @@ import { of, startWith, switchMap, tap } from 'rxjs';
 import { AuthenticationService, SeasonService } from '@liga-manager-ui/services';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,11 +40,10 @@ import { LocalStorage } from 'ngx-webstorage';
     ],
 })
 export class ScheduleComponent implements OnInit {
-    @LocalStorage('selectedMatchDayId', '0')
-    selectedMatchDayId!: string;
 
-    @LocalStorage('selectedTeamId', '0')
-    selectedTeamId!: string;
+    @LocalStorage('selectedMatchDayId', '0') selectedMatchDayId!: string;
+
+    @LocalStorage('selectedTeamId', '0') selectedTeamId!: string;
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment>(
         this.selectedSeasonLS,
@@ -114,10 +113,11 @@ export class ScheduleComponent implements OnInit {
     filterMatches(matches: any[]): any[] {
         return this.selectedTeamId !== '0'
             ? matches.filter(
-                  (x) =>
-                      x.guest_team.id === this.selectedTeamId ||
+                (x) =>
+                    x.guest_team.id === this.selectedTeamId ||
                       x.home_team.id === this.selectedTeamId,
-              )
+            )
             : matches;
     }
+
 }

@@ -1,0 +1,12 @@
+{
+    "name": "@liga-manager-api/graphql",
+    "version": "0.0.1",
+    "scripts": {
+        "graphql-gen:api": "graphql-codegen --config codegenAPI.yml"
+    },
+    "peerDependencies": {
+        "@angular/common": "^19.2.0",
+        "@angular/core": "^19.2.0"
+    },
+    "sideEffects": false
+}

@@ -1,0 +1,37 @@
+{
+    "name": "api-graphql",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/api-graphql/src",
+    "prefix": "lib",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/angular:ng-packagr-lite",
+            "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+            "options": {
+                "project": "libs/api-graphql/ng-package.json"
+            },
+            "dependsOn": ["codegen-generate"],
+            "configurations": {
+                "production": {
+                    "tsConfig": "libs/api-graphql/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "libs/api-graphql/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        },
+        "codegen-generate": {
+            "executor": "@nx-tools/nx-graphql-codegen:generate",
+            "cache": true,
+            "options": {
+                "config": "{projectRoot}/codegen.ts"
+            }
+        }
+    }
+}

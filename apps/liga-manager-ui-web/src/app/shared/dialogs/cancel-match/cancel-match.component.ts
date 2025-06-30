@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
     MatDialogRef,
@@ -35,14 +35,15 @@ import { EditMatchBaseComponent } from '../edit-match-base';
     ],
 })
 export class CancelMatchComponent {
+
     cancelMatchReason = new FormControl('', [
         Validators.required,
         Validators.maxLength(255),
     ]);
 
+    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
+
     constructor(
-        @Inject(MAT_DIALOG_DATA)
-        public data: { match: Match; matchDay: MatchDay },
         private notificationService: NotificationService,
         private dialogRef: MatDialogRef<CancelMatchComponent>,
         private matchService: MatchService,
@@ -72,4 +73,5 @@ export class CancelMatchComponent {
             // throw error
         }
     }
+
 }

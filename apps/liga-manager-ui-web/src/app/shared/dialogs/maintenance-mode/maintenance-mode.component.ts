@@ -10,7 +10,9 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './maintenance-mode.component.html',
 })
 export class MaintenanceModeComponent {
+
     reload() {
         window.location.reload();
     }
+
 }

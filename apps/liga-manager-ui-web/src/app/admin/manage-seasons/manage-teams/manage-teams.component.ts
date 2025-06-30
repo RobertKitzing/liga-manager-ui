@@ -20,6 +20,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     templateUrl: './manage-teams.component.html',
 })
 export class ManageTeamsComponent extends ManageSeasonBase {
+
     constructor(public teamService: TeamService) {
         super();
     }
@@ -41,4 +42,5 @@ export class ManageTeamsComponent extends ManageSeasonBase {
             //
         }
     }
+
 }

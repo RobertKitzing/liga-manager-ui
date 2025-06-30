@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import dayjs from 'dayjs';
-import { forkJoin, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
     CalendarGQL,
@@ -28,6 +28,7 @@ export interface IMatchDayEvent {
     providedIn: 'root',
 })
 export class CalendarService {
+
     constructor(
         private holidaysService: PublicHolidaysService,
         private calendarGQL: CalendarGQL,
@@ -98,4 +99,5 @@ export class CalendarService {
         return of(matchDays);
         // }
     }
+
 }

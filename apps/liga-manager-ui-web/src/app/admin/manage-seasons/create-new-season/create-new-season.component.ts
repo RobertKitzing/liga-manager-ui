@@ -38,6 +38,7 @@ import { firstValueFrom } from 'rxjs';
     templateUrl: './create-new-season.component.html',
 })
 export class CreateNewSeasonComponent {
+
     newName = new FormControl('', [Validators.required]);
 
     constructor(
@@ -61,4 +62,5 @@ export class CreateNewSeasonComponent {
             );
         }
     }
+
 }

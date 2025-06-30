@@ -36,14 +36,12 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './match.component.html',
 })
 export class MatchComponent {
-    @Input({ required: true })
-    match!: Match;
 
-    @Input({ required: true })
-    matchDay!: MatchDay;
+    @Input({ required: true }) match!: Match;
 
-    @Input()
-    markLooser = false;
+    @Input({ required: true }) matchDay!: MatchDay;
+
+    @Input() markLooser = false;
 
     constructor(
         private dialog: MatDialog,
@@ -114,4 +112,5 @@ export class MatchComponent {
             (this.match?.home_score || 0) < (this.match?.guest_score || 0)
         );
     }
+
 }

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -21,8 +21,9 @@ export interface SnackBarData {
     standalone: true,
 })
 export class SnackbarComponent {
-    constructor(
-        public snackBarRef: MatSnackBarRef<SnackbarComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData,
-    ) {}
+
+    snackBarRef = inject(MatSnackBarRef<SnackbarComponent>);
+
+    data = inject<SnackBarData>(MAT_SNACK_BAR_DATA);
+
 }

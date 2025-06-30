@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import {
-    AddTeamToSeasonGQL,
-    AddTeamToSeasonMutationVariables,
     AllTeamsGQL,
     CreateTeamGQL,
     DeleteTeamGQL,
@@ -24,6 +22,7 @@ import { AuthenticationService } from './authentication.service';
     providedIn: 'root',
 })
 export class TeamService {
+
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
         map((teams) => sortArrayBy(teams as Team[], 'name')),
@@ -131,4 +130,5 @@ export class TeamService {
     teamCompare(c1: Team, c2: Team) {
         return c1 && c2 && c1.id === c2.id;
     }
+
 }

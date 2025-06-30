@@ -13,11 +13,11 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './team-chooser.component.html',
 })
 export class TeamChooserComponent {
-    @Input({ required: true })
-    selectedTeamFC!: FormControl<Team | null>;
 
-    @Input()
-    teams!: Maybe<Team>[];
+    @Input({ required: true }) selectedTeamFC!: FormControl<Team | null>;
+
+    @Input() teams!: Maybe<Team>[];
 
     constructor(public teamService: TeamService) {}
+
 }

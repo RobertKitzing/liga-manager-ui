@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { AllSeasonsFragment, SeasonState } from '@liga-manager-api/graphql';
@@ -29,14 +29,14 @@ export type SeasonChooserModes =
     ],
 })
 export class SeasonChooserComponent {
-    @Input({ required: true })
-    selectedSeasonFC!: FormControl<AllSeasonsFragment | null | undefined>;
 
-    @Input()
-    filterSeasonStates: SeasonState[] = [];
+    @Input({ required: true }) selectedSeasonFC!: FormControl<AllSeasonsFragment | null | undefined>;
 
-    @Input()
-    clearable = false;
+    @Input() filterSeasonStates: SeasonState[] = [];
+
+    @Input() clearable = false;
+
+    seasonService = inject(SeasonService);
 
     SeasonState = SeasonState;
 
@@ -52,5 +52,4 @@ export class SeasonChooserComponent {
         ),
     );
 
-    constructor(public seasonService: SeasonService) {}
 }

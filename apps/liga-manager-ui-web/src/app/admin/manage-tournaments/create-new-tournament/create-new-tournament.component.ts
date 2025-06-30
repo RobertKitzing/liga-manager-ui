@@ -38,6 +38,7 @@ import { firstValueFrom } from 'rxjs';
     templateUrl: './create-new-tournament.component.html',
 })
 export class CreateNewTournamentComponent {
+
     newName = new FormControl('', [Validators.required]);
 
     constructor(
@@ -61,4 +62,5 @@ export class CreateNewTournamentComponent {
             );
         }
     }
+
 }

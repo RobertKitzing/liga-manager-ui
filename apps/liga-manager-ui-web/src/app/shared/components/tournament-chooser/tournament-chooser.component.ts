@@ -13,8 +13,9 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './tournament-chooser.component.html',
 })
 export class TournamentChooserComponent {
-    @Input({ required: true })
-    selectedTournamentFC!: FormControl<Tournament | null>;
+
+    @Input({ required: true }) selectedTournamentFC!: FormControl<Tournament | null>;
 
     constructor(public tournamentService: TournamentService) {}
+
 }

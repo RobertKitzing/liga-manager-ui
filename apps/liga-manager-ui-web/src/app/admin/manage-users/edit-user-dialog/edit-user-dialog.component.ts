@@ -47,6 +47,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
 })
 export class EditUserDialogComponent implements OnInit {
+
     UserRole = UserRole;
 
     searchTeam = new FormControl();
@@ -57,14 +58,14 @@ export class EditUserDialogComponent implements OnInit {
             !searchTerm
                 ? this.teamService.allTeams$
                 : this.teamService.allTeams$.pipe(
-                      map((t) =>
-                          t?.filter((x) =>
-                              x?.name
-                                  .toLocaleLowerCase()
-                                  .includes(searchTerm.toLocaleLowerCase()),
-                          ),
-                      ),
-                  ),
+                    map((t) =>
+                        t?.filter((x) =>
+                            x?.name
+                                .toLocaleLowerCase()
+                                .includes(searchTerm.toLocaleLowerCase()),
+                        ),
+                    ),
+                ),
         ),
     );
 
@@ -123,4 +124,5 @@ export class EditUserDialogComponent implements OnInit {
             this.dialogRef.close();
         }
     }
+
 }

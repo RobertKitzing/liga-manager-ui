@@ -14,6 +14,7 @@ const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
     providedIn: 'root',
 })
 export class AuthenticationService {
+
     @LocalStorage(ACCESS_TOKEN_KEY) accessToken?: string;
 
     user = signal<User | undefined>(undefined);
@@ -36,4 +37,5 @@ export class AuthenticationService {
         this.user.set(undefined);
         this.router.navigateByUrl('');
     }
+
 }

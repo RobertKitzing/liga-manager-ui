@@ -43,6 +43,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
     ],
 })
 export class EditMatchPitchComponent {
+
     newMatchPitch = new FormControl();
 
     filteredPitches = this.newMatchPitch.valueChanges.pipe(
@@ -53,10 +54,10 @@ export class EditMatchPitchComponent {
             return this.newMatchPitch.value &&
                 typeof this.newMatchPitch.value === 'string'
                 ? x?.filter((y) =>
-                      y?.label
-                          .toLowerCase()
-                          .includes(this.newMatchPitch.value.toLowerCase()),
-                  )
+                    y?.label
+                        .toLowerCase()
+                        .includes(this.newMatchPitch.value.toLowerCase()),
+                )
                 : x;
         }),
     );
@@ -90,4 +91,5 @@ export class EditMatchPitchComponent {
     displayPitch(pitch?: Pitch): string {
         return pitch ? pitch.label : '';
     }
+
 }

@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllSeasonsFragment, SeasonState } from '@liga-manager-api/graphql';
 import { SeasonChooserComponent } from '@liga-manager-ui/components';
 import { CreateNewSeasonComponent } from './create-new-season';
-import { of, startWith, switchMap, tap } from 'rxjs';
+import { startWith, tap } from 'rxjs';
 import { SeasonService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,6 +35,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     ],
 })
 export class ManageSeasonsComponent {
+
     MANAGE_SEASON_ROUTES = MANAGE_SEASON_ROUTES;
 
     SeasonState = SeasonState;
@@ -68,4 +69,5 @@ export class ManageSeasonsComponent {
     createSeason() {
         this.dialog.open(CreateNewSeasonComponent);
     }
+
 }

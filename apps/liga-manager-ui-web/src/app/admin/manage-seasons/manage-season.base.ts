@@ -8,6 +8,7 @@ import { ADMIN_ROUTES } from '../admin.routes.enum';
 import { sortArrayBy } from '@liga-manager-ui/utils';
 
 export class ManageSeasonBase {
+
     SeasonState = SeasonState;
 
     activatedRoute = inject(ActivatedRoute);
@@ -39,4 +40,5 @@ export class ManageSeasonBase {
             }
         }),
     );
+
 }

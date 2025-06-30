@@ -5,5 +5,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 export class LoadingIndicatorService {
+
     loading$ = new BehaviorSubject<boolean>(false);
+
 }

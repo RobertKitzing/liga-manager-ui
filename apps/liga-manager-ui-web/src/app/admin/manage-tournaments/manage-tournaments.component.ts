@@ -11,7 +11,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateNewTournamentComponent } from './create-new-tournament';
 import { TournamentService } from '@liga-manager-ui/services';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { of, startWith, switchMap, tap } from 'rxjs';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { LocalStorage } from 'ngx-webstorage';
@@ -39,8 +39,8 @@ const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
     ],
 })
 export class ManageTournamentsComponent {
-    @LocalStorage(SELECTED_MANAGE_TOURNAMENT_KEY)
-    manageTournament!: AllTournamentsFragment;
+
+    @LocalStorage(SELECTED_MANAGE_TOURNAMENT_KEY) manageTournament!: AllTournamentsFragment;
 
     selectedTournamentFC = new FormControl<Tournament | null>(
         this.manageTournament,
@@ -68,4 +68,5 @@ export class ManageTournamentsComponent {
     createTournament() {
         this.dialog.open(CreateNewTournamentComponent);
     }
+
 }

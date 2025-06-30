@@ -10,7 +10,9 @@ import { TeamLogoPipe } from '@liga-manager-ui/pipes';
     templateUrl: './team-contact.component.html',
 })
 export class TeamContactComponent {
+
     @Input() team!: Team;
 
     @Input() showTitle = true;
+
 }

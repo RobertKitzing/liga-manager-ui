@@ -21,6 +21,7 @@ import { HttpHeaders } from '@angular/common/http';
     providedIn: 'root',
 })
 export class UserService {
+
     allUsers$ = this.allUsersGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allUsers),
         map((teams) => {
@@ -149,4 +150,5 @@ export class UserService {
             new_password: newPassword,
         });
     }
+
 }

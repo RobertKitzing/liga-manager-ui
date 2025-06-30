@@ -8,8 +8,8 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 export class ThemeService {
-    @LocalStorage('APPEARANCE', DarkModeAppearance.system)
-    darkMode!: DarkModeAppearance;
+
+    @LocalStorage('APPEARANCE', DarkModeAppearance.system) darkMode!: DarkModeAppearance;
 
     @LocalStorage('THEME')
     private currentTheme?: string;
@@ -42,4 +42,5 @@ export class ThemeService {
             head.appendChild(style);
         }
     }
+
 }

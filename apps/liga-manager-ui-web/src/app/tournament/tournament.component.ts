@@ -29,8 +29,8 @@ import { TournamentService } from '@liga-manager-ui/services';
     standalone: true,
 })
 export class TournamentComponent {
-    @LocalStorage('TournamentComponent')
-    selectedTournamentLS!: AllTournamentsFragment;
+
+    @LocalStorage('TournamentComponent') selectedTournamentLS!: AllTournamentsFragment;
 
     selectedTournamentFC = new FormControl<Tournament | null>(
         this.selectedTournamentLS,
@@ -58,4 +58,5 @@ export class TournamentComponent {
     filterMatches(matches: Match[]) {
         return matches;
     }
+
 }

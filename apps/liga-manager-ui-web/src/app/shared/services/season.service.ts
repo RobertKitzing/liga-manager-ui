@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { firstValueFrom, map, tap } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import {
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
@@ -25,14 +25,12 @@ const SELECTED_MANAGE_SEASON_KEY = 'SELECTED_MANAGE_SEASON';
     providedIn: 'root',
 })
 export class SeasonService {
-    @LocalStorage(SELECTED_PROGRESS_SEASON_KEY)
-    progressSeason!: AllSeasonsFragment;
 
-    @LocalStorage(SELECTED_HISTORY_SEASON_KEY)
-    historySeason!: AllSeasonsFragment;
+    @LocalStorage(SELECTED_PROGRESS_SEASON_KEY) progressSeason!: AllSeasonsFragment;
 
-    @LocalStorage(SELECTED_MANAGE_SEASON_KEY)
-    manageSeason: Season | AllSeasonsFragment | undefined | null;
+    @LocalStorage(SELECTED_HISTORY_SEASON_KEY) historySeason!: AllSeasonsFragment;
+
+    @LocalStorage(SELECTED_MANAGE_SEASON_KEY) manageSeason: Season | AllSeasonsFragment | undefined | null;
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
         map((seasons) =>
@@ -177,4 +175,5 @@ export class SeasonService {
             ),
         );
     }
+
 }

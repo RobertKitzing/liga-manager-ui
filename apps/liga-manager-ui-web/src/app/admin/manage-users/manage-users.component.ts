@@ -30,6 +30,7 @@ import { defaultDialogConfig } from '@liga-manager-ui';
     ],
 })
 export class ManageUsersComponent {
+
     displayedColumns: string[] = ['email', 'action'];
 
     searchUser = new FormControl();
@@ -40,25 +41,25 @@ export class ManageUsersComponent {
             !searchTerm
                 ? this.userService.allUsers$
                 : this.userService.allUsers$.pipe(
-                      map((x) =>
-                          x?.filter(
-                              (y) =>
-                                  y?.email
-                                      .toLocaleLowerCase()
-                                      .includes(
-                                          searchTerm.toLocaleLowerCase(),
-                                      ) ||
-                                  y?.first_name
-                                      .toLocaleLowerCase()
-                                      .includes(
-                                          searchTerm.toLocaleLowerCase(),
-                                      ) ||
-                                  y?.last_name
-                                      .toLocaleLowerCase()
-                                      .includes(searchTerm.toLocaleLowerCase()),
-                          ),
-                      ),
-                  ),
+                    map((x) =>
+                        x?.filter(
+                            (y) =>
+                                y?.email
+                                    .toLocaleLowerCase()
+                                    .includes(
+                                        searchTerm.toLocaleLowerCase(),
+                                    ) ||
+                                y?.first_name
+                                    .toLocaleLowerCase()
+                                    .includes(
+                                        searchTerm.toLocaleLowerCase(),
+                                    ) ||
+                                y?.last_name
+                                    .toLocaleLowerCase()
+                                    .includes(searchTerm.toLocaleLowerCase()),
+                        ),
+                    ),
+                ),
         ),
     );
 
@@ -78,4 +79,5 @@ export class ManageUsersComponent {
     async sendPasswordMail(email: string) {
         await firstValueFrom(this.userService.sendPasswordMail(email));
     }
+
 }

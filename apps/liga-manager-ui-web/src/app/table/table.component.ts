@@ -49,6 +49,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     ],
 })
 export class TableComponent {
+
     displayedColumns: string[] = [
         'position',
         'logo',
@@ -96,32 +97,33 @@ export class TableComponent {
                     return [...(ranking?.positions || [])].sort((a, b) => {
                         const isAsc = sort.direction === 'asc';
                         switch (sort.active) {
-                            case 'sort_index':
-                                return this.compare(
-                                    a?.sort_index || 0,
-                                    b?.sort_index || 0,
-                                    isAsc,
-                                );
-                            case 'team_name':
-                                return this.compare(
-                                    a?.team.name || '',
-                                    b?.team.name || '',
-                                    isAsc,
-                                );
-                            case 'matches':
-                                return this.compare(
-                                    a?.matches || 0,
-                                    b?.matches || 0,
-                                    isAsc,
-                                );
-                            case 'goaldiff':
-                                const agd =
-                                    a?.scored_goals! - a?.conceded_goals!;
-                                const bgd =
-                                    b?.scored_goals! - b?.conceded_goals!;
-                                return this.compare(agd, bgd, isAsc);
-                            default:
-                                return 0;
+                        case 'sort_index':
+                            return this.compare(
+                                a?.sort_index || 0,
+                                b?.sort_index || 0,
+                                isAsc,
+                            );
+                        case 'team_name':
+                            return this.compare(
+                                a?.team.name || '',
+                                b?.team.name || '',
+                                isAsc,
+                            );
+                        case 'matches':
+                            return this.compare(
+                                a?.matches || 0,
+                                b?.matches || 0,
+                                isAsc,
+                            );
+                        case 'goaldiff': {
+                            const agd =
+                                a?.scored_goals - a?.conceded_goals;
+                            const bgd =
+                                b?.scored_goals - b?.conceded_goals;
+                            return this.compare(agd, bgd, isAsc);
+                        }
+                        default:
+                            return 0;
                         }
                     });
                 }),
@@ -162,4 +164,5 @@ export class TableComponent {
     compare(a: number | string, b: number | string, isAsc?: boolean) {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
+
 }

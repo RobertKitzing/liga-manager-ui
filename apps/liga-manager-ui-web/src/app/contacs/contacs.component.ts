@@ -37,6 +37,7 @@ import { SortByPipe } from '@liga-manager-ui/pipes';
     ],
 })
 export class ContacsComponent {
+
     searchTeam = new FormControl();
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment | null>(null);
@@ -61,8 +62,8 @@ export class ContacsComponent {
                     !searchTeam
                         ? teams
                         : teams?.filter((t) =>
-                              t?.name.toLowerCase().includes(searchTeam),
-                          ),
+                            t?.name.toLowerCase().includes(searchTeam),
+                        ),
                 ),
             );
         }),
@@ -83,4 +84,5 @@ export class ContacsComponent {
         private seasonService: SeasonService,
         private tournamentService: TournamentService,
     ) {}
+
 }

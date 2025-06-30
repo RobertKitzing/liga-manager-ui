@@ -6,6 +6,7 @@ import { SnackBarData, SnackbarComponent } from '@liga-manager-ui/components';
     providedIn: 'root',
 })
 export class NotificationService {
+
     defaultDuration = 6000;
 
     constructor(private snackBar: MatSnackBar) {}
@@ -44,4 +45,5 @@ export class NotificationService {
             ],
         });
     }
+
 }

@@ -9,6 +9,7 @@ type Enums = SeasonState | UserRole;
     name: 'enumTranslate',
 })
 export class EnumTranslatePipe implements PipeTransform {
+
     constructor(private translatePipe: TranslatePipe) {}
 
     transform(value: Enums): unknown {
@@ -17,18 +18,19 @@ export class EnumTranslatePipe implements PipeTransform {
 
     interpretValue(value: Enums): string {
         switch (value) {
-            case SeasonState.Ended:
-                return marker('SeasonState.Ended');
-            case SeasonState.Preparation:
-                return marker('SeasonState.Preparation');
-            case SeasonState.Progress:
-                return marker('SeasonState.Progress');
-            case UserRole.Admin:
-                return marker('UserRole.Admin');
-            case UserRole.TeamManager:
-                return marker('UserRole.TeamManager');
-            default:
-                throw new Error(`Unupported Enum Value ${value}`);
+        case SeasonState.Ended:
+            return marker('SeasonState.Ended');
+        case SeasonState.Preparation:
+            return marker('SeasonState.Preparation');
+        case SeasonState.Progress:
+            return marker('SeasonState.Progress');
+        case UserRole.Admin:
+            return marker('UserRole.Admin');
+        case UserRole.TeamManager:
+            return marker('UserRole.TeamManager');
+        default:
+            throw new Error(`Unupported Enum Value ${value}`);
         }
     }
+
 }

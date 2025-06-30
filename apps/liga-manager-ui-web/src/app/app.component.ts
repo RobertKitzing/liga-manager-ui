@@ -53,6 +53,7 @@ import { CypressSelectorDirective } from './shared/directives';
     ],
 })
 export class AppComponent implements OnInit {
+
     DarkModeAppearance = DarkModeAppearance;
 
     darkModeControl = new FormControl(this.themeService.darkMode);
@@ -127,4 +128,5 @@ export class AppComponent implements OnInit {
     languageCompare(c1: StoredLang, c2: StoredLang) {
         return c1 && c2 && c1.code === c2.code;
     }
+
 }

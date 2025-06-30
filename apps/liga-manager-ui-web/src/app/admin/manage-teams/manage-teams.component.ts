@@ -29,6 +29,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     ],
 })
 export class ManageTeamsComponent {
+
     displayedColumns: string[] = ['team', 'action'];
 
     newTeam = new FormControl('', [Validators.required]);
@@ -47,14 +48,14 @@ export class ManageTeamsComponent {
             !searchTerm
                 ? this.teamService.allTeams$
                 : this.teamService.allTeams$.pipe(
-                      map((x) =>
-                          x?.filter((y) =>
-                              y?.name
-                                  .toLocaleLowerCase()
-                                  .includes(searchTerm.toLocaleLowerCase()),
-                          ),
-                      ),
-                  ),
+                    map((x) =>
+                        x?.filter((y) =>
+                            y?.name
+                                .toLocaleLowerCase()
+                                .includes(searchTerm.toLocaleLowerCase()),
+                        ),
+                    ),
+                ),
         ),
     );
 
@@ -81,4 +82,5 @@ export class ManageTeamsComponent {
         );
         this.editTeamId = '';
     }
+
 }

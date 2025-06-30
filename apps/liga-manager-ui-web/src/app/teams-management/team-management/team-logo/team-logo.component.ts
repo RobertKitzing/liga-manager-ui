@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AuthenticationService,
@@ -19,6 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
     imports: [TranslateModule, AsyncPipe, MatButtonModule, MatIconModule],
 })
 export class TeamLogoComponent {
+
+    authenticationService = inject(AuthenticationService);
+
     imageSrc = '';
 
     team$ = this.activatedRoute.parent?.paramMap.pipe(
@@ -30,12 +33,11 @@ export class TeamLogoComponent {
         switchMap((teamId) => this.teamService.getTeamById(teamId)),
     );
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private teamService: TeamService,
-        private notificationService: NotificationService,
-        public authenticationService: AuthenticationService,
-    ) {}
+    private activatedRoute = inject(ActivatedRoute);
+
+    private teamService = inject(TeamService);
+
+    private notificationService = inject(NotificationService);
 
     reloadImage(teamId: string) {
         this.imageSrc = `/api/logos?teamId=${teamId}&timestamp=${Date.now()}`;
@@ -82,4 +84,5 @@ export class TeamLogoComponent {
         this.teamService.refetchTeamById(teamId);
         this.reloadImage(teamId);
     }
+
 }

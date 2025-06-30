@@ -14,6 +14,7 @@ import { map, tap } from 'rxjs';
     templateUrl: './hall-of-fame.component.html',
 })
 export class HallOfFameComponent {
+
     displayedColumns = ['logo', 'team', 'winnerCount'];
 
     winner!: {
@@ -109,4 +110,5 @@ export class HallOfFameComponent {
                 this.winner.filter((x) => x.winnerCount === thirdWinnerCount),
             );
     }
+
 }

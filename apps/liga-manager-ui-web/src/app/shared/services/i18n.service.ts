@@ -20,6 +20,7 @@ export function httpLoaderFactory(http: HttpClient) {
     providedIn: 'root',
 })
 export class I18nService {
+
     @LocalStorage(LANG_KEY) storedLang?: StoredLang;
 
     availableLang$ = this.httpClient.get<
@@ -59,4 +60,5 @@ export class I18nService {
     setTextDir(direction?: string) {
         this.document.body.dir = direction || 'ltr';
     }
+
 }

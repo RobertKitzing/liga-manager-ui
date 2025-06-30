@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { NotificationService, TeamService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
-import { firstValueFrom, map, of, switchMap, tap } from 'rxjs';
+import { firstValueFrom, map, switchMap, tap } from 'rxjs';
 
 @Component({
     selector: 'lima-team-contact',
@@ -27,6 +27,7 @@ import { firstValueFrom, map, of, switchMap, tap } from 'rxjs';
     templateUrl: './edit-team-contact.component.html',
 })
 export class EditTeamContactComponent {
+
     team$ = this.activatedRoute.parent?.paramMap.pipe(
         map((p) => p.get('teamId')!),
         switchMap((teamId) =>
@@ -76,4 +77,5 @@ export class EditTeamContactComponent {
             );
         }
     }
+
 }

@@ -33,6 +33,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     ],
 })
 export class AdminComponent {
+
     ADMIN_ROUTES = ADMIN_ROUTES;
 
     constructor(private router: Router) {}
@@ -41,4 +42,5 @@ export class AdminComponent {
         const url = this.router.url.split('/')[2];
         return `NAVIGATION.ADMIN.${url?.toUpperCase()}`;
     }
+
 }

@@ -37,7 +37,7 @@
             "accessibility": "no-public"
           }
         ],
-        "@typescript-eslint/member-ordering": "error",
+        "@typescript-eslint/member-ordering": "off",
         "curly": "error",
         "comma-dangle": [
           "error",

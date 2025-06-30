@@ -7,6 +7,7 @@ import { I18nService } from '@liga-manager-ui/services';
     providedIn: 'root',
 })
 export class CustomDateAdapter extends NativeDateAdapter {
+
     constructor(i18nService: I18nService, translateService: TranslateService) {
         super(i18nService.currentLang);
 
@@ -19,4 +20,5 @@ export class CustomDateAdapter extends NativeDateAdapter {
     override getFirstDayOfWeek(): number {
         return 1;
     }
+
 }

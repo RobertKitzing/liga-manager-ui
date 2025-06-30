@@ -13,6 +13,7 @@ import { LoadingIndicatorService } from '@liga-manager-ui/services';
     providedIn: 'root',
 })
 export class LoadingIndicatorHttpInterceptor implements HttpInterceptor {
+
     requestCounter = 0;
 
     constructor(public loadingIndicatorService: LoadingIndicatorService) {}
@@ -44,4 +45,5 @@ export class LoadingIndicatorHttpInterceptor implements HttpInterceptor {
             this.loadingIndicatorService.loading$.next(false);
         }
     }
+
 }

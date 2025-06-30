@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { iif, of, tap } from 'rxjs';
 import { AuthenticationService, TeamService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import {
-    RouterLinkActive,
-    RouterLink,
     RouterOutlet,
     Router,
-    ActivatedRoute,
 } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TeamChooserComponent } from '@liga-manager-ui/components';
-import { APP_ROUTES } from '@liga-manager-ui';
+import { APP_ROUTES } from '../app.routes.enum';
 import { LocalStorage } from 'ngx-webstorage';
 import { Team } from '@liga-manager-api/graphql';
 
@@ -32,8 +29,14 @@ import { Team } from '@liga-manager-api/graphql';
     ],
 })
 export class TeamsManagementComponent {
-    @LocalStorage()
-    selectedTeamLS!: Team | null;
+
+    private authenticationService = inject(AuthenticationService);
+
+    private teamService = inject(TeamService)
+
+    private router = inject(Router)
+
+    @LocalStorage() selectedTeamLS!: Team | null;
 
     selectedTeamFC = new FormControl<Team | null>(this.selectedTeamLS);
 
@@ -65,10 +68,4 @@ export class TeamsManagementComponent {
         }),
     );
 
-    constructor(
-        private authenticationService: AuthenticationService,
-        private teamService: TeamService,
-        private router: Router,
-        private route: ActivatedRoute,
-    ) {}
 }

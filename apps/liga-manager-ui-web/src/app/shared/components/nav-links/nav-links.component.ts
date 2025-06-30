@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { APP_ROUTES } from '@liga-manager-ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
@@ -18,7 +18,9 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     ],
 })
 export class NavLinksComponent {
+
     APP_ROUTES = APP_ROUTES;
 
-    constructor(public authenticationService: AuthenticationService) {}
+    authenticationService = inject(AuthenticationService);
+
 }

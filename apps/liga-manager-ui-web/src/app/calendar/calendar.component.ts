@@ -18,6 +18,7 @@ import { Subject, switchMap, tap } from 'rxjs';
     standalone: true,
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
+
     @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
     eventTrigger = new Subject<CalendarQueryVariables>();
@@ -66,4 +67,5 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             max_date: this.calendarApi.view.activeEnd,
         });
     }
+
 }

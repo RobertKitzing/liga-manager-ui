@@ -11,6 +11,7 @@ GlobalCacheConfig.storageStrategy = LocalStorageStrategy;
     providedIn: 'root',
 })
 export class PublicHolidaysService {
+
     constructor(private httpClient: HttpClient) {}
 
     @Cacheable({
@@ -42,4 +43,5 @@ export class PublicHolidaysService {
                 ),
             );
     }
+
 }

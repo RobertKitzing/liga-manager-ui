@@ -5,7 +5,8 @@ import { Directive, HostBinding, Input } from '@angular/core';
     selector: '[cySelector]',
 })
 export class CypressSelectorDirective {
+
     @HostBinding('attr.data-cy')
-    @Input()
-    cySelector?: CySelectors;
+    @Input() cySelector?: CySelectors;
+
 }

@@ -17,5 +17,7 @@ import { TEAM_MANAGEMENT_ROUTES } from '../teams-management.routes';
     ],
 })
 export class TeamManagementComponent {
+
     TEAM_MANAGEMENT_ROUTES = TEAM_MANAGEMENT_ROUTES;
+
 }

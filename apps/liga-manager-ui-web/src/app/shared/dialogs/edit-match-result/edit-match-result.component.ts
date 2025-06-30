@@ -40,6 +40,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     ],
 })
 export class EditMatchResultComponent {
+
     resultFormGroup = new FormGroup({
         home_score: new FormControl(this.data.match.home_score, [
             Validators.required,
@@ -76,4 +77,5 @@ export class EditMatchResultComponent {
             // throw error
         }
     }
+
 }
