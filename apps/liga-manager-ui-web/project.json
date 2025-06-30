@@ -1,0 +1,127 @@
+{
+  "name": "liga-manager-ui-web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/liga-manager-ui-web/src",
+  "prefix": "lima",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "none",
+      "skipTests": true
+    },
+    "@schematics/angular:class": {
+      "skipTests": true
+    },
+    "@schematics/angular:directive": {
+      "skipTests": true
+    },
+    "@schematics/angular:guard": {
+      "skipTests": true
+    },
+    "@schematics/angular:interceptor": {
+      "skipTests": true
+    },
+    "@schematics/angular:pipe": {
+      "skipTests": true
+    },
+    "@schematics/angular:resolver": {
+      "skipTests": true
+    },
+    "@schematics/angular:service": {
+      "skipTests": true
+    }
+  },
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "options": {
+        "outputPath": "dist/apps/liga-manager-ui-web",
+        "index": "apps/liga-manager-ui-web/src/index.html",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "apps/liga-manager-ui-web/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/liga-manager-ui-web/src/favicon.ico",
+          "apps/liga-manager-ui-web/src/assets",
+          "apps/liga-manager-ui-web/src/i18n",
+          {
+            "glob": "**/*.js",
+            "input": "apps/liga-manager-ui-web/node_modules/@angular/common/locales",
+            "output": "/assets/locales"
+          }
+        ],
+        "styles": [
+          "apps/liga-manager-ui-web/src/styles.scss",
+          {
+            "input": "apps/liga-manager-ui-web/src/themes/default.scss",
+            "inject": false
+          },
+          {
+            "input": "apps/liga-manager-ui-web/src/themes/gondi.scss",
+            "inject": false
+          },
+          {
+            "input": "apps/liga-manager-ui-web/src/themes/werder.scss",
+            "inject": false
+          }
+        ],
+        "scripts": [],
+        "browser": "apps/liga-manager-ui-web/src/main.ts"
+      },
+      "configurations": {
+        "web": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "web",
+      "outputs": [
+        "{options.outputPath}"
+      ]
+    },
+    "serve": {
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "liga-manager-ui-web:build:production",
+          "host": "0.0.0.0",
+          "proxyConfig": "{projectRoot}/proxy.conf.json"
+        },
+        "development": {
+          "buildTarget": "liga-manager-ui-web:build:development",
+          "host": "0.0.0.0",
+          "proxyConfig": "{projectRoot}/proxy.conf.json"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/liga-manager-ui-web/**/*.ts",
+          "apps/liga-manager-ui-web/**/*.html"
+        ]
+      }
+    }
+  }
+}

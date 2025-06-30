@@ -103,6 +103,7 @@
         "@angular/build": "^19.2.15",
         "@angular/cli": "~19.2.15",
         "@angular/compiler-cli": "^19.2.14",
+        "@nx-tools/nx-container": "^6.8.0",
         "@nx/angular": "21.2.1",
         "@nx/eslint": "21.2.1",
         "@nx/js": "21.2.1",

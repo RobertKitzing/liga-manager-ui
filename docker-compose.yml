@@ -22,7 +22,7 @@ services:
     volumes:
       - .:/liga-manager-ui
     working_dir: /liga-manager-ui
-    command: npx nx run liga-manager-ui:serve:development
+    command: npx nx run liga-manager-ui-web:serve:development
 
   api:
     image: mklocke/liga-manager-api:latest

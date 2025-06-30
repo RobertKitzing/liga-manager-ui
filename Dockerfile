@@ -1,16 +1,3 @@
-###################
-# UI
-###################
-
-FROM node:lts-alpine as ui-builder
-
-WORKDIR /ui
-
-COPY frontend .
-
-RUN npm ci
-RUN npm run build:web
-
 ####################
 ## PRODUCTION
 ####################
@@ -18,5 +5,5 @@ RUN npm run build:web
 FROM nginx:stable-alpine-slim As production
 RUN apk add certbot certbot-nginx --no-cache
 
-COPY --from=ui-builder /ui/dist/liga-manager-ui/browser /ui
+COPY /dist/apps/liga-manager-ui-web/browser /ui
 COPY ./nginx.ui.conf /nginx-ui/nginx.ui.conf
