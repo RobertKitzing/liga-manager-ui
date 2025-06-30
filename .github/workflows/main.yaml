@@ -23,7 +23,9 @@ jobs:
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
-      - run: npm ci
+      - name: npm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v4
