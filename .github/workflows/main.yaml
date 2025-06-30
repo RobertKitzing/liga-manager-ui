@@ -18,6 +18,11 @@ jobs:
           node-version: 22
           cache: 'npm'
           cache-dependency-path: package-lock.json
+      - uses: actions/cache/restore@v4
+        id: cache_restore
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm ci
       - name: Cache dependencies
         id: cache
@@ -27,6 +32,9 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ['liga-manager-ui-web']
     needs: 
       - npm-install
     steps:
@@ -35,7 +43,7 @@ jobs:
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
-      - run: npx nx affected --target=lint --parallel=true
+      - run: npx nx run ${{ matrix.project }}:lint
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:
