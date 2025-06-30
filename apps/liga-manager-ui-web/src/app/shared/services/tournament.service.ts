@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
     AllTournamentListGQL,
     CreateTournamentGQL,
@@ -14,19 +14,20 @@ import { sortArrayBy } from '../utils';
 })
 export class TournamentService {
 
+    private allTournamentListGQL = inject(AllTournamentListGQL);
+
+    private createTournamentGQL = inject(CreateTournamentGQL);
+
+    private deleteTournamentGQL = inject(DeleteTournamentGQL);
+
+    private tournamentByIdGQL = inject(TournamentByIdGQL);
+
     allTournaments$ = this.allTournamentListGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTournaments),
         map((tournaments) =>
             sortArrayBy(tournaments as Tournament[], 'name', 'desc'),
         ),
     );
-
-    constructor(
-        private allTournamentListGQL: AllTournamentListGQL,
-        private createTournamentGQL: CreateTournamentGQL,
-        private deleteTournamentGQL: DeleteTournamentGQL,
-        private tournamentByIdGQL: TournamentByIdGQL,
-    ) {}
 
     createTournament(name: string) {
         return this.createTournamentGQL.mutate(

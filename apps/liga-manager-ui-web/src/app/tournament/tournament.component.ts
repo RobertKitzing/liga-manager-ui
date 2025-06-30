@@ -1,7 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllTournamentsFragment, Match, Tournament } from '@liga-manager-api/graphql';
 import {
@@ -32,6 +31,8 @@ export class TournamentComponent {
 
     @LocalStorage('TournamentComponent') selectedTournamentLS!: AllTournamentsFragment;
 
+    tournamentService = inject(TournamentService)
+
     selectedTournamentFC = new FormControl<Tournament | null>(
         this.selectedTournamentLS,
     );
@@ -49,11 +50,6 @@ export class TournamentComponent {
                 : of(null),
         ),
     );
-
-    constructor(
-        public tournamentService: TournamentService,
-        private dialog: MatDialog,
-    ) {}
 
     filterMatches(matches: Match[]) {
         return matches;

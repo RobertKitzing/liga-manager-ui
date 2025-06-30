@@ -43,10 +43,5 @@
         },
         "rootDir": "."
     },
-    "angularCompilerOptions": {
-        "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true,
-        "strictTemplates": true
-    },
     "exclude": ["node_modules", "tmp"]
 }

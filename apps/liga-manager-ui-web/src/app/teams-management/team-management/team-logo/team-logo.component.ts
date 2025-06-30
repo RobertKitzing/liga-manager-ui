@@ -22,6 +22,12 @@ export class TeamLogoComponent {
 
     authenticationService = inject(AuthenticationService);
 
+    private activatedRoute = inject(ActivatedRoute);
+
+    private teamService = inject(TeamService);
+
+    private notificationService = inject(NotificationService);
+
     imageSrc = '';
 
     team$ = this.activatedRoute.parent?.paramMap.pipe(
@@ -32,12 +38,6 @@ export class TeamLogoComponent {
         }),
         switchMap((teamId) => this.teamService.getTeamById(teamId)),
     );
-
-    private activatedRoute = inject(ActivatedRoute);
-
-    private teamService = inject(TeamService);
-
-    private notificationService = inject(NotificationService);
 
     reloadImage(teamId: string) {
         this.imageSrc = `/api/logos?teamId=${teamId}&timestamp=${Date.now()}`;

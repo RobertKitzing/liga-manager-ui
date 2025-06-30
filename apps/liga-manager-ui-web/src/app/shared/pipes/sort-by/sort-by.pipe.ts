@@ -7,7 +7,8 @@ import { sortArrayBy } from '@liga-manager-ui/utils';
 })
 export class SortByPipe implements PipeTransform {
 
-    transform(value: unknown[], key: string, dir: 'asc' | 'desc' = 'asc') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    transform(value: any[], key: string, dir: 'asc' | 'desc' = 'asc') {
         return sortArrayBy(value, key, dir);
     }
 

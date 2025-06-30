@@ -47,6 +47,19 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
       - run: npx nx-cloud record -- nx run ${{ matrix.project }}:lint
+  build:
+    runs-on: ubuntu-latest
+    needs: 
+      - npm-install
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        id: cache
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - uses: nrwl/nx-set-shas@v4
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:web
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:

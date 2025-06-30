@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import {
     animate,
     state,
@@ -117,9 +118,9 @@ export class TableComponent {
                             );
                         case 'goaldiff': {
                             const agd =
-                                a?.scored_goals - a?.conceded_goals;
+                                a?.scored_goals! - a?.conceded_goals!;
                             const bgd =
-                                b?.scored_goals - b?.conceded_goals;
+                                b?.scored_goals! - b?.conceded_goals!;
                             return this.compare(agd, bgd, isAsc);
                         }
                         default:

@@ -7,13 +7,17 @@ const config: CodegenConfig = {
     generates: {
         'libs/api-graphql/src/gen/graphql.ts': {
             config: {
+                content: [
+                    "/* eslint-disable */",
+                    "/* GENERATED DO NOT EDIT */",
+                ],
                 flattenGeneratedTypes: true,
                 flattenGeneratedTypesIncludeFragments: true,
                 skipTypeNameForRoot: true,
                 preResolveTypes: false,
-                addExplicitOverride: true,
             },
             plugins: [
+                'add',
                 'typescript',
                 'typescript-operations',
                 'typescript-apollo-angular',

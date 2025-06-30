@@ -38,7 +38,7 @@ import { SortByPipe } from '@liga-manager-ui/pipes';
 })
 export class ContacsComponent {
 
-    searchTeam = new FormControl();
+    searchTeam = new FormControl<string | null>(null);
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment | null>(null);
 
