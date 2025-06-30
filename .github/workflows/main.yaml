@@ -30,6 +30,11 @@ jobs:
     needs: 
       - npm-install
     steps:
+      - uses: actions/cache/restore@v4
+        id: cache
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npx nx affected --target=lint --parallel=true
   # e2e:
   #   runs-on: ubuntu-latest
