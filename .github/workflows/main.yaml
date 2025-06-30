@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ['liga-manager-ui-web']
+        project: ['liga-manager-ui-web', 'api-graphql']
     needs: 
       - npm-install
     steps:

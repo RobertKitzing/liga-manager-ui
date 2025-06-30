@@ -12,7 +12,6 @@
             "options": {
                 "project": "libs/api-graphql/ng-package.json"
             },
-            "dependsOn": ["codegen-generate"],
             "configurations": {
                 "production": {
                     "tsConfig": "libs/api-graphql/tsconfig.lib.prod.json"
