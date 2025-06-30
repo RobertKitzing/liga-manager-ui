@@ -7,6 +7,7 @@ on:
 
 env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
   npm-install:
@@ -23,9 +24,7 @@ jobs:
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
-      - name: npm install
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+      - run: npm ci
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v4
@@ -45,6 +44,8 @@ jobs:
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
+      - uses: nrwl/nx-set-shas@v4
+      - run: npx nx-cloud record -- nx format:check
       - run: npx nx run ${{ matrix.project }}:lint
   # e2e:
   #   runs-on: ubuntu-latest
