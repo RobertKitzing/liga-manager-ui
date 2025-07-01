@@ -24,25 +24,27 @@
         } }
     </div>
     @if (season.state === SeasonState.Preparation) {
-    <div>
-        <div class="flex items-center">
-            <h1 translate>ALL_TEAMS</h1>
+        <div>
+            <div class="flex items-center">
+                <h1 translate>ALL_TEAMS</h1>
+            </div>
+            @for (team of teamService.allTeams$ | async; track team) {
+                @if (team) {
+                    <div class="flex items-center m-3">
+                        <button
+                            mat-icon-button
+                            (click)="
+                                addTeamToSeason({ team_id: team.id, season_id: season.id })
+                            "
+                            cySelector="button-add-team-to-season"
+                        >
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                        <p>{{ team.name }}</p>
+                    </div>
+                }
+            }
         </div>
-        @for (team of teamService.allTeams$ | async; track team) { @if (team) {
-        <div class="flex items-center m-3">
-            <button
-                mat-icon-button
-                (click)="
-                    addTeamToSeason({ team_id: team.id, season_id: season.id })
-                "
-                cySelector="button-add-team-to-season"
-            >
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <p>{{ team.name }}</p>
-        </div>
-        } }
-    </div>
     }
 </div>
 }

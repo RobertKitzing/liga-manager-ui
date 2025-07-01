@@ -7,7 +7,12 @@
             "default",
             "!{projectRoot}/.eslintrc.json",
             "!{projectRoot}/eslint.config.cjs",
-            "!{projectRoot}/eslint.config.mjs"
+            "!{projectRoot}/eslint.config.mjs",
+            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+            "!{projectRoot}/tsconfig.spec.json",
+            "!{projectRoot}/jest.config.[jt]s",
+            "!{projectRoot}/src/test-setup.[jt]s",
+            "!{projectRoot}/test-setup.[jt]s"
         ]
     },
     "targetDefaults": {
@@ -23,6 +28,21 @@
                 "{workspaceRoot}/eslint.config.cjs"
             ],
             "cache": true
+        },
+        "test": {
+            "inputs": [
+                "default",
+                "{workspaceRoot}/tsconfig.json",
+                "{workspaceRoot}/tsconfig.spec.json"
+            ],
+            "cache": true,
+            "configurations": {
+                "ci": {},
+                "watch": {
+                    "watch": true
+                }
+            },
+            "defaultConfiguration": "ci"
         },
         "@nx/eslint:lint": {
             "cache": true,
@@ -53,6 +73,12 @@
             "options": {
                 "defaultEngine": "docker",
                 "defaultRegistry": "docker.io"
+            }
+        },
+        {
+            "plugin": "@nx/jest/plugin",
+            "options": {
+                "targetName": "test"
             }
         }
     ],

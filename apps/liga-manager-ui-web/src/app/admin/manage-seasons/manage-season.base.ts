@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeasonState, Team } from '@liga-manager-api/graphql';
 import { APP_ROUTES } from '@liga-manager-ui';
-import { SeasonService } from '@liga-manager-ui/services';
+import { SeasonService, TeamService } from '@liga-manager-ui/services';
 import { map, switchMap, tap } from 'rxjs';
 import { ADMIN_ROUTES } from '../admin.routes.enum';
 import { sortArrayBy } from '@liga-manager-ui/utils';
@@ -14,6 +14,8 @@ export class ManageSeasonBase {
     activatedRoute = inject(ActivatedRoute);
 
     seasonService = inject(SeasonService);
+
+    teamService = inject(TeamService);
 
     router = inject(Router);
 

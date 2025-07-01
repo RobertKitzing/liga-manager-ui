@@ -13,7 +13,7 @@ import {
     UpdateTeamContactMutationVariables,
 } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
-import { sortArrayBy } from '../utils';
+import { sortArrayBy } from '@liga-manager-ui/utils';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';

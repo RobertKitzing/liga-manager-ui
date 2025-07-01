@@ -7,7 +7,7 @@ import {
     TournamentByIdGQL,
 } from '@liga-manager-api/graphql';
 import { map } from 'rxjs';
-import { sortArrayBy } from '../utils';
+import { sortArrayBy } from '@liga-manager-ui/utils';
 
 @Injectable({
     providedIn: 'root',

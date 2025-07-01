@@ -2,11 +2,10 @@ import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TeamService } from '@liga-manager-ui/services';
 import { ManageSeasonBase } from '../manage-season.base';
 import { firstValueFrom } from 'rxjs';
 import { AddTeamToSeasonMutationVariables } from '@liga-manager-api/graphql';
-import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { CypressSelectorDirective } from '../../../shared/directives/cypress-selector/cypress-selector.directive';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -20,10 +19,6 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
     templateUrl: './manage-teams.component.html',
 })
 export class ManageTeamsComponent extends ManageSeasonBase {
-
-    constructor(public teamService: TeamService) {
-        super();
-    }
 
     async addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
         try {

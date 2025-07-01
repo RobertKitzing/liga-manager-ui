@@ -37,9 +37,7 @@
             "@liga-manager-ui/services": [
                 "apps/liga-manager-ui-web/src/app/shared/services/index.ts"
             ],
-            "@liga-manager-ui/utils": [
-                "apps/liga-manager-ui-web/src/app/shared/utils/index.ts"
-            ]
+            "@liga-manager-ui/utils": ["libs/utils/src/index.ts"]
         },
         "rootDir": "."
     },
