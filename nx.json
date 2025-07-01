@@ -64,6 +64,9 @@
             "cache": true,
             "dependsOn": ["^build"],
             "inputs": ["production", "^production"]
+        },
+        "@nx/angular:application": {
+            "dependsOn": ["^build"]
         }
     },
     "nxCloudId": "6861932c17c61a0a6cc469c3",
@@ -85,10 +88,10 @@
     "generators": {
         "@nx/angular:library": {
             "linter": "eslint",
-            "unitTestRunner": "none"
+            "unitTestRunner": "jest"
         },
         "@nx/angular:component": {
-            "style": "css"
+            "style": "scss"
         }
     }
 }

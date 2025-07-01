@@ -33,8 +33,9 @@
   },
   "targets": {
     "build": {
-      "executor": "@angular/build:application",
+      "executor": "@nx/angular:application",
       "dependsOn": [
+        "^build",
         "i18n-extract",
         "i18n-languages"
       ],
@@ -71,7 +72,8 @@
           }
         ],
         "scripts": [],
-        "browser": "apps/liga-manager-ui-web/src/main.ts"
+        "browser": "apps/liga-manager-ui-web/src/main.ts",
+        "buildLibsFromSource": false
       },
       "configurations": {
         "production": {
@@ -102,7 +104,7 @@
       ]
     },
     "serve": {
-      "executor": "@angular/build:dev-server",
+      "executor": "@nx/angular:dev-server",
       "configurations": {
         "development": {
           "buildTarget": "liga-manager-ui-web:build:development",
