@@ -1,29 +1,35 @@
 {
   "name": "liga-manager-ui",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "./node_modules/nx/schemas/project-schema.json",
   "targets": {
     "serve": {
-        "command": "docker compose up"
+      "command": "docker compose up"
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",
-      "dependsOn": ["build:production"],
+      "dependsOn": [
+        "build:production"
+      ],
       "defaultConfiguration": "local",
-       "options": {
+      "options": {
         "engine": "docker",
         "context": ".",
         "file": "Dockerfile"
       },
       "configurations": {
         "local": {
-          "tags": ["liga-manager-ui-web:latest"],
+          "tags": [
+            "liga-manager-ui-web:latest"
+          ],
           "push": false
         },
         "test": {
-          "tags": ["liga-manager-ui-web:test"],
+          "tags": [
+            "liga-manager-ui-web:test"
+          ],
           "push": false
         }
       }
-    },
+    }
   }
 }
