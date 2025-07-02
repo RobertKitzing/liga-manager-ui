@@ -5,19 +5,21 @@ import {
     MAT_SNACK_BAR_DATA,
     MatSnackBarRef,
 } from '@angular/material/snack-bar';
+import { CypressSelectorDirective } from '../../directives/cypress-selector/cypress-selector.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 export interface SnackBarData {
     title: string;
     messages: string[];
     type: 'warn' | 'success';
+    cySelector: CySelectors;
 }
 
 @Component({
     selector: 'lima-snackbar',
     templateUrl: './snackbar.component.html',
     styleUrls: [],
-    imports: [TranslateModule, MatDividerModule, MatIconModule],
+    imports: [TranslateModule, MatDividerModule, MatIconModule, CypressSelectorDirective],
     standalone: true,
 })
 export class SnackbarComponent {

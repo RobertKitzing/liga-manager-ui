@@ -54,6 +54,8 @@ export class CreateNewSeasonComponent {
             );
             this.notificationService.showSuccessNotification(
                 marker('CREATE_SEASON_SUCCESS'),
+                [],
+                'snackbar-success-create-season',
             );
             this.dialog.closeAll();
         } catch (_error) {

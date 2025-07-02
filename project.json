@@ -23,9 +23,9 @@
           ],
           "push": false
         },
-        "test": {
+        "e2e": {
           "tags": [
-            "liga-manager-ui-web:test"
+            "liga-manager-ui-web:e2e"
           ],
           "push": false
         }

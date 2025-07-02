@@ -54,6 +54,8 @@ export class CreateNewTournamentComponent {
             );
             this.notificationService.showSuccessNotification(
                 marker('CREATE_TOURNAMENT_SUCCESS'),
+                [],
+                'snackbar-success-create-tournament',
             );
             this.dialog.closeAll();
         } catch (_error) {

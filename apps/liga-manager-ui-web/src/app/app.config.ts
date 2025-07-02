@@ -4,7 +4,7 @@ import {
     inject,
     provideAppInitializer,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withDebugTracing } from '@angular/router';
 import { routes } from './app.routes';
 import {
     TranslateLoader,
@@ -59,7 +59,10 @@ export const appConfig: ApplicationConfig = {
     providers: [
         DatePipe,
         TranslatePipe,
-        provideRouter(routes),
+        provideRouter(
+            routes,
+            withDebugTracing(),
+        ),
         provideNgxWebstorage(withLocalStorage()),
         provideApollo(apolloFactory),
         importProvidersFrom(

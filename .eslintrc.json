@@ -12,6 +12,7 @@
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
+                "quotes": ["error", "single"],
                 "indent": ["error", 4],
                 "padded-blocks": [
                     "error",
@@ -71,7 +72,7 @@
                     "error",
                     {
                         "enforceBuildableLibDependency": true,
-                        "allow": [],
+                        "allow": ["@cypress"],
                         "depConstraints": [
                             {
                                 "sourceTag": "*",

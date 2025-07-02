@@ -14,15 +14,15 @@ services:
     depends_on:
       - api
 
-  dev-ui:
-    image: node:lts-alpine
-    user: 1000:1000
-    ports:
-      - "4200:4200"
-    volumes:
-      - .:/liga-manager-ui
-    working_dir: /liga-manager-ui
-    command: npx nx run liga-manager-ui-web:serve:development
+  # dev-ui:
+  #   image: node:lts-alpine
+  #   user: 1000:1000
+  #   ports:
+  #     - "4200:4200"
+  #   volumes:
+  #     - .:/liga-manager-ui
+  #   working_dir: /liga-manager-ui
+  #   command: npx nx run liga-manager-ui-web:serve:development
 
   api:
     image: mklocke/liga-manager-api:latest

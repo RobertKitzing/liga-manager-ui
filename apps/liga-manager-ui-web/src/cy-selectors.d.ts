@@ -34,4 +34,7 @@ type CySelectors =
     | 'route-table'
     | 'route-teams_management'
     | 'route-tournament'
-    | 'select-season';
+    | 'select-season'
+    | 'snackbar-success-create-tournament'
+    | 'snackbar-success-create-season'
+;

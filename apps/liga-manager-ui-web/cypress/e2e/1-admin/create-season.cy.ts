@@ -1,23 +1,21 @@
-import * as enGB from '@lima-i18n/en-GB.json';
-import { Users } from 'cypress/support/values';
-import { Seasons } from 'cypress/support/values/seasons';
+import { Users, Seasons } from '@cypress/fixtures';
 
 describe('Admin - Create Season', () => {
 
     beforeEach(
         () => {
             cy.login(Users.admin.username, Users.admin.password);
-            cy.visit(`/`)
+            cy.visit('/')
             cy.getBySel('route-admin').first().click();
             cy.getBySel('route-admin-seasons').first().click();
-        }
+        },
     )
 
     it('Should create a season', () => {
         cy.getBySel('button-create-season').click();
         cy.getBySel('input-create-season-name').type(Seasons[0].name);
         cy.getBySel('button-create-season-submit').click();
-        cy.contains(enGB['CREATE_SEASON_SUCCESS']).should('exist');
+        cy.getBySel('snackbar-success-create-season').should('exist');
     })
 
     it('should select-season a season', () => {

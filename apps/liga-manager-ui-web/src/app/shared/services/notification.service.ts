@@ -11,15 +11,16 @@ export class NotificationService {
 
     constructor(private snackBar: MatSnackBar) {}
 
-    showSuccessNotification(title: string, messages?: string[]) {
-        this.showNotification(title, messages, 'success');
+    showSuccessNotification(title: string, messages?: string[], cySelector?: CySelectors) {
+        this.showNotification(title, messages, 'success', cySelector);
     }
 
-    showErrorNotification(title: string, messages?: string[]) {
+    showErrorNotification(title: string, messages?: string[], cySelector?: CySelectors) {
         this.showNotification(
             title,
             messages,
             'error',
+            cySelector,
             this.defaultDuration * 200,
         );
     }
@@ -28,6 +29,7 @@ export class NotificationService {
         title: string,
         messages?: string[],
         type?: 'error' | 'success',
+        cySelector?: CySelectors,
         duration?: number,
     ) {
         this.snackBar.openFromComponent(SnackbarComponent, {
@@ -35,13 +37,14 @@ export class NotificationService {
                 title,
                 messages,
                 type,
+                cySelector,
             } as SnackBarData,
             duration: duration || this.defaultDuration,
             panelClass: [
                 `mat-sys-${type}`,
-                `border-2`,
-                `dark:border-toolbardark`,
-                `rounded`,
+                'border-2',
+                'dark:border-toolbardark',
+                'rounded',
             ],
         });
     }

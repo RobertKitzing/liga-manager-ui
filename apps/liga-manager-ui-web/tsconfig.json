@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "skipLibCheck": true,
-        "moduleResolution": "bundler",
+        "moduleResolution": "node10",
         "isolatedModules": true
     },
     "angularCompilerOptions": {
@@ -16,6 +16,6 @@
     "references": [
         {
             "path": "./tsconfig.app.json"
-        },
+        }
     ]
 }

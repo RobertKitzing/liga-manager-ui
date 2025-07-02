@@ -1,13 +1,13 @@
 {
     "/api/*": {
-        "target": "http://nginx:80",
+        "target": "http://localhost:80",
         "secure": false,
         "changeOrigin": true
     },
     "/appsettings.json": {
-        "target": "http://nginx:80"
+        "target": "http://localhost:80"
     },
     "/logos/*": {
-        "target": "http://nginx:80"
+        "target": "http://localhost:80"
     }
 }
