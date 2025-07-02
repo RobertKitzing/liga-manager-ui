@@ -22,12 +22,6 @@
             "liga-manager-ui-web:local"
           ],
           "push": false
-        },
-        "e2e": {
-          "tags": [
-            "liga-manager-ui-web:e2e"
-          ],
-          "push": false
         }
       }
     }

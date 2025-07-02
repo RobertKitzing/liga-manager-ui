@@ -93,17 +93,36 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-      - run: npx nx-cloud record -- nx run liga-manager-ui:container:e2e
+      - run: nx run liga-manager-ui-web:build:production
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          context: .
+          load: true
+          tags: ${{ env.DOCKER_REPO_UI }}:e2e
       - name: Start Services
         uses: hoverkraft-tech/compose-action@v2.2.0
         env:
-          UI_IMAGE: 'liga-manager-ui'
+          UI_IMAGE: ${{ env.DOCKER_REPO_UI }}
           UI_TAG: 'e2e'
           API_TAG: 'latest'
         with:
           compose-file: "./docker-compose.e2e.yml"
       - name: Add Admin user
         run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_baseUrl: http://localhost
+        with:
+          record: true
+          browser: chrome
+          working-directory: apps/liga-manager-ui-web
+      - name: Save docker image
+        run: docker save ${{ env.DOCKER_REPO_UI }}:e2e | gzip > /tmp/lima.tar
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:
