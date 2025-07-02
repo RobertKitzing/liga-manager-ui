@@ -61,7 +61,6 @@ export const appConfig: ApplicationConfig = {
         TranslatePipe,
         provideRouter(
             routes,
-            withDebugTracing(),
         ),
         provideNgxWebstorage(withLocalStorage()),
         provideApollo(apolloFactory),

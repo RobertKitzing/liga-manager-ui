@@ -10,11 +10,6 @@ export default defineConfig({
         video: true,
         ...nxE2EPreset(__filename, {
             cypressDir: 'cypress',
-            webServerCommands: {
-                default: 'nx run liga-manager-ui-web:serve',
-            },
-            ciWebServerCommand: '',
-            ciBaseUrl: 'http://localhost',
         }),
     },
 });

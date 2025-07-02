@@ -12,7 +12,7 @@ export class NotificationService {
     constructor(private snackBar: MatSnackBar) {}
 
     showSuccessNotification(title: string, messages?: string[], cySelector?: CySelectors) {
-        this.showNotification(title, messages, 'success', cySelector);
+        this.showNotification(title, messages, 'success', cySelector, this.defaultDuration);
     }
 
     showErrorNotification(title: string, messages?: string[], cySelector?: CySelectors) {

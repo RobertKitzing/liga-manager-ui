@@ -93,7 +93,6 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
       - name: Build
         uses: docker/build-push-action@v5
         with:
@@ -114,14 +113,15 @@ jobs:
         run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
-          record: true
-          browser: chrome
-          command: npx nx-cloud record -- nx run liga-manager-ui-web:e2e
+          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}"
       - name: Save docker image
         run: docker save ${{ env.DOCKER_REPO_UI }}:e2e | gzip > /tmp/lima.tar
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lima-img
+          path: /tmp/lima.tar
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:
