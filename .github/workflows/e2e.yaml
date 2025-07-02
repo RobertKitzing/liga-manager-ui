@@ -26,7 +26,7 @@ jobs:
           UI_TAG: ${{ github.event.inputs.ui-image-tag }}
           API_TAG: ${{ github.event.inputs.api-image-tag }}
         with:
-          compose-file: "./apps/e2e/docker-compose.yml"
+          compose-file: "./docker-compose.e2e.yml"
       - name: Add Admin user
         run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
       - name: Cypress run
