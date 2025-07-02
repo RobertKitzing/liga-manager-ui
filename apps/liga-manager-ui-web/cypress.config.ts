@@ -14,6 +14,7 @@ export default defineConfig({
                 default: 'nx run liga-manager-ui-web:serve',
             },
             ciWebServerCommand: '',
+            ciBaseUrl: 'http://localhost',
         }),
     },
 });

@@ -76,11 +76,6 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: liga-manager-ui-web
-          path: dist/apps/liga-manager-ui-web
   container:
     runs-on: ubuntu-latest
     needs: 
@@ -99,6 +94,16 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
       - run: npx nx-cloud record -- nx run liga-manager-ui:container:e2e
+      - name: Start Services
+        uses: hoverkraft-tech/compose-action@v2.2.0
+        env:
+          UI_IMAGE: 'liga-manager-ui'
+          UI_TAG: 'e2e'
+          API_TAG: 'latest'
+        with:
+          compose-file: "./apps/e2e/docker-compose.yml"
+      - name: Add Admin user
+        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:

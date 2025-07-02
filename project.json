@@ -1,15 +1,15 @@
 {
   "name": "liga-manager-ui",
   "$schema": "./node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": [
+    "liga-manager-ui-web"
+  ],
   "targets": {
     "serve": {
       "command": "docker compose up"
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",
-      "dependsOn": [
-        "build:production"
-      ],
       "defaultConfiguration": "local",
       "options": {
         "engine": "docker",
@@ -19,7 +19,7 @@
       "configurations": {
         "local": {
           "tags": [
-            "liga-manager-ui-web:latest"
+            "liga-manager-ui-web:local"
           ],
           "push": false
         },
