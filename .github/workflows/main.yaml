@@ -93,6 +93,7 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
       - name: Build
         uses: docker/build-push-action@v5
         with:

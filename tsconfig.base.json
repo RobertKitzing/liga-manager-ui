@@ -20,6 +20,7 @@
         "esModuleInterop": true,
         "lib": ["ES2022", "dom"],
         "paths": {
+            "@cypress/*": ["apps/liga-manager-ui-web/cypress/*"],
             "@liga-manager-api/graphql": ["libs/api-graphql/src/index.ts"],
             "@liga-manager-ui": ["apps/liga-manager-ui-web/src/app/index.ts"],
             "@liga-manager-ui/components": [
@@ -37,8 +38,7 @@
             "@liga-manager-ui/services": [
                 "apps/liga-manager-ui-web/src/app/shared/services/index.ts"
             ],
-            "@liga-manager-ui/utils": ["libs/utils/src/index.ts"],
-            "@cypress/*": [ "apps/liga-manager-ui-web/cypress/*" ]
+            "@liga-manager-ui/utils": ["libs/utils/src/index.ts"]
         },
         "rootDir": "."
     },

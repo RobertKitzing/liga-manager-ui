@@ -1,5 +1,5 @@
 {
-    "name": "@liga-manager-ui/utils",
+    "name": "@liga-manager-ui/web",
     "version": "5.4.39",
     "peerDependencies": {
         "@angular/common": "^19.2.0",
