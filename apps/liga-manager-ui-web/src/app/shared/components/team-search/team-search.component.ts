@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Maybe, Team } from '@liga-manager-api/graphql';
 import { TranslateModule } from '@ngx-translate/core';
 import { startWith, tap } from 'rxjs';
+import fuzzysearch from 'fuzzysearch-ts';
 
 @Component({
     selector: 'lima-team-search',
@@ -45,10 +46,9 @@ export class TeamSearchComponent implements OnInit {
                         this.filteredTeams.emit(this.teams());
                     } else {
                         this.filteredTeams.emit(
-                            this.teams()?.filter((y) =>
-                                y?.name
-                                    .toLocaleLowerCase()
-                                    .includes(searchTerm.toLocaleLowerCase()),
+                            this.teams()?.filter(
+                                (y) => 
+                                    fuzzysearch(searchTerm.toLocaleLowerCase(), y?.name || ''),
                             ),
                         );
                     }
