@@ -116,11 +116,10 @@ jobs:
         uses: cypress-io/github-action@v6
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_baseUrl: http://localhost
         with:
           record: true
           browser: chrome
-          working-directory: apps/liga-manager-ui-web
+          command: npx nx-cloud record -- nx run liga-manager-ui-web:e2e
       - name: Save docker image
         run: docker save ${{ env.DOCKER_REPO_UI }}:e2e | gzip > /tmp/lima.tar
   # e2e:
