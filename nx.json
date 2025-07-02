@@ -124,6 +124,16 @@
         }
     },
     "release": {
-        "projects": ["apps/*", "libs/*"]
+        "projects": ["apps/*", "libs/*"],
+        "conventionalCommits": {
+            "types": {
+                "wip": {
+                    "semverBump": "patch",
+                    "changelog": {
+                        "title": "Work in Progress"
+                    }
+                }
+            }
+        }
     }
 }

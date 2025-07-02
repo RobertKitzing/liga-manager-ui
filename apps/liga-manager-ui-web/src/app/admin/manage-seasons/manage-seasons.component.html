@@ -35,7 +35,7 @@
                 <a translate>TAB.ADMIN.SEASON.MATCH_DAYS</a>
             </ng-template>
             <ng-template matStepContent>
-                <router-outlet></router-outlet>
+                <lima-manage-matchdays [season]="season"></lima-manage-matchdays>
             </ng-template>
         </mat-step>
         <mat-step>
@@ -43,7 +43,7 @@
                 <a translate>TAB.ADMIN.SEASON.MATCHES</a>
             </ng-template>
             <ng-template matStepContent>
-                <router-outlet></router-outlet>
+                <lima-manage-matches [season]="season"></lima-manage-matches>
             </ng-template>
         </mat-step>
         <mat-step>
@@ -51,7 +51,7 @@
                 <a translate>TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a>
             </ng-template>
             <ng-template matStepContent>
-                <router-outlet></router-outlet>
+                <lima-manage-schedule-matches [season]="season"></lima-manage-schedule-matches>
             </ng-template>
         </mat-step>
         <mat-step>
@@ -59,7 +59,7 @@
                 <a translate>TAB.ADMIN.SEASON.PENALTIES</a>
             </ng-template>
             <ng-template matStepContent>
-                <router-outlet></router-outlet>
+                <lima-manage-penalties [season]="season"></lima-manage-penalties>
             </ng-template>
         </mat-step>
         <mat-step>
@@ -67,7 +67,7 @@
                 <a translate>TAB.ADMIN.SEASON.START_STOP</a>
             </ng-template>
             <ng-template matStepContent>
-                <router-outlet></router-outlet>
+                <lima-manage-start-stop [season]="season"></lima-manage-start-stop>
             </ng-template>
         </mat-step>
     </mat-stepper>

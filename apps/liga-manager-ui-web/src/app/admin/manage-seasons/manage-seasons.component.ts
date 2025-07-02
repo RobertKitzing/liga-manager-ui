@@ -6,19 +6,23 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterModule } from '@angular/router';
-import { AllSeasonsFragment, Season, SeasonState, Team } from '@liga-manager-api/graphql';
-import { APP_ROUTES } from '@liga-manager-ui';
+import { RouterModule } from '@angular/router';
+import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { SeasonChooserComponent } from '@liga-manager-ui/components';
-import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { SeasonService } from '@liga-manager-ui/services';
+import { CypressSelectorDirective } from '../../shared/directives/cypress-selector/cypress-selector.directive';
+import { SeasonService } from '../../shared/services/season.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { startWith, map, switchMap, BehaviorSubject } from 'rxjs';
+import { map, switchMap, BehaviorSubject } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
 import { ManageTeamsComponent } from './manage-teams';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { sortArrayBy } from '@liga-manager-ui/utils';
+import { ManageMatchdaysComponent } from './manage-matchdays/manage-matchdays.component';
+import { ManageMatchesComponent } from './manage-matches/manage-matches.component';
+import { ManageScheduleMatchesComponent } from './manage-schedule-matches/manage-schedule-matches.component';
+import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.component';
+import { ManageStartStopComponent } from './manage-start-stop/manage-start-stop.component';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -37,6 +41,11 @@ import { sortArrayBy } from '@liga-manager-ui/utils';
         MatStepperModule,
         CypressSelectorDirective,
         ManageTeamsComponent,
+        ManageMatchdaysComponent,
+        ManageMatchesComponent,
+        ManageScheduleMatchesComponent,
+        ManagePenaltiesComponent,
+        ManageStartStopComponent,
     ],
 })
 export class ManageSeasonsComponent implements OnInit {

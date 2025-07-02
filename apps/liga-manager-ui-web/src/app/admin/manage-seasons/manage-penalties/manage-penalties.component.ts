@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 
 @Component({
-    selector: 'lima-manage-matches',
+    selector: 'lima-manage-penalties',
     standalone: true,
     imports: [AsyncPipe],
     templateUrl: './manage-penalties.component.html',
