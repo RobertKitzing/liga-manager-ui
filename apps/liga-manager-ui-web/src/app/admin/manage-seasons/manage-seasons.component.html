@@ -20,62 +20,112 @@
         </button>
     </div>
 </mat-toolbar>
-@if (season$ | async; as season) {
-<mat-toolbar>
-    <div class="flex h-full w-full items-center space-x-4">
-        <a
-            class="flex h-full items-center p-2"
-            mat-tab-link
-            translate
-            routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.TEAMS }}"
-            routerLinkActive="mat-sys-primary-container"
-            >TAB.ADMIN.SEASON.TEAMS</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            mat-tab-link
-            translate
-            routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.MATCH_DAYS }}"
-            routerLinkActive="mat-sys-primary-container"
-            >TAB.ADMIN.SEASON.MATCH_DAYS</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            mat-tab-link
-            translate
-            routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.MATCHES }}"
-            routerLinkActive="mat-sys-primary-container"
-            >TAB.ADMIN.SEASON.MATCHES</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            mat-tab-link
-            translate
-            routerLink="{{ season.id }}/{{
-                MANAGE_SEASON_ROUTES.SCHEDULE_MATCHES
-            }}"
-            routerLinkActive="mat-sys-primary-container"
-            >TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            mat-tab-link
-            translate
-            routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.PENALTIES }}"
-            routerLinkActive="mat-sys-primary-container"
-            >TAB.ADMIN.SEASON.PENALTIES</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            mat-tab-link
-            translate
-            routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.START_STOP }}"
-            routerLinkActive="mat-sys-primary-container"
-            >TAB.ADMIN.SEASON.START_STOP</a
-        >
-    </div>
-</mat-toolbar>
-<div class="p-3">
-    <router-outlet></router-outlet>
-</div>
+@if ((season$ | async); as season) {
+    <mat-stepper orientation="horizontal">
+        <mat-step>
+            <ng-template matStepLabel>
+                <a translate>TAB.ADMIN.SEASON.TEAMS</a>
+            </ng-template>
+            <ng-template matStepContent>
+                <lima-manage-teams [season]="season"></lima-manage-teams>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>
+                <a translate>TAB.ADMIN.SEASON.MATCH_DAYS</a>
+            </ng-template>
+            <ng-template matStepContent>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>
+                <a translate>TAB.ADMIN.SEASON.MATCHES</a>
+            </ng-template>
+            <ng-template matStepContent>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>
+                <a translate>TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a>
+            </ng-template>
+            <ng-template matStepContent>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>
+                <a translate>TAB.ADMIN.SEASON.PENALTIES</a>
+            </ng-template>
+            <ng-template matStepContent>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>
+                <a translate>TAB.ADMIN.SEASON.START_STOP</a>
+            </ng-template>
+            <ng-template matStepContent>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </mat-step>
+    </mat-stepper>
 }
+    <!-- <mat-toolbar>
+        <div class="flex h-full w-full items-center space-x-4">
+            <a
+                class="flex h-full items-center p-2"
+                mat-tab-link
+                translate
+                routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.TEAMS }}"
+                routerLinkActive="mat-sys-primary-container"
+                >TAB.ADMIN.SEASON.TEAMS</a
+            >
+            <a
+                class="flex h-full items-center p-2"
+                mat-tab-link
+                translate
+                routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.MATCH_DAYS }}"
+                routerLinkActive="mat-sys-primary-container"
+                >TAB.ADMIN.SEASON.MATCH_DAYS</a
+            >
+            <a
+                class="flex h-full items-center p-2"
+                mat-tab-link
+                translate
+                routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.MATCHES }}"
+                routerLinkActive="mat-sys-primary-container"
+                >TAB.ADMIN.SEASON.MATCHES</a
+            >
+            <a
+                class="flex h-full items-center p-2"
+                mat-tab-link
+                translate
+                routerLink="{{ season.id }}/{{
+                    MANAGE_SEASON_ROUTES.SCHEDULE_MATCHES
+                }}"
+                routerLinkActive="mat-sys-primary-container"
+                >TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a
+            >
+            <a
+                class="flex h-full items-center p-2"
+                mat-tab-link
+                translate
+                routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.PENALTIES }}"
+                routerLinkActive="mat-sys-primary-container"
+                >TAB.ADMIN.SEASON.PENALTIES</a
+            >
+            <a
+                class="flex h-full items-center p-2"
+                mat-tab-link
+                translate
+                routerLink="{{ season.id }}/{{ MANAGE_SEASON_ROUTES.START_STOP }}"
+                routerLinkActive="mat-sys-primary-container"
+                >TAB.ADMIN.SEASON.START_STOP</a
+            >
+        </div>
+    </mat-toolbar> -->
+    <!-- <div class="p-3">
+        <router-outlet></router-outlet>
+    </div>-->

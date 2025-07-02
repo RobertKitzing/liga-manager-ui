@@ -1,11 +1,13 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ManageSeasonBase } from '../manage-season.base';
 import { firstValueFrom } from 'rxjs';
-import { AddTeamToSeasonMutationVariables } from '@liga-manager-api/graphql';
+import { AddTeamToSeasonMutationVariables, Maybe, Team } from '@liga-manager-api/graphql';
 import { CypressSelectorDirective } from '../../../shared/directives/cypress-selector/cypress-selector.directive';
+import { TranslateModule } from '@ngx-translate/core';
+import { ManageSeasonBaseComponent } from '../manage-season.base.component';
+import { TeamSearchComponent } from '@liga-manager-ui/components';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -14,11 +16,17 @@ import { CypressSelectorDirective } from '../../../shared/directives/cypress-sel
         AsyncPipe,
         MatButtonModule,
         MatIconModule,
+        TranslateModule,
         CypressSelectorDirective,
+        TeamSearchComponent,
     ],
     templateUrl: './manage-teams.component.html',
 })
-export class ManageTeamsComponent extends ManageSeasonBase {
+export class ManageTeamsComponent extends ManageSeasonBaseComponent {
+
+    seasonTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
+
+    allTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
 
     async addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
         try {

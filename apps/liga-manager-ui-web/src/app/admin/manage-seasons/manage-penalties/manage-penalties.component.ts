@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ManageSeasonBase } from '../manage-season.base';
 import { AsyncPipe } from '@angular/common';
+import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 
 @Component({
     selector: 'lima-manage-matches',
@@ -8,4 +8,4 @@ import { AsyncPipe } from '@angular/common';
     imports: [AsyncPipe],
     templateUrl: './manage-penalties.component.html',
 })
-export class ManagePenaltiesComponent extends ManageSeasonBase {}
+export class ManagePenaltiesComponent extends ManageSeasonBaseComponent {}

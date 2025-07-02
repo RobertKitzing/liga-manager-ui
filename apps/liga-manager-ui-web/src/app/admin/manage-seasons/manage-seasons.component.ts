@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllSeasonsFragment, SeasonState } from '@liga-manager-api/graphql';
-import { SeasonChooserComponent } from '@liga-manager-ui/components';
-import { CreateNewSeasonComponent } from './create-new-season';
-import { startWith, tap } from 'rxjs';
-import { SeasonService } from '@liga-manager-ui/services';
-import { AsyncPipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
-import { ADMIN_ROUTES } from '../admin.routes.enum';
+import { AllSeasonsFragment, Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { APP_ROUTES } from '@liga-manager-ui';
-import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
+import { SeasonChooserComponent } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { SeasonService } from '@liga-manager-ui/services';
+import { TranslateModule } from '@ngx-translate/core';
+import { startWith, map, switchMap, BehaviorSubject } from 'rxjs';
+import { CreateNewSeasonComponent } from './create-new-season';
+import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
+import { ManageTeamsComponent } from './manage-teams';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { sortArrayBy } from '@liga-manager-ui/utils';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -31,40 +34,50 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         MatToolbarModule,
         TranslateModule,
         RouterModule,
+        MatStepperModule,
         CypressSelectorDirective,
+        ManageTeamsComponent,
     ],
 })
-export class ManageSeasonsComponent {
+export class ManageSeasonsComponent implements OnInit {
 
     MANAGE_SEASON_ROUTES = MANAGE_SEASON_ROUTES;
 
     SeasonState = SeasonState;
 
-    selectedSeasonFC = new FormControl<AllSeasonsFragment | undefined | null>(
+    selectedSeasonFC = new FormControl<Season | undefined | null>(
         this.seasonService.manageSeason,
     );
 
-    season$ = this.selectedSeasonFC.valueChanges.pipe(
-        startWith(this.seasonService.manageSeason),
-        tap((season) => {
-            this.seasonService.manageSeason = season;
-            if (season?.id) {
-                this.router.navigateByUrl(
-                    `${APP_ROUTES.ADMIN}/${ADMIN_ROUTES.SEASONS}/${season.id}`,
-                );
-            } else {
-                this.router.navigateByUrl(
-                    `${APP_ROUTES.ADMIN}/${ADMIN_ROUTES.SEASONS}`,
-                );
-            }
-        }),
-    );
+    seasonTrigger$ = new BehaviorSubject(this.selectedSeasonFC.value?.id);
+
+    season$ = 
+        this.seasonTrigger$.pipe(
+            switchMap(
+                (id) => this.seasonService.getSeasonById$(id).pipe(
+                    map((season) => {
+                        if (season) {
+                            return {
+                                ...season,
+                                teams: sortArrayBy(season?.teams as Team[], 'name'),
+                            } as Season;
+                        }
+                        return;
+                    }),
+                ),
+            ),
+        )
+
+    destroyRef = inject(DestroyRef);
 
     constructor(
         private dialog: MatDialog,
         private seasonService: SeasonService,
-        private router: Router,
     ) {}
+
+    ngOnInit(): void {
+        this.selectedSeasonFC.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((season) => this.seasonTrigger$.next(season?.id))
+    }
 
     createSeason() {
         this.dialog.open(CreateNewSeasonComponent);

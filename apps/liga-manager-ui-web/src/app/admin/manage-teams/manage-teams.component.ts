@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TeamService } from '@liga-manager-ui/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
-import { Team } from '@liga-manager-api/graphql';
+import { Maybe, Team } from '@liga-manager-api/graphql';
 import { AsyncPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { TeamSearchComponent } from '../../shared/components/team-search/team-search.component';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -26,6 +27,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         MatIconModule,
         AsyncPipe,
         CypressSelectorDirective,
+        TeamSearchComponent,
     ],
 })
 export class ManageTeamsComponent {
@@ -41,6 +43,8 @@ export class ManageTeamsComponent {
     addTeamMode = false;
 
     editTeamId = '';
+
+    teams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
 
     teams$ = this.searchTeam.valueChanges.pipe(
         startWith(null),
