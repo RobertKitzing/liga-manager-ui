@@ -1,6 +1,6 @@
 {
     "name": "liga-manager-ui",
-    "version": "5.4.39",
+    "version": "5.4.41",
     "scripts": {
         "build:app:local": "npm run clean:dist && npm run build && copy-files-from-to --mode app-local --silent",
         "build:app:prod": "npm run clean:dist && npm run build && copy-files-from-to --mode app-prod --silent",

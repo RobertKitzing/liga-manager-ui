@@ -124,7 +124,7 @@
         }
     },
     "release": {
-        "projects": ["apps/*", "libs/*"],
+        "projects": [".", "apps/*", "libs/*"],
         "version": {
             "conventionalCommits": true,
             "preVersionCommand": "npx nx run-many -t build"
