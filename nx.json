@@ -125,6 +125,10 @@
     },
     "release": {
         "projects": ["apps/*", "libs/*"],
+        "version": {
+            "conventionalCommits": true,
+            "preVersionCommand": "npx nx run-many -t build"
+        },
         "conventionalCommits": {
             "types": {
                 "wip": {
@@ -132,6 +136,9 @@
                     "changelog": {
                         "title": "Work in Progress"
                     }
+                },
+                "chore": {
+                    "changelog": false
                 }
             }
         }
