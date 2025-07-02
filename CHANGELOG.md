@@ -1,3 +1,17 @@
+## 5.4.41 (2025-07-02)
+
+### 🩹 Fixes
+
+- github releases ([cd3f67b](https://github.com/RobertKitzing/liga-manager-ui/commit/cd3f67b))
+
+### Work in Progress
+
+- admin area ([2cbd094](https://github.com/RobertKitzing/liga-manager-ui/commit/2cbd094))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.40 (2025-07-02)
 
 ### 🚀 Features
