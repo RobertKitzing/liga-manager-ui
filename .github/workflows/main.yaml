@@ -123,6 +123,10 @@ jobs:
         with:
           name: lima-img
           path: /tmp/lima.tar
+      - name: Create Release
+        run:
+          npx nx release --skip-publish
+
   # e2e:
   #   runs-on: ubuntu-latest
   #   steps:
