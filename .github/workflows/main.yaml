@@ -45,6 +45,9 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: next_nx
+
       - run: npx nx-cloud record -- nx run ${{ matrix.project }}:lint
   test:
     runs-on: ubuntu-latest
@@ -61,6 +64,8 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: next_nx
       - run: npx nx-cloud record -- nx run ${{ matrix.project }}:test
   build:
     runs-on: ubuntu-latest
