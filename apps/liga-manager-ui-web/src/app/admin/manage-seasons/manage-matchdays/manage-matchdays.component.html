@@ -1,3 +1,14 @@
 @if (season) {
-    {{ season.name }}
+    @if (!season.match_days || season.match_days.length === 0) {
+        <div>
+            <mat-form-field>
+                <mat-label translate>START_SEASON_DATE</mat-label>
+                <input matInput [matDatepicker]="startSeasonDatePicker"
+                    [formControl]="seasonStartDate"
+                    (dateChange)="createMatchDays()">
+                <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startSeasonDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    }
 }

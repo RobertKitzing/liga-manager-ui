@@ -4,15 +4,17 @@ import {
     inject,
     provideAppInitializer,
 } from '@angular/core';
-import { provideRouter, withDebugTracing } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {
     TranslateLoader,
     TranslateModule,
     TranslatePipe,
+    TranslateService,
 } from '@ngx-translate/core';
 import {
     AppsettingsService,
+    I18nService,
     ThemeService,
     httpLoaderFactory,
 } from './shared/services';
@@ -25,12 +27,13 @@ import {
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
 import { MatDialogConfig } from '@angular/material/dialog';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { DarkMode } from '@aparajita/capacitor-dark-mode';
 import { provideApollo } from 'apollo-angular';
 import { provideNgxWebstorage, withLocalStorage } from 'ngx-webstorage';
 import { apolloFactory } from './apllo.factory';
 import { DatePipe } from '@angular/common';
+import { CustomDateAdapter } from './shared/utils';
 
 export const defaultDialogConfig = {
     // width: '50vw',
@@ -89,5 +92,10 @@ export const appConfig: ApplicationConfig = {
         },
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimationsAsync(),
+        {
+            provide: DateAdapter,
+            useClass: CustomDateAdapter,
+            deps: [I18nService, TranslateService],
+        },
     ],
 };
