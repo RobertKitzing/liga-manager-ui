@@ -159,7 +159,8 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
         with:
           main-branch-name: next_nx
-
+      
+      - uses: fregante/setup-git-user@v2
       - name: Create Release
         # if: github.ref == 'refs/heads/main'
         run:
