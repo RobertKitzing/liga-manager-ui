@@ -1,3 +1,14 @@
+## 5.4.43 (2025-07-03)
+
+### Work in Progress
+
+- create Season ([f880f84](https://github.com/RobertKitzing/liga-manager-ui/commit/f880f84))
+- create season ([0576fa4](https://github.com/RobertKitzing/liga-manager-ui/commit/0576fa4))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.42 (2025-07-03)
 
 ### 🩹 Fixes

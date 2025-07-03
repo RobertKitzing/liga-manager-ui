@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-ui/web",
-    "version": "5.4.42",
+    "version": "5.4.43",
     "peerDependencies": {
         "@angular/common": "^19.2.0",
         "@angular/core": "^19.2.0"
