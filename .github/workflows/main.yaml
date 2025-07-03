@@ -2,7 +2,6 @@ name: Build
 on:
   push:
     branches:
-      - 'next'
       - 'next_nx'
 
 env:
@@ -75,6 +74,12 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: next_nx
+
+      - run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
   e2e:
     runs-on: ubuntu-latest
@@ -91,6 +96,9 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: next_nx
+
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
       - name: Build
         uses: docker/build-push-action@v5
@@ -144,10 +152,18 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
 
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: next_nx
 
       - name: Create Release
+        if: github.ref == 'refs/heads/main'
         run:
           npx nx release --skip-publish
+
+      - name: Create Release
+        if: github.ref != 'refs/heads/main'
+        run:
+          npx nx release --skip-publish --preid ${GITHUB_REF##*/}
 
       - name: get-npm-version
         id: package-version
@@ -162,14 +178,19 @@ jobs:
       - name: Load image
         run: |
           docker load --input /tmp/lima.tar
-          docker tag ${{ env.DOCKER_REPO_UI }}:e2e ${{ env.DOCKER_REPO_UI }}:next
-          docker tag ${{ env.DOCKER_REPO_UI }}:e2e ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version }}
-          docker image ls -a
-      
-      - name: Push image
+
+      - name: Tag/push image with Version
         run: |
-          docker push ${{ env.DOCKER_REPO_UI }}:next
+          docker tag ${{ env.DOCKER_REPO_UI }}:e2e ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version }}
           docker push ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}
+      
+      - name: Tag image with latest
+        if: github.ref == 'refs/heads/main'
+        # TODO: replace next with latest
+        run: |
+          docker tag ${{ env.DOCKER_REPO_UI }}:e2e ${{ env.DOCKER_REPO_UI }}:next
+          docker push ${{ env.DOCKER_REPO_UI }}:next
+
 
   # build-app:
   #   needs: e2e
