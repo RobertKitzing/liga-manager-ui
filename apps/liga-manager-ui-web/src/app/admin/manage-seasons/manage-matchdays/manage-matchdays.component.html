@@ -11,4 +11,7 @@
             </mat-form-field>
         </div>
     }
+    @for (matchDay of matchDays(); track matchDay) {
+        <p>{{ matchDay.from | date }} - {{ matchDay.to | date }}</p>
+    }
 }

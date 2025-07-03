@@ -161,14 +161,14 @@ jobs:
           main-branch-name: next_nx
 
       - name: Create Release
-        if: github.ref == 'refs/heads/main'
+        # if: github.ref == 'refs/heads/main'
         run:
           npx nx release --skip-publish
 
-      - name: Create Release
-        if: github.ref != 'refs/heads/main'
-        run:
-          npx nx release --skip-publish --preid ${GITHUB_REF##*/}
+      # - name: Create Release
+      #   if: github.ref != 'refs/heads/main'
+      #   run:
+      #     npx nx release --skip-publish --preid ${GITHUB_REF##*/}
 
       - name: get-npm-version
         id: package-version

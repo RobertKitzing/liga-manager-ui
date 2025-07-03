@@ -1,7 +1,7 @@
 @if (season) {
     <div class="grid grid-cols-2">
         <div>
-            <h1 translate>TEAMS_IN_SEASON</h1>
+            <h1 translate class="text-center">TEAMS_IN_SEASON</h1>
             <div class="m-8">
                 <lima-team-search [teams]="season.teams" (filteredTeams)="seasonTeams.set($event)"></lima-team-search>
             </div>
@@ -33,8 +33,8 @@
         </div>
         @if (season.state === SeasonState.Preparation) {
             <div>
-                <div class="flex items-center">
-                    <h1 translate>ALL_TEAMS</h1>
+                <div>
+                    <h1 translate class="text-center">ALL_TEAMS</h1>
                 </div>
                 @if (teamService.allTeams$ | async; as at) {
                     <div class="m-8">
