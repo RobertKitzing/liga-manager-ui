@@ -1,3 +1,13 @@
+## 5.4.42 (2025-07-03)
+
+### 🩹 Fixes
+
+- all projects have the same version ([5af211a](https://github.com/RobertKitzing/liga-manager-ui/commit/5af211a))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.41 (2025-07-02)
 
 ### 🩹 Fixes
