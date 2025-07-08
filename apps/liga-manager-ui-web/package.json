@@ -5,5 +5,12 @@
         "@angular/common": "^19.2.0",
         "@angular/core": "^19.2.0"
     },
-    "sideEffects": false
+    "sideEffects": false,
+    "dependencies": {
+        "@capacitor/ios": "../../node_modules/@capacitor/ios",
+        "@capacitor/android": "../../node_modules/@capacitor/android"
+    },
+    "devDependencies": {
+        "@capacitor/cli": "^6.0.0"
+    }
 }

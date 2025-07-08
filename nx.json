@@ -112,7 +112,8 @@
                     "watchDepsName": "tsc:watch-deps"
                 }
             }
-        }
+        },
+        "@nxext/capacitor/plugin"
     ],
     "generators": {
         "@nx/angular:library": {

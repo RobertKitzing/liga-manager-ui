@@ -134,6 +134,12 @@
       "inputs": ["{projectRoot}/src/i18n"],
       "outputs": ["{projectRoot}/src/assets/languages.json"],
       "command": "node {projectRoot}/get-languages.mjs"
+    },
+    "capibar": {
+      "executor": "@nxext/capacitor:cap",
+      "options": {
+        "cmd": "build android"
+      }
     }
   }
 }
