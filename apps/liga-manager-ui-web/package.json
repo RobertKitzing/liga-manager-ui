@@ -1,16 +1,14 @@
 {
-    "name": "@liga-manager-ui/web",
-    "version": "5.4.43",
-    "peerDependencies": {
-        "@angular/common": "^19.2.0",
-        "@angular/core": "^19.2.0"
-    },
-    "sideEffects": false,
-    "dependencies": {
-        "@capacitor/ios": "../../node_modules/@capacitor/ios",
-        "@capacitor/android": "../../node_modules/@capacitor/android"
-    },
-    "devDependencies": {
-        "@capacitor/cli": "^6.0.0"
-    }
+  "name": "@liga-manager-ui/web",
+  "version": "5.4.43",
+  "sideEffects": false,
+  "dependencies": {
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/android": "^7.0.0",
+    "@aparajita/capacitor-dark-mode": "^5.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
 }
