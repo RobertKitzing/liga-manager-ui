@@ -34,6 +34,7 @@ import { provideNgxWebstorage, withLocalStorage } from 'ngx-webstorage';
 import { apolloFactory } from './apllo.factory';
 import { DatePipe } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
+import { firstValueFrom } from 'rxjs';
 
 export const defaultDialogConfig = {
     // width: '50vw',
@@ -53,7 +54,7 @@ function appInitFactory(
                     themeService.darkMode = appearance;
                 },
             }),
-            appsettingsService.loadAppsettings(),
+            firstValueFrom(appsettingsService.loadAppsettings()),
         ]);
     };
 }

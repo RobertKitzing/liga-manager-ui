@@ -5,6 +5,8 @@ services:
 
   nginx:
     image: liga-manager-ui-web:latest
+    environment:
+      - GOOGLE_MAPS_APIK_EY=test
     #build: .
     ports:
       - "80:80"
