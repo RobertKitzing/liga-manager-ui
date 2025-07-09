@@ -17,10 +17,6 @@ html {
     @media (prefers-contrast: more) {
         @include theme.high-contrast-overrides(light);
     }
-}
-
-body {
-    margin: 0;
 
     &.dark {
         @include apply-dark-mode;
@@ -28,6 +24,10 @@ body {
             @include theme.high-contrast-overrides(dark);
         }
     }
+}
+
+body {
+    margin: 0;
 }
 
 :root {
