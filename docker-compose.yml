@@ -4,10 +4,10 @@ volumes:
 services:
 
   nginx:
-    image: liga-manager-ui-web:latest
-    environment:
-      - GOOGLE_MAPS_APIK_EY=test
-    #build: .
+    #image: robertkitzing/liga-manager-ui:next
+    build: .
+    # environment:
+    #   - GOOGLE_MAPS_API_KEY=value
     ports:
       - "80:80"
     volumes:
