@@ -135,12 +135,6 @@
       "outputs": ["{projectRoot}/src/assets/languages.json"],
       "command": "node {projectRoot}/get-languages.mjs"
     },
-    "sync": {
-      "dependsOn": [
-        "^build:production",
-        "copy:app-settings:local"
-      ]
-    },
     "app": {
       "executor": "@nxext/capacitor:cap",
       "dependsOn": [

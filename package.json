@@ -2,7 +2,7 @@
     "name": "liga-manager-ui",
     "version": "5.4.43",
     "scripts": {
-        "copy:app-settings:local": "copy-files-from-to --mode app-local",
+        "copy:app-settings:local": "copy-files-from-to --mode app-local --silent",
         "copy:app-settings:prod": "copy-files-from-to --mode app-prod --silent"
     },
     "jest": {
@@ -25,6 +25,9 @@
             }
         }
     ],
+    "copyFilesSettings": {
+        "whenFileExists": "overwrite"
+    },
     "private": true,
     "dependencies": {
         "@angular/animations": "^19.2.14",
