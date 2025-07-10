@@ -134,6 +134,16 @@
       "inputs": ["{projectRoot}/src/i18n"],
       "outputs": ["{projectRoot}/src/assets/languages.json"],
       "command": "node {projectRoot}/get-languages.mjs"
+    },
+    "app": {
+      "executor": "@nxext/capacitor:cap",
+      "dependsOn": [
+        "^build:production",
+        "copy:app-settings:local"
+      ],
+      "options": {
+        "cmd": "build android"
+      }
     }
   }
 }

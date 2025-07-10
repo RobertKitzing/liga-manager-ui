@@ -2,9 +2,8 @@
     "name": "liga-manager-ui",
     "version": "5.4.43",
     "scripts": {
-        "build:app:local": "npm run clean:dist && npm run build && copy-files-from-to --mode app-local --silent",
-        "build:app:prod": "npm run clean:dist && npm run build && copy-files-from-to --mode app-prod --silent",
-        "clean:dist": "rimraf ../capacitor/dist"
+        "copy:app-settings:local": "copy-files-from-to --mode app-local --silent",
+        "copy:app-settings:prod": "copy-files-from-to --mode app-prod --silent"
     },
     "jest": {
         "preset": "jest-preset-angular",
@@ -20,21 +19,15 @@
                 "app-prod": "appsettings/appsettings.app-prod.json"
             },
             "to": {
-                "web": "dist/liga-manager-ui/browser/appsettings.json",
-                "app-local": "../capacitor/dist/liga-manager-ui/appsettings.json",
-                "app-prod": "../capacitor/dist/liga-manager-ui/appsettings.json"
-            }
-        },
-        {
-            "from": "dist/liga-manager-ui/browser/**/*",
-            "to": {
-                "default": "../capacitor/dist/liga-manager-ui",
-                "web": {
-                    "skip": true
-                }
+                "web": "dist/apps/liga-manager-ui-web/browser/appsettings.json",
+                "app-local": "dist/apps/liga-manager-ui-web/browser/appsettings.json",
+                "app-prod": "dist/apps/liga-manager-ui-web/browser/appsettings.json"
             }
         }
     ],
+    "copyFilesSettings": {
+        "whenFileExists": "overwrite"
+    },
     "private": true,
     "dependencies": {
         "@angular/animations": "^19.2.14",
@@ -47,8 +40,12 @@
         "@angular/platform-browser": "^19.2.14",
         "@angular/platform-browser-dynamic": "^19.2.14",
         "@angular/router": "^19.2.14",
-        "@aparajita/capacitor-dark-mode": "^4.0.1",
+        "@aparajita/capacitor-dark-mode": "^5.0.2",
         "@apollo/client": "^3.13.8",
+        "@capacitor/android": "^7.0.0",
+        "@capacitor/app": "^7.0.0",
+        "@capacitor/assets": "^3.0.5",
+        "@capacitor/core": "^7.0.0",
         "@colsen1991/ngx-translate-extract-marker": "^2.0.8",
         "@fullcalendar/angular": "^6.1.17",
         "@fullcalendar/core": "^6.1.17",
@@ -59,6 +56,7 @@
         "@graphql-codegen/typescript-operations": "^4.6.1",
         "@ngx-translate/core": "^14.0.0",
         "@ngx-translate/http-loader": "^7.0.0",
+        "@nx/devkit": "^21.2.2",
         "@nx/eslint-plugin": "^21.2.1",
         "@tailwindcss/postcss": "^4.1.10",
         "@types/node": "^20.10.0",
@@ -92,6 +90,7 @@
         "@angular/build": "^19.2.15",
         "@angular/cli": "~19.2.15",
         "@angular/compiler-cli": "^19.2.14",
+        "@capacitor/cli": "^7.0.0",
         "@nx-tools/nx-container": "^6.8.0",
         "@nx-tools/nx-graphql-codegen": "^6.8.0",
         "@nx/angular": "21.2.1",
@@ -100,6 +99,7 @@
         "@nx/jest": "^21.2.1",
         "@nx/js": "^21.2.1",
         "@nx/workspace": "21.2.1",
+        "@nxext/capacitor": "^21.0.0",
         "@openapitools/openapi-generator-cli": "^2.6.0",
         "@schematics/angular": "~19.2.15",
         "@swc-node/register": "~1.9.1",
@@ -120,7 +120,7 @@
         "jest-preset-angular": "^14.6.0",
         "jsonc-eslint-parser": "^2.1.0",
         "ng-packagr": "~19.2.0",
-        "nx": "21.2.1",
+        "nx": "^21.2.2",
         "postcss-url": "~10.1.3",
         "prettier": "^2.6.2",
         "tailwindcss": "^4.1.10",
