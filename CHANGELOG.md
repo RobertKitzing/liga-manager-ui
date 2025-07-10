@@ -1,3 +1,13 @@
+## 5.4.44 (2025-07-10)
+
+### Work in Progress
+
+- android app ([0bb89dc](https://github.com/RobertKitzing/liga-manager-ui/commit/0bb89dc))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.43 (2025-07-03)
 
 ### Work in Progress
