@@ -17,7 +17,7 @@ export class AppsettingsService {
     private httpClient = inject(HttpClient);
 
     loadAppsettings() {
-        return this.httpClient.get<AppsettingsModel>('./appsettings.json').pipe(
+        return this.httpClient.get<AppsettingsModel>('/appsettings.json').pipe(
             tap((res) => {
                 this.appsettings = res;
             }),
