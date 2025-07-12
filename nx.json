@@ -126,11 +126,6 @@
     },
     "release": {
         "projects": [".", "apps/*", "libs/*"],
-        "changelog": {
-            "workspaceChangelog": {
-                "createRelease": "github"
-            }
-        },
         "version": {
             "fallbackCurrentVersionResolver": "disk",
             "conventionalCommits": true,
