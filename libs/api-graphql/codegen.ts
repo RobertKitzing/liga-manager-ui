@@ -8,8 +8,8 @@ const config: CodegenConfig = {
         'libs/api-graphql/src/gen/graphql.ts': {
             config: {
                 content: [
-                    "/* eslint-disable */",
-                    "/* GENERATED DO NOT EDIT */",
+                    '/* eslint-disable */',
+                    '/* GENERATED DO NOT EDIT */',
                 ],
                 flattenGeneratedTypes: true,
                 flattenGeneratedTypesIncludeFragments: true,
