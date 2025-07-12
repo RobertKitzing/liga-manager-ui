@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
+import { APP_ROUTES } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-edit-user-dialog',
@@ -120,7 +121,7 @@ export class EditUserDialogComponent implements OnInit {
                     }),
                 }),
             );
-            this.userService.sendPasswordMail(this.userFormGroup.value.email!);
+            this.userService.sendPasswordMail({email: this.userFormGroup.value.email!, target_path: APP_ROUTES.NEW_PASSWORD_ROUTE});
             this.dialogRef.close();
         }
     }

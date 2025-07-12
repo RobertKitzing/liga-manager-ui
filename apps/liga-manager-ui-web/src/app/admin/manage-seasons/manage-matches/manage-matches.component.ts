@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';

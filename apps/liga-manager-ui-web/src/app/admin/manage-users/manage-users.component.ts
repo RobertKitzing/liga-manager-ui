@@ -12,7 +12,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { defaultDialogConfig } from '@liga-manager-ui';
+import { APP_ROUTES } from '@liga-manager-ui/common';
+import { defaultDialogConfig } from '@liga-manager-ui/components';
 
 @Component({
     selector: 'lima-manage-users',
@@ -77,7 +78,7 @@ export class ManageUsersComponent {
     }
 
     async sendPasswordMail(email: string) {
-        await firstValueFrom(this.userService.sendPasswordMail(email));
+        await firstValueFrom(this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD_ROUTE}));
     }
 
 }

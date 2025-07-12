@@ -11,13 +11,13 @@ import {
     AuthenticationService,
     LoginContext,
     NotificationService,
-} from './shared/services';
+} from '@liga-manager-ui/services';
 import { onError } from '@apollo/client/link/error';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatDialog } from '@angular/material/dialog';
-import { MaintenanceModeComponent } from './shared/dialogs';
 import { setContext } from '@apollo/client/link/context';
 import { Base64 } from 'js-base64';
+import { MaintenanceModeComponent } from '@liga-manager-ui/components';
 
 export function apolloFactory() {
     const appsettingsService = inject(AppsettingsService);

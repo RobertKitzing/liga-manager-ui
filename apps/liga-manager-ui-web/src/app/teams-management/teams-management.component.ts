@@ -10,9 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TeamChooserComponent } from '@liga-manager-ui/components';
-import { APP_ROUTES } from '../app.routes.enum';
 import { LocalStorage } from 'ngx-webstorage';
 import { Team } from '@liga-manager-api/graphql';
+import { APP_ROUTES } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-teams-managment',

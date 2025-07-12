@@ -6,7 +6,6 @@
     },
     "files": ["src/main.ts"],
     "include": [
-        "src/**/*.ts",
-        "cy-selectors.d.ts"
+        "src/**/*.ts"
     ]
 }

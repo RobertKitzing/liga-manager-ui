@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { TeamSearchComponent } from '../../shared/components/team-search/team-search.component';
+import { TeamSearchComponent } from '@liga-manager-ui/components';
 
 @Component({
     selector: 'lima-manage-teams',

@@ -11,8 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ADMIN_ROUTES } from './admin.routes.enum';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { ADMIN_ROUTES } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-admin',

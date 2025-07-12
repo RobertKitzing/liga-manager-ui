@@ -10,7 +10,6 @@ import {
     StoredLang,
     ThemeService,
 } from '@liga-manager-ui/services';
-import { LoginComponent } from './shared/dialogs';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
@@ -21,11 +20,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { defaultDialogConfig } from './app.config';
-import { NavLinksComponent } from './shared/components';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
-import { CypressSelectorDirective } from './shared/directives';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { defaultDialogConfig, LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
 
 @Component({
     selector: 'lima-root',

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { ADMIN_ROUTES } from './admin.routes.enum';
 import { ManageSeasonsRoutes } from './manage-seasons/manage-seasons.routes';
+import { ADMIN_ROUTES } from '@liga-manager-ui/common';
 
 export const AdminRoutes: Routes = [
     {

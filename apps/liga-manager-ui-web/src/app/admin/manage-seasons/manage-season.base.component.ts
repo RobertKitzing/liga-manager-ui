@@ -1,8 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Season, SeasonState } from '@liga-manager-api/graphql';
-import { SeasonService } from '../../shared/services/season.service';
-import { TeamService } from '../../shared/services/team.service';
+import { SeasonService, TeamService } from '@liga-manager-ui/services';
 
 @Component({template: ''})
 export class ManageSeasonBaseComponent {

@@ -1,0 +1,23 @@
+{
+    "name": "@liga-manager-ui/services",
+    "version": "5.4.45",
+    "peerDependencies": {
+        "@angular/common": "^19.2.0",
+        "@angular/core": "^19.2.0",
+        "@angular/material": "^19.2.18",
+        "@angular/router": "^19.2.14",
+        "@aparajita/capacitor-dark-mode": "^5.0.2",
+        "@liga-manager-api/graphql": "^5.4.45",
+        "@liga-manager-ui/directives": "^5.4.45",
+        "@liga-manager-ui/utils": "^5.4.45",
+        "@ngx-translate/core": "^14.0.0",
+        "@ngx-translate/http-loader": "^7.0.0",
+        "dayjs": "^1.11.10",
+        "js-base64": "^3.7.3",
+        "ngx-webstorage": "^19.0.1",
+        "rxjs":"~7.5.0",
+        "ts-cacheable": "^1.0.10",
+        "uuid": "^9.0.0"
+    },
+    "sideEffects": false
+}

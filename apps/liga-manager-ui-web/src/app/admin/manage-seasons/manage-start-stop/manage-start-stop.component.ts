@@ -3,8 +3,8 @@ import { AsyncPipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@liga-manager-ui/services';
 import { MatButtonModule } from '@angular/material/button';
-import { APP_ROUTES, ADMIN_ROUTES } from '@liga-manager-ui';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
+import { ADMIN_ROUTES, APP_ROUTES } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-manage-start-stop',

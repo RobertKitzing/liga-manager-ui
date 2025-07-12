@@ -9,8 +9,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { SeasonChooserComponent } from '@liga-manager-ui/components';
-import { CypressSelectorDirective } from '../../shared/directives/cypress-selector/cypress-selector.directive';
-import { SeasonService } from '../../shared/services/season.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { map, switchMap, BehaviorSubject, Observable } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
@@ -24,6 +22,8 @@ import { ManageScheduleMatchesComponent } from './manage-schedule-matches/manage
 import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.component';
 import { ManageStartStopComponent } from './manage-start-stop/manage-start-stop.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { SeasonService } from '@liga-manager-ui/services';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-manage-seasons',

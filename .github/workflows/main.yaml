@@ -32,9 +32,6 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
   lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: ['liga-manager-ui-web', 'api-graphql']
     needs: 
       - npm-install
     steps:
@@ -48,7 +45,7 @@ jobs:
         with:
           main-branch-name: next_nx
 
-      - run: npx nx-cloud record -- nx run ${{ matrix.project }}:lint
+      - run: npx nx-cloud record -- nx affected -t lint
   test:
     runs-on: ubuntu-latest
     strategy:

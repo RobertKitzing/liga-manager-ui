@@ -2,8 +2,6 @@
     "name": "@liga-manager-ui/utils",
     "version": "5.4.45",
     "peerDependencies": {
-        "@angular/common": "^19.2.0",
-        "@angular/core": "^19.2.0"
     },
     "sideEffects": false
 }

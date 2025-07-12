@@ -17,7 +17,7 @@ import {
     I18nService,
     ThemeService,
     httpLoaderFactory,
-} from './shared/services';
+} from '@liga-manager-ui/services';
 import {
     HTTP_INTERCEPTORS,
     HttpClient,
@@ -26,7 +26,6 @@ import {
 } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
-import { MatDialogConfig } from '@angular/material/dialog';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { DarkMode } from '@aparajita/capacitor-dark-mode';
 import { provideApollo } from 'apollo-angular';
@@ -35,11 +34,6 @@ import { apolloFactory } from './apllo.factory';
 import { DatePipe } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { firstValueFrom } from 'rxjs';
-
-export const defaultDialogConfig = {
-    // width: '50vw',
-    // height: '50vh',
-} as MatDialogConfig;
 
 function appInitFactory(
     appsettingsService: AppsettingsService,

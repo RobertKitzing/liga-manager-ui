@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
+import { AuthenticationService, UserService } from '@liga-manager-ui/services';
 import { Observable, of } from 'rxjs';
-import { AuthenticationService, UserService } from './shared/services';
 
 export const userResolver: ResolveFn<Observable<unknown>> = () => {
 

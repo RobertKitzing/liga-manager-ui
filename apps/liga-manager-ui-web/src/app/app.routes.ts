@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { AdminRoutes } from './admin';
-import { AuthenticationService, UserService } from './shared/services';
 import { inject } from '@angular/core';
 import { TeamsManagementRoutes } from './teams-management';
-import { APP_ROUTES } from './app.routes.enum';
 import { userResolver } from './user.resolver';
 import { map } from 'rxjs';
+import { AuthenticationService, UserService } from '@liga-manager-ui/services';
+import { APP_ROUTES } from '@liga-manager-ui/common';
 
 export const isLoggedInGuard = () => {
     return inject(UserService).loadUser();

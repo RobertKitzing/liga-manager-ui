@@ -10,7 +10,7 @@ import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@liga-manager-ui/services';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TeamLogoPipe, TruncatePipe } from '@liga-manager-ui/pipes';
