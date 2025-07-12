@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-ui/web",
-    "version": "5.4.44",
+    "version": "5.4.45",
     "sideEffects": false,
     "dependencies": {
         "@aparajita/capacitor-dark-mode": "^5.0.2",
