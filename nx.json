@@ -126,7 +126,13 @@
     },
     "release": {
         "projects": [".", "apps/*", "libs/*"],
+        "changelog": {
+            "workspaceChangelog": {
+                "createRelease": "github"
+            }
+        },
         "version": {
+            "fallbackCurrentVersionResolver": "disk",
             "conventionalCommits": true,
             "preVersionCommand": "npx nx run-many -t build"
         },
