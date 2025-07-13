@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { Location, AsyncPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,6 +24,7 @@ import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { defaultDialogConfig, LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
+import { SafeArea } from 'capacitor-plugin-safe-area';
 
 @Component({
     selector: 'lima-root',
@@ -60,6 +61,8 @@ export class AppComponent implements OnInit {
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
 
+    statusBarHeight = signal(0);
+
     constructor(
         public themeService: ThemeService,
         public loadingIndicatorService: LoadingIndicatorService,
@@ -77,6 +80,11 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
+
+        SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+            this.statusBarHeight.set(statusBarHeight);
+        });
+
         this.route.queryParams.subscribe((params) => {
             if (params['theme']) {
                 this.changeTheme(params['theme']);

@@ -62,6 +62,7 @@
         "@types/node": "^20.10.0",
         "@types/uuid": "^9.0.0",
         "apollo-angular": "^11.0.0",
+        "capacitor-plugin-safe-area": "^4.0.0",
         "copy-files-from-to": "^3.9.1",
         "dayjs": "^1.11.10",
         "fuzzysearch-ts": "^1.0.3",

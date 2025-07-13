@@ -2,17 +2,17 @@ import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { fromStorage } from '../functions';
 import { StorageKeys } from '@liga-manager-ui/common';
+import { PruningTranslationLoader } from './pruning-translation-loader';
 
 export interface StoredLang {
     code: string;
     direction?: string;
 }
 
-export function httpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/i18n/', '.json');
+export function httpLoaderFactory() {
+    return new PruningTranslationLoader('/i18n/', '.json');
 }
 
 @Injectable({
@@ -31,6 +31,7 @@ export class I18nService {
         @Inject(DOCUMENT) private document: Document,
         private httpClient: HttpClient,
     ) {
+        this.translateService.setDefaultLang('en-GB')
         if (!this.storedLang()) {
             let code =
                 this.translateService.getBrowserLang() ||
