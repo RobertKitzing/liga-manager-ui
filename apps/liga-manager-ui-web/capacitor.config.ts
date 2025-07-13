@@ -5,7 +5,11 @@ const config: CapacitorConfig = {
     appName: 'Wilde Liga Bremen Manager',
     webDir: '../../dist/apps/liga-manager-ui-web/browser',
     android: {
-        loggingBehavior: 'debug',
+        buildOptions: {
+            keystoreAlias: 'release',
+            keystorePath: './release.jks',
+            signingType: 'apksigner',
+        },
     },
     server: {
         androidScheme: 'http',
