@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { defaultDialogConfig, LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
 import { SafeArea, SafeAreaInsets } from 'capacitor-plugin-safe-area';
+import { Device } from '@capacitor/device';
 
 @Component({
     selector: 'lima-root',
@@ -81,8 +82,11 @@ export class AppComponent implements OnInit {
 
     async ngOnInit() {
 
-        SafeArea.getSafeAreaInsets().then((safeAreaInsets) => {
-            this.safeAreaInsets.set(safeAreaInsets)
+        SafeArea.getSafeAreaInsets().then(async(safeAreaInsets) => {
+            const info = await Device.getInfo();
+            if (info.androidSDKVersion! >= 35) {
+                this.safeAreaInsets.set(safeAreaInsets)
+            }
         });
 
         this.route.queryParams.subscribe((params) => {

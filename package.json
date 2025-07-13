@@ -46,6 +46,7 @@
         "@capacitor/app": "^7.0.0",
         "@capacitor/assets": "^3.0.5",
         "@capacitor/core": "^7.0.0",
+        "@capacitor/device": "^7.0.1",
         "@colsen1991/ngx-translate-extract-marker": "^2.0.8",
         "@fullcalendar/angular": "^6.1.17",
         "@fullcalendar/core": "^6.1.17",
