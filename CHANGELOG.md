@@ -1,3 +1,13 @@
+## 5.4.55 (2025-07-13)
+
+### Work in Progress
+
+- less colors ([8a7c0e0](https://github.com/RobertKitzing/liga-manager-ui/commit/8a7c0e0))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.54 (2025-07-13)
 
 This was a version bump only, there were no code changes.
