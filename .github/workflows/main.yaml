@@ -137,7 +137,7 @@ jobs:
 
   nx-release:
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - e2e
     steps:
       - name: Checkout
@@ -182,8 +182,6 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
-      
-      - run: git push --follow-tags
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -209,7 +207,7 @@ jobs:
 
   build-app:
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - e2e
       - nx-release
     steps:
@@ -252,5 +250,44 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lima-app
-          path: apps/liga-manager-ui-web/android/app/build/outputs
+          name: lima-app-release-signed
+          path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
+
+  github-create-release:
+    runs-on: ubuntu-latest
+    needs:
+      - build-app
+      - build-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: lima-app-release-signed
+          path: /tmp
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: Create Release
+        id: android_app_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version }}
+          release_name: Release ${{ steps.package-version.outputs.current-version }}
+          draft: false
+          prerelease: true
+          body: |
+            - New Docker Image @ ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}
+      - name: Upload Release Asset
+        id: upload-release-asset-apk 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: /tmp/app-release-signed.apk
+          asset_name: app-release-signed.apk
+          asset_content_type: application/x-authorware-bin
