@@ -24,7 +24,7 @@ import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { defaultDialogConfig, LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
-import { SafeArea } from 'capacitor-plugin-safe-area';
+import { SafeArea, SafeAreaInsets } from 'capacitor-plugin-safe-area';
 
 @Component({
     selector: 'lima-root',
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
 
-    statusBarHeight = signal(0);
+    safeAreaInsets = signal<SafeAreaInsets | null>(null);
 
     constructor(
         public themeService: ThemeService,
@@ -81,8 +81,8 @@ export class AppComponent implements OnInit {
 
     async ngOnInit() {
 
-        SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
-            this.statusBarHeight.set(statusBarHeight);
+        SafeArea.getSafeAreaInsets().then((safeAreaInsets) => {
+            this.safeAreaInsets.set(safeAreaInsets)
         });
 
         this.route.queryParams.subscribe((params) => {
