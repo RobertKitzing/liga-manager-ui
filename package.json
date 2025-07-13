@@ -1,6 +1,6 @@
 {
     "name": "liga-manager-ui",
-    "version": "5.4.45",
+    "version": "5.4.46",
     "scripts": {
         "copy:app-settings:local": "copy-files-from-to --mode app-local --silent",
         "copy:app-settings:prod": "copy-files-from-to --mode app-prod --silent"

@@ -1,7 +1,6 @@
 {
     "name": "@liga-manager-ui/common",
-    "version": "5.4.45",
-    "peerDependencies": {
-    },
+    "version": "5.4.46",
+    "peerDependencies": {},
     "sideEffects": false
 }
