@@ -34,9 +34,9 @@ export function apolloFactory() {
                 response: { headers },
             } = operation.getContext();
             if (headers) {
-                const token = headers.get('x-token');
+                const token = headers.get('x-token') as string;
                 if (token) {
-                    authenticationService.accessToken = token;
+                    authenticationService.accessToken.set(token);
                 }
             }
             return response;
@@ -96,7 +96,7 @@ export function apolloFactory() {
                 headers: { Authorization: `Basic ${base64}` },
             };
         }
-        const token = authenticationService.accessToken;
+        const token = authenticationService.accessToken();
         if (token) {
             return {
                 headers: { Authorization: `Bearer ${token}` },

@@ -1,27 +1,25 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
 import { User, UserRole } from '@liga-manager-api/graphql';
+import { fromStorage } from '../functions';
+import { StorageKeys } from '@liga-manager-ui/common';
 
 export interface LoginContext {
     username: string;
     password: string;
 }
 
-const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
-
 @Injectable({
     providedIn: 'root',
 })
 export class AuthenticationService {
 
-    @LocalStorage(ACCESS_TOKEN_KEY) accessToken?: string;
+    accessToken = fromStorage<string>(StorageKeys.ACCESS_TOKEN);
 
     user = signal<User | undefined>(undefined);
 
     constructor(
         private router: Router,
-        private localStorageService: LocalStorageService,
     ) {}
 
     get isAdmin() {
@@ -33,7 +31,7 @@ export class AuthenticationService {
     }
 
     logout() {
-        this.localStorageService.clear(ACCESS_TOKEN_KEY);
+        this.accessToken.set(null)
         this.user.set(undefined);
         this.router.navigateByUrl('');
     }

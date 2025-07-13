@@ -24,7 +24,7 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "cache": false,
             "options": {
                 "jestConfig": "libs/components/jest.config.ts"
             }

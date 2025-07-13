@@ -17,6 +17,7 @@ import {
     I18nService,
     ThemeService,
     httpLoaderFactory,
+    provideStorage,
 } from '@liga-manager-ui/services';
 import {
     HTTP_INTERCEPTORS,
@@ -29,7 +30,6 @@ import { LoadingIndicatorHttpInterceptor } from './shared/interceptors';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { DarkMode } from '@aparajita/capacitor-dark-mode';
 import { provideApollo } from 'apollo-angular';
-import { provideNgxWebstorage, withLocalStorage } from 'ngx-webstorage';
 import { apolloFactory } from './apllo.factory';
 import { DatePipe } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
@@ -43,9 +43,9 @@ function appInitFactory(
         return Promise.all([
             DarkMode.init({
                 cssClass: 'dark',
-                getter: () => themeService.darkMode,
+                getter: () => themeService.darkMode(),
                 setter: (appearance) => {
-                    themeService.darkMode = appearance;
+                    themeService.darkMode.set(appearance);
                 },
             }),
             firstValueFrom(appsettingsService.loadAppsettings()),
@@ -60,7 +60,6 @@ export const appConfig: ApplicationConfig = {
         provideRouter(
             routes,
         ),
-        provideNgxWebstorage(withLocalStorage()),
         provideApollo(apolloFactory),
         importProvidersFrom(
             MatNativeDateModule,
@@ -92,5 +91,6 @@ export const appConfig: ApplicationConfig = {
             useClass: CustomDateAdapter,
             deps: [I18nService, TranslateService],
         },
+        provideStorage(localStorage),
     ],
 };

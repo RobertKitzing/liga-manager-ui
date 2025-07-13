@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { iif, of, tap } from 'rxjs';
-import { AuthenticationService, TeamService } from '@liga-manager-ui/services';
+import { AuthenticationService, fromStorage, TeamService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import {
     RouterOutlet,
@@ -10,9 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TeamChooserComponent } from '@liga-manager-ui/components';
-import { LocalStorage } from 'ngx-webstorage';
 import { Team } from '@liga-manager-api/graphql';
-import { APP_ROUTES } from '@liga-manager-ui/common';
+import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-teams-managment',
@@ -36,9 +35,9 @@ export class TeamsManagementComponent {
 
     private router = inject(Router)
 
-    @LocalStorage() selectedTeamLS!: Team | null;
+    selectedTeamLS = fromStorage<Team>(StorageKeys.TEAMS_MANAGMENT_SELECTED_TEAM);
 
-    selectedTeamFC = new FormControl<Team | null>(this.selectedTeamLS);
+    selectedTeamFC = new FormControl(this.selectedTeamLS());
 
     selectedTeam$ = this.selectedTeamFC.valueChanges.pipe(
         tap((team) => {
@@ -49,7 +48,7 @@ export class TeamsManagementComponent {
             } else {
                 this.router.navigateByUrl(`${APP_ROUTES.TEAMS_MANAGEMENT}`);
             }
-            this.selectedTeamLS = team;
+            this.selectedTeamLS.set(team);
         }),
     );
 

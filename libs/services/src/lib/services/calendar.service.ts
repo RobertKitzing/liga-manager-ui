@@ -68,13 +68,13 @@ export class CalendarService {
                         })),
                     );
                 }
-                events = events.concat(
-                    data.matchesByKickoff!.map((match) => ({
-                        allDay: false,
-                        title: `${match?.home_team.name} - ${match?.guest_team.name}`,
-                        start: match?.kickoff,
-                    })),
-                );
+                // events = events.concat(
+                //     data.matchesByKickoff!.map((match) => ({
+                //         allDay: false,
+                //         title: `${match?.home_team.name} - ${match?.guest_team.name}`,
+                //         start: match?.kickoff,
+                //     })),
+                // );
                 return events;
             }),
         );

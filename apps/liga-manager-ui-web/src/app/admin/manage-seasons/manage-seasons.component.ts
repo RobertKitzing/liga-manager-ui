@@ -61,9 +61,7 @@ export class ManageSeasonsComponent implements OnInit {
 
     SeasonState = SeasonState;
 
-    selectedSeasonFC = new FormControl<Season | undefined | null>(
-        this.seasonService.manageSeason,
-    );
+    selectedSeasonFC = new FormControl(this.seasonService.manageSeason());
 
     seasonTrigger$ = new BehaviorSubject(this.selectedSeasonFC.value?.id);
 

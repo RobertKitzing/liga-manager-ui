@@ -106,7 +106,7 @@ export class TeamService {
         const params = new HttpParams().set('teamId', teamId);
         const headers = new HttpHeaders().set(
             'Authorization',
-            `Bearer ${this.authenticationService.accessToken}`,
+            `Bearer ${this.authenticationService.accessToken()}`,
         );
         return this.httpClient.post(
             `${this.appsettingsService.appsettings?.host || ''}/api/logos`,
@@ -119,7 +119,7 @@ export class TeamService {
         const params = new HttpParams().set('teamId', teamId);
         const headers = new HttpHeaders().set(
             'Authorization',
-            `Bearer ${this.authenticationService.accessToken}`,
+            `Bearer ${this.authenticationService.accessToken()}`,
         );
         return this.httpClient.delete(
             `${this.appsettingsService.appsettings?.host || ''}/api/logos`,

@@ -92,6 +92,7 @@
           "outputHashing": "all"
         },
         "development": {
+          "buildLibsFromSource": true,
           "optimization": false,
           "extractLicenses": false,
           "sourceMap": true,

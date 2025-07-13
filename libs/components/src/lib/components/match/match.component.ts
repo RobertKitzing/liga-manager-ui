@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,12 +36,13 @@ export class MatchComponent {
 
     @Input() markLooser = false;
 
-    constructor(
-        private dialog: MatDialog,
-        private router: Router,
-        public authService: AuthenticationService,
-        private userService: UserService,
-    ) {}
+    authService = inject(AuthenticationService);
+
+    private dialog = inject(MatDialog);
+
+    private router = inject(Router);
+
+    private userService = inject(UserService);
 
     get dialogData() {
         return {
@@ -92,14 +93,14 @@ export class MatchComponent {
         });
     }
 
-    isHomeWinner(): boolean {
+    isHomeWinner() {
         return (
             this.markLooser &&
             (this.match?.home_score || 0) > (this.match?.guest_score || 0)
         );
     }
 
-    isGuestWinner(): boolean {
+    isGuestWinner() {
         return (
             this.markLooser &&
             (this.match?.home_score || 0) < (this.match?.guest_score || 0)

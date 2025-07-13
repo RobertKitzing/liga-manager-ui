@@ -1,22 +1,22 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
-import { LocalStorage } from 'ngx-webstorage';
 import { BehaviorSubject } from 'rxjs';
+import { fromStorage } from '../functions';
+import { StorageKeys } from '@liga-manager-ui/common';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ThemeService {
 
-    @LocalStorage('APPEARANCE', DarkModeAppearance.system) darkMode!: DarkModeAppearance;
+    darkMode = fromStorage<DarkModeAppearance>(StorageKeys.DARK_MODE_APPEARANCE, DarkModeAppearance.system);
 
-    @LocalStorage('THEME')
-    private currentTheme?: string;
+    private currentTheme = fromStorage<string>(StorageKeys.THEME);
 
     themes = ['default', 'gondi', 'werder'];
 
-    currentTheme$ = new BehaviorSubject(this.currentTheme || 'default');
+    currentTheme$ = new BehaviorSubject(this.currentTheme() || 'default');
 
     constructor(@Inject(DOCUMENT) private document: Document) {
         this.currentTheme$.subscribe((theme) => {
@@ -25,7 +25,7 @@ export class ThemeService {
     }
 
     private loadStyle(styleName: string) {
-        this.currentTheme = styleName;
+        this.currentTheme.set(styleName);
         const head = this.document.getElementsByTagName('head')[0];
 
         const themeLink = this.document.getElementById(

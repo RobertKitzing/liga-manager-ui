@@ -54,11 +54,9 @@ export class AppComponent implements OnInit {
 
     DarkModeAppearance = DarkModeAppearance;
 
-    darkModeControl = new FormControl(this.themeService.darkMode);
+    darkModeControl = new FormControl(this.themeService.darkMode());
 
-    languageControl = new FormControl<StoredLang | undefined>(
-        this.i18Service.storedLang,
-    );
+    languageControl = new FormControl(this.i18Service.storedLang());
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
 
@@ -86,7 +84,7 @@ export class AppComponent implements OnInit {
         });
 
         this.darkModeControl.valueChanges.subscribe((dark) => {
-            this.themeService.darkMode = dark || DarkModeAppearance.system;
+            this.themeService.darkMode.set(dark || DarkModeAppearance.system);
             DarkMode.update();
         });
 

@@ -1,4 +1,5 @@
 import { Base64 } from 'js-base64';
+import { StorageKeys } from '@liga-manager-ui/common';
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-cy="${selector}"]`, ...args)
@@ -30,7 +31,7 @@ const login = (username: string, password: string) => {
         },
     }).then(
         (res) => {
-            localStorage.setItem('ngx-webstorage|access_token', `"${res.headers['x-token']}"`)
+            localStorage.setItem(StorageKeys.ACCESS_TOKEN, `"${res.headers['x-token']}"`)
         },
     )
 }

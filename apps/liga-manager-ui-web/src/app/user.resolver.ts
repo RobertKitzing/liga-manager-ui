@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 
 export const userResolver: ResolveFn<Observable<unknown>> = () => {
 
-    if (inject(AuthenticationService).accessToken) {
+    if (inject(AuthenticationService).accessToken()) {
         return inject(UserService).loadUser();
     }
     return of({});

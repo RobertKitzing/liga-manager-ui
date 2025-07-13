@@ -15,6 +15,14 @@ const config: CodegenConfig = {
                 flattenGeneratedTypesIncludeFragments: true,
                 skipTypeNameForRoot: true,
                 preResolveTypes: false,
+                strictScalars: true,
+                defaultScalarType: 'unknown',
+                scalars: {
+                    DateTime: 'Date',
+                    Date: 'Date',
+                },
+                skipTypename: true,
+                dedupeFragments: true,
             },
             plugins: [
                 'add',

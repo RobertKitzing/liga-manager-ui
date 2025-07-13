@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, startWith, switchMap, tap } from 'rxjs';
-import { AuthenticationService, SeasonService } from '@liga-manager-ui/services';
+import { AuthenticationService, fromStorage, SeasonService } from '@liga-manager-ui/services';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import {
 } from '@liga-manager-ui/components';
 import { AllSeasonsFragment, SeasonState } from '@liga-manager-api/graphql';
 import { FormControl } from '@angular/forms';
-import { LocalStorage } from 'ngx-webstorage';
+import { StorageKeys } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-schedule',
@@ -41,20 +41,18 @@ import { LocalStorage } from 'ngx-webstorage';
 })
 export class ScheduleComponent implements OnInit {
 
-    @LocalStorage('selectedMatchDayId', '0') selectedMatchDayId!: string;
+    selectedMatchDayId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY_ID, '0')
 
-    @LocalStorage('selectedTeamId', '0') selectedTeamId!: string;
+    selectedTeamId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_TEAM_ID, '0')
 
-    selectedSeasonFC = new FormControl<AllSeasonsFragment>(
-        this.selectedSeasonLS,
-    );
+    selectedSeasonFC = new FormControl(this.selectedSeason);
 
     season$ = this.selectedSeasonFC.valueChanges.pipe(
-        startWith(this.selectedSeasonLS),
+        startWith(this.selectedSeason),
         tap((season) => {
             if (season) {
                 this.seasonService.refetchSeasonById(season.id);
-                this.selectedSeasonLS = season;
+                this.selectedSeason = season;
             }
         }),
         switchMap((selectedSeason) =>
@@ -80,42 +78,42 @@ export class ScheduleComponent implements OnInit {
         }
     }
 
-    get selectedSeasonLS() {
+    get selectedSeason() {
         if (this.router.url.includes('history')) {
-            return this.seasonService.historySeason;
+            return this.seasonService.historySeason();
         } else {
-            return this.seasonService.progressSeason;
+            return this.seasonService.progressSeason();
         }
     }
 
-    set selectedSeasonLS(season: AllSeasonsFragment) {
+    set selectedSeason(season: AllSeasonsFragment | null) {
         if (this.router.url.includes('history')) {
-            this.seasonService.historySeason = season;
+            this.seasonService.historySeason.set(season)
         } else {
-            this.seasonService.progressSeason = season;
+            this.seasonService.progressSeason.set(season)
         }
     }
 
     ngOnInit(): void {
-        if (this.selectedMatchDayId !== '0' || this.selectedTeamId !== '0') {
+        if (this.selectedMatchDayId() !== '0' || this.selectedTeamId() !== '0') {
             this.showFilter = true;
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filterMatchDays(matchDays: any[]): any[] {
-        return this.selectedMatchDayId !== '0'
-            ? matchDays.filter((x) => x.id === this.selectedMatchDayId)
+        return this.selectedMatchDayId() !== '0'
+            ? matchDays.filter((x) => x.id === this.selectedMatchDayId())
             : matchDays;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filterMatches(matches: any[]): any[] {
-        return this.selectedTeamId !== '0'
+        return this.selectedTeamId() !== '0'
             ? matches.filter(
                 (x) =>
-                    x.guest_team.id === this.selectedTeamId ||
-                      x.home_team.id === this.selectedTeamId,
+                    x.guest_team.id === this.selectedTeamId() ||
+                      x.home_team.id === this.selectedTeamId(),
             )
             : matches;
     }

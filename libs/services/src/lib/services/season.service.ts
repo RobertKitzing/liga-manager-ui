@@ -15,22 +15,19 @@ import {
     SeasonByIdGQL,
     StartSeasonGQL,
 } from '@liga-manager-api/graphql';
-import { LocalStorage } from 'ngx-webstorage';
-
-const SELECTED_PROGRESS_SEASON_KEY = 'SELECTED_PROGRESS_SEASON';
-const SELECTED_HISTORY_SEASON_KEY = 'SELECTED_HISTORY_SEASON';
-const SELECTED_MANAGE_SEASON_KEY = 'SELECTED_MANAGE_SEASON';
+import { StorageKeys } from '@liga-manager-ui/common';
+import { fromStorage } from '../functions';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SeasonService {
 
-    @LocalStorage(SELECTED_PROGRESS_SEASON_KEY) progressSeason!: AllSeasonsFragment;
+    progressSeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_PROGRESS_SEASON);
 
-    @LocalStorage(SELECTED_HISTORY_SEASON_KEY) historySeason!: AllSeasonsFragment;
+    historySeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_HISTORY_SEASON);
 
-    @LocalStorage(SELECTED_MANAGE_SEASON_KEY) manageSeason: Season | undefined | null;
+    manageSeason = fromStorage<Season>(StorageKeys.SELECTED_MANAGE_SEASON);
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
         map((seasons) =>

@@ -64,9 +64,7 @@ export class TableComponent {
 
     expandedElement = signal<RankingPosition | undefined>(undefined);
 
-    selectedSeasonFC = new FormControl<AllSeasonsFragment>(
-        this.selectedSeasonLS,
-    );
+    selectedSeasonFC = new FormControl(this.selectedSeason);
 
     sortRanking = new BehaviorSubject<Sort>({
         active: 'sort_index',
@@ -78,11 +76,11 @@ export class TableComponent {
     ranking$ = this.sortRanking.pipe(
         switchMap((sort) =>
             this.selectedSeasonFC.valueChanges.pipe(
-                startWith(this.selectedSeasonLS),
+                startWith(this.selectedSeason),
                 tap((season) => {
                     if (season) {
                         this.seasonService.refetchRankingById(season.id);
-                        this.selectedSeasonLS = season;
+                        this.selectedSeason = season;
                     }
                 }),
                 switchMap((selectedSeason) =>
@@ -142,19 +140,19 @@ export class TableComponent {
         }
     }
 
-    get selectedSeasonLS() {
+    get selectedSeason() {
         if (this.router.url.includes('history')) {
-            return this.seasonService.historySeason;
+            return this.seasonService.historySeason();
         } else {
-            return this.seasonService.progressSeason;
+            return this.seasonService.progressSeason();
         }
     }
 
-    set selectedSeasonLS(season: AllSeasonsFragment) {
+    set selectedSeason(season: AllSeasonsFragment | null) {
         if (this.router.url.includes('history')) {
-            this.seasonService.historySeason = season;
+            this.seasonService.historySeason.set(season);
         } else {
-            this.seasonService.progressSeason = season;
+            this.seasonService.progressSeason.set(season);
         }
     }
 

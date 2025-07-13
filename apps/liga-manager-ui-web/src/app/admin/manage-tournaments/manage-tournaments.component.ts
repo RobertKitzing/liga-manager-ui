@@ -1,24 +1,23 @@
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TranslateModule } from '@ngx-translate/core';
-import { AllTournamentsFragment, Tournament } from '@liga-manager-api/graphql';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateNewTournamentComponent } from './create-new-tournament';
-import { TournamentService } from '@liga-manager-ui/services';
-import { AsyncPipe } from '@angular/common';
-import { of, startWith, switchMap, tap } from 'rxjs';
-import { CustomDatePipe } from '@liga-manager-ui/pipes';
-import { LocalStorage } from 'ngx-webstorage';
+import { AllTournamentsFragment } from '@liga-manager-api/graphql';
 import { TournamentChooserComponent } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { CustomDatePipe } from '@liga-manager-ui/pipes';
+import { fromStorage, TournamentService } from '@liga-manager-ui/services';
+import { TranslateModule } from '@ngx-translate/core';
+import { of, startWith, switchMap, tap } from 'rxjs';
+import { CreateNewTournamentComponent } from './create-new-tournament';
+import { StorageKeys } from '@liga-manager-ui/common';
 
-const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
 @Component({
     selector: 'lima-manage-tournaments',
     templateUrl: './manage-tournaments.component.html',
@@ -40,17 +39,15 @@ const SELECTED_MANAGE_TOURNAMENT_KEY = 'SELECTED_MANAGE_TOURNAMENT';
 })
 export class ManageTournamentsComponent {
 
-    @LocalStorage(SELECTED_MANAGE_TOURNAMENT_KEY) manageTournament!: AllTournamentsFragment;
+    manageTournament = fromStorage<AllTournamentsFragment>(StorageKeys.ADMIN_SELECTED_MANAGE_TOURNAMENT)
 
-    selectedTournamentFC = new FormControl<Tournament | null>(
-        this.manageTournament,
-    );
+    selectedTournamentFC = new FormControl(this.manageTournament());
 
     selectedTournament$ = this.selectedTournamentFC.valueChanges.pipe(
-        startWith(this.manageTournament),
+        startWith(this.manageTournament()),
         tap((tournament) => {
             if (tournament) {
-                this.manageTournament = tournament;
+                this.manageTournament.set(tournament);
             }
         }),
         switchMap((tournament) =>

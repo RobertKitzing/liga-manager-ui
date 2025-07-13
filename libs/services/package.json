@@ -7,6 +7,7 @@
         "@angular/material": "^19.2.18",
         "@angular/router": "^19.2.14",
         "@aparajita/capacitor-dark-mode": "^5.0.2",
+        "@liga-manager-ui/common": "^5.4.45",
         "@liga-manager-api/graphql": "^5.4.45",
         "@liga-manager-ui/directives": "^5.4.45",
         "@liga-manager-ui/utils": "^5.4.45",
@@ -14,7 +15,6 @@
         "@ngx-translate/http-loader": "^7.0.0",
         "dayjs": "^1.11.10",
         "js-base64": "^3.7.3",
-        "ngx-webstorage": "^19.0.1",
         "rxjs":"~7.5.0",
         "ts-cacheable": "^1.0.10",
         "uuid": "^9.0.0"

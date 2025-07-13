@@ -5,9 +5,6 @@
     "liga-manager-ui-web"
   ],
   "targets": {
-    "serve": {
-      "command": "docker compose up"
-    },
     "container": {
       "executor": "@nx-tools/nx-container:build",
       "defaultConfiguration": "local",

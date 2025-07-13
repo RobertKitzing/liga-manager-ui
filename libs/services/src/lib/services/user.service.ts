@@ -94,7 +94,7 @@ export class UserService {
     }
 
     loadUser() {
-        if (!this.authenticationService.accessToken) {
+        if (!this.authenticationService.accessToken()) {
             return of();
         }
         return this.authenticatedUserGQL.fetch().pipe(
