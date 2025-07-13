@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatchComponent } from './match.component';
-import { STORAGE } from '@liga-manager-ui/services';
-import { provideApollo } from 'apollo-angular';
-import { HttpLink, InMemoryCache } from '@apollo/client/core';
+import { STORAGE, UserService } from '@liga-manager-ui/services';
+import { Injectable } from '@angular/core';
+import { Match } from '@liga-manager-api/graphql';
+
+@Injectable()
+class UserServiceMock {}
 
 describe('MatchComponent', () => {
 
@@ -19,7 +22,10 @@ describe('MatchComponent', () => {
                     provide: STORAGE,
                     useValue: localStorage,
                 },
-                provideApollo(() => ({ link: new HttpLink(), cache: new InMemoryCache() })),
+                {
+                    provide: UserService,
+                    useClass: UserServiceMock,
+                },
             ],
         }).compileComponents();
 
@@ -33,6 +39,11 @@ describe('MatchComponent', () => {
     })
 
     it('should mark home as winner', () => {
+        component.markLooser = true;
+        component.match = {
+            home_score: 1,
+            guest_score: 0,
+        } as  Match;
         expect(component.isHomeWinner()).toBeTruthy();
     })
 

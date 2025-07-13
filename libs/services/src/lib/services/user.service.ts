@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Base64 } from 'js-base64';
 import { map, of, tap } from 'rxjs';
 import {
@@ -22,6 +22,20 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class UserService {
 
+    private allUsersGQL = inject(AllUsersGQL);
+
+    private createUserGQL = inject(CreateUserGQL);
+
+    private updateUserGQL = inject(UpdateUserGQL);
+
+    private authenticatedUserGQL = inject(AuthenticatedUserGQL);
+
+    private changePasswordQGL = inject(PasswordChangeGQL);
+
+    private resetPasswordQGL = inject(PasswordResetGQL);
+
+    private authenticationService = inject(AuthenticationService);
+
     allUsers$ = this.allUsersGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allUsers),
         map((teams) => {
@@ -38,16 +52,6 @@ export class UserService {
             );
         }),
     );
-
-    constructor(
-        private allUsersGQL: AllUsersGQL,
-        private createUserGQL: CreateUserGQL,
-        private updateUserGQL: UpdateUserGQL,
-        private authenticatedUserGQL: AuthenticatedUserGQL,
-        private changePasswordQGL: PasswordChangeGQL,
-        private resetPasswordQGL: PasswordResetGQL,
-        private authenticationService: AuthenticationService,
-    ) {}
 
     createUser(variables: CreateUserMutationVariables) {
         return this.createUserGQL.mutate(variables, {

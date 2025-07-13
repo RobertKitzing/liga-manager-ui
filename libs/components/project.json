@@ -24,7 +24,6 @@
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "cache": false,
             "options": {
                 "jestConfig": "libs/components/jest.config.ts"
             }
