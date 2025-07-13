@@ -256,7 +256,7 @@ jobs:
 
       - name: Build App
         working-directory: apps/liga-manager-ui-web
-        run: npx cap build android --keystorealias limahb --keystorepath ./android/release.decrypted.jks --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+        run: npx cap build android --keystorealias release --keystorepath ./release.decrypted.jks --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
