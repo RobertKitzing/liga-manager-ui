@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
 
-    safeAreaInsets = signal<SafeAreaInsets | null>(null);
+    safeAreaInsets = signal<SafeAreaInsets>({ insets: { top: 0, bottom: 0, left: 0, right: 0 }});
 
     constructor(
         public themeService: ThemeService,

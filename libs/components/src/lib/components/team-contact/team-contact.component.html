@@ -1,14 +1,14 @@
 @if (team) {
 <div class="flex flex-col">
     @if (showTitle) {
-    <div class="mat-sys-primary text-center">
+    <div class="mat-sys-surface text-center p-4">
         {{ team.name }}
     </div>
     }
     <div class="flex justify-center">
-        <img class="p-2 h-[100px]" src="{{ team | teamLogo }}" />
+        <img class="p-2 h-[200px]" src="{{ team | teamLogo }}" />
     </div>
-    <div class="flex space-x-4">
+    <div class="flex space-x-4 mat-sys-surface p-3">
         <mat-icon>person</mat-icon>
         @if (team.contact) {
         <span class="grow">
@@ -16,7 +16,7 @@
         </span>
         }
     </div>
-    <div class="flex space-x-4">
+    <div class="flex space-x-4 mat-sys-surface p-3">
         <mat-icon>email</mat-icon>
         @if (team.contact) {
         <span class="grow">
@@ -30,7 +30,7 @@
         </span>
         }
     </div>
-    <div class="flex space-x-4">
+    <div class="flex space-x-4 mat-sys-surface p-3">
         <mat-icon>phone</mat-icon>
         @if (team.contact) {
         <span class="grow">

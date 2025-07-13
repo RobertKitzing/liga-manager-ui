@@ -1,26 +1,32 @@
-<mat-toolbar class="border-t-2">
-    <div class="flex justify-center w-full h-full text-lg">
-        <a
-            class="flex h-full items-center p-2"
-            routerLink="table"
-            routerLinkActive="mat-sys-primary-container"
-            translate
-            >NAVIGATION.TABLE</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            routerLink="schedule"
-            routerLinkActive="mat-sys-primary-container"
-            translate
-            >NAVIGATION.SCHEDULE</a
-        >
-        <a
-            class="flex h-full items-center p-2"
-            routerLink="tournament"
-            routerLinkActive="mat-sys-primary-container"
-            translate
-            >NAVIGATION.TOURNAMENT</a
-        >
+<div class="flex justify-center mat-sys-surface-container">
+    <div class="w-full lg:w-2/3">
+        <div class="mt-2 mb-2">
+            <mat-toolbar class="secondary">
+                <div class="flex justify-center w-full h-full text-lg">
+                    <a
+                        class="flex h-full items-center p-2"
+                        routerLink="table"
+                        routerLinkActive="mat-sys-primary-container"
+                        translate
+                        >NAVIGATION.TABLE</a
+                    >
+                    <a
+                        class="flex h-full items-center p-2"
+                        routerLink="schedule"
+                        routerLinkActive="mat-sys-primary-container"
+                        translate
+                        >NAVIGATION.SCHEDULE</a
+                    >
+                    <a
+                        class="flex h-full items-center p-2"
+                        routerLink="tournament"
+                        routerLinkActive="mat-sys-primary-container"
+                        translate
+                        >NAVIGATION.TOURNAMENT</a
+                    >
+                </div>
+            </mat-toolbar>
+        </div>
     </div>
-</mat-toolbar>
+</div>
 <router-outlet></router-outlet>

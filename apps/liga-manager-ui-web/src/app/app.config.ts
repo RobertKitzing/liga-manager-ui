@@ -21,7 +21,6 @@ import {
 } from '@liga-manager-ui/services';
 import {
     HTTP_INTERCEPTORS,
-    HttpClient,
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';

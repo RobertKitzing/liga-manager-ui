@@ -1,9 +1,9 @@
-<mat-toolbar class="border-t-2 dark:border-toolbardark">
-    <div class="grow flex justify-center visible lg:hidden">
+<mat-toolbar class="secondary">
+    <div class="grow flex justify-center visible lg:hidden text-lg">
         <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
     </div>
 
-    <div class="hidden h-full lg:flex lg:visible grow">
+    <div class="hidden h-full lg:flex lg:visible grow text-lg">
         <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
     </div>
 
@@ -21,7 +21,7 @@
             <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
         </div>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content class="mat-sys-surface-container">
         <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

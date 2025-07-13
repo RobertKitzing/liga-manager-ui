@@ -1,11 +1,11 @@
-<div class="flex justify-center h-full w-full">
+<div class="flex justify-center h-full w-full mat-sys-surface-container">
     <div class="w-full m-3">
-        <mat-toolbar class="flex justify-center mt-2 mb-2 space-x-4">
-            <mat-form-field class="w-1/2" subscriptSizing="dynamic">
+        <mat-toolbar class="secondary">
+            <mat-form-field class="w-1/2 p-8" subscriptSizing="dynamic">
                 <mat-label translate>SEARCH_TEAM</mat-label>
                 <input matInput [formControl]="searchTeam" />
             </mat-form-field>
-            <div class="w-1/2">
+            <div class="w-1/2 m-8">
                 <lima-season-chooser
                     [selectedSeasonFC]="selectedSeasonFC"
                     [clearable]="true"
@@ -20,7 +20,7 @@
             @if(teams$ | async; as teams) {
                 @for (team of teams | sortBy:'name'; track team) {
                     <div
-                        class="p-2 w-1/2 lg:w-1/3 max-w-1/3 border-2 dark:border-toolbardark"
+                        class="p-2 w-1/2 lg:w-1/3 max-w-1/3 border-2"
                     >
                         <lima-team-contact [team]="team"></lima-team-contact>
                     </div>

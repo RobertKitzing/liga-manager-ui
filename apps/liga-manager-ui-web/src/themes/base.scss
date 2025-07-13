@@ -53,4 +53,25 @@ body {
             )
         );
     }
+    mat-toolbar.secondary {
+        @include mat.toolbar-overrides(
+            (
+                container-background-color: var(--mat-sys-surface),
+                container-text-color: var(--mat-sys-on-surface),
+            )
+        );
+        @include mat.select-overrides(
+            (
+                panel-background-color: var(--mat-sys-surface),
+                enabled-trigger-text-color: var(--mat-sys-on-surface),
+                placeholder-text-color: var(--mat-sys-on-surface),
+                enabled-arrow-color: var(--mat-sys-on-surface),
+            )
+        );
+        @include mat.icon-overrides(
+            (
+                color: var(--mat-sys-on-surface),
+            )
+        );
+    }
 }
