@@ -243,9 +243,15 @@ jobs:
         run: npx capacitor-set-version set:android -v ${{ steps.package-version.outputs.current-version }} -b ${{ github.run_number  }}
         working-directory: apps/liga-manager-ui-web
 
+      - name: Extract Android signing key from env
+        working-directory: apps/liga-manager-ui-web
+        run: |
+          echo "${{ secrets.RELEASE_KEYSTORE }}" > android/release.jks.base64
+          base64 -d android/release.jks.base64 > android/release.decrypted.jks
+
       - name: Build App
         working-directory: apps/liga-manager-ui-web
-        run: npx cap build android --keystorealias limahb --keystorepath ../limahb.keystore --keystorepass ${{ secrets.ANDROID_KEYSTORE_STOREPASS }} --androidreleasetype APK --keystorealiaspass ${{ secrets.ANDROID_KEYSTORE_PASS }}
+        run: npx cap build android --keystorealias limahb --keystorepath ./android/release.decrypted.jks --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
