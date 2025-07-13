@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
     android: {
         buildOptions: {
             keystoreAlias: 'release',
-            keystorePath: './release.jks',
+            keystorePath: '../release.jks',
             signingType: 'apksigner',
         },
     },

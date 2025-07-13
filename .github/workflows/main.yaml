@@ -252,8 +252,17 @@ jobs:
         working-directory: apps/liga-manager-ui-web
         run: |
           echo "${{ secrets.RELEASE_KEYSTORE }}" > android/release.jks.base64
-          base64 -d android/release.jks.base64 > android/release.jks
+          base64 -d android/release.jks.base64 > ./release.jks
 
+      - uses: actions/cache@v4
+        with:
+          path: apps/liga-manager-ui-web/android/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - run: sudo apt install apksigner
+  
       - name: Build App
         working-directory: apps/liga-manager-ui-web
         run: npx cap build android --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK
