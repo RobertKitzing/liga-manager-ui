@@ -1,3 +1,13 @@
+## 5.4.56 (2025-07-14)
+
+### Work in Progress
+
+- new design for matches ([11d5347](https://github.com/RobertKitzing/liga-manager-ui/commit/11d5347))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.55 (2025-07-13)
 
 ### Work in Progress
