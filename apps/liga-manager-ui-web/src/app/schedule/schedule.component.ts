@@ -41,7 +41,7 @@ import { StorageKeys } from '@liga-manager-ui/common';
 })
 export class ScheduleComponent implements OnInit {
 
-    selectedMatchDayId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY_ID, '0')
+    selectedMatchDayId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY_ID)
 
     selectedTeamId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_TEAM_ID, '0')
 
@@ -59,6 +59,13 @@ export class ScheduleComponent implements OnInit {
             selectedSeason
                 ? this.seasonService.getSeasonById$(selectedSeason.id)
                 : of(null),
+        ),
+        tap(
+            (season) => {
+                if (!this.selectedMatchDayId() && season?.match_days) {
+                    this.selectedMatchDayId.set(season.match_days[0]?.id || null);
+                }
+            },
         ),
     );
 
@@ -116,6 +123,31 @@ export class ScheduleComponent implements OnInit {
                       x.home_team.id === this.selectedTeamId(),
             )
             : matches;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    nextMatchDay(season: any) {
+        if (!season.match_days) {
+            return;
+        }
+        const currentIndex = season.match_days.findIndex((md: any) => md?.id === this.selectedMatchDayId());
+        if (currentIndex === season.match_days.length - 1) {
+            return;
+        }
+
+        this.selectedMatchDayId.set(season.match_days[currentIndex +1]?.id || null)
+    }
+
+    prevMatchDay(season: any) {
+        if (!season.match_days) {
+            return;
+        }
+        const currentIndex = season.match_days.findIndex((md: any) => md?.id === this.selectedMatchDayId());
+        if (currentIndex === 0) {
+            return;
+        }
+
+        this.selectedMatchDayId.set(season.match_days[currentIndex - 1]?.id || null)
     }
 
 }

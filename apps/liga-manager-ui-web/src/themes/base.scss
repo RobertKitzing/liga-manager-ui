@@ -38,6 +38,11 @@ body {
         )
     );
 
+    @include mat.card-overrides((
+        subtitle-text-color: var(--mat-sys-on-surface),
+        elevated-container-color: var(--mat-sys-surface-dim),
+    ));
+
     mat-toolbar {
         @include mat.select-overrides(
             (
@@ -56,13 +61,13 @@ body {
     mat-toolbar.secondary {
         @include mat.toolbar-overrides(
             (
-                container-background-color: var(--mat-sys-surface),
+                container-background-color: var(--mat-sys-surface-dim),
                 container-text-color: var(--mat-sys-on-surface),
             )
         );
         @include mat.select-overrides(
             (
-                panel-background-color: var(--mat-sys-surface),
+                panel-background-color: var(--mat-sys-surface-dim),
                 enabled-trigger-text-color: var(--mat-sys-on-surface),
                 placeholder-text-color: var(--mat-sys-on-surface),
                 enabled-arrow-color: var(--mat-sys-on-surface),

@@ -35,6 +35,12 @@ export type CySelectors =
     | 'route-teams_management'
     | 'route-tournament'
     | 'select-season'
+    | 'season-management-tab-select-teams'
+    | 'season-management-tab-create-matchdays'
+    | 'season-management-tab-create-matches'
+    | 'season-management-tab-schedule-matches'
+    | 'season-management-tab-penalties'
+    | 'season-management-tab-start-stop'
     | 'snackbar-success-create-tournament'
     | 'snackbar-success-create-season'
 ;

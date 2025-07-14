@@ -11,6 +11,7 @@ import { CustomDatePipe, NumberPipe, TeamLogoPipe } from '@liga-manager-ui/pipes
 import { AuthenticationService, UserService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchResultComponent, defaultDialogConfig, EditMatchPitchComponent, ViewTeamContactComponent, CancelMatchComponent, EditMatchKickoffComponent } from '../../dialogs';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-match',
@@ -25,6 +26,7 @@ import { EditMatchResultComponent, defaultDialogConfig, EditMatchPitchComponent,
         MatButtonModule,
         NumberPipe,
         CypressSelectorDirective,
+        MatCardModule,
     ],
     templateUrl: './match.component.html',
 })

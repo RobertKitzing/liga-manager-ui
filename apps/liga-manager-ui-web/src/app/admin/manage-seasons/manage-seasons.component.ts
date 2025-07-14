@@ -84,13 +84,15 @@ export class ManageSeasonsComponent implements OnInit {
 
     stepperOrientation: Observable<StepperOrientation>;
 
+    private destoryRef = inject(DestroyRef);
+
     constructor() {
 
         const breakpointObserver = inject(BreakpointObserver);
 
         this.stepperOrientation = breakpointObserver
             .observe('(min-width: 800px)')
-            .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+            .pipe(takeUntilDestroyed(this.destoryRef),map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
     }
 

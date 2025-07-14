@@ -2,6 +2,10 @@
     @apply bg-(--mat-sys-primary) text-(--mat-sys-on-primary);
 }
 
+.mat-sys-primary-fixed {
+    @apply bg-(--mat-sys-primary-fixed) text-(--mat-sys-on-primary-fixed);
+}
+
 .mat-sys-primary-container {
     @apply bg-(--mat-sys-primary-container) text-(--mat-sys-on-primary-container);
 }
@@ -38,10 +42,38 @@
     @apply bg-(--mat-sys-surface) text-(--mat-sys-on-surface);
 }
 
-.mat-sys-surface-dim {
-    @apply bg-(--mat-sys-surface-dim) text-(--mat-sys-on-surface-dim);
-}
-
 .mat-sys-surface-container {
     @apply bg-(--mat-sys-surface-container) text-(--mat-sys-on-surface-container);
+}
+
+.mat-sys-surface-dim {
+    @apply bg-(--mat-sys-surface-dim) text-(--mat-sys-on-surface);
+}
+
+.mat-sys-surface-bright {
+    @apply bg-(--mat-sys-surface-bright) text-(--mat-sys-on-surface);
+}
+
+.mat-sys-surface-container-lowest {
+    @apply bg-(--mat-sys-surface-container-lowest) text-(--mat-sys-on-surface);
+}
+
+.mat-sys-surface-container-low {
+    @apply bg-(--mat-sys-surface-container-low) text-(--mat-sys-on-surface);
+}
+
+.mat-sys-surface-container-high {
+    @apply bg-(--mat-sys-surface-container-high) text-(--mat-sys-on-surface);
+}
+
+.mat-sys-surface-container-highest {
+    @apply bg-(--mat-sys-surface-container-highest) text-(--mat-sys-on-surface);
+}
+
+.mat-sys-corner-medium {
+    @apply rounded-(--mat-sys-corner-medium)
+}
+
+.mat-sys-border {
+    @apply border-1 border-(--mat-sys-outline)
 }

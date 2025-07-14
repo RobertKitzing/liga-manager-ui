@@ -6,7 +6,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@liga-manager-ui/services';
 import { NgClass, AsyncPipe } from '@angular/common';
@@ -20,6 +20,8 @@ import { AllSeasonsFragment, RankingPosition, SeasonState } from '@liga-manager-
 import { BehaviorSubject, map, of, startWith, switchMap, tap } from 'rxjs';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-table',
@@ -130,7 +132,11 @@ export class TableComponent {
         ),
     );
 
-    constructor(private seasonService: SeasonService, private router: Router) {}
+    constructor(
+        private router: Router,
+        private seasonService: SeasonService,
+    ) {
+    }
 
     get filterSeasonStates() {
         if (this.router.url.includes('history')) {

@@ -21,6 +21,8 @@ describe('Admin - Create Season', () => {
     it('should select-season a season', () => {
         cy.getBySel('select-season').click();
         cy.contains(Seasons[0].name).click();
+        cy.getBySel('season-management-tab-select-teams').click();
         cy.getBySel('button-add-team-to-season').click({ multiple: true });
+        cy.getBySel('season-management-tab-create-matchdays').click();
     })
 })
