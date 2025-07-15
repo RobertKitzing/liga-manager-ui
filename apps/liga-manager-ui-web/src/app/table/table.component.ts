@@ -17,10 +17,9 @@ import { TeamLogoPipe, TruncatePipe } from '@liga-manager-ui/pipes';
 import { FormControl } from '@angular/forms';
 import { SeasonChooserComponent } from '@liga-manager-ui/components';
 import { AllSeasonsFragment, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
-import { BehaviorSubject, map, of, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, fromEvent, map, of, startWith, switchMap, tap } from 'rxjs';
 import { MatSortModule, Sort } from '@angular/material/sort';
-import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -48,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         AsyncPipe,
         TruncatePipe,
         MatSortModule,
-        CypressSelectorDirective,
+        MatCardModule,
     ],
 })
 export class TableComponent {
@@ -136,6 +135,10 @@ export class TableComponent {
         private router: Router,
         private seasonService: SeasonService,
     ) {
+        fromEvent(window, 'resize')
+            .pipe(
+                takeUntilDestroyed(inject(DestroyRef)),
+            ).subscribe(() => this.expandedElement.set(undefined));
     }
 
     get filterSeasonStates() {

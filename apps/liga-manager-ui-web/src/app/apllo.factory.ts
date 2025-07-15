@@ -45,6 +45,7 @@ export function apolloFactory() {
 
     const errorHandler = onError(
         ({ graphQLErrors, networkError, operation }) => {
+            console.log(graphQLErrors);
             if (graphQLErrors) {
                 graphQLErrors.map(({ message }) =>
                     console.log(`[GraphQL error]: Message: ${message}`),
@@ -59,8 +60,9 @@ export function apolloFactory() {
                     break;
                 case 400: {
                     const messages = graphQLErrors?.map((x) => x.message);
+                    console.log(messages);
                     notificationService.showErrorNotification(
-                        marker('NETWORK_ERROR'),
+                        marker('ERROR.400_NETWORK'),
                         messages,
                     );
                     break;
@@ -76,7 +78,7 @@ export function apolloFactory() {
                 }
                 default:
                     notificationService.showErrorNotification(
-                        marker('UNKNOWN_NETWORK_ERROR'),
+                        marker('ERROR.UNKNOWN_NETWORK_ERROR'),
                         [],
                     );
                 }

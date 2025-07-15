@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { HallOfFameGQL, SeasonState, Team } from '@liga-manager-api/graphql';
 import { TeamLogoPipe } from '@liga-manager-ui/pipes';
@@ -9,7 +10,13 @@ import { map, tap } from 'rxjs';
 
 @Component({
     selector: 'lima-hall-of-fame',
-    imports: [AsyncPipe, TeamLogoPipe, MatTableModule, TranslateModule],
+    imports: [
+        AsyncPipe,
+        TeamLogoPipe,
+        MatTableModule,
+        TranslateModule,
+        MatCardModule,
+    ],
     standalone: true,
     templateUrl: './hall-of-fame.component.html',
 })
@@ -25,7 +32,7 @@ export class HallOfFameComponent {
     seasons$ = this.hof.watch().valueChanges.pipe(
         map((data) => data.data.allSeasons),
         map((seasons) =>
-            seasons?.filter((s) => s?.state === SeasonState.Ended),
+            seasons?.filter((s) => s?.state === SeasonState.Progress),
         ),
         map((seasons) =>
             [...(seasons || [])]?.sort((a, b) => {

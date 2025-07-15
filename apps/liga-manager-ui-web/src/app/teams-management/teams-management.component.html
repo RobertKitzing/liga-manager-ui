@@ -1,18 +1,22 @@
-<div class="w-full mat-sys-surface-container">
+<div class="mat-sys-surface-container-high">
     <mat-toolbar class="secondary">
         <div class="flex w-1/2 h-full m-auto">
             <div class="w-full self-center">
-                @if (teams$ | async; as teams) { @if (teams.length > 1) {
-                <lima-team-chooser
-                    [selectedTeamFC]="selectedTeamFC"
-                    [teams]="teams"
-                ></lima-team-chooser>
-                } @else {
-                <div>{{ teams[0]?.name }}</div>
-                } }
+                @if (teams$ | async; as teams) {
+                    @if (teams.length > 1) {
+                        <lima-team-chooser
+                            [selectedTeamFC]="selectedTeamFC"
+                            [teams]="teams"
+                        ></lima-team-chooser>
+                    } @else {
+                        <div>{{ teams[0]?.name }}</div>
+                    }
+                }
             </div>
         </div>
     </mat-toolbar>
 </div>
 @if (selectedTeam$ | async) { }
-<router-outlet></router-outlet>
+<div class="mat-sys-surface-container-high h-full">
+    <router-outlet></router-outlet>
+</div>

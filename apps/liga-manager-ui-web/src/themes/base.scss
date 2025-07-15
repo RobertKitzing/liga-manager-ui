@@ -59,6 +59,9 @@ body {
         );
     }
     mat-toolbar.secondary {
+        //mat-sys-corner-medium mat-sys-outlined
+        @apply rounded-(--mat-sys-corner-medium);
+        @apply border-1 border-(--mat-sys-outline-variant);
         @include mat.toolbar-overrides(
             (
                 container-background-color: var(--mat-sys-surface-dim),

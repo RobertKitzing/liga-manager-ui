@@ -1,0 +1,42 @@
+{
+    "name": "api-openapi",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/api-openapi/src",
+    "prefix": "lib",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "gen:api": {
+            "inputs": [
+                "{projectRoot}/openapi.yaml",
+                "{projectRoot}/openapi.config.json"
+            ],
+            "cache": true,
+            "outputs": ["{projectRoot}/src/lib/"],
+            "command": "npx openapi-generator-cli generate -i {projectRoot}/openapi.yml -g typescript-angular -o {projectRoot}/src/lib/ -c {projectRoot}/openapi.config.json"
+        },
+        "build": {
+            "executor": "@nx/angular:ng-packagr-lite",
+            "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+            "options": {
+                "project": "libs/api-openapi/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "libs/api-openapi/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "libs/api-openapi/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "libs/api-openapi/jest.config.ts"
+            }
+        }
+    }
+}

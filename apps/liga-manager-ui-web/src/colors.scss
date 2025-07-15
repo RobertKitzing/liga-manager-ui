@@ -74,6 +74,6 @@
     @apply rounded-(--mat-sys-corner-medium)
 }
 
-.mat-sys-border {
-    @apply border-1 border-(--mat-sys-outline)
+.mat-sys-outlined {
+    @apply border-1 border-(--mat-sys-outline-variant)
 }

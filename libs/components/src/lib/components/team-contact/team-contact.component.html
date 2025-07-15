@@ -1,44 +1,48 @@
 @if (team) {
-<div class="flex flex-col">
-    @if (showTitle) {
-    <div class="mat-sys-surface text-center p-4">
-        {{ team.name }}
-    </div>
-    }
-    <div class="flex justify-center">
-        <img class="p-2 h-[200px]" src="{{ team | teamLogo }}" />
-    </div>
-    <div class="flex space-x-4 mat-sys-surface p-3">
-        <mat-icon>person</mat-icon>
-        @if (team.contact) {
-        <span class="grow">
-            {{ team.contact.first_name }} {{ team.contact.last_name }}
-        </span>
-        }
-    </div>
-    <div class="flex space-x-4 mat-sys-surface p-3">
-        <mat-icon>email</mat-icon>
-        @if (team.contact) {
-        <span class="grow">
-            <a
-                href="mailto:{{ team.contact.first_name }} {{
-                    team.contact.last_name
-                }}<{{ team.contact.email }}>"
-            >
-                {{ team.contact.email }}
-            </a>
-        </span>
-        }
-    </div>
-    <div class="flex space-x-4 mat-sys-surface p-3">
-        <mat-icon>phone</mat-icon>
-        @if (team.contact) {
-        <span class="grow">
-            <a href="tel:{{ team.contact.phone }}">
-                {{ team.contact.phone }}
-            </a>
-        </span>
-        }
-    </div>
-</div>
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <div class="flex flex-col">
+                @if (showTitle) {
+                <div class="mat-sys-surface text-center p-4">
+                    {{ team.name }}
+                </div>
+                }
+                <div class="flex justify-center">
+                    <img class="p-2 h-[200px]" src="{{ team | teamLogo }}" />
+                </div>
+                <div class="flex space-x-4 mat-sys-surface p-3">
+                    <mat-icon>person</mat-icon>
+                    @if (team.contact) {
+                    <span class="grow">
+                        {{ team.contact.first_name }} {{ team.contact.last_name }}
+                    </span>
+                    }
+                </div>
+                <div class="flex space-x-4 mat-sys-surface p-3">
+                    <mat-icon>email</mat-icon>
+                    @if (team.contact) {
+                    <span class="grow">
+                        <a
+                            href="mailto:{{ team.contact.first_name }} {{
+                                team.contact.last_name
+                            }}<{{ team.contact.email }}>"
+                        >
+                            {{ team.contact.email }}
+                        </a>
+                    </span>
+                    }
+                </div>
+                <div class="flex space-x-4 mat-sys-surface p-3">
+                    <mat-icon>phone</mat-icon>
+                    @if (team.contact) {
+                    <span class="grow">
+                        <a href="tel:{{ team.contact.phone }}">
+                            {{ team.contact.phone }}
+                        </a>
+                    </span>
+                    }
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
 }

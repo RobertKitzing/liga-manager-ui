@@ -23,6 +23,7 @@
             "@cypress/*": ["apps/liga-manager-ui-web/cypress/*"],
             "@liga-manager-api/graphql": ["libs/api-graphql/src/index.ts"],
             "@liga-manager-ui": ["apps/liga-manager-ui-web/src/app/index.ts"],
+            "@liga-manager-ui/api-openapi": ["libs/api-openapi/src/index.ts"],
             "@liga-manager-ui/common": ["libs/common/src/index.ts"],
             "@liga-manager-ui/components": ["libs/components/src/index.ts"],
             "@liga-manager-ui/directives": ["libs/directives/src/index.ts"],

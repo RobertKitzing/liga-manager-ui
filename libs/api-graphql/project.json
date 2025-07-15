@@ -25,7 +25,7 @@
         "lint": {
             "executor": "@nx/eslint:lint"
         },
-        "codegen-generate": {
+        "gen:api": {
             "executor": "@nx-tools/nx-graphql-codegen:generate",
             "inputs": [
                 "{projectRoot}/codegen.ts",

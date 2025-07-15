@@ -11,12 +11,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-team-logo',
     templateUrl: './team-logo.component.html',
     standalone: true,
-    imports: [TranslateModule, AsyncPipe, MatButtonModule, MatIconModule],
+    imports: [
+        TranslateModule,
+        AsyncPipe,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+    ],
 })
 export class TeamLogoComponent {
 

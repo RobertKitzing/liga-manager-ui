@@ -1,11 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
     SeasonChooserComponent,
     TeamContactComponent,
+    TeamSearchComponent,
 } from '@liga-manager-ui/components';
 import {
     SeasonService,
@@ -16,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllSeasonsFragment, SeasonState } from '@liga-manager-api/graphql';
+import { AllSeasonsFragment, Maybe, SeasonState, Team } from '@liga-manager-api/graphql';
 import { SortByPipe } from '@liga-manager-ui/pipes';
 
 @Component({
@@ -34,21 +35,19 @@ import { SortByPipe } from '@liga-manager-ui/pipes';
         SeasonChooserComponent,
         MatToolbarModule,
         SortByPipe,
+        TeamSearchComponent,
     ],
 })
 export class ContacsComponent {
-
-    searchTeam = new FormControl<string | null>(null);
 
     selectedSeasonFC = new FormControl<AllSeasonsFragment | null>(null);
 
     SeasonState = SeasonState;
 
     teams$ = combineLatest([
-        this.searchTeam.valueChanges.pipe(startWith(null)),
         this.selectedSeasonFC.valueChanges.pipe(startWith(null)),
     ]).pipe(
-        switchMap(([searchTeam, selectedSeason]) => {
+        switchMap(([selectedSeason]) => {
             let teams$;
             if (!selectedSeason) {
                 teams$ = this.teamService.allTeams$;
@@ -57,18 +56,12 @@ export class ContacsComponent {
                     .getSeasonById$(selectedSeason.id)
                     .pipe(map((season) => season?.teams));
             }
-            return teams$.pipe(
-                map((teams) =>
-                    !searchTeam
-                        ? teams
-                        : teams?.filter((t) =>
-                            t?.name.toLowerCase().includes(searchTeam),
-                        ),
-                ),
-            );
+            return teams$;
         }),
     );
 
+    teams = signal<Maybe<Maybe<Team>[]> | undefined>( []);
+    
     season$ = this.selectedSeasonFC.valueChanges.pipe(
         switchMap((selectedSeason) =>
             selectedSeason

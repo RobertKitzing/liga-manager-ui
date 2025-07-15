@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe, KeyValuePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import {
     FormControl,
@@ -7,6 +7,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
@@ -23,6 +24,7 @@ import { firstValueFrom, map, switchMap, tap } from 'rxjs';
         MatInputModule,
         MatButtonModule,
         TranslateModule,
+        MatCardModule,
     ],
     templateUrl: './edit-team-contact.component.html',
 })
@@ -48,14 +50,15 @@ export class EditTeamContactComponent {
         email: new FormControl('', [Validators.email]),
         first_name: new FormControl('', [Validators.required]),
         last_name: new FormControl('', [Validators.required]),
-        phone: new FormControl('', [Validators.required]),
+        phone: new FormControl('', []),
     });
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private teamService: TeamService,
         private notificationService: NotificationService,
-    ) {}
+    ) {
+    }
 
     async updateTeamContact(team_id: string) {
         try {
@@ -72,9 +75,7 @@ export class EditTeamContactComponent {
                 marker('TEAM_CONTACT_SAVED_SUCCESS'),
             );
         } catch (_error) {
-            this.notificationService.showErrorNotification(
-                marker('TEAM_CONTACT_SAVED_ERROR'),
-            );
+            //Empty Catch
         }
     }
 
