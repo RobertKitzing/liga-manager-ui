@@ -47,7 +47,7 @@
                                 [ngClass]="{ '!border-0': element === expandedElement() }"
                                 *matCellDef="let element"
                             >
-                                <img class="m-2" ngSrc="{{ element.team | teamLogo }}" width="80" height="80"/>
+                                <img class="m-2" ngSrc="{{ element.team | teamLogo }}" width="80" height="80" priority/>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="team">

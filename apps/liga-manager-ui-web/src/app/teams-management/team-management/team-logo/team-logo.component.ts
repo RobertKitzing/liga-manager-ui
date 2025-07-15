@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AuthenticationService,
@@ -6,13 +6,15 @@ import {
     TeamService,
 } from '@liga-manager-ui/services';
 import { firstValueFrom, map, switchMap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { LogosService } from '@liga-manager-api/openapi'
+import { TeamLogoPipe } from '@liga-manager-ui/pipes';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'lima-team-logo',
@@ -20,10 +22,12 @@ import { LogosService } from '@liga-manager-api/openapi'
     standalone: true,
     imports: [
         TranslateModule,
-        AsyncPipe,
         MatButtonModule,
         MatIconModule,
         MatCardModule,
+        TeamLogoPipe,
+        NgOptimizedImage,
+        ReactiveFormsModule,
     ],
 })
 export class TeamLogoComponent {
@@ -36,41 +40,47 @@ export class TeamLogoComponent {
 
     private notificationService = inject(NotificationService);
 
-    private logosService = inject(LogosService);
-
-    imageSrc = '';
-
     team$ = this.activatedRoute.parent?.paramMap.pipe(
         map((p) => {
             const teamId = p.get('teamId')!;
-            this.reloadImage(teamId);
             return teamId;
         }),
         switchMap((teamId) => this.teamService.getTeamById(teamId)),
     );
 
-    reloadImage(teamId: string) {
-        this.imageSrc = `/api/logos?teamId=${teamId}&timestamp=${Date.now()}`;
-    }
+    team = toSignal(this.team$!)
 
-    async onFileSelected(event: Event, teamId: string) {
+    previewImage = signal<string | null>(null);
+
+    file?: File;
+
+    onFileSelected(event: Event) {
         const element = event.currentTarget as HTMLInputElement;
         if (element.files) {
             const file = element.files[0];
-            if (file) {
-                try {
-                    await firstValueFrom(
-                        this.teamService.uploadTeamLogo(teamId, file),
-                    );
-                    this.reload(teamId);
-                    this.notificationService.showSuccessNotification(
-                        marker('UPLOAD_TEAM_LOGO_SUCCESS'),
-                    );
-                } catch (_error) {
-                    this.notificationService.showErrorNotification(
-                        marker('UPLOAD_TEAM_LOGO_ERROR'),
-                    );
-                }
+            this.previewImage.set( URL.createObjectURL(file) )
+            this.file = file;
+        }
+    }
+
+    async saveTeamLogo(teamId?: string) {
+        if (!teamId) {
+            return;
+        }
+        if (this.file) {
+            try {
+                await firstValueFrom(
+                    this.teamService.uploadTeamLogo(teamId, this.file),
+                );
+                this.reload(teamId);
+                this.notificationService.showSuccessNotification(
+                    marker('UPLOAD_TEAM_LOGO_SUCCESS'),
+                );
+            } catch (error) {
+                this.notificationService.showErrorNotification(
+                    marker('UPLOAD_TEAM_LOGO_ERROR'),
+                    [`${error}`],
+                );
             }
         }
     }
@@ -92,7 +102,6 @@ export class TeamLogoComponent {
     private reload(teamId: string) {
         this.teamService.refetchAllTeams();
         this.teamService.refetchTeamById(teamId);
-        this.reloadImage(teamId);
     }
 
 }
