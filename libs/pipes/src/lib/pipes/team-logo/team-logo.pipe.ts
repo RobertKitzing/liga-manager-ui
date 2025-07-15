@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { Team } from '@liga-manager-api/graphql';
 import { AppsettingsService } from '@liga-manager-ui/services';
 
@@ -8,7 +8,7 @@ import { AppsettingsService } from '@liga-manager-ui/services';
 })
 export class TeamLogoPipe implements PipeTransform {
 
-    constructor(private appsettingsService: AppsettingsService) {}
+    private appsettingsService = inject(AppsettingsService);
 
     transform(team: Pick<Team, 'logo_id'>): string {
         // return `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${logoId}`;

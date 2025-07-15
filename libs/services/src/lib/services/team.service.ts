@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import {
     AllTeamsGQL,
@@ -17,6 +17,7 @@ import { sortArrayBy } from '@liga-manager-ui/utils';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
+import { LogosService } from '@liga-manager-api/openapi';
 
 @Injectable({
     providedIn: 'root',
@@ -27,6 +28,8 @@ export class TeamService {
         map(({ data }) => data.allTeams),
         map((teams) => sortArrayBy(teams as Team[], 'name')),
     );
+
+    private logoService = inject(LogosService);
 
     constructor(
         private teamByIdGQL: TeamByIdGQL,
@@ -101,18 +104,9 @@ export class TeamService {
     }
 
     uploadTeamLogo(teamId: string, file: File) {
-        const fd = new FormData();
-        fd.append('file', file);
-        const params = new HttpParams().set('teamId', teamId);
-        const headers = new HttpHeaders().set(
-            'Authorization',
-            `Bearer ${this.authenticationService.accessToken()}`,
-        );
-        return this.httpClient.post(
-            `${this.appsettingsService.appsettings?.host || ''}/api/logos`,
-            fd,
-            { params, headers },
-        );
+
+        return this.logoService.uploadLogo(teamId, file);
+
     }
 
     deleteTeamLogo(teamId: string) {

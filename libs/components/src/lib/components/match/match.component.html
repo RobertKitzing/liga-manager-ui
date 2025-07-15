@@ -12,7 +12,8 @@
                                 @defer (on viewport) {
                                 <img
                                     class="h-[100px]"
-                                    src="{{ match.home_team | teamLogo }}"
+                                    ngSrc="{{ match.home_team | teamLogo }}"
+                                    width="100" height="100"
                                 />
                                 } @placeholder {
                                 <div></div>
@@ -58,7 +59,8 @@
                             <div class="flex flex-col items-center">
                                 <img
                                     class="h-[100px] m-3"
-                                    src="{{ match.guest_team | teamLogo }}"
+                                    ngSrc="{{ match.guest_team | teamLogo }}"
+                                    width="100" height="100"
                                 />
                             </div>
                         </div>

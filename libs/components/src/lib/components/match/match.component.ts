@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,6 +27,7 @@ import { MatCardModule } from '@angular/material/card';
         NumberPipe,
         CypressSelectorDirective,
         MatCardModule,
+        NgOptimizedImage,
     ],
     templateUrl: './match.component.html',
 })

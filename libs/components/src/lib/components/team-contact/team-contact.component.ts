@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +12,7 @@ import { TeamLogoPipe } from '@liga-manager-ui/pipes';
         TeamLogoPipe,
         MatIconModule,
         MatCardModule,
+        NgOptimizedImage,
     ],
     templateUrl: './team-contact.component.html',
 })

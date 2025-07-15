@@ -6,9 +6,9 @@
                     <mat-card-content>
                         <table mat-table [dataSource]="winner">
                             <ng-container matColumnDef="logo">
-                                <th class="w-1" mat-header-cell *matHeaderCellDef></th>
-                                <td class="w-1" mat-cell *matCellDef="let element">
-                                    <img class="m-2" src="{{ element.team | teamLogo }}" />
+                                <th class="w-[80px]" mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element">
+                                    <img class="m-2" ngSrc="{{ element.team | teamLogo }}"  width="80" height="80"/>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="team">

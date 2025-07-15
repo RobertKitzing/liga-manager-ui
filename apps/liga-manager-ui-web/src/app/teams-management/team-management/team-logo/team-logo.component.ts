@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AuthenticationService,
@@ -12,6 +12,7 @@ import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { LogosService } from '@liga-manager-api/openapi'
 
 @Component({
     selector: 'lima-team-logo',
@@ -34,6 +35,8 @@ export class TeamLogoComponent {
     private teamService = inject(TeamService);
 
     private notificationService = inject(NotificationService);
+
+    private logosService = inject(LogosService);
 
     imageSrc = '';
 

@@ -9,7 +9,7 @@ import {
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@liga-manager-ui/services';
-import { NgClass, AsyncPipe } from '@angular/common';
+import { NgClass, AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -48,6 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         TruncatePipe,
         MatSortModule,
         MatCardModule,
+        NgOptimizedImage,
     ],
 })
 export class TableComponent {

@@ -14,6 +14,7 @@ import {
 } from '@ngx-translate/core';
 import {
     AppsettingsService,
+    AuthenticationService,
     I18nService,
     ThemeService,
     httpLoaderFactory,
@@ -33,6 +34,7 @@ import { apolloFactory } from './apllo.factory';
 import { DatePipe } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { firstValueFrom } from 'rxjs';
+import { Configuration } from '@liga-manager-api/openapi';
 
 function appInitFactory(
     appsettingsService: AppsettingsService,
@@ -50,6 +52,13 @@ function appInitFactory(
             firstValueFrom(appsettingsService.loadAppsettings()),
         ]);
     };
+}
+
+function openApiFactory(appsettingsService: AppsettingsService, authenticationService: AuthenticationService) {
+    return new Configuration({
+        basePath: appsettingsService.appsettings?.host || window.location.origin,
+        credentials: { bearerAuth: authenticationService.accessToken() || '' },
+    });
 }
 
 export const appConfig: ApplicationConfig = {
@@ -90,5 +99,10 @@ export const appConfig: ApplicationConfig = {
             deps: [I18nService, TranslateService],
         },
         provideStorage(localStorage),
+        {
+            provide: Configuration,
+            useFactory: openApiFactory,
+            deps: [ AppsettingsService, AuthenticationService ],
+        },
     ],
 };
