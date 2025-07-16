@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@liga-manager-ui/services';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +8,7 @@ import { ADMIN_ROUTES, APP_ROUTES } from '@liga-manager-ui/common';
 @Component({
     selector: 'lima-manage-start-stop',
     standalone: true,
-    imports: [AsyncPipe, TranslateModule, MatButtonModule],
+    imports: [TranslateModule, MatButtonModule],
     templateUrl: './manage-start-stop.component.html',
 })
 export class ManageStartStopComponent extends ManageSeasonBaseComponent {

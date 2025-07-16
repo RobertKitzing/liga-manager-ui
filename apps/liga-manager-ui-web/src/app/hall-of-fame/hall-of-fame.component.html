@@ -8,7 +8,11 @@
                             <ng-container matColumnDef="logo">
                                 <th class="w-[80px]" mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell *matCellDef="let element">
-                                    <img class="m-2" ngSrc="{{ element.team | teamLogo }}"  width="80" height="80"/>
+                                    <lima-team-logo
+                                        [width]="80"
+                                        [height]="80"
+                                        [team]="element.team"
+                                    ></lima-team-logo>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="team">

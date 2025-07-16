@@ -1,4 +1,4 @@
-import { Component, Inject, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AuthenticationService,
@@ -6,31 +6,29 @@ import {
     TeamService,
 } from '@liga-manager-ui/services';
 import { firstValueFrom, map, switchMap } from 'rxjs';
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { TeamLogoPipe } from '@liga-manager-ui/pipes';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TeamLogoComponent } from '@liga-manager-ui/components';
 
 @Component({
-    selector: 'lima-team-logo',
-    templateUrl: './team-logo.component.html',
+    selector: 'lima-edit--team-logo',
+    templateUrl: './edit-team-logo.component.html',
     standalone: true,
     imports: [
         TranslateModule,
         MatButtonModule,
         MatIconModule,
         MatCardModule,
-        TeamLogoPipe,
-        NgOptimizedImage,
+        TeamLogoComponent,
         ReactiveFormsModule,
     ],
 })
-export class TeamLogoComponent {
+export class EditTeamLogoComponent {
 
     authenticationService = inject(AuthenticationService);
 

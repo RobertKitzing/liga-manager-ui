@@ -3,4 +3,3 @@ export * from './enum-translate';
 export * from './custom-date';
 export * from './number';
 export * from './sort-by';
-export * from './team-logo';

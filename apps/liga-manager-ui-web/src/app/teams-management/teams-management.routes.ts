@@ -21,8 +21,8 @@ export const TeamsManagementRoutes: Routes = [
             {
                 path: TEAM_MANAGEMENT_ROUTES.LOGO,
                 loadComponent: () =>
-                    import('./team-management/team-logo').then(
-                        (m) => m.TeamLogoComponent,
+                    import('./team-management/edit-team-logo').then(
+                        (m) => m.EditTeamLogoComponent,
                     ),
             },
             {

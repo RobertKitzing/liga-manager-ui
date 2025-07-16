@@ -4,7 +4,11 @@
             <div class="w-full grid grid-col-1">
                 <h1 translate>CURRENT_TEAM_LOGO</h1>
                 @if (team()) {
-                    <img class="m-auto" ngSrc="{{ team()! | teamLogo }}" alt="{{ 'NO_CURRENT_TEAM_LOGO' | translate}}" width="100" height="100">
+                    <lima-team-logo
+                        [width]="200"
+                        [height]="200"
+                        [team]="team()"
+                    ></lima-team-logo>
                 }
             </div>
             @if (team()?.logo_id) {
@@ -50,29 +54,3 @@
         </mat-card-actions>
     }
 </mat-card>
-    <!-- <div class="flex justify-center items-center flex-col mt-3 space-y-3 mat-sys-surface-container-high">
-        <div class="flex justify-center flex-col">
-            <h1 translate>CURRENT_TEAM_LOGO</h1>
-            <img src="{{ imageSrc }}" />
-        </div>
-        @if (authenticationService.isAdmin) {
-            <div>
-                <button
-                    class="mat-sys-primary"
-                    mat-button
-                    (click)="deleteTeamLogo(team.id)"
-                >
-                    <mat-icon>delete</mat-icon>
-                    <span translate>BUTTON.DELETE_TEAM_LOGO</span>
-                </button>
-            </div>
-            <div class="flex justify-center flex-col space-y-3 mt-3">
-                <h1 translate>UPLOAD_TEAM_LOGO</h1>
-                <input
-                    type="file"
-                    (change)="onFileSelected($event, team.id)"
-                    accept=".webp"
-                />
-            </div>
-        }
-    </div> -->

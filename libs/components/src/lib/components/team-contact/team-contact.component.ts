@@ -1,18 +1,16 @@
-import { NgOptimizedImage } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Team } from '@liga-manager-api/graphql';
-import { TeamLogoPipe } from '@liga-manager-ui/pipes';
+import { TeamLogoComponent } from '../team-logo';
 
 @Component({
     selector: 'lima-team-contact',
     standalone: true,
     imports: [
-        TeamLogoPipe,
         MatIconModule,
         MatCardModule,
-        NgOptimizedImage,
+        TeamLogoComponent,
     ],
     templateUrl: './team-contact.component.html',
 })

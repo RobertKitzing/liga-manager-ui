@@ -5,3 +5,4 @@ export * from './team-search/team-search.component';
 export * from './team-contact';
 export * from './tournament-chooser';
 export * from './match';
+export * from './team-logo';

@@ -9,13 +9,13 @@ import {
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@liga-manager-ui/services';
-import { NgClass, AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TeamLogoPipe, TruncatePipe } from '@liga-manager-ui/pipes';
+import { TruncatePipe } from '@liga-manager-ui/pipes';
 import { FormControl } from '@angular/forms';
-import { SeasonChooserComponent } from '@liga-manager-ui/components';
+import { SeasonChooserComponent, TeamLogoComponent } from '@liga-manager-ui/components';
 import { AllSeasonsFragment, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
 import { BehaviorSubject, fromEvent, map, of, startWith, switchMap, tap } from 'rxjs';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -38,7 +38,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ],
     standalone: true,
     imports: [
-        TeamLogoPipe,
         MatToolbarModule,
         SeasonChooserComponent,
         MatTableModule,
@@ -48,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         TruncatePipe,
         MatSortModule,
         MatCardModule,
-        NgOptimizedImage,
+        TeamLogoComponent,
     ],
 })
 export class TableComponent {

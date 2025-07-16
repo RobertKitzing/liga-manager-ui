@@ -1,9 +1,9 @@
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { HallOfFameGQL, SeasonState, Team } from '@liga-manager-api/graphql';
-import { TeamLogoPipe } from '@liga-manager-ui/pipes';
+import { TeamLogoComponent } from '@liga-manager-ui/components';
 import { sortArrayBy } from '@liga-manager-ui/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { map, tap } from 'rxjs';
@@ -12,11 +12,10 @@ import { map, tap } from 'rxjs';
     selector: 'lima-hall-of-fame',
     imports: [
         AsyncPipe,
-        TeamLogoPipe,
         MatTableModule,
         TranslateModule,
         MatCardModule,
-        NgOptimizedImage,
+        TeamLogoComponent,
     ],
     standalone: true,
     templateUrl: './hall-of-fame.component.html',

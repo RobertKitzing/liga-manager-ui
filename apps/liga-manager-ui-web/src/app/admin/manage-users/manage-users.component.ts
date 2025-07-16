@@ -29,7 +29,6 @@ import { MatToolbar } from '@angular/material/toolbar';
         MatButtonModule,
         MatIconModule,
         AsyncPipe,
-        MatToolbar,
     ],
 })
 export class ManageUsersComponent {

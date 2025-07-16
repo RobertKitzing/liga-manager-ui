@@ -1,4 +1,4 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,11 +7,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { Match, MatchDay, Team } from '@liga-manager-api/graphql';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { CustomDatePipe, NumberPipe, TeamLogoPipe } from '@liga-manager-ui/pipes';
+import { CustomDatePipe, NumberPipe } from '@liga-manager-ui/pipes';
 import { AuthenticationService, UserService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchResultComponent, defaultDialogConfig, EditMatchPitchComponent, ViewTeamContactComponent, CancelMatchComponent, EditMatchKickoffComponent } from '../../dialogs';
 import { MatCardModule } from '@angular/material/card';
+import { TeamLogoComponent } from '../team-logo/team-logo.component';
 
 @Component({
     selector: 'lima-match',
@@ -19,7 +20,6 @@ import { MatCardModule } from '@angular/material/card';
     imports: [
         TranslateModule,
         CustomDatePipe,
-        TeamLogoPipe,
         NgClass,
         MatIconModule,
         MatMenuModule,
@@ -27,7 +27,7 @@ import { MatCardModule } from '@angular/material/card';
         NumberPipe,
         CypressSelectorDirective,
         MatCardModule,
-        NgOptimizedImage,
+        TeamLogoComponent,
     ],
     templateUrl: './match.component.html',
 })
