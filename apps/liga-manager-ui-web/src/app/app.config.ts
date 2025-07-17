@@ -35,7 +35,6 @@ import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { firstValueFrom } from 'rxjs';
 import { Configuration } from '@liga-manager-api/openapi';
-import { LOGO_PATH } from '@liga-manager-ui/components';
 import { Base64 } from 'js-base64';
 
 function appInitFactory(
@@ -107,13 +106,10 @@ export const appConfig: ApplicationConfig = {
             deps: [ AppsettingsService, AuthenticationService ],
         },
         {
-            provide: LOGO_PATH,
-            useValue: 'logos',
-        },
-        {
             provide: IMAGE_LOADER,
             useValue: (config: ImageLoaderConfig) => {
-                return `/imgproxy/sig/rs:fit:${config.width}:${config.width}/format:webp/${Base64.encode(`http://nginx/${config.src}`)}`
+                const imgPath = `local:///${config.src}`;
+                return `/imgproxy/unsecure/rs:fit:${config.width}:${config.width}/${Base64.encode(imgPath)}`
             },
         },
     ],

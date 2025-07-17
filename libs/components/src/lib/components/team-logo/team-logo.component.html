@@ -1,6 +1,7 @@
 @if (team()?.logo_id) {
     <img
-        ngSrc="{{logoPath}}/{{team()!.logo_id!}}.webp"
+        ngSrc="logos/{{team()!.logo_id!}}.webp"
+        
         [width]="width()"
         [height]="height()"
     />

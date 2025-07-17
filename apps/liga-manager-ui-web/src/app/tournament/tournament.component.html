@@ -6,58 +6,56 @@
                     <div class="w-full">
                         <lima-tournament-chooser
                             [selectedTournamentFC]="selectedTournamentFC"
+                            [filterStates]="filterStates"
                         ></lima-tournament-chooser>
                     </div>
-                    <!-- <div class="w-full">
-                        <lima-team-chooser
-                            [selectedTeamFC]="selectedTeamFC"
-                        ></lima-team-chooser>
-                    </div> -->
                 </mat-toolbar-row>
-                <mat-toolbar-row>
-                    <div class="w-full flex">
-                        <div class="self-center grow-0">
-                            <button
-                                mat-icon-button
-                                (click)="prevRound()"
+                @if(selectedTournamentFC.value) {
+                    <mat-toolbar-row>
+                        <div class="w-full flex">
+                            <div class="self-center grow-0">
+                                <button
+                                    mat-icon-button
+                                    (click)="prevRound()"
+                                    >
+                                        <mat-icon>arrow_back</mat-icon>
+                                </button>
+                            </div>
+                            <div class="self-center w-full grow pl-6 pr-6">
+                                <mat-select
+                                    class="text-center"
+                                    #matchDaySelect
+                                    [formControl]="selectedRoundIdFC"
+                                    placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
                                 >
-                                    <mat-icon>arrow_back</mat-icon>
-                            </button>
+                                    @for (round of selectedTournament()?.rounds || [] | sortBy:'number'; track $index) {
+                                        <mat-option [value]="round?.id">
+                                            @if (round) {
+                                                <div>
+                                                    {{
+                                                        "TOURNAMENT_ROUND"
+                                                            | translate : { round: round?.number }
+                                                    }}
+                                                    ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{
+                                                        round.end_date | customDate
+                                                    }})
+                                                </div>
+                                            }
+                                        </mat-option>
+                                    }
+                                </mat-select>
+                            </div>
+                            <div class="self-center text-end grow-0">
+                                <button
+                                    mat-icon-button
+                                    (click)="nextRound()"
+                                >
+                                    <mat-icon>arrow_forward</mat-icon>
+                                </button>
+                            </div>
                         </div>
-                        <div class="self-center w-full grow pl-6 pr-6">
-                            <mat-select
-                                class="text-center"
-                                #matchDaySelect
-                                [formControl]="selectedRoundIdFC"
-                                placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
-                            >
-                                @for (round of selectedTournament()?.rounds || [] | sortBy:'number'; track round) {
-                                    <mat-option [value]="round?.id">
-                                        @if (round) {
-                                            <div>
-                                                {{
-                                                    "TOURNAMENT_ROUND"
-                                                        | translate : { round: round?.number }
-                                                }}
-                                                ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{
-                                                    round.end_date | customDate
-                                                }})
-                                            </div>
-                                        }
-                                    </mat-option>
-                                }
-                            </mat-select>
-                        </div>
-                        <div class="self-center text-end grow-0">
-                            <button
-                                mat-icon-button
-                                (click)="nextRound()"
-                            >
-                                <mat-icon>arrow_forward</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-toolbar-row>
+                    </mat-toolbar-row>
+                }
             </mat-toolbar>
         </div>
         @if(selectedTournament()?.rounds) {

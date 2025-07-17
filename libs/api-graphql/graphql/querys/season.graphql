@@ -4,12 +4,6 @@ query AllSeasonsList {
     }
 }
 
-query HallOfFame {
-    allSeasons {
-        ...AllSeasonsHoF
-    }
-}
-
 query SeasonById($id: String!) {
     season(id: $id) {
         ...Season

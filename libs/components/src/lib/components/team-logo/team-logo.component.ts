@@ -1,9 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, inject, InjectionToken, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Team } from '@liga-manager-api/graphql';
 import { Configuration } from '@liga-manager-api/openapi';
-
-export const LOGO_PATH = new InjectionToken<string>('LOGO_PATH');
 
 @Component({
     selector: 'lima-team-logo',
@@ -19,8 +17,6 @@ export class TeamLogoComponent {
     height = input<number | undefined>();
 
     team = input<Team | null>();
-
-    logoPath = inject(LOGO_PATH);
 
     basePath = inject(Configuration).basePath;
 

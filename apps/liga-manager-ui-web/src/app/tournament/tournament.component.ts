@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllTournamentsFragment, Tournament } from '@liga-manager-api/graphql';
+import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graphql';
 import {
     TournamentChooserComponent,
     MatchComponent,
@@ -15,6 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'lima-tournament',
@@ -69,6 +70,16 @@ export class TournamentComponent {
 
     selectedTournament = toSignal(this.selectedTournament$);
 
+    private router = inject(Router);
+
+    get filterStates() {
+        if (this.router.url.includes('history')) {
+            return [TournamentState.Ended];
+        } else {
+            return [TournamentState.Progress];
+        }
+    }
+    
     selectedTournamentRound() {
         return this.selectedTournament()?.rounds?.find(
             (round) => round?.id === this.selectedRoundIdFC.value,

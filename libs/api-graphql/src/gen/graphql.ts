@@ -513,6 +513,51 @@ export type PitchFragment = (
 
 export type EventFragment = Pick<Event, 'id' | 'occurred_at' | 'type'>;
 
+export type AllSeasonsHoFFragment = (
+  Pick<Season, 'id' | 'name' | 'state'>
+  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>>, ranking?: Maybe<{ positions?: Maybe<Array<Maybe<(
+      Pick<RankingPosition, 'sort_index'>
+      & { team: Pick<Team, 'id' | 'name' | 'logo_id'> }
+    )>>> }> }
+);
+
+export type AllTournamentsHoFFragment = (
+  Pick<Tournament, 'id' | 'name' | 'state'>
+  & { rounds?: Maybe<Array<Maybe<(
+    Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+    & { matches?: Maybe<Array<Maybe<(
+      Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+      & { home_team: (
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+      ), guest_team: (
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+      ), pitch?: Maybe<(
+        Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+        & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+      )> }
+    )>>> }
+  )>>> }
+);
+
+export type MatchDayFragment = (
+  Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+  & { matches?: Maybe<Array<Maybe<(
+    Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+    & { home_team: (
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+    ), guest_team: (
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+    ), pitch?: Maybe<(
+      Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+    )> }
+  )>>> }
+);
+
 export type MatchFragment = (
   Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
   & { home_team: (
@@ -560,14 +605,6 @@ export type AllSeasonsFragment = (
   & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>> }
 );
 
-export type AllSeasonsHoFFragment = (
-  Pick<Season, 'id' | 'name' | 'state'>
-  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>>, ranking?: Maybe<{ positions?: Maybe<Array<Maybe<(
-      Pick<RankingPosition, 'sort_index'>
-      & { team: Pick<Team, 'id' | 'name' | 'logo_id'> }
-    )>>> }> }
-);
-
 export type SeasonFragment = (
   Pick<Season, 'id' | 'name' | 'state'>
   & { teams?: Maybe<Array<Maybe<(
@@ -591,24 +628,7 @@ export type SeasonFragment = (
   )>>> }
 );
 
-export type MatchDayFragment = (
-  Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
-  & { matches?: Maybe<Array<Maybe<(
-    Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
-    & { home_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
-      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
-    ), guest_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
-      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
-    ), pitch?: Maybe<(
-      Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
-      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
-    )> }
-  )>>> }
-);
-
-export type AllTournamentsFragment = Pick<Tournament, 'id' | 'name'>;
+export type AllTournamentsFragment = Pick<Tournament, 'id' | 'name' | 'state'>;
 
 export type TournamentFragment = (
   Pick<Tournament, 'id' | 'name' | 'state'>
@@ -952,6 +972,35 @@ export type LatestEventQueryVariables = Exact<{
 
 export type LatestEventQuery = { latestEvents?: Maybe<Array<Maybe<Pick<Event, 'id' | 'occurred_at' | 'type'>>>> };
 
+export type HallOfFameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HallOfFameQuery = { allSeasons?: Maybe<Array<Maybe<(
+    Pick<Season, 'id' | 'name' | 'state'>
+    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>>, ranking?: Maybe<{ positions?: Maybe<Array<Maybe<(
+        Pick<RankingPosition, 'sort_index'>
+        & { team: Pick<Team, 'id' | 'name' | 'logo_id'> }
+      )>>> }> }
+  )>>>, allTournaments?: Maybe<Array<Maybe<(
+    Pick<Tournament, 'id' | 'name' | 'state'>
+    & { rounds?: Maybe<Array<Maybe<(
+      Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
+      & { matches?: Maybe<Array<Maybe<(
+        Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
+        & { home_team: (
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+        ), guest_team: (
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+        ), pitch?: Maybe<(
+          Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
+          & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+        )> }
+      )>>> }
+    )>>> }
+  )>>> };
+
 export type MatchByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1031,17 +1080,6 @@ export type AllSeasonsListQuery = { allSeasons?: Maybe<Array<Maybe<(
     & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>> }
   )>>> };
 
-export type HallOfFameQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HallOfFameQuery = { allSeasons?: Maybe<Array<Maybe<(
-    Pick<Season, 'id' | 'name' | 'state'>
-    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>>, ranking?: Maybe<{ positions?: Maybe<Array<Maybe<(
-        Pick<RankingPosition, 'sort_index'>
-        & { team: Pick<Team, 'id' | 'name' | 'logo_id'> }
-      )>>> }> }
-  )>>> };
-
 export type SeasonByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1091,7 +1129,7 @@ export type TeamByIdQuery = { team?: Maybe<(
 export type AllTournamentListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTournamentListQuery = { allTournaments?: Maybe<Array<Maybe<Pick<Tournament, 'id' | 'name'>>>> };
+export type AllTournamentListQuery = { allTournaments?: Maybe<Array<Maybe<Pick<Tournament, 'id' | 'name' | 'state'>>>> };
 
 export type TournamentByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1259,12 +1297,24 @@ export const AllTournamentsFragmentDoc = gql`
     fragment AllTournaments on Tournament {
   id
   name
+  state
+}
+    `;
+export const AllTournamentsHoFFragmentDoc = gql`
+    fragment AllTournamentsHoF on Tournament {
+  id
+  name
+  state
+  rounds {
+    ...MatchDay
+  }
 }
     `;
 export const AllTournamentsCalendarFragmentDoc = gql`
     fragment AllTournamentsCalendar on Tournament {
   id
   name
+  state
   rounds {
     ...MatchDay
   }
@@ -1991,6 +2041,33 @@ export const LatestEventDocument = gql`
       super(apollo);
     }
   }
+export const HallOfFameDocument = gql`
+    query HallOfFame {
+  allSeasons {
+    ...AllSeasonsHoF
+  }
+  allTournaments {
+    ...AllTournamentsHoF
+  }
+}
+    ${AllSeasonsHoFFragmentDoc}
+${AllTournamentsHoFFragmentDoc}
+${MatchDayFragmentDoc}
+${MatchFragmentDoc}
+${TeamFragmentDoc}
+${ContactFragmentDoc}
+${PitchFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class HallOfFameGQL extends Apollo.Query<HallOfFameQuery, HallOfFameQueryVariables> {
+    document = HallOfFameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const MatchByIdDocument = gql`
     query MatchById($id: String!) {
   match(id: $id) {
@@ -2093,24 +2170,6 @@ export const AllSeasonsListDocument = gql`
   })
   export class AllSeasonsListGQL extends Apollo.Query<AllSeasonsListQuery, AllSeasonsListQueryVariables> {
     document = AllSeasonsListDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const HallOfFameDocument = gql`
-    query HallOfFame {
-  allSeasons {
-    ...AllSeasonsHoF
-  }
-}
-    ${AllSeasonsHoFFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class HallOfFameGQL extends Apollo.Query<HallOfFameQuery, HallOfFameQueryVariables> {
-    document = HallOfFameDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -8,17 +8,23 @@
         class="text-center"
     >
         @if (clearable) {
-        <mat-option>
-            <span translate>DESELECT_SEASON</span>
-        </mat-option>
-        } @for (season of seasonList$ | async; track season) {
-        <mat-option [value]="season">
-            @if (season) { @switch (season.state) { @case (SeasonState.Progress)
-            {
-            {{ season.name }}
-            } @default {
-            {{ season.name }} ({{ season.state | enumTranslate }}) } } }
-        </mat-option>
+            <mat-option>
+                <span translate>DESELECT_SEASON</span>
+            </mat-option>
+        }
+        @for (season of seasonList$ | async; track season) {
+            <mat-option [value]="season">
+                @if (season) {
+                    @switch (season.state) {
+                        @case (SeasonState.Progress) {
+                            {{ season.name }}
+                        }
+                        @default {
+                            {{ season.name }} ({{ season.state | enumTranslate }})
+                        }
+                    }
+                }
+            </mat-option>
         }
     </mat-select>
 </div>

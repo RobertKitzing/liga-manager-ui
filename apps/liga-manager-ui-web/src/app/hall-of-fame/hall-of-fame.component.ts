@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { HallOfFameGQL, SeasonState, Team } from '@liga-manager-api/graphql';
+import { HallOfFameGQL, SeasonState, Team, TournamentState } from '@liga-manager-api/graphql';
 import { TeamLogoComponent } from '@liga-manager-ui/components';
 import { sortArrayBy } from '@liga-manager-ui/utils';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,30 +30,16 @@ export class HallOfFameComponent {
     }[];
 
     seasons$ = this.hof.watch().valueChanges.pipe(
-        map((data) => data.data.allSeasons),
-        map((seasons) =>
-            seasons?.filter((s) => s?.state === SeasonState.Progress),
-        ),
-        map((seasons) =>
-            [...(seasons || [])]?.sort((a, b) => {
-                const aStartDate =
-                    a?.match_days?.find((x) => x?.number === 1)?.start_date ||
-                    '';
-                const bStartDate =
-                    b?.match_days?.find((x) => x?.number === 1)?.start_date ||
-                    '';
-                if (aStartDate < bStartDate) {
-                    return 1;
-                }
-                if (aStartDate > bStartDate) {
-                    return -1;
-                }
-                return 0;
-            }),
-        ),
-        tap((seasons) => {
+        map((data) => data.data),
+        map((data) => (
+            {
+                seasons: data?.allSeasons?.filter((s) => s?.state === SeasonState.Progress),
+                tournaments: data?.allTournaments?.filter((s) => s?.state === TournamentState.Ended),
+            }
+        )),
+        tap((data) => {
             this.winner = [];
-            for (const season of seasons) {
+            for (const season of data.seasons || []) {
                 const winnerTeam = season?.ranking?.positions![0]?.team;
                 if (winnerTeam) {
                     const t = this.winner.find(

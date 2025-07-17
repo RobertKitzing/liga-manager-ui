@@ -110,9 +110,19 @@ fragment AllTournaments on Tournament {
     state
 }
 
+fragment AllTournamentsHoF on Tournament {
+    id
+    name
+    state
+    rounds {
+        ...MatchDay
+    }
+}
+
 fragment AllTournamentsCalendar on Tournament {
     id
     name
+    state
     rounds {
         ...MatchDay
     }

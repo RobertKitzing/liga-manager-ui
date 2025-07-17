@@ -17,7 +17,7 @@ import { sortArrayBy } from '@liga-manager-ui/utils';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
-import { LogosService } from '@liga-manager-api/openapi';
+import { Configuration, LogosService } from '@liga-manager-api/openapi';
 
 @Injectable({
     providedIn: 'root',
@@ -104,9 +104,7 @@ export class TeamService {
     }
 
     uploadTeamLogo(teamId: string, file: File) {
-
         return this.logoService.uploadLogo(teamId, file);
-
     }
 
     deleteTeamLogo(teamId: string) {
