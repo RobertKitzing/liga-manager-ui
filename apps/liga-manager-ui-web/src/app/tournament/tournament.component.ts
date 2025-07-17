@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllTournamentsFragment, Match, MatchDay } from '@liga-manager-api/graphql';
+import { AllTournamentsFragment, Tournament } from '@liga-manager-api/graphql';
 import {
     TournamentChooserComponent,
     MatchComponent,

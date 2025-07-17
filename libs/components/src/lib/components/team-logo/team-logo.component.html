@@ -1,7 +1,6 @@
 @if (team()?.logo_id) {
     <img
-        placeholder="assets/default_team_logo_200x200.webp"
-        ngSrc="{{ basePath }}{{ logoUrl }}{{ team()!.id }}"
+        ngSrc="{{logoPath}}/{{team()!.logo_id!}}.webp"
         [width]="width()"
         [height]="height()"
     />

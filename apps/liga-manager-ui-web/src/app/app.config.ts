@@ -31,11 +31,12 @@ import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { DarkMode } from '@aparajita/capacitor-dark-mode';
 import { provideApollo } from 'apollo-angular';
 import { apolloFactory } from './apllo.factory';
-import { DatePipe, PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
+import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { firstValueFrom } from 'rxjs';
 import { Configuration } from '@liga-manager-api/openapi';
-import { LOGO_URL } from '@liga-manager-ui/components';
+import { LOGO_PATH } from '@liga-manager-ui/components';
+import { Base64 } from 'js-base64';
 
 function appInitFactory(
     appsettingsService: AppsettingsService,
@@ -106,8 +107,14 @@ export const appConfig: ApplicationConfig = {
             deps: [ AppsettingsService, AuthenticationService ],
         },
         {
-            provide: LOGO_URL,
-            useValue: '/api/logos?teamId=',
+            provide: LOGO_PATH,
+            useValue: 'logos',
+        },
+        {
+            provide: IMAGE_LOADER,
+            useValue: (config: ImageLoaderConfig) => {
+                return `/imgproxy/sig/rs:fit:${config.width}:${config.width}/format:webp/${Base64.encode(`http://nginx/${config.src}`)}`
+            },
         },
     ],
 };

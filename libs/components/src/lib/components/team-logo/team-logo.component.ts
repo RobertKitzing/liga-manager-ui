@@ -3,7 +3,7 @@ import { Component, inject, InjectionToken, input } from '@angular/core';
 import { Team } from '@liga-manager-api/graphql';
 import { Configuration } from '@liga-manager-api/openapi';
 
-export const LOGO_URL = new InjectionToken<string>('LOGO_URL');
+export const LOGO_PATH = new InjectionToken<string>('LOGO_PATH');
 
 @Component({
     selector: 'lima-team-logo',
@@ -20,7 +20,7 @@ export class TeamLogoComponent {
 
     team = input<Team | null>();
 
-    logoUrl = inject(LOGO_URL);
+    logoPath = inject(LOGO_PATH);
 
     basePath = inject(Configuration).basePath;
 

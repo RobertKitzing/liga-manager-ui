@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { Tournament } from '@liga-manager-api/graphql';
+import { AllTournamentsFragment } from '@liga-manager-api/graphql';
 import { TournamentService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class TournamentChooserComponent {
 
-    @Input({ required: true }) selectedTournamentFC!: FormControl<Tournament | null>;
+    @Input({ required: true }) selectedTournamentFC!: FormControl<AllTournamentsFragment | null>;
 
     constructor(public tournamentService: TournamentService) {}
 

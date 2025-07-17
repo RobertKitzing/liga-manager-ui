@@ -16,6 +16,8 @@ services:
     depends_on:
       - api
 
+  imgproxy:
+    image: ghcr.io/imgproxy/imgproxy:latest
   # dev-ui:
   #   image: node:lts-alpine
   #   user: 1000:1000

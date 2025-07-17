@@ -107,6 +107,7 @@ fragment AllSeasonsCalendar on Season {
 fragment AllTournaments on Tournament {
     id
     name
+    state
 }
 
 fragment AllTournamentsCalendar on Tournament {

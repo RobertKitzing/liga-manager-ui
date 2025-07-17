@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
-import { Location, AsyncPipe } from '@angular/common';
+import { Location, AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -50,6 +50,7 @@ import { Device } from '@capacitor/device';
         MatListModule,
         AsyncPipe,
         CypressSelectorDirective,
+        NgOptimizedImage,
     ],
 })
 export class AppComponent implements OnInit {
