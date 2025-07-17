@@ -136,7 +136,14 @@ export type Tournament = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   rounds?: Maybe<Array<Maybe<MatchDay>>>;
+  state: TournamentState;
 };
+
+export enum TournamentState {
+  Ended = 'ended',
+  Preparation = 'preparation',
+  Progress = 'progress'
+}
 
 export type User = {
   email: Scalars['String']['output'];
@@ -175,6 +182,7 @@ export type Mutation = {
   deleteTournament?: Maybe<Scalars['Boolean']['output']>;
   deleteUser?: Maybe<Scalars['Boolean']['output']>;
   endSeason?: Maybe<Scalars['Boolean']['output']>;
+  endTournament?: Maybe<Scalars['Boolean']['output']>;
   invalidateAccessTokens?: Maybe<Scalars['Boolean']['output']>;
   locateMatch?: Maybe<Scalars['Boolean']['output']>;
   removeRankingPenalty?: Maybe<Scalars['Boolean']['output']>;
@@ -189,6 +197,7 @@ export type Mutation = {
   sendPasswordResetMail?: Maybe<Scalars['Boolean']['output']>;
   setTournamentRound?: Maybe<Scalars['Boolean']['output']>;
   startSeason?: Maybe<Scalars['Boolean']['output']>;
+  startTournament?: Maybe<Scalars['Boolean']['output']>;
   submitMatchResult?: Maybe<Scalars['Boolean']['output']>;
   updatePitchContact?: Maybe<Scalars['Boolean']['output']>;
   updateTeamContact?: Maybe<Scalars['Boolean']['output']>;
@@ -296,6 +305,11 @@ export type MutationEndSeasonArgs = {
 };
 
 
+export type MutationEndTournamentArgs = {
+  tournament_id: Scalars['String']['input'];
+};
+
+
 export type MutationLocateMatchArgs = {
   match_id: Scalars['String']['input'];
   pitch_id: Scalars['String']['input'];
@@ -374,6 +388,11 @@ export type MutationSetTournamentRoundArgs = {
 
 export type MutationStartSeasonArgs = {
   season_id: Scalars['String']['input'];
+};
+
+
+export type MutationStartTournamentArgs = {
+  tournament_id: Scalars['String']['input'];
 };
 
 
@@ -592,7 +611,7 @@ export type MatchDayFragment = (
 export type AllTournamentsFragment = Pick<Tournament, 'id' | 'name'>;
 
 export type TournamentFragment = (
-  Pick<Tournament, 'id' | 'name'>
+  Pick<Tournament, 'id' | 'name' | 'state'>
   & { rounds?: Maybe<Array<Maybe<(
     Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
     & { matches?: Maybe<Array<Maybe<(
@@ -1080,7 +1099,7 @@ export type TournamentByIdQueryVariables = Exact<{
 
 
 export type TournamentByIdQuery = { tournament?: Maybe<(
-    Pick<Tournament, 'id' | 'name'>
+    Pick<Tournament, 'id' | 'name' | 'state'>
     & { rounds?: Maybe<Array<Maybe<(
       Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
       & { matches?: Maybe<Array<Maybe<(
@@ -1258,6 +1277,7 @@ export const TournamentFragmentDoc = gql`
   rounds {
     ...MatchDay
   }
+  state
 }
     `;
 export const UserFragmentDoc = gql`
