@@ -500,7 +500,7 @@ export type QueryTournamentArgs = {
 };
 
 export type TeamFragment = (
-  Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+  Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
   & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
 );
 
@@ -517,7 +517,10 @@ export type AllSeasonsHoFFragment = (
   Pick<Season, 'id' | 'name' | 'state'>
   & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>>, ranking?: Maybe<{ positions?: Maybe<Array<Maybe<(
       Pick<RankingPosition, 'sort_index'>
-      & { team: Pick<Team, 'id' | 'name' | 'logo_id'> }
+      & { team: (
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
+        & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+      ) }
     )>>> }> }
 );
 
@@ -528,10 +531,10 @@ export type AllTournamentsHoFFragment = (
     & { matches?: Maybe<Array<Maybe<(
       Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
       & { home_team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ), guest_team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ), pitch?: Maybe<(
         Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -546,10 +549,10 @@ export type MatchDayFragment = (
   & { matches?: Maybe<Array<Maybe<(
     Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
     & { home_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     ), guest_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     ), pitch?: Maybe<(
       Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -561,10 +564,10 @@ export type MatchDayFragment = (
 export type MatchFragment = (
   Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
   & { home_team: (
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   ), guest_team: (
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   ), pitch?: Maybe<(
     Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -575,7 +578,7 @@ export type MatchFragment = (
 export type PenaltyFragment = (
   Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
   & { team: (
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   ) }
 );
@@ -587,13 +590,13 @@ export type RankingFragment = (
     & { positions?: Maybe<Array<Maybe<(
       Pick<RankingPosition, 'sort_index' | 'number' | 'matches' | 'wins' | 'draws' | 'losses' | 'scored_goals' | 'conceded_goals' | 'points'>
       & { team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ) }
     )>>>, penalties?: Maybe<Array<Maybe<(
       Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
       & { team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ) }
     )>>> }
@@ -608,17 +611,17 @@ export type AllSeasonsFragment = (
 export type SeasonFragment = (
   Pick<Season, 'id' | 'name' | 'state'>
   & { teams?: Maybe<Array<Maybe<(
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   )>>>, match_days?: Maybe<Array<Maybe<(
     Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
     & { matches?: Maybe<Array<Maybe<(
       Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
       & { home_team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ), guest_team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ), pitch?: Maybe<(
         Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -637,10 +640,10 @@ export type TournamentFragment = (
     & { matches?: Maybe<Array<Maybe<(
       Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
       & { home_team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ), guest_team: (
-        Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+        Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
         & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
       ), pitch?: Maybe<(
         Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -653,7 +656,7 @@ export type TournamentFragment = (
 export type UserFragment = (
   Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
   & { teams?: Maybe<Array<Maybe<(
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   )>>> }
 );
@@ -945,10 +948,10 @@ export type CalendarQuery = { allSeasons?: Maybe<Array<Maybe<(
   )>>>, matchesByKickoff?: Maybe<Array<Maybe<(
     Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
     & { home_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     ), guest_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     ), pitch?: Maybe<(
       Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -979,7 +982,10 @@ export type HallOfFameQuery = { allSeasons?: Maybe<Array<Maybe<(
     Pick<Season, 'id' | 'name' | 'state'>
     & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>>, ranking?: Maybe<{ positions?: Maybe<Array<Maybe<(
         Pick<RankingPosition, 'sort_index'>
-        & { team: Pick<Team, 'id' | 'name' | 'logo_id'> }
+        & { team: (
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
+          & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+        ) }
       )>>> }> }
   )>>>, allTournaments?: Maybe<Array<Maybe<(
     Pick<Tournament, 'id' | 'name' | 'state'>
@@ -988,10 +994,10 @@ export type HallOfFameQuery = { allSeasons?: Maybe<Array<Maybe<(
       & { matches?: Maybe<Array<Maybe<(
         Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
         & { home_team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ), guest_team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ), pitch?: Maybe<(
           Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -1009,10 +1015,10 @@ export type MatchByIdQueryVariables = Exact<{
 export type MatchByIdQuery = { match?: Maybe<(
     Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
     & { home_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     ), guest_team: (
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     ), pitch?: Maybe<(
       Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -1028,12 +1034,12 @@ export type SeasonPenaltiesQueryVariables = Exact<{
 export type SeasonPenaltiesQuery = { season?: Maybe<(
     Pick<Season, 'id'>
     & { teams?: Maybe<Array<Maybe<(
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     )>>>, ranking?: Maybe<{ penalties?: Maybe<Array<Maybe<(
         Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
         & { team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ) }
       )>>> }> }
@@ -1059,13 +1065,13 @@ export type RankingByIdQuery = { season?: Maybe<(
       & { positions?: Maybe<Array<Maybe<(
         Pick<RankingPosition, 'sort_index' | 'number' | 'matches' | 'wins' | 'draws' | 'losses' | 'scored_goals' | 'conceded_goals' | 'points'>
         & { team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ) }
       )>>>, penalties?: Maybe<Array<Maybe<(
         Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
         & { team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ) }
       )>>> }
@@ -1088,17 +1094,17 @@ export type SeasonByIdQueryVariables = Exact<{
 export type SeasonByIdQuery = { season?: Maybe<(
     Pick<Season, 'id' | 'name' | 'state'>
     & { teams?: Maybe<Array<Maybe<(
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     )>>>, match_days?: Maybe<Array<Maybe<(
       Pick<MatchDay, 'id' | 'number' | 'start_date' | 'end_date'>
       & { matches?: Maybe<Array<Maybe<(
         Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
         & { home_team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ), guest_team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ), pitch?: Maybe<(
           Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -1112,7 +1118,7 @@ export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllTeamsQuery = { allTeams?: Maybe<Array<Maybe<(
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   )>>> };
 
@@ -1122,7 +1128,7 @@ export type TeamByIdQueryVariables = Exact<{
 
 
 export type TeamByIdQuery = { team?: Maybe<(
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   )> };
 
@@ -1143,10 +1149,10 @@ export type TournamentByIdQuery = { tournament?: Maybe<(
       & { matches?: Maybe<Array<Maybe<(
         Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
         & { home_team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ), guest_team: (
-          Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+          Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
           & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
         ), pitch?: Maybe<(
           Pick<Pitch, 'id' | 'label' | 'location_longitude' | 'location_latitude'>
@@ -1162,7 +1168,7 @@ export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 export type AuthenticatedUserQuery = { authenticatedUser?: Maybe<(
     Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
     & { teams?: Maybe<Array<Maybe<(
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     )>>> }
   )> };
@@ -1173,7 +1179,7 @@ export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllUsersQuery = { allUsers?: Maybe<Array<Maybe<(
     Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
     & { teams?: Maybe<Array<Maybe<(
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'created_at'>
+      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
       & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
     )>>> }
   )>>> };
@@ -1191,6 +1197,7 @@ export const TeamFragmentDoc = gql`
   id
   name
   logo_id
+  logo_path
   created_at
   contact {
     ...Contact
@@ -1274,9 +1281,7 @@ export const AllSeasonsHoFFragmentDoc = gql`
   ranking {
     positions {
       team {
-        id
-        name
-        logo_id
+        ...Team
       }
       sort_index
     }
@@ -2051,11 +2056,11 @@ export const HallOfFameDocument = gql`
   }
 }
     ${AllSeasonsHoFFragmentDoc}
+${TeamFragmentDoc}
+${ContactFragmentDoc}
 ${AllTournamentsHoFFragmentDoc}
 ${MatchDayFragmentDoc}
 ${MatchFragmentDoc}
-${TeamFragmentDoc}
-${ContactFragmentDoc}
 ${PitchFragmentDoc}`;
 
   @Injectable({

@@ -40,6 +40,7 @@ fragment Team on Team {
     id
     name
     logo_id
+    logo_path
     created_at
     contact {
         ...Contact
@@ -86,9 +87,7 @@ fragment AllSeasonsHoF on Season {
     ranking {
         positions {
             team {
-                id
-                name
-                logo_id
+                ...Team
             }
             sort_index
         }

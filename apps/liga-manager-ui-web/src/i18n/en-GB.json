@@ -39,6 +39,7 @@
 	"DELETE_TEAM_LOGO_ERROR": "Team logo not deleted",
 	"DELETE_TEAM_LOGO_SUCCESS": "Team logo deleted",
 	"DESELECT_SEASON": "No Season",
+	"DESELECT_TOURNAMENT": "",
 	"EDIT_KICKOFF_SUCCESS": "Kickoff saved",
 	"EDIT_PITCH_SUCCESS": "Pitch saved",
 	"EDIT_RESULT_SUCCESS": "Result saved",

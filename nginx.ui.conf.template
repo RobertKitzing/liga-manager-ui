@@ -11,10 +11,10 @@ location / {
 
 location /appsettings.json {
     default_type application/json;
-    return 200 '{ "googleMapsApiKey": "${googleMapsApiKey}" }';
+    return 200 '{ "googleMapsApiKey": "${GOOGLE_MAPS_API_KEY}" }';
 }
 
 location /imgproxy {
   rewrite /imgproxy/(.*) /$1  break;
-  proxy_pass http://imgproxy:8080;
+  proxy_pass http://${IMG_PROXY_HOST}:8080;
 }

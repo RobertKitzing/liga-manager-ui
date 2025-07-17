@@ -109,7 +109,7 @@ export const appConfig: ApplicationConfig = {
             provide: IMAGE_LOADER,
             useValue: (config: ImageLoaderConfig) => {
                 const imgPath = `local:///${config.src}`;
-                return `/imgproxy/unsecure/rs:fit:${config.width}:${config.width}/${Base64.encode(imgPath)}`
+                return `/imgproxy/_/rs:fit:${config.width}:${config.width}/${Base64.encode(imgPath)}`
             },
         },
     ],

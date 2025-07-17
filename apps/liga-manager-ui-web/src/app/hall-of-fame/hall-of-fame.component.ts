@@ -25,7 +25,7 @@ export class HallOfFameComponent {
     displayedColumns = ['logo', 'team', 'winnerCount'];
 
     winner!: {
-        team: Pick<Team, 'id' | 'name' | 'logo_id'>;
+        team: Pick<Team, 'id' | 'name' | 'logo_path'>;
         winnerCount: number;
     }[];
 
