@@ -1,9 +1,9 @@
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { SeasonState, UserRole } from '@liga-manager-api/graphql';
+import { SeasonState, TournamentState, UserRole } from '@liga-manager-api/graphql';
 
-type Enums = SeasonState | UserRole;
+type Enums = SeasonState | UserRole | TournamentState;
 
 @Pipe({
     name: 'enumTranslate',
@@ -19,10 +19,13 @@ export class EnumTranslatePipe implements PipeTransform {
     interpretValue(value: Enums): string {
         switch (value) {
         case SeasonState.Ended:
+        case TournamentState.Ended:
             return marker('SeasonState.Ended');
         case SeasonState.Preparation:
+        case TournamentState.Preparation:
             return marker('SeasonState.Preparation');
         case SeasonState.Progress:
+        case TournamentState.Progress:
             return marker('SeasonState.Progress');
         case UserRole.Admin:
             return marker('UserRole.Admin');

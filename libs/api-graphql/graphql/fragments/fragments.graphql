@@ -123,6 +123,7 @@ fragment Tournament on Tournament {
     rounds {
         ...MatchDay
     }
+    state
 }
 
 fragment User on User {
