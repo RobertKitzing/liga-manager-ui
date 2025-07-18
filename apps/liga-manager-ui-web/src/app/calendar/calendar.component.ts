@@ -33,7 +33,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     calendarApi!: Calendar;
 
-    backgroundEvents = this.eventTrigger.pipe(
+    backgroundEvents$ = this.eventTrigger.pipe(
         switchMap((params) =>
             this.calendarService.getCalendarEvents(params).pipe(
                 tap((events) => {
