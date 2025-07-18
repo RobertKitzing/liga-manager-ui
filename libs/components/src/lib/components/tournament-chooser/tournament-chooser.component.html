@@ -1,10 +1,15 @@
 <mat-select
     placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT' | translate }}"
-    [formControl]="selectedTournamentFC"
+    [formControl]="selectedTournamentFC()"
     [compareWith]="tournamentService.tournamentCompare"
     class="text-center"
 >
-    @for (tournament of tournamentService.allTournaments$ | async; track tournament) {
+    @if (clearable()) {
+        <mat-option>
+            <span translate>DESELECT_TOURNAMENT</span>
+        </mat-option>
+    }
+    @for (tournament of tournamentList$ | async; track tournament) {
         @if (tournament) {
             <mat-option [value]="tournament">
                 {{ tournament.name }}

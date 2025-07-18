@@ -9,5 +9,8 @@
     },
     "/logos/*": {
         "target": "http://localhost:80"
+    },
+    "/imgproxy": {
+        "target": "http://localhost:80"
     }
 }

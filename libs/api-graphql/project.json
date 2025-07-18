@@ -31,7 +31,10 @@
                 "{projectRoot}/codegen.ts",
                 "{projectRoot}/graphql/**/*"
             ],
-            "cache": true,
+            "outputs": [
+                "{projectRoot}/src/gen/graphql.ts"
+            ],
+            "cache": false,
             "options": {
                 "config": "{projectRoot}/codegen.ts"
             }

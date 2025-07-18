@@ -1,0 +1,8 @@
+query HallOfFame {
+    allSeasons {
+        ...AllSeasonsHoF
+    }
+    allTournaments {
+        ...AllTournamentsHoF
+    }
+}

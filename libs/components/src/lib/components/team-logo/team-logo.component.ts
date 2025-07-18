@@ -1,9 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, inject, InjectionToken, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Team } from '@liga-manager-api/graphql';
 import { Configuration } from '@liga-manager-api/openapi';
-
-export const LOGO_URL = new InjectionToken<string>('LOGO_URL');
 
 @Component({
     selector: 'lima-team-logo',
@@ -14,13 +12,11 @@ export const LOGO_URL = new InjectionToken<string>('LOGO_URL');
 })
 export class TeamLogoComponent {
 
-    width = input<number | undefined>();
+    width = input<number>(0);
 
-    height = input<number | undefined>();
+    height = input<number>(0);
 
     team = input<Team | null>();
-
-    logoUrl = inject(LOGO_URL);
 
     basePath = inject(Configuration).basePath;
 

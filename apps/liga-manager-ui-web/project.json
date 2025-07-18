@@ -106,6 +106,7 @@
     },
     "serve": {
       "executor": "@nx/angular:dev-server",
+      "cache": false,
       "configurations": {
         "development": {
           "buildTarget": "liga-manager-ui-web:build:development",

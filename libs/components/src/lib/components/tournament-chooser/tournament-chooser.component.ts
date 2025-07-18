@@ -1,10 +1,11 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { Tournament } from '@liga-manager-api/graphql';
+import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graphql';
 import { TournamentService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
+import { map } from 'rxjs';
 
 @Component({
     selector: 'lima-tournament-chooser',
@@ -14,8 +15,26 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class TournamentChooserComponent {
 
-    @Input({ required: true }) selectedTournamentFC!: FormControl<Tournament | null>;
+    selectedTournamentFC = input.required<FormControl<AllTournamentsFragment | null>>();
 
-    constructor(public tournamentService: TournamentService) {}
+    filterStates = input<TournamentState[] | null>(null);
+
+    clearable = input<boolean>(false);
+
+    tournamentService = inject(TournamentService);
+
+    tournamentList$ = this.tournamentService.allTournaments$.pipe(
+        map(
+            (tournamentList) =>
+                tournamentList.filter(
+                    (tournament) => {
+                        if (!this.filterStates()) {
+                            return true;
+                        }
+                        return this.filterStates()?.includes(tournament.state);
+                    },
+                ),
+        ),
+    );
 
 }

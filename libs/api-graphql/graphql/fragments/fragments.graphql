@@ -40,6 +40,7 @@ fragment Team on Team {
     id
     name
     logo_id
+    logo_path
     created_at
     contact {
         ...Contact
@@ -86,9 +87,7 @@ fragment AllSeasonsHoF on Season {
     ranking {
         positions {
             team {
-                id
-                name
-                logo_id
+                ...Team
             }
             sort_index
         }
@@ -107,11 +106,22 @@ fragment AllSeasonsCalendar on Season {
 fragment AllTournaments on Tournament {
     id
     name
+    state
+}
+
+fragment AllTournamentsHoF on Tournament {
+    id
+    name
+    state
+    rounds {
+        ...MatchDay
+    }
 }
 
 fragment AllTournamentsCalendar on Tournament {
     id
     name
+    state
     rounds {
         ...MatchDay
     }
