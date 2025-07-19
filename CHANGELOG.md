@@ -1,3 +1,15 @@
+## 5.4.57 (2025-07-19)
+
+### Work in Progress
+
+- team logos ([02942da5](https://github.com/RobertKitzing/liga-manager-ui/commit/02942da5))
+- logo upload ([abfde543](https://github.com/RobertKitzing/liga-manager-ui/commit/abfde543))
+- responsive images ([27219dd8](https://github.com/RobertKitzing/liga-manager-ui/commit/27219dd8))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.56 (2025-07-14)
 
 ### Work in Progress
