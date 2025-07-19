@@ -144,6 +144,7 @@ export class ScheduleComponent {
         if (!season.match_days) {
             return;
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const currentIndex = season.match_days.findIndex((md: any) => md?.id === this.selectedMatchDayId());
         if (currentIndex === 0) {
             return;

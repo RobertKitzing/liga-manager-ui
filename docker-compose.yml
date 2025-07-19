@@ -31,8 +31,8 @@ services:
       - api
       - nginx
     volumes:
-      - team-logos:/lima/logos
-      - assets:/lima/assets
+      - team-logos:/lima/logos:ro
+      - assets:/lima/assets:ro
   # dev-ui:
   #   image: node:lts-alpine
   #   user: 1000:1000

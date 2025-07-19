@@ -38,6 +38,9 @@
                 "{workspaceRoot}/tsconfig.json",
                 "{workspaceRoot}/tsconfig.spec.json"
             ],
+            "dependsOn": [
+                "api-openapi:gen:api"
+            ],
             "cache": true,
             "configurations": {
                 "ci": {},
