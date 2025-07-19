@@ -91,7 +91,9 @@ jobs:
           no-coverage-ran: false
           coverage-folder: ./coverage
           coverage-base-folder: ./coverage-base
-          gist-processing: false
+          gist-processing: true
+          gist-token: ${{ secrets.GIST_SECRET }}
+          gist-id: 000877215e1ce4800aba4a9c90d5f655
           named-logo: jest
           color: green
           hide-coverage-reports: false
