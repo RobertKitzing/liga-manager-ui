@@ -23,6 +23,21 @@ services:
     depends_on:
       - mariadb
       - redis
+  
+  imgproxy:
+    image: ghcr.io/imgproxy/imgproxy:latest
+    environment:
+      IMGPROXY_USE_ETAG: false
+      IMGPROXY_ALLOWED_SOURCES: local://
+      IMGPROXY_LOCAL_FILESYSTEM_ROOT: /lima
+      IMGPROXY_ENABLE_AVIF_DETECTION: true
+      IMGPROXY_ENABLE_WEBP_DETECTION: true
+    depends_on:
+      - api
+      - nginx
+    volumes:
+      - team-logos:/lima/logos:ro
+      - assets:/lima/assets:ro
 
   redis:
     image: redis:alpine
