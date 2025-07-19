@@ -41,6 +41,15 @@
             "dependsOn": [
                 "api-openapi:gen:api"
             ],
+            "options": {
+                "passWithNoTests": true,
+                "codeCoverage": true,
+                "coverageReporters": [
+                    "json",
+                    "json-summary",
+                    "html"
+                ]
+            },
             "cache": true,
             "configurations": {
                 "ci": {},
