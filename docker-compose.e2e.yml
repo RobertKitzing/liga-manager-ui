@@ -1,5 +1,6 @@
 volumes:
   team-logos:
+  assets:
 
 services:
   nginx:
