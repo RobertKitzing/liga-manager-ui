@@ -1,7 +1,6 @@
 name: Pull Requests
 
 env:
-  DOCKER_REPO_UI: robertkitzing/liga-manager-ui
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 on:
@@ -121,11 +120,11 @@ jobs:
           cache-to: type=gha,mode=max
           context: .
           load: true
-          tags: ${{ env.DOCKER_REPO_UI }}:e2e
+          tags: liga-manager-ui:e2e
       - name: Start Services
         uses: hoverkraft-tech/compose-action@v2.2.0
         env:
-          UI_IMAGE: ${{ env.DOCKER_REPO_UI }}
+          UI_IMAGE: liga-manager-ui
           UI_TAG: 'e2e'
           API_TAG: 'latest'
         with:
