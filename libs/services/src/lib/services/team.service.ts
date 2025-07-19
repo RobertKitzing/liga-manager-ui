@@ -17,7 +17,7 @@ import { sortArrayBy } from '@liga-manager-ui/utils';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
-import { Configuration, LogosService } from '@liga-manager-api/openapi';
+import { LogosService } from '@liga-manager-api/openapi';
 
 @Injectable({
     providedIn: 'root',

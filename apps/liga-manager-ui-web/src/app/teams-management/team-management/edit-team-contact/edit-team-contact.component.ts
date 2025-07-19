@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, KeyValuePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import {
     FormControl,

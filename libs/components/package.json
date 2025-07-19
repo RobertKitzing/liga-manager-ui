@@ -10,6 +10,7 @@
         "@angular/router": "^19.2.14",
         "@colsen1991/ngx-translate-extract-marker": "^2.0.8",
         "@liga-manager-api/graphql": "^5.4.56",
+        "@liga-manager-api/openapi": "^5.4.56",
         "@liga-manager-ui/common": "^5.4.56",
         "@liga-manager-ui/directives": "^5.4.56",
         "@liga-manager-ui/pipes": "^5.4.56",

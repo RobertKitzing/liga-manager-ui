@@ -14,7 +14,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { defaultDialogConfig } from '@liga-manager-ui/components';
-import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
     selector: 'lima-manage-users',

@@ -33,6 +33,9 @@
                 }
             },
             "defaultConfiguration": "production"
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
         }
     }
 }
