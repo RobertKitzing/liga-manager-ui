@@ -1,15 +1,14 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { firstValueFrom, tap } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { AddTeamToSeasonMutationVariables, Maybe, Team } from '@liga-manager-api/graphql';
 import { TranslateModule } from '@ngx-translate/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { TeamAutoCompleteComponent, TeamSearchComponent } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'lima-manage-teams',
