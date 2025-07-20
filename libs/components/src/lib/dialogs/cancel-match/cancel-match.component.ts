@@ -70,7 +70,7 @@ export class CancelMatchComponent {
                 this.dialogRef.close(true);
             }
         } catch (_error) {
-            // throw error
+            console.error(_error);
         }
     }
 

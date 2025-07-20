@@ -68,6 +68,7 @@ export class LoginComponent {
             );
             this.dialogRef.close();
         } catch (_error) {
+            console.error(_error);
             this.loginForm.controls.password.setValue('');
             this.loginForm.controls.username.setErrors({ required: true });
             this.loginForm.controls.password.setErrors({ required: true });
@@ -83,7 +84,7 @@ export class LoginComponent {
                 );
                 this.dialogRef.close();
             } catch (_error) {
-                // throw error;
+                console.error(_error);
             }
         } else {
             this.loginForm.controls.username.setErrors({ required: true });

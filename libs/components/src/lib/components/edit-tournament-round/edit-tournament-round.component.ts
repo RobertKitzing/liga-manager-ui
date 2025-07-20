@@ -103,7 +103,7 @@ export class EditTournamentRoundComponent {
             this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_TOURNAMENT_ROUND_SUCCESS'));
             this.roundEdited.emit(true);
         } catch (_error) {
-            // Empty
+            console.error(_error);
         }
     }
 

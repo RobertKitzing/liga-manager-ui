@@ -4,14 +4,12 @@
             [ngSrc]="team()!.logo_path!"
             [width]="width()"
             [height]="height()"
-            (error)="onError($event)"
         />
     } @else {
         <img
             ngSrc="assets/default_team_logo_200x200.webp"
             [width]="width()"
             [height]="height()"
-            (error)="onError($event)"
         />
     }
 }

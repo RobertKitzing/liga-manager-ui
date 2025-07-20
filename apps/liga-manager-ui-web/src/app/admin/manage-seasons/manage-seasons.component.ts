@@ -20,7 +20,6 @@ import { ManageMatchdaysComponent } from './manage-matchdays/manage-matchdays.co
 import { ManageMatchesComponent } from './manage-matches/manage-matches.component';
 import { ManageScheduleMatchesComponent } from './manage-schedule-matches/manage-schedule-matches.component';
 import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.component';
-import { ManageStartStopComponent } from './manage-start-stop/manage-start-stop.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NotificationService, SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';

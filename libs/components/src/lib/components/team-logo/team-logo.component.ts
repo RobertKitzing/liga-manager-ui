@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Team } from '@liga-manager-api/graphql';
 import { Configuration } from '@liga-manager-api/openapi';
 
@@ -19,11 +19,5 @@ export class TeamLogoComponent {
     team = input<Team | null>();
 
     basePath = inject(Configuration).basePath;
-
-    error = signal(false);
-
-    onError(error: any) {
-        this.error.set(true);
-    }
 
 }
