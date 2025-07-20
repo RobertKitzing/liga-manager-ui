@@ -14,6 +14,7 @@
                 <div class="mb-2">
                     @if(teamService.allTeams$ | async; as teams) {
                         <lima-team-auto-complete
+                            cySelector="input-team-auto-complete-home"
                             [teams]="teams"
                             [fromControl]="newMatch.controls.home"
                             >
@@ -26,6 +27,7 @@
                 <div class="mb-2">
                     @if(teamService.allTeams$ | async; as teams) {
                         <lima-team-auto-complete class="mb-2"
+                            cySelector="input-team-auto-complete-guest"
                             [teams]="teams"
                             [fromControl]="newMatch.controls.guest">
                         </lima-team-auto-complete>
@@ -33,7 +35,7 @@
                 </div>
             </div>
             <div>
-                <button mat-icon-button (click)="addMatch()" [disabled]="!newMatch.valid">
+                <button mat-icon-button (click)="addMatch()" [disabled]="!newMatch.valid" cySelector="button-add-match-to-tournament-round">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -62,7 +64,7 @@
     </mat-card-content>
     <mat-card-footer>
         <div class="flex justify-center m-3">
-            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0">
+            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0" cySelector="button-save-tournament-round">
                 <mat-icon>save</mat-icon>
                 <span translate>SAVE_ROUND</span>
             </button>

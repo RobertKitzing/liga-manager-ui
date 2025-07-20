@@ -18,10 +18,11 @@
                 @switch (selectedTournament.state) {
                     @case (TournamentState.Preparation) {
                         <button
+                            cySelector="button-start-tournament"
                             mat-stroked-button
                             (click)="startTournament(selectedTournament.id)"
                         >
-                            <mat-icon>play</mat-icon>
+                            <mat-icon>play_arrow</mat-icon>
                             <span translate>BUTTON.START_TOURNAMENT</span>
                         </button>
                     }
@@ -30,7 +31,7 @@
                             mat-stroked-button
                             (click)="endTournament(selectedTournament.id)"
                         >
-                            <mat-icon>play</mat-icon>
+                            <mat-icon>stop</mat-icon>
                             <span translate>BUTTON.STOP_TOURNAMENT</span>
                         </button>
                     }
@@ -96,7 +97,7 @@
                     @if (!editRound() && round.number === selectedTournament.rounds?.length && !tournamentEnded(selectedTournament.state)) {
                         <mat-card-footer>
                             <div class="flex justify-center m-3">
-                                <button mat-stroked-button (click)="createNext(round.number)">
+                                <button mat-stroked-button (click)="createNext(round.number)" cySelector="button-create-next-tournament-round">
                                     <mat-icon>add</mat-icon>
                                     <span translate>CREATE_NEXT_ROUND</span>
                                 </button>

@@ -6,11 +6,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { NotificationService, TeamService, TournamentService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import { Match, MatchDay, Maybe, Team } from '@liga-manager-api/graphql';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatchComponent } from '../match';
 import { TeamAutoCompleteComponent } from '../team-auto-complete/team-auto-complete.component';
 import { firstValueFrom } from 'rxjs';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+
+function typeofTeamValidator(): ValidatorFn {
+    return (control) => {
+        return typeof control.value == 'string' ? { noTeam: true }: null
+    }
+}
 
 @Component({
     selector: 'lima-edit-tournament-round',
@@ -25,6 +32,7 @@ import { firstValueFrom } from 'rxjs';
         TranslateModule,
         MatchComponent,
         TeamAutoCompleteComponent,
+        CypressSelectorDirective,
     ],
     templateUrl: './edit-tournament-round.component.html',
 })
@@ -52,8 +60,8 @@ export class EditTournamentRoundComponent {
 
     newMatch = new FormGroup(
         {
-            home: new FormControl<Team | undefined | null>(undefined, [ Validators.required]),
-            guest: new FormControl<Team | undefined | null>(undefined, [ Validators.required]),
+            home: new FormControl<Team | undefined | null>(undefined, [ Validators.required, typeofTeamValidator() ]),
+            guest: new FormControl<Team | undefined | null>(undefined, [ Validators.required, typeofTeamValidator() ]),
         },
     );
 
