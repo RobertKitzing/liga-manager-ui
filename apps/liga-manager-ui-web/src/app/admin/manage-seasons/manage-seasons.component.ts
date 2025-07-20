@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { ConfirmComponent, defaultDialogConfig, SeasonChooserComponent } from '@liga-manager-ui/components';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { map, switchMap, BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap, BehaviorSubject, Observable, take } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
 import { ManageTeamsComponent } from './manage-teams';
@@ -23,7 +23,6 @@ import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.co
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NotificationService, SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { marker } from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -110,13 +109,13 @@ export class ManageSeasonsComponent implements OnInit {
         this.dialog.open(CreateNewSeasonComponent);
     }
 
-    endSeason(seasonId: string) {
+    endSeason(seasonId: string, name: string) {
 
         this.dialog.open(ConfirmComponent,
             {
                 ...defaultDialogConfig,
                 data: {
-                    body: marker('ARE_YOU_SURE_TO_DELETE_THIS_SEASON'),
+                    body: this.translateService.instant('ARE_YOU_SURE_TO_END_THIS_SEASON', { season: name }),
                 },
             },
         )
@@ -153,8 +152,15 @@ export class ManageSeasonsComponent implements OnInit {
         }
     }
 
-    deleteSeason(seasonId: string) {
-        this.dialog.open(ConfirmComponent)
+    deleteSeason(seasonId: string, name: string) {
+        this.dialog.open(
+            ConfirmComponent, {
+                ...defaultDialogConfig,
+                data: {
+                    body: this.translateService.instant('ARE_YOU_SURE_TO_DELETE_THIS_SEASON', { season: name }),
+                },
+            },
+        )
             .afterClosed()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
@@ -165,6 +171,7 @@ export class ManageSeasonsComponent implements OnInit {
                             this.notificationService.showSuccessNotification(
                                 this.translateService.instant('DELETE_SEASON_SUCCESS'),
                             );
+                            this.selectedSeasonFC.reset();
                         } catch (_error) {
                             this.notificationService.showErrorNotification(
                                 this.translateService.instant('DELETE_SEASON_ERROR'),

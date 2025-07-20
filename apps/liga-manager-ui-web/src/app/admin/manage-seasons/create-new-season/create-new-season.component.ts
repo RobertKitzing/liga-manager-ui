@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FormControl,
     FormsModule,
@@ -10,6 +10,7 @@ import {
     MatDialog,
     MatDialogActions,
     MatDialogContent,
+    MatDialogRef,
     MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,6 +40,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreateNewSeasonComponent {
 
+    dialogRef = inject(MatDialogRef<CreateNewSeasonComponent>);
+
     newName = new FormControl('', [Validators.required]);
 
     constructor(
@@ -57,7 +60,7 @@ export class CreateNewSeasonComponent {
                 [],
                 'snackbar-success-create-season',
             );
-            this.dialog.closeAll();
+            this.dialogRef.close();
         } catch (_error) {
             this.notificationService.showErrorNotification(
                 marker('CREATE_SEASON_ERROR'),

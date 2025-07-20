@@ -12,6 +12,8 @@ import { MatchComponent } from '../match';
 import { TeamAutoCompleteComponent } from '../team-auto-complete/team-auto-complete.component';
 import { firstValueFrom } from 'rxjs';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 
 function typeofTeamValidator(): ValidatorFn {
     return (control) => {
@@ -33,6 +35,8 @@ function typeofTeamValidator(): ValidatorFn {
         MatchComponent,
         TeamAutoCompleteComponent,
         CypressSelectorDirective,
+        MatDatepickerModule,
+        MatInputModule,
     ],
     templateUrl: './edit-tournament-round.component.html',
 })
@@ -66,8 +70,8 @@ export class EditTournamentRoundComponent {
     );
 
     roundDates = new FormGroup({
-        from: new FormControl<Date>(new Date(), { nonNullable: true }),
-        to: new FormControl<Date>(new Date(), { nonNullable: true }),
+        from: new FormControl<Date | undefined>(undefined, [ Validators.required ]),
+        to: new FormControl<Date | undefined>(undefined, [ Validators.required ]),
     });
 
     matches = signal<Maybe<Match>[]>([])
@@ -78,6 +82,12 @@ export class EditTournamentRoundComponent {
         effect(() => {
             if (!this.createNext()) {
                 this.matches.set(this.round()?.matches || []);
+            }
+            if (this.round() && !this.createNext()) {
+                this.roundDates.setValue({
+                    from: new Date(this.round()?.start_date || ''),
+                    to: new Date(this.round()?.end_date || ''),
+                })
             }
         });
     }
@@ -92,8 +102,8 @@ export class EditTournamentRoundComponent {
                 this.tournamentService.createRound({
                     tournament_id: this.tournamentId(),
                     date_period: {
-                        from: this.roundDates.controls.from.value,
-                        to: this.roundDates.controls.to.value,
+                        from: this.roundDates.controls.from.value!,
+                        to: this.roundDates.controls.to.value!,
                     },
                     round,
                     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain

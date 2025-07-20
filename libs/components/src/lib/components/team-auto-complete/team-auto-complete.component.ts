@@ -1,4 +1,4 @@
-import { Component, input, effect, inject, DestroyRef, ViewChild } from '@angular/core';
+import { Component, input, effect, inject, DestroyRef, ViewChild, output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +32,10 @@ export class TeamAutoCompleteComponent {
 
     teams = input<Maybe<Maybe<Team>[]> | undefined>();
 
+    clearAfterSelected = input(false);
+
+    teamSelected = output<Team>();
+
     destroyRef = inject(DestroyRef);
 
     filteredTeams$!: Observable<Maybe<Maybe<Team>[]>>;
@@ -54,7 +58,11 @@ export class TeamAutoCompleteComponent {
 
     _teamSelected(option: MatAutocompleteSelectedEvent) {
         if (option.option.value) {
-            this.fromControl()?.setValue(option.option.value)
+            this.fromControl().setValue(option.option.value)
+            this.teamSelected.emit(option.option.value);
+            if (this.clearAfterSelected()) {
+                this.fromControl().reset();
+            }
         }
     }
 
