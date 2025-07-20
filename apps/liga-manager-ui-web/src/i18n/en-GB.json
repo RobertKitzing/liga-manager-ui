@@ -1,6 +1,8 @@
 {
 	"ADD_USER_TITLE": "Add User",
 	"ALL_TEAMS": "All Teams",
+	"ARE_YOU_SURE": "",
+	"ARE_YOU_SURE_TO_DELETE_THIS_SEASON": "",
 	"BUTTON.CANCEL": "Cancel",
 	"BUTTON.CANCEL_MATCH": "Cancel Match",
 	"BUTTON.CHANGE_PASSWORD": "Change Password",
@@ -29,6 +31,7 @@
 	"CHAMPIONSHIP_COUNT": "Championships",
 	"CREATE_NEW_SEASON_TITLE": "New Season",
 	"CREATE_NEW_TOURNAMENT_TITLE": "New Tournament",
+	"CREATE_NEXT_ROUND": "",
 	"CREATE_SEASON_ERROR": "Season not created",
 	"CREATE_SEASON_SUCCESS": "Season created",
 	"CREATE_TOURNAMENT_ERROR": "Tournament not creted",
@@ -40,10 +43,13 @@
 	"DELETE_TEAM_LOGO_SUCCESS": "Team logo deleted",
 	"DESELECT_SEASON": "No Season",
 	"DESELECT_TOURNAMENT": "",
+	"EDITING_ROUND": "Edit Round {{ round }}",
 	"EDIT_KICKOFF_SUCCESS": "Kickoff saved",
 	"EDIT_PITCH_SUCCESS": "Pitch saved",
 	"EDIT_RESULT_SUCCESS": "Result saved",
 	"EMAIL": "Email",
+	"END_SEASON_ERROR": "",
+	"END_SEASON_SUCCESS": "",
 	"ERROR.400_NETWORK": "",
 	"ERROR.FORM.EMAIL-INVALID": "",
 	"ERROR.UNKNOWN_NETWORK_ERROR": "",
@@ -79,6 +85,7 @@
 	"NEW_PITCH": "New Pitch",
 	"NEW_TEAM": "New Team name",
 	"NEW_TEAM_LOGO": "",
+	"NO": "",
 	"NO_PTICH_SET": "where ?",
 	"NO_TIME_SET": "when ?",
 	"OLD_KICKOFF": "Current Kickoff",
@@ -126,5 +133,6 @@
 	"USER_ROLE": "User role",
 	"UserRole.Admin": "Admin",
 	"UserRole.TeamManager": "TeamManager",
-	"WINS_DRAWS_LOSSES": "W:D:L"
+	"WINS_DRAWS_LOSSES": "W:D:L",
+	"YES": ""
 }

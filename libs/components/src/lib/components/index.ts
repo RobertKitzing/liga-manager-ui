@@ -6,3 +6,5 @@ export * from './team-contact';
 export * from './tournament-chooser';
 export * from './match';
 export * from './team-logo';
+export * from './edit-tournament-round';
+export * from './team-auto-complete/team-auto-complete.component';

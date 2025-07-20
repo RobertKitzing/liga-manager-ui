@@ -19,3 +19,11 @@ mutation CreateTournamentRound(
 mutation DeleteTournament($tournament_id: String!) {
     deleteTournament(tournament_id: $tournament_id)
 }
+
+mutation StartTournament($tournament_id: String!) {
+  startTournament(tournament_id: $tournament_id)
+}
+
+mutation EndTournament($tournament_id: String!) {
+  endTournament(tournament_id: $tournament_id)
+}

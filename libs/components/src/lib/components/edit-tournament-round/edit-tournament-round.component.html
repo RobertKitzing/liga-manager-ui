@@ -1,0 +1,71 @@
+<mat-card>
+    <mat-card-title>
+        <div class="flex justify-between">
+            <div class="text-center m-2 grow">
+                @if (createNext()) {
+                    <span>{{'EDITING_ROUND' | translate: { round: round()?.number! + 1 } }}</span>
+                }
+            </div>
+        </div>
+    </mat-card-title>
+    <mat-card-content>
+        <div class="flex justify-evenly items-center">
+            <div class="grow m-6">
+                <div class="mb-2">
+                    @if(teamService.allTeams$ | async; as teams) {
+                        <lima-team-auto-complete
+                            [teams]="teams"
+                            [fromControl]="newMatch.controls.home"
+                            >
+                        </lima-team-auto-complete>
+                    }
+                </div>
+            </div>
+            <div class="m-6">-</div>
+            <div class="grow m-6">
+                <div class="mb-2">
+                    @if(teamService.allTeams$ | async; as teams) {
+                        <lima-team-auto-complete class="mb-2"
+                            [teams]="teams"
+                            [fromControl]="newMatch.controls.guest">
+                        </lima-team-auto-complete>
+                    }
+                </div>
+            </div>
+            <div>
+                <button mat-icon-button (click)="addMatch()" [disabled]="!newMatch.valid">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div>
+            @for( match of matches(); track match ) {
+                @if(match) {
+                    <div class="flex items-center">
+                        <div class="grow">
+                            <lima-match
+                                [match]="match"
+                                [matchDay]="round()!"
+                                [markLooser]="false"
+                                [resultOnly]="true"
+                            ></lima-match>
+                        </div>
+                        <div>
+                            <button mat-icon-button (click)="deleteMatch(match)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <div class="flex justify-center m-3">
+            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0">
+                <mat-icon>save</mat-icon>
+                <span translate>SAVE_ROUND</span>
+            </button>
+        </div>
+    </mat-card-footer>
+</mat-card>

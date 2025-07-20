@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -38,6 +38,8 @@ export class MatchComponent {
     @Input({ required: true }) matchDay!: MatchDay;
 
     @Input() markLooser = false;
+
+    resultOnly = input(false);
 
     authService = inject(AuthenticationService);
 

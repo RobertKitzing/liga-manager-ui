@@ -12,7 +12,14 @@
     @for (tournament of tournamentList$ | async; track tournament) {
         @if (tournament) {
             <mat-option [value]="tournament">
-                {{ tournament.name }}
+                @switch (tournament.state) {
+                    @case (TournamentState.Progress) {
+                        {{ tournament.name }}
+                    }
+                    @default {
+                        {{ tournament.name }} ({{ tournament.state | enumTranslate }})
+                    }
+                }
             </mat-option>
         }
     }

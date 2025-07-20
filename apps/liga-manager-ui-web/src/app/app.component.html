@@ -84,7 +84,7 @@
                 <mat-icon class="mr-2">palette</mat-icon>
                 <mat-select [formControl]="themeControl">
                     @for (theme of themeService.themes; track theme) {
-                    <mat-option [value]="theme">{{ theme }}</mat-option>
+                        <mat-option [value]="theme">{{ theme }}</mat-option>
                     }
                 </mat-select>
             </div>

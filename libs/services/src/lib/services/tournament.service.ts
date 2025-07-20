@@ -2,7 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import {
     AllTournamentListGQL,
     CreateTournamentGQL,
+    CreateTournamentRoundGQL,
+    CreateTournamentRoundMutationVariables,
     DeleteTournamentGQL,
+    EndTournamentGQL,
+    StartTournamentGQL,
     Tournament,
     TournamentByIdGQL,
 } from '@liga-manager-api/graphql';
@@ -20,7 +24,13 @@ export class TournamentService {
 
     private deleteTournamentGQL = inject(DeleteTournamentGQL);
 
+    private startTournamentGQL = inject(StartTournamentGQL);
+
+    private endTournamentGQL = inject(EndTournamentGQL);
+
     private tournamentByIdGQL = inject(TournamentByIdGQL);
+
+    private createTournamentRoundGQL = inject(CreateTournamentRoundGQL);
 
     allTournaments$ = this.allTournamentListGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTournaments),
@@ -54,6 +64,54 @@ export class TournamentService {
                     {
                         query: this.allTournamentListGQL.document,
                     },
+                ],
+            },
+        );
+    }
+
+    startTournament(tournament_id: string) {
+        return this.startTournamentGQL.mutate(
+            {
+                tournament_id,
+            },
+            {
+                refetchQueries: [
+                    {
+                        query: this.allTournamentListGQL.document,
+                    },
+                    {
+                        query: this.tournamentByIdGQL.document, variables: { id: tournament_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    endTournament(tournament_id: string) {
+        return this.endTournamentGQL.mutate(
+            {
+                tournament_id,
+            },
+            {
+                refetchQueries: [
+                    {
+                        query: this.allTournamentListGQL.document,
+                    },
+                    {
+                        query: this.tournamentByIdGQL.document, variables: { id: tournament_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    createRound(params: CreateTournamentRoundMutationVariables) {
+        return this.createTournamentRoundGQL.mutate(
+            params,
+            {
+                refetchQueries: [
+                    { query: this.allTournamentListGQL.document },
+                    { query: this.tournamentByIdGQL.document, variables: { id: params.tournament_id } },
                 ],
             },
         );
