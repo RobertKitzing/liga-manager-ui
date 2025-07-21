@@ -6,9 +6,9 @@ services:
   liga-manager-ui:
     #image: robertkitzing/liga-manager-ui:next
     build: .
-    environment:
-      GOOGLE_MAPS_API_KEY: ""
-      IMG_PROXY_HOST: imgproxy
+    # environment:
+    #   GOOGLE_MAPS_API_KEY: ""
+    #   IMG_PROXY_HOST: imgproxy
     ports:
       - "80:80"
     volumes:

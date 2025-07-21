@@ -126,14 +126,6 @@ export class AppComponent implements OnInit {
         this.i18Service.changeLang(param);
     }
 
-    onSwipeLeft() {
-        this.location.back();
-    }
-
-    onSwipeRight() {
-        this.location.forward();
-    }
-
     languageCompare(c1: StoredLang, c2: StoredLang) {
         return c1 && c2 && c1.code === c2.code;
     }

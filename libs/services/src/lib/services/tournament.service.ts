@@ -10,7 +10,7 @@ import {
     Tournament,
     TournamentByIdGQL,
 } from '@liga-manager-api/graphql';
-import { map } from 'rxjs';
+import { map, take } from 'rxjs';
 import { sortArrayBy } from '@liga-manager-ui/utils';
 
 @Injectable({
@@ -38,6 +38,10 @@ export class TournamentService {
             sortArrayBy(tournaments as Tournament[], 'name', 'desc'),
         ),
     );
+
+    reloadTournaments() {
+        this.allTournamentListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+    }
 
     createTournament(name: string) {
         return this.createTournamentGQL.mutate(

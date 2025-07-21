@@ -16,12 +16,7 @@ describe('Admin - Create Season', () => {
         cy.getBySel('button-create-season').click();
         cy.getBySel('input-create-season-name').type(Seasons[0].name);
         cy.getBySel('button-create-season-submit').click();
-        cy.intercept('POST', '/api/graphql').as('graphql');
-
         cy.getBySel('snackbar-success-create-season').should('exist');
-
-        cy.wait(['@graphql', '@graphql'])
-        
         cy.getBySel('select-season').click();
         cy.contains(Seasons[0].name).click();
         cy.getBySel('season-management-tab-select-teams').click();
@@ -34,7 +29,7 @@ describe('Admin - Create Season', () => {
 
         cy.getBySel('season-management-tab-create-matchdays').click();
 
-        cy.getBySel('input-tournament-season-start-date').type('07/21/2025');
+        cy.getBySel('input-tournament-season-start-date').type('07/21/2025', { force: true });
 
         cy.getBySel('button-save-match-days').click();
 

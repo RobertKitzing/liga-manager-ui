@@ -7,7 +7,6 @@ import { AddTeamToSeasonMutationVariables, Maybe, Team } from '@liga-manager-api
 import { TranslateModule } from '@ngx-translate/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { TeamAutoCompleteComponent, TeamSearchComponent } from '@liga-manager-ui/components';
-import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -18,7 +17,6 @@ import { ReactiveFormsModule } from '@angular/forms';
         MatButtonModule,
         MatIconModule,
         TranslateModule,
-        CypressSelectorDirective,
         TeamSearchComponent,
         TeamAutoCompleteComponent,
         ReactiveFormsModule,
