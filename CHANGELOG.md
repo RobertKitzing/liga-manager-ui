@@ -1,3 +1,13 @@
+## 5.4.58 (2025-07-21)
+
+### Work in Progress
+
+- edit tournaments ([81d1cf08](https://github.com/RobertKitzing/liga-manager-ui/commit/81d1cf08))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.57 (2025-07-19)
 
 ### Work in Progress
