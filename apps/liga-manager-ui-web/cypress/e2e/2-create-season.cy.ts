@@ -1,28 +1,39 @@
-import { Users, Seasons } from '@cypress/fixtures';
+import { Users, Seasons, Teams } from '@cypress/fixtures';
 
 describe('Admin - Create Season', () => {
 
     beforeEach(
         () => {
             cy.login(Users.admin.username, Users.admin.password);
-            cy.visit('/')
-            cy.getBySel('route-admin').first().click();
-            cy.getBySel('route-admin-seasons').first().click();
         },
     )
 
     it('Should create a season', () => {
+        cy.visit('/')
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
         cy.getBySel('button-create-season').click();
         cy.getBySel('input-create-season-name').type(Seasons[0].name);
         cy.getBySel('button-create-season-submit').click();
-        cy.getBySel('snackbar-success-create-season').should('exist');
-    })
+        cy.intercept('POST', '/api/graphql').as('graphql');
 
-    it('should select-season a season', () => {
+        cy.getBySel('snackbar-success-create-season').should('exist');
+
+        cy.wait(['@graphql', '@graphql'])
+        
         cy.getBySel('select-season').click();
         cy.contains(Seasons[0].name).click();
         cy.getBySel('season-management-tab-select-teams').click();
-        cy.getBySel('button-add-team-to-season').click({ multiple: true });
+
+        for (const team of Teams) {
+            // eslint-disable-next-line cypress/unsafe-to-chain-command
+            cy.getBySel('input-team-auto-complete').clear().type(team.name)
+            cy.get('mat-option').contains(team.name).click()
+        }
+
         cy.getBySel('season-management-tab-create-matchdays').click();
+
     })
+
 })

@@ -14,6 +14,7 @@
                 <mat-form-field class="w-full" subscriptSizing="dynamic">
                     <mat-label translate>TOURNAMENT_ROUND_FROM_DATE</mat-label>
                     <input matInput [matDatepicker]="startDatePicker"
+                        cySelector="input-tournament-round-from-date"
                         [formControl]="roundDates.controls.from">
                     <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #startDatePicker></mat-datepicker>
@@ -24,6 +25,7 @@
                 <mat-form-field class="w-full" subscriptSizing="dynamic">
                     <mat-label translate>TOURNAMENT_ROUND_TO_DATE</mat-label>
                     <input matInput [matDatepicker]="endDatePicker"
+                        cySelector="input-tournament-round-to-date"
                         [formControl]="roundDates.controls.to">
                     <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #endDatePicker></mat-datepicker>

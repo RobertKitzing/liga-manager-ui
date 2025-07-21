@@ -100,6 +100,7 @@ export class ManageTournamentsComponent {
 
     deleteTournament(id: string) {
         firstValueFrom(this.tournamentService.deleteTournament(id))
+        this.selectedTournamentFC.reset();
     }
 
 }

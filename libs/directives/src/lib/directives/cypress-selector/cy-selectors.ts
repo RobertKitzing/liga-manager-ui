@@ -1,6 +1,5 @@
 export type CySelectors =
     | 'button-add-match-to-tournament-round'
-    | 'button-add-team-to-season'
     | 'button-create-next-tournament-round'
     | 'button-create-season'
     | 'button-create-season-submit'
@@ -26,6 +25,8 @@ export type CySelectors =
     | 'input-team-auto-complete'
     | 'input-team-auto-complete-guest'
     | 'input-team-auto-complete-home'
+    | 'input-tournament-round-from-date'
+    | 'input-tournament-round-to-date'
     | 'input-username'
     | 'route-admin'
     | 'route-admin-pitches'
