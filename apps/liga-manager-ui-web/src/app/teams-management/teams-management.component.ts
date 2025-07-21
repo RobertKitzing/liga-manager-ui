@@ -8,8 +8,8 @@ import {
 } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TeamChooserComponent } from '@liga-manager-ui/components';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TeamAutoCompleteComponent } from '@liga-manager-ui/components';
 import { Team } from '@liga-manager-api/graphql';
 import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 
@@ -23,8 +23,9 @@ import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
         MatToolbarModule,
         RouterOutlet,
         AsyncPipe,
-        TeamChooserComponent,
         ReactiveFormsModule,
+        TeamAutoCompleteComponent,
+        FormsModule,
     ],
 })
 export class TeamsManagementComponent {
@@ -58,12 +59,12 @@ export class TeamsManagementComponent {
         of(this.authenticationService.user()?.teams),
     ).pipe(
         tap((teams) => {
-            // if (!this.selectedTeamFC.value) {
-            this.selectedTeamFC.setValue(teams![0]);
-            this.router.navigateByUrl(
-                `${APP_ROUTES.TEAMS_MANAGEMENT}/${teams![0]?.id}`,
-            );
-            // }
+            if (!this.selectedTeamFC.value) {
+                this.selectedTeamFC.setValue(teams![0]);
+                this.router.navigateByUrl(
+                    `${APP_ROUTES.TEAMS_MANAGEMENT}/${teams![0]?.id}`,
+                );
+            }
         }),
     );
 

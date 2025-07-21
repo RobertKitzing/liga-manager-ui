@@ -1,0 +1,12 @@
+<div mat-dialog-title class="text-center" translate>
+    ARE_YOU_SURE
+</div>
+<mat-dialog-content>
+    <div class="m-8">
+        {{ data.body }}
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button translate (click)="dialogRef.close(true)">YES</button>
+    <button mat-button translate (click)="dialogRef.close(false)">NO</button>
+</mat-dialog-actions>

@@ -1,0 +1,16 @@
+<mat-form-field class="w-full" subscriptSizing="dynamic">
+    <mat-label translate>PLACEHOLDER.SELECT_TEAM</mat-label>
+    <input type="text"
+        [cySelector]="cySelector()"
+        matInput
+        [formControl]="fromControl()"
+        [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete"
+        (optionSelected)="_teamSelected($event)"
+        [displayWith]="displayWith"
+        >
+        @for (option of filteredTeams$ | async; track option) {
+            <mat-option [value]="option">{{option?.name}}</mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>

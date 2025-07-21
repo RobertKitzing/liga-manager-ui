@@ -1,5 +1,12 @@
 @if (season) {
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-1">
+        @if (season.state === SeasonState.Preparation) {
+            <div class="m-8">
+                @if(teamService.allTeams$ | async; as allTeams) {
+                    <lima-team-auto-complete [teams]="allTeams" (teamSelected)="addTeamToSeason({ season_id: season.id, team_id: $event.id})" [clearAfterSelected]="true"></lima-team-auto-complete>
+                }
+            </div>
+        }
         <div>
             <h1 translate class="text-center">TEAMS_IN_SEASON</h1>
             <div class="m-8">
@@ -31,7 +38,7 @@
                 }
             }
         </div>
-        @if (season.state === SeasonState.Preparation) {
+        <!-- @if (season.state === SeasonState.Preparation) {
             <div>
                 <div>
                     <h1 translate class="text-center">ALL_TEAMS</h1>
@@ -58,6 +65,6 @@
                     }
                 }
             </div>
-        }
+        } -->
     </div>
 }

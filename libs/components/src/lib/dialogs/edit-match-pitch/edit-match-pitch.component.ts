@@ -84,6 +84,7 @@ export class EditMatchPitchComponent {
             );
             this.dialogRef.close(true);
         } catch (_error) {
+            console.error(_error);
             // throw error
         }
     }

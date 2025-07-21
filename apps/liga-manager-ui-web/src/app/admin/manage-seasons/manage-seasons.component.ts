@@ -8,8 +8,8 @@ import { MatStepperModule, StepperOrientation } from '@angular/material/stepper'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
-import { SeasonChooserComponent } from '@liga-manager-ui/components';
-import { TranslateModule } from '@ngx-translate/core';
+import { ConfirmComponent, defaultDialogConfig, SeasonChooserComponent } from '@liga-manager-ui/components';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { map, switchMap, BehaviorSubject, Observable } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
@@ -20,9 +20,8 @@ import { ManageMatchdaysComponent } from './manage-matchdays/manage-matchdays.co
 import { ManageMatchesComponent } from './manage-matches/manage-matches.component';
 import { ManageScheduleMatchesComponent } from './manage-schedule-matches/manage-schedule-matches.component';
 import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.component';
-import { ManageStartStopComponent } from './manage-start-stop/manage-start-stop.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { SeasonService } from '@liga-manager-ui/services';
+import { NotificationService, SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
@@ -46,7 +45,6 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         ManageMatchesComponent,
         ManageScheduleMatchesComponent,
         ManagePenaltiesComponent,
-        ManageStartStopComponent,
     ],
 })
 export class ManageSeasonsComponent implements OnInit {
@@ -56,6 +54,10 @@ export class ManageSeasonsComponent implements OnInit {
     private dialog = inject(MatDialog);
 
     private seasonService = inject(SeasonService);
+
+    private notificationService = inject(NotificationService);
+
+    private translateService = inject(TranslateService);
 
     MANAGE_SEASON_ROUTES = MANAGE_SEASON_ROUTES;
 
@@ -71,6 +73,7 @@ export class ManageSeasonsComponent implements OnInit {
                 (id) => this.seasonService.getSeasonById$(id).pipe(
                     map((season) => {
                         if (season) {
+                            this.seasonService.manageSeason.set(season as Season)
                             return {
                                 ...season,
                                 teams: sortArrayBy(season?.teams as Team[], 'name'),
@@ -97,11 +100,86 @@ export class ManageSeasonsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.selectedSeasonFC.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((season) => this.seasonTrigger$.next(season?.id))
+        this.selectedSeasonFC.valueChanges.pipe(
+            takeUntilDestroyed(this.destroyRef)).subscribe((season) => this.seasonTrigger$.next(season?.id),
+        )
     }
 
     createSeason() {
         this.dialog.open(CreateNewSeasonComponent);
+    }
+
+    endSeason(seasonId: string, name: string) {
+
+        this.dialog.open(ConfirmComponent,
+            {
+                ...defaultDialogConfig,
+                data: {
+                    body: this.translateService.instant('ARE_YOU_SURE_TO_END_THIS_SEASON', { season: name }),
+                },
+            },
+        )
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                (result) => {
+                    if (result) {
+                        try {
+                            this.seasonService.endSeason(seasonId);
+                            this.notificationService.showSuccessNotification(
+                                this.translateService.instant('END_SEASON_SUCCESS'),
+                            );
+                        } catch (_error) {
+                            this.notificationService.showErrorNotification(
+                                this.translateService.instant('END_SEASON_ERROR'),
+                            );
+                        }
+                    }
+                },
+            );
+    }
+
+    async startSeason(seasonId: string) {
+        try {
+            await this.seasonService.startSeason(seasonId);
+            this.notificationService.showSuccessNotification(
+                this.translateService.instant('START_SEASON_SUCCESS'),
+            );
+        } catch (_error) {
+            this.notificationService.showErrorNotification(
+                this.translateService.instant('START_SEASON_ERROR'),
+            );
+        }
+    }
+
+    deleteSeason(seasonId: string, name: string) {
+        this.dialog.open(
+            ConfirmComponent, {
+                ...defaultDialogConfig,
+                data: {
+                    body: this.translateService.instant('ARE_YOU_SURE_TO_DELETE_THIS_SEASON', { season: name }),
+                },
+            },
+        )
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                (result) => {
+                    if (result) {
+                        try {
+                            this.seasonService.deleteSeason(seasonId);
+                            this.notificationService.showSuccessNotification(
+                                this.translateService.instant('DELETE_SEASON_SUCCESS'),
+                            );
+                            this.selectedSeasonFC.reset();
+                        } catch (_error) {
+                            this.notificationService.showErrorNotification(
+                                this.translateService.instant('DELETE_SEASON_ERROR'),
+                            );
+                        }
+                    }
+                },
+            );
     }
 
 }

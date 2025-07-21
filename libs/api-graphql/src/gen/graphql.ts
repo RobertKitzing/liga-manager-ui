@@ -901,6 +901,20 @@ export type DeleteTournamentMutationVariables = Exact<{
 
 export type DeleteTournamentMutation = Pick<Mutation, 'deleteTournament'>;
 
+export type StartTournamentMutationVariables = Exact<{
+  tournament_id: Scalars['String']['input'];
+}>;
+
+
+export type StartTournamentMutation = Pick<Mutation, 'startTournament'>;
+
+export type EndTournamentMutationVariables = Exact<{
+  tournament_id: Scalars['String']['input'];
+}>;
+
+
+export type EndTournamentMutation = Pick<Mutation, 'endTournament'>;
+
 export type CreateUserMutationVariables = Exact<{
   user_id?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
@@ -1889,6 +1903,38 @@ export const DeleteTournamentDocument = gql`
   })
   export class DeleteTournamentGQL extends Apollo.Mutation<DeleteTournamentMutation, DeleteTournamentMutationVariables> {
     document = DeleteTournamentDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const StartTournamentDocument = gql`
+    mutation StartTournament($tournament_id: String!) {
+  startTournament(tournament_id: $tournament_id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class StartTournamentGQL extends Apollo.Mutation<StartTournamentMutation, StartTournamentMutationVariables> {
+    document = StartTournamentDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EndTournamentDocument = gql`
+    mutation EndTournament($tournament_id: String!) {
+  endTournament(tournament_id: $tournament_id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EndTournamentGQL extends Apollo.Mutation<EndTournamentMutation, EndTournamentMutationVariables> {
+    document = EndTournamentDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

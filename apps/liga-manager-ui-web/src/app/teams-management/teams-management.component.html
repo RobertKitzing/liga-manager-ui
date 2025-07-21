@@ -4,10 +4,11 @@
             <div class="w-full self-center">
                 @if (teams$ | async; as teams) {
                     @if (teams.length > 1) {
-                        <lima-team-chooser
-                            [selectedTeamFC]="selectedTeamFC"
+                        <lima-team-auto-complete
                             [teams]="teams"
-                        ></lima-team-chooser>
+                            [fromControl]="selectedTeamFC"
+                            >
+                        </lima-team-auto-complete>
                     } @else {
                         <div>{{ teams[0]?.name }}</div>
                     }

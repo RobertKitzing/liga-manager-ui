@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { TeamSearchComponent } from '@liga-manager-ui/components';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -28,6 +29,7 @@ import { TeamSearchComponent } from '@liga-manager-ui/components';
         AsyncPipe,
         CypressSelectorDirective,
         TeamSearchComponent,
+        MatCardModule,
     ],
 })
 export class ManageTeamsComponent {

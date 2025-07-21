@@ -1,24 +1,119 @@
-<mat-toolbar class="secondary">
-    <div class="w-full flex items-center space-x-4">
-        <div class="w-1/2">
-            <lima-tournament-chooser
-                [selectedTournamentFC]="selectedTournamentFC"
-            ></lima-tournament-chooser>
+<div class="mat-sys-surface-dim">
+    <mat-toolbar class="secondary">
+        <div class="w-full flex items-center space-x-4">
+            <div class="w-1/2">
+                <lima-tournament-chooser
+                    [selectedTournamentFC]="selectedTournamentFC"
+                ></lima-tournament-chooser>
+            </div>
+            <button
+                mat-stroked-button
+                (click)="createTournament()"
+                cySelector="button-create-tournament"
+            >
+                <mat-icon>add</mat-icon>
+                <span translate>BUTTON.CREATE_TOURNAMENT</span>
+            </button>
+            @if (selectedTournament$ | async; as selectedTournament) {
+                @switch (selectedTournament.state) {
+                    @case (TournamentState.Preparation) {
+                        <button
+                            cySelector="button-start-tournament"
+                            mat-stroked-button
+                            (click)="startTournament(selectedTournament.id)"
+                        >
+                            <mat-icon>play_arrow</mat-icon>
+                            <span translate>BUTTON.START_TOURNAMENT</span>
+                        </button>
+                    }
+                    @case (TournamentState.Progress) {
+                        <button
+                            mat-stroked-button
+                            (click)="endTournament(selectedTournament.id)"
+                        >
+                            <mat-icon>stop</mat-icon>
+                            <span translate>BUTTON.STOP_TOURNAMENT</span>
+                        </button>
+                    }
+                }
+                <button
+                    mat-stroked-button
+                    (click)="deleteTournament(selectedTournament.id)"
+                >
+                    <mat-icon>delete</mat-icon>
+                    <span translate>BUTTON.DELETE_TOURNAMENT</span>
+                </button>
+            }
         </div>
-        <button
-            mat-stroked-button
-            (click)="createTournament()"
-            cySelector="button-create-tournament"
-        >
-            <mat-icon>add</mat-icon>
-            <span translate>BUTTON.CREATE_TOURNAMENT</span>
-        </button>
-    </div>
-</mat-toolbar>
+    </mat-toolbar>
+</div>
 
-@if (selectedTournament$ | async; as selectedTournament) { @for( round of
-selectedTournament.rounds; track round ) { @if(round) {
-<p>{{ round.start_date | customDate }} - {{ round.end_date | customDate }}</p>
-} @for( match of round?.matches; track match ) { @if(match) {
-<p>{{ match.home_team.name }} - {{ match.guest_team.name }}</p>
-} } } }
+<div class="w-3/4 m-auto mt-2">
+    @if (selectedTournament$ | async; as selectedTournament) {
+        @if (selectedTournament.rounds?.length === 0) {
+            <lima-edit-tournament-round
+                [tournamentId]="selectedTournament.id"
+                [createNext]="true"
+                (roundEdited)="roundEdited()">
+            </lima-edit-tournament-round>
+        }
+        @for( round of selectedTournament.rounds; track round ) {
+            @if(round) {
+                <mat-card class="mb-2">
+                    <mat-card-title>
+                        <div class="flex justify-between">
+                            <div class="text-center m-2 grow">
+                                {{ "TOURNAMENT_ROUND" | translate : { round: round?.number } }} ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{round.end_date | customDate}})
+                            </div>
+                            <div>
+                                @if (editRound() !== round.number && !tournamentEnded(selectedTournament.state)) {
+                                    <button mat-icon-button (click)="editRound.set(round.number)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </mat-card-title>
+                    <mat-card-content>
+                        @if (editRound() === round.number) {
+                            <lima-edit-tournament-round
+                                [tournamentId]="selectedTournament.id"
+                                [round]="round"
+                                (roundEdited)="roundEdited()">
+                            </lima-edit-tournament-round>
+                        } @else {
+                            @for( match of round?.matches; track match ) {
+                                @if(match) {
+                                    <lima-match
+                                        [match]="match"
+                                        [matchDay]="round"
+                                        [markLooser]="true"
+                                        [resultOnly]="true"
+                                    ></lima-match>
+                                }
+                            }
+                        }
+                    </mat-card-content>
+                    @if (!editRound() && round.number === selectedTournament.rounds?.length && !tournamentEnded(selectedTournament.state)) {
+                        <mat-card-footer>
+                            <div class="flex justify-center m-3">
+                                <button mat-stroked-button (click)="createNext(round.number)" cySelector="button-create-next-tournament-round">
+                                    <mat-icon>add</mat-icon>
+                                    <span translate>CREATE_NEXT_ROUND</span>
+                                </button>
+                            </div>
+                        </mat-card-footer>
+                    }
+                </mat-card>
+                @if(createRoundMode() === round.number) {
+                    <lima-edit-tournament-round
+                        [tournamentId]="selectedTournament.id"
+                        [round]="round"
+                        [createNext]="true"
+                        (roundEdited)="roundEdited()">
+                    </lima-edit-tournament-round>
+                }
+            }
+        }
+    }
+</div>

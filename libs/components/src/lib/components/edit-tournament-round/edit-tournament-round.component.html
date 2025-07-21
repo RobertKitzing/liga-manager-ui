@@ -1,0 +1,101 @@
+<mat-card>
+    <mat-card-title>
+        <div class="flex justify-between">
+            <div class="text-center m-2 grow">
+                @if (createNext()) {
+                    <span>{{'EDITING_ROUND' | translate: { round: round()?.number! + 1 } }}</span>
+                }
+            </div>
+        </div>
+    </mat-card-title>
+    <mat-card-content>
+        <div class="flex justify-evenly items-center">
+            <div class="grow m-6">
+                <mat-form-field class="w-full" subscriptSizing="dynamic">
+                    <mat-label translate>TOURNAMENT_ROUND_FROM_DATE</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker"
+                        cySelector="input-tournament-round-from-date"
+                        [formControl]="roundDates.controls.from">
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="m-6">-</div>
+            <div class="grow m-6">
+                <mat-form-field class="w-full" subscriptSizing="dynamic">
+                    <mat-label translate>TOURNAMENT_ROUND_TO_DATE</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker"
+                        cySelector="input-tournament-round-to-date"
+                        [formControl]="roundDates.controls.to">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="flex justify-evenly items-center">
+            <div class="grow m-6">
+                <div class="mb-2">
+                    @if(teamService.allTeams$ | async; as teams) {
+                        <lima-team-auto-complete
+                            cySelector="input-team-auto-complete-home"
+                            [teams]="teams"
+                            [fromControl]="newMatch.controls.home"
+                            >
+                        </lima-team-auto-complete>
+                    }
+                </div>
+            </div>
+            <div class="m-6">-</div>
+            <div class="grow m-6">
+                <div class="mb-2">
+                    @if(teamService.allTeams$ | async; as teams) {
+                        <lima-team-auto-complete class="mb-2"
+                            cySelector="input-team-auto-complete-guest"
+                            [teams]="teams"
+                            [fromControl]="newMatch.controls.guest">
+                        </lima-team-auto-complete>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <button mat-stroked-button (click)="addMatch()" [disabled]="!newMatch.valid" cySelector="button-add-match-to-tournament-round">
+                <mat-icon>add</mat-icon>
+                <span translate>BUTTON.ADD_MATCH</span>
+            </button>
+        </div>
+        <div>
+            @for( match of matches(); track match ) {
+                @if(match) {
+                    <div class="flex items-center">
+                        <div class="grow">
+                            <lima-match
+                                [match]="match"
+                                [matchDay]="round()!"
+                                [markLooser]="false"
+                                [resultOnly]="true"
+                            ></lima-match>
+                        </div>
+                        <div>
+                            <button mat-icon-button (click)="deleteMatch(match)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <div class="flex justify-evenly m-3">
+            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0 && roundDates.valid" cySelector="button-save-tournament-round">
+                <mat-icon>save</mat-icon>
+                <span translate>SAVE_ROUND</span>
+            </button>
+            <button mat-stroked-button (click)="roundEdited.emit(false)">
+                <mat-icon>close</mat-icon>
+                <span translate>BUTTON.CANCEL</span>
+            </button>
+        </div>
+    </mat-card-footer>
+</mat-card>

@@ -44,7 +44,6 @@ export class NotificationService {
             panelClass: [
                 `mat-sys-${type}`,
                 'border-2',
-                'dark:border-toolbardark',
                 'rounded',
             ],
         });

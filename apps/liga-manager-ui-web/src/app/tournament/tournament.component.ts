@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graphql';
@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
     ],
     standalone: true,
 })
-export class TournamentComponent {
+export class TournamentComponent implements OnInit {
 
     storedSelectedTournament = fromStorage<AllTournamentsFragment>(StorageKeys.TOURNAMENT_SELECTED_TOURNAMENT);
 
@@ -79,7 +79,11 @@ export class TournamentComponent {
             return [TournamentState.Progress];
         }
     }
-    
+
+    ngOnInit(): void {
+        this.tournamentService.reloadTournaments()
+    }
+
     selectedTournamentRound() {
         return this.selectedTournament()?.rounds?.find(
             (round) => round?.id === this.selectedRoundIdFC.value,
