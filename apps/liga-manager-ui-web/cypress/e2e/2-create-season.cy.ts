@@ -34,6 +34,11 @@ describe('Admin - Create Season', () => {
 
         cy.getBySel('season-management-tab-create-matchdays').click();
 
+        cy.getBySel('input-tournament-season-start-date').type('07/21/2025');
+
+        cy.getBySel('button-save-match-days').click();
+
+        cy.getBySel('button-start-season').click();
     })
 
 })

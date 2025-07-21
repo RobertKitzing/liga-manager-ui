@@ -5,6 +5,8 @@ import {
     AddTeamToSeasonMutationVariables,
     AllSeasonsFragment,
     AllSeasonsListGQL,
+    CreateMatchesForSeasonGQL,
+    CreateMatchesForSeasonMutationVariables,
     CreateSeasonGQL,
     DeleteSeasonGQL,
     EndSeasonGQL,
@@ -59,6 +61,7 @@ export class SeasonService {
         private startSeasonGQL: StartSeasonGQL,
         private deleteSeasonGQL: DeleteSeasonGQL,
         private endSeasonGQL: EndSeasonGQL,
+        private createMatchesForSeasonGQL: CreateMatchesForSeasonGQL,
     ) {}
 
     createSeason(name: string) {
@@ -169,6 +172,22 @@ export class SeasonService {
                     refetchQueries: [
                         {
                             query: this.allSeasonlistGQL.document,
+                        },
+                    ],
+                },
+            ),
+        );
+    }
+
+    createMatchesForSeason(params: CreateMatchesForSeasonMutationVariables) {
+        return firstValueFrom(
+            this.createMatchesForSeasonGQL.mutate(
+                params,
+                {
+                    refetchQueries: [
+                        {
+                            query: this.seasonByIdGQL.document,
+                            variables: { id: params.season_id },
                         },
                     ],
                 },
