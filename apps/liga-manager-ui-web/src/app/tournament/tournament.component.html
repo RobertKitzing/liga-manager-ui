@@ -13,7 +13,7 @@
                 @if(selectedTournamentFC.value) {
                     <mat-toolbar-row>
                         <div class="w-full flex">
-                            <div class="self-center grow-0">
+                            <div class="self-center grow">
                                 <button
                                     mat-icon-button
                                     (click)="prevRound()"
@@ -21,7 +21,7 @@
                                         <mat-icon>arrow_back</mat-icon>
                                 </button>
                             </div>
-                            <div class="self-center w-full grow pl-6 pr-6">
+                            <div class="self-center w-full grow max-w-3/4">
                                 <mat-select
                                     class="text-center"
                                     #matchDaySelect
@@ -45,7 +45,7 @@
                                     }
                                 </mat-select>
                             </div>
-                            <div class="self-center text-end grow-0">
+                            <div class="self-center text-end grow">
                                 <button
                                     mat-icon-button
                                     (click)="nextRound()"

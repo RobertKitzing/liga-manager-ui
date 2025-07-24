@@ -47,7 +47,7 @@ export class EditTeamContactComponent {
     );
 
     teamContact = new FormGroup({
-        email: new FormControl('', [Validators.email]),
+        email: new FormControl('', [Validators.required, Validators.email]),
         first_name: new FormControl('', [Validators.required]),
         last_name: new FormControl('', [Validators.required]),
         phone: new FormControl('', []),

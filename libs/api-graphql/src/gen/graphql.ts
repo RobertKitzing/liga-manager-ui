@@ -957,7 +957,7 @@ export type CalendarQuery = { allSeasons?: Maybe<Array<Maybe<(
     Pick<Season, 'id' | 'name' | 'state'>
     & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
   )>>>, allTournaments?: Maybe<Array<Maybe<(
-    Pick<Tournament, 'id' | 'name'>
+    Pick<Tournament, 'id' | 'name' | 'state'>
     & { rounds?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
   )>>>, matchesByKickoff?: Maybe<Array<Maybe<(
     Pick<Match, 'id' | 'home_score' | 'guest_score' | 'kickoff' | 'cancelled_at' | 'cancellation_reason'>
@@ -2018,6 +2018,7 @@ export const CalendarDocument = gql`
   allTournaments {
     id
     name
+    state
     rounds {
       number
       start_date

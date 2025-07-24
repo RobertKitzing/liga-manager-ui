@@ -74,6 +74,7 @@ export class EditTeamLogoComponent {
                 this.notificationService.showSuccessNotification(
                     marker('UPLOAD_TEAM_LOGO_SUCCESS'),
                 );
+                this.previewImage.set(null);
             } catch (error) {
                 this.notificationService.showErrorNotification(
                     marker('UPLOAD_TEAM_LOGO_ERROR'),

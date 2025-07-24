@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { AllSeasonsFragment, SeasonState } from '@liga-manager-api/graphql';
@@ -29,6 +29,8 @@ export type SeasonChooserModes =
     ],
 })
 export class SeasonChooserComponent {
+
+    multiple = input(false);
 
     @Input({ required: true }) selectedSeasonFC!: FormControl<AllSeasonsFragment | null | undefined>;
 

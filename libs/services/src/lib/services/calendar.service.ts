@@ -1,27 +1,32 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import dayjs from 'dayjs';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import {
     CalendarGQL,
     CalendarQueryVariables,
     MatchAppointment,
     MatchDay,
     SeasonState,
+    TournamentState,
 } from '@liga-manager-api/graphql';
 import { PublicHolidaysService } from './public-holidays.service';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface IMatchDayEvent {
     allDay: boolean;
     title: string;
     start: Date;
     end?: Date;
+    matchDay?: MatchDay;
     matchDayIndex?: number;
     matchDayId?: string;
     display?: string;
     new?: boolean;
-    match?: MatchAppointment;
+    matchAppointment?: MatchAppointment;
     matchSeriesId?: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    match?: any;
 }
 
 @Injectable({
@@ -29,10 +34,16 @@ export interface IMatchDayEvent {
 })
 export class CalendarService {
 
+    private translateService = inject(TranslateService);
+
     constructor(
         private holidaysService: PublicHolidaysService,
         private calendarGQL: CalendarGQL,
     ) {}
+
+    reloadEvents() {
+        this.calendarGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+    }
 
     getCalendarEvents(
         params: CalendarQueryVariables,
@@ -48,13 +59,16 @@ export class CalendarService {
                         season!.match_days!.map((matchDay) => ({
                             allDay: true,
                             display: 'background',
-                            title: `${matchDay?.number}. Spieltag (${season?.name})`,
+                            title: this.translateService.instant('MATCHDAY', { matchDay: matchDay?.number}),
                             start: dayjs(matchDay?.start_date).toDate(),
                             end: dayjs(matchDay?.end_date).toDate(),
                         })),
                     );
                 }
-                for (const tournament of data.allTournaments!) {
+                const tournaments = [...data.allTournaments!].filter(
+                    (x) => x?.state !== TournamentState.Preparation,
+                );
+                for (const tournament of tournaments) {
                     if (!tournament?.rounds) {
                         continue;
                     }
@@ -68,13 +82,14 @@ export class CalendarService {
                         })),
                     );
                 }
-                // events = events.concat(
-                //     data.matchesByKickoff!.map((match) => ({
-                //         allDay: false,
-                //         title: `${match?.home_team.name} - ${match?.guest_team.name}`,
-                //         start: match?.kickoff,
-                //     })),
-                // );
+                events = events.concat(
+                    data.matchesByKickoff!.map((match) => ({
+                        allDay: false,
+                        title: `${match?.home_team.name} - ${match?.guest_team.name}`,
+                        start: dayjs(match?.kickoff).toDate(),
+                        match,
+                    })),
+                );
                 return events;
             }),
         );
@@ -83,7 +98,7 @@ export class CalendarService {
     getEvents(match_days: MatchDay[]): Observable<IMatchDayEvent[]> {
         const matchDays = match_days?.map((matchDay) => ({
             allDay: true,
-            title: `${matchDay.number}. Spieltag`,
+            title: this.translateService.instant('MATCHDAY', { matchDay: matchDay?.number}),
             matchDayIndex: matchDay.number - 1,
             matchDayId: matchDay.id,
             start: new Date(matchDay.start_date),

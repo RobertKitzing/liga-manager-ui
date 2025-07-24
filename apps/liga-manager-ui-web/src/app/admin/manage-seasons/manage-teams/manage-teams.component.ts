@@ -45,4 +45,8 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
         }
     }
 
+    replaceTeamInSeason() {
+        // TODO: ADD FUNCTION
+    }
+
 }

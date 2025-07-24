@@ -4,7 +4,7 @@ import {
     inject,
     provideAppInitializer,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import {
     TranslateLoader,
@@ -68,6 +68,7 @@ export const appConfig: ApplicationConfig = {
         TranslatePipe,
         provideRouter(
             routes,
+            withComponentInputBinding(),
         ),
         provideApollo(apolloFactory),
         importProvidersFrom(

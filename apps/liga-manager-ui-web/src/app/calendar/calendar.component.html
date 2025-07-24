@@ -1,9 +1,44 @@
+<!-- <mat-toolbar class="secondary">
+    <div class="flex">
+        <div>
+            <lima-season-chooser
+                [multiple]="true"
+                [selectedSeasonFC]="selectedSeasonFC"
+            ></lima-season-chooser>
+        </div>
+        <div>
+            <mat-select></mat-select>
+        </div>
+    </div>
+</mat-toolbar> -->
 <div class="flex h-full w-full p-3 mat-sys-surface-container">
-    @if (backgroundEvents$ | async) { }
+    @if (events$ | async) { }
     <full-calendar
         class="h-full w-full"
         #calendar
         [options]="calendarOptions"
         [deepChangeDetection]="true"
-    ></full-calendar>
+    >
+
+    <ng-template #eventContent let-arg>
+        @if(arg.event.extendedProps.match) {
+            <lima-match [match]="arg.event.extendedProps.match"></lima-match>
+        }
+    </ng-template>
+
+    </full-calendar>
 </div>
+
+<!-- @if (events$ | async; as events) {
+
+    <mat-card>
+        <mat-card-content>
+            @for (event of events; track event) {
+                @if (event.match) {
+                    <lima-match [match]="event.match"></lima-match>
+                }
+            }
+        </mat-card-content>
+    </mat-card>
+
+} -->

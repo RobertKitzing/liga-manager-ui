@@ -14,7 +14,8 @@
             </div>
             @for (team of seasonTeams(); track team) {
                 @if (team) {
-                    <div class="flex items-center m-3 space-x-3">
+                    <div class="flex justify-center items-center m-3 space-x-3">
+                        <p>{{ team.name }}</p>
                         @switch (season.state) {
                             @case (SeasonState.Preparation) {
                                 <button
@@ -30,10 +31,14 @@
                                 </button>
                             }
                             @case (SeasonState.Progress) {
-                                <mat-icon>compare_arrows</mat-icon>
+                                <button
+                                    mat-icon-button
+                                    (click)="replaceTeamInSeason()"
+                                >
+                                    <mat-icon>compare_arrows</mat-icon>
+                                </button>
                             }
                         }
-                        <p>{{ team.name }}</p>
                     </div>
                 }
             }

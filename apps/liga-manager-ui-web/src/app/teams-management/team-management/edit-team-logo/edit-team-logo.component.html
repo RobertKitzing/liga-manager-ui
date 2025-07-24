@@ -1,48 +1,63 @@
-<mat-card class="w-1/2 m-auto">
+<mat-card class="w-full md:w-3/4 lg:w-1/3 m-auto mt-2">
     <mat-card-content>
-        <div class="grid grid-col-1">
-            <div class="w-full grid grid-col-1">
+        <mat-card class="m-4">
+            <mat-card-title class="text-center">
                 <h1 translate>CURRENT_TEAM_LOGO</h1>
-                @if (team()) {
-                    <lima-team-logo
-                        [width]="200"
-                        [height]="200"
-                        [team]="team()"
-                    ></lima-team-logo>
-                }
-            </div>
-            @if (team()?.logo_id) {
-                <button
-                    class="w-full"
-                    mat-button
-                    (click)="deleteTeamLogo(team()?.id!)"
-                >
-                    <mat-icon>delete</mat-icon>
-                    <span translate>BUTTON.DELETE_TEAM_LOGO</span>
-                </button>
-            }
-        </div>
-        @if(previewImage()) {
-            <div class="grid grid-col-1">
-                <div class="w-full grid grid-col-1">
-                    <h1 translate>NEW_TEAM_LOGO</h1>
-                    <img class="m-auto" src="{{ previewImage() }}" width="100" height="100">
+            </mat-card-title>
+            <mat-card-content>
+                <div class="grid grid-col-1 justify-center p-8">
+                    <div class="w-full grid grid-col-1 justify-center">
+                        @if (team()) {
+                            <lima-team-logo
+                                [width]="100"
+                                [height]="100"
+                                [team]="team()"
+                            ></lima-team-logo>
+                        }
+                    </div>
+                    @if (team()?.logo_id) {
+                        <button
+                            class="w-full mt-8"
+                            mat-stroked-button
+                            (click)="deleteTeamLogo(team()?.id!)"
+                        >
+                            <mat-icon>delete</mat-icon>
+                            <span translate>BUTTON.DELETE_TEAM_LOGO</span>
+                        </button>
+                    }
                 </div>
-                <button
-                    class="w-full"
-                    mat-button
-                    (click)="saveTeamLogo(team()?.id)"
-                >
-                    <mat-icon>save</mat-icon>
-                    <span translate>BUTTON.SAVE_TEAM_LOGO</span>
-                </button>
-            </div>
+            </mat-card-content>
+        </mat-card>
+        @if(previewImage()) {
+            <mat-card class="m-4">
+                <mat-card-title class="text-center">
+                    <h1 translate>NEW_TEAM_LOGO</h1>
+                </mat-card-title>
+                <mat-card-content>
+                    <div class="grid grid-col-1 justify-center p-8">
+                        <div class="w-full grid grid-col-1 justify-center">
+                            <img class="m-auto" src="{{ previewImage() }}" width="100" height="100">
+                        </div>
+                        <button
+                            class="w-full mt-8"
+                            mat-stroked-button
+                            (click)="saveTeamLogo(team()?.id)"
+                        >
+                            <mat-icon>save</mat-icon>
+                            <span translate>BUTTON.SAVE_TEAM_LOGO</span>
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         }
     </mat-card-content>
     @if (authenticationService.isAdmin) {
         <mat-card-actions class="flex justify-center">
             <div>
-                <button type="button" mat-raised-button (click)="fileInput.click()" translate>UPLOAD_TEAM_LOGO</button>
+                <button type="button" mat-stroked-button (click)="fileInput.click()">
+                    <mat-icon>upload</mat-icon>
+                    <span translate>UPLOAD_TEAM_LOGO</span>
+                </button>
                 <input
                     hidden
                     type="file"

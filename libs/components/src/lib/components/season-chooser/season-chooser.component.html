@@ -1,6 +1,7 @@
 <div class="flex justify-center w-full">
     <mat-select
         #seasonSelect
+        [multiple]="multiple()"
         [compareWith]="seasonService.seasonCompare"
         cySelector="select-season"
         [formControl]="selectedSeasonFC"

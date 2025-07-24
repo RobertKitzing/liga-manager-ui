@@ -12,6 +12,7 @@ query Calendar($min_date: DateTime, $max_date: DateTime) {
     allTournaments {
         id
         name
+        state
         rounds {
             number
             start_date

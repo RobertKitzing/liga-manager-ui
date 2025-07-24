@@ -1,6 +1,6 @@
 <div class="flex justify-center h-full mat-sys-surface-container-high">
     <div class="w-full lg:w-2/3">
-        <div class="flex justify-center mt-2 sticky top-0 z-1">
+        <div class="flex justify-center mt-2">
             <mat-toolbar class="secondary">
                 <mat-toolbar-row>
                     <div class="w-full grid grid-cols-2">
@@ -30,8 +30,8 @@
                     </div>
                 </mat-toolbar-row>
                 <mat-toolbar-row>
-                    <div class="w-full flex">
-                        <div class="self-center grow-0">
+                    <div class="flex w-full">
+                        <div class="self-center grow">
                             <button
                                 mat-icon-button
                                 (click)="prevMatchDay(season())"
@@ -39,7 +39,7 @@
                                     <mat-icon>arrow_back</mat-icon>
                             </button>
                         </div>
-                        <div class="self-center w-full grow pl-6 pr-6">
+                        <div class="self-center grow max-w-3/4">
                             <mat-select
                                 class="text-center"
                                 #matchDaySelect
@@ -49,21 +49,20 @@
                                 @for (matchDay of season()?.match_days; track matchDay) {
                                     <mat-option [value]="matchDay?.id">
                                         @if (matchDay) {
-                                        <div>
-                                            {{
-                                                "MATCHDAY"
-                                                    | translate : { matchDay: matchDay?.number }
-                                            }}
-                                            ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{
-                                                matchDay.end_date | customDate
-                                            }})
+                                        <div class="grid grid-cols-1 text-center">
+                                            <span>
+                                                {{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}
+                                            </span>
+                                            <span>
+                                            ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }})
+                                            </span>
                                         </div>
                                         }
                                     </mat-option>
                                 }
                             </mat-select>
                         </div>
-                        <div class="self-center text-end grow-0">
+                        <div class="self-center text-end grow">
                             <button
                                 mat-icon-button
                                 (click)="nextMatchDay(season())"
@@ -73,6 +72,26 @@
                         </div>
                     </div>
                 </mat-toolbar-row>
+                <!-- <mat-toolbar-row>
+                    <div class="flex w-full">
+                        <div class="self-center w-1/2">
+                            <button
+                                mat-stroked-button
+                                (click)="prevMatchDay(season())"
+                                >
+                                    <mat-icon>arrow_back</mat-icon>
+                            </button>
+                        </div>
+                        <div class="self-center text-end w-1/2">
+                            <button
+                                mat-stroked-button
+                                (click)="nextMatchDay(season())"
+                            >
+                                <mat-icon>arrow_forward</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-toolbar-row> -->
             </mat-toolbar>
         </div>
         @if (findMatchDay(season()?.match_days || []); as matchDay) {

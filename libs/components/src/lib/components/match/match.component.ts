@@ -35,7 +35,7 @@ export class MatchComponent {
 
     @Input({ required: true }) match!: Match;
 
-    @Input({ required: true }) matchDay!: MatchDay;
+    matchDay = input<MatchDay | undefined>();
 
     @Input() markLooser = false;
 
@@ -52,7 +52,7 @@ export class MatchComponent {
     get dialogData() {
         return {
             match: this.match,
-            matchDay: this.matchDay,
+            matchDay: this.matchDay(),
         };
     }
 

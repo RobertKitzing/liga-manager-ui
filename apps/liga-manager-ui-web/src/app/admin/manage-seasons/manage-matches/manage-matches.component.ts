@@ -4,11 +4,12 @@ import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-manage-matches',
     standalone: true,
-    imports: [TranslateModule, CustomDatePipe, MatSelectModule, MatDatepickerModule],
+    imports: [TranslateModule, CustomDatePipe, MatSelectModule, MatDatepickerModule, MatCardModule],
     templateUrl: './manage-matches.component.html',
 })
 export class ManageMatchesComponent extends ManageSeasonBaseComponent {}
