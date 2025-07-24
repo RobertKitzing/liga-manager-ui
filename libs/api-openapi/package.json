@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-api/openapi",
-    "version": "5.4.58",
+    "version": "5.4.59",
     "peerDependencies": {},
     "sideEffects": false
 }

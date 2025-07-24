@@ -1,3 +1,13 @@
+## 5.4.59 (2025-07-24)
+
+### Work in Progress
+
+- calendar view ([c66343a7](https://github.com/RobertKitzing/liga-manager-ui/commit/c66343a7))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.58 (2025-07-21)
 
 ### Work in Progress
