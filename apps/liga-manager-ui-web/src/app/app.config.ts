@@ -14,7 +14,6 @@ import {
 } from '@ngx-translate/core';
 import {
     AppsettingsService,
-    AuthenticationService,
     I18nService,
     ThemeService,
     httpLoaderFactory,
