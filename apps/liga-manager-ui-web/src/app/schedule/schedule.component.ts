@@ -130,13 +130,13 @@ export class ScheduleComponent {
 
         const matchDays = (season.match_days as MatchDay[])
 
-        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId());
+        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId()) || 0;
 
-        if (currentIndex === season.match_days.length - 1) {
-            return;
+        const nextId = matchDays[currentIndex + 1]?.id;
+
+        if(nextId) {
+            this.selectedMatchDayId.set(nextId);
         }
-
-        this.selectedMatchDayId.set(season.match_days[currentIndex +1]?.id || null)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -144,13 +144,16 @@ export class ScheduleComponent {
         if (!season.match_days) {
             return;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const currentIndex = season.match_days.findIndex((md: any) => md?.id === this.selectedMatchDayId());
-        if (currentIndex === 0) {
-            return;
-        }
 
-        this.selectedMatchDayId.set(season.match_days[currentIndex - 1]?.id || null)
+        const matchDays = (season.match_days as MatchDay[])
+
+        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId()) || 0;
+
+        const nextId = matchDays[currentIndex - 1]?.id;
+
+        if(nextId) {
+            this.selectedMatchDayId.set(nextId);
+        }
     }
 
 }

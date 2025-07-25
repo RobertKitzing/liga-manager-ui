@@ -16,6 +16,7 @@
                             <div class="self-center grow">
                                 <button
                                     mat-icon-button
+                                    cySelector="button-prev-matchday"
                                     (click)="prevRound()"
                                     >
                                         <mat-icon>arrow_back</mat-icon>
@@ -25,7 +26,7 @@
                                 <mat-select
                                     class="text-center"
                                     #matchDaySelect
-                                    [formControl]="selectedRoundIdFC"
+                                    [(value)]="selectedRoundIdFC"
                                     placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
                                 >
                                     @for (round of selectedTournament()?.rounds || [] | sortBy:'number'; track $index) {
@@ -48,6 +49,7 @@
                             <div class="self-center text-end grow">
                                 <button
                                     mat-icon-button
+                                    cySelector="button-next-matchday"
                                     (click)="nextRound()"
                                 >
                                     <mat-icon>arrow_forward</mat-icon>
