@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
+    AppsettingsService,
     AuthenticationService,
     NotificationService,
     TeamService,
@@ -34,6 +35,8 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 export class EditTeamLogoComponent {
 
     authenticationService = inject(AuthenticationService);
+
+    private appsettingsService = inject(AppsettingsService);
 
     private activatedRoute = inject(ActivatedRoute);
 
@@ -72,10 +75,9 @@ export class EditTeamLogoComponent {
         }
         if (this.file) {
             try {
+                this.configuration.basePath = this.appsettingsService.appsettings?.host || '';
                 this.configuration.credentials = { bearerAuth: this.authenticationService.accessToken() || '' };
-                await firstValueFrom(
-                    this.teamService.uploadTeamLogo(teamId, this.file),
-                );
+                await this.teamService.uploadTeamLogo(teamId, this.file);
                 this.reload(teamId);
                 this.notificationService.showSuccessNotification(
                     marker('UPLOAD_TEAM_LOGO_SUCCESS'),

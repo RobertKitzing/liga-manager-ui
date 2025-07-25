@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import {
     AllTeamsGQL,
     CreateTeamGQL,
@@ -104,7 +104,16 @@ export class TeamService {
     }
 
     uploadTeamLogo(teamId: string, file: File) {
-        return this.logoService.uploadLogo(teamId, file);
+        // return FileTransfer.uploadFile({
+        //     url: `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${teamId}`,
+        //     path: file.,
+        //     headers: {
+        //         'authorization': this.authenticationService.accessToken() || '',
+        //     },
+            
+        //     blob: file,
+        // })
+        return firstValueFrom(this.logoService.uploadLogo(teamId, file));
     }
 
     deleteTeamLogo(teamId: string) {

@@ -33,7 +33,7 @@ import { apolloFactory } from './apllo.factory';
 import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { firstValueFrom } from 'rxjs';
-import { Configuration } from '@liga-manager-api/openapi';
+import { provideApi } from '@liga-manager-api/openapi';
 import { Base64 } from 'js-base64';
 
 function appInitFactory(
@@ -52,12 +52,6 @@ function appInitFactory(
             firstValueFrom(appsettingsService.loadAppsettings()),
         ]);
     };
-}
-
-function openApiFactory(appsettingsService: AppsettingsService) {
-    return new Configuration({
-        basePath: appsettingsService.appsettings?.host || window.location.origin,
-    });
 }
 
 export const appConfig: ApplicationConfig = {
@@ -99,17 +93,16 @@ export const appConfig: ApplicationConfig = {
             deps: [I18nService, TranslateService],
         },
         provideStorage(localStorage),
-        {
-            provide: Configuration,
-            useFactory: openApiFactory,
-            deps: [ AppsettingsService ],
-        },
+        provideApi({}),
         {
             provide: IMAGE_LOADER,
-            useValue: (config: ImageLoaderConfig) => {
-                const imgPath = `local:///${config.src}`;
-                return `/imgproxy/_/rs:fit:${config.width}:${config.width}/${Base64.encode(imgPath)}`
-            },
+            useFactory: (appsettingsService: AppsettingsService) =>
+                (config: ImageLoaderConfig) => {
+                    const imgPath = `local:///${config.src}`;
+                    const host = appsettingsService.appsettings?.host || '';
+                    return `${host}/imgproxy/_/rs:fit:${config.width}:${config.width}/${Base64.encode(imgPath)}`;
+                },
+            deps: [ AppsettingsService ],
         },
     ],
 };
