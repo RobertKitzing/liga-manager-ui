@@ -55,10 +55,9 @@ function appInitFactory(
     };
 }
 
-function openApiFactory(appsettingsService: AppsettingsService, authenticationService: AuthenticationService) {
+function openApiFactory(appsettingsService: AppsettingsService) {
     return new Configuration({
         basePath: appsettingsService.appsettings?.host || window.location.origin,
-        credentials: { bearerAuth: authenticationService.accessToken() || '' },
     });
 }
 
@@ -104,7 +103,7 @@ export const appConfig: ApplicationConfig = {
         {
             provide: Configuration,
             useFactory: openApiFactory,
-            deps: [ AppsettingsService, AuthenticationService ],
+            deps: [ AppsettingsService ],
         },
         {
             provide: IMAGE_LOADER,

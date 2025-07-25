@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TeamLogoComponent } from '@liga-manager-ui/components';
+import { Configuration } from '@liga-manager-api/openapi';
 
 @Component({
     selector: 'lima-edit--team-logo',
@@ -37,6 +38,8 @@ export class EditTeamLogoComponent {
     private teamService = inject(TeamService);
 
     private notificationService = inject(NotificationService);
+
+    private configuration = inject(Configuration);
 
     team$ = this.activatedRoute.parent?.paramMap.pipe(
         map((p) => {
@@ -67,6 +70,7 @@ export class EditTeamLogoComponent {
         }
         if (this.file) {
             try {
+                this.configuration.credentials = { bearerAuth: this.authenticationService.accessToken() || '' };
                 await firstValueFrom(
                     this.teamService.uploadTeamLogo(teamId, this.file),
                 );
@@ -75,10 +79,14 @@ export class EditTeamLogoComponent {
                     marker('UPLOAD_TEAM_LOGO_SUCCESS'),
                 );
                 this.previewImage.set(null);
-            } catch (error) {
+                this.file = undefined;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
+                console.error(error);
+                const message = error.error.errors[0].message || '';
                 this.notificationService.showErrorNotification(
                     marker('UPLOAD_TEAM_LOGO_ERROR'),
-                    [`${error}`],
+                    [message],
                 );
             }
         }
