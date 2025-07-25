@@ -4,7 +4,7 @@
   "scripts": {
     "copy:app-settings:local": "copy-files-from-to --mode app-local --silent",
     "copy:app-settings:prod": "copy-files-from-to --mode app-prod --silent",
-    "prepare": "husky"
+    "prepare": "npx husky install"
   },
   "jest": {
     "preset": "jest-preset-angular",
