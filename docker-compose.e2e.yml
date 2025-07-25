@@ -3,7 +3,7 @@ volumes:
   assets:
 
 services:
-  nginx:
+  liga-manager-ui:
     image: ${UI_IMAGE}:${UI_TAG}
     environment:
       GOOGLE_MAPS_API_KEY: ""
