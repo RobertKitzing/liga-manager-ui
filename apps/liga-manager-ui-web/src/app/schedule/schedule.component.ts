@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, startWith, switchMap, tap } from 'rxjs';
 import { AuthenticationService, fromStorage, SeasonService } from '@liga-manager-ui/services';
@@ -40,7 +40,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
         SortByPipe,
     ],
 })
-export class ScheduleComponent {
+export class ScheduleComponent implements OnInit {
 
     selectedMatchDayId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY_ID)
 
@@ -81,6 +81,10 @@ export class ScheduleComponent {
         private router: Router,
         public authService: AuthenticationService,
     ) {}
+
+    ngOnInit(): void {
+        this.seasonService.reloadSeasons()
+    }
 
     get filterSeasonStates() {
         if (this.router.url.includes('history')) {

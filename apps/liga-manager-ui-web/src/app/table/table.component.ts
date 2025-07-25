@@ -6,7 +6,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SeasonService } from '@liga-manager-ui/services';
 import { NgClass, AsyncPipe } from '@angular/common';
@@ -50,7 +50,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         TeamLogoComponent,
     ],
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
 
     displayedColumns: string[] = [
         'position',
@@ -139,6 +139,10 @@ export class TableComponent {
             .pipe(
                 takeUntilDestroyed(inject(DestroyRef)),
             ).subscribe(() => this.expandedElement.set(undefined));
+    }
+
+    ngOnInit(): void {
+        this.seasonService.reloadSeasons();
     }
 
     get filterSeasonStates() {

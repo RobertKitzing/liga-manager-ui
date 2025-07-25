@@ -16,6 +16,7 @@ services:
       - api
       - mariadb
       - redis
+      - imgproxy
 
   api:
     container_name: lima-api
@@ -36,9 +37,6 @@ services:
       IMGPROXY_LOCAL_FILESYSTEM_ROOT: /lima
       IMGPROXY_ENABLE_AVIF_DETECTION: true
       IMGPROXY_ENABLE_WEBP_DETECTION: true
-    depends_on:
-      - api
-      - nginx
     volumes:
       - team-logos:/lima/logos:ro
       - assets:/lima/assets:ro

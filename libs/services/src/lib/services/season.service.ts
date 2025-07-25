@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { firstValueFrom, map, of } from 'rxjs';
+import { firstValueFrom, map, of, take } from 'rxjs';
 import {
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
@@ -63,6 +63,10 @@ export class SeasonService {
         private endSeasonGQL: EndSeasonGQL,
         private createMatchesForSeasonGQL: CreateMatchesForSeasonGQL,
     ) {}
+
+    reloadSeasons() {
+        this.allSeasonlistGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+    }
 
     createSeason(name: string) {
         return this.createSeasonGQL.mutate(

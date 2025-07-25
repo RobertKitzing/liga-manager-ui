@@ -11,8 +11,6 @@ describe('Admin - Edit Match Result', () => {
     it('should edit an Match result by click in result area', () => {
         cy.visit('/')
         cy.getBySel('route-schedule').first().click();
-        cy.intercept('POST', '/api/graphql').as('graphql');
-        cy.wait(['@graphql'])
         cy.getBySel('select-season').click();
         cy.contains(Seasons[0].name).click();
         cy.getBySel('button-edit-match-result').first().click();
