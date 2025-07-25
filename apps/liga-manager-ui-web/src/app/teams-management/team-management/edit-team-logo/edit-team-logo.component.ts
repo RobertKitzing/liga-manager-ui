@@ -15,6 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TeamLogoComponent } from '@liga-manager-ui/components';
 import { Configuration } from '@liga-manager-api/openapi';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-edit--team-logo',
@@ -27,6 +28,7 @@ import { Configuration } from '@liga-manager-api/openapi';
         MatCardModule,
         TeamLogoComponent,
         ReactiveFormsModule,
+        CypressSelectorDirective,
     ],
 })
 export class EditTeamLogoComponent {

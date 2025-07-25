@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { TEAM_MANAGEMENT_ROUTES } from '../teams-management.routes';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-team-management',
@@ -14,6 +15,7 @@ import { TEAM_MANAGEMENT_ROUTES } from '../teams-management.routes';
         RouterLink,
         RouterLinkActive,
         RouterOutlet,
+        CypressSelectorDirective,
     ],
 })
 export class TeamManagementComponent {
