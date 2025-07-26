@@ -54,19 +54,12 @@
     @if (authenticationService.isAdmin) {
         <mat-card-actions class="flex justify-center">
             <div>
-                <button type="button" mat-stroked-button (click)="fileInput.click()"
+                <button type="button" mat-stroked-button (click)="chooseFile()"
                     cySelector="button-upload-team-logo"
                 >
                     <mat-icon>upload</mat-icon>
                     <span translate>UPLOAD_TEAM_LOGO</span>
                 </button>
-                <input
-                    hidden
-                    type="file"
-                    #fileInput
-                    (change)="onFileSelected($event)"
-                    accept="image/gif,image/png,image/jpeg,image/webp"
-                />
             </div>
         </mat-card-actions>
     }

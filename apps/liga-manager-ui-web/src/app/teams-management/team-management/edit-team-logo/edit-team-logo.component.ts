@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TeamLogoComponent } from '@liga-manager-ui/components';
 import { Configuration } from '@liga-manager-api/openapi';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
 
 @Component({
     selector: 'lima-edit--team-logo',
@@ -58,41 +59,27 @@ export class EditTeamLogoComponent {
 
     previewImage = signal<string | null>(null);
 
-    file?: File;
-
-    onFileSelected(event: Event) {
-        const element = event.currentTarget as HTMLInputElement;
-        if (element.files) {
-            const file = element.files[0];
-            this.previewImage.set( URL.createObjectURL(file) )
-            this.file = file;
-        }
-    }
-
     async saveTeamLogo(teamId?: string) {
         if (!teamId) {
             return;
         }
-        if (this.file) {
-            try {
-                this.configuration.basePath = this.appsettingsService.appsettings?.host || '';
-                this.configuration.credentials = { bearerAuth: this.authenticationService.accessToken() || '' };
-                await this.teamService.uploadTeamLogo(teamId, this.file);
-                this.reload(teamId);
-                this.notificationService.showSuccessNotification(
-                    marker('UPLOAD_TEAM_LOGO_SUCCESS'),
-                );
-                this.previewImage.set(null);
-                this.file = undefined;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (error: any) {
-                console.error(error);
-                const message = error.error.errors[0].message || '';
-                this.notificationService.showErrorNotification(
-                    marker('UPLOAD_TEAM_LOGO_ERROR'),
-                    [message],
-                );
-            }
+        try {
+            this.configuration.basePath = this.appsettingsService.appsettings?.host || '';
+            this.configuration.credentials = { bearerAuth: this.authenticationService.accessToken() || '' };
+            await this.teamService.uploadTeamLogo(teamId, this.previewImage()!);
+            this.reload(teamId);
+            this.notificationService.showSuccessNotification(
+                marker('UPLOAD_TEAM_LOGO_SUCCESS'),
+            );
+            this.previewImage.set(null);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            console.error(error);
+            const message = error.error.errors[0].message || '';
+            this.notificationService.showErrorNotification(
+                marker('UPLOAD_TEAM_LOGO_ERROR'),
+                [message],
+            );
         }
     }
 
@@ -113,6 +100,12 @@ export class EditTeamLogoComponent {
     private reload(teamId: string) {
         this.teamService.refetchAllTeams();
         this.teamService.refetchTeamById(teamId);
+    }
+
+    async chooseFile() {
+        const result = await FilePicker.pickMedia({ readData: true, limit: 1  });
+        const file = result.files[0];
+        this.previewImage.set( `data:${file.mimeType};base64, ${file.data}` )
     }
 
 }

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom, map } from 'rxjs';
+import { map } from 'rxjs';
 import {
     AllTeamsGQL,
     CreateTeamGQL,
@@ -14,7 +14,7 @@ import {
 } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '@liga-manager-ui/utils';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
 import { LogosService } from '@liga-manager-api/openapi';
@@ -24,12 +24,12 @@ import { LogosService } from '@liga-manager-api/openapi';
 })
 export class TeamService {
 
+    private logoService = inject(LogosService);
+
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
         map((teams) => sortArrayBy(teams as Team[], 'name')),
     );
-
-    private logoService = inject(LogosService);
 
     constructor(
         private teamByIdGQL: TeamByIdGQL,
@@ -103,29 +103,24 @@ export class TeamService {
         });
     }
 
-    uploadTeamLogo(teamId: string, file: File) {
-        // return FileTransfer.uploadFile({
-        //     url: `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${teamId}`,
-        //     path: file.,
-        //     headers: {
-        //         'authorization': this.authenticationService.accessToken() || '',
-        //     },
-            
-        //     blob: file,
-        // })
-        return firstValueFrom(this.logoService.uploadLogo(teamId, file));
+    async uploadTeamLogo(teamId: string, base64Url: string) {
+
+        const blob = await (await fetch(base64Url)).blob();
+        const formData = new FormData();
+        formData.append('file', blob)
+        return fetch(
+            `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${teamId}`, {
+                method: 'post',
+                body: formData,
+                headers: {
+                    'authorization': this.authenticationService.accessToken() || '',
+                },
+            },
+        )
     }
 
     deleteTeamLogo(teamId: string) {
-        const params = new HttpParams().set('teamId', teamId);
-        const headers = new HttpHeaders().set(
-            'Authorization',
-            `Bearer ${this.authenticationService.accessToken()}`,
-        );
-        return this.httpClient.delete(
-            `${this.appsettingsService.appsettings?.host || ''}/api/logos`,
-            { params, headers },
-        );
+        return this.logoService.deleteLogo(teamId);
     }
 
     teamCompare(c1: Team, c2: Team) {

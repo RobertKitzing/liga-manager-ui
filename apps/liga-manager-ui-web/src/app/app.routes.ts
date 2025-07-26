@@ -66,12 +66,13 @@ export const routes: Routes = [
             import('./tournament').then((m) => m.TournamentComponent),
         resolve: { user: userResolver },
     },
-    {
-        path: APP_ROUTES.HALL_OF_FAME,
-        loadComponent: () =>
-            import('./hall-of-fame').then((m) => m.HallOfFameComponent),
-        resolve: { user: userResolver },
-    },
+    // Removed for now
+    // {
+    //     path: APP_ROUTES.HALL_OF_FAME,
+    //     loadComponent: () =>
+    //         import('./hall-of-fame').then((m) => m.HallOfFameComponent),
+    //     resolve: { user: userResolver },
+    // },
     {
         path: APP_ROUTES.TEAMS_MANAGEMENT,
         canActivate: [teamAdminGuard],
