@@ -7,8 +7,6 @@
         "@angular/material": "^19.2.18",
         "@angular/router": "^19.2.14",
         "@aparajita/capacitor-dark-mode": "^5.0.2",
-        "@capacitor/file-transfer": "^1.0.1",
-        "@capawesome/capacitor-file-picker": "^7.2.0",
         "@liga-manager-api/graphql": "^5.4.61",
         "@liga-manager-api/openapi": "^5.4.61",
         "@liga-manager-ui/common": "^5.4.61",
