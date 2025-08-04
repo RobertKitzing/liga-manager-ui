@@ -1,0 +1,35 @@
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+
+replicaCount: 1
+
+env:
+  GOOGLE_MAPS_API_KEY: ""
+  IMG_PROXY_HOST: "imgproxy"
+
+image:
+  repository: "robertkitzing/liga-manager-ui"
+  tag: "next"
+
+service:
+  type: "ClusterIP"
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/issuer: step-issuer
+    cert-manager.io/issuer-kind: StepClusterIssuer
+    cert-manager.io/issuer-group: certmanager.step.sm
+  hosts:
+    - host: liga-manager-ui.cluster.home
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: liga-manager-ui-tls
+      hosts:
+        - liga-manager-ui.cluster.home

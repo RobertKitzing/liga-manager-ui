@@ -1,0 +1,8 @@
+# Default values for liga-manager
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+liga-manager-ui:
+  enabled: true
+  env:
+    GOOGLE_MAPS_API_KEY: test

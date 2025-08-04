@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "liga-manager-ui.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "liga-manager-ui.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "liga-manager-ui.selectorLabels" . | nindent 4 }}
