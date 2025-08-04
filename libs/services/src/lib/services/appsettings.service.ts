@@ -5,6 +5,7 @@ import { tap } from 'rxjs';
 export interface AppsettingsModel {
     host: string;
     googleMapsApiKey: string;
+    use_imgproxy: string;
 }
 
 @Injectable({
