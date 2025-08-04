@@ -8,7 +8,7 @@ metadata:
 data:
   default.conf: |
     upstream {{ .Values.env.IMG_PROXY_HOST }} {
-      server 127.0.0.1:9001;
+      server 127.0.0.1:8080;
     }
     server {
         listen {{ .Values.service.port }};
