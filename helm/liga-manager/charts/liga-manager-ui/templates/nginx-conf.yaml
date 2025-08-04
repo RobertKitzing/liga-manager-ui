@@ -7,8 +7,8 @@ metadata:
     {{- include "liga-manager-ui.labels" . | nindent 4 }}
 data:
   default.conf: |
-    upstream {{ .Values.env.IMG_PROXY_HOST }} {
-      server 127.0.0.1:8080;
+    upstream imgproxy {
+      server {{ .Values.env.IMG_PROXY_HOST }}:{{ .Values.env.IMG_PROXY_PORT }};
     }
     server {
         listen {{ .Values.service.port }};

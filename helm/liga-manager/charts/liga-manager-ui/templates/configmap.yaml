@@ -6,4 +6,6 @@ metadata:
   labels:
     {{- include "liga-manager-ui.labels" . | nindent 4 }}
 data:
-  IMG_PROXY_HOST: {{ .Values.env.IMG_PROXY_HOST }}
+  {{- with .Values.env }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
