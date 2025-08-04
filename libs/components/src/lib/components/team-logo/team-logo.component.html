@@ -4,12 +4,14 @@
             [ngSrc]="team()!.logo_path!"
             [width]="width()"
             [height]="height()"
+            [loaderParams]="{width: width(), height: height()}"
         />
     } @else {
         <img
             ngSrc="assets/default_team_logo_200x200.webp"
             [width]="width()"
             [height]="height()"
+            [loaderParams]="{width: width(), height: height()}"
         />
     }
 }

@@ -1,6 +1,6 @@
 <mat-toolbar [style.marginTop.px]="safeAreaInsets().insets.top">
     <div class="flex h-full w-full items-center">
-        <img ngSrc="assets/wildeliga_bremen_nobg.webp" width="60" height="60" />
+        <img ngSrc="assets/wildeliga_bremen_nobg.webp" [loaderParams]="{width: 60, height: 60}" width="60" height="60" />
         <div class="grow flex justify-center visible lg:hidden">
             <a class="flex h-full items-center">{{
                 currentRoute | translate

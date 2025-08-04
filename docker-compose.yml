@@ -9,7 +9,7 @@ services:
     environment:
       GOOGLE_MAPS_API_KEY: ""
       IMG_PROXY_HOST: imgproxy
-      USE_IMGPROXY: false
+      USE_IMGPROXY: true
     ports:
       - "80:80"
     volumes:
