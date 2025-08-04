@@ -98,9 +98,12 @@ export const appConfig: ApplicationConfig = {
             provide: IMAGE_LOADER,
             useFactory: (appsettingsService: AppsettingsService) =>
                 (config: ImageLoaderConfig) => {
-                    const imgPath = `local:///${config.src}`;
-                    const host = appsettingsService.appsettings?.host || '';
-                    return `${host}/imgproxy/_/rs:fit:${config.width}:${config.width}/${Base64.encode(imgPath)}`;
+                    const host = appsettingsService.appsettings?.host || window.location.origin;
+                    const use_imgproxy = JSON.parse(appsettingsService.appsettings?.use_imgproxy || 'false');
+                    if (!use_imgproxy) {
+                        return `${ config.src.startsWith('logos') ? '' : host}/${config.src.replace(/^\/+/g, '')}`;
+                    }
+                    return `${host}/imgproxy/_/rs:fit:${config.loaderParams!['width']}:${config.loaderParams!['height']}/${Base64.encode(`local:///${config.src.replace(/^\/+/g, '')}`)}`;
                 },
             deps: [ AppsettingsService ],
         },
