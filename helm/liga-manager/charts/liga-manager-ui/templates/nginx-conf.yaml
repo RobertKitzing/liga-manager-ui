@@ -24,7 +24,7 @@ data:
 
         location /api {
             include fastcgi_params;
-            fastcgi_pass api:9000;
+            fastcgi_pass api;
             fastcgi_param DOCUMENT_ROOT /var/www/api/public;
             fastcgi_param SCRIPT_NAME index.php;
             fastcgi_param SCRIPT_FILENAME /var/www/api/public/index.php;

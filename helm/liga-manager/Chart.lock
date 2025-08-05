@@ -1,0 +1,15 @@
+dependencies:
+- name: liga-manager-ui
+  repository: ""
+  version: 0.0.1
+- name: liga-manager-imgproxy
+  repository: ""
+  version: 0.0.1
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 21.2.13
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 21.0.3
+digest: sha256:4197903fa0f3ddb788d46bfc6a3eaf5669315d546d513bec94ed0a9de24e54f0
+generated: "2025-08-05T13:27:54.257718668+02:00"

@@ -1,0 +1,13 @@
+replicaCount: 1
+
+imagePullSecrets: []
+
+env: {}
+
+image:
+  repository: "robertkitzing/liga-manager-imgproxy"
+  pullPolicy: "IfNotPresent"
+
+service:
+  type: "ClusterIP"
+  port: 8080

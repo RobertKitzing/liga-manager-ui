@@ -26,6 +26,8 @@ spec:
         volumeMounts:
           - name: nginx-config
             mountPath: /etc/nginx/conf.d/
+          - mountPath: /ui/browser/logos
+            name: team-logos
         envFrom:
           - configMapRef:
               name: {{ include "liga-manager-ui.fullname" . }}-env
@@ -36,6 +38,9 @@ spec:
             containerPort: {{ .Values.service.port }}
             protocol: TCP
       volumes:
+        - name: team-logos
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-team-logos
         - name: nginx-config
           configMap:
             name: {{ include "liga-manager-ui.fullname" . }}-nginx

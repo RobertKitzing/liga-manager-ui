@@ -13,8 +13,7 @@ env:
 
 image:
   repository: "robertkitzing/liga-manager-ui"
-  pullPolicy: "Always"
-  tag: "next"
+  pullPolicy: "IfNotPresent"
 
 service:
   type: "ClusterIP"
@@ -22,17 +21,15 @@ service:
 
 ingress:
   enabled: true
-  className: nginx
+  className: inet-nginx
   annotations:
-    cert-manager.io/issuer: step-issuer
-    cert-manager.io/issuer-kind: StepClusterIssuer
-    cert-manager.io/issuer-group: certmanager.step.sm
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: liga-manager-ui.cluster.home
+    - host: liga-manager.rkitzing.de
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
     - secretName: liga-manager-ui-tls
       hosts:
-        - liga-manager-ui.cluster.home
+        - liga-manager.rkitzing.de

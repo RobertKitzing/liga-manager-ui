@@ -21,11 +21,8 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-            - name: lima-assets
-              mountPath: /lima/assets
           envFrom:
             - configMapRef:
                 name: {{ include "imgproxy.fullname" . }}
@@ -33,8 +30,10 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          volumeMounts:
+            - mountPath: /lima/logos
+              name: team-logos
       volumes:
-        - name: lima-assets
-          image:
-            reference: "{{ .Values.assets.repository }}:{{ .Values.assets.tag }}"
-            pullPolicy: {{ .Values.assets.pullPolicy }}
+        - name: team-logos
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-team-logos
