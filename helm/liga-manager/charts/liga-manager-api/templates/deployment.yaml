@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "liga-manager-api.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "liga-manager-api.selectorLabels" . | nindent 6 }}
@@ -60,6 +58,8 @@ spec:
               name: team-logos
           envFrom:
             - configMapRef:
+                name: {{ include "liga-manager-api.fullname" . }}
+            - secretRef:
                 name: {{ include "liga-manager-api.fullname" . }}
       volumes:
         - name: team-logos

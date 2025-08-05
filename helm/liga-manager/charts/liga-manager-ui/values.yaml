@@ -6,10 +6,12 @@ imagePullSecrets: []
 replicaCount: 1
 
 env:
-  GOOGLE_MAPS_API_KEY: ""
   IMG_PROXY_HOST: "127.0.0.1:80"
   API_HOST: "127.0.0.1:80"
   USE_IMGPROXY: "false"
+
+secrets:
+  GOOGLE_MAPS_API_KEY: ""
 
 image:
   repository: "robertkitzing/liga-manager-ui"

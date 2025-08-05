@@ -1,7 +1,7 @@
 apiVersion: v2
 name: liga-manager-ui
 description: A Helm chart for Kubernetes
-
+icon: https://raw.githubusercontent.com/RobertKitzing/liga-manager-ui/refs/heads/next_nx/apps/liga-manager-ui-web/src/assets/wildeliga_bremen_nobg.webp
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives

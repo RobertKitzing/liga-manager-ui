@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "liga-manager-api.fullname" . }}
+  name: {{ .Release.Name }}-liga-manager-api
   labels:
     {{- include "liga-manager-api.labels" . | nindent 4 }}
 spec:

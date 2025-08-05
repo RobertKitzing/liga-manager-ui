@@ -1,7 +1,3 @@
-
-autoscaling:
-  enabled: false
-
 replicaCount: 1
 
 image:
@@ -16,7 +12,10 @@ fullnameOverride: ""
 env:
   LOG_LEVEL: warning
 
-secrets: {}
+secrets:
+  MYSQL_PASSWORD: ""
+  MYSQL_ROOT_PASSWORD: ""
+  JWT_SECRET: ""
 
 service:
   type: "ClusterIP"
