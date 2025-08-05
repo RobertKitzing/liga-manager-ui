@@ -1,0 +1,11 @@
+FROM ghcr.io/imgproxy/imgproxy:latest
+
+WORKDIR /lima
+
+COPY ./dist/apps/liga-manager-ui-web/browser/assets /lima/assets
+
+ENV IMGPROXY_USE_ETAG=false
+ENV IMGPROXY_ALLOWED_SOURCES=local://
+ENV IMGPROXY_LOCAL_FILESYSTEM_ROOT=/lima
+ENV IMGPROXY_ENABLE_AVIF_DETECTION=true
+ENV IMGPROXY_ENABLE_WEBP_DETECTION=true

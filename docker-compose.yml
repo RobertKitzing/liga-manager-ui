@@ -20,15 +20,18 @@ services:
       - api
 
   imgproxy:
-    image: ghcr.io/imgproxy/imgproxy:latest
-    ports:
-      - "8080:8080"
-    environment:
-      IMGPROXY_USE_ETAG: false
-      IMGPROXY_ALLOWED_SOURCES: local://
-      IMGPROXY_LOCAL_FILESYSTEM_ROOT: /lima
-      IMGPROXY_ENABLE_AVIF_DETECTION: true
-      IMGPROXY_ENABLE_WEBP_DETECTION: true
+    #image: ghcr.io/imgproxy/imgproxy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.imgproxy
+    # ports:
+    #   - "8080:8080"
+    # environment:
+    #   IMGPROXY_USE_ETAG: false
+    #   IMGPROXY_ALLOWED_SOURCES: local://
+    #   IMGPROXY_LOCAL_FILESYSTEM_ROOT: /lima
+    #   IMGPROXY_ENABLE_AVIF_DETECTION: true
+    #   IMGPROXY_ENABLE_WEBP_DETECTION: true
     depends_on:
       - api
       - liga-manager-ui
