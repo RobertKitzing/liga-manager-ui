@@ -3,6 +3,7 @@
     "version": "5.4.63",
     "scripts": {
         "copy:app-settings:local": "copy-files-from-to --mode app-local --silent",
+        "copy:app-settings:staging": "copy-files-from-to --mode app-staging --silent",
         "copy:app-settings:prod": "copy-files-from-to --mode app-prod --silent",
         "prepare": "npx husky install"
     },
@@ -17,11 +18,13 @@
             "from": {
                 "web": "appsettings/appsettings.web.json",
                 "app-local": "appsettings/appsettings.app-local.json",
+                "app-staging": "appsettings/appsettings.app-staging.json",
                 "app-prod": "appsettings/appsettings.app-prod.json"
             },
             "to": {
                 "web": "dist/apps/liga-manager-ui-web/browser/appsettings.json",
                 "app-local": "dist/apps/liga-manager-ui-web/browser/appsettings.json",
+                "app-staging": "dist/apps/liga-manager-ui-web/browser/appsettings.json",
                 "app-prod": "dist/apps/liga-manager-ui-web/browser/appsettings.json"
             }
         }

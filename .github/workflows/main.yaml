@@ -292,8 +292,6 @@ jobs:
           java-version: "21"
       
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
-      - run: npx nx-cloud record -- nx run liga-manager-ui:copy:app-settings:prod
-      - run: npx nx-cloud record -- nx run liga-manager-ui-web:sync:android
 
       - name: get-npm-version
         id: package-version
@@ -321,8 +319,11 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - run: sudo apt install apksigner
-  
-      - name: Build App
+
+      - run: npx nx-cloud record -- nx run liga-manager-ui:copy:app-settings:prod
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:sync:android
+
+      - name: Build App Prod
         working-directory: apps/liga-manager-ui-web
         run: npx cap build android --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK
 
@@ -330,6 +331,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lima-app-release-signed
+          path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
+
+      - run: npx nx-cloud record -- nx run liga-manager-ui:copy:app-settings:staging
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:sync:android
+
+      - name: Build App Staging
+        working-directory: apps/liga-manager-ui-web
+        run: npx cap build android --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lima-app-staging-signed
           path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
 
   github-create-release:
@@ -343,7 +357,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4.3.0
         with:
-          name: lima-app-release-signed
+          pattern: lima-app-*
           path: /tmp
       - name: get-npm-version
         id: package-version
@@ -360,13 +374,26 @@ jobs:
           prerelease: true
           body: |
             - New Docker Image @ ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}
+            - New Docker Image @ ${{ env.DOCKER_REPO_IMGPROXY }}:${{ steps.package-version.outputs.current-version}}
+
       - name: Upload Release Asset
-        id: upload-release-asset-apk 
+        id: upload-release-asset-apk-prod
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: /tmp/app-release-signed.apk
-          asset_name: app-release-signed.apk
+          asset_path: /tmp/lima-app-release-signed/app-release-signed.apk
+          asset_name: lima-app-release-signed.apk
+          asset_content_type: application/x-authorware-bin
+
+      - name: Upload Release Asset
+        id: upload-release-asset-apk-staging
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.android_app_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: /tmp/lima-app-staging-signed/app-release-signed.apk
+          asset_name: lima-app-staging-signed.apk
           asset_content_type: application/x-authorware-bin
