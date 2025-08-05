@@ -8,7 +8,10 @@ metadata:
 data:
   default.conf: |
     upstream imgproxy {
-      server {{ .Values.env.IMG_PROXY_HOST }}:{{ .Values.env.IMG_PROXY_PORT }};
+      server {{ .Values.env.IMG_PROXY_HOST }};
+    }
+    upstream api {
+      server {{ .Values.env.API_HOST }};
     }
     server {
         listen {{ .Values.service.port }};
@@ -19,4 +22,11 @@ data:
 
         include /nginx-ui-conf/nginx.ui.conf;
 
+        location /api {
+            include fastcgi_params;
+            fastcgi_pass api:9000;
+            fastcgi_param DOCUMENT_ROOT /var/www/api/public;
+            fastcgi_param SCRIPT_NAME index.php;
+            fastcgi_param SCRIPT_FILENAME /var/www/api/public/index.php;
+        }
     }

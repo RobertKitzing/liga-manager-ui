@@ -1,0 +1,24 @@
+replicaCount: 1
+
+imagePullSecrets: []
+
+env:
+  IMGPROXY_USE_ETAG: "false"
+  IMGPROXY_ALLOWED_SOURCES: "local://"
+  IMGPROXY_LOCAL_FILESYSTEM_ROOT: "/lima"
+  IMGPROXY_ENABLE_AVIF_DETECTION: "true"
+  IMGPROXY_ENABLE_WEBP_DETECTION: "true"
+
+image:
+  repository: "ghcr.io/imgproxy/imgproxy"
+  tag: "latest"
+  pullPolicy: "Always"
+
+assets:
+  repository: "robertkitzing/liga-manager-ui"
+  tag: "next"
+  pullPolicy: "Always"
+
+service:
+  type: "ClusterIP"
+  port: 8080

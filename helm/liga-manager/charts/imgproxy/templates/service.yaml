@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "imgproxy.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "imgproxy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "imgproxy.selectorLabels" . | nindent 4 }}

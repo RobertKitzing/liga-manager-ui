@@ -5,4 +5,8 @@
 liga-manager-ui:
   enabled: true
   env:
-    GOOGLE_MAPS_API_KEY: test
+    USE_IMGPROXY: "true"
+    IMG_PROXY_HOST: {{ .Release.Name }}-imgproxy:8080
+
+imgproxy:
+  enabled: true

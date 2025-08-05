@@ -7,12 +7,13 @@ replicaCount: 1
 
 env:
   GOOGLE_MAPS_API_KEY: ""
-  IMG_PROXY_HOST: "127.0.0.1"
-  IMG_PROXY_PORT: 80
-  USE_IMGPROXY: false
+  IMG_PROXY_HOST: "127.0.0.1:80"
+  API_HOST: "127.0.0.1:80"
+  USE_IMGPROXY: "false"
 
 image:
   repository: "robertkitzing/liga-manager-ui"
+  pullPolicy: "Always"
   tag: "next"
 
 service:

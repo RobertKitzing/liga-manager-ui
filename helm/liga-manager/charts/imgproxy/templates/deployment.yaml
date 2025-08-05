@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "imgproxy.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "imgproxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "imgproxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "imgproxy.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: lima-assets
+              mountPath: /lima/assets
+          envFrom:
+            - configMapRef:
+                name: {{ include "imgproxy.fullname" . }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+      volumes:
+        - name: lima-assets
+          image:
+            reference: "{{ .Values.assets.repository }}:{{ .Values.assets.tag }}"
+            pullPolicy: {{ .Values.assets.pullPolicy }}

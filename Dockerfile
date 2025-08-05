@@ -1,7 +1,3 @@
-####################
-## PRODUCTION
-####################
-
 FROM nginx:stable-alpine-slim
 RUN apk add certbot certbot-nginx --no-cache
 
