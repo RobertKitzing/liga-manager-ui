@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-api/graphql",
-    "version": "5.4.63",
+    "version": "5.5.0",
     "scripts": {},
     "peerDependencies": {
         "@angular/core": "^19.2.14",

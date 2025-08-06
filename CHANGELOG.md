@@ -1,3 +1,13 @@
+## 5.5.0 (2025-08-06)
+
+### 🚀 Features
+
+- added helm chart ([0cbc5486](https://github.com/RobertKitzing/liga-manager-ui/commit/0cbc5486))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.4.63 (2025-08-04)
 
 This was a version bump only, there were no code changes.
