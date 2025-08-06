@@ -9,6 +9,8 @@ import fuzzysearch from 'fuzzysearch-ts';
 import { MatAutocomplete, MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { AsyncPipe } from '@angular/common';
 import { CypressSelectorDirective, CySelectors } from '@liga-manager-ui/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'lima-team-auto-complete',
@@ -21,6 +23,8 @@ import { CypressSelectorDirective, CySelectors } from '@liga-manager-ui/directiv
         AsyncPipe,
         FormsModule,
         CypressSelectorDirective,
+        MatIconModule,
+        MatButtonModule,
     ],
     templateUrl: './team-auto-complete.component.html',
 })

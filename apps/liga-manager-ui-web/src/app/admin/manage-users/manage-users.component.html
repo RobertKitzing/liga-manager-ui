@@ -1,10 +1,16 @@
 <div class="flex justify-center h-full">
     <div class="w-full sm:w-3/4">
         <div class="m-4">
-            <mat-form-field class="w-full" subscriptSizing="dynamic">
-                <mat-label translate>SEARCH</mat-label>
-                <input matInput [formControl]="searchUser" />
-            </mat-form-field>
+            <div class="flex items-center">
+                <mat-form-field class="grow pr-6" subscriptSizing="dynamic">
+                    <mat-label translate>SEARCH</mat-label>
+                    <input matInput [formControl]="searchUser" />
+                </mat-form-field>
+                <button mat-stroked-button (click)="createUser()" cySelector="button-create-user">
+                    <mat-icon>save</mat-icon>
+                    {{ "BUTTON.CREATE_USER" | translate }}
+                </button>
+            </div>
         </div>
         @if (users$ | async; as users) {
             <table mat-table [dataSource]="users">
@@ -33,9 +39,6 @@
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <th class="text-end" mat-header-cell *matHeaderCellDef>
-                        <button mat-icon-button (click)="createUser()">
-                            <mat-icon>add</mat-icon>
-                        </button>
                     </th>
                     <td class="text-end" mat-cell *matCellDef="let user">
                         <button mat-icon-button (click)="editUser(user)">

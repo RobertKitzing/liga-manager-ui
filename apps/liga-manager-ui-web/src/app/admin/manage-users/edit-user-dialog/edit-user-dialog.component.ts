@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { APP_ROUTES } from '@liga-manager-ui/common';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-edit-user-dialog',
@@ -45,6 +46,7 @@ import { APP_ROUTES } from '@liga-manager-ui/common';
         MatIconModule,
         AsyncPipe,
         KeyValuePipe,
+        CypressSelectorDirective,
     ],
 })
 export class EditUserDialogComponent implements OnInit {

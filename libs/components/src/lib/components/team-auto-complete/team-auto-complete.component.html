@@ -4,6 +4,7 @@
         [cySelector]="cySelector()"
         matInput
         [formControl]="fromControl()"
+        clea
         [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete"
         (optionSelected)="_teamSelected($event)"
@@ -13,4 +14,9 @@
             <mat-option [value]="option">{{option?.name}}</mat-option>
         }
     </mat-autocomplete>
+    @if (fromControl().value) {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="fromControl().reset()" class="mr-4">
+            <mat-icon>close</mat-icon>
+        </button>
+    }
 </mat-form-field>

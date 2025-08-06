@@ -13,6 +13,7 @@
 	"BUTTON.CONTACT": "Contact",
 	"BUTTON.CREATE_SEASON": "Create new Season",
 	"BUTTON.CREATE_TOURNAMENT": "Create new Tournament",
+	"BUTTON.CREATE_USER": "Create User",
 	"BUTTON.DELETE_SEASON": "Delete Season",
 	"BUTTON.DELETE_TEAM_LOGO": "Delete Team Logo",
 	"BUTTON.DELETE_TOURNAMENT": "",
