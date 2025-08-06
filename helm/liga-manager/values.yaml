@@ -6,8 +6,6 @@ liga-manager-ui:
   enabled: true
   env:
     USE_IMGPROXY: "true"
-    IMG_PROXY_HOST: "{{ .Release.Name }}-imgproxy:8080"
-    API_HOST: "{{ .Release.Name }}-liga-manager-api:9000"
 
 liga-manager-imgproxy:
   enabled: true
@@ -19,10 +17,10 @@ liga-manager-api:
       storageClassName: "longhorn"
       storage: 1Gi
   env:
-    MYSQL_HOST: "{{ .Release.Name }}-mariadb"
+    MYSQL_HOST: "liga-manager-mariadb"
     MYSQL_DATABASE: dev
     MYSQL_USER: root
-    REDIS_HOST: "{{ .Release.Name }}-redis-master"
+    REDIS_HOST: "liga-manager-redis-master"
   secrets:
     MYSQL_PASSWORD: dev
     MYSQL_ROOT_PASSWORD: dev

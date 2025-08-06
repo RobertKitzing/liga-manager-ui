@@ -6,9 +6,11 @@ imagePullSecrets: []
 replicaCount: 1
 
 env:
-  IMG_PROXY_HOST: "127.0.0.1:80"
-  API_HOST: "127.0.0.1:80"
-  USE_IMGPROXY: "false"
+  IMG_PROXY_HOST:
+  IMG_PROXY_PORT:
+  API_HOST:
+  API_PORT:
+  USE_IMGPROXY:
 
 secrets:
   GOOGLE_MAPS_API_KEY: ""

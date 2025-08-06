@@ -8,10 +8,18 @@ metadata:
 data:
   default.conf: |
     upstream imgproxy {
-      server {{ .Values.env.IMG_PROXY_HOST }};
+      {{ if .Values.env.IMG_PROXY_HOST }}
+      server {{ .Values.env.IMG_PROXY_HOST }}:{{ .Values.env.IMG_PROXY_PORT | default 8080 }};
+      {{ else }}
+      server {{ .Release.Name }}-imgproxy:{{ .Values.env.IMG_PROXY_PORT | default 8080 }};
+      {{ end }}
     }
     upstream api {
-      server {{ .Values.env.API_HOST }};
+      {{ if .Values.env.API_HOST }}
+      server {{ .Values.env.API_HOST }}:{{ .Values.env.API_PORT | default 9000 }};
+      {{ else }}
+      server {{ .Release.Name }}-liga-manager-api:{{ .Values.env.API_PORT | default 9000 }};
+      {{ end }}
     }
     server {
         listen {{ .Values.service.port }};

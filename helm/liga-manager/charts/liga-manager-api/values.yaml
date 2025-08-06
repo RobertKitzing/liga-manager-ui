@@ -11,6 +11,10 @@ fullnameOverride: ""
 
 env:
   LOG_LEVEL: warning
+  MYSQL_HOST:
+  MYSQL_DATABASE:
+  MYSQL_USER:
+  REDIS_HOST:
 
 secrets:
   MYSQL_PASSWORD: ""
