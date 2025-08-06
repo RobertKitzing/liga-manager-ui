@@ -1,0 +1,26 @@
+apiVersion: v2
+name: liga-manager
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+icon: https://raw.githubusercontent.com/RobertKitzing/liga-manager-ui/refs/heads/next_nx/apps/liga-manager-ui-web/src/assets/wildeliga_bremen_nobg.webp
+appVersion: 5.4.63
+
+dependencies:
+  - name: liga-manager-ui
+    condition: liga-manager-ui.enabled
+    version: 0.0.1
+  - name: liga-manager-imgproxy
+    condition: liga-manager-imgproxy.enabled
+    version: 0.0.1
+  - name: liga-manager-api
+    condition: liga-manager-api.enabled
+    version: 0.0.1
+  - name: redis
+    condition: redis.enabled
+    repository: https://charts.bitnami.com/bitnami
+    version: 21.2.13
+  - name: mariadb
+    condition: mariadb.enabled
+    repository: https://charts.bitnami.com/bitnami
+    version: 21.0.3

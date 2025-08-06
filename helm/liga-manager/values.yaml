@@ -1,0 +1,43 @@
+# Default values for liga-manager
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+liga-manager-ui:
+  enabled: true
+  env:
+    USE_IMGPROXY: "true"
+
+liga-manager-imgproxy:
+  enabled: true
+
+liga-manager-api:
+  enabled: true
+  persistence:
+    teamlogos:
+      storageClassName: "longhorn"
+      storage: 1Gi
+  env:
+    MYSQL_HOST: "liga-manager-mariadb"
+    MYSQL_DATABASE: dev
+    MYSQL_USER: root
+    REDIS_HOST: "liga-manager-redis-master"
+  secrets:
+    MYSQL_PASSWORD: dev
+    MYSQL_ROOT_PASSWORD: dev
+    JWT_SECRET: 0123456789abcdef
+
+redis:
+  architecture: standalone
+  persistence:
+    enabled: false
+  auth:
+    enabled: false
+  enabled: true
+
+mariadb:
+  enabled: true
+  auth:
+    rootPassword: "dev"
+    user: "dev"
+    password: "dev"
+    database: "dev"

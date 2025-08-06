@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-team-logos
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "liga-manager-api.labels" . | nindent 4 }}
+spec:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: {{ .Values.persistence.teamlogos.storage }}
+    storageClassName: {{ .Values.persistence.teamlogos.storageClassName }}

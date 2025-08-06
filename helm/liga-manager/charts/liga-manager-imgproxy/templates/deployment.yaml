@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "imgproxy.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "imgproxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "imgproxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "imgproxy.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "imgproxy.fullname" . }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /lima/logos
+              name: team-logos
+      volumes:
+        - name: team-logos
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-team-logos

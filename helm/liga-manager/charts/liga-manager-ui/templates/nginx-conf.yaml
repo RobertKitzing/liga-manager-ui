@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "liga-manager-ui.fullname" . }}-nginx
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "liga-manager-ui.labels" . | nindent 4 }}
+data:
+  default.conf: |
+    upstream imgproxy {
+      {{ if .Values.env.IMG_PROXY_HOST }}
+      server {{ .Values.env.IMG_PROXY_HOST }}:{{ .Values.env.IMG_PROXY_PORT | default 8080 }};
+      {{ else }}
+      server {{ .Release.Name }}-imgproxy:{{ .Values.env.IMG_PROXY_PORT | default 8080 }};
+      {{ end }}
+    }
+    upstream api {
+      {{ if .Values.env.API_HOST }}
+      server {{ .Values.env.API_HOST }}:{{ .Values.env.API_PORT | default 9000 }};
+      {{ else }}
+      server {{ .Release.Name }}-liga-manager-api:{{ .Values.env.API_PORT | default 9000 }};
+      {{ end }}
+    }
+    server {
+        listen {{ .Values.service.port }};
+        server_name localhost;
+        server_tokens off;
+        gzip on;
+        gzip_types application/json application/javascript image/webp image/png application/font-woff2 image/x-icon;
+
+        include /nginx-ui-conf/nginx.ui.conf;
+
+        location /api {
+            include fastcgi_params;
+            fastcgi_pass api;
+            fastcgi_param DOCUMENT_ROOT /var/www/api/public;
+            fastcgi_param SCRIPT_NAME index.php;
+            fastcgi_param SCRIPT_FILENAME /var/www/api/public/index.php;
+        }
+    }

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "liga-manager-ui.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "liga-manager-ui.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "liga-manager-ui.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "liga-manager-ui.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/conf.d/
+          - mountPath: /ui/browser/logos
+            name: team-logos
+        envFrom:
+          - configMapRef:
+              name: {{ include "liga-manager-ui.fullname" . }}-env
+          - secretRef:
+              name: {{ include "liga-manager-ui.fullname" . }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+      volumes:
+        - name: team-logos
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-team-logos
+        - name: nginx-config
+          configMap:
+            name: {{ include "liga-manager-ui.fullname" . }}-nginx

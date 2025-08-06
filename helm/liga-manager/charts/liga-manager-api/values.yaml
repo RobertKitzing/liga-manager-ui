@@ -1,0 +1,45 @@
+replicaCount: 1
+
+image:
+  repository: mklocke/liga-manager-api
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+env:
+  LOG_LEVEL: warning
+  MYSQL_HOST:
+  MYSQL_DATABASE:
+  MYSQL_USER:
+  REDIS_HOST:
+
+secrets:
+  MYSQL_PASSWORD: ""
+  MYSQL_ROOT_PASSWORD: ""
+  JWT_SECRET: ""
+
+service:
+  type: "ClusterIP"
+  port: 9000
+
+persistence:
+  teamlogos:
+    storageClassName: ""
+    storage: 1Gi
+
+volumeMounts: []
+volumes: []
+
+tolerations: {}
+affinity: {}
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
+livenessProbe: {}
+readinessProbe: {}
+resources: {}

@@ -1,0 +1,39 @@
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+
+replicaCount: 1
+
+env:
+  IMG_PROXY_HOST:
+  IMG_PROXY_PORT:
+  API_HOST:
+  API_PORT:
+  USE_IMGPROXY:
+
+secrets:
+  GOOGLE_MAPS_API_KEY: ""
+
+image:
+  repository: "robertkitzing/liga-manager-ui"
+  pullPolicy: "IfNotPresent"
+
+service:
+  type: "ClusterIP"
+  port: 80
+
+ingress:
+  enabled: true
+  className: inet-nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: liga-manager.rkitzing.de
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: liga-manager-ui-tls
+      hosts:
+        - liga-manager.rkitzing.de

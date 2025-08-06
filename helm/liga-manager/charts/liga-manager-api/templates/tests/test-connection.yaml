@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "liga-manager-api.fullname" . }}-test-connection"
+  labels:
+    {{- include "liga-manager-api.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "liga-manager-api.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
