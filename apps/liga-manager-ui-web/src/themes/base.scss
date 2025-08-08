@@ -93,3 +93,9 @@ body {
         );
     }
 }
+
+.fc-list-empty {
+    background-color: var(--mat-sys-surface-container-high) !important;
+    color: var(--mat-sys-on-surface-container-high) !important;
+    border: none !important;
+}
