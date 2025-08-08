@@ -7,3 +7,4 @@ export * from './maintenance-mode';
 export * from './view-team-contact';
 export * from './default-dialog-config';
 export * from './confirm';
+export * from './edit-pitch';

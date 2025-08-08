@@ -9,6 +9,7 @@ import {
     MatDialogRef,
     MatDialogTitle,
     MatDialogContent,
+    MatDialogModule,
 } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
@@ -24,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { APP_ROUTES } from '@liga-manager-ui/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-login',
@@ -40,6 +42,8 @@ import { APP_ROUTES } from '@liga-manager-ui/common';
         MatButtonModule,
         MatIconModule,
         CypressSelectorDirective,
+        MatCardModule,
+        MatDialogModule,
     ],
 })
 export class LoginComponent {

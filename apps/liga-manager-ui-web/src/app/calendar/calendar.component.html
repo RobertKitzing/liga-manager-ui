@@ -6,9 +6,6 @@
                 [selectedSeasonFC]="selectedSeasonFC"
             ></lima-season-chooser>
         </div>
-        <div>
-            <mat-select></mat-select>
-        </div>
     </div>
 </mat-toolbar> -->
 <div class="flex h-full w-full p-3 mat-sys-surface-container">
@@ -21,24 +18,14 @@
     >
 
     <ng-template #eventContent let-arg>
-        @if(arg.event.extendedProps.match) {
-            <lima-match [match]="arg.event.extendedProps.match"></lima-match>
-        }
+        <div class="flex justify-center w-full">
+            @if(arg.event.extendedProps.match) {
+                <lima-match [match]="arg.event.extendedProps.match"></lima-match>
+            } @else {
+                <span class="mat-sys-primary-container">{{ arg.event.title }}</span>
+            }
+        </div>
     </ng-template>
 
     </full-calendar>
 </div>
-
-<!-- @if (events$ | async; as events) {
-
-    <mat-card>
-        <mat-card-content>
-            @for (event of events; track event) {
-                @if (event.match) {
-                    <lima-match [match]="event.match"></lima-match>
-                }
-            }
-        </mat-card-content>
-    </mat-card>
-
-} -->

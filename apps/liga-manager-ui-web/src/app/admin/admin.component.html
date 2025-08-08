@@ -1,4 +1,4 @@
-<div class="mt-2 mb-2 mat-sys-surface-dim">
+<div class="m-2 mat-sys-surface-container-high">
     <mat-toolbar class="secondary">
         <div class="grow flex justify-center visible lg:hidden text-lg">
             <a class="flex h-full items-center">{{ currentRoute | translate }}</a>
@@ -22,7 +22,7 @@
             <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
         </div>
     </mat-drawer>
-    <mat-drawer-content class="mat-sys-surface-container">
+    <mat-drawer-content class="mat-sys-surface-container-high">
         <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

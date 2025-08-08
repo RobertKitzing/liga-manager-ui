@@ -76,7 +76,7 @@ export class CalendarService {
                         tournament.rounds.map((round) => ({
                             allDay: true,
                             display: 'background',
-                            title: `${round?.number}. Runde (${tournament?.name})`,
+                            title: this.translateService.instant('TOURNAMENT_ROUND', { round: round?.number }),
                             start: dayjs(round?.start_date).toDate(),
                             end: dayjs(round?.end_date).toDate(),
                         })),

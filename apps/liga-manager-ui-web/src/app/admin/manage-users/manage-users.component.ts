@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { defaultDialogConfig } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-manage-users',
@@ -30,6 +31,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         MatIconModule,
         AsyncPipe,
         CypressSelectorDirective,
+        MatCardModule,
     ],
 })
 export class ManageUsersComponent {

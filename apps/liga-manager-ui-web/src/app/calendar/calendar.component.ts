@@ -19,7 +19,9 @@ import { MatchComponent } from '@liga-manager-ui/components';
     selector: 'lima-calendar',
     templateUrl: './calendar.component.html',
     styles: [],
-    imports: [AsyncPipe, FullCalendarModule, MatToolbarModule, MatchComponent],
+    imports: [
+        AsyncPipe, FullCalendarModule, MatToolbarModule, MatchComponent,
+    ],
     standalone: true,
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
@@ -37,11 +39,17 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     calendarOptions: CalendarOptions = {
         headerToolbar: {
             start: 'title',
-            center: 'dayGridYear,dayGridMonth,dayGridWeek listMonth,listWeek',
+            center: 'dayGridMonth,dayGridWeek list1Year',
             end: 'today prev,next',
         },
-        initialView: 'listMonth',
+        initialView: 'list1Year',
         plugins: [dayGridPlugin, listPlugin],
+        views: {
+            list1Year: {
+                type: 'list',
+                duration: { year: 1 },
+            },
+        },
         firstDay: 1,
         editable: false,
         datesSet: this.viewChanged.bind(this),
@@ -53,6 +61,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         switchMap((params) =>
             this.calendarService.getCalendarEvents(params).pipe(
                 tap((events) => {
+                    console.log(events);
                     this.calendarOptions.events = events;
                 }),
             ),

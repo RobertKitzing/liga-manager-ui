@@ -19,6 +19,7 @@
                     matInput
                     type="time"
                     formControlName="time"
+                    cySelector="input-time"
                 />
             </mat-form-field>
         </div>
@@ -29,6 +30,7 @@
                     matInput
                     [matDatepicker]="picker"
                     formControlName="date"
+                    cySelector="input-kickoff-date"
                 />
                 <mat-datepicker-toggle
                     matIconSuffix
@@ -49,6 +51,7 @@
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!newKickoff.valid"
+        cySelector="button-schedule-match-submit"
     >
         <mat-icon>save</mat-icon>
         {{ "BUTTON.SAVE" | translate }}

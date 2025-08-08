@@ -1,7 +1,7 @@
-<div class="w-full h-full mat-sys-surface-container flex flex-col">
-    <div>
+<div class="w-full h-full flex flex-col">
+    <div class="m-2 mt-0">
         <mat-toolbar class="secondary">
-            <div class="w-full flex items-center space-x-4">
+            <div class="w-full flex items-center space-x-4 justify-evenly">
                 <div class="w-1/2">
                     <lima-season-chooser
                         [selectedSeasonFC]="selectedSeasonFC"
@@ -41,57 +41,61 @@
     <div>
     @if ((season$ | async); as season) {
         @if( season.state !== SeasonState.Ended) {
-            <mat-stepper [orientation]="(stepperOrientation | async)!" labelPosition="bottom">
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div translate cySelector="season-management-tab-select-teams">TAB.ADMIN.SEASON.TEAMS</div>
-                    </ng-template>
-                    <ng-template matStepContent>
-                        <!-- <button mat-button matStepperNext>Next</button> -->
-                        <lima-manage-teams [season]="season"></lima-manage-teams>
-                    </ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <a translate cySelector="season-management-tab-create-matchdays">TAB.ADMIN.SEASON.MATCH_DAYS</a>
-                    </ng-template>
-                    <ng-template matStepContent>
-                        <!-- <button matButton matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button> -->
-                        <lima-manage-matchdays [season]="season"></lima-manage-matchdays>
-                    </ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <a translate cySelector="season-management-tab-create-matches">TAB.ADMIN.SEASON.MATCHES</a>
-                    </ng-template>
-                    <ng-template matStepContent>
-                        <!-- <button matButton matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button> -->
-                        <lima-manage-matches [season]="season"></lima-manage-matches>
-                    </ng-template>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <a translate cySelector="season-management-tab-schedule-matches">TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a>
-                    </ng-template>
-                    <ng-template matStepContent>
-                        <!-- <button matButton matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button> -->
-                        <lima-manage-schedule-matches [season]="season"></lima-manage-schedule-matches>
-                    </ng-template>
-                </mat-step>
-                <mat-step [optional]="true">
-                    <ng-template matStepLabel>
-                        <a translate cySelector="season-management-tab-penalties">TAB.ADMIN.SEASON.PENALTIES</a>
-                    </ng-template>
-                    <ng-template matStepContent>
-                        <!-- <button matButton matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button> -->
-                        <lima-manage-penalties [season]="season"></lima-manage-penalties>
-                    </ng-template>
-                </mat-step>
-            </mat-stepper>
+            <mat-card class="m-2">
+                <mat-card-content>
+                    <mat-stepper [orientation]="(stepperOrientation | async)!" labelPosition="bottom">
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <div translate cySelector="season-management-tab-select-teams">TAB.ADMIN.SEASON.TEAMS</div>
+                            </ng-template>
+                            <ng-template matStepContent>
+                                <!-- <button mat-button matStepperNext>Next</button> -->
+                                <lima-manage-teams [season]="season"></lima-manage-teams>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <a translate cySelector="season-management-tab-create-matchdays">TAB.ADMIN.SEASON.MATCH_DAYS</a>
+                            </ng-template>
+                            <ng-template matStepContent>
+                                <!-- <button matButton matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button> -->
+                                <lima-manage-matchdays [season]="season"></lima-manage-matchdays>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <a translate cySelector="season-management-tab-create-matches">TAB.ADMIN.SEASON.MATCHES</a>
+                            </ng-template>
+                            <ng-template matStepContent>
+                                <!-- <button matButton matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button> -->
+                                <lima-manage-matches [season]="season"></lima-manage-matches>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <a translate cySelector="season-management-tab-schedule-matches">TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a>
+                            </ng-template>
+                            <ng-template matStepContent>
+                                <!-- <button matButton matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button> -->
+                                <lima-manage-schedule-matches [season]="season"></lima-manage-schedule-matches>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step [optional]="true">
+                            <ng-template matStepLabel>
+                                <a translate cySelector="season-management-tab-penalties">TAB.ADMIN.SEASON.PENALTIES</a>
+                            </ng-template>
+                            <ng-template matStepContent>
+                                <!-- <button matButton matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button> -->
+                                <lima-manage-penalties [season]="season"></lima-manage-penalties>
+                            </ng-template>
+                        </mat-step>
+                    </mat-stepper>
+                </mat-card-content>
+            </mat-card>
         }
     }
     </div>
