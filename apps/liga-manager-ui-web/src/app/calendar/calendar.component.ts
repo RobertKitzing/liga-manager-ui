@@ -13,11 +13,14 @@ import { Subject, switchMap, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatchComponent, SeasonChooserComponent } from '@liga-manager-ui/components';
+import { defaultDialogConfig, MatchComponent, SeasonChooserComponent } from '@liga-manager-ui/components';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
 
 @Component({
     selector: 'lima-calendar',
@@ -28,16 +31,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         FullCalendarModule,
         MatToolbarModule,
         MatchComponent,
-        SeasonChooserComponent,
         MatIcon,
         MatButtonModule,
         MatSelectModule,
         ReactiveFormsModule,
         TranslateModule,
+        MatInputModule,
     ],
     standalone: true,
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
+
+    private dialog = inject(MatDialog);
 
     from = input(new Date());
 
@@ -47,9 +52,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     selectedSeasonFC = new FormControl();
 
-    selectedView = new FormControl('list1Year', { nonNullable: true });
-
     eventTrigger = new Subject<CalendarQueryVariables>();
+
+    options = new CalendarOptionsFormGroup();
 
     calendarOptions: CalendarOptions = {
         headerToolbar: {
@@ -57,21 +62,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             center: 'title',
             end: '',
         },
-        initialView: this.selectedView.value,
+        initialView: this.options.controls['selectedView'].value,
         plugins: [dayGridPlugin, listPlugin],
-        views: {
-            list1Week: {
-                type: 'list',
-                duration: { week: 1 },
-            },
-            list1Month: {
-                type: 'list',
-                duration: { month: 1 },
-            },
-            list1Year: {
-                type: 'list',
-                duration: { year: 1 },
-            },
+        duration: {
+            [this.options.controls['duration'].controls.type.value]: this.options.controls.duration.controls.value.value,
         },
         firstDay: 1,
         editable: false,
@@ -102,12 +96,18 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.calendarService.reloadEvents();
         this.calendarOptions.locale = this.i18nService.currentLang;
         this.translateService.onLangChange.subscribe((lang) => this.calendarOptions.locale = lang.lang);
-        this.selectedView.valueChanges.pipe(
+        this.options.controls.selectedView.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             (view) => {
-                console.log(view)
                 this.calendarApi.changeView(view)
+            },
+        );
+        this.options.controls.duration.valueChanges.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            () => {
+                this.updateDuration()
             },
         );
     }
@@ -132,12 +132,27 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.calendarApi.prev();
     }
 
+    updateDuration() {
+        this.calendarApi.setOption('duration', {
+            [this.options.controls.duration.controls.type.value]: this.options.controls.duration.controls.value.value,
+        });
+    }
+
     next() {
         this.calendarApi.next();
     }
 
     today() {
         this.calendarApi.today();
+    }
+
+    openSettings() {
+        this.dialog.open(CalendarOptionsComponent, {
+            ...defaultDialogConfig,
+            data: {
+                options: this.options,
+            },
+        })
     }
 
 }

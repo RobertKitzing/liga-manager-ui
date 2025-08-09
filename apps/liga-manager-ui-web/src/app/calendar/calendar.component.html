@@ -1,71 +1,65 @@
-<div class="mat-sys-surface-container-high flex h-[97%] flex-col">
-    <div class="m-2">
+<div class="flex flex-col h-full">
+    <div class="shrink p-2">
         <mat-toolbar class="secondary">
-            <div class="flex space-x-4 w-full">
-                <div class="self-center grow">
-                    <button
-                        mat-icon-button
-                        (click)="prev()"
+            <mat-toolbar-row>
+                <div class="grid grid-cols-3 w-full">
+                    <div class="self-center">
+                        <button
+                            mat-icon-button
+                            (click)="prev()"
+                            >
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                    </div>
+                    <div class="flex justify-center space-x-4">
+                        <button
+                            mat-stroked-button
+                            (click)="today()"
+                            >
+                            <mat-label>today</mat-label>
+                        </button>
+                        <button
+                            mat-icon-button
+                            (click)="openSettings()"
+                            >
+                            <div class="flex justify-center">
+                                <mat-icon>settings</mat-icon>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="self-center text-end">
+                        <button
+                            mat-icon-button
+                            (click)="next()"
                         >
-                        <mat-icon>arrow_back</mat-icon>
-                    </button>
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </div>
                 </div>
-                <div class="self-center grow">
-                    <mat-select [formControl]="selectedView">
-                        <mat-option value="list1Week" translate>CALENDAR.list1Week</mat-option>
-                        <mat-option value="list1Month" translate>CALENDAR.list1Month</mat-option>
-                        <mat-option value="list1Year" translate>CALENDAR.list1Year</mat-option>
-                        <mat-option value="dayGridWeek" translate>CALENDAR.dayGridWeek</mat-option>
-                        <mat-option value="dayGridMonth" translate>CALENDAR.dayGridMonth</mat-option>
-                    </mat-select>
-                </div>
-                <div class="self-center grow">
-                    <button
-                        mat-stroked-button
-                        (click)="today()"
-                        >
-                        <mat-label>today</mat-label>
-                    </button>
-                </div>
-                <div class="self-center text-end grow">
-                    <button
-                        mat-icon-button
-                        (click)="next()"
-                    >
-                        <mat-icon>arrow_forward</mat-icon>
-                    </button>
-                </div>
-                <!-- <div>
-                    <lima-season-chooser
-                        [multiple]="true"
-                        [selectedSeasonFC]="selectedSeasonFC"
-                    ></lima-season-chooser>
-                </div> -->
-            </div>
+            </mat-toolbar-row>
         </mat-toolbar>
     </div>
-    @if (events$ | async) { }
-    <div class="m-2 h-[97%]">
+    <div class="grow overflow-auto p-2">
+        @if (events$ | async) {}
         <full-calendar
-            class="w-full h-[97%]"
+            class="w-full h-full"
             #calendar
             [options]="calendarOptions"
             [deepChangeDetection]="true"
         >
+            <ng-template #eventContent let-arg>
+                <div class="flex justify-center w-full">
+                    @if(arg.event.extendedProps.match) {
+                        <lima-match class="w-full" [match]="arg.event.extendedProps.match"></lima-match>
+                    } @else {
+                        <span class="mat-sys-primary-container w-full">{{ arg.event.title }}</span>
+                    }
+                </div>
+            </ng-template>
 
-        <ng-template #eventContent let-arg>
-            <div class="flex justify-center w-full">
-                @if(arg.event.extendedProps.match) {
-                    <lima-match class="w-full" [match]="arg.event.extendedProps.match"></lima-match>
-                } @else {
-                    <span class="mat-sys-primary-container w-full">{{ arg.event.title }}</span>
-                }
-            </div>
-        </ng-template>
-
-        <ng-template #noEventsContent let-arg>
-            {{ "NO_EVENTS" | translate }}
-        </ng-template>
+            <ng-template #noEventsContent let-arg>
+                {{ "NO_EVENTS" | translate }}
+            </ng-template>
         </full-calendar>
     </div>
 </div>
