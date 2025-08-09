@@ -42,17 +42,16 @@ export const routes: Routes = [
     {
         path: '',
         component: AppComponent,
+        resolve: { user: userResolver },
         children: [
             {
                 path: APP_ROUTES.TABLE,
                 loadComponent: () => import('./table').then((m) => m.TableComponent),
-                resolve: { user: userResolver },
             },
             {
                 path: APP_ROUTES.CALENDAR,
                 loadComponent: () =>
                     import('./calendar').then((m) => m.CalendarComponent),
-                resolve: { user: userResolver },
             },
             {
                 path: APP_ROUTES.CONTACTS,
@@ -64,13 +63,11 @@ export const routes: Routes = [
                 path: APP_ROUTES.SCHEDULE,
                 loadComponent: () =>
                     import('./schedule').then((m) => m.ScheduleComponent),
-                resolve: { user: userResolver },
             },
             {
                 path: APP_ROUTES.TOURNAMENT,
                 loadComponent: () =>
                     import('./tournament').then((m) => m.TournamentComponent),
-                resolve: { user: userResolver },
             },
             {
                 path: APP_ROUTES.TEAMS_MANAGEMENT,
@@ -91,31 +88,26 @@ export const routes: Routes = [
                 path: APP_ROUTES.HISTORY,
                 loadComponent: () =>
                     import('./history').then((m) => m.HistoryComponent),
-                resolve: { user: userResolver },
                 children: [
                     {
                         path: APP_ROUTES.TABLE,
                         loadComponent: () =>
                             import('./table').then((m) => m.TableComponent),
-                        resolve: { user: userResolver },
                     },
                     {
                         path: APP_ROUTES.SCHEDULE,
                         loadComponent: () =>
                             import('./schedule').then((m) => m.ScheduleComponent),
-                        resolve: { user: userResolver },
                     },
                     {
                         path: APP_ROUTES.TOURNAMENT,
                         loadComponent: () =>
                             import('./tournament').then((m) => m.TournamentComponent),
-                        resolve: { user: userResolver },
                     },
                     {
                         path: '',
                         redirectTo: APP_ROUTES.TABLE,
                         pathMatch: 'full',
-                        resolve: { user: userResolver },
                     },
                 ],
             },
@@ -130,6 +122,5 @@ export const routes: Routes = [
         path: '',
         redirectTo: APP_ROUTES.SCHEDULE,
         pathMatch: 'full',
-        resolve: { user: userResolver },
     },
 ];
