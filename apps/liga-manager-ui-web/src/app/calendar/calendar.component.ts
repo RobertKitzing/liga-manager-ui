@@ -8,7 +8,7 @@ import {
 import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
-import { AppsettingsService, CalendarService, I18nService } from '@liga-manager-ui/services';
+import { AppsettingsService, CalendarService, fromStorage, I18nService } from '@liga-manager-ui/services';
 import { Subject, switchMap, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
-import { APP_ROUTES } from '@liga-manager-ui/common';
+import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 import { Share } from '@capacitor/share';
 
 @Component({
@@ -46,6 +46,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     canShare = Share.canShare();
 
+    teamIdsLS = fromStorage<string>(StorageKeys.CALENDAR_TEAM_IDS)
+
     team_ids = input<string>();
 
     private appsettingsService = inject(AppsettingsService)
@@ -58,7 +60,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     eventTrigger = new Subject<CalendarQueryVariables>();
 
-    options = new CalendarOptionsFormGroup();
+    options = new CalendarOptionsFormGroup(this.teamIdsLS()?.split(','));
 
     calendarOptions: CalendarOptions = {
         headerToolbar: {
@@ -135,6 +137,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         ).subscribe(
             () => {
                 this.triggerEvent();
+                this.teamIdsLS.set(this.options.controls.team_ids.value.join(','));
             },
         );
     }

@@ -22,14 +22,14 @@ export class CalendarOptionsFormGroup extends FormGroup<{
         team_ids: FormControl<string[]>
     }> {
 
-    constructor() {
+    constructor(team_ids?: string[]) {
         super({
             selectedView: new FormControl('list', { nonNullable: true }),
             duration: new FormGroup({
                 value: new FormControl<number>(1),
                 type: new FormControl<'week' | 'month' | 'year'>('week', { nonNullable: true }),
             }),
-            team_ids: new FormControl(),
+            team_ids: new FormControl(team_ids || [], { nonNullable: true }),
         });
     }
 
