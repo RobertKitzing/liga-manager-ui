@@ -13,7 +13,7 @@ import { Subject, switchMap, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { defaultDialogConfig, MatchComponent, SeasonChooserComponent } from '@liga-manager-ui/components';
+import { defaultDialogConfig, MatchComponent } from '@liga-manager-ui/components';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
