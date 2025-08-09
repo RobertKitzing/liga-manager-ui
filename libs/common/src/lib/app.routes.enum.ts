@@ -1,4 +1,5 @@
 export enum APP_ROUTES {
+
     NEW_PASSWORD_ROUTE = 'newpassword',
     TABLE = 'table',
     CALENDAR = 'calendar',
@@ -9,4 +10,6 @@ export enum APP_ROUTES {
     ADMIN = 'admin',
     HISTORY = 'history',
     HALL_OF_FAME = 'hall_of_fame',
+    MATCH = 'match',
+
 }

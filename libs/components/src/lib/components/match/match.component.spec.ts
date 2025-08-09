@@ -3,6 +3,8 @@ import { MatchComponent } from './match.component';
 import { STORAGE, UserService } from '@liga-manager-ui/services';
 import { Injectable } from '@angular/core';
 import { Match } from '@liga-manager-api/graphql';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 
 @Injectable()
 class UserServiceMock {}
@@ -18,6 +20,7 @@ describe('MatchComponent', () => {
                 MatchComponent,
             ],
             providers: [
+                provideHttpClient(),
                 {
                     provide: STORAGE,
                     useValue: localStorage,
@@ -26,6 +29,7 @@ describe('MatchComponent', () => {
                     provide: UserService,
                     useClass: UserServiceMock,
                 },
+                provideRouter([]),
             ],
         }).compileComponents();
 

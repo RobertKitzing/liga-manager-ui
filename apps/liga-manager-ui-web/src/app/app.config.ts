@@ -98,7 +98,7 @@ export const appConfig: ApplicationConfig = {
             provide: IMAGE_LOADER,
             useFactory: (appsettingsService: AppsettingsService) =>
                 (config: ImageLoaderConfig) => {
-                    const host = appsettingsService.appsettings?.host || window.location.origin;
+                    const host = appsettingsService.host;
                     const use_imgproxy = JSON.parse(appsettingsService.appsettings?.use_imgproxy || 'false');
                     if (!use_imgproxy) {
                         return `${ config.src.startsWith('logos') ? '' : host}/${config.src.replace(/^\/+/g, '')}`;

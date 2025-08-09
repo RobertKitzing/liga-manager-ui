@@ -78,7 +78,6 @@ export class ManageTeamsComponent {
     }
 
     async deleteTeam(team_id: string) {
-        console.log(team_id);
         await firstValueFrom(this.teamService.deleteTeam({ team_id }));
     }
 

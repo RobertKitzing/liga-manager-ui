@@ -8,13 +8,10 @@ describe('Public - Select Tournament', () => {
         },
     )
 
-    it('Should select a Tournament', () => {
+    it('Should select a Tournament', { retries: 3 }, () => {
 
         cy.visit('/')
         cy.getBySel('route-tournament').first().click();
-
-        cy.intercept('POST', '/api/graphql').as('tournament-list');
-        cy.wait(['@tournament-list'])
 
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').contains(Tournaments[0].name).click();

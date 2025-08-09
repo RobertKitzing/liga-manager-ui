@@ -27,6 +27,7 @@ export interface IMatchDayEvent {
     matchSeriesId?: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     match?: any;
+    team_ids?: string[];
 }
 
 @Injectable({
@@ -88,6 +89,7 @@ export class CalendarService {
                         title: `${match?.home_team.name} - ${match?.guest_team.name}`,
                         start: dayjs(match?.kickoff).toDate(),
                         match,
+                        team_ids: [ match?.home_team.id || '', match?.guest_team.id || '' ],
                     })),
                 );
                 return events;

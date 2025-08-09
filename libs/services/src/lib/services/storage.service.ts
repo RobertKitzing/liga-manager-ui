@@ -19,13 +19,13 @@ export class StorageService {
         const stringified = JSON.stringify(value);
         this.#storage.setItem(key, stringified);
 
-        const storageEvent = new StorageEvent('storage', {
-            key: key,
-            newValue: stringified,
-            storageArea: this.#storage,
-        });
+        // const storageEvent = new StorageEvent('storage', {
+        //     key: key,
+        //     newValue: stringified,
+        //     storageArea: this.#storage,
+        // });
 
-        window.dispatchEvent(storageEvent);
+        // window.dispatchEvent(storageEvent);
     }
 
 }

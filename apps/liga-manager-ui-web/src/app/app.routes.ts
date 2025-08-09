@@ -6,6 +6,8 @@ import { userResolver } from './user.resolver';
 import { map } from 'rxjs';
 import { AuthenticationService, UserService } from '@liga-manager-ui/services';
 import { APP_ROUTES } from '@liga-manager-ui/common';
+import { matchResolver } from './match.resolver';
+import { AppComponent } from './app.component';
 
 export const isLoggedInGuard = () => {
     return inject(UserService).loadUser();
@@ -38,85 +40,87 @@ export const adminGuard = () => {
 
 export const routes: Routes = [
     {
-        path: APP_ROUTES.TABLE,
-        loadComponent: () => import('./table').then((m) => m.TableComponent),
-        resolve: { user: userResolver },
-    },
-    {
-        path: APP_ROUTES.CALENDAR,
-        loadComponent: () =>
-            import('./calendar').then((m) => m.CalendarComponent),
-        resolve: { user: userResolver },
-    },
-    {
-        path: APP_ROUTES.CONTACTS,
-        canActivate: [isLoggedInGuard],
-        loadComponent: () =>
-            import('./contacs').then((m) => m.ContacsComponent),
-    },
-    {
-        path: APP_ROUTES.SCHEDULE,
-        loadComponent: () =>
-            import('./schedule').then((m) => m.ScheduleComponent),
-        resolve: { user: userResolver },
-    },
-    {
-        path: APP_ROUTES.TOURNAMENT,
-        loadComponent: () =>
-            import('./tournament').then((m) => m.TournamentComponent),
-        resolve: { user: userResolver },
-    },
-    {
-        path: APP_ROUTES.TEAMS_MANAGEMENT,
-        canActivate: [teamAdminGuard],
-        loadComponent: () =>
-            import('./teams-management').then(
-                (m) => m.TeamsManagementComponent,
-            ),
-        children: TeamsManagementRoutes,
-    },
-    {
-        path: APP_ROUTES.ADMIN,
-        canActivate: [adminGuard],
-        loadComponent: () => import('./admin').then((m) => m.AdminComponent),
-        children: AdminRoutes,
-    },
-    {
-        path: APP_ROUTES.HISTORY,
-        loadComponent: () =>
-            import('./history').then((m) => m.HistoryComponent),
+        path: '',
+        component: AppComponent,
         resolve: { user: userResolver },
         children: [
             {
                 path: APP_ROUTES.TABLE,
+                loadComponent: () => import('./table').then((m) => m.TableComponent),
+            },
+            {
+                path: APP_ROUTES.CALENDAR,
                 loadComponent: () =>
-                    import('./table').then((m) => m.TableComponent),
-                resolve: { user: userResolver },
+                    import('./calendar').then((m) => m.CalendarComponent),
+            },
+            {
+                path: APP_ROUTES.CONTACTS,
+                canActivate: [isLoggedInGuard],
+                loadComponent: () =>
+                    import('./contacs').then((m) => m.ContacsComponent),
             },
             {
                 path: APP_ROUTES.SCHEDULE,
                 loadComponent: () =>
                     import('./schedule').then((m) => m.ScheduleComponent),
-                resolve: { user: userResolver },
             },
             {
                 path: APP_ROUTES.TOURNAMENT,
                 loadComponent: () =>
                     import('./tournament').then((m) => m.TournamentComponent),
-                resolve: { user: userResolver },
             },
             {
-                path: '',
-                redirectTo: APP_ROUTES.TABLE,
-                pathMatch: 'full',
-                resolve: { user: userResolver },
+                path: APP_ROUTES.TEAMS_MANAGEMENT,
+                canActivate: [teamAdminGuard],
+                loadComponent: () =>
+                    import('./teams-management').then(
+                        (m) => m.TeamsManagementComponent,
+                    ),
+                children: TeamsManagementRoutes,
+            },
+            {
+                path: APP_ROUTES.ADMIN,
+                canActivate: [adminGuard],
+                loadComponent: () => import('./admin').then((m) => m.AdminComponent),
+                children: AdminRoutes,
+            },
+            {
+                path: APP_ROUTES.HISTORY,
+                loadComponent: () =>
+                    import('./history').then((m) => m.HistoryComponent),
+                children: [
+                    {
+                        path: APP_ROUTES.TABLE,
+                        loadComponent: () =>
+                            import('./table').then((m) => m.TableComponent),
+                    },
+                    {
+                        path: APP_ROUTES.SCHEDULE,
+                        loadComponent: () =>
+                            import('./schedule').then((m) => m.ScheduleComponent),
+                    },
+                    {
+                        path: APP_ROUTES.TOURNAMENT,
+                        loadComponent: () =>
+                            import('./tournament').then((m) => m.TournamentComponent),
+                    },
+                    {
+                        path: '',
+                        redirectTo: APP_ROUTES.TABLE,
+                        pathMatch: 'full',
+                    },
+                ],
             },
         ],
+    },
+    {
+        path: `${APP_ROUTES.MATCH}/:matchid`,
+        loadComponent: () => import('@liga-manager-ui/components').then((m) => m.MatchComponent),
+        resolve: { user: userResolver, match: matchResolver },
     },
     {
         path: '',
         redirectTo: APP_ROUTES.SCHEDULE,
         pathMatch: 'full',
-        resolve: { user: userResolver },
     },
 ];

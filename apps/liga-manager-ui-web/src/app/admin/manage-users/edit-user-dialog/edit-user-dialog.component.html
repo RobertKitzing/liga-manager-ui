@@ -35,17 +35,17 @@
             </mat-select>
         </mat-form-field>
         @if (userFormGroup.value.role === UserRole.TeamManager) {
-        <mat-form-field>
-            <mat-label translate>TEAMS</mat-label>
-            <input matInput [formControl]="searchTeam" />
-            <mat-select formControlName="team_ids" name="teams" multiple cySelector="select-team">
-                @for (team of allTeams$ | async; track team) {
-                <mat-option [value]="team?.id">
-                    {{ team?.name }}
-                </mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+            <mat-form-field>
+                <mat-label translate>TEAMS</mat-label>
+                <input matInput [formControl]="searchTeam" />
+                <mat-select formControlName="team_ids" name="teams" multiple cySelector="select-team">
+                    @for (team of allTeams$ | async; track team) {
+                    <mat-option [value]="team?.id">
+                        {{ team?.name }}
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
         }
     </div>
 </div>

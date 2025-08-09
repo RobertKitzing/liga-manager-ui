@@ -14,6 +14,9 @@
                 <mat-button-toggle value="dayGridMonth" class="hidden 2xl:block">
                     <span translate>CALENDAR.dayGridMonth</span>
                 </mat-button-toggle>
+                <mat-button-toggle value="dayGridYear" class="hidden 2xl:block">
+                    <span translate>CALENDAR.dayGridYear</span>
+                </mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         @if (data.options.controls['selectedView'].value === 'list') {
@@ -30,6 +33,23 @@
                 </mat-form-field>
             </div>
         }
+        <div>
+            <mat-form-field class="w-full">
+                <mat-label translate>TEAMS</mat-label>
+                <mat-select formControlName="team_ids" name="teams" multiple cySelector="select-team">
+                    @for (team of allTeams$ | async; track team) {
+                    <mat-option [value]="team?.id">
+                        {{ team?.name }}
+                    </mat-option>
+                    }
+                </mat-select>
+                @if (data.options.controls.team_ids.value) {
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="data.options.controls.team_ids.reset()" class="mr-4">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                }
+            </mat-form-field>
+        </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
