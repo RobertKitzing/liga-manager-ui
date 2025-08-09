@@ -1,13 +1,13 @@
 {
     "name": "@liga-manager-ui/pipes",
-    "version": "5.6.0",
+    "version": "5.6.1",
     "peerDependencies": {
         "@angular/common": "^19.2.0",
         "@angular/core": "^19.2.0",
         "@colsen1991/ngx-translate-extract-marker": "^2.0.8",
-        "@liga-manager-api/graphql": "^5.6.0",
-        "@liga-manager-ui/services": "^5.6.0",
-        "@liga-manager-ui/utils": "^5.6.0",
+        "@liga-manager-api/graphql": "^5.6.1",
+        "@liga-manager-ui/services": "^5.6.1",
+        "@liga-manager-ui/utils": "^5.6.1",
         "@ngx-translate/core": "^14.0.0"
     },
     "sideEffects": false

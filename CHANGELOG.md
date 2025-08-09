@@ -1,3 +1,13 @@
+## 5.6.1 (2025-08-09)
+
+### Work in Progress
+
+- added team_id filter ([#99](https://github.com/RobertKitzing/liga-manager-ui/pull/99))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.6.0 (2025-08-09)
 
 ### 🚀 Features
