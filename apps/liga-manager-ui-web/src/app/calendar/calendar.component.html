@@ -26,6 +26,14 @@
                                 <mat-icon>settings</mat-icon>
                             </div>
                         </button>
+                        @if (canShare | async) {
+                            <button
+                                mat-icon-button
+                                (click)="share()"
+                            >
+                                <mat-icon>share</mat-icon>
+                            </button>
+                        }
                     </div>
                     <div class="self-center text-end">
                         <button
