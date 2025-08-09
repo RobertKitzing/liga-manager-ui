@@ -79,6 +79,7 @@
                                 <div
                                     [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
                                     (click)="canEditMatch(match) && openEditKickoffDialog()"
+                                    cySelector="button-schedule-match"
                                     class="mat-sys-surface-container-highest mat-sys-corner-medium"
                                 >
                                     <div
@@ -148,7 +149,7 @@
                                             <mat-icon>location_on</mat-icon>
                                             <span translate>BUTTON.EDIT_PITCH</span>
                                         </button>
-                                        <button mat-menu-item (click)="openEditKickoffDialog()">
+                                        <button mat-menu-item (click)="openEditKickoffDialog()" cySelector="button-schedule-match">
                                             <mat-icon>event</mat-icon>
                                             <span translate>BUTTON.EDIT_KICKOFF</span>
                                         </button>

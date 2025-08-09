@@ -48,7 +48,7 @@ export class TeamSearchComponent implements OnInit {
                         this.filteredTeams.emit(
                             this.teams()?.filter(
                                 (y) => 
-                                    fuzzysearch(searchTerm.toLocaleLowerCase(), y?.name.toLowerCase() || ''),
+                                    fuzzysearch(searchTerm.toLowerCase(), y?.name.toLowerCase() || ''),
                             ),
                         );
                     }

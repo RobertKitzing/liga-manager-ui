@@ -11,7 +11,10 @@ describe('Admin - Create Season', () => {
     it('Should create teams', () => {
         cy.visit('/')
         cy.getBySel('route-admin').first().click();
+        cy.intercept('POST', '/api/graphql').as('graphql');
         cy.getBySel('route-admin-teams').first().click();
+        cy.wait(['@graphql'])
+
         for (const team of Teams) {
             cy.getBySel('button-create-team').click();
             cy.getBySel('input-create-team-name').clear();

@@ -1,0 +1,38 @@
+<div mat-dialog-title class="mat-sys-primary text-center" translate>
+    EDIT_PITCH_DIALOG_TITLE
+</div>
+<mat-dialog-content>
+    <div
+        [formGroup]="formGroup"
+        class="flex flex-col justify-center w-full p-2"
+    >
+        <mat-form-field>
+            <mat-label translate>PITCH_LABEL</mat-label>
+            <input matInput formControlName="label" cySelector="input-pitch-name"/>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label translate>LONGITUDE</mat-label>
+            <input matInput formControlName="longitude" type="number" cySelector="input-longitude"/>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label translate>LATITUDE</mat-label>
+            <input matInput formControlName="latitude" type="number" cySelector="input-latitude"/>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <div class="flex justify-evenly p-2">
+        <button mat-stroked-button mat-dialog-close>
+            {{ "BUTTON.CANCEL" | translate }}
+        </button>
+        <button
+            mat-stroked-button
+            (click)="onSaveClicked()"
+            [disabled]="!formGroup.valid"
+            cySelector="button-save-user"
+        >
+            <mat-icon>save</mat-icon>
+            {{ "BUTTON.SAVE" | translate }}
+        </button>
+    </div>
+</mat-dialog-actions>

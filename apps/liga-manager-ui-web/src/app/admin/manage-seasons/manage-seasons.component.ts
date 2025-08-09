@@ -23,6 +23,7 @@ import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.co
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NotificationService, SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -45,6 +46,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         ManageMatchesComponent,
         ManageScheduleMatchesComponent,
         ManagePenaltiesComponent,
+        MatCardModule,
     ],
 })
 export class ManageSeasonsComponent implements OnInit {

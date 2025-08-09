@@ -2,8 +2,8 @@
     {{ data.name }}
 </div>
 <mat-dialog-content>
-    <lima-team-contact [team]="data" [showTitle]="false"></lima-team-contact>
+    <lima-team-contact class="m-2" [team]="data" [showTitle]="false"></lima-team-contact>
 </mat-dialog-content>
-<div class="flex justify-evenly p-2 border-t-2">
+<mat-dialog-actions align="center">
     <button mat-stroked-button mat-dialog-close translate>BUTTON.CLOSE</button>
-</div>
+</mat-dialog-actions>
