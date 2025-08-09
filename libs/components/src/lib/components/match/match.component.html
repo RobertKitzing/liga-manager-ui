@@ -1,4 +1,14 @@
 <mat-card class="mt-2 mb-2" appearance="outlined">
+    @if (canShare | async) {
+        <mat-card-header class="justify-end">
+            <button
+                mat-icon-button
+                (click)="share()"
+            >
+                <mat-icon>share</mat-icon>
+            </button>
+        </mat-card-header>
+    }
     <mat-card-content>
         <div class="flex w-full mt-2 mb-2 items-center m-auto flex-col">
             @if (match) {
