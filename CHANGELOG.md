@@ -1,3 +1,13 @@
+## 5.6.0 (2025-08-09)
+
+### 🚀 Features
+
+- calendar styling ([82fc17c2](https://github.com/RobertKitzing/liga-manager-ui/commit/82fc17c2))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.5.0 (2025-08-06)
 
 ### 🚀 Features
