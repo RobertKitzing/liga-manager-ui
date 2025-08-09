@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
     ) {}
 
     get currentRoute() {
-        const url = this.router.url.split('/')[1];
+        const url = this.router.url.split('/')[1].split('?')[0];
         return `NAVIGATION.${url.toUpperCase()}`;
     }
 
