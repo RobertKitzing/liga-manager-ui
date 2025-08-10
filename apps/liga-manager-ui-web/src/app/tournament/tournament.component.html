@@ -1,77 +1,79 @@
-<div class="flex justify-center h-full mat-sys-surface-container-high">
-    <div class="w-full lg:w-2/3">
-        <div class="mt-2 mb-2 sticky top-0 z-1">
-            <mat-toolbar class="secondary">
-                <mat-toolbar-row>
-                    <div class="w-full">
-                        <lima-tournament-chooser
-                            [selectedTournamentFC]="selectedTournamentFC"
-                            [filterStates]="filterStates"
-                        ></lima-tournament-chooser>
-                    </div>
-                </mat-toolbar-row>
-                @if(selectedTournamentFC.value) {
+<ngx-pull-to-refresh (refresh)="refresh($event)" [spinnerSize]="35">
+    <div class="flex justify-center h-full mat-sys-surface-container-high">
+        <div class="w-full lg:w-2/3">
+            <div class="mt-2 mb-2 sticky top-0 z-1">
+                <mat-toolbar class="secondary">
                     <mat-toolbar-row>
-                        <div class="w-full flex">
-                            <div class="self-center grow">
-                                <button
-                                    mat-icon-button
-                                    cySelector="button-prev-matchday"
-                                    (click)="prevRound()"
-                                    >
-                                        <mat-icon>arrow_back</mat-icon>
-                                </button>
-                            </div>
-                            <div class="self-center w-full grow max-w-3/4">
-                                <mat-select
-                                    class="text-center"
-                                    #matchDaySelect
-                                    [(value)]="selectedRoundIdFC"
-                                    placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
-                                >
-                                    @for (round of selectedTournament()?.rounds || [] | sortBy:'number'; track $index) {
-                                        <mat-option [value]="round?.id">
-                                            @if (round) {
-                                                <div>
-                                                    {{
-                                                        "TOURNAMENT_ROUND"
-                                                            | translate : { round: round?.number }
-                                                    }}
-                                                    ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{
-                                                        round.end_date | customDate
-                                                    }})
-                                                </div>
-                                            }
-                                        </mat-option>
-                                    }
-                                </mat-select>
-                            </div>
-                            <div class="self-center text-end grow">
-                                <button
-                                    mat-icon-button
-                                    cySelector="button-next-matchday"
-                                    (click)="nextRound()"
-                                >
-                                    <mat-icon>arrow_forward</mat-icon>
-                                </button>
-                            </div>
+                        <div class="w-full">
+                            <lima-tournament-chooser
+                                [selectedTournamentFC]="selectedTournamentFC"
+                                [filterStates]="filterStates"
+                            ></lima-tournament-chooser>
                         </div>
                     </mat-toolbar-row>
-                }
-            </mat-toolbar>
-        </div>
-        @if(selectedTournament()?.rounds) {
-            @if(selectedTournamentRound(); as round) {
-                @for (match of round.matches; track match) {
-                    @if(match) {
-                        <lima-match
-                            [match]="match"
-                            [matchDay]="round"
-                            [markLooser]="true"
-                        ></lima-match>
+                    @if(selectedTournamentFC.value) {
+                        <mat-toolbar-row>
+                            <div class="w-full flex">
+                                <div class="self-center grow">
+                                    <button
+                                        mat-icon-button
+                                        cySelector="button-prev-matchday"
+                                        (click)="prevRound()"
+                                        >
+                                            <mat-icon>arrow_back</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="self-center w-full grow max-w-3/4">
+                                    <mat-select
+                                        class="text-center"
+                                        #matchDaySelect
+                                        [(value)]="selectedRoundIdFC"
+                                        placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
+                                    >
+                                        @for (round of selectedTournament()?.rounds || [] | sortBy:'number'; track $index) {
+                                            <mat-option [value]="round?.id">
+                                                @if (round) {
+                                                    <div>
+                                                        {{
+                                                            "TOURNAMENT_ROUND"
+                                                                | translate : { round: round?.number }
+                                                        }}
+                                                        ({{ round.start_date | customDate }}&nbsp;-&nbsp;{{
+                                                            round.end_date | customDate
+                                                        }})
+                                                    </div>
+                                                }
+                                            </mat-option>
+                                        }
+                                    </mat-select>
+                                </div>
+                                <div class="self-center text-end grow">
+                                    <button
+                                        mat-icon-button
+                                        cySelector="button-next-matchday"
+                                        (click)="nextRound()"
+                                    >
+                                        <mat-icon>arrow_forward</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-toolbar-row>
+                    }
+                </mat-toolbar>
+            </div>
+            @if(selectedTournament()?.rounds) {
+                @if(selectedTournamentRound(); as round) {
+                    @for (match of round.matches; track match) {
+                        @if(match) {
+                            <lima-match
+                                [match]="match"
+                                [matchDay]="round"
+                                [markLooser]="true"
+                            ></lima-match>
+                        }
                     }
                 }
             }
-        }
+        </div>
     </div>
-</div>
+</ngx-pull-to-refresh>

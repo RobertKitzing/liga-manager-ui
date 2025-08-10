@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, OnInit, viewChild, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
@@ -63,6 +63,7 @@ export class EditPitchDialogComponent implements OnInit {
         // @ts-expect-error @types/google.maps not working
         const places = new google.maps.places.PlaceAutocompleteElement();
         this.adressAutoComplete()?.nativeElement.appendChild(places)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         places.addEventListener('gmp-select', async ({ placePrediction }: any) => {
             const place = placePrediction.toPlace();
             await place.fetchFields({

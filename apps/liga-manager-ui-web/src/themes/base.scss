@@ -110,3 +110,21 @@ gmp-place-autocomplete {
 .dark gmp-place-autocomplete {
     color-scheme: dark;
 }
+
+.ngx-ptr-animation .ngx-ptr-path {
+    animation: ngx-ptr-dash 1.4s ease-in-out infinite,
+        ngx-ptr-colors-override 5.6s ease-in-out infinite !important;
+}
+
+.ngx-ptr-spinner .ngx-ptr-path {
+    stroke: var(--mat-sys-primary) !important;
+}
+
+@keyframes ngx-ptr-colors-override {
+    0% {
+        stroke: var(--mat-sys-secondary);
+    }
+    100% {
+        stroke: var(--mat-sys-primary);
+    }
+}

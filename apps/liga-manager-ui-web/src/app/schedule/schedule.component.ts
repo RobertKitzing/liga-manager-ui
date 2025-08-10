@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { of, startWith, switchMap, tap } from 'rxjs';
+import { firstValueFrom, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { AuthenticationService, fromStorage, GestureService, SeasonService } from '@liga-manager-ui/services';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import { FormControl } from '@angular/forms';
 import { StorageKeys } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-schedule',
@@ -38,6 +39,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
         MatchComponent,
         MatCardModule,
         SortByPipe,
+        NgxPullToRefreshComponent,
     ],
 })
 export class ScheduleComponent implements OnInit {
@@ -87,7 +89,7 @@ export class ScheduleComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.seasonService.reloadSeasons();
+        this.refresh();
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
@@ -98,6 +100,11 @@ export class ScheduleComponent implements OnInit {
                 }
             },
         );
+    }
+
+    async refresh(event?: Subject<void>) {
+        await firstValueFrom(this.seasonService.reloadSeasons());
+        event?.next();
     }
 
     get filterSeasonStates() {

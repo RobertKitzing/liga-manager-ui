@@ -22,7 +22,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { EditMatchBaseComponent } from '../edit-match-base';
 import { PitchAutoCompleteComponent } from '../../components';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';

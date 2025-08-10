@@ -8,7 +8,7 @@ import {
 } from '@liga-manager-ui/components';
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import { TranslateModule } from '@ngx-translate/core';
-import { of, startWith, switchMap, tap } from 'rxjs';
+import { firstValueFrom, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { fromStorage, GestureService, TournamentService } from '@liga-manager-ui/services';
 import { StorageKeys } from '@liga-manager-ui/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -17,6 +17,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-tournament',
@@ -33,6 +34,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         ReactiveFormsModule,
         MatButtonModule,
         CypressSelectorDirective,
+        NgxPullToRefreshComponent,
     ],
     standalone: true,
 })
@@ -85,7 +87,7 @@ export class TournamentComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.tournamentService.reloadTournaments()
+        this.refresh();
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
@@ -96,6 +98,11 @@ export class TournamentComponent implements OnInit {
                 }
             },
         );
+    }
+
+    async refresh(event?: Subject<void>) {
+        await firstValueFrom(this.tournamentService.reloadTournaments());
+        event?.next();
     }
 
     selectedTournamentRound() {

@@ -65,7 +65,7 @@ export class SeasonService {
     ) {}
 
     reloadSeasons() {
-        this.allSeasonlistGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+        return this.allSeasonlistGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
     }
 
     createSeason(name: string) {

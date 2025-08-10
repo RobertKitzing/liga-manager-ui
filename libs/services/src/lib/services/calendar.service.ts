@@ -43,7 +43,7 @@ export class CalendarService {
     ) {}
 
     reloadEvents() {
-        this.calendarGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+        return this.calendarGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
     }
 
     getCalendarEvents(
