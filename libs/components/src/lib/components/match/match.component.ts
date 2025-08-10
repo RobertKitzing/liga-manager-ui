@@ -55,8 +55,6 @@ export class MatchComponent {
 
     private userService = inject(UserService);
 
-    private destroyRef = inject(DestroyRef);
-
     private appsettingsService = inject(AppsettingsService)
 
     get dialogData() {
@@ -64,16 +62,6 @@ export class MatchComponent {
             match: this.match,
             matchDay: this.matchDay(),
         };
-    }
-
-    constructor(route: ActivatedRoute) {
-        route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
-            (data) => {
-                if (data['match']) {
-                    this.match = data['match']
-                }
-            },
-        )
     }
 
     canEditMatch(match: Match) {
