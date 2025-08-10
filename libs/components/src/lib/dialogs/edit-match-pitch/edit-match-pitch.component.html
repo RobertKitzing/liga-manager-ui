@@ -1,37 +1,51 @@
-<lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
-    <div class="grid grid-cols-1 content-center gap-2">
+<h1 mat-dialog-title class="mat-sys-primary text-center">
+    {{ data.match.home_team.name }}&nbsp;-&nbsp;{{ data.match.guest_team.name }}
+</h1>
+<mat-dialog-content>
+    <div class="grid grid-cols-1 gap-4">
         @if (data.match; as match) {
-        <div class="flex justify-center flex-col">
-            <div translate class="text-center">OLD_PITCH</div>
-            @if (!match.pitch) {
-            <mat-icon class="self-center">location_off</mat-icon>
-            } @if (match.pitch) {
-            <span class="text-center">{{ match.pitch.label }}</span>
-            }
-        </div>
+            <div class="flex justify-center flex-col">
+                <div translate class="text-center">OLD_PITCH</div>
+                @if (!match.pitch) {
+                    <mat-icon class="self-center">location_off</mat-icon>
+                } @if (match.pitch) {
+                    <span class="text-center">{{ match.pitch.label }}</span>
+                }
+            </div>
         }
         <div>
-            <mat-form-field>
-                <mat-label translate>NEW_PITCH</mat-label>
-                <input
-                    matInput
-                    [matAutocomplete]="pitchAutoComplete"
-                    [formControl]="newMatchPitch"
-                />
-                <mat-autocomplete
-                    #pitchAutoComplete
-                    [displayWith]="displayPitch"
-                >
-                    @for (pitch of filteredPitches | async; track pitch) {
-                    <mat-option [value]="pitch">
-                        <span>{{ pitch?.label }}</span>
-                    </mat-option>
-                    }
-                </mat-autocomplete>
-            </mat-form-field>
+            @if(pitchService.allPitches$ | async; as allPitches) {
+                <lima-pitch-auto-complete [pitches]="allPitches" (pitchSelected)="pitchSelected($event)"></lima-pitch-auto-complete>
+            }
         </div>
+        <div class="flex justify-center" translate>PITCH_NOT_THERE_HINT</div>
+        <div class="flex justify-center">
+            <button mat-stroked-button (click)="createPitch()" cySelector="button-create-pitch">
+                {{ "BUTTON.CREATE_PITCH" | translate }}
+            </button>
+        </div>
+        @if (newMatchPitch) {
+            <div class="flex justify-center flex-col">
+                <div translate class="text-center">NEW_PITCH</div>
+                <span class="text-center">{{ newMatchPitch.label }}</span>
+            </div>
+        }
     </div>
-</lima-edit-match-base>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-stroked-button mat-dialog-close>
+        {{ "BUTTON.CANCEL" | translate }}
+    </button>
+    <button
+        mat-stroked-button
+        [mat-dialog-close]="true"
+        (click)="onSaveClicked()"
+        [disabled]="!newMatchPitch"
+    >
+        <mat-icon>save</mat-icon>
+        {{ "BUTTON.SAVE" | translate }}
+    </button>
+</mat-dialog-actions>
 <ng-template #actionsTemplate>
     <button mat-stroked-button mat-dialog-close>
         {{ "BUTTON.CANCEL" | translate }}
@@ -40,7 +54,7 @@
         mat-stroked-button
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
-        [disabled]="!newMatchPitch.valid"
+        [disabled]="!newMatchPitch"
     >
         <mat-icon>save</mat-icon>
         {{ "BUTTON.SAVE" | translate }}

@@ -1,16 +1,16 @@
 <mat-form-field class="w-full" subscriptSizing="dynamic">
-    <mat-label translate>PLACEHOLDER.SELECT_TEAM</mat-label>
+    <mat-label translate>PLACEHOLDER.SELECT_PITCH</mat-label>
     <input type="text"
         [cySelector]="cySelector()"
         matInput
         [formControl]="fromControl()"
         [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete"
-        (optionSelected)="_teamSelected($event)"
+        (optionSelected)="_pitchSelected($event)"
         [displayWith]="displayWith"
         >
-        @for (option of filteredTeams$ | async; track option) {
-            <mat-option [value]="option">{{option?.name}}</mat-option>
+        @for (option of filteredPitches$ | async; track option) {
+            <mat-option [value]="option">{{option?.label}}</mat-option>
         }
     </mat-autocomplete>
     @if (fromControl().value) {

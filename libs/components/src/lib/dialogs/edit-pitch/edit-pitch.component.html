@@ -4,20 +4,32 @@
 <mat-dialog-content>
     <div
         [formGroup]="formGroup"
-        class="flex flex-col justify-center w-full p-2"
+        class="flex flex-col justify-center w-full space-y-4 p-4"
     >
         <mat-form-field>
             <mat-label translate>PITCH_LABEL</mat-label>
             <input matInput formControlName="label" cySelector="input-pitch-name"/>
         </mat-form-field>
+        @if (appsettingsService.appsettings?.googleMapsApiKey) {
+            <div>
+                <span translate>ADDRESS_SEARCH</span>
+                <div #adressAutoComplete></div>
+            </div>
+        }
         <mat-form-field>
             <mat-label translate>LONGITUDE</mat-label>
-            <input matInput formControlName="longitude" type="number" cySelector="input-longitude"/>
+            <input matInput formControlName="location_longitude" type="number" cySelector="input-longitude"/>
         </mat-form-field>
         <mat-form-field>
             <mat-label translate>LATITUDE</mat-label>
-            <input matInput formControlName="latitude" type="number" cySelector="input-latitude"/>
+            <input matInput formControlName="location_latitude" type="number" cySelector="input-latitude"/>
         </mat-form-field>
+        @if (newPitch) {
+            <div class="w-full flex justify-center space-x-2">
+                <mat-icon>location_on</mat-icon>
+                <lima-pitch [pitch]="newPitch"></lima-pitch>
+            </div>
+        }
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">

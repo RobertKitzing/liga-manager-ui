@@ -11,5 +11,6 @@ export default defineConfig({
         ...nxE2EPreset(__filename, {
             cypressDir: 'cypress',
         }),
+        retries: 3,
     },
 });

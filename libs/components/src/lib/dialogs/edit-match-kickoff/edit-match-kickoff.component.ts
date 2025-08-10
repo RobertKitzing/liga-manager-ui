@@ -23,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchBaseComponent } from '../edit-match-base';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -41,6 +42,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         MatDialogClose,
         CustomDatePipe,
         CypressSelectorDirective,
+        MatCardModule,
     ],
 })
 export class EditMatchKickoffComponent {

@@ -34,7 +34,7 @@
                         <div class="self-center grow">
                             <button
                                 mat-icon-button
-                                (click)="prevMatchDay(season())"
+                                (click)="prevMatchDay()"
                                 >
                                     <mat-icon>arrow_back</mat-icon>
                             </button>
@@ -65,7 +65,7 @@
                         <div class="self-center text-end grow">
                             <button
                                 mat-icon-button
-                                (click)="nextMatchDay(season())"
+                                (click)="nextMatchDay()"
                             >
                                 <mat-icon>arrow_forward</mat-icon>
                             </button>
@@ -96,10 +96,7 @@
         </div>
         @if (findMatchDay(season()?.match_days || []); as matchDay) {
             <div class="flex justify-center z-0">
-                <div class="w-full"
-                    (swipeleft)="prevMatchDay(season())"
-                    (swiperight)="nextMatchDay(season())"
-                    >
+                <div class="w-full">
                     @for (match of filterMatches(matchDay?.matches || []); track match) {
                         <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
                     }

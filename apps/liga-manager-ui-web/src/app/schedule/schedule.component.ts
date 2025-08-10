@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, startWith, switchMap, tap } from 'rxjs';
-import { AuthenticationService, fromStorage, SeasonService } from '@liga-manager-ui/services';
+import { AuthenticationService, fromStorage, GestureService, SeasonService } from '@liga-manager-ui/services';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatOptionModule } from '@angular/material/core';
@@ -18,7 +18,7 @@ import { AllSeasonsFragment, Match, MatchDay, SeasonState } from '@liga-manager-
 import { FormControl } from '@angular/forms';
 import { StorageKeys } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-schedule',
@@ -76,6 +76,10 @@ export class ScheduleComponent implements OnInit {
 
     season = toSignal(this.season$);
 
+    private gestureService = inject(GestureService);
+
+    private destroyRef = inject(DestroyRef);
+
     constructor(
         private seasonService: SeasonService,
         private router: Router,
@@ -83,7 +87,17 @@ export class ScheduleComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.seasonService.reloadSeasons()
+        this.seasonService.reloadSeasons();
+        this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
+            (event) => {
+                if (event.direction === 'Left') {
+                    this.prevMatchDay()
+                }
+                if (event.direction === 'Right') {
+                    this.nextMatchDay()
+                }
+            },
+        );
     }
 
     get filterSeasonStates() {
@@ -126,13 +140,13 @@ export class ScheduleComponent implements OnInit {
             : matches;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    nextMatchDay(season: any) {
-        if (!season.match_days) {
+    nextMatchDay() {
+
+        if (!this.season()?.match_days) {
             return;
         }
 
-        const matchDays = (season.match_days as MatchDay[])
+        const matchDays = this.season()?.match_days || []
 
         const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId()) || 0;
 
@@ -143,13 +157,12 @@ export class ScheduleComponent implements OnInit {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    prevMatchDay(season: any) {
-        if (!season.match_days) {
+    prevMatchDay() {
+        if (!this.season()?.match_days) {
             return;
         }
 
-        const matchDays = (season.match_days as MatchDay[])
+        const matchDays = this.season()?.match_days || []
 
         const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId()) || 0;
 

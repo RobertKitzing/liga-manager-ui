@@ -765,8 +765,8 @@ export type UpdatePitchContactMutation = Pick<Mutation, 'updatePitchContact'>;
 export type CreatePitchMutationVariables = Exact<{
   id: Scalars['String']['input'];
   label: Scalars['String']['input'];
-  longitude: Scalars['Float']['input'];
-  latitude: Scalars['Float']['input'];
+  location_longitude: Scalars['Float']['input'];
+  location_latitude: Scalars['Float']['input'];
 }>;
 
 
@@ -1622,8 +1622,13 @@ export const UpdatePitchContactDocument = gql`
     }
   }
 export const CreatePitchDocument = gql`
-    mutation CreatePitch($id: String!, $label: String!, $longitude: Float!, $latitude: Float!) {
-  createPitch(id: $id, label: $label, longitude: $longitude, latitude: $latitude)
+    mutation CreatePitch($id: String!, $label: String!, $location_longitude: Float!, $location_latitude: Float!) {
+  createPitch(
+    id: $id
+    label: $label
+    longitude: $location_longitude
+    latitude: $location_latitude
+  )
 }
     `;
 

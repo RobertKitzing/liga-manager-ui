@@ -8,3 +8,5 @@ export * from './match';
 export * from './team-logo';
 export * from './edit-tournament-round';
 export * from './team-auto-complete/team-auto-complete.component';
+export * from './pitch-auto-complete/pitch-auto-complete.component';
+export * from './pitch/pitch.component';

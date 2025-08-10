@@ -13,3 +13,4 @@ export * from './tournament.service';
 export * from './public-holidays.service';
 export * from './calendar.service';
 export * from './storage.service';
+export * from './gesture.service';

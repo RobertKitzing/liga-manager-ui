@@ -99,3 +99,14 @@ body {
     color: var(--mat-sys-on-surface-container-high) !important;
     border: none !important;
 }
+
+gmp-place-autocomplete {
+    background-color: var(--mat-sys-surface-variant);
+    color-scheme: light;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 0;
+}
+
+.dark gmp-place-autocomplete {
+    color-scheme: dark;
+}

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graphql';
@@ -9,9 +9,9 @@ import {
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, startWith, switchMap, tap } from 'rxjs';
-import { fromStorage, TournamentService } from '@liga-manager-ui/services';
+import { fromStorage, GestureService, TournamentService } from '@liga-manager-ui/services';
 import { StorageKeys } from '@liga-manager-ui/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -72,6 +72,10 @@ export class TournamentComponent implements OnInit {
 
     private router = inject(Router);
 
+    private gestureService = inject(GestureService);
+
+    private destroyRef = inject(DestroyRef);
+
     get filterStates() {
         if (this.router.url.includes('history')) {
             return [TournamentState.Ended];
@@ -82,6 +86,16 @@ export class TournamentComponent implements OnInit {
 
     ngOnInit(): void {
         this.tournamentService.reloadTournaments()
+        this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
+            (event) => {
+                if (event.direction === 'Left') {
+                    this.prevRound()
+                }
+                if (event.direction === 'Right') {
+                    this.nextRound()
+                }
+            },
+        );
     }
 
     selectedTournamentRound() {

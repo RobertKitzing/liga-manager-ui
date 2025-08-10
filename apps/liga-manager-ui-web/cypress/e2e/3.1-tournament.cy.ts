@@ -8,7 +8,7 @@ describe('Public - Select Tournament', () => {
         },
     )
 
-    it('Should select a Tournament', { retries: 3 }, () => {
+    it('Should select a Tournament', () => {
 
         cy.visit('/')
         cy.getBySel('route-tournament').first().click();

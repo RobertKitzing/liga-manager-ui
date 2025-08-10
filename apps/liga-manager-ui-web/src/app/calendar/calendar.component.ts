@@ -135,8 +135,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.options.controls.team_ids.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
-            () => {
+            (ids) => {
                 this.triggerEvent();
+                console.log(ids)
                 this.teamIdsLS.set(this.options.controls.team_ids.value.join(','));
             },
         );

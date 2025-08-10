@@ -114,11 +114,13 @@
                                         class="flex items-center flex-col space-y-2 text-center p-2"
                                     >
                                         @if (!match.pitch) {
-                                        <mat-icon>location_off</mat-icon>
-                                        <span translate>NO_PTICH_SET</span>
+                                            <mat-icon>location_off</mat-icon>
+                                            <span translate>NO_PTICH_SET</span>
                                         } @else {
-                                        <mat-icon>location_on</mat-icon>
-                                        <span class="line-clamp-5">{{ match.pitch.label }}</span>
+                                            <mat-icon>location_on</mat-icon>
+                                            <span class="line-clamp-5">
+                                                <lima-pitch [pitch]="match.pitch"></lima-pitch>
+                                            </span>
                                         }
                                     </div>
                                 </div>

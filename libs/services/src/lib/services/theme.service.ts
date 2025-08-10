@@ -10,7 +10,7 @@ import { StorageKeys } from '@liga-manager-ui/common';
 })
 export class ThemeService {
 
-    darkMode = fromStorage<DarkModeAppearance>(StorageKeys.DARK_MODE_APPEARANCE, DarkModeAppearance.system);
+    darkMode = fromStorage<DarkModeAppearance>(StorageKeys.DARK_MODE_APPEARANCE);
 
     private currentTheme = fromStorage<string>(StorageKeys.THEME);
 

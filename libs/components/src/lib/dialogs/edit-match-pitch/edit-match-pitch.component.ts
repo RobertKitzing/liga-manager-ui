@@ -1,9 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, DestroyRef, inject, Inject } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
     MatDialogRef,
     MAT_DIALOG_DATA,
     MatDialogClose,
+    MatDialog,
+    MatDialogModule,
 } from '@angular/material/dialog';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import {
@@ -11,9 +13,8 @@ import {
     NotificationService,
     PitchService,
 } from '@liga-manager-ui/services';
-import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Match, MatchDay, Pitch } from '@liga-manager-api/graphql';
-import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -22,6 +23,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchBaseComponent } from '../edit-match-base';
+import { PitchAutoCompleteComponent } from '../../components';
+import { AsyncPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { EditPitchDialogComponent } from '../edit-pitch';
+import { defaultDialogConfig } from '../default-dialog-config';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-edit-match-pitch',
@@ -29,7 +36,6 @@ import { EditMatchBaseComponent } from '../edit-match-base';
     styleUrls: [],
     standalone: true,
     imports: [
-        EditMatchBaseComponent,
         TranslateModule,
         MatIconModule,
         MatFormFieldModule,
@@ -39,28 +45,19 @@ import { EditMatchBaseComponent } from '../edit-match-base';
         MatOptionModule,
         MatButtonModule,
         MatDialogClose,
+        PitchAutoCompleteComponent,
         AsyncPipe,
+        MatCardModule,
+        MatDialogModule,
     ],
 })
 export class EditMatchPitchComponent {
 
-    newMatchPitch = new FormControl();
+    newMatchPitch?: Pitch;
 
-    filteredPitches = this.newMatchPitch.valueChanges.pipe(
-        startWith<string | Pitch>(''),
-        map((value) => (typeof value === 'string' ? value : value.label)),
-        switchMap(() => this.pitchService.allPitches$),
-        map((x) => {
-            return this.newMatchPitch.value &&
-                typeof this.newMatchPitch.value === 'string'
-                ? x?.filter((y) =>
-                    y?.label
-                        .toLowerCase()
-                        .includes(this.newMatchPitch.value.toLowerCase()),
-                )
-                : x;
-        }),
-    );
+    private dialog = inject(MatDialog);
+
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         @Inject(MAT_DIALOG_DATA)
@@ -68,15 +65,22 @@ export class EditMatchPitchComponent {
         private notificationService: NotificationService,
         private dialogRef: MatDialogRef<EditMatchPitchComponent>,
         private matchService: MatchService,
-        private pitchService: PitchService,
+        public pitchService: PitchService,
     ) {}
 
+    pitchSelected(pitch: Pitch) {
+        this.newMatchPitch = pitch;
+    }
+
     async onSaveClicked() {
+        if (!this.newMatchPitch) {
+            return;
+        }
         try {
             await firstValueFrom(
                 this.matchService.locateMatch({
                     match_id: this.data.match.id,
-                    pitch_id: this.newMatchPitch.value.id,
+                    pitch_id: this.newMatchPitch.id,
                 }),
             );
             this.notificationService.showSuccessNotification(
@@ -89,8 +93,20 @@ export class EditMatchPitchComponent {
         }
     }
 
-    displayPitch(pitch?: Pitch): string {
-        return pitch ? pitch.label : '';
+    createPitch() {
+        this.dialog.open(EditPitchDialogComponent,
+            {
+                ...defaultDialogConfig,
+            },
+        ).afterClosed().pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            (pitch) => {
+                if (pitch) {
+                    this.newMatchPitch = pitch;
+                }
+            },
+        )
     }
 
 }
