@@ -3,12 +3,11 @@
         <mat-card-title>
             <div class="flex items-center m-4">
                 <mat-form-field class="grow pr-6" subscriptSizing="dynamic">
-                    <mat-label translate>PLACEHOLDER.SEARCH_TEAM</mat-label>
+                    <mat-label translate>PLACEHOLDER.SEARCH_PITCH</mat-label>
                     <input matInput [formControl]="searchPitch" />
                 </mat-form-field>
-                <button mat-stroked-button (click)="createPitch()" cySelector="button-create-pitch">
-                    <mat-icon>save</mat-icon>
-                    {{ "BUTTON.CREATE_PITCH" | translate }}
+                <button mat-icon-button (click)="createPitch()" cySelector="button-create-pitch">
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
         </mat-card-title>

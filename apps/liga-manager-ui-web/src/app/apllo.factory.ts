@@ -58,11 +58,12 @@ export function apolloFactory() {
                         authenticationService.logout();
                     }
                     break;
-                case 400: {
+                case 400:
+                case 409: {
                     const messages = graphQLErrors?.map((x) => x.message);
                     console.log(messages);
                     notificationService.showErrorNotification(
-                        marker('ERROR.400_NETWORK'),
+                        marker('ERROR.BAD_REQUEST'),
                         messages,
                     );
                     break;

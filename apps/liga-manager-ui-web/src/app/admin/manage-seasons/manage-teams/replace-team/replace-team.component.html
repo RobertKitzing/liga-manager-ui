@@ -1,0 +1,30 @@
+<div mat-dialog-title translate class="flex mat-sys-primary text-center">
+    REPLACE_TEAM_IN_SEASON
+</div>
+<mat-dialog-content>
+    <div class="flex justify-center items-center flex-col space-y-4">
+        <span translate>REPLACE_TEAM</span>
+        <span>{{ data.teamToBeReplaced.name }}</span>
+        <span translate>REPLACE_TEAM_WITH</span>
+        @if(teamService.allTeams$ | async; as allTeams) {
+            <lima-team-auto-complete [teams]="allTeams" (teamSelected)="replaceWithTeamId.set($event.id)"></lima-team-auto-complete>
+        }
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <div class="flex justify-center">
+        <button mat-dialog-close
+            mat-stroked-button
+        >
+            <span translate>BUTTON.CANCEL</span>
+        </button>
+        <button
+            mat-stroked-button
+            [disabled]="!replaceWithTeamId()"
+            (click)="replaceTeamInSeason()"
+        >
+            <mat-icon>compare_arrows</mat-icon>
+            <span translate>BUTTON.REPLACE_TEAM</span>
+        </button>
+    </div>
+</mat-dialog-actions>

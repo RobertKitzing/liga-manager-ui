@@ -75,15 +75,17 @@
                     </mat-toolbar-row>
                 </mat-toolbar>
             </div>
-            @if (findMatchDay(season()?.match_days || []); as matchDay) {
-                <div class="flex justify-center z-0">
-                    <div class="w-full">
-                        @for (match of filterMatches(matchDay?.matches || []); track match) {
-                            <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
-                        }
+            <div>
+                @if (findMatchDay(season()?.match_days || []); as matchDay) {
+                    <div class="flex justify-center z-0">
+                        <div class="w-full">
+                            @for (match of filterMatches(matchDay?.matches || []); track match) {
+                                <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
+                            }
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </ngx-pull-to-refresh>

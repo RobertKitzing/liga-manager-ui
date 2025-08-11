@@ -41,8 +41,12 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         SortByPipe,
         NgxPullToRefreshComponent,
     ],
+    animations: [
+    ],
 })
 export class ScheduleComponent implements OnInit {
+
+    counter = 0;
 
     selectedMatchDayId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY_ID)
 
@@ -148,7 +152,7 @@ export class ScheduleComponent implements OnInit {
     }
 
     nextMatchDay() {
-
+        this.counter--;
         if (!this.season()?.match_days) {
             return;
         }
@@ -165,6 +169,7 @@ export class ScheduleComponent implements OnInit {
     }
 
     prevMatchDay() {
+        this.counter++;
         if (!this.season()?.match_days) {
             return;
         }

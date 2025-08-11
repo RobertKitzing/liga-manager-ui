@@ -29,12 +29,11 @@
                         @if (!addTeamMode) {
                             <lima-team-search class="grow pr-6" [teams]="t" (filteredTeams)="teams.set($event)"></lima-team-search>
                             <button
-                                mat-stroked-button
+                                mat-icon-button
                                 (click)="addTeamMode = true"
                                 cySelector="button-create-team"
                             >
                                 <mat-icon>add</mat-icon>
-                                {{ "BUTTON.CREATE_TEAM" | translate }}
                             </button>
                         }
                     </div>

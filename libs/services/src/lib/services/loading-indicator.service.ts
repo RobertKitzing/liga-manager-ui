@@ -6,6 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoadingIndicatorService {
 
-    loading$ = new BehaviorSubject<boolean>(false);
+    loading$ = new BehaviorSubject<boolean>(true);
 
 }

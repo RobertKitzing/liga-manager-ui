@@ -125,9 +125,9 @@
     </mat-drawer>
     <mat-drawer-content>
         @if ((loadingIndicatorService.loading$ | async) === true) {
-        <div class="h-1">
-            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
-        </div>
+            <div class="h-1">
+                <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+            </div>
         }
         <div
             class="h-full overflow-auto mat-sys-surface-container-high"

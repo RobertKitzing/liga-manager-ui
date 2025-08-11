@@ -1,6 +1,6 @@
 @if (season) {
     @if (!season.match_days || season.match_days.length === 0) {
-        <div class="flex justify-evenly">
+        <div class="flex justify-center flex-col space-y-4 mt-4 w-full items-center">
             <div>
                 <mat-form-field subscriptSizing="dynamic">
                     <mat-label translate>START_SEASON_DATE</mat-label>
@@ -21,11 +21,11 @@
             <div>
                 <mat-form-field subscriptSizing="dynamic">
                     <mat-label translate>FROM_TO_OFFSET</mat-label>
-                    <input matInput [formControl]="betweenMatchDaysOffset">
+                    <input matInput [formControl]="fromToOffset">
                 </mat-form-field>
             </div>
-            <button mat-stroked-button translate (click)="saveMatchDays(season)" cySelector="button-save-match-days">
-                BUTTON.SAVE_MATCHDAYS
+            <button mat-stroked-button (click)="saveMatchDays(season)" cySelector="button-save-match-days">
+                <span translate>BUTTON.SAVE_MATCHDAYS</span>
             </button>
         </div>
     }
