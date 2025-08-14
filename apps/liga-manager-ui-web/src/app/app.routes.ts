@@ -111,16 +111,16 @@ export const routes: Routes = [
                     },
                 ],
             },
+            {
+                path: '',
+                redirectTo: APP_ROUTES.SCHEDULE,
+                pathMatch: 'full',
+            },
         ],
     },
     {
         path: `${APP_ROUTES.MATCH}/:matchid`,
         loadComponent: () => import('@liga-manager-ui/components').then((m) => m.MatchComponent),
         resolve: { user: userResolver, match: matchResolver },
-    },
-    {
-        path: '',
-        redirectTo: APP_ROUTES.SCHEDULE,
-        pathMatch: 'full',
     },
 ];
