@@ -100,8 +100,19 @@ export const appConfig: ApplicationConfig = {
                 (config: ImageLoaderConfig) => {
                     const host = appsettingsService.host;
                     const use_imgproxy = JSON.parse(appsettingsService.appsettings?.use_imgproxy || 'false');
+                    const use_local_assets = JSON.parse(appsettingsService.appsettings?.use_local_assets || 'false');
+
+                    const isTeamLogo = config.src.startsWith('logos')
+
+                    if (use_local_assets && !isTeamLogo) {
+                        return `${window.location.protocol}//localhost/${config.src.replace(/^\/+/g, '')}`;
+                    }
+
                     if (!use_imgproxy) {
-                        return `${ config.src.startsWith('logos') ? '' : host}/${config.src.replace(/^\/+/g, '')}`;
+                        if (isTeamLogo) {
+                            return `${host}/${config.src.replace(/^\/+/g, '')}`;
+                        }
+                        return `/${config.src.replace(/^\/+/g, '')}`;
                     }
                     return `${host}/imgproxy/_/rs:fit:${config.loaderParams!['width']}:${config.loaderParams!['height']}/${Base64.encode(`local:///${config.src.replace(/^\/+/g, '')}`)}`;
                 },

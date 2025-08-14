@@ -11,3 +11,4 @@ VOLUME [ "/ui/browser/assets" ]
 ENV GOOGLE_MAPS_API_KEY=""
 ENV IMG_PROXY_HOST="imgproxy"
 ENV USE_IMGPROXY=false
+ENV USE_LOCAL_ASSETS=false

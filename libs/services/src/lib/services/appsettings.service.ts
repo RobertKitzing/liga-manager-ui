@@ -6,6 +6,7 @@ export interface AppsettingsModel {
     host: string;
     googleMapsApiKey: string;
     use_imgproxy: string;
+    use_local_assets: string;
 }
 
 @Injectable({
