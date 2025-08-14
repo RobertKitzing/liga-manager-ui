@@ -44,20 +44,22 @@
                                 <mat-select
                                     class="text-center"
                                     #matchDaySelect
-                                    [(value)]="selectedMatchDayId"
+                                    [(value)]="selectedMatchDay"
+                                    [compareWith]="compareMatchDay"
                                     placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
                                 >
+                                    
                                     @for (matchDay of season()?.match_days; track matchDay) {
-                                        <mat-option [value]="matchDay?.id">
+                                        <mat-option [value]="matchDay">
                                             @if (matchDay) {
-                                            <div class="grid grid-cols-1 text-center">
-                                                <span>
-                                                    {{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}
-                                                </span>
-                                                <span>
-                                                ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }})
-                                                </span>
-                                            </div>
+                                                <div class="flex flex-col text-center">
+                                                    <span>
+                                                        {{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}
+                                                    </span>
+                                                    <span>
+                                                        {{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }}
+                                                    </span>
+                                                </div>
                                             }
                                         </mat-option>
                                     }

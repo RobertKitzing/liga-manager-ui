@@ -13,7 +13,7 @@
         <mat-card-content>
             <div class="flex flex-col">
                 @if (showTitle) {
-                <div class="mat-sys-surface text-center p-4">
+                <div class="text-center p-4">
                     {{ team.name }}
                 </div>
                 }
@@ -24,15 +24,15 @@
                         [team]="team"
                     ></lima-team-logo>
                 </div>
-                <div class="flex space-x-4 mat-sys-surface p-3">
+                <div class="flex space-x-4 p-3 items-center">
                     <mat-icon>person</mat-icon>
                     @if (team.contact) {
-                    <span class="grow">
-                        {{ team.contact.first_name }} {{ team.contact.last_name }}
-                    </span>
+                        <span class="grow">
+                            {{ team.contact.first_name }} {{ team.contact.last_name }}
+                        </span>
                     }
                 </div>
-                <div class="flex space-x-4 mat-sys-surface p-3">
+                <div class="flex space-x-4 p-3 items-center">
                     <mat-icon>email</mat-icon>
                     @if (team.contact) {
                     <span class="grow">
@@ -46,7 +46,7 @@
                     </span>
                     }
                 </div>
-                <div class="flex space-x-4 mat-sys-surface p-3">
+                <div class="flex space-x-4 p-3 items-center">
                     <mat-icon>phone</mat-icon>
                     @if (team.contact) {
                     <span class="grow">

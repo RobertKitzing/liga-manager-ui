@@ -13,11 +13,12 @@ export class CustomDatePipe implements PipeTransform {
     transform(
         value: string | number | Date | undefined,
         format = 'shortDate',
+        timezone: string | undefined = undefined,
     ): string | null {
         return this.date.transform(
             value,
             format,
-            undefined,
+            timezone,
             this.i18nService.currentLang,
         );
     }

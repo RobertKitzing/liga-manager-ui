@@ -72,7 +72,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     genKickoff(matchDayStartDate: string, offset: number, time: `${number}:${number}`) {
         const h = +time.split(':')[0];
         const m = +time.split(':')[1];
-        return dayjs(matchDayStartDate).add(offset, 'days').hour(h).minute(m);
+        return dayjs.utc(matchDayStartDate).add(offset, 'days').hour(h).minute(m);
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {

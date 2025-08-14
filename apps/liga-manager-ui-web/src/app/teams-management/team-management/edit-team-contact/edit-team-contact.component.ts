@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { TrimDirective } from '@liga-manager-ui/directives';
 import { NotificationService, TeamService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom, map, switchMap, tap } from 'rxjs';
@@ -25,6 +26,7 @@ import { firstValueFrom, map, switchMap, tap } from 'rxjs';
         MatButtonModule,
         TranslateModule,
         MatCardModule,
+        TrimDirective,
     ],
     templateUrl: './edit-team-contact.component.html',
 })
@@ -36,10 +38,10 @@ export class EditTeamContactComponent {
             this.teamService.getTeamById(teamId).pipe(
                 tap((team) => {
                     this.teamContact.patchValue({
-                        email: team?.contact?.email,
-                        first_name: team?.contact?.first_name,
-                        last_name: team?.contact?.last_name,
-                        phone: team?.contact?.phone,
+                        email: team?.contact?.email.trim(),
+                        first_name: team?.contact?.first_name.trim(),
+                        last_name: team?.contact?.last_name.trim(),
+                        phone: team?.contact?.phone.trim(),
                     });
                 }),
             ),
@@ -50,7 +52,7 @@ export class EditTeamContactComponent {
         email: new FormControl('', [Validators.required, Validators.email]),
         first_name: new FormControl('', [Validators.required]),
         last_name: new FormControl('', [Validators.required]),
-        phone: new FormControl('', []),
+        phone: new FormControl('', [Validators.required]),
     });
 
     constructor(

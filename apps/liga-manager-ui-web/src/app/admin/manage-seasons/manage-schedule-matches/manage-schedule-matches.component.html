@@ -4,43 +4,45 @@
             {{ "MATCH_APPOINTMENTS" | translate}}
         </mat-card-title>
         <mat-card-content>
-            @for( matchAppointmentsFromGroup of matchAppointments?.controls; track $index ) {
-                <mat-card appearance="outlined">
-                    <mat-card-content>
-                        <div class="flex space-x-4 items-center">
-                            <div>
-                                {{ $index + 1 }}
+            <div class="flex flex-wrap justify-center gap-4">
+                @for( matchAppointmentsFromGroup of matchAppointments?.controls; track $index ) {
+                    <mat-card appearance="outlined">
+                        <mat-card-content>
+                            <div class="flex space-x-4 items-center">
+                                <div>
+                                    {{ $index + 1 }}
+                                </div>
+                                <div class="grow" [formGroup]="matchAppointmentsFromGroup">
+                                    @if(pitchService.allPitches$ | async; as allPitches) {
+                                        <lima-pitch-auto-complete [pitches]="allPitches" formControlName="pitch"></lima-pitch-auto-complete>
+                                    }
+                                    <mat-form-field class="w-full" subscriptSizing="dynamic">
+                                        <mat-label translate>NEW_KICKOFF_TIME</mat-label>
+                                        <input
+                                            class="text-center"
+                                            matInput
+                                            type="time"
+                                            formControlName="time"
+                                            cySelector="input-time"
+                                        />
+                                    </mat-form-field>
+                                    <mat-form-field class="w-full" subscriptSizing="dynamic">
+                                        <mat-label translate>DAYS_OFFSET</mat-label>
+                                        <input
+                                            class="text-center"
+                                            matInput
+                                            type="number"
+                                            formControlName="daysOffset"
+                                            cySelector="input-time"
+                                        />
+                                    </mat-form-field>
+                                    <lima-team-chooser [teams]="season.teams || []" formControlName="unavailableTeams" [multiple]="true"></lima-team-chooser>
+                                </div>
                             </div>
-                            <div class="grow" [formGroup]="matchAppointmentsFromGroup">
-                                @if(pitchService.allPitches$ | async; as allPitches) {
-                                    <lima-pitch-auto-complete [pitches]="allPitches" formControlName="pitch"></lima-pitch-auto-complete>
-                                }
-                                <mat-form-field class="w-full" subscriptSizing="dynamic">
-                                    <mat-label translate>NEW_KICKOFF_TIME</mat-label>
-                                    <input
-                                        class="text-center"
-                                        matInput
-                                        type="time"
-                                        formControlName="time"
-                                        cySelector="input-time"
-                                    />
-                                </mat-form-field>
-                                <mat-form-field class="w-full" subscriptSizing="dynamic">
-                                    <mat-label translate>DAYS_OFFSET</mat-label>
-                                    <input
-                                        class="text-center"
-                                        matInput
-                                        type="number"
-                                        formControlName="daysOffset"
-                                        cySelector="input-time"
-                                    />
-                                </mat-form-field>
-                                <lima-team-chooser [teams]="season.teams || []" formControlName="unavailableTeams" [multiple]="true"></lima-team-chooser>
-                            </div>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            }
+                        </mat-card-content>
+                    </mat-card>
+                }
+            </div>
         </mat-card-content>
     </mat-card>
     @if( matchAppointments?.valid ) {
@@ -49,28 +51,32 @@
                 PREVIEW
             </mat-card-title>
             <mat-card-content class="justify-center">
-                <div class="flex flex-row justify-center space-x-8">
+                <div class="flex flex-wrap justify-center gap-4">
                     @for( matchDay of exampleMatchDays(); track $index ) {
-                        <div class="flex flex-col items-center">
-                            <div>
-                                {{ "MATCHDAY" | translate : { matchDay: matchDay.number } }}
-                            </div>
-                            <div>
-                                {{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}
-                            </div>
-                            <ul>
-                                @for( match of matchDay.matches; track $index ) {
-                                    @if(match?.kickoff) {
-                                        <li>
-                                            {{ match?.kickoff! | customDate:'short' }} {{ match?.pitch?.label }}
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                            <button mat-stroked-button (click)="scheduleAllMatchesForMatchDay($index)">
-                                <span translate>SCHEDULE_MATCHES_FOR_MATCHDAY</span>
-                            </button>
-                        </div>
+                        <mat-card appearance="outlined">
+                            <mat-card-content>
+                                <div class="flex flex-col items-center">
+                                    <div>
+                                        {{ "MATCHDAY" | translate : { matchDay: matchDay.number } }}
+                                    </div>
+                                    <div>
+                                        {{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}
+                                    </div>
+                                    <ul>
+                                        @for( match of matchDay.matches; track $index ) {
+                                            @if(match?.kickoff) {
+                                                <li>
+                                                    {{ match?.kickoff! | customDate:'short':'utc' }} {{ match?.pitch?.label }}
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                    <button mat-stroked-button (click)="scheduleAllMatchesForMatchDay($index)">
+                                        <span translate>SCHEDULE_MATCHES_FOR_MATCHDAY</span>
+                                    </button>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
                     }
                 </div>
                 <mat-card-footer>
