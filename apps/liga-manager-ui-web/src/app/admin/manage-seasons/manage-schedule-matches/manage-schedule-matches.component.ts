@@ -46,6 +46,10 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         this.matchAppointments.valueChanges.subscribe(console.log)
     }
 
+    calcOffestFromStartDate(offset: number) {
+        return dayjs.utc(this.season?.match_days![0]?.start_date).add(offset, 'days').format('dddd')
+    }
+
     exampleMatchDays() {
         if (!this.season?.match_days) {
             return;

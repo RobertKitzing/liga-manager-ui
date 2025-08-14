@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, Inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     MatDialogRef,
     MAT_DIALOG_DATA,
@@ -52,7 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class EditMatchPitchComponent {
 
-    newMatchPitch?: Pitch;
+    newMatchPitchFC = new FormControl<Pitch | undefined>(undefined, [ Validators.required ]);
 
     private dialog = inject(MatDialog);
 
@@ -67,19 +67,15 @@ export class EditMatchPitchComponent {
         public pitchService: PitchService,
     ) {}
 
-    pitchSelected(pitch: Pitch) {
-        this.newMatchPitch = pitch;
-    }
-
     async onSaveClicked() {
-        if (!this.newMatchPitch) {
+        if (!this.newMatchPitchFC.valid) {
             return;
         }
         try {
             await firstValueFrom(
                 this.matchService.locateMatch({
                     match_id: this.data.match.id,
-                    pitch_id: this.newMatchPitch.id,
+                    pitch_id: this.newMatchPitchFC.value!.id,
                 }),
             );
             this.notificationService.showSuccessNotification(
@@ -102,7 +98,7 @@ export class EditMatchPitchComponent {
         ).subscribe(
             (pitch) => {
                 if (pitch) {
-                    this.newMatchPitch = pitch;
+                    this.newMatchPitchFC.setValue(pitch);
                 }
             },
         )
