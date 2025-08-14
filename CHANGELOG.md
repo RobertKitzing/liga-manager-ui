@@ -1,3 +1,7 @@
+## 5.6.2 (2025-08-14)
+
+This was a version bump only, there were no code changes.
+
 ## 5.6.1 (2025-08-09)
 
 ### Work in Progress
