@@ -101,20 +101,19 @@ export const appConfig: ApplicationConfig = {
                     const host = appsettingsService.host;
                     const use_imgproxy = JSON.parse(appsettingsService.appsettings?.use_imgproxy || 'false');
                     const use_local_assets = JSON.parse(appsettingsService.appsettings?.use_local_assets || 'false');
-
-                    const isTeamLogo = config.src.startsWith('logos')
-
+                    const src = config.src.replace(/^\/+/g, '');
+                    const isTeamLogo = src.startsWith('logos');
                     if (use_local_assets && !isTeamLogo) {
-                        return `${window.location.protocol}//localhost/${config.src.replace(/^\/+/g, '')}`;
+                        return `${window.location.protocol}//localhost/${src}`;
                     }
-
+                    
                     if (!use_imgproxy) {
                         if (isTeamLogo) {
-                            return `${host}/${config.src.replace(/^\/+/g, '')}`;
+                            return `${host}/${src}`;
                         }
-                        return `/${config.src.replace(/^\/+/g, '')}`;
+                        return `/${src}`;
                     }
-                    return `${host}/imgproxy/_/rs:fit:${config.loaderParams!['width']}:${config.loaderParams!['height']}/${Base64.encode(`local:///${config.src.replace(/^\/+/g, '')}`)}`;
+                    return `${host}/imgproxy/_/rs:fit:${config.loaderParams!['width']}:${config.loaderParams!['height']}/${Base64.encode(`local:///${src}`)}`;
                 },
             deps: [ AppsettingsService ],
         },
