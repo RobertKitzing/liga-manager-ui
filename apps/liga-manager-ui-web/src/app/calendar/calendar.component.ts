@@ -62,9 +62,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     eventTrigger = new Subject<CalendarQueryVariables>();
 
-    options = new CalendarOptionsFormGroup(this.teamIdsLS()?.split(','));
+    options = new CalendarOptionsFormGroup(this.teamIdsLS() ? this.teamIdsLS()!.split(',') : undefined);
 
     calendarOptions: CalendarOptions = {
+        contentHeight: 'auto',
         headerToolbar: {
             start: '',
             center: 'title',
@@ -137,9 +138,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.options.controls.team_ids.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
-            (ids) => {
+            () => {
                 this.triggerEvent();
-                console.log(ids)
                 this.teamIdsLS.set(this.options.controls.team_ids.value.join(','));
             },
         );

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, firstValueFrom, map, of, take } from 'rxjs';
+import { firstValueFrom, map, of, take } from 'rxjs';
 import {
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
@@ -15,6 +15,12 @@ import {
     RemoveTeamFromSeasonMutationVariables,
     ReplaceTeamInSeasonGQL,
     ReplaceTeamInSeasonMutationVariables,
+    RescheduleMatchDayGQL,
+    RescheduleMatchDayMutationVariables,
+    ScheduleAllMatchesForMatchDayGQL,
+    ScheduleAllMatchesForMatchDayMutationVariables,
+    ScheduleAllMatchesForSeasonGQL,
+    ScheduleAllMatchesForSeasonMutationVariables,
     Season,
     SeasonByIdGQL,
     StartSeasonGQL,
@@ -65,6 +71,9 @@ export class SeasonService {
         private endSeasonGQL: EndSeasonGQL,
         private createMatchesForSeasonGQL: CreateMatchesForSeasonGQL,
         private replaceTeamInSeasonGQL: ReplaceTeamInSeasonGQL,
+        private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
+        private scheduleAllMatchesForSeasonGQL: ScheduleAllMatchesForSeasonGQL,
+        private scheduleAllMatchesForMatchDayGQL: ScheduleAllMatchesForMatchDayGQL,
     ) {}
 
     reloadSeasons() {
@@ -205,6 +214,54 @@ export class SeasonService {
     replaceTeamInSeason(params: ReplaceTeamInSeasonMutationVariables) {
         return firstValueFrom(
             this.replaceTeamInSeasonGQL.mutate(
+                params,
+                {
+                    refetchQueries: [
+                        {
+                            query: this.seasonByIdGQL.document,
+                            variables: { id: params.season_id },
+                        },
+                    ],
+                },
+            ),
+        )
+    }
+
+    rescheduleMatchDay(params: RescheduleMatchDayMutationVariables, season_id: string) {
+        return firstValueFrom(
+            this.rescheduleMatchDayGQL.mutate(
+                params,
+                {
+                    refetchQueries: [
+                        {
+                            query: this.seasonByIdGQL.document,
+                            variables: { id: season_id },
+                        },
+                    ],
+                },
+            ),
+        )
+    }
+
+    scheduleAllMatchesForMatchDay(params: ScheduleAllMatchesForMatchDayMutationVariables, seasonId?: string) {
+        return firstValueFrom(
+            this.scheduleAllMatchesForMatchDayGQL.mutate(
+                params,
+                {
+                    refetchQueries: [
+                        {
+                            query: this.seasonByIdGQL.document,
+                            variables: { id: seasonId },
+                        },
+                    ],
+                },
+            ),
+        )
+    }
+
+    scheduleAllMatchesForSeason(params: ScheduleAllMatchesForSeasonMutationVariables) {
+        return firstValueFrom(
+            this.scheduleAllMatchesForSeasonGQL.mutate(
                 params,
                 {
                     refetchQueries: [

@@ -18,8 +18,8 @@
                     </button>
                 </div>
             </mat-toolbar-row>
-            @if ((season$ | async); as season) {
-                <mat-toolbar-row class="justify-evenly">
+            <mat-toolbar-row class="justify-evenly">
+                @if ((season$ | async); as season) {
                     @if ( season.state === SeasonState.Progress ) {
                         <button mat-stroked-button (click)="endSeason(season.id, season.name)">
                             <mat-icon>stop</mat-icon>
@@ -37,8 +37,8 @@
                             <span translate>BUTTON.DELETE_SEASON</span>
                         </button>
                     }
-                </mat-toolbar-row>
-            }
+                }
+            </mat-toolbar-row>
         </mat-toolbar>
     </div>
     <div>

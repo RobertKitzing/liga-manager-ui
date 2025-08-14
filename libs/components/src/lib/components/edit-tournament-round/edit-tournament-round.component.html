@@ -88,13 +88,13 @@
     </mat-card-content>
     <mat-card-footer>
         <div class="flex justify-evenly m-3">
-            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0 && roundDates.valid" cySelector="button-save-tournament-round">
-                <mat-icon>save</mat-icon>
-                <span translate>SAVE_ROUND</span>
-            </button>
             <button mat-stroked-button (click)="roundEdited.emit(false)">
                 <mat-icon>close</mat-icon>
                 <span translate>BUTTON.CANCEL</span>
+            </button>
+            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0 && roundDates.valid" cySelector="button-save-tournament-round">
+                <mat-icon>save</mat-icon>
+                <span translate>SAVE_ROUND</span>
             </button>
         </div>
     </mat-card-footer>

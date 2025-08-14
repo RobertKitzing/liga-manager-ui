@@ -73,6 +73,7 @@ fragment AllSeasons on Season {
     match_days {
         number
         start_date
+        end_date
     }
 }
 

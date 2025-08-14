@@ -43,7 +43,7 @@
                     </mat-option>
                     }
                 </mat-select>
-                @if (data.options.controls.team_ids.value) {
+                @if (data.options.controls.team_ids.value.length > 0) {
                     <button matSuffix mat-icon-button aria-label="Clear" (click)="data.options.controls.team_ids.setValue([])" class="mr-4">
                         <mat-icon>close</mat-icon>
                     </button>

@@ -605,7 +605,7 @@ export type RankingFragment = (
 
 export type AllSeasonsFragment = (
   Pick<Season, 'id' | 'name' | 'state'>
-  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>> }
+  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
 );
 
 export type SeasonFragment = (
@@ -1097,7 +1097,7 @@ export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllSeasonsListQuery = { allSeasons?: Maybe<Array<Maybe<(
     Pick<Season, 'id' | 'name' | 'state'>
-    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>> }
+    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
   )>>> };
 
 export type SeasonByIdQueryVariables = Exact<{
@@ -1280,6 +1280,7 @@ export const AllSeasonsFragmentDoc = gql`
   match_days {
     number
     start_date
+    end_date
   }
 }
     `;

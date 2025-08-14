@@ -1,46 +1,67 @@
 @if (season) {
-    @if (!season.match_days || season.match_days.length === 0) {
-        <div class="flex justify-center flex-col space-y-4 mt-4 w-full items-center">
+    <div class="flex justify-center flex-col md:flex-row md:space-x-4 space-y-4 mt-4 w-full items-center" [formGroup]="formGroup">
+        @if (!season.match_days || season.match_days.length === 0) {
             <div>
                 <mat-form-field subscriptSizing="dynamic">
                     <mat-label translate>START_SEASON_DATE</mat-label>
                     <input matInput [matDatepicker]="startSeasonDatePicker"
                         cySelector="input-tournament-season-start-date"
-                        [formControl]="seasonStartDate"
+                        formControlName="seasonStartDate"
                         (dateChange)="createMatchDays()">
                     <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #startSeasonDatePicker></mat-datepicker>
                 </mat-form-field>
             </div>
             <div>
-                <mat-form-field subscriptSizing="dynamic">
-                    <mat-label translate>BETWEEN_MATCHDAYS_OFFSET</mat-label>
-                    <input matInput [formControl]="betweenMatchDaysOffset">
-                </mat-form-field>
+                <mat-checkbox formControlName="secondHalf">
+                    <mat-label translate>SECOND_HALF</mat-label>
+                </mat-checkbox>
             </div>
-            <div>
-                <mat-form-field subscriptSizing="dynamic">
-                    <mat-label translate>FROM_TO_OFFSET</mat-label>
-                    <input matInput [formControl]="fromToOffset">
-                </mat-form-field>
-            </div>
-            <button mat-stroked-button (click)="saveMatchDays(season)" cySelector="button-save-match-days">
-                <span translate>BUTTON.SAVE_MATCHDAYS</span>
-            </button>
+        }
+        <div>
+            <mat-form-field subscriptSizing="dynamic">
+                <mat-label translate>BETWEEN_MATCHDAYS_OFFSET</mat-label>
+                <input matInput type="number" formControlName="betweenMatchDaysOffset">
+            </mat-form-field>
         </div>
-    }
-    <mat-card>
-        <mat-card-content class="text-center">
-            @for (matchDay of matchDays(); track matchDay; let index = $index) {
-                <div class="flex flex-col">
-                    <div>
-                        {{ "MATCHDAY" | translate : { matchDay: index + 1 } }}
+        <div>
+            <mat-form-field subscriptSizing="dynamic">
+                <mat-label translate>FROM_TO_OFFSET</mat-label>
+                <input matInput type="number" formControlName="fromToOffset">
+            </mat-form-field>
+        </div>
+        @if (!season.match_days || season.match_days.length === 0) {
+            <button mat-stroked-button [disabled]="!formGroup.valid" (click)="saveMatchDays(season, 'create')" cySelector="button-save-match-days">
+                <span translate>BUTTON.CREATE_MATCHDAYS</span>
+            </button>
+        } @else {
+            <button mat-stroked-button (click)="saveMatchDays(season, 'update')" cySelector="button-save-match-days">
+                <span translate>BUTTON.UPDATE_MATCHDAYS</span>
+            </button>
+        }
+    </div>
+    <div class="visible md:hidden">
+        <mat-card>
+            <mat-card-content class="text-center">
+                @for (matchDay of matchDays(); track matchDay?.id; let index = $index) {
+                    <div class="flex flex-col">
+                        <div>
+                            {{ "MATCHDAY" | translate : { matchDay: index + 1 } }}
+                        </div>
+                        <div>
+                            {{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}
+                        </div>
                     </div>
-                    <div>
-                        {{ matchDay.from | date }} - {{ matchDay.to | date }}
-                    </div>
-                </div>
-            }
-        </mat-card-content>
-    </mat-card>
+                }
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="hidden md:block">
+        <full-calendar
+            [draggable]="false"
+            [deepChangeDetection]="true"
+            [options]="calendarOptions"
+            [events]="events$ | async">
+        </full-calendar>
+    </div>
 }

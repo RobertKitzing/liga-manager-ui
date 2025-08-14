@@ -1,5 +1,5 @@
-import { Component, input, effect, inject, DestroyRef, ViewChild, output } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, input, inject, DestroyRef, ViewChild, output, forwardRef, OnInit, Injector } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormControlDirective, FormControlName, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Maybe, Pitch } from '@liga-manager-api/graphql';
@@ -27,10 +27,17 @@ import { MatButtonModule } from '@angular/material/button';
         MatButtonModule,
     ],
     templateUrl: './pitch-auto-complete.component.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PitchAutoCompleteComponent),
+            multi: true,
+        },
+    ],
 })
-export class PitchAutoCompleteComponent {
+export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
 
-    fromControl = input<FormControl>(new FormControl());
+    fromControl?: FormControl;
 
     cySelector = input<CySelectors>('input-pitch-auto-complete');
 
@@ -46,26 +53,44 @@ export class PitchAutoCompleteComponent {
 
     @ViewChild(MatAutocomplete) autoComplete!: MatAutocomplete;
 
-    constructor() {
-        effect(
-            () => {
-                this.filteredPitches$ = this.fromControl().valueChanges.pipe(
-                    startWith(''),
-                    map(
-                        (searchTerm) => this.filterPitches(searchTerm) || [],
-                    ),
-                );
-                this.fromControl().setValue(this.fromControl()?.value)
-            },
+    injector = inject(Injector);
+
+    ngOnInit(): void {
+        const ngControl = this.injector.get(NgControl);
+
+        if (ngControl instanceof FormControlName) {
+            this.fromControl =  this.injector.get(FormGroupDirective).getControl(ngControl);
+        } else {
+            this.fromControl = (ngControl as FormControlDirective).form;
+        }
+
+        this.filteredPitches$ = this.fromControl.valueChanges.pipe(
+            startWith(''),
+            map(
+                (searchTerm) => this.filterPitches(searchTerm) || [],
+            ),
         );
+        this.fromControl.setValue(this.fromControl.value)
+    }
+
+    writeValue(_obj: unknown): void {
+    }
+
+    registerOnChange(_fn: unknown): void {
+    }
+
+    registerOnTouched(_fn: unknown): void {
+    }
+
+    setDisabledState?(_isDisabled: boolean): void {
     }
 
     _pitchSelected(option: MatAutocompleteSelectedEvent) {
         if (option.option.value) {
-            this.fromControl().setValue(option.option.value)
+            this.fromControl?.setValue(option.option.value)
             this.pitchSelected.emit(option.option.value);
             if (this.clearAfterSelected()) {
-                this.fromControl().reset();
+                this.fromControl?.reset();
             }
         }
     }

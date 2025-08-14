@@ -59,6 +59,7 @@
         "@fullcalendar/angular": "^6.1.17",
         "@fullcalendar/core": "^6.1.18",
         "@fullcalendar/daygrid": "^6.1.10",
+        "@fullcalendar/interaction": "^6.1.19",
         "@fullcalendar/list": "^6.1.18",
         "@graphql-codegen/add": "^5.0.3",
         "@graphql-codegen/cli": "^5.0.7",

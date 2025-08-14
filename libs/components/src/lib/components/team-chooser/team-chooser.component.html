@@ -2,6 +2,7 @@
     placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
     [formControl]="selectedTeamFC"
     [compareWith]="teamService.teamCompare"
+    [multiple]="multiple()"
     class="text-center"
 >
     @for (team of teams || (teamService.allTeams$ | async); track team) {
