@@ -221,3 +221,9 @@ jobs:
         with:
           name: lima-app-release-signed-staging
           path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lima-app-release-signed
+          path: apps/liga-manager-ui-web/android/app/build/outputs/apk/debug/app-debug-signed.apk
