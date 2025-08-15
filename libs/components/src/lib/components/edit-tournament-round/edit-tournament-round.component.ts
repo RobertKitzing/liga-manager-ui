@@ -15,6 +15,9 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 function typeofTeamValidator(): ValidatorFn {
     return (control) => {
