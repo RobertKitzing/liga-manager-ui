@@ -42,8 +42,6 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         this.matchAppointments = new FormArray(
             Array.from({ length: this.season?.match_days![0]?.matches?.length || 0 }, () => new MatchAppointmentFormGroup()),
         );
-
-        this.matchAppointments.valueChanges.subscribe(console.log)
     }
 
     calcOffestFromStartDate(offset: number) {

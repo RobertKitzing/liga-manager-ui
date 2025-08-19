@@ -22,6 +22,8 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class TeamChooserComponent implements OnInit, ControlValueAccessor {
 
+    label = input<string | undefined>(undefined);
+
     @Input() selectedTeamFC!: FormControl<Team | Team[] | null>;
 
     @Input() teams!: Maybe<Team>[];

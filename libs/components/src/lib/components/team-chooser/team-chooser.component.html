@@ -1,15 +1,23 @@
-<mat-select
-    placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
-    [formControl]="selectedTeamFC"
-    [compareWith]="teamService.teamCompare"
-    [multiple]="multiple()"
-    class="text-center"
->
-    @for (team of teams || (teamService.allTeams$ | async); track team) {
-        @if (team) {
-            <mat-option [value]="team">
-                {{ team.name }}
-            </mat-option>
+<mat-form-field class="w-full">
+    <mat-label>
+        @if (label()) {
+            {{ label()! | translate }}
+        } @else {
+            {{ 'PLACEHOLDER.SELECT_TEAM' | translate }}
         }
-    }
-</mat-select>
+    </mat-label>
+    <mat-select
+        [formControl]="selectedTeamFC"
+        [compareWith]="teamService.teamCompare"
+        [multiple]="multiple()"
+        class="text-center"
+    >
+        @for (team of teams || (teamService.allTeams$ | async); track team) {
+            @if (team) {
+                <mat-option [value]="team">
+                    {{ team.name }}
+                </mat-option>
+            }
+        }
+    </mat-select>
+</mat-form-field>

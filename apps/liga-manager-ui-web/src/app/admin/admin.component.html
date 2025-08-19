@@ -8,20 +8,20 @@
             <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
         </div>
 
-        <button mat-icon-button (click)="drawer.toggle()" class="visible lg:hidden">
-            <mat-icon>menu</mat-icon>
-        </button>
+        <div class="visible lg:hidden">
+            <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
     </mat-toolbar>
 </div>
-<mat-drawer-container
-    [hasBackdrop]="true"
->
+<mat-drawer-container [hasBackdrop]="true">
     <mat-drawer #drawer [mode]="'over'" [position]="'end'">
         <div class="flex flex-col" (click)="drawer.close()">
             <ng-container *ngTemplateOutlet="adminLinks"></ng-container>
         </div>
     </mat-drawer>
-    <mat-drawer-content class="mat-sys-surface-container-high">
+    <mat-drawer-content class="mat-sys-surface-container-high h-auto">
         <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

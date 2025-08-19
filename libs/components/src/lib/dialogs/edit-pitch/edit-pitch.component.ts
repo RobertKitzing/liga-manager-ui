@@ -70,7 +70,6 @@ export class EditPitchDialogComponent implements OnInit {
                 fields: ['location'],
             });
             const t = place.toJSON();
-            console.log(t);
             this.formGroup.controls.location_latitude.setValue(t.location.lat)
             this.formGroup.controls.location_longitude.setValue(t.location.lng)
         });

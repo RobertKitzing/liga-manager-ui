@@ -86,7 +86,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
     events$ = this.matchDayTrigger.pipe(
         switchMap(
-            (matchDays) => this.calendarService.getEvents(matchDays, true).pipe(tap(console.log)),
+            (matchDays) => this.calendarService.getEvents(matchDays, true),
         ),
     );
 

@@ -1,6 +1,6 @@
 @if (season) {
-    <mat-card>
-        <mat-card-title class="text-center">
+    <mat-card appearance="outlined">
+        <mat-card-title class="text-center p-4">
             {{ "MATCH_SCHEDULING.MATCH_KICKOFF_APPOINTMENTS" | translate}}
         </mat-card-title>
         <mat-card-content>
@@ -12,7 +12,7 @@
                                 <div>
                                     {{ $index + 1 }}
                                 </div>
-                                <div class="grow" [formGroup]="matchAppointmentsFromGroup">
+                                <div class="grow grid grid-cols-2 gap-4 items-center" [formGroup]="matchAppointmentsFromGroup">
                                     @if(pitchService.allPitches$ | async; as allPitches) {
                                         <lima-pitch-auto-complete [pitches]="allPitches" formControlName="pitch"></lima-pitch-auto-complete>
                                     }
@@ -35,9 +35,9 @@
                                             formControlName="daysOffset"
                                             cySelector="input-time"
                                         />
-                                        <mat-label class="ml-4 italic">{{ calcOffestFromStartDate(matchAppointmentsFromGroup.controls['daysOffset'].value) }}</mat-label>
                                     </mat-form-field>
-                                    <lima-team-chooser [teams]="season.teams || []" formControlName="unavailableTeams" [multiple]="true"></lima-team-chooser>
+                                    <span class="italic">{{ calcOffestFromStartDate(matchAppointmentsFromGroup.controls['daysOffset'].value) }}</span>
+                                    <lima-team-chooser class="col-span-full" [teams]="season.teams || []" formControlName="unavailableTeams" [multiple]="true" label="{{ 'PLACEHOLDER.UNAVAILABLE_TEAMS' | translate }}"></lima-team-chooser>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -48,20 +48,21 @@
     </mat-card>
     @if( matchAppointments?.valid ) {
         <mat-card appearance="outlined">
-            <mat-card-title class="text-center" translate>
+            <mat-card-title class="text-center p-4" translate>
                 MATCH_SCHEDULING.PREVIEW
             </mat-card-title>
             <mat-card-content class="justify-center">
                 <div class="flex flex-wrap justify-center gap-4">
                     @for( matchDay of exampleMatchDays(); track $index ) {
                         <mat-card appearance="outlined">
+                            <mat-card-title class="text-center p-4">
+                                <p>{{ "MATCHDAY" | translate : { matchDay: matchDay.number } }}</p>
+                                <p class="text-sm">{{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}</p>
+                            </mat-card-title>
                             <mat-card-content>
                                 <div class="flex flex-col items-center">
                                     <div>
-                                        {{ "MATCHDAY" | translate : { matchDay: matchDay.number } }}
-                                    </div>
-                                    <div>
-                                        {{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}
+                                        
                                     </div>
                                     <ul>
                                         @for( match of matchDay.matches; track $index ) {
@@ -80,7 +81,7 @@
                         </mat-card>
                     }
                 </div>
-                <mat-card-footer>
+                <mat-card-footer class="flex justify-center m-4">
                     <button mat-stroked-button (click)="scheduleAllMatchesForSeason()">
                         <span translate>MATCH_SCHEDULING.SCHEDULE_MATCHES_FOR_SEASON</span>
                     </button>
@@ -88,30 +89,34 @@
             </mat-card-content>
         </mat-card>
          <mat-card appearance="outlined">
-            <mat-card-title class="text-center">
+            <mat-card-title class="text-center p-4">
                 REAL MATCHES
             </mat-card-title>
             <mat-card-content class="justify-center">
-                @for (matchDay of season.match_days; track $index) {
-                    <div class="flex flex-col items-center">
-                        <div>
-                            {{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}
-                        </div>
-                        <div>
-                            {{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}
-                        </div>
-                        <ul>
-                            @for( match of matchDay?.matches; track $index ) {
-                                @if(match?.kickoff) {
-                                    <li>
-                                        {{ match?.home_team?.name }} - {{ match?.guest_team?.name }}
-                                        {{ match?.kickoff! | customDate:'short' }} {{ match?.pitch?.label }}
-                                    </li>
-                                }
-                            }
-                        </ul>
-                    </div>
-                }
+                <div class="flex flex-wrap justify-center gap-4">
+                    @for (matchDay of season.match_days; track $index) {
+                        <mat-card appearance="outlined">
+                            <mat-card-title class="text-center p-4">
+                                <p>{{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}</p>
+                                <p class="text-sm">{{ matchDay?.start_date | customDate }} - {{ matchDay?.end_date | customDate }}</p>
+                            </mat-card-title>
+                            <mat-card-content>
+                                <div class="flex flex-col items-center">
+                                    <ul>
+                                        @for( match of matchDay?.matches; track $index ) {
+                                            @if(match?.kickoff) {
+                                                <li>
+                                                    {{ match?.home_team?.name }} - {{ match?.guest_team?.name }}
+                                                    {{ match?.kickoff! | customDate:'short' }} {{ match?.pitch?.label }}
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    }
+                </div>
             </mat-card-content>
         </mat-card>
     }
