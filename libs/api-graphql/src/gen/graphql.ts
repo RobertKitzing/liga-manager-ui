@@ -605,7 +605,7 @@ export type RankingFragment = (
 
 export type AllSeasonsFragment = (
   Pick<Season, 'id' | 'name' | 'state'>
-  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>> }
+  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
 );
 
 export type SeasonFragment = (
@@ -765,8 +765,8 @@ export type UpdatePitchContactMutation = Pick<Mutation, 'updatePitchContact'>;
 export type CreatePitchMutationVariables = Exact<{
   id: Scalars['String']['input'];
   label: Scalars['String']['input'];
-  longitude: Scalars['Float']['input'];
-  latitude: Scalars['Float']['input'];
+  location_longitude: Scalars['Float']['input'];
+  location_latitude: Scalars['Float']['input'];
 }>;
 
 
@@ -1097,7 +1097,7 @@ export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllSeasonsListQuery = { allSeasons?: Maybe<Array<Maybe<(
     Pick<Season, 'id' | 'name' | 'state'>
-    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date'>>>> }
+    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
   )>>> };
 
 export type SeasonByIdQueryVariables = Exact<{
@@ -1280,6 +1280,7 @@ export const AllSeasonsFragmentDoc = gql`
   match_days {
     number
     start_date
+    end_date
   }
 }
     `;
@@ -1622,8 +1623,13 @@ export const UpdatePitchContactDocument = gql`
     }
   }
 export const CreatePitchDocument = gql`
-    mutation CreatePitch($id: String!, $label: String!, $longitude: Float!, $latitude: Float!) {
-  createPitch(id: $id, label: $label, longitude: $longitude, latitude: $latitude)
+    mutation CreatePitch($id: String!, $label: String!, $location_longitude: Float!, $location_latitude: Float!) {
+  createPitch(
+    id: $id
+    label: $label
+    longitude: $location_longitude
+    latitude: $location_latitude
+  )
 }
     `;
 

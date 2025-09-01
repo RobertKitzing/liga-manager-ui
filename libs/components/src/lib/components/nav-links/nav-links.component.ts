@@ -8,7 +8,6 @@ import { APP_ROUTES } from '@liga-manager-ui/common';
 @Component({
     selector: 'lima-nav-links',
     templateUrl: './nav-links.component.html',
-    styleUrls: ['./nav-links.component.scss'],
     standalone: true,
     imports: [
         RouterLinkActive,

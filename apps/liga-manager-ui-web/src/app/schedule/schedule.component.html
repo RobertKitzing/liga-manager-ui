@@ -1,110 +1,93 @@
-<div class="flex justify-center h-full mat-sys-surface-container-high">
-    <div class="w-full lg:w-2/3">
-        <div class="flex justify-center mt-2">
-            <mat-toolbar class="secondary">
-                <mat-toolbar-row>
-                    <div class="w-full grid grid-cols-2">
-                        <div class="self-center">
-                            <lima-season-chooser
-                                [selectedSeasonFC]="selectedSeasonFC"
-                                [filterSeasonStates]="filterSeasonStates"
-                            ></lima-season-chooser>
-                        </div>
-                        <div class="w-full">
-                            <mat-select
-                                class="text-center"
-                                #teamSelect
-                                [(value)]="selectedTeamId"
-                                placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
-                            >
-                                <mat-option [value]="'0'">
-                                    {{ "ALL_TEAMS" | translate }}
-                                </mat-option>
-                                @for (team of season()?.teams || [] | sortBy:'name'; track team) {
-                                    <mat-option [value]="team?.id">
-                                        {{ team?.name }}
-                                    </mat-option>
-                                }
-                            </mat-select>
-                        </div>
-                    </div>
-                </mat-toolbar-row>
-                <mat-toolbar-row>
-                    <div class="flex w-full">
-                        <div class="self-center grow">
-                            <button
-                                mat-icon-button
-                                (click)="prevMatchDay(season())"
+<ngx-pull-to-refresh (refresh)="refresh($event)" [spinnerSize]="35">
+    <div class="flex justify-center h-full mat-sys-surface-container-high">
+        <div class="w-full lg:w-2/3">
+            <div class="flex justify-center mt-2">
+                <mat-toolbar class="secondary">
+                    <mat-toolbar-row>
+                        <div class="w-full grid grid-cols-2">
+                            <div class="self-center">
+                                <lima-season-chooser
+                                    [selectedSeasonFC]="selectedSeasonFC"
+                                    [filterSeasonStates]="filterSeasonStates"
+                                ></lima-season-chooser>
+                            </div>
+                            <div class="w-full">
+                                <mat-select
+                                    class="text-center"
+                                    #teamSelect
+                                    [(value)]="selectedTeamId"
+                                    placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
                                 >
-                                    <mat-icon>arrow_back</mat-icon>
-                            </button>
-                        </div>
-                        <div class="self-center grow max-w-3/4">
-                            <mat-select
-                                class="text-center"
-                                #matchDaySelect
-                                [(value)]="selectedMatchDayId"
-                                placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
-                            >
-                                @for (matchDay of season()?.match_days; track matchDay) {
-                                    <mat-option [value]="matchDay?.id">
-                                        @if (matchDay) {
-                                        <div class="grid grid-cols-1 text-center">
-                                            <span>
-                                                {{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}
-                                            </span>
-                                            <span>
-                                            ({{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }})
-                                            </span>
-                                        </div>
-                                        }
+                                    <mat-option [value]="'0'">
+                                        {{ "ALL_TEAMS" | translate }}
                                     </mat-option>
-                                }
-                            </mat-select>
+                                    @for (team of season()?.teams || [] | sortBy:'name'; track team) {
+                                        <mat-option [value]="team?.id">
+                                            {{ team?.name }}
+                                        </mat-option>
+                                    }
+                                </mat-select>
+                            </div>
                         </div>
-                        <div class="self-center text-end grow">
-                            <button
-                                mat-icon-button
-                                (click)="nextMatchDay(season())"
-                            >
-                                <mat-icon>arrow_forward</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-toolbar-row>
-                <!-- <mat-toolbar-row>
-                    <div class="flex w-full">
-                        <div class="self-center w-1/2">
-                            <button
-                                mat-stroked-button
-                                (click)="prevMatchDay(season())"
+                    </mat-toolbar-row>
+                    <mat-toolbar-row>
+                        <div class="flex w-full">
+                            <div class="self-center grow">
+                                <button
+                                    mat-icon-button
+                                    (click)="prevMatchDay()"
+                                    >
+                                        <mat-icon>arrow_back</mat-icon>
+                                </button>
+                            </div>
+                            <div class="self-center grow max-w-3/4">
+                                <mat-select
+                                    class="text-center"
+                                    #matchDaySelect
+                                    [(value)]="selectedMatchDay"
+                                    [compareWith]="compareMatchDay"
+                                    placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
                                 >
-                                    <mat-icon>arrow_back</mat-icon>
-                            </button>
+                                    
+                                    @for (matchDay of season()?.match_days; track matchDay) {
+                                        <mat-option [value]="matchDay">
+                                            @if (matchDay) {
+                                                <div class="flex flex-col text-center">
+                                                    <span>
+                                                        {{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}
+                                                    </span>
+                                                    <span>
+                                                        {{ matchDay.start_date | customDate }}&nbsp;-&nbsp;{{ matchDay.end_date | customDate }}
+                                                    </span>
+                                                </div>
+                                            }
+                                        </mat-option>
+                                    }
+                                </mat-select>
+                            </div>
+                            <div class="self-center text-end grow">
+                                <button
+                                    mat-icon-button
+                                    (click)="nextMatchDay()"
+                                >
+                                    <mat-icon>arrow_forward</mat-icon>
+                                </button>
+                            </div>
                         </div>
-                        <div class="self-center text-end w-1/2">
-                            <button
-                                mat-stroked-button
-                                (click)="nextMatchDay(season())"
-                            >
-                                <mat-icon>arrow_forward</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-toolbar-row> -->
-            </mat-toolbar>
-        </div>
-        @if (findMatchDay(season()?.match_days || []); as matchDay) {
-            <div class="flex justify-center z-0">
-                <div class="w-full"
-                    (swipeleft)="prevMatchDay(season())"
-                    (swiperight)="nextMatchDay(season())"
-                    >
-                    @for (match of filterMatches(matchDay?.matches || []); track match) {
-                        <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
-                    }
-                </div>
+                    </mat-toolbar-row>
+                </mat-toolbar>
             </div>
-        }
+            <div>
+                @if (findMatchDay(season()?.match_days || []); as matchDay) {
+                    <div class="flex justify-center z-0">
+                        <div class="w-full">
+                            @for (match of filterMatches(matchDay?.matches || []); track match) {
+                                <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
-</div>
+</ngx-pull-to-refresh>

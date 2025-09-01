@@ -1,54 +1,57 @@
 <div class="m-2 mt-0">
     <mat-toolbar class="secondary">
-        <div class="w-full flex items-center space-x-4 justify-evenly">
-            <div class="w-1/2">
-                <lima-tournament-chooser
-                    [selectedTournamentFC]="selectedTournamentFC"
-                ></lima-tournament-chooser>
-            </div>
-            <button
-                mat-stroked-button
-                (click)="createTournament()"
-                cySelector="button-create-tournament"
-            >
-                <mat-icon>add</mat-icon>
-                <span translate>BUTTON.CREATE_TOURNAMENT</span>
-            </button>
-            @if (selectedTournament$ | async; as selectedTournament) {
-                @switch (selectedTournament.state) {
-                    @case (TournamentState.Preparation) {
-                        <button
-                            cySelector="button-start-tournament"
-                            mat-stroked-button
-                            (click)="startTournament(selectedTournament.id)"
-                        >
-                            <mat-icon>play_arrow</mat-icon>
-                            <span translate>BUTTON.START_TOURNAMENT</span>
-                        </button>
-                    }
-                    @case (TournamentState.Progress) {
-                        <button
-                            mat-stroked-button
-                            (click)="endTournament(selectedTournament.id)"
-                        >
-                            <mat-icon>stop</mat-icon>
-                            <span translate>BUTTON.STOP_TOURNAMENT</span>
-                        </button>
-                    }
-                }
+        <mat-toolbar-row>
+            <div class="w-full flex items-center space-x-4 justify-evenly">
+                <div class="w-1/2">
+                    <lima-tournament-chooser
+                        [selectedTournamentFC]="selectedTournamentFC"
+                    ></lima-tournament-chooser>
+                </div>
                 <button
-                    mat-stroked-button
-                    (click)="deleteTournament(selectedTournament.id)"
+                    mat-icon-button
+                    (click)="createTournament()"
+                    cySelector="button-create-tournament"
                 >
-                    <mat-icon>delete</mat-icon>
-                    <span translate>BUTTON.DELETE_TOURNAMENT</span>
+                    <mat-icon>add</mat-icon>
                 </button>
-            }
-        </div>
+            </div>
+        </mat-toolbar-row>
+        @if (selectedTournament$ | async; as selectedTournament) {
+            <mat-toolbar-row class="justify-evenly">
+                    @switch (selectedTournament.state) {
+                        @case (TournamentState.Preparation) {
+                            <button
+                                cySelector="button-start-tournament"
+                                mat-stroked-button
+                                (click)="startTournament(selectedTournament.id)"
+                            >
+                                <mat-icon>play_arrow</mat-icon>
+                                <span translate>BUTTON.START_TOURNAMENT</span>
+                            </button>
+                        }
+                        @case (TournamentState.Progress) {
+                            <button
+                                mat-stroked-button
+                                (click)="endTournament(selectedTournament.id)"
+                            >
+                                <mat-icon>stop</mat-icon>
+                                <span translate>BUTTON.STOP_TOURNAMENT</span>
+                            </button>
+                        }
+                    }
+                    <button
+                        mat-stroked-button
+                        (click)="deleteTournament(selectedTournament.id)"
+                    >
+                        <mat-icon>delete</mat-icon>
+                        <span translate>BUTTON.DELETE_TOURNAMENT</span>
+                    </button>
+            </mat-toolbar-row>
+        }
     </mat-toolbar>
 </div>
 
-<div class="w-3/4 m-auto mt-2">
+<div class="w-full m-auto p-2">
     @if (selectedTournament$ | async; as selectedTournament) {
         @if (selectedTournament.rounds?.length === 0) {
             <lima-edit-tournament-round

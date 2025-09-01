@@ -85,7 +85,9 @@ export const appConfig: ApplicationConfig = {
             useClass: LoadingIndicatorHttpInterceptor,
             multi: true,
         },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(
+            withInterceptorsFromDi(),
+        ),
         provideAnimationsAsync(),
         {
             provide: DateAdapter,

@@ -1,0 +1,21 @@
+<mat-form-field class="w-full" subscriptSizing="dynamic">
+    <mat-label translate>PLACEHOLDER.SELECT_PITCH</mat-label>
+    <input type="text"
+        [cySelector]="cySelector()"
+        matInput
+        [formControl]="fromControl!"
+        [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete"
+        (optionSelected)="_pitchSelected($event)"
+        [displayWith]="displayWith"
+        >
+        @for (option of filteredPitches$ | async; track option) {
+            <mat-option [value]="option">{{option?.label}}</mat-option>
+        }
+    </mat-autocomplete>
+    @if (fromControl?.value) {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="fromControl!.reset()" class="mr-4">
+            <mat-icon>close</mat-icon>
+        </button>
+    }
+</mat-form-field>

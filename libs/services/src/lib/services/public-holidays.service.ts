@@ -15,7 +15,7 @@ export class PublicHolidaysService {
     constructor(private httpClient: HttpClient) {}
 
     @Cacheable({
-        maxCacheCount: 2,
+        maxCacheCount: 5,
     })
     publicHolidays(year: number, county = 'HB'): Observable<IMatchDayEvent[]> {
         return this.httpClient
@@ -35,6 +35,34 @@ export class PublicHolidaysService {
                                 matchDayId: '',
                                 start: result[holiday].datum,
                                 end: result[holiday].datum,
+                                display: 'background',
+                            });
+                        }
+                        return holidays;
+                    },
+                ),
+            );
+    }
+
+    @Cacheable({
+        maxCacheCount: 5,
+    })
+    publicSchoolOff(year: number, county = 'BE'): Observable<IMatchDayEvent[]> {
+        return this.httpClient
+            .get(
+                `https://ferien-api.maxleistner.de/api/v1/${year}/${county}/`,
+            )
+            .pipe(
+                map(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    (result: any) => {
+                        const holidays = new Array<IMatchDayEvent>();
+                        for (const holiday of result) {
+                            holidays.push({
+                                allDay: true,
+                                title: holiday.name,
+                                start: holiday.start,
+                                end:  holiday.end,
                                 display: 'background',
                             });
                         }

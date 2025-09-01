@@ -14,6 +14,10 @@ import { firstValueFrom } from 'rxjs';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 function typeofTeamValidator(): ValidatorFn {
     return (control) => {
@@ -85,8 +89,8 @@ export class EditTournamentRoundComponent {
             }
             if (this.round() && !this.createNext()) {
                 this.roundDates.setValue({
-                    from: new Date(this.round()?.start_date || ''),
-                    to: new Date(this.round()?.end_date || ''),
+                    from: dayjs.utc(this.round()?.start_date).toDate(),
+                    to: dayjs.utc(this.round()?.end_date).toDate(),
                 })
             }
         });

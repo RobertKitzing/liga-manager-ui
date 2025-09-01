@@ -35,6 +35,7 @@ export type CySelectors =
     | 'input-kickoff-date'
     | 'input-last-name'
     | 'input-password'
+    | 'input-pitch-auto-complete'
     | 'input-team-auto-complete'
     | 'input-team-auto-complete-guest'
     | 'input-team-auto-complete-home'

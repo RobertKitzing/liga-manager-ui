@@ -6,9 +6,8 @@
                     <mat-label translate>SEARCH</mat-label>
                     <input matInput [formControl]="searchUser" />
                 </mat-form-field>
-                <button mat-stroked-button (click)="createUser()" cySelector="button-create-user">
-                    <mat-icon>save</mat-icon>
-                    {{ "BUTTON.CREATE_USER" | translate }}
+                <button mat-icon-button (click)="createUser()" cySelector="button-create-user">
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
         </mat-card-title>

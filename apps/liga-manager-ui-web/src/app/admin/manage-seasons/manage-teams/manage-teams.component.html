@@ -31,45 +31,19 @@
                                 </button>
                             }
                             @case (SeasonState.Progress) {
-                                <button
-                                    mat-icon-button
-                                    (click)="replaceTeamInSeason()"
-                                >
-                                    <mat-icon>compare_arrows</mat-icon>
-                                </button>
+                                <div class="flex items-center">
+                                    <button
+                                        mat-icon-button
+                                        (click)="replaceTeamInSeason(team)"
+                                    >
+                                        <mat-icon>compare_arrows</mat-icon>
+                                    </button>
+                                </div>
                             }
                         }
                     </div>
                 }
             }
         </div>
-        <!-- @if (season.state === SeasonState.Preparation) {
-            <div>
-                <div>
-                    <h1 translate class="text-center">ALL_TEAMS</h1>
-                </div>
-                @if (teamService.allTeams$ | async; as at) {
-                    <div class="m-8">
-                        <lima-team-search [teams]="at" (filteredTeams)="allTeams.set($event)"></lima-team-search>
-                    </div>
-                    @for (team of allTeams(); track team) {
-                        @if (team) {
-                            <div class="flex items-center m-3">
-                                <button
-                                    mat-icon-button
-                                    (click)="
-                                        addTeamToSeason({ team_id: team.id, season_id: season.id })
-                                    "
-                                    cySelector="button-add-team-to-season"
-                                >
-                                    <mat-icon>arrow_back</mat-icon>
-                                </button>
-                                <p>{{ team.name }}</p>
-                            </div>
-                        }
-                    }
-                }
-            </div>
-        } -->
     </div>
 }

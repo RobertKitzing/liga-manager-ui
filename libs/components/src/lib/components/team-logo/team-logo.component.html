@@ -5,6 +5,8 @@
             [width]="width()"
             [height]="height()"
             [loaderParams]="{width: width(), height: height()}"
+            [placeholderConfig]="{ blur: false }"
+            [placeholder]="placeholder"
         />
     } @else {
         <img
@@ -12,6 +14,8 @@
             [width]="width()"
             [height]="height()"
             [loaderParams]="{width: width(), height: height()}"
+            [placeholderConfig]="{ blur: false }"
+            [placeholder]="placeholder"
         />
     }
 }

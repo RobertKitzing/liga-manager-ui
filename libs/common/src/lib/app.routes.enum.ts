@@ -11,5 +11,6 @@ export enum APP_ROUTES {
     HISTORY = 'history',
     HALL_OF_FAME = 'hall_of_fame',
     MATCH = 'match',
+    TEAM = 'team',
 
 }

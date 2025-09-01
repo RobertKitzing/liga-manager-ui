@@ -1,10 +1,10 @@
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Component, DestroyRef, inject, input, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Match, MatchDay, Team } from '@liga-manager-api/graphql';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { CustomDatePipe, NumberPipe } from '@liga-manager-ui/pipes';
@@ -13,9 +13,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchResultComponent, defaultDialogConfig, EditMatchPitchComponent, ViewTeamContactComponent, CancelMatchComponent, EditMatchKickoffComponent } from '../../dialogs';
 import { MatCardModule } from '@angular/material/card';
 import { TeamLogoComponent } from '../team-logo/team-logo.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Share } from '@capacitor/share';
 import { APP_ROUTES } from '@liga-manager-ui/common';
+import { PitchComponent } from '../pitch/pitch.component';
 
 @Component({
     selector: 'lima-match',
@@ -32,6 +32,7 @@ import { APP_ROUTES } from '@liga-manager-ui/common';
         MatCardModule,
         TeamLogoComponent,
         AsyncPipe,
+        PitchComponent,
     ],
     templateUrl: './match.component.html',
 })
@@ -55,8 +56,6 @@ export class MatchComponent {
 
     private userService = inject(UserService);
 
-    private destroyRef = inject(DestroyRef);
-
     private appsettingsService = inject(AppsettingsService)
 
     get dialogData() {
@@ -64,16 +63,6 @@ export class MatchComponent {
             match: this.match,
             matchDay: this.matchDay(),
         };
-    }
-
-    constructor(route: ActivatedRoute) {
-        route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
-            (data) => {
-                if (data['match']) {
-                    this.match = data['match']
-                }
-            },
-        )
     }
 
     canEditMatch(match: Match) {
@@ -93,6 +82,8 @@ export class MatchComponent {
     openEditPitchDialog() {
         this.dialog.open(EditMatchPitchComponent, {
             ...defaultDialogConfig,
+            // width: '50vw',
+            // height: '50vh',
             data: this.dialogData,
         });
     }

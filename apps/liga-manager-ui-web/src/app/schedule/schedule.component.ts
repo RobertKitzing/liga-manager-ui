@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { of, startWith, switchMap, tap } from 'rxjs';
-import { AuthenticationService, fromStorage, SeasonService } from '@liga-manager-ui/services';
+import { firstValueFrom, of, startWith, Subject, switchMap, tap } from 'rxjs';
+import { AuthenticationService, fromStorage, GestureService, SeasonService } from '@liga-manager-ui/services';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatOptionModule } from '@angular/material/core';
@@ -18,7 +18,8 @@ import { AllSeasonsFragment, Match, MatchDay, SeasonState } from '@liga-manager-
 import { FormControl } from '@angular/forms';
 import { StorageKeys } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-schedule',
@@ -38,11 +39,16 @@ import { toSignal } from '@angular/core/rxjs-interop';
         MatchComponent,
         MatCardModule,
         SortByPipe,
+        NgxPullToRefreshComponent,
+    ],
+    animations: [
     ],
 })
 export class ScheduleComponent implements OnInit {
 
-    selectedMatchDayId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY_ID)
+    counter = 0;
+
+    selectedMatchDay = fromStorage<MatchDay>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY)
 
     selectedTeamId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_TEAM_ID, '0')
 
@@ -64,8 +70,8 @@ export class ScheduleComponent implements OnInit {
                             if (!season) {
                                 return;
                             }
-                            if (!this.selectedMatchDayId() || !season?.match_days?.find((t) => t?.id === this.selectedMatchDayId())) {
-                                this.selectedMatchDayId.set(season!.match_days![0]?.id || null);
+                            if (!this.selectedMatchDay() || !season?.match_days?.find((t) => t?.id === this.selectedMatchDay()?.id )) {
+                                this.selectedMatchDay.set(season!.match_days![0]);
                             }
                         },
                     ),
@@ -76,6 +82,10 @@ export class ScheduleComponent implements OnInit {
 
     season = toSignal(this.season$);
 
+    private gestureService = inject(GestureService);
+
+    private destroyRef = inject(DestroyRef);
+
     constructor(
         private seasonService: SeasonService,
         private router: Router,
@@ -83,7 +93,22 @@ export class ScheduleComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.seasonService.reloadSeasons()
+        this.refresh();
+        this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
+            (event) => {
+                if (event.direction === 'Left') {
+                    this.prevMatchDay()
+                }
+                if (event.direction === 'Right') {
+                    this.nextMatchDay()
+                }
+            },
+        );
+    }
+
+    async refresh(event?: Subject<void>) {
+        await firstValueFrom(this.seasonService.reloadSeasons());
+        event?.next();
     }
 
     get filterSeasonStates() {
@@ -112,7 +137,7 @@ export class ScheduleComponent implements OnInit {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     findMatchDay(matchDays: any[]): MatchDay {
-        return matchDays.find((x) => x.id === this.selectedMatchDayId())
+        return matchDays.find((x) => x.id === this.selectedMatchDay()?.id )
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -126,38 +151,42 @@ export class ScheduleComponent implements OnInit {
             : matches;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    nextMatchDay(season: any) {
-        if (!season.match_days) {
+    nextMatchDay() {
+        this.counter--;
+        if (!this.season()?.match_days) {
             return;
         }
 
-        const matchDays = (season.match_days as MatchDay[])
+        const matchDays = this.season()?.match_days || []
 
-        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId()) || 0;
+        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDay()?.id ) || 0;
 
-        const nextId = matchDays[currentIndex + 1]?.id;
+        const next = matchDays[currentIndex + 1];
 
-        if(nextId) {
-            this.selectedMatchDayId.set(nextId);
+        if(next) {
+            this.selectedMatchDay.set(next);
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    prevMatchDay(season: any) {
-        if (!season.match_days) {
+    prevMatchDay() {
+        this.counter++;
+        if (!this.season()?.match_days) {
             return;
         }
 
-        const matchDays = (season.match_days as MatchDay[])
+        const matchDays = this.season()?.match_days || []
 
-        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayId()) || 0;
+        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDay()?.id) || 0;
 
-        const nextId = matchDays[currentIndex - 1]?.id;
+        const next = matchDays[currentIndex - 1];
 
-        if(nextId) {
-            this.selectedMatchDayId.set(nextId);
+        if(next) {
+            this.selectedMatchDay.set(next);
         }
+    }
+
+    compareMatchDay(a: MatchDay, b: MatchDay) {
+        return a.id === b.id
     }
 
 }

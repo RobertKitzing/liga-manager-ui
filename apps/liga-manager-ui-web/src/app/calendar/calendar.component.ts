@@ -9,7 +9,7 @@ import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import { AppsettingsService, CalendarService, fromStorage, I18nService } from '@liga-manager-ui/services';
-import { Subject, switchMap, tap } from 'rxjs';
+import { firstValueFrom, Subject, switchMap, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -23,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
 import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 import { Share } from '@capacitor/share';
+import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-calendar',
@@ -39,6 +40,7 @@ import { Share } from '@capacitor/share';
         ReactiveFormsModule,
         TranslateModule,
         MatInputModule,
+        NgxPullToRefreshComponent,
     ],
     standalone: true,
 })
@@ -60,9 +62,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     eventTrigger = new Subject<CalendarQueryVariables>();
 
-    options = new CalendarOptionsFormGroup(this.teamIdsLS()?.split(','));
+    options = new CalendarOptionsFormGroup(this.teamIdsLS() ? this.teamIdsLS()!.split(',') : undefined);
 
     calendarOptions: CalendarOptions = {
+        contentHeight: 'auto',
         headerToolbar: {
             start: '',
             center: 'title',
@@ -115,7 +118,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.calendarService.reloadEvents();
+        this.refresh();
         this.calendarOptions.locale = this.i18nService.currentLang;
         this.translateService.onLangChange.subscribe((lang) => this.calendarOptions.locale = lang.lang);
         this.options.controls.selectedView.valueChanges.pipe(
@@ -140,6 +143,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
                 this.teamIdsLS.set(this.options.controls.team_ids.value.join(','));
             },
         );
+    }
+
+    async refresh(event?: Subject<void>) {
+        await firstValueFrom(this.calendarService.reloadEvents());
+        event?.next();
     }
 
     triggerEvent() {

@@ -1,0 +1,6 @@
+@if (pitch()) {
+    <a href="https://www.google.com/maps/?q={{ pitch()?.location_latitude }},{{ pitch()?.location_longitude }}"
+        target="_blank" style="cursor: pointer;" (click)="$event.stopImmediatePropagation()">
+        {{ pitch()?.label }}
+    </a>
+}

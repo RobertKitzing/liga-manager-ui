@@ -20,4 +20,6 @@ export class TeamLogoComponent {
 
     basePath = inject(Configuration).basePath;
 
+    placeholder = 'data:image/webp;base64,UklGRpIAAABXRUJQVlA4WAoAAAAQAAAACQAACQAAQUxQSDgAAAABYBRJkqKSsuRgX+TfB0hYAXDX4yEiFAQEgIgzACGjxrWbkNY5L/NXx39LxU0LfsgNvnTJDC4DAFZQOCA0AAAA8AEAnQEqCgAKAAcAkiWwAnQBC2NATk0gAPxh+MwD1MPZrg5VVOUUv72vn8dnddXiffeQAA==';
+
 }

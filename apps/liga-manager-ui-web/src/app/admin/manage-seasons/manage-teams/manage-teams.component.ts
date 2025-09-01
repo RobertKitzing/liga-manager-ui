@@ -6,8 +6,9 @@ import { firstValueFrom } from 'rxjs';
 import { AddTeamToSeasonMutationVariables, Maybe, Team } from '@liga-manager-api/graphql';
 import { TranslateModule } from '@ngx-translate/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
-import { TeamAutoCompleteComponent, TeamSearchComponent } from '@liga-manager-ui/components';
+import { defaultDialogConfig, TeamAutoCompleteComponent, TeamSearchComponent } from '@liga-manager-ui/components';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReplaceTeamComponent } from './replace-team/replace-team.component';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -45,8 +46,14 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
         }
     }
 
-    replaceTeamInSeason() {
-        // TODO: ADD FUNCTION
+    replaceTeamInSeason(teamToBeReplaced: Team) {
+        this.dialog.open(ReplaceTeamComponent, {
+            ...defaultDialogConfig,
+            data: {
+                seasonId: this.season?.id,
+                teamToBeReplaced,
+            },
+        })
     }
 
 }

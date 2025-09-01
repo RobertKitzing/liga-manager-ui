@@ -40,7 +40,7 @@ export class TournamentService {
     );
 
     reloadTournaments() {
-        this.allTournamentListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+        return this.allTournamentListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
     }
 
     createTournament(name: string) {

@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import { defaultDialogConfig, EditPitchDialogComponent } from '@liga-manager-ui/components';
+import { defaultDialogConfig, EditPitchDialogComponent, PitchComponent } from '@liga-manager-ui/components';
 import { PitchService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import fuzzysearch from 'fuzzysearch-ts';
@@ -29,6 +29,7 @@ import { map, startWith, switchMap } from 'rxjs';
         MatInputModule,
         AsyncPipe,
         MatTableModule,
+        PitchComponent,
     ],
 })
 export class ManagePitchesComponent {
@@ -51,7 +52,7 @@ export class ManagePitchesComponent {
         ),
     );
 
-    displayedColumns = [ 'name' ];
+    displayedColumns = [ 'name', 'latitude', 'longitude' ];
 
     createPitch() {
         this.dialog.open(EditPitchDialogComponent,

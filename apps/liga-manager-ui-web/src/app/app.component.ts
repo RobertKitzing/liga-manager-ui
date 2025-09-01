@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Location, AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import {
+    AppsettingsService,
     AuthenticationService,
     I18nService,
     LoadingIndicatorService,
@@ -57,13 +58,15 @@ export class AppComponent implements OnInit {
 
     DarkModeAppearance = DarkModeAppearance;
 
-    darkModeControl = new FormControl(this.themeService.darkMode());
+    darkModeControl = new FormControl(this.themeService.darkMode() || DarkModeAppearance.system);
 
     languageControl = new FormControl(this.i18Service.storedLang());
 
     themeControl = new FormControl(this.themeService.currentTheme$.getValue());
 
     safeAreaInsets = signal<SafeAreaInsets>({ insets: { top: 0, bottom: 0, left: 0, right: 0 }});
+
+    private appsettingsService = inject(AppsettingsService);
 
     constructor(
         public themeService: ThemeService,
@@ -108,6 +111,19 @@ export class AppComponent implements OnInit {
         this.themeControl.valueChanges.subscribe((theme) => {
             this.changeTheme(theme || 'default');
         });
+
+        this.loadGoogleMapsScript();
+    }
+
+    loadGoogleMapsScript() {
+        const googleMapsJS = document.getElementById('googelmapsscript');
+        if (!googleMapsJS && this.appsettingsService.appsettings?.googleMapsApiKey) {
+            const tag = document.createElement('script');
+            tag.src = `https://maps.googleapis.com/maps/api/js?key=${this.appsettingsService.appsettings.googleMapsApiKey}&libraries=places&loading=async`;
+            tag.type = 'text/javascript';
+            tag.id = 'googelmapsscript';
+            document.body.appendChild(tag);
+        }
     }
 
     openLoginDialog() {

@@ -17,10 +17,11 @@ import { TruncatePipe } from '@liga-manager-ui/pipes';
 import { FormControl } from '@angular/forms';
 import { SeasonChooserComponent, TeamLogoComponent } from '@liga-manager-ui/components';
 import { AllSeasonsFragment, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
-import { BehaviorSubject, fromEvent, map, of, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, fromEvent, map, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-table',
@@ -48,6 +49,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatSortModule,
         MatCardModule,
         TeamLogoComponent,
+        NgxPullToRefreshComponent,
     ],
 })
 export class TableComponent implements OnInit {
@@ -142,7 +144,12 @@ export class TableComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.seasonService.reloadSeasons();
+        this.refresh();
+    }
+
+    async refresh(event?: Subject<void>) {
+        await firstValueFrom(this.seasonService.reloadSeasons());
+        event?.next();
     }
 
     get filterSeasonStates() {

@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import dayjs from 'dayjs';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import {
     CalendarGQL,
     CalendarQueryVariables,
     MatchAppointment,
     MatchDay,
+    Maybe,
     SeasonState,
     TournamentState,
 } from '@liga-manager-api/graphql';
@@ -16,8 +17,8 @@ import { TranslateService } from '@ngx-translate/core';
 export interface IMatchDayEvent {
     allDay: boolean;
     title: string;
-    start: Date;
-    end?: Date;
+    start: string;
+    end?: string;
     matchDay?: MatchDay;
     matchDayIndex?: number;
     matchDayId?: string;
@@ -29,6 +30,10 @@ export interface IMatchDayEvent {
     match?: any;
     team_ids?: string[];
 }
+
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 @Injectable({
     providedIn: 'root',
@@ -43,7 +48,7 @@ export class CalendarService {
     ) {}
 
     reloadEvents() {
-        this.calendarGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1)).subscribe();
+        return this.calendarGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
     }
 
     getCalendarEvents(
@@ -61,8 +66,8 @@ export class CalendarService {
                             allDay: true,
                             display: 'background',
                             title: this.translateService.instant('MATCHDAY', { matchDay: matchDay?.number}),
-                            start: dayjs(matchDay?.start_date).toDate(),
-                            end: dayjs(matchDay?.end_date).toDate(),
+                            start: dayjs(matchDay?.start_date).toJSON(),
+                            end: dayjs(matchDay?.end_date).toJSON(),
                         })),
                     );
                 }
@@ -78,8 +83,8 @@ export class CalendarService {
                             allDay: true,
                             display: 'background',
                             title: this.translateService.instant('TOURNAMENT_ROUND', { round: round?.number }),
-                            start: dayjs(round?.start_date).toDate(),
-                            end: dayjs(round?.end_date).toDate(),
+                            start: dayjs(round?.start_date, { utc: true }).toJSON(),
+                            end: dayjs(round?.end_date).toJSON(),
                         })),
                     );
                 }
@@ -87,7 +92,7 @@ export class CalendarService {
                     data.matchesByKickoff!.map((match) => ({
                         allDay: false,
                         title: `${match?.home_team.name} - ${match?.guest_team.name}`,
-                        start: dayjs(match?.kickoff).toDate(),
+                        start: dayjs(match?.kickoff).toJSON(),
                         match,
                         team_ids: [ match?.home_team.id || '', match?.guest_team.id || '' ],
                     })),
@@ -97,24 +102,30 @@ export class CalendarService {
         );
     }
 
-    getEvents(match_days: MatchDay[]): Observable<IMatchDayEvent[]> {
-        const matchDays = match_days?.map((matchDay) => ({
+    getEvents(match_days: Maybe<MatchDay>[], holidays?: boolean) {
+        const matchDays: IMatchDayEvent[] = match_days?.map((matchDay) => ({
             allDay: true,
             title: this.translateService.instant('MATCHDAY', { matchDay: matchDay?.number}),
-            matchDayIndex: matchDay.number - 1,
-            matchDayId: matchDay.id,
-            start: new Date(matchDay.start_date),
-            end: new Date(matchDay.end_date),
-        }));
-        // if (holidays) {
-        //   return forkJoin(
-        //     this.holidaysService.publicHolidays(dayjs().year()),
-        //     this.holidaysService.publicHolidays(dayjs().year() + 1),
-        //     of(matchDays || []),
-        //   );
-        // } else {
-        return of(matchDays);
-        // }
+            matchDayIndex: (matchDay?.number || 1) - 1,
+            matchDayId: matchDay?.id,
+            start: dayjs.utc(matchDay?.start_date).toJSON(),
+            end: dayjs.utc(matchDay?.end_date).toJSON(),
+        })) || [];
+        if (holidays) {
+            return forkJoin([
+                this.holidaysService.publicHolidays(dayjs().year() - 1),
+                this.holidaysService.publicHolidays(dayjs().year()),
+                this.holidaysService.publicHolidays(dayjs().year() + 1),
+                this.holidaysService.publicSchoolOff(dayjs().year() - 1),
+                this.holidaysService.publicSchoolOff(dayjs().year()),
+                this.holidaysService.publicSchoolOff(dayjs().year() + 1),
+                of(matchDays || []),
+            ]).pipe(
+                map((data) => data.flat()),
+            )
+        } else {
+            return of(matchDays);
+        }
     }
 
 }

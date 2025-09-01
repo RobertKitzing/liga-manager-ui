@@ -7,6 +7,7 @@ import { Maybe, Team } from '@liga-manager-api/graphql';
 import { TranslateModule } from '@ngx-translate/core';
 import { startWith, tap } from 'rxjs';
 import fuzzysearch from 'fuzzysearch-ts';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'lima-team-search',
@@ -15,6 +16,7 @@ import fuzzysearch from 'fuzzysearch-ts';
         ReactiveFormsModule,
         MatInputModule,
         TranslateModule,
+        MatIcon,
     ],
     templateUrl: './team-search.component.html',
 })

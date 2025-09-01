@@ -8,6 +8,8 @@ import { AuthenticationService, UserService } from '@liga-manager-ui/services';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { matchResolver } from './match.resolver';
 import { AppComponent } from './app.component';
+import { teamResolver } from './team.resolver';
+import { MatchComponent, TeamContactComponent } from '@liga-manager-ui/components';
 
 export const isLoggedInGuard = () => {
     return inject(UserService).loadUser();
@@ -112,15 +114,22 @@ export const routes: Routes = [
                 ],
             },
             {
+                path: `${APP_ROUTES.MATCH}/:matchid`,
+                component: MatchComponent,
+                // loadComponent: () => import('@liga-manager-ui/components').then((m) => m.MatchComponent),
+                resolve: { match: matchResolver },
+            },
+            {
+                path: `${APP_ROUTES.TEAM}/:teamid`,
+                component: TeamContactComponent,
+                // loadComponent: () => import('@liga-manager-ui/components').then((m) => m.TeamContactComponent),
+                resolve: { team: teamResolver },
+            },
+            {
                 path: '',
                 redirectTo: APP_ROUTES.SCHEDULE,
                 pathMatch: 'full',
             },
         ],
-    },
-    {
-        path: `${APP_ROUTES.MATCH}/:matchid`,
-        loadComponent: () => import('@liga-manager-ui/components').then((m) => m.MatchComponent),
-        resolve: { user: userResolver, match: matchResolver },
     },
 ];

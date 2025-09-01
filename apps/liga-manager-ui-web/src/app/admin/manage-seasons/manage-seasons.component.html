@@ -1,21 +1,24 @@
 <div class="w-full h-full flex flex-col">
     <div class="m-2 mt-0">
         <mat-toolbar class="secondary">
-            <div class="w-full flex items-center space-x-4 justify-evenly">
-                <div class="w-1/2">
-                    <lima-season-chooser
-                        [selectedSeasonFC]="selectedSeasonFC"
-                        [clearable]="true"
-                    ></lima-season-chooser>
+            <mat-toolbar-row>
+                <div class="w-full flex items-center space-x-4 justify-evenly">
+                    <div class="w-1/2">
+                        <lima-season-chooser
+                            [selectedSeasonFC]="selectedSeasonFC"
+                            [clearable]="true"
+                        ></lima-season-chooser>
+                    </div>
+                    <button
+                        mat-icon-button
+                        (click)="createSeason()"
+                        cySelector="button-create-season"
+                    >
+                        <mat-icon>add</mat-icon>
+                    </button>
                 </div>
-                <button
-                    mat-stroked-button
-                    (click)="createSeason()"
-                    cySelector="button-create-season"
-                >
-                    <mat-icon>add</mat-icon>
-                    <span translate>BUTTON.CREATE_SEASON</span>
-                </button>
+            </mat-toolbar-row>
+            <mat-toolbar-row class="justify-evenly">
                 @if ((season$ | async); as season) {
                     @if ( season.state === SeasonState.Progress ) {
                         <button mat-stroked-button (click)="endSeason(season.id, season.name)">
@@ -35,7 +38,7 @@
                         </button>
                     }
                 }
-            </div>
+            </mat-toolbar-row>
         </mat-toolbar>
     </div>
     <div>

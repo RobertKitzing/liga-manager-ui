@@ -26,12 +26,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { APP_ROUTES } from '@liga-manager-ui/common';
-import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { CypressSelectorDirective, TrimDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-edit-user-dialog',
     templateUrl: './edit-user-dialog.component.html',
-    styleUrls: ['./edit-user-dialog.component.scss'],
     standalone: true,
     imports: [
         MatDialogTitle,
@@ -47,6 +46,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         AsyncPipe,
         KeyValuePipe,
         CypressSelectorDirective,
+        TrimDirective,
     ],
 })
 export class EditUserDialogComponent implements OnInit {
@@ -112,9 +112,9 @@ export class EditUserDialogComponent implements OnInit {
             await firstValueFrom(
                 this.userService.createUser({
                     user_id: uuidv4(),
-                    email: this.userFormGroup.value.email!,
-                    first_name: this.userFormGroup.value.first_name!,
-                    last_name: this.userFormGroup.value.last_name!,
+                    email: this.userFormGroup.value.email!.trim(),
+                    first_name: this.userFormGroup.value.first_name!.trim(),
+                    last_name: this.userFormGroup.value.last_name!.trim(),
                     role: this.userFormGroup.value.role!,
                     team_ids: this.userFormGroup.value.team_ids!,
                     password: generator({
