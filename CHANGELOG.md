@@ -1,3 +1,13 @@
+## 5.7.0 (2025-09-01)
+
+### 🚀 Features
+
+- Added Guestures ([03ba6383](https://github.com/RobertKitzing/liga-manager-ui/commit/03ba6383))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.6.3 (2025-08-14)
 
 This was a version bump only, there were no code changes.
