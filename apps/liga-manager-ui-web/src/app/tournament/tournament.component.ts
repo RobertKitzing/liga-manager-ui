@@ -5,6 +5,7 @@ import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graph
 import {
     TournamentChooserComponent,
     MatchComponent,
+    matchDayAnimation,
 } from '@liga-manager-ui/components';
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,6 +38,7 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         NgxPullToRefreshComponent,
     ],
     standalone: true,
+    animations: [ matchDayAnimation ],
 })
 export class TournamentComponent implements OnInit {
 

@@ -1,75 +1,73 @@
-<ngx-pull-to-refresh (refresh)="refresh($event)" [spinnerSize]="35">
-    <div class="flex flex-col h-full">
-        <div class="shrink p-2">
-            <mat-toolbar class="secondary">
-                <mat-toolbar-row>
-                    <div class="grid grid-cols-3 w-full">
-                        <div class="self-center">
-                            <button
-                                mat-icon-button
-                                (click)="prev()"
-                                >
-                                <mat-icon>arrow_back</mat-icon>
-                            </button>
-                        </div>
-                        <div class="flex justify-center space-x-4">
-                            <button
-                                mat-stroked-button
-                                (click)="today()"
-                                >
-                                <mat-label>today</mat-label>
-                            </button>
-                            <button
-                                mat-icon-button
-                                (click)="openSettings()"
-                                >
-                                <div class="flex justify-center">
-                                    <mat-icon>settings</mat-icon>
-                                </div>
-                            </button>
-                            @if (canShare | async) {
-                                <button
-                                    mat-icon-button
-                                    (click)="share()"
-                                >
-                                    <mat-icon>share</mat-icon>
-                                </button>
-                            }
-                        </div>
-                        <div class="self-center text-end">
-                            <button
-                                mat-icon-button
-                                (click)="next()"
+<div class="flex flex-col h-full">
+    <div class="shrink p-2">
+        <mat-toolbar class="secondary">
+            <mat-toolbar-row>
+                <div class="grid grid-cols-3 w-full">
+                    <div class="self-center">
+                        <button
+                            mat-icon-button
+                            (click)="prev()"
                             >
-                                <mat-icon>arrow_forward</mat-icon>
-                            </button>
-                        </div>
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
                     </div>
-                </mat-toolbar-row>
-            </mat-toolbar>
-        </div>
-        <div class="grow overflow-auto p-2">
-            @if (events$ | async) {}
-            <full-calendar
-                class="w-full h-full"
-                #calendar
-                [options]="calendarOptions"
-                [deepChangeDetection]="true"
-            >
-                <ng-template #eventContent let-arg>
-                    <div class="flex justify-center w-full">
-                        @if(arg.event.extendedProps.match) {
-                            <lima-match class="w-full" [match]="arg.event.extendedProps.match"></lima-match>
-                        } @else {
-                            <span class="mat-sys-primary-container w-full">{{ arg.event.title }}</span>
+                    <div class="flex justify-center space-x-4">
+                        <button
+                            mat-stroked-button
+                            (click)="today()"
+                            >
+                            <mat-label>today</mat-label>
+                        </button>
+                        <button
+                            mat-icon-button
+                            (click)="openSettings()"
+                            >
+                            <div class="flex justify-center">
+                                <mat-icon>settings</mat-icon>
+                            </div>
+                        </button>
+                        @if ((canShare | async) && options.controls.team_ids.value.length > 0) {
+                            <button
+                                mat-icon-button
+                                (click)="share()"
+                            >
+                                <mat-icon>share</mat-icon>
+                            </button>
                         }
                     </div>
-                </ng-template>
-
-                <ng-template #noEventsContent let-arg>
-                    {{ "NO_EVENTS" | translate }}
-                </ng-template>
-            </full-calendar>
-        </div>
+                    <div class="self-center text-end">
+                        <button
+                            mat-icon-button
+                            (click)="next()"
+                        >
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
     </div>
-</ngx-pull-to-refresh>
+    <div class="grow overflow-auto p-2">
+        @if (events$ | async) {}
+        <full-calendar
+            class="w-full h-full"
+            #calendar
+            [options]="calendarOptions"
+            [deepChangeDetection]="true"
+        >
+            <ng-template #eventContent let-arg>
+                <div class="flex justify-center w-full">
+                    @if(arg.event.extendedProps.match) {
+                        <lima-match class="w-full" [match]="arg.event.extendedProps.match"></lima-match>
+                    } @else {
+                        <span class="mat-sys-primary-container w-full">{{ arg.event.title }}</span>
+                    }
+                </div>
+            </ng-template>
+
+            <ng-template #noEventsContent let-arg>
+                {{ "NO_EVENTS" | translate }}
+            </ng-template>
+        </full-calendar>
+    </div>
+</div>

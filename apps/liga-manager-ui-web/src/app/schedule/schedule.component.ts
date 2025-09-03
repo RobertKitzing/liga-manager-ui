@@ -12,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import {
     MatchComponent,
+    matchDayAnimation,
     SeasonChooserComponent,
 } from '@liga-manager-ui/components';
 import { AllSeasonsFragment, Match, MatchDay, SeasonState } from '@liga-manager-api/graphql';
@@ -24,7 +25,7 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 @Component({
     selector: 'lima-schedule',
     templateUrl: './schedule.component.html',
-    styles: [],
+    styles: [ ],
     standalone: true,
     imports: [
         MatToolbarModule,
@@ -42,11 +43,10 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         NgxPullToRefreshComponent,
     ],
     animations: [
+        matchDayAnimation,
     ],
 })
 export class ScheduleComponent implements OnInit {
-
-    counter = 0;
 
     selectedMatchDay = fromStorage<MatchDay>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY)
 
@@ -152,7 +152,6 @@ export class ScheduleComponent implements OnInit {
     }
 
     nextMatchDay() {
-        this.counter--;
         if (!this.season()?.match_days) {
             return;
         }
@@ -169,7 +168,6 @@ export class ScheduleComponent implements OnInit {
     }
 
     prevMatchDay() {
-        this.counter++;
         if (!this.season()?.match_days) {
             return;
         }

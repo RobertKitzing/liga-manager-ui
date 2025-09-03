@@ -23,12 +23,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
 import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 import { Share } from '@capacitor/share';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-calendar',
     templateUrl: './calendar.component.html',
-    styles: [],
     imports: [
         AsyncPipe,
         FullCalendarModule,
@@ -40,7 +38,6 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         ReactiveFormsModule,
         TranslateModule,
         MatInputModule,
-        NgxPullToRefreshComponent,
     ],
     standalone: true,
 })
