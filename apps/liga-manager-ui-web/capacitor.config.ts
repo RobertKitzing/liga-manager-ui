@@ -15,11 +15,11 @@ const config: CapacitorConfig = {
         androidScheme: 'http',
         cleartext: true,
     },
-    plugins: {
-        CapacitorHttp: {
-            enabled: true,
-        },
-    },
+    // plugins: {
+    //     CapacitorHttp: {
+    //         enabled: true,
+    //     },
+    // },
 };
 
 export default config;

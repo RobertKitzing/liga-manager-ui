@@ -1,7 +1,7 @@
 import { trigger, transition, style, animate, query, group } from '@angular/animations';
 
 export const matchDayAnimation = trigger('matchDayAnimation', [
-    transition(':decrement', [
+    transition(':increment', [
         group([
             query(':leave', [
                 style({ position: 'relative', opacity: 1, translate: '0 calc( (-{{ length }}*100%) - ({{ length }}*8px) )' }),
@@ -13,7 +13,7 @@ export const matchDayAnimation = trigger('matchDayAnimation', [
             ),
         ]),
     ]),
-    transition(':increment', [
+    transition(':decrement', [
         group([
             query(':leave', [
                 style({ position: 'relative', opacity: 1, translate: '0 calc( (-{{ length }}*100%) - ({{ length }}*8px) )' }),
