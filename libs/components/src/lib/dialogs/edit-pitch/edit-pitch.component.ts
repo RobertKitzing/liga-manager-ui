@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, OnInit, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -21,7 +20,6 @@ import { Pitch } from '@liga-manager-api/graphql';
     standalone: true,
     imports: [
         TranslateModule,
-        CommonModule,
         MatDialogModule,
         MatButtonModule,
         MatCardModule,

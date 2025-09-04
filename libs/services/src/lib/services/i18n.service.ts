@@ -1,6 +1,6 @@
-import { DOCUMENT, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { fromStorage } from '../functions';
 import { StorageKeys } from '@liga-manager-ui/common';

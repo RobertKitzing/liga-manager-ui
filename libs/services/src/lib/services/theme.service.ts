@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { BehaviorSubject } from 'rxjs';
 import { fromStorage } from '../functions';
