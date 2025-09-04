@@ -53,35 +53,35 @@ export function apolloFactory() {
             }
             if (networkError) {
                 switch ((networkError as ServerError).statusCode) {
-                case 401:
-                    if (operation.operationName !== 'PasswordChange') {
-                        authenticationService.logout();
+                    case 401:
+                        if (operation.operationName !== 'PasswordChange') {
+                            authenticationService.logout();
+                        }
+                        break;
+                    case 400:
+                    case 409: {
+                        const messages = graphQLErrors?.map((x) => x.message);
+                        console.log(messages);
+                        notificationService.showErrorNotification(
+                            marker('ERROR.BAD_REQUEST'),
+                            messages,
+                        );
+                        break;
                     }
-                    break;
-                case 400:
-                case 409: {
-                    const messages = graphQLErrors?.map((x) => x.message);
-                    console.log(messages);
-                    notificationService.showErrorNotification(
-                        marker('ERROR.BAD_REQUEST'),
-                        messages,
-                    );
-                    break;
-                }
-                case 503: {
-                    const open = dialog.getDialogById('maintenance-mode');
-                    if (!open) {
-                        dialog.open(MaintenanceModeComponent, {
-                            id: 'maintenance-mode',
-                        });
+                    case 503: {
+                        const open = dialog.getDialogById('maintenance-mode');
+                        if (!open) {
+                            dialog.open(MaintenanceModeComponent, {
+                                id: 'maintenance-mode',
+                            });
+                        }
+                        break;
                     }
-                    break;
-                }
-                default:
-                    notificationService.showErrorNotification(
-                        marker('ERROR.UNKNOWN_NETWORK_ERROR'),
-                        [],
-                    );
+                    default:
+                        notificationService.showErrorNotification(
+                            marker('ERROR.UNKNOWN_NETWORK_ERROR'),
+                            [],
+                        );
                 }
             }
         },
