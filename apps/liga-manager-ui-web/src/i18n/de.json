@@ -160,7 +160,7 @@
 	"TEAM_CONTACT_SAVED_SUCCESS": "",
 	"TEAM_NAME": "Team",
 	"TOURNAMENT_COUNT": "Pokalsiege",
-	"TOURNAMENT_ROUND": "{{ matchDay }}. Runde",
+	"TOURNAMENT_ROUND": "{{ round }}. Runde",
 	"TOURNAMENT_ROUND_FROM_DATE": "",
 	"TOURNAMENT_ROUND_TO_DATE": "",
 	"UPLOAD_TEAM_LOGO": "",

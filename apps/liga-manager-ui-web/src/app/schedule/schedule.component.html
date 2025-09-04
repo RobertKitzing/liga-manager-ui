@@ -82,13 +82,11 @@
             @if (findMatchDay(season()?.match_days || []); as matchDay) {
                 <div class="flex justify-center z-0 overflow-x-hidden">
                     <ul class="w-full overflow-x-hidden" [@matchDayAnimation]="{value: matchDay.number , params: { length: matchDay?.matches?.length }}">
-                        <ngx-pull-to-refresh (refresh)="refresh($event)" [spinnerSize]="35" [distanceForRefresh]="100">
-                            @for (match of filterMatches(matchDay?.matches || []); track match.id) {
-                                <li>
-                                    <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
-                                </li>
-                            }
-                        </ngx-pull-to-refresh>
+                        @for (match of filterMatches(matchDay?.matches || []); track match.id) {
+                            <li>
+                                <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
+                            </li>
+                        }
                     </ul>
                 </div>
             }

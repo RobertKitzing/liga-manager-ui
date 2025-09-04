@@ -20,7 +20,6 @@ import { FormControl } from '@angular/forms';
 import { StorageKeys } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-schedule',
@@ -40,7 +39,6 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         MatchComponent,
         MatCardModule,
         SortByPipe,
-        NgxPullToRefreshComponent,
     ],
     animations: [
         matchDayAnimation,
@@ -97,10 +95,10 @@ export class ScheduleComponent implements OnInit {
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
-                    this.prevMatchDay()
+                    this.nextMatchDay()
                 }
                 if (event.direction === 'Right') {
-                    this.nextMatchDay()
+                    this.prevMatchDay()
                 }
             },
         );

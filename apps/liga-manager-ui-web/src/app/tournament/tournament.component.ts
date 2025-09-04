@@ -93,10 +93,10 @@ export class TournamentComponent implements OnInit {
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
-                    this.prevRound()
+                    this.nextRound()
                 }
                 if (event.direction === 'Right') {
-                    this.nextRound()
+                    this.prevRound()
                 }
             },
         );
