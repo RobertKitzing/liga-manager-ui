@@ -31,10 +31,26 @@ data:
         include /nginx-ui-conf/nginx.ui.conf;
 
         location /api {
-            include fastcgi_params;
-            fastcgi_pass api;
-            fastcgi_param DOCUMENT_ROOT /var/www/api/public;
-            fastcgi_param SCRIPT_NAME index.php;
-            fastcgi_param SCRIPT_FILENAME /var/www/api/public/index.php;
+          # Answer preflight request directly (required for Android app)
+          if ($request_method = 'OPTIONS') {
+              add_header 'Access-Control-Allow-Origin' 'https://localhost';
+              add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
+              add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+              add_header 'Access-Control-Max-Age' 60;
+              add_header 'Content-Type' 'text/plain; charset=UTF-8';
+              add_header 'Content-Length' 0;
+              return 204; # No Content response
+          }
+
+          # Add the CORS headers to application responses as well (required for Android app)
+          add_header 'Access-Control-Allow-Origin' 'https://localhost' always;
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+          add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+          
+          include fastcgi_params;
+          fastcgi_pass api;
+          fastcgi_param DOCUMENT_ROOT /var/www/api/public;
+          fastcgi_param SCRIPT_NAME index.php;
+          fastcgi_param SCRIPT_FILENAME /var/www/api/public/index.php;
         }
     }
