@@ -11,7 +11,7 @@
 }
 
 .slide-out-rtl {
-  animation: slide-out-rtl 1s, fade-in 1s;
+  animation: slide-out-rtl 1s, fade-in 1s, out-transform-y 1s;
 }
 
 .slide-in-ltr {
@@ -19,7 +19,16 @@
 }
 
 .slide-out-ltr {
-  animation: slide-out-ltr 1s, fade-in 1s;
+  animation: slide-out-ltr 1s, fade-in 1s, out-transform-y 1s;
+}
+
+@keyframes out-transform-y {
+    from {
+      transform: translateY(calc( ( var(--data-length) * -100% ) - ( var(--data-length) * 8px) ));
+    }
+    to {
+      transform: translateY(calc( ( var(--data-length) * -100%) - ( var(--data-length) * 8px) ));
+    }
 }
 
 @keyframes slide-in-ltr {
@@ -33,10 +42,10 @@
 
 @keyframes slide-out-ltr {
   from {
-    translate: 0 calc( ( var(--data-length) * -100% ) - ( var(--data-length) * 8px) )
+    translate: 0;
   }
   to {
-    translate: 100% calc( ( var(--data-length) * -100%) - ( var(--data-length) * 8px) )
+    translate: 100%
   }
 }
 
@@ -51,10 +60,10 @@
 
 @keyframes slide-out-rtl {
   from {
-    translate: 0 calc( ( var(--data-length) * -100%) - ( var(--data-length) * 8px) )
+    translate: 0;
   }
   to {
-    translate: -100% calc( ( var(--data-length) * -100%) - ( var(--data-length) * 8px) )
+    translate: -100%
   }
 }
 
