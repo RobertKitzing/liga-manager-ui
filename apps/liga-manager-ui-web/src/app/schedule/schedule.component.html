@@ -81,13 +81,13 @@
         <div>
             @if (findMatchDay(season()?.match_days || []); as matchDay) {
                 <div class="flex justify-center z-0 overflow-x-hidden">
-                    <ul class="w-full overflow-x-hidden" [@matchDayAnimation]="{value: matchDay.number , params: { length: matchDay?.matches?.length }}">
+                    <div class="w-full overflow-x-hidden">
                         @for (match of filterMatches(matchDay?.matches || []); track match.id) {
-                            <li>
+                            <div [animate.enter]="animateEnter()" [animate.leave]="animateLeave()">
                                 <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
-                            </li>
+                            </div>
                         }
-                    </ul>
+                    </div>
                 </div>
             }
         </div>

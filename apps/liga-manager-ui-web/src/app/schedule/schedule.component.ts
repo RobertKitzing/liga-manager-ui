@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { AuthenticationService, fromStorage, GestureService, SeasonService } from '@liga-manager-ui/services';
@@ -12,7 +12,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import {
     MatchComponent,
-    matchDayAnimation,
     SeasonChooserComponent,
 } from '@liga-manager-ui/components';
 import { AllSeasonsFragment, Match, MatchDay, SeasonState } from '@liga-manager-api/graphql';
@@ -24,7 +23,6 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'lima-schedule',
     templateUrl: './schedule.component.html',
-    styles: [ ],
     standalone: true,
     imports: [
         MatToolbarModule,
@@ -40,11 +38,12 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
         MatCardModule,
         SortByPipe,
     ],
-    animations: [
-        matchDayAnimation,
-    ],
 })
 export class ScheduleComponent implements OnInit {
+
+    animateEnter = signal<'slide-in-ltr' | 'slide-in-rtl' | undefined>(undefined);
+
+    animateLeave = signal<'slide-out-ltr' | 'slide-out-rtl' | undefined>(undefined);
 
     private gestureService = inject(GestureService);
 
@@ -150,6 +149,10 @@ export class ScheduleComponent implements OnInit {
     }
 
     nextMatchDay() {
+
+        this.animateEnter.set('slide-in-rtl');
+        this.animateLeave.set('slide-out-rtl');
+
         if (!this.season()?.match_days) {
             return;
         }
@@ -166,6 +169,10 @@ export class ScheduleComponent implements OnInit {
     }
 
     prevMatchDay() {
+
+        this.animateEnter.set('slide-in-ltr');
+        this.animateLeave.set('slide-out-ltr');
+
         if (!this.season()?.match_days) {
             return;
         }

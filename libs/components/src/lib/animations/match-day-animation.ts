@@ -4,8 +4,8 @@ export const matchDayAnimation = trigger('matchDayAnimation', [
     transition(':decrement', [
         group([
             query(':leave', [
-                style({ opacity: 1, translate: '0 calc( (-{{ length }}*100%) - ({{ length }}*8px) )' }),
-                animate('.5s ease-out', style({ opacity: 0, translate: '100% calc( (-{{ length }}*100%) - ({{ length }}*8px) )' })),
+                style({ opacity: 1, translate: '0' }),
+                animate('.5s ease-out', style({ opacity: 0, translate: '100%' })),
             ],{ optional: true }),
             query(':enter',
                 [style({ opacity: 0, translate: '-100%' }), animate('.5s ease-out', style({ opacity: 1, translate: '0' }))],
@@ -16,8 +16,8 @@ export const matchDayAnimation = trigger('matchDayAnimation', [
     transition(':increment', [
         group([
             query(':leave', [
-                style({ opacity: 1, translate: '0 calc( (-{{ length }}*100%) - ({{ length }}*8px) )' }),
-                animate('.5s ease-out', style({ opacity: 0, translate: '-100% calc( (-{{ length }}*100%) - ({{ length }}*8px) )' })),
+                style({ opacity: 1, translate: '0' }),
+                animate('.5s ease-out', style({ opacity: 0, translate: '-100%' })),
             ],{ optional: true }),
             query(':enter',
                 [style({ opacity: 0, translate: '100%' }), animate('.5s ease-out', style({ opacity: 1, translate: '0' }))],
@@ -26,3 +26,8 @@ export const matchDayAnimation = trigger('matchDayAnimation', [
         ]),
     ]),
 ]);
+
+// calc( (-{{ length }}*100%) - ({{ length }}*8px) )
+// calc( (-{{ length }}*100%) - ({{ length }}*8px) )
+// calc( (-{{ length }}*100%) - ({{ length }}*8px) )
+// calc( (-{{ length }}*100%) - ({{ length }}*8px) )
