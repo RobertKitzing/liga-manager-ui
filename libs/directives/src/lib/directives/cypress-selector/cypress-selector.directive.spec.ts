@@ -31,11 +31,11 @@ describe('CypressSelectorDirective', () => {
 
     it('should init', () => {
         expect(fixture).toBeTruthy();
-    })
+    });
 
     it('should add the right attr to the element', () => {
         const elements = fixture.debugElement.queryAll(By.directive(CypressSelectorDirective));
         expect(elements[0].attributes['data-cy']).toBe('black');
-    })
+    });
 
-})
+});

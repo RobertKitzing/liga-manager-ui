@@ -21,7 +21,6 @@ import { BehaviorSubject, firstValueFrom, fromEvent, map, of, startWith, Subject
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-table',
@@ -49,10 +48,13 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         MatSortModule,
         MatCardModule,
         TeamLogoComponent,
-        NgxPullToRefreshComponent,
     ],
 })
 export class TableComponent implements OnInit {
+
+    private router = inject(Router);
+
+    private seasonService = inject(SeasonService);
 
     displayedColumns: string[] = [
         'position',
@@ -134,8 +136,6 @@ export class TableComponent implements OnInit {
     );
 
     constructor(
-        private router: Router,
-        private seasonService: SeasonService,
     ) {
         fromEvent(window, 'resize')
             .pipe(

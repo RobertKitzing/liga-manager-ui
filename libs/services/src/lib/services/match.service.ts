@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
     CancelMatchGQL,
     CancelMatchMutationVariables,
@@ -20,16 +20,22 @@ import { map } from 'rxjs';
 })
 export class MatchService {
 
-    constructor(
-        private submitResultGQL: SubmitResultGQL,
-        private seasonByIdGQL: SeasonByIdGQL,
-        private seasonService: SeasonService,
-        private rankingByIdGQL: RankingByIdGQL,
-        private locateMatchQGL: LocateMatchGQL,
-        private scheduleMatchGQL: ScheduleMatchGQL,
-        private cancelMatchGQL: CancelMatchGQL,
-        private matchByIdGQL: MatchByIdGQL,
-    ) {}
+    private submitResultGQL = inject(SubmitResultGQL);
+
+    private seasonByIdGQL = inject(SeasonByIdGQL);
+
+    private seasonService = inject(SeasonService);
+
+    private rankingByIdGQL = inject(RankingByIdGQL);
+
+    private locateMatchQGL = inject(LocateMatchGQL);
+
+    private scheduleMatchGQL = inject(ScheduleMatchGQL);
+
+    private cancelMatchGQL = inject(CancelMatchGQL);
+
+    private matchByIdGQL = inject(MatchByIdGQL);
+
 
     getMatchById$(id: string) {
         return this.matchByIdGQL

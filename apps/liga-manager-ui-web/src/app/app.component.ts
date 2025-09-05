@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { Location, AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -56,6 +56,20 @@ import { Device } from '@capacitor/device';
 })
 export class AppComponent implements OnInit {
 
+    themeService = inject(ThemeService);
+
+    loadingIndicatorService = inject(LoadingIndicatorService);
+
+    authService = inject(AuthenticationService);
+
+    i18Service = inject(I18nService);
+
+    private dialog = inject(MatDialog);
+
+    private route = inject(ActivatedRoute);
+
+    private router = inject(Router);
+
     DarkModeAppearance = DarkModeAppearance;
 
     darkModeControl = new FormControl(this.themeService.darkMode() || DarkModeAppearance.system);
@@ -68,17 +82,6 @@ export class AppComponent implements OnInit {
 
     private appsettingsService = inject(AppsettingsService);
 
-    constructor(
-        public themeService: ThemeService,
-        public loadingIndicatorService: LoadingIndicatorService,
-        public authService: AuthenticationService,
-        public i18Service: I18nService,
-        private dialog: MatDialog,
-        private route: ActivatedRoute,
-        private router: Router,
-        private location: Location,
-    ) {}
-
     get currentRoute() {
         const url = this.router.url.split('/')[1].split('?')[0];
         return `NAVIGATION.${url.toUpperCase()}`;
@@ -89,7 +92,7 @@ export class AppComponent implements OnInit {
         SafeArea.getSafeAreaInsets().then(async(safeAreaInsets) => {
             const info = await Device.getInfo();
             if (info.androidSDKVersion! >= 35) {
-                this.safeAreaInsets.set(safeAreaInsets)
+                this.safeAreaInsets.set(safeAreaInsets);
             }
         });
 

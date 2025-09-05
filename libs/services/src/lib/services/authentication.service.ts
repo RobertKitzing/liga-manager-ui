@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserRole } from '@liga-manager-api/graphql';
 import { fromStorage } from '../functions';
@@ -18,9 +18,7 @@ export class AuthenticationService {
 
     user = signal<User | undefined>(undefined);
 
-    constructor(
-        private router: Router,
-    ) {}
+    private router = inject(Router);
 
     get isAdmin() {
         return this.user() ? this.user()?.role === UserRole.Admin : false;
@@ -31,7 +29,7 @@ export class AuthenticationService {
     }
 
     logout() {
-        this.accessToken.set(null)
+        this.accessToken.set(null);
         this.user.set(undefined);
         this.router.navigateByUrl('');
     }

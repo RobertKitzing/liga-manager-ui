@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom, map, of, take } from 'rxjs';
 import {
     AddTeamToSeasonGQL,
@@ -33,6 +33,35 @@ import { fromStorage } from '../functions';
 })
 export class SeasonService {
 
+    private allSeasonlistGQL = inject(AllSeasonsListGQL);
+
+    private seasonByIdGQL = inject(SeasonByIdGQL);
+
+    private rankingGQL = inject(RankingByIdGQL);
+
+    private createSeasonGQL = inject(CreateSeasonGQL);
+
+    private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
+
+    private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
+
+    private startSeasonGQL = inject(StartSeasonGQL);
+
+    private deleteSeasonGQL = inject(DeleteSeasonGQL);
+
+    private endSeasonGQL = inject(EndSeasonGQL);
+
+    private createMatchesForSeasonGQL = inject(CreateMatchesForSeasonGQL);
+
+    private replaceTeamInSeasonGQL = inject(ReplaceTeamInSeasonGQL);
+
+    private rescheduleMatchDayGQL = inject(RescheduleMatchDayGQL);
+
+    private scheduleAllMatchesForSeasonGQL = inject(ScheduleAllMatchesForSeasonGQL);
+
+    private scheduleAllMatchesForMatchDayGQL = inject(ScheduleAllMatchesForMatchDayGQL);
+
+
     progressSeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_PROGRESS_SEASON);
 
     historySeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_HISTORY_SEASON);
@@ -59,23 +88,6 @@ export class SeasonService {
         ),
     );
 
-    constructor(
-        private allSeasonlistGQL: AllSeasonsListGQL,
-        private seasonByIdGQL: SeasonByIdGQL,
-        private rankingGQL: RankingByIdGQL,
-        private createSeasonGQL: CreateSeasonGQL,
-        private addTeamToSeasonGQL: AddTeamToSeasonGQL,
-        private removeTeamFromSeasonGQL: RemoveTeamFromSeasonGQL,
-        private startSeasonGQL: StartSeasonGQL,
-        private deleteSeasonGQL: DeleteSeasonGQL,
-        private endSeasonGQL: EndSeasonGQL,
-        private createMatchesForSeasonGQL: CreateMatchesForSeasonGQL,
-        private replaceTeamInSeasonGQL: ReplaceTeamInSeasonGQL,
-        private rescheduleMatchDayGQL: RescheduleMatchDayGQL,
-        private scheduleAllMatchesForSeasonGQL: ScheduleAllMatchesForSeasonGQL,
-        private scheduleAllMatchesForMatchDayGQL: ScheduleAllMatchesForMatchDayGQL,
-    ) {}
-
     reloadSeasons() {
         return this.allSeasonlistGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
     }
@@ -97,7 +109,7 @@ export class SeasonService {
 
     getSeasonById$(id: string | undefined) {
         if (!id) {
-            return of(undefined)
+            return of(undefined);
         }
         return this.seasonByIdGQL
             .watch({ id })
@@ -224,7 +236,7 @@ export class SeasonService {
                     ],
                 },
             ),
-        )
+        );
     }
 
     rescheduleMatchDay(params: RescheduleMatchDayMutationVariables, season_id: string) {
@@ -240,7 +252,7 @@ export class SeasonService {
                     ],
                 },
             ),
-        )
+        );
     }
 
     scheduleAllMatchesForMatchDay(params: ScheduleAllMatchesForMatchDayMutationVariables, seasonId?: string) {
@@ -256,7 +268,7 @@ export class SeasonService {
                     ],
                 },
             ),
-        )
+        );
     }
 
     scheduleAllMatchesForSeason(params: ScheduleAllMatchesForSeasonMutationVariables) {
@@ -272,7 +284,7 @@ export class SeasonService {
                     ],
                 },
             ),
-        )
+        );
     }
 
 }

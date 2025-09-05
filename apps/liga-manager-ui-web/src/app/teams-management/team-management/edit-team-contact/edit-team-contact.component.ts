@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FormControl,
     FormGroup,
@@ -32,6 +32,12 @@ import { firstValueFrom, map, switchMap, tap } from 'rxjs';
 })
 export class EditTeamContactComponent {
 
+    activatedRoute = inject(ActivatedRoute);
+
+    teamService = inject(TeamService);
+
+    notificationService = inject(NotificationService);
+
     team$ = this.activatedRoute.parent?.paramMap.pipe(
         map((p) => p.get('teamId')!),
         switchMap((teamId) =>
@@ -54,13 +60,6 @@ export class EditTeamContactComponent {
         last_name: new FormControl('', [Validators.required]),
         phone: new FormControl('', [Validators.required]),
     });
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private teamService: TeamService,
-        private notificationService: NotificationService,
-    ) {
-    }
 
     async updateTeamContact(team_id: string) {
         try {

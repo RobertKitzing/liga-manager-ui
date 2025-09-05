@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,7 +11,6 @@ import {
 import {
     SeasonService,
     TeamService,
-    TournamentService,
 } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
@@ -40,6 +39,10 @@ import { SortByPipe } from '@liga-manager-ui/pipes';
 })
 export class ContacsComponent {
 
+    private teamService = inject(TeamService);
+
+    private seasonService = inject(SeasonService);
+
     selectedSeasonFC = new FormControl<AllSeasonsFragment | null>(null);
 
     SeasonState = SeasonState;
@@ -61,7 +64,7 @@ export class ContacsComponent {
     );
 
     teams = signal<Maybe<Maybe<Team>[]> | undefined>( []);
-    
+
     season$ = this.selectedSeasonFC.valueChanges.pipe(
         switchMap((selectedSeason) =>
             selectedSeason
@@ -71,11 +74,5 @@ export class ContacsComponent {
     );
 
     onlyCurrentSeason = false;
-
-    constructor(
-        private teamService: TeamService,
-        private seasonService: SeasonService,
-        private tournamentService: TournamentService,
-    ) {}
 
 }

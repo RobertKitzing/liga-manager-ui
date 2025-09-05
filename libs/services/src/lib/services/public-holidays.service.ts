@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,7 +12,7 @@ GlobalCacheConfig.storageStrategy = LocalStorageStrategy;
 })
 export class PublicHolidaysService {
 
-    constructor(private httpClient: HttpClient) {}
+    private httpClient = inject(HttpClient);
 
     @Cacheable({
         maxCacheCount: 5,

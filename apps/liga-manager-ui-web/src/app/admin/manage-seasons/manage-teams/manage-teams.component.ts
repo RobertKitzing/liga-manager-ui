@@ -30,10 +30,10 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
 
     allTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
 
-    destroyRef = inject(DestroyRef)
+    destroyRef = inject(DestroyRef);
 
     addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
-        firstValueFrom(this.seasonService.addTeamToSeason(variables))
+        firstValueFrom(this.seasonService.addTeamToSeason(variables));
     }
 
     async removeTeamFromSeason(variables: AddTeamToSeasonMutationVariables) {
@@ -53,7 +53,7 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
                 seasonId: this.season?.id,
                 teamToBeReplaced,
             },
-        })
+        });
     }
 
 }

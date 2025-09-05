@@ -56,7 +56,7 @@ export class MatchComponent {
 
     private userService = inject(UserService);
 
-    private appsettingsService = inject(AppsettingsService)
+    private appsettingsService = inject(AppsettingsService);
 
     get dialogData() {
         return {

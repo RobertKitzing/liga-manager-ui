@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     Router,
     RouterOutlet,
@@ -36,7 +36,7 @@ export class AdminComponent {
 
     ADMIN_ROUTES = ADMIN_ROUTES;
 
-    constructor(private router: Router) {}
+    private router = inject(Router);
 
     get currentRoute() {
         const url = this.router.url.split('/')[2].split('?')[0];

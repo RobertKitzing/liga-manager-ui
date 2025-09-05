@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FormControl,
     FormGroup,
@@ -41,6 +41,14 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 })
 export class EditMatchResultComponent {
 
+    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
+
+    private notificationService = inject(NotificationService);
+
+    private dialogRef = inject(MatDialogRef<EditMatchResultComponent>);
+
+    private matchService = inject(MatchService);
+
     resultFormGroup = new FormGroup({
         home_score: new FormControl(this.data.match.home_score, [
             Validators.required,
@@ -49,14 +57,6 @@ export class EditMatchResultComponent {
             Validators.required,
         ]),
     });
-
-    constructor(
-        @Inject(MAT_DIALOG_DATA)
-        public data: { match: Match; matchDay: MatchDay },
-        private notificationService: NotificationService,
-        private dialogRef: MatDialogRef<EditMatchResultComponent>,
-        private matchService: MatchService,
-    ) {}
 
     async onSaveClicked() {
         try {

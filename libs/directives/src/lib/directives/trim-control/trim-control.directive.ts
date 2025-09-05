@@ -1,11 +1,11 @@
-import { Directive } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Directive({ selector: '[trim]' })
 export class TrimDirective {
 
-    constructor(ngControl: NgControl) {
-        trimValueAccessor(ngControl.valueAccessor!)
+    constructor() {
+        trimValueAccessor(inject(NgControl).valueAccessor!);
     }
 
 }

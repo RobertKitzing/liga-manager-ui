@@ -4,12 +4,12 @@ describe('Admin - Create User', () => {
 
     beforeEach(
         () => {
-            cy.login(Users.admin.username, Users.admin.password)
+            cy.login(Users.admin.username, Users.admin.password);
         },
-    )
+    );
 
     it('Should create a user', () => {
-        cy.visit('/')
+        cy.visit('/');
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-users').first().click();
         cy.getBySel('button-create-user').click();
@@ -19,6 +19,6 @@ describe('Admin - Create User', () => {
         cy.getBySel('select-team').click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-user').click({ force: true });
-    })
+    });
 
-})
+});

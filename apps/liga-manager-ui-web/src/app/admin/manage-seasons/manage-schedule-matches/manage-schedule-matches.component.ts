@@ -21,7 +21,7 @@ class MatchAppointmentFormGroup extends FormGroup {
             time: new FormControl(null, [ Validators.required ]),
             unavailableTeams: new FormControl<Team[]>([]),
             daysOffset: new FormControl(0),
-        })
+        });
     }
 
 }
@@ -45,7 +45,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     calcOffestFromStartDate(offset: number) {
-        return dayjs.utc(this.season?.match_days![0]?.start_date).add(offset, 'days').format('dddd')
+        return dayjs.utc(this.season?.match_days![0]?.start_date).add(offset, 'days').format('dddd');
     }
 
     exampleMatchDays() {
@@ -79,7 +79,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
         const matchDay = this.season?.match_days![matchDayIndex];
-        if (!matchDay) { 
+        if (!matchDay) {
             return;
         }
         const match_appointments: MatchAppointment[] = this.matchAppointments?.controls.map(
@@ -101,7 +101,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
 
     async scheduleAllMatchesForSeason() {
         const matchDay = this.season?.match_days![0];
-        if (!matchDay) { 
+        if (!matchDay) {
             return;
         }
         const match_appointments: MatchAppointment[] = this.matchAppointments?.controls.map(

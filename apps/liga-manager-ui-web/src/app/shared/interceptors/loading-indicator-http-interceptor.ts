@@ -5,7 +5,7 @@ import {
     HttpInterceptor,
     HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { finalize, Observable } from 'rxjs';
 import { LoadingIndicatorService } from '@liga-manager-ui/services';
 
@@ -14,9 +14,9 @@ import { LoadingIndicatorService } from '@liga-manager-ui/services';
 })
 export class LoadingIndicatorHttpInterceptor implements HttpInterceptor {
 
-    requestCounter = 0;
+    loadingIndicatorService = inject(LoadingIndicatorService);
 
-    constructor(public loadingIndicatorService: LoadingIndicatorService) {}
+    requestCounter = 0;
 
     intercept(
         req: HttpRequest<any>,

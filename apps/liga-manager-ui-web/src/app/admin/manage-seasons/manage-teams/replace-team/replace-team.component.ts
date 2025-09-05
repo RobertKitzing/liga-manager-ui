@@ -37,10 +37,10 @@ export class ReplaceTeamComponent {
                 season_id: this.data.seasonId,
                 current_team_id: this.data.teamToBeReplaced.id,
                 replacement_team_id: this.replaceWithTeamId()!,
-            })
+            });
             this.dialogRef.close();
         } catch(error) {
-            console.error(error)
+            console.error(error);
         }
     }
 

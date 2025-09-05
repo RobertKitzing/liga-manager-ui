@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     Validators,
     FormGroup,
@@ -48,6 +48,12 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class LoginComponent {
 
+    private userService = inject(UserService);
+
+    dialogRef = inject(MatDialogRef<LoginComponent>);
+
+    private notificationService = inject(NotificationService);
+
     loginForm = new FormGroup({
         username: new FormControl('', {
             nonNullable: true,
@@ -58,12 +64,6 @@ export class LoginComponent {
             validators: [Validators.required],
         }),
     });
-
-    constructor(
-        private userService: UserService,
-        public dialogRef: MatDialogRef<LoginComponent>,
-        private notificationService: NotificationService,
-    ) {}
 
     async login() {
         try {

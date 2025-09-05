@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from '@liga-manager-ui/services';
@@ -8,9 +8,10 @@ import { I18nService } from '@liga-manager-ui/services';
 })
 export class CustomDateAdapter extends NativeDateAdapter {
 
-    constructor(i18nService: I18nService, translateService: TranslateService) {
-        super(i18nService.currentLang);
+    constructor() {
+        super(inject(I18nService).currentLang);
 
+        const translateService = inject(TranslateService);
         translateService.onLangChange.subscribe((lang) => {
             this.setLocale(lang.lang);
         });

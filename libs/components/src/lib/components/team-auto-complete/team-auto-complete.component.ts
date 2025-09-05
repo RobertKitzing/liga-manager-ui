@@ -55,14 +55,14 @@ export class TeamAutoCompleteComponent {
                         (searchTerm) => this.filterTeams(searchTerm) || [],
                     ),
                 );
-                this.fromControl().setValue(this.fromControl()?.value)
+                this.fromControl().setValue(this.fromControl()?.value);
             },
         );
     }
 
     _teamSelected(option: MatAutocompleteSelectedEvent) {
         if (option.option.value) {
-            this.fromControl().setValue(option.option.value)
+            this.fromControl().setValue(option.option.value);
             this.teamSelected.emit(option.option.value);
             if (this.clearAfterSelected()) {
                 this.fromControl().reset();
@@ -81,9 +81,9 @@ export class TeamAutoCompleteComponent {
         let t = this.teams();
         if (searchTerm) {
             t = this.teams()?.filter(
-                (y) => 
+                (y) =>
                     fuzzysearch(searchTerm.toLocaleLowerCase(), y?.name.toLowerCase() || ''),
-            )
+            );
         }
         return t;
     }

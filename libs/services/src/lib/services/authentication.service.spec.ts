@@ -21,6 +21,6 @@ describe('AuthenticationService', () => {
 
     it('should init', () => {
         expect(service).toBeTruthy();
-    })
+    });
 
-})
+});

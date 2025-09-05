@@ -52,7 +52,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         secondHalf: new FormControl(false),
         betweenMatchDaysOffset: new FormControl<number>(7, { nonNullable: true }),
         fromToOffset: new FormControl<number>(2, { nonNullable: true }),
-    })
+    });
 
     matchDays = signal<Maybe<MatchDay>[]>([]);
 
@@ -80,9 +80,9 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         contentHeight: 'auto',
         editable: true,
         eventDrop: this.eventDrop.bind(this),
-    }
+    };
 
-    matchDayTrigger = new BehaviorSubject<Maybe<MatchDay>[]>([])
+    matchDayTrigger = new BehaviorSubject<Maybe<MatchDay>[]>([]);
 
     events$ = this.matchDayTrigger.pipe(
         switchMap(
@@ -103,7 +103,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['season']) {
             if (this.season?.match_days) {
-                this.matchDays.set(this.season?.match_days)
+                this.matchDays.set(this.season?.match_days);
             } else {
                 this.matchDays.set([]);
             }
@@ -171,13 +171,13 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                     ...matchDay,
                     start_date: dayjs.utc(matchDay?.start_date).add(event.delta.days, 'days').toJSON(),
                     end_date: dayjs.utc(matchDay?.end_date).add(event.delta.days, 'days').toJSON(),
-                }
-                updatedDates.push(updatedDate)
+                };
+                updatedDates.push(updatedDate);
             }
         }
         this.matchDays.update(
             (old) => {
-                return old.slice(0, matchDayIndex).concat(updatedDates)
+                return old.slice(0, matchDayIndex).concat(updatedDates);
             },
         );
         this.matchDayTrigger.next(this.matchDays());

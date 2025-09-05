@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FormControl,
     FormGroup,
@@ -52,13 +52,13 @@ export class EditMatchKickoffComponent {
         date: new FormControl<Date | null>(null, [Validators.required]),
     });
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA)
-        public data: { match: Match; matchDay: MatchDay },
-        private notificationService: NotificationService,
-        private dialogRef: MatDialogRef<EditMatchKickoffComponent>,
-        private matchService: MatchService,
-    ) {}
+    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
+
+    private notificationService = inject(NotificationService);
+
+    private dialogRef = inject(MatDialogRef<EditMatchKickoffComponent>);
+
+    private matchService = inject(MatchService);
 
     async onSaveClicked() {
         const kickoff = this.newKickoff.value.date as Date;

@@ -44,7 +44,7 @@ export class ManagePitchesComponent {
         startWith(null),
         switchMap(
             (searchTerm) =>
-                !searchTerm 
+                !searchTerm
                     ? this.pitchService.allPitches$
                     : this.pitchService.allPitches$.pipe(
                         map((x) => x?.filter((y) => fuzzysearch(searchTerm.toLowerCase(), y?.label.toLowerCase() || '') )),
@@ -59,7 +59,7 @@ export class ManagePitchesComponent {
             {
                 ...defaultDialogConfig,
             },
-        )
+        );
     }
 
 }

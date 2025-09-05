@@ -55,7 +55,7 @@ export class EditTeamLogoComponent {
         switchMap((teamId) => this.teamService.getTeamById(teamId)),
     );
 
-    team = toSignal(this.team$!)
+    team = toSignal(this.team$!);
 
     previewImage = signal<string | null>(null);
 
@@ -105,7 +105,7 @@ export class EditTeamLogoComponent {
     async chooseFile() {
         const result = await FilePicker.pickMedia({ readData: true, limit: 1  });
         const file = result.files[0];
-        this.previewImage.set( `data:${file.mimeType};base64, ${file.data}` )
+        this.previewImage.set( `data:${file.mimeType};base64, ${file.data}` );
     }
 
 }

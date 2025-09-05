@@ -21,8 +21,8 @@ dayjs.extend(utc);
 
 function typeofTeamValidator(): ValidatorFn {
     return (control) => {
-        return typeof control.value == 'string' ? { noTeam: true }: null
-    }
+        return typeof control.value == 'string' ? { noTeam: true }: null;
+    };
 }
 
 @Component({
@@ -48,7 +48,7 @@ export class EditTournamentRoundComponent {
 
     round = input<MatchDay | undefined>(undefined);
 
-    tournamentId = input.required<string>()
+    tournamentId = input.required<string>();
 
     createNext = input(false);
 
@@ -78,7 +78,7 @@ export class EditTournamentRoundComponent {
         to: new FormControl<Date | undefined>(undefined, [ Validators.required ]),
     });
 
-    matches = signal<Maybe<Match>[]>([])
+    matches = signal<Maybe<Match>[]>([]);
 
     destroyRef = inject(DestroyRef);
 
@@ -91,7 +91,7 @@ export class EditTournamentRoundComponent {
                 this.roundDates.setValue({
                     from: dayjs.utc(this.round()?.start_date).toDate(),
                     to: dayjs.utc(this.round()?.end_date).toDate(),
-                })
+                });
             }
         });
     }
@@ -113,7 +113,7 @@ export class EditTournamentRoundComponent {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                     team_id_pairs: this.matches().map((t) => ({ home_team_id: t?.home_team.id!, guest_team_id: t?.guest_team.id! })),
                 }),
-            )
+            );
             this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_TOURNAMENT_ROUND_SUCCESS'));
             this.roundEdited.emit(true);
         } catch (_error) {
@@ -127,7 +127,7 @@ export class EditTournamentRoundComponent {
             home_team: this.newMatch.controls.home.value!,
             guest_team: this.newMatch.controls.guest.value!,
             id: '',
-        })
+        });
         this.matches.set(matches);
         this.newMatch.reset();
     }

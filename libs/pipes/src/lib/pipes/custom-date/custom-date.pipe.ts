@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { I18nService } from '@liga-manager-ui/services';
 
 @Pipe({
@@ -8,7 +8,9 @@ import { I18nService } from '@liga-manager-ui/services';
 })
 export class CustomDatePipe implements PipeTransform {
 
-    constructor(private date: DatePipe, private i18nService: I18nService) {}
+    private date = inject(DatePipe);
+
+    private i18nService = inject(I18nService);
 
     transform(
         value: string | number | Date | undefined,

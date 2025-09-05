@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FormControl,
     FormsModule,
@@ -39,13 +39,13 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreateNewTournamentComponent {
 
-    newName = new FormControl('', [Validators.required]);
+    private tournamentService = inject(TournamentService);
 
-    constructor(
-        private tournamentService: TournamentService,
-        private dialog: MatDialog,
-        private notificationService: NotificationService,
-    ) {}
+    private dialog = inject(MatDialog);
+
+    private notificationService = inject(NotificationService);
+
+    newName = new FormControl('', [Validators.required]);
 
     async createTournament() {
         try {

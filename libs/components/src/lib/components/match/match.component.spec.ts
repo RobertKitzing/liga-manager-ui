@@ -40,7 +40,7 @@ describe('MatchComponent', () => {
 
     it('should init', () => {
         expect(component).toBeTruthy();
-    })
+    });
 
     it('should mark home as winner', () => {
         component.markLooser = true;
@@ -49,6 +49,6 @@ describe('MatchComponent', () => {
             guest_score: 0,
         } as  Match;
         expect(component.isHomeWinner()).toBeTruthy();
-    })
+    });
 
-})
+});

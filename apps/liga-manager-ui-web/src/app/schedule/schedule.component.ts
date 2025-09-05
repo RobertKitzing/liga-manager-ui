@@ -46,9 +46,19 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 })
 export class ScheduleComponent implements OnInit {
 
-    selectedMatchDay = fromStorage<MatchDay>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY)
+    private gestureService = inject(GestureService);
 
-    selectedTeamId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_TEAM_ID, '0')
+    private destroyRef = inject(DestroyRef);
+
+    private seasonService = inject(SeasonService);
+
+    private router = inject(Router);
+
+    authService = inject(AuthenticationService);
+
+    selectedMatchDay = fromStorage<MatchDay>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY);
+
+    selectedTeamId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_TEAM_ID, '0');
 
     selectedSeasonFC = new FormControl(this.selectedSeason);
 
@@ -80,25 +90,15 @@ export class ScheduleComponent implements OnInit {
 
     season = toSignal(this.season$);
 
-    private gestureService = inject(GestureService);
-
-    private destroyRef = inject(DestroyRef);
-
-    constructor(
-        private seasonService: SeasonService,
-        private router: Router,
-        public authService: AuthenticationService,
-    ) {}
-
     ngOnInit(): void {
         this.refresh();
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
-                    this.nextMatchDay()
+                    this.nextMatchDay();
                 }
                 if (event.direction === 'Right') {
-                    this.prevMatchDay()
+                    this.prevMatchDay();
                 }
             },
         );
@@ -127,15 +127,15 @@ export class ScheduleComponent implements OnInit {
 
     set selectedSeason(season: AllSeasonsFragment | null) {
         if (this.router.url.includes('history')) {
-            this.seasonService.historySeason.set(season)
+            this.seasonService.historySeason.set(season);
         } else {
-            this.seasonService.progressSeason.set(season)
+            this.seasonService.progressSeason.set(season);
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     findMatchDay(matchDays: any[]): MatchDay {
-        return matchDays.find((x) => x.id === this.selectedMatchDay()?.id )
+        return matchDays.find((x) => x.id === this.selectedMatchDay()?.id );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -154,7 +154,7 @@ export class ScheduleComponent implements OnInit {
             return;
         }
 
-        const matchDays = this.season()?.match_days || []
+        const matchDays = this.season()?.match_days || [];
 
         const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDay()?.id ) || 0;
 
@@ -170,7 +170,7 @@ export class ScheduleComponent implements OnInit {
             return;
         }
 
-        const matchDays = this.season()?.match_days || []
+        const matchDays = this.season()?.match_days || [];
 
         const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDay()?.id) || 0;
 
@@ -182,7 +182,7 @@ export class ScheduleComponent implements OnInit {
     }
 
     compareMatchDay(a: MatchDay, b: MatchDay) {
-        return a.id === b.id
+        return a.id === b.id;
     }
 
 }

@@ -49,7 +49,7 @@ export class TeamSearchComponent implements OnInit {
                     } else {
                         this.filteredTeams.emit(
                             this.teams()?.filter(
-                                (y) => 
+                                (y) =>
                                     fuzzysearch(searchTerm.toLowerCase(), y?.name.toLowerCase() || ''),
                             ),
                         );

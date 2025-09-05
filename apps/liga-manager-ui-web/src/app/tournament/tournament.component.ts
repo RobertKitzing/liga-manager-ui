@@ -42,11 +42,11 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 })
 export class TournamentComponent implements OnInit {
 
-    selectedRoundIdFC = fromStorage<string>(StorageKeys.TOURNAMENT_SELECTED_ROUND_ID)
+    selectedRoundIdFC = fromStorage<string>(StorageKeys.TOURNAMENT_SELECTED_ROUND_ID);
 
     storedSelectedTournament = fromStorage<AllTournamentsFragment>(StorageKeys.TOURNAMENT_SELECTED_TOURNAMENT);
 
-    tournamentService = inject(TournamentService)
+    tournamentService = inject(TournamentService);
 
     selectedTournamentFC = new FormControl(this.storedSelectedTournament());
 
@@ -63,7 +63,7 @@ export class TournamentComponent implements OnInit {
                     tap(
                         (tournament) => {
                             if (!this.selectedRoundIdFC() || !tournament?.rounds?.find((t) => t?.id === this.selectedRoundIdFC()) ) {
-                                this.selectedRoundIdFC.set(tournament?.rounds![0]?.id || null)
+                                this.selectedRoundIdFC.set(tournament?.rounds![0]?.id || null);
                             }
                         },
                     ),
@@ -93,10 +93,10 @@ export class TournamentComponent implements OnInit {
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
-                    this.nextRound()
+                    this.nextRound();
                 }
                 if (event.direction === 'Right') {
-                    this.prevRound()
+                    this.prevRound();
                 }
             },
         );
@@ -121,7 +121,7 @@ export class TournamentComponent implements OnInit {
 
         const currentIndex = this.selectedTournament()?.rounds?.findIndex(
             (round) => round?.id === this.selectedRoundIdFC(),
-        ) || 0
+        ) || 0;
         const nextId = this.selectedTournament()?.rounds![currentIndex + 1]?.id;
         if(nextId) {
             this.selectedRoundIdFC.set(nextId);
@@ -137,7 +137,7 @@ export class TournamentComponent implements OnInit {
 
         const currentIndex = this.selectedTournament()?.rounds?.findIndex(
             (round) => round?.id === this.selectedRoundIdFC(),
-        ) || 0
+        ) || 0;
 
         const nextId = this.selectedTournament()?.rounds![currentIndex -1]?.id;
 

@@ -1,5 +1,5 @@
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SeasonState, TournamentState, UserRole } from '@liga-manager-api/graphql';
 
@@ -10,7 +10,7 @@ type Enums = SeasonState | UserRole | TournamentState;
 })
 export class EnumTranslatePipe implements PipeTransform {
 
-    constructor(private translatePipe: TranslatePipe) {}
+    private translatePipe = inject(TranslatePipe);
 
     transform(value: Enums): unknown {
         return this.translatePipe.transform(this.interpretValue(value));

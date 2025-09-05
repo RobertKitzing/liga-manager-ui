@@ -75,7 +75,7 @@ export class ManageSeasonsComponent implements OnInit {
                 (id) => this.seasonService.getSeasonById$(id).pipe(
                     map((season) => {
                         if (season) {
-                            this.seasonService.manageSeason.set(season as Season)
+                            this.seasonService.manageSeason.set(season as Season);
                             return {
                                 ...season,
                                 teams: sortArrayBy(season?.teams as Team[], 'name'),
@@ -85,7 +85,7 @@ export class ManageSeasonsComponent implements OnInit {
                     }),
                 ),
             ),
-        )
+        );
 
     stepperOrientation: Observable<StepperOrientation>;
 
@@ -104,7 +104,7 @@ export class ManageSeasonsComponent implements OnInit {
     ngOnInit(): void {
         this.selectedSeasonFC.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef)).subscribe((season) => this.seasonTrigger$.next(season?.id),
-        )
+        );
     }
 
     createSeason() {

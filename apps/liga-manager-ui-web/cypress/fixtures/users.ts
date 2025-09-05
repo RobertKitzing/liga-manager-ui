@@ -3,4 +3,4 @@ export const Users = {
         username: 'admin@example.com',
         password: '123456',
     },
-}
+};

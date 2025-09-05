@@ -108,7 +108,7 @@ export const appConfig: ApplicationConfig = {
                     if (use_local_assets && !isTeamLogo) {
                         return `${window.location.protocol}//localhost/${src}`;
                     }
-                    
+
                     if (!use_imgproxy) {
                         if (isTeamLogo) {
                             return `${host}/${src}`;

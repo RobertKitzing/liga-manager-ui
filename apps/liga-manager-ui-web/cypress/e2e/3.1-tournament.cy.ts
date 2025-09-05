@@ -4,13 +4,13 @@ describe('Public - Select Tournament', () => {
 
     beforeEach(
         () => {
-            cy.login(Users.admin.username, Users.admin.password)
+            cy.login(Users.admin.username, Users.admin.password);
         },
-    )
+    );
 
     it('Should select a Tournament', () => {
 
-        cy.visit('/')
+        cy.visit('/');
         cy.getBySel('route-tournament').first().click();
 
         cy.getBySel('select-tournament').click();
@@ -27,9 +27,9 @@ describe('Public - Select Tournament', () => {
         cy.get('lima-match').should('have.length', 2);
 
         cy.getBySel('button-edit-match-result').first().click();
-        cy.getBySel('input-home-score').clear()
+        cy.getBySel('input-home-score').clear();
         cy.getBySel('input-home-score').type('10', { force: true });
-        cy.getBySel('input-guest-score').clear()
+        cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type('1', { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
 

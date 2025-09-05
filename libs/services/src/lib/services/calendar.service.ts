@@ -42,10 +42,9 @@ export class CalendarService {
 
     private translateService = inject(TranslateService);
 
-    constructor(
-        private holidaysService: PublicHolidaysService,
-        private calendarGQL: CalendarGQL,
-    ) {}
+    private holidaysService = inject(PublicHolidaysService);
+
+    private calendarGQL = inject(CalendarGQL);
 
     reloadEvents() {
         return this.calendarGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
@@ -122,7 +121,7 @@ export class CalendarService {
                 of(matchDays || []),
             ]).pipe(
                 map((data) => data.flat()),
-            )
+            );
         } else {
             return of(matchDays);
         }

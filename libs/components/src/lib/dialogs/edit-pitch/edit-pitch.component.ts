@@ -49,7 +49,7 @@ export class EditPitchDialogComponent implements OnInit {
         label: new FormControl(null, [ Validators.required ]),
         location_longitude: new FormControl<number | undefined>(undefined, [ Validators.required ]),
         location_latitude: new FormControl<number | undefined>(undefined, [ Validators.required ]),
-    })
+    });
 
     get newPitch() {
         return this.formGroup.value as unknown as Pitch;
@@ -60,7 +60,7 @@ export class EditPitchDialogComponent implements OnInit {
     ngOnInit(): void {
         // @ts-expect-error @types/google.maps not working
         const places = new google.maps.places.PlaceAutocompleteElement();
-        this.adressAutoComplete()?.nativeElement.appendChild(places)
+        this.adressAutoComplete()?.nativeElement.appendChild(places);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         places.addEventListener('gmp-select', async ({ placePrediction }: any) => {
             const place = placePrediction.toPlace();
@@ -68,8 +68,8 @@ export class EditPitchDialogComponent implements OnInit {
                 fields: ['location'],
             });
             const t = place.toJSON();
-            this.formGroup.controls.location_latitude.setValue(t.location.lat)
-            this.formGroup.controls.location_longitude.setValue(t.location.lng)
+            this.formGroup.controls.location_latitude.setValue(t.location.lat);
+            this.formGroup.controls.location_longitude.setValue(t.location.lng);
         });
     }
 
@@ -81,10 +81,10 @@ export class EditPitchDialogComponent implements OnInit {
                 location_longitude: this.formGroup.value.location_longitude!,
                 location_latitude: this.formGroup.value.location_latitude!,
             };
-            await firstValueFrom(this.pitchService.createPitch(newPitch))
+            await firstValueFrom(this.pitchService.createPitch(newPitch));
             this.dialogRef.close(newPitch);
         } catch(error) {
-            console.error(error)
+            console.error(error);
         }
     }
 

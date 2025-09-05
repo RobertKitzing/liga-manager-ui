@@ -1,4 +1,4 @@
-import { Inject, Injectable, DOCUMENT } from '@angular/core';
+import { Injectable, DOCUMENT, inject } from '@angular/core';
 import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { BehaviorSubject } from 'rxjs';
 import { fromStorage } from '../functions';
@@ -17,7 +17,9 @@ export class ThemeService {
 
     currentTheme$ = new BehaviorSubject(this.currentTheme() || 'default');
 
-    constructor(@Inject(DOCUMENT) private document: Document) {
+    private document = inject(DOCUMENT);
+
+    constructor() {
         this.currentTheme$.subscribe((theme) => {
             this.loadStyle(theme);
         });

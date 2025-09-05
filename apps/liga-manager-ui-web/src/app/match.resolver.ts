@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 
 export const matchResolver: ResolveFn<Observable<unknown>> = (route) => {
 
-    const matchId = route.paramMap.get('matchid')
+    const matchId = route.paramMap.get('matchid');
     return matchId ? inject(MatchService).getMatchById$(matchId) : of(null);
 
 };
