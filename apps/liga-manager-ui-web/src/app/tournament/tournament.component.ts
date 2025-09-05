@@ -1,11 +1,10 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graphql';
 import {
     TournamentChooserComponent,
     MatchComponent,
-    matchDayAnimation,
 } from '@liga-manager-ui/components';
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,7 +17,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-tournament',
@@ -35,12 +33,15 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         ReactiveFormsModule,
         MatButtonModule,
         CypressSelectorDirective,
-        NgxPullToRefreshComponent,
     ],
     standalone: true,
-    animations: [ matchDayAnimation ],
 })
 export class TournamentComponent implements OnInit {
+
+    animateEnter = signal<'slide-in-ltr' | 'slide-in-rtl' | undefined>(undefined);
+
+    animateLeave = signal<'slide-out-ltr' | 'slide-out-rtl' | undefined>(undefined);
+
 
     selectedRoundIdFC = fromStorage<string>(StorageKeys.TOURNAMENT_SELECTED_ROUND_ID);
 
@@ -115,6 +116,9 @@ export class TournamentComponent implements OnInit {
 
     nextRound() {
 
+        this.animateEnter.set('slide-in-rtl');
+        this.animateLeave.set('slide-out-rtl');
+
         if(!this.selectedTournament()?.rounds) {
             return;
         }
@@ -130,6 +134,9 @@ export class TournamentComponent implements OnInit {
     }
 
     prevRound() {
+
+        this.animateEnter.set('slide-in-ltr');
+        this.animateLeave.set('slide-out-ltr');
 
         if(!this.selectedTournament()?.rounds) {
             return;

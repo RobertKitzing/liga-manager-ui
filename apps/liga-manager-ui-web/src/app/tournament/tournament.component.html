@@ -62,21 +62,19 @@
         </div>
         @if(selectedTournament()?.rounds) {
             @if(selectedTournamentRound(); as round) {
-                <ul [@matchDayAnimation]="{value: round.number , params: { length: round?.matches?.length }}">
-                    <ngx-pull-to-refresh (refresh)="refresh($event)" [spinnerSize]="35" [distanceForRefresh]="100">
-                        @for (match of round.matches; track match) {
-                            @if(match) {
-                                <li>
-                                    <lima-match
-                                        [match]="match"
-                                        [matchDay]="round"
-                                        [markLooser]="true"
-                                    ></lima-match>
-                                </li>
-                            }
+                <div>
+                    @for (match of round.matches; track match?.id) {
+                        @if(match) {
+                            <div [animate.enter]="animateEnter()" [animate.leave]="animateLeave()" style="--data-length: {{ round.matches?.length }}">
+                                <lima-match
+                                    [match]="match"
+                                    [matchDay]="round"
+                                    [markLooser]="true"
+                                ></lima-match>
+                            </div>
                         }
-                    </ngx-pull-to-refresh>
-                </ul>
+                    }
+                </div>
             }
         }
     </div>
