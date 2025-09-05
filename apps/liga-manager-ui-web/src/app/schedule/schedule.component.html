@@ -83,7 +83,7 @@
                 <div class="flex justify-center z-0 overflow-x-hidden">
                     <div class="w-full overflow-x-hidden">
                         @for (match of filterMatches(matchDay?.matches || []); track match.id) {
-                            <div class="w-full" [animate.enter]="animateEnter()" [animate.leave]="animateLeave()" style="--data-length: {{ matchDay?.matches?.length }}">
+                            <div class="w-full" [animate.enter]="animateEnter()">
                                 <lima-match [match]="match" [matchDay]="matchDay"></lima-match>
                             </div>
                         }

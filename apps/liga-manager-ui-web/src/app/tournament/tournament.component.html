@@ -65,7 +65,7 @@
                 <div>
                     @for (match of round.matches; track match?.id) {
                         @if(match) {
-                            <div [animate.enter]="animateEnter()" [animate.leave]="animateLeave()" style="--data-length: {{ round.matches?.length }}">
+                            <div [animate.enter]="animateEnter()">
                                 <lima-match
                                     [match]="match"
                                     [matchDay]="round"
