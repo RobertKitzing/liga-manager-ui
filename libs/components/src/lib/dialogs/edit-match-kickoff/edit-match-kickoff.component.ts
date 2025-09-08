@@ -24,6 +24,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
+import { set } from 'date-fns';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -61,11 +62,13 @@ export class EditMatchKickoffComponent {
     private matchService = inject(MatchService);
 
     async onSaveClicked() {
-        const kickoff = this.newKickoff.value.date as Date;
+        let kickoff = this.newKickoff.value.date;
+        if (!kickoff) {
+            return;
+        }
         const time = this.newKickoff.value.time?.split(':');
         if (time) {
-            kickoff.setHours(+time[0]);
-            kickoff.setMinutes(+time[1]);
+            kickoff = set(kickoff, { hours: +time[0], minutes: +time[1]});
         }
 
         try {

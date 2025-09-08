@@ -10,8 +10,8 @@ import { PitchAutoCompleteComponent, TeamChooserComponent } from '@liga-manager-
 import { MatInputModule } from '@angular/material/input';
 import { MatchAppointment, Team } from '@liga-manager-api/graphql';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
-import dayjs from 'dayjs';
 import { MatButtonModule } from '@angular/material/button';
+import { add, set } from 'date-fns';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -45,7 +45,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     calcOffestFromStartDate(offset: number) {
-        return dayjs.utc(this.season?.match_days![0]?.start_date).add(offset, 'days').format('dddd');
+        return add(new Date(this.season?.match_days![0]?.start_date || ''), { days: offset });
     }
 
     exampleMatchDays() {
@@ -63,8 +63,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                             matchDay.start_date,
                             this.matchAppointments?.controls[i].controls['daysOffset'].value,
                             this.matchAppointments?.controls[i].controls['time'].value,
-                        ).toDate(),
-
+                        ),
                     }),
                 ),
             }),
@@ -72,9 +71,9 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     genKickoff(matchDayStartDate: string, offset: number, time: `${number}:${number}`) {
-        const h = +time.split(':')[0];
-        const m = +time.split(':')[1];
-        return dayjs.utc(matchDayStartDate).add(offset, 'days').hour(h).minute(m);
+        const hours = +time.split(':')[0];
+        const minutes = +time.split(':')[1];
+        return set(add(new Date(matchDayStartDate), { days: offset }), { hours, minutes });
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
@@ -88,7 +87,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                     matchDay.start_date,
                     fg.controls['daysOffset'].value,
                     fg.controls['time'].value,
-                ).toDate(),
+                ),
                 pitch_id: fg.controls['pitch'].value.id,
                 unavailable_team_ids: fg.controls['unavailableTeams'].value.map((t: Team) => t.id),
             }),
@@ -110,7 +109,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                     matchDay.start_date,
                     fg.controls['daysOffset'].value,
                     fg.controls['time'].value,
-                ).toDate(),
+                ),
                 pitch_id: fg.controls['pitch'].value.id,
                 unavailable_team_ids: fg.controls['unavailableTeams'].value.map((t: Team) => t.id),
             }),

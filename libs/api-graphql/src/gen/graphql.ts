@@ -1,5 +1,6 @@
 /* eslint-disable */
 /* GENERATED DO NOT EDIT */
+import { ApiDate } from './api-date'
 import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
@@ -17,7 +18,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: Date; output: Date; }
+  Date: { input: ApiDate; output: ApiDate; }
   DateTime: { input: Date; output: Date; }
 };
 
@@ -725,7 +726,7 @@ export type PasswordChangeMutationVariables = Exact<{
 
 export type PasswordChangeMutation = Pick<Mutation, 'changeUserPassword'>;
 
-export type AddRankingPenaltyMutationVariables = Exact<{
+export type AddPenaltyMutationVariables = Exact<{
   id: Scalars['String']['input'];
   season_id: Scalars['String']['input'];
   team_id: Scalars['String']['input'];
@@ -734,15 +735,15 @@ export type AddRankingPenaltyMutationVariables = Exact<{
 }>;
 
 
-export type AddRankingPenaltyMutation = Pick<Mutation, 'addRankingPenalty'>;
+export type AddPenaltyMutation = Pick<Mutation, 'addRankingPenalty'>;
 
-export type RemoveRankingPenaltyMutationVariables = Exact<{
+export type RemovePenaltyMutationVariables = Exact<{
   ranking_penalty_id: Scalars['String']['input'];
   season_id: Scalars['String']['input'];
 }>;
 
 
-export type RemoveRankingPenaltyMutation = Pick<Mutation, 'removeRankingPenalty'>;
+export type RemovePenaltyMutation = Pick<Mutation, 'removeRankingPenalty'>;
 
 export type DeletePitchMutationVariables = Exact<{
   pitch_id: Scalars['String']['input'];
@@ -1047,10 +1048,7 @@ export type SeasonPenaltiesQueryVariables = Exact<{
 
 export type SeasonPenaltiesQuery = { season?: Maybe<(
     Pick<Season, 'id'>
-    & { teams?: Maybe<Array<Maybe<(
-      Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
-      & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
-    )>>>, ranking?: Maybe<{ penalties?: Maybe<Array<Maybe<(
+    & { ranking?: Maybe<{ penalties?: Maybe<Array<Maybe<(
         Pick<RankingPenalty, 'id' | 'reason' | 'created_at' | 'points'>
         & { team: (
           Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
@@ -1543,8 +1541,8 @@ export const PasswordChangeDocument = gql`
       super(apollo);
     }
   }
-export const AddRankingPenaltyDocument = gql`
-    mutation AddRankingPenalty($id: String!, $season_id: String!, $team_id: String!, $reason: String!, $points: Int!) {
+export const AddPenaltyDocument = gql`
+    mutation AddPenalty($id: String!, $season_id: String!, $team_id: String!, $reason: String!, $points: Int!) {
   addRankingPenalty(
     id: $id
     season_id: $season_id
@@ -1558,15 +1556,15 @@ export const AddRankingPenaltyDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class AddRankingPenaltyGQL extends Apollo.Mutation<AddRankingPenaltyMutation, AddRankingPenaltyMutationVariables> {
-    document = AddRankingPenaltyDocument;
+  export class AddPenaltyGQL extends Apollo.Mutation<AddPenaltyMutation, AddPenaltyMutationVariables> {
+    document = AddPenaltyDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
-export const RemoveRankingPenaltyDocument = gql`
-    mutation RemoveRankingPenalty($ranking_penalty_id: String!, $season_id: String!) {
+export const RemovePenaltyDocument = gql`
+    mutation RemovePenalty($ranking_penalty_id: String!, $season_id: String!) {
   removeRankingPenalty(
     ranking_penalty_id: $ranking_penalty_id
     season_id: $season_id
@@ -1577,8 +1575,8 @@ export const RemoveRankingPenaltyDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class RemoveRankingPenaltyGQL extends Apollo.Mutation<RemoveRankingPenaltyMutation, RemoveRankingPenaltyMutationVariables> {
-    document = RemoveRankingPenaltyDocument;
+  export class RemovePenaltyGQL extends Apollo.Mutation<RemovePenaltyMutation, RemovePenaltyMutationVariables> {
+    document = RemovePenaltyDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -2151,9 +2149,6 @@ export const SeasonPenaltiesDocument = gql`
     query SeasonPenalties($id: String!) {
   season(id: $id) {
     id
-    teams {
-      ...Team
-    }
     ranking {
       penalties {
         ...Penalty
@@ -2161,9 +2156,9 @@ export const SeasonPenaltiesDocument = gql`
     }
   }
 }
-    ${TeamFragmentDoc}
-${ContactFragmentDoc}
-${PenaltyFragmentDoc}`;
+    ${PenaltyFragmentDoc}
+${TeamFragmentDoc}
+${ContactFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

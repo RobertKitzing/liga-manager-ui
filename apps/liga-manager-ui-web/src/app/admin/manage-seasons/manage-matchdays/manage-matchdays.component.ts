@@ -5,8 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { MatchDay, Maybe, SeasonFragment } from '@liga-manager-api/graphql';
-import dayjs from 'dayjs';
+import { ApiDate, MatchDay, Maybe, SeasonFragment } from '@liga-manager-api/graphql';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { CalendarService, NotificationService } from '@liga-manager-ui/services';
@@ -20,11 +19,9 @@ import { BehaviorSubject, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { v4 } from 'uuid';
-
-import utc from 'dayjs/plugin/utc';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
-
-dayjs.extend(utc);
+import { add } from 'date-fns';
+import { UTCDate } from '@date-fns/utc';
 
 @Component({
     selector: 'lima-manage-matchdays',
@@ -125,8 +122,8 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
                 const md = {} as MatchDay;
                 md.id = v4();
-                md.start_date = dayjs.utc(this.formGroup.controls.seasonStartDate.value).add(i * this.formGroup.controls.betweenMatchDaysOffset.value, 'day').toJSON();
-                md.end_date = dayjs.utc(md.start_date).add(this.formGroup.controls.fromToOffset.value, 'day').toJSON();
+                md.start_date = add(this.formGroup.controls.seasonStartDate.value!, { days: i * this.formGroup.controls.betweenMatchDaysOffset.value }).toDateString();
+                md.end_date = add(new Date(md.start_date), { days: i * this.formGroup.controls.betweenMatchDaysOffset.value }).toDateString();
                 md.number = i + 1;
                 this.matchDays().push(md);
             }
@@ -136,7 +133,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
     async saveMatchDays(manageSeason: SeasonFragment, mode: 'create' | 'update') {
         try {
-            const dates = this.matchDays()?.map((m) => ({ from: dayjs.utc(m?.start_date).toDate(), to: dayjs.utc(m?.end_date).toDate() }));
+            const dates = this.matchDays()?.map((m) => ({ from: new ApiDate(m?.start_date || ''), to: new ApiDate(m?.end_date || '') }));
             if (mode === 'create') {
                 await this.seasonService.createMatchesForSeason({
                     season_id: manageSeason.id,
@@ -147,7 +144,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 for (const md of this.matchDays()) {
                     await this.seasonService.rescheduleMatchDay({
                         match_day_id: md?.id || '',
-                        date_period: { from: dayjs.utc(md?.start_date).toDate(), to: dayjs.utc(md?.end_date).toDate() },
+                        date_period: { from: new ApiDate(md?.start_date || ''), to: new ApiDate(md?.end_date || '') },
                     }, manageSeason.id);
                 }
             }
@@ -169,8 +166,8 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 }
                 const updatedDate = {
                     ...matchDay,
-                    start_date: dayjs.utc(matchDay?.start_date).add(event.delta.days, 'days').toJSON(),
-                    end_date: dayjs.utc(matchDay?.end_date).add(event.delta.days, 'days').toJSON(),
+                    start_date: add(new UTCDate(matchDay?.start_date), { days: event.delta.days }).toJSON(),
+                    end_date: add(new UTCDate(matchDay?.end_date), { days: event.delta.days }).toJSON(),
                 };
                 updatedDates.push(updatedDate);
             }
