@@ -31,11 +31,11 @@
             </mat-form-field>
         </div>
         @if (!season.match_days || season.match_days.length === 0) {
-            <button mat-stroked-button [disabled]="!formGroup.valid" (click)="saveMatchDays(season, 'create')" cySelector="button-save-match-days">
+            <button matButton="outlined" [disabled]="!formGroup.valid" (click)="saveMatchDays(season, 'create')" cySelector="button-save-match-days">
                 <span translate>BUTTON.CREATE_MATCHDAYS</span>
             </button>
         } @else {
-            <button mat-stroked-button (click)="saveMatchDays(season, 'update')" cySelector="button-save-match-days">
+            <button matButton="outlined" (click)="saveMatchDays(season, 'update')" cySelector="button-save-match-days">
                 <span translate>BUTTON.UPDATE_MATCHDAYS</span>
             </button>
         }

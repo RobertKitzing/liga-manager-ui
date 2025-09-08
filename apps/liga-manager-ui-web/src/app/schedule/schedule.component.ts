@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom, of, startWith, Subject, switchMap, tap } from 'rxjs';
+import { firstValueFrom, fromEvent, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { AuthenticationService, fromStorage, GestureService, SeasonService } from '@liga-manager-ui/services';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import { FormControl } from '@angular/forms';
 import { StorageKeys } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-schedule',
@@ -37,6 +38,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
         MatchComponent,
         MatCardModule,
         SortByPipe,
+        NgxPullToRefreshComponent,
     ],
 })
 export class ScheduleComponent implements OnInit {
@@ -101,6 +103,7 @@ export class ScheduleComponent implements OnInit {
                 }
             },
         );
+        fromEvent(document, 'scroll').subscribe(console.log);
     }
 
     async refresh(event?: Subject<void>) {

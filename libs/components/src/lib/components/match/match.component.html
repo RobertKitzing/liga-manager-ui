@@ -2,7 +2,7 @@
     @if (canShare | async) {
         <mat-card-header class="justify-end">
             <button
-                mat-icon-button
+                matIconButton
                 (click)="share()"
             >
                 <mat-icon>share</mat-icon>
@@ -130,7 +130,7 @@
                             <div class="grid grid-cols-3 gap-0">
                                 <div class="flex justify-center p-2">
                                     <button
-                                        mat-stroked-button
+                                        matButton="outlined"
                                         color="primary"
                                         class="w-min"
                                         (click)="openViewContactDialog(match.home_team)"
@@ -142,7 +142,7 @@
                                 @if (canEditMatch(match)) {
                                     <div class="flex justify-center p-2">
                                         <button
-                                            mat-stroked-button
+                                            matButton="outlined"
                                             color="primary"
                                             class="w-min"
                                             [matMenuTriggerFor]="editMenu"
@@ -176,7 +176,7 @@
                                 }
                                 <div class="flex justify-center p-2">
                                     <button
-                                        mat-stroked-button
+                                        matButton="outlined"
                                         color="primary"
                                         (click)="openViewContactDialog(match.guest_team)"
                                     >

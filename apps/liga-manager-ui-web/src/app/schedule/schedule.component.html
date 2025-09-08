@@ -33,7 +33,7 @@
                     <div class="flex w-full">
                         <div class="self-center grow">
                             <button
-                                mat-icon-button
+                                matIconButton
                                 (click)="prevMatchDay()"
                                 [disabled]="selectedMatchDay()?.number === 1"
                                 >
@@ -67,7 +67,7 @@
                         </div>
                         <div class="self-center text-end grow">
                             <button
-                                mat-icon-button
+                                matIconButton
                                 (click)="nextMatchDay()"
                                 [disabled]="selectedMatchDay()?.number === season()?.match_days?.length"
                             >

@@ -1,7 +1,7 @@
 <lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
     @if (data.match; as match) {
         <div class="grid grid-cols-1 gap-4">
-            <!-- <div translate class="text-center">OLD_KICKOFF</div>
+            <div translate class="text-center">OLD_KICKOFF</div>
             @if (match.kickoff) {
                 <div class="flex justify-evenly">
                     <mat-icon>event</mat-icon>
@@ -9,7 +9,7 @@
                         match.kickoff | customDate : "short"
                     }}</span>
                 </div>
-            } -->
+            }
             <h1 translate class="text-center text-xl">NEW_KICKOFF</h1>
             <div>
                 <mat-form-field [formGroup]="newKickoff" class="w-full">
@@ -43,11 +43,11 @@
     }
 </lima-edit-match-base>
 <ng-template #actionsTemplate>
-    <button mat-stroked-button mat-dialog-close>
+    <button matButton="outlined" mat-dialog-close>
         {{ "BUTTON.CANCEL" | translate }}
     </button>
     <button
-        mat-stroked-button
+        matButton="outlined"
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!newKickoff.valid"

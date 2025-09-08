@@ -20,7 +20,7 @@
         </div>
         <div class="flex justify-center" translate>PITCH_NOT_THERE_HINT</div>
         <div class="flex justify-center">
-            <button mat-stroked-button (click)="createPitch()" cySelector="button-create-pitch">
+            <button matButton="outlined" (click)="createPitch()" cySelector="button-create-pitch">
                 {{ "BUTTON.CREATE_PITCH" | translate }}
             </button>
         </div>
@@ -33,11 +33,11 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button mat-stroked-button mat-dialog-close>
+    <button matButton="outlined" mat-dialog-close>
         {{ "BUTTON.CANCEL" | translate }}
     </button>
     <button
-        mat-stroked-button
+        matButton="outlined"
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!newMatchPitchFC.valid"

@@ -73,7 +73,7 @@
                                             }
                                         }
                                     </ul>
-                                    <button mat-stroked-button (click)="scheduleAllMatchesForMatchDay($index)">
+                                    <button matButton="outlined" (click)="scheduleAllMatchesForMatchDay($index)">
                                         <span translate>MATCH_SCHEDULING.SCHEDULE_MATCHES_FOR_MATCHDAY</span>
                                     </button>
                                 </div>
@@ -82,7 +82,7 @@
                     }
                 </div>
                 <mat-card-footer class="flex justify-center m-4">
-                    <button mat-stroked-button (click)="scheduleAllMatchesForSeason()">
+                    <button matButton="outlined" (click)="scheduleAllMatchesForSeason()">
                         <span translate>MATCH_SCHEDULING.SCHEDULE_MATCHES_FOR_SEASON</span>
                     </button>
                 </mat-card-footer>

@@ -6,7 +6,7 @@
                     <mat-label translate>SEARCH</mat-label>
                     <input matInput [formControl]="searchUser" />
                 </mat-form-field>
-                <button mat-icon-button (click)="createUser()" cySelector="button-create-user">
+                <button matIconButton (click)="createUser()" cySelector="button-create-user">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -43,11 +43,11 @@
                             <th class="text-end" mat-header-cell *matHeaderCellDef>
                             </th>
                             <td class="text-end" mat-cell *matCellDef="let user">
-                                <button mat-icon-button (click)="editUser(user)">
+                                <button matIconButton (click)="editUser(user)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                                 <button
-                                    mat-icon-button
+                                    matIconButton
                                     (click)="sendPasswordMail(user.email)"
                                 >
                                     <mat-icon>mail</mat-icon>

@@ -1,10 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
+import { MatCardContent, MatCardModule } from '@angular/material/card';
+import { EditPenaltyComponent, EditPenaltyDialogData, TeamSearchComponent } from '@liga-manager-ui/components';
+import { MatIconModule } from '@angular/material/icon';
+import { Maybe, Team } from '@liga-manager-api/graphql';
+import { MatTableModule } from '@angular/material/table';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'lima-manage-penalties',
     standalone: true,
-    imports: [],
+    imports: [
+        MatCardContent,
+        MatCardModule,
+        TeamSearchComponent,
+        MatIconModule,
+        MatTableModule,
+        AsyncPipe,
+        MatButtonModule,
+    ],
     templateUrl: './manage-penalties.component.html',
 })
-export class ManagePenaltiesComponent extends ManageSeasonBaseComponent {}
+export class ManagePenaltiesComponent extends ManageSeasonBaseComponent {
+
+    teams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
+
+    displayedColumns = [ 'team', 'penalty_reason', 'penalty_points', 'action' ];
+
+    penaltyTrigger = new BehaviorSubject(this.teams());
+
+    penalties$ = this.penaltyTrigger.pipe(
+        switchMap(
+            () => this.seasonService.getSeasonPenalties({ id: this.season?.id || '' }),
+        ),
+    );
+
+    editPenalty() {
+
+        const data: EditPenaltyDialogData = {
+            teams: this.teams() || [],
+            seasonId: this.season?.id,
+        };
+
+        this.dialog.open(EditPenaltyComponent, {
+            data,
+        });
+    }
+
+}

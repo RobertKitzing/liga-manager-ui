@@ -10,7 +10,16 @@
     </mat-card-title>
     <mat-card-content>
         <div class="flex justify-evenly items-center flex-col md:flex-row space-x-0 md:space-x-4">
-            <div class="w-full">
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+                <mat-label translate>TOURNAMENT_ROUND_FROM_DATE</mat-label>
+                <mat-date-range-input [formGroup]="roundDates" [rangePicker]="roundDatesPicker">
+                    <input matStartDate formControlName="from">
+                    <input matEndDate formControlName="to">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="roundDatesPicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #roundDatesPicker></mat-date-range-picker>
+            </mat-form-field>
+            <!-- <div class="w-full">
                 <mat-form-field class="w-full" subscriptSizing="dynamic">
                     <mat-label translate>TOURNAMENT_ROUND_FROM_DATE</mat-label>
                     <input matInput [matDatepicker]="startDatePicker"
@@ -30,7 +39,7 @@
                     <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #endDatePicker></mat-datepicker>
                 </mat-form-field>
-            </div>
+            </div> -->
         </div>
         <div class="flex justify-evenly items-center flex-col md:flex-row space-x-0 md:space-x-4 mt-4">
             <div class="w-full">
@@ -59,7 +68,7 @@
             </div>
         </div>
         <div class="flex justify-center mt-4 mb-4">
-            <button mat-stroked-button (click)="addMatch()" [disabled]="!newMatch.valid" cySelector="button-add-match-to-tournament-round">
+            <button matButton="outlined" (click)="addMatch()" [disabled]="!newMatch.valid" cySelector="button-add-match-to-tournament-round">
                 <mat-icon>add</mat-icon>
                 <span translate>BUTTON.ADD_MATCH</span>
             </button>
@@ -77,7 +86,7 @@
                             ></lima-match>
                         </div>
                         <div>
-                            <button mat-icon-button (click)="deleteMatch(match)">
+                            <button matIconButton (click)="deleteMatch(match)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -88,11 +97,11 @@
     </mat-card-content>
     <mat-card-footer>
         <div class="flex justify-evenly m-3">
-            <button mat-stroked-button (click)="roundEdited.emit(false)">
+            <button matButton="outlined" (click)="roundEdited.emit(false)">
                 <mat-icon>close</mat-icon>
                 <span translate>BUTTON.CANCEL</span>
             </button>
-            <button mat-stroked-button (click)="saveRound()" [disabled]="matches().length === 0 && roundDates.valid" cySelector="button-save-tournament-round">
+            <button matButton="outlined" (click)="saveRound()" [disabled]="matches().length === 0 && roundDates.valid" cySelector="button-save-tournament-round">
                 <mat-icon>save</mat-icon>
                 <span translate>SAVE_ROUND</span>
             </button>

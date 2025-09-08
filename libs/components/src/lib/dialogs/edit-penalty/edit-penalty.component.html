@@ -1,0 +1,35 @@
+<div mat-dialog-title class="mat-sys-primary text-center" translate>
+    EDIT_PENALTY_DIALOG_TITLE
+</div>
+<mat-dialog-content>
+    <div class="flex flex-col p-4" [formGroup]="penaltyFormGroup">
+        <lima-team-chooser [teams]="data.teams" formControlName="team"></lima-team-chooser>
+        <mat-form-field>
+            <mat-label translate>PLACEHOLDER.PENALTY_POINTS</mat-label>
+            <input matInput type="number" formControlName="points"/>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label translate>PLACEHOLDER.PENALTY_REASON</mat-label>
+            <textarea matInput cdkTextareaAutosize formControlName="reason"
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="15">
+            </textarea>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+    <div class="flex justify-evenly p-2">
+        <button matButton="outlined" mat-dialog-close>
+            {{ "BUTTON.CANCEL" | translate }}
+        </button>
+        <button
+            matButton="outlined"
+            (click)="onSaveClicked()"
+            [disabled]="!penaltyFormGroup.valid"
+            cySelector="button-save-user"
+        >
+            <mat-icon>save</mat-icon>
+            {{ "BUTTON.SAVE" | translate }}
+        </button>
+    </div>
+</mat-dialog-actions>

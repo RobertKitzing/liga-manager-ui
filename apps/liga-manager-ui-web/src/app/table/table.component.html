@@ -166,7 +166,16 @@
                                 mat-cell
                                 *matCellDef="let element"
                             >
-                                {{ element.points }}
+                                <div class="flex space-x-4 items-center">
+                                    <span>{{ element.points }}</span>
+                                    @if (getPenaltiesForTeam(element.team.id); as penalties) {
+                                        @if (penalties.length > 0) {
+                                            <button matIconButton (click)="expandedElement.set(element)">
+                                                <mat-icon>warning</mat-icon>
+                                            </button>
+                                        }
+                                    }
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="expandedDetail">
@@ -178,26 +187,39 @@
                                             : 'collapsed'
                                     "
                                 >
-                                    <div class="flex justify-center">
-                                        <div class="grid grid-cols-3 gap-x-4 m-2">
+                                    <div class="flex justify-evenly">
+                                        <div class="flex flex-col">
                                             <span translate>WINS_DRAWS_LOSSES</span>
-                                            <span translate>SCORED_CONCEDED</span>
-                                            <span translate>SCORED_CONCEDED_DIFF</span>
-                                            <span
-                                                >{{ element.wins }}:{{ element.draws }}:{{
-                                                    element.losses
-                                                }}</span
-                                            >
-                                            <span
-                                                >{{ element.scored_goals }}:{{
-                                                    element.conceded_goals
-                                                }}</span
-                                            >
-                                            <span>{{
-                                                element.scored_goals -
-                                                    element.conceded_goals
-                                            }}</span>
+                                            <span>
+                                                {{ element.wins }}:{{ element.draws }}:{{ element.losses }}
+                                            </span>
                                         </div>
+                                        <div class="flex flex-col">
+                                            <span translate>SCORED_CONCEDED</span>
+                                            <span>
+                                                {{ element.scored_goals }}:{{element.conceded_goals}}
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span translate>SCORED_CONCEDED_DIFF</span>
+                                            <span>
+                                                {{ element.scored_goals - element.conceded_goals }}
+                                            </span>
+                                        </div>
+                                        @if (getPenaltiesForTeam(element.team.id); as penalties) {
+                                            @if(penalties.length > 0) {
+                                                <div class="flex flex-col">
+                                                    <span translate>PENALTIES</span>
+                                                    <ul>
+                                                        @for (penalty of penalties; track penalty.id) {
+                                                            <li>
+                                                                {{ penalty.reason }} (-{{ penalty.points }})
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </td>
@@ -211,7 +233,6 @@
                                     expandedElement() === element ? null : element
                                 )
                             "
-                            class="sm:pointer-events-none"
                         ></tr>
                         <tr
                             mat-row

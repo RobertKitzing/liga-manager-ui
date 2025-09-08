@@ -19,7 +19,7 @@
                         @switch (season.state) {
                             @case (SeasonState.Preparation) {
                                 <button
-                                    mat-icon-button
+                                    matIconButton
                                     (click)="
                                         removeTeamFromSeason({
                                             team_id: team.id,
@@ -33,7 +33,7 @@
                             @case (SeasonState.Progress) {
                                 <div class="flex items-center">
                                     <button
-                                        mat-icon-button
+                                        matIconButton
                                         (click)="replaceTeamInSeason(team)"
                                     >
                                         <mat-icon>compare_arrows</mat-icon>

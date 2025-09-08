@@ -15,21 +15,21 @@
                                 />
                             </mat-form-field>
                             <button
-                                mat-icon-button
+                                matIconButton
                                 (click)="addNewTeam(newTeam.value!)"
                                 [disabled]="!newTeam.valid"
                                 cySelector="button-create-team-submit"
                             >
                                 <mat-icon> add </mat-icon>
                             </button>
-                            <button mat-icon-button (click)="addTeamMode = false">
+                            <button matIconButton (click)="addTeamMode = false">
                                 <mat-icon> cancel </mat-icon>
                             </button>
                         }
                         @if (!addTeamMode) {
                             <lima-team-search class="grow pr-6" [teams]="t" (filteredTeams)="teams.set($event)"></lima-team-search>
                             <button
-                                mat-icon-button
+                                matIconButton
                                 (click)="addTeamMode = true"
                                 cySelector="button-create-team"
                             >
@@ -69,21 +69,21 @@
                             </th>
                             <td class="text-end" mat-cell *matCellDef="let team">
                                 @if (editTeamId !== team.id) {
-                                    <button mat-icon-button (click)="editTeam(team)">
+                                    <button matIconButton (click)="editTeam(team)">
                                         <mat-icon>edit</mat-icon>
                                     </button>
                                 } @if (editTeamId === team.id) {
                                     <button
-                                        mat-icon-button
+                                        matIconButton
                                         (click)="renameTeam(team.id, newTeamName.value!)"
                                         [disabled]="!newTeamName.valid"
                                     >
                                         <mat-icon>save</mat-icon>
                                     </button>
-                                    <button mat-icon-button (click)="deleteTeam(team.id)">
+                                    <button matIconButton (click)="deleteTeam(team.id)">
                                         <mat-icon> delete </mat-icon>
                                     </button>
-                                    <button mat-icon-button (click)="editTeamId = ''">
+                                    <button matIconButton (click)="editTeamId = ''">
                                         <mat-icon> cancel </mat-icon>
                                     </button>
                                 }

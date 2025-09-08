@@ -16,11 +16,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TruncatePipe } from '@liga-manager-ui/pipes';
 import { FormControl } from '@angular/forms';
 import { SeasonChooserComponent, TeamLogoComponent } from '@liga-manager-ui/components';
-import { AllSeasonsFragment, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
+import { AllSeasonsFragment, RankingPenalty, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
 import { BehaviorSubject, firstValueFrom, fromEvent, map, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'lima-table',
@@ -48,6 +50,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatSortModule,
         MatCardModule,
         TeamLogoComponent,
+        MatIconModule,
+        MatButtonModule,
     ],
 })
 export class TableComponent implements OnInit {
@@ -78,6 +82,8 @@ export class TableComponent implements OnInit {
 
     SeasonState = SeasonState;
 
+    penalties = signal<RankingPenalty[]>([]);
+
     ranking$ = this.sortRanking.pipe(
         switchMap((sort) =>
             this.selectedSeasonFC.valueChanges.pipe(
@@ -94,6 +100,8 @@ export class TableComponent implements OnInit {
                         : of(null),
                 ),
                 map((ranking) => {
+                    this.penalties.set(ranking?.penalties as RankingPenalty[]);
+
                     if (!sort.direction) {
                         return ranking?.positions;
                     }
@@ -182,6 +190,10 @@ export class TableComponent implements OnInit {
 
     compare(a: number | string, b: number | string, isAsc?: boolean) {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+
+    getPenaltiesForTeam(teamId: string) {
+        return this.penalties()?.filter((t) => t?.team.id === teamId);
     }
 
 }

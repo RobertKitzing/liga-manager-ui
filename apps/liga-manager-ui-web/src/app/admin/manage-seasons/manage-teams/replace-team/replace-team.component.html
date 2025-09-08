@@ -14,12 +14,12 @@
 <mat-dialog-actions align="center">
     <div class="flex justify-center">
         <button mat-dialog-close
-            mat-stroked-button
+            matButton="outlined"
         >
             <span translate>BUTTON.CANCEL</span>
         </button>
         <button
-            mat-stroked-button
+            matButton="outlined"
             [disabled]="!replaceWithTeamId()"
             (click)="replaceTeamInSeason()"
         >

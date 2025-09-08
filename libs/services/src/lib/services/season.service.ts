@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom, map, of, take } from 'rxjs';
 import {
+    AddPenaltyGQL,
+    AddPenaltyMutationVariables,
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
     AllSeasonsFragment,
@@ -23,6 +25,8 @@ import {
     ScheduleAllMatchesForSeasonMutationVariables,
     Season,
     SeasonByIdGQL,
+    SeasonPenaltiesGQL,
+    SeasonPenaltiesQueryVariables,
     StartSeasonGQL,
 } from '@liga-manager-api/graphql';
 import { StorageKeys } from '@liga-manager-ui/common';
@@ -32,6 +36,8 @@ import { fromStorage } from '../functions';
     providedIn: 'root',
 })
 export class SeasonService {
+
+    private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
 
     private allSeasonlistGQL = inject(AllSeasonsListGQL);
 
@@ -61,6 +67,7 @@ export class SeasonService {
 
     private scheduleAllMatchesForMatchDayGQL = inject(ScheduleAllMatchesForMatchDayGQL);
 
+    private addPenaltyGQL = inject(AddPenaltyGQL);
 
     progressSeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_PROGRESS_SEASON);
 
@@ -284,6 +291,31 @@ export class SeasonService {
                     ],
                 },
             ),
+        );
+    }
+
+    getSeasonPenalties(params: SeasonPenaltiesQueryVariables) {
+        return this.seasonPenaltiesGQL.watch(params).valueChanges.pipe(
+            map(({ data }) => data.season?.ranking?.penalties),
+        );
+    }
+
+    addPenalty(params: AddPenaltyMutationVariables) {
+        return firstValueFrom(
+            this.addPenaltyGQL.mutate(
+                params
+                ,{
+                    refetchQueries: [
+                        {
+                            query: this.rankingGQL.document,
+                            variables: { id: params.season_id },
+                        },
+                        {
+                            query: this.seasonPenaltiesGQL.document,
+                            variables: { id: params.season_id },
+                        },
+                    ],
+                }),
         );
     }
 

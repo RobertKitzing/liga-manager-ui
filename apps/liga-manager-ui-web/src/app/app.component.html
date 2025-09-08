@@ -12,7 +12,7 @@
         <div class="hidden lg:flex lg:visible">
             @if (authService.user()) {
             <button
-                mat-stroked-button
+                matButton="outlined"
                 class="mat-sys-primary"
                 [matMenuTriggerFor]="userMenu"
                 cySelector="button-user-menu"
@@ -27,7 +27,7 @@
             } @else {
             <button
                 class="mat-sys-primary"
-                mat-stroked-button
+                matButton="outlined"
                 (click)="openLoginDialog()"
                 cySelector="button-login"
             >
@@ -35,7 +35,7 @@
             </button>
             }
         </div>
-        <button mat-icon-button (click)="drawer.toggle()" class="ml-2">
+        <button matIconButton (click)="drawer.toggle()" class="ml-2">
             <mat-icon>menu</mat-icon>
         </button>
     </div>

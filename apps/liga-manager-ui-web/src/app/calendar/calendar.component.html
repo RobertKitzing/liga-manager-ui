@@ -5,7 +5,7 @@
                 <div class="grid grid-cols-3 w-full">
                     <div class="self-center">
                         <button
-                            mat-icon-button
+                            matIconButton
                             (click)="prev()"
                             >
                             <mat-icon>arrow_back</mat-icon>
@@ -13,13 +13,13 @@
                     </div>
                     <div class="flex justify-center space-x-4">
                         <button
-                            mat-stroked-button
+                            matButton="outlined"
                             (click)="today()"
                             >
                             <mat-label>today</mat-label>
                         </button>
                         <button
-                            mat-icon-button
+                            matIconButton
                             (click)="openSettings()"
                             >
                             <div class="flex justify-center">
@@ -28,7 +28,7 @@
                         </button>
                         @if ((canShare | async) && options.controls.team_ids.value.length > 0) {
                             <button
-                                mat-icon-button
+                                matIconButton
                                 (click)="share()"
                             >
                                 <mat-icon>share</mat-icon>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="self-center text-end">
                         <button
-                            mat-icon-button
+                            matIconButton
                             (click)="next()"
                         >
                             <mat-icon>arrow_forward</mat-icon>
