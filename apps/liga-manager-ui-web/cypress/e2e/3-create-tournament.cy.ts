@@ -23,14 +23,11 @@ describe('Admin - Create Tournament', () => {
 
         cy.wait(['@graphql', '@graphql']);
 
-
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').contains(Tournaments[0].name).click();
 
-        // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
 
-        // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
 
         cy.getBySel('input-team-auto-complete-home').first().type(Teams[0].name);
