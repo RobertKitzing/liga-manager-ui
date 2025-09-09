@@ -62,7 +62,6 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     private destroyRef = inject(DestroyRef);
 
     calendarOptions: CalendarOptions = {
-        timeZone: 'UTC',
         headerToolbar: {
             start: 'dayGridMonth,dayGridYear',
             center: 'title',
@@ -109,7 +108,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     }
 
     createMatchDays() {
-        if (this.season?.teams) {
+        if (this.season?.teams && this.formGroup.controls.seasonStartDate.value) {
             this.matchDays.set([]);
             let length = this.season.teams.length;
             if (length % 2 !== 0) {
@@ -119,13 +118,21 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 length = (length * 2) - 1;
             }
             for (let i = 0; i < length - 1; i++) {
-
+                const betweenMatchDaysOffset = i * this.formGroup.controls.betweenMatchDaysOffset.value;
+                console.log(this.formGroup.controls.seasonStartDate.value.getFullYear(), this.formGroup.controls.seasonStartDate.value.getMonth(), this.formGroup.controls.seasonStartDate.value.getDate());
+                const chosenDate = new UTCDate(this.formGroup.controls.seasonStartDate.value.getFullYear(), this.formGroup.controls.seasonStartDate.value.getMonth(), this.formGroup.controls.seasonStartDate.value.getDate());
+                console.log('chosenDate', chosenDate.toString());
+                const startDate = add(chosenDate, { days: betweenMatchDaysOffset });
+                console.log('startDate', startDate.toString());
+                const endDate = add(startDate, { days: this.formGroup.controls.fromToOffset.value });
+                console.log('endDate', endDate.toString());
                 const md = {} as MatchDay;
                 md.id = v4();
-                md.start_date = add(this.formGroup.controls.seasonStartDate.value!, { days: i * this.formGroup.controls.betweenMatchDaysOffset.value }).toDateString();
-                md.end_date = add(new Date(md.start_date), { days: i * this.formGroup.controls.betweenMatchDaysOffset.value }).toDateString();
+                md.start_date = new ApiDate(startDate).toJSON();
+                md.end_date = new ApiDate(endDate).toJSON();
                 md.number = i + 1;
                 this.matchDays().push(md);
+                console.log(md);
             }
             this.matchDayTrigger.next(this.matchDays());
         }

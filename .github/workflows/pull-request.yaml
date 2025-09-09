@@ -181,7 +181,7 @@ jobs:
           distribution: "zulu"
           java-version: "21"
       
-      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:development
       - run: npx nx-cloud record -- nx run liga-manager-ui:copy:app-settings:staging
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:sync:android
 
@@ -216,23 +216,21 @@ jobs:
         working-directory: apps/liga-manager-ui-web
         run: npx cap build android --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lima-app-release-signed-staging
+          path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
+
       - name: Build Debug App
         working-directory: apps/liga-manager-ui-web/android
         run: ./gradlew assembleDebug
-
-      - run: ls -la apps/liga-manager-ui-web/android/app/build/outputs/apk
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: lima-app-debug-signed-staging
           path: apps/liga-manager-ui-web/android/app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lima-app-release-signed-staging
-          path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
 
   build-app:
     runs-on: ubuntu-latest
@@ -255,7 +253,7 @@ jobs:
           distribution: "zulu"
           java-version: "21"
       
-      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
+      - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:development
       - run: npx nx-cloud record -- nx run liga-manager-ui:copy:app-settings:prod
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:sync:android
 
@@ -293,5 +291,15 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lima-app-release-signed
+          name: lima-app-release-signed-prod
           path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
+
+      - name: Build Debug App
+        working-directory: apps/liga-manager-ui-web/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lima-app-debug-signed-prod
+          path: apps/liga-manager-ui-web/android/app/build/outputs/apk/debug/app-debug.apk
