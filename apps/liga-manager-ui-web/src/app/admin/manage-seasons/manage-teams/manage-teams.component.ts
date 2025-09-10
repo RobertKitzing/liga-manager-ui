@@ -9,6 +9,7 @@ import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { defaultDialogConfig, TeamAutoCompleteComponent, TeamSearchComponent } from '@liga-manager-ui/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReplaceTeamComponent } from './replace-team/replace-team.component';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -21,19 +22,20 @@ import { ReplaceTeamComponent } from './replace-team/replace-team.component';
         TeamSearchComponent,
         TeamAutoCompleteComponent,
         ReactiveFormsModule,
+        MatCardModule,
     ],
     templateUrl: './manage-teams.component.html',
 })
 export class ManageTeamsComponent extends ManageSeasonBaseComponent {
 
-    seasonTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
+    allTeams$ = this.teamService.allTeams$;
 
-    allTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
+    seasonTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
 
     destroyRef = inject(DestroyRef);
 
-    addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
-        firstValueFrom(this.seasonService.addTeamToSeason(variables));
+    async addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
+        await firstValueFrom(this.seasonService.addTeamToSeason(variables));
     }
 
     async removeTeamFromSeason(variables: AddTeamToSeasonMutationVariables) {

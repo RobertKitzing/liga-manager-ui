@@ -13,10 +13,13 @@ export class CustomDatePipe implements PipeTransform {
     private i18nService = inject(I18nService);
 
     transform(
-        value: string | number | Date | undefined,
+        value: string | number | Date | undefined | null,
         format = 'shortDate',
         timezone: string | undefined = undefined,
     ): string | null {
+        if (!value) {
+            return '';
+        }
         return this.date.transform(
             value,
             format,

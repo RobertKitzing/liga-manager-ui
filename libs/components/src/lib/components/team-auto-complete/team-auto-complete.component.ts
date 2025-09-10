@@ -36,6 +36,8 @@ export class TeamAutoCompleteComponent {
 
     teams = input<Maybe<Maybe<Team>[]> | undefined>();
 
+    disabledTeams = input<Maybe<Maybe<Team>[]> | undefined>([]);
+
     clearAfterSelected = input(false);
 
     teamSelected = output<Team>();
@@ -78,7 +80,7 @@ export class TeamAutoCompleteComponent {
         if (typeof searchTerm !== 'string') {
             searchTerm = searchTerm?.name;
         }
-        let t = this.teams();
+        let t = this.teams()?.filter((t) => t && !this.disabledTeams()?.find((dt) => dt?.id === t.id));
         if (searchTerm) {
             t = this.teams()?.filter(
                 (y) =>

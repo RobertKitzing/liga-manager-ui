@@ -63,7 +63,6 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     private destroyRef = inject(DestroyRef);
 
     calendarOptions: CalendarOptions = {
-        timeZone: 'UTC',
         headerToolbar: {
             start: 'dayGridMonth,dayGridYear',
             center: 'title',

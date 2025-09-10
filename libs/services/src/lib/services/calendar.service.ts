@@ -17,8 +17,8 @@ import { add, getYear, parseISO } from 'date-fns';
 export interface IMatchDayEvent {
     allDay: boolean;
     title: string;
-    start: string;
-    end?: string;
+    start: Date | undefined;
+    end?: Date;
     matchDay?: MatchDay;
     matchDayIndex?: number;
     matchDayId?: string;
@@ -61,8 +61,8 @@ export class CalendarService {
                             allDay: true,
                             display: 'background',
                             title: this.translateService.instant('MATCHDAY', { matchDay: matchDay?.number}),
-                            start: parseISO(matchDay?.start_date || '').toDateString(),
-                            end: parseISO(matchDay?.end_date ||'').toDateString(),
+                            start: parseISO(matchDay?.start_date || ''),
+                            end: parseISO(matchDay?.end_date ||''),
                         })),
                     );
                 }
@@ -78,8 +78,8 @@ export class CalendarService {
                             allDay: true,
                             display: 'background',
                             title: this.translateService.instant('TOURNAMENT_ROUND', { round: round?.number }),
-                            start: parseISO(round?.start_date || '').toJSON(),
-                            end: parseISO(round?.end_date || '').toJSON(),
+                            start: parseISO(round?.start_date || ''),
+                            end: parseISO(round?.end_date || ''),
                         })),
                     );
                 }
@@ -87,7 +87,7 @@ export class CalendarService {
                     data.matchesByKickoff!.map((match) => ({
                         allDay: false,
                         title: `${match?.home_team.name} - ${match?.guest_team.name}`,
-                        start: new Date(match?.kickoff || '').toJSON() || '',
+                        start: parseISO(match?.kickoff || ''),
                         match,
                         team_ids: [ match?.home_team.id || '', match?.guest_team.id || '' ],
                     })),
@@ -103,8 +103,8 @@ export class CalendarService {
             title: this.translateService.instant('MATCHDAY', { matchDay: matchDay?.number}),
             matchDayIndex: (matchDay?.number || 1) - 1,
             matchDayId: matchDay?.id,
-            start: new Date(matchDay?.start_date || '').toJSON(),
-            end: add(new Date(matchDay?.end_date || ''), { days: 1 }).toJSON(),
+            start: parseISO(matchDay?.start_date || ''),
+            end: add(parseISO(matchDay?.end_date || ''), { days: 1 }),
         })) || [];
         if (holidays) {
             return forkJoin([

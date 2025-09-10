@@ -8,10 +8,10 @@ import { AsyncPipe } from '@angular/common';
 import { PitchService } from '@liga-manager-ui/services';
 import { PitchAutoCompleteComponent, TeamChooserComponent } from '@liga-manager-ui/components';
 import { MatInputModule } from '@angular/material/input';
-import { MatchAppointment, Team } from '@liga-manager-api/graphql';
+import { Team } from '@liga-manager-api/graphql';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { MatButtonModule } from '@angular/material/button';
-import { add, parseISO, set } from 'date-fns';
+import { add, formatISO, parseISO, set } from 'date-fns';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -74,7 +74,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     genKickoff(matchDayStartDate: string, offset: number, time: `${number}:${number}`) {
         const hours = +time.split(':')[0];
         const minutes = +time.split(':')[1];
-        return set(add(parseISO(matchDayStartDate), { days: offset }), { hours, minutes });
+        return formatISO(set(add(parseISO(matchDayStartDate), { days: offset }), { hours, minutes }));
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
@@ -82,7 +82,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         if (!matchDay) {
             return;
         }
-        const match_appointments: MatchAppointment[] = this.matchAppointments?.controls.map(
+        const match_appointments = this.matchAppointments?.controls.map(
             (fg) => ({
                 kickoff: this.genKickoff(
                     matchDay.start_date,
@@ -104,7 +104,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         if (!matchDay) {
             return;
         }
-        const match_appointments: MatchAppointment[] = this.matchAppointments?.controls.map(
+        const match_appointments = this.matchAppointments?.controls.map(
             (fg) => ({
                 kickoff: this.genKickoff(
                     matchDay.start_date,

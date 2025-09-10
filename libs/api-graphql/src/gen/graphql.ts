@@ -1,5 +1,6 @@
 /* eslint-disable */
 /* GENERATED DO NOT EDIT */
+import { ApiDateTime } from './api-date-time'
 import { ApiDate } from './api-date'
 import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
@@ -19,7 +20,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Date: { input: ApiDate; output: ApiDate; }
-  DateTime: { input: Date; output: Date; }
+  DateTime: { input: ApiDateTime; output: ApiDateTime; }
 };
 
 export type Contact = {

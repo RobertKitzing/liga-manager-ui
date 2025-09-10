@@ -1,8 +1,8 @@
-import { format, parseISO } from 'date-fns';
+import { formatISO, parseISO } from 'date-fns';
 
 export class ApiDate {
 
-    private date: Date;
+    date: Date;
 
     constructor(
         date: Date | string,
@@ -15,7 +15,7 @@ export class ApiDate {
     }
 
     toJSON(): string {
-        return format(this.date, 'yyyy-LL-dd');
+        return formatISO(this.date, { representation: 'date' });
     }
 
 }

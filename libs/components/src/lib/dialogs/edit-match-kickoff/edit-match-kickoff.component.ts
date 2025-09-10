@@ -24,7 +24,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
-import { set } from 'date-fns';
+import { formatISO, set } from 'date-fns';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -75,7 +75,7 @@ export class EditMatchKickoffComponent {
             await firstValueFrom(
                 this.matchService.scheduleMatch({
                     match_id: this.data.match.id,
-                    kickoff,
+                    kickoff: formatISO(kickoff),
                 }),
             );
             this.notificationService.showSuccessNotification(

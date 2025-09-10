@@ -10,6 +10,7 @@ const config: CodegenConfig = {
                 content: [
                     '/* eslint-disable */',
                     '/* GENERATED DO NOT EDIT */',
+                    'import { ApiDateTime } from \'./api-date-time\'',
                     'import { ApiDate } from \'./api-date\'',
                 ],
                 flattenGeneratedTypes: true,
@@ -19,7 +20,7 @@ const config: CodegenConfig = {
                 strictScalars: false,
                 defaultScalarType: 'unknown',
                 scalars: {
-                    DateTime: 'Date',
+                    DateTime: 'ApiDateTime',
                     Date: 'ApiDate',
                 },
                 skipTypename: true,

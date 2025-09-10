@@ -4,7 +4,7 @@
             {{ "MATCH_SCHEDULING.MATCH_KICKOFF_APPOINTMENTS" | translate}}
         </mat-card-title>
         <mat-card-content>
-            <div class="flex flex-wrap justify-center gap-4">
+            <div class="grid grid-cols-4 justify-center gap-4">
                 @for( matchAppointmentsFromGroup of matchAppointments?.controls; track $index ) {
                     <mat-card appearance="outlined">
                         <mat-card-content>
@@ -68,7 +68,7 @@
                                         @for( match of matchDay.matches; track $index ) {
                                             @if(match?.kickoff) {
                                                 <li>
-                                                    {{ match?.kickoff! | customDate:'short' }} {{ match?.pitch?.label }}
+                                                    {{ match?.kickoff | customDate:'short' }} {{ match?.pitch?.label }}
                                                 </li>
                                             }
                                         }
@@ -107,7 +107,7 @@
                                             @if(match?.kickoff) {
                                                 <li>
                                                     {{ match?.home_team?.name }} - {{ match?.guest_team?.name }}
-                                                    {{ match?.kickoff! | customDate:'short' }} {{ match?.pitch?.label }}
+                                                    {{ match?.kickoff | customDate:'short' }} {{ match?.pitch?.label }}
                                                 </li>
                                             }
                                         }

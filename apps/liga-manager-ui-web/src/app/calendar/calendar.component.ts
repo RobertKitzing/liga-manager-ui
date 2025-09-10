@@ -152,8 +152,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     triggerEvent() {
         this.eventTrigger.next({
-            min_date: this.calendarApi?.view.activeStart,
-            max_date: this.calendarApi?.view.activeEnd,
+            min_date: this.calendarApi?.view.activeStart.toJSON(),
+            max_date: this.calendarApi?.view.activeEnd.toJSON(),
         });
     }
 
