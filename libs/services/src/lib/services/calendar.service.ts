@@ -12,7 +12,7 @@ import {
 } from '@liga-manager-api/graphql';
 import { PublicHolidaysService } from './public-holidays.service';
 import { TranslateService } from '@ngx-translate/core';
-import { getYear, parseISO } from 'date-fns';
+import { add, getYear, parseISO } from 'date-fns';
 
 export interface IMatchDayEvent {
     allDay: boolean;
@@ -104,7 +104,7 @@ export class CalendarService {
             matchDayIndex: (matchDay?.number || 1) - 1,
             matchDayId: matchDay?.id,
             start: new Date(matchDay?.start_date || '').toJSON(),
-            end: new Date(matchDay?.end_date || '').toJSON(),
+            end: add(new Date(matchDay?.end_date || ''), { days: 1 }).toJSON(),
         })) || [];
         if (holidays) {
             return forkJoin([

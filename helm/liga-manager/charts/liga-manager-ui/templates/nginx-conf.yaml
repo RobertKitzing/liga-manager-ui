@@ -23,6 +23,7 @@ data:
     }
     server {
         listen {{ .Values.service.port }};
+        http2 on;
         server_name localhost;
         server_tokens off;
         gzip on;
@@ -36,6 +37,7 @@ data:
               add_header 'Access-Control-Allow-Origin' 'https://localhost';
               add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
               add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+              add_header 'Access-Control-Expose-Headers' 'Content-Encoding,X-Token';
               add_header 'Access-Control-Max-Age' 60;
               add_header 'Content-Type' 'text/plain; charset=UTF-8';
               add_header 'Content-Length' 0;
@@ -46,7 +48,8 @@ data:
           add_header 'Access-Control-Allow-Origin' 'https://localhost' always;
           add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
           add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
-          
+          add_header 'Access-Control-Expose-Headers' 'Content-Encoding,X-Token';
+
           include fastcgi_params;
           fastcgi_pass api;
           fastcgi_param DOCUMENT_ROOT /var/www/api/public;

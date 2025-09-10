@@ -36,7 +36,7 @@
                                             cySelector="input-time"
                                         />
                                     </mat-form-field>
-                                    <span class="italic">{{ calcOffestFromStartDate(matchAppointmentsFromGroup.controls['daysOffset'].value) }}</span>
+                                    <span class="italic">{{ calcOffestFromStartDate(matchAppointmentsFromGroup.controls['daysOffset'].value) | customDate:'cccc' }}</span>
                                     <lima-team-chooser class="col-span-full" [teams]="season.teams || []" formControlName="unavailableTeams" [multiple]="true" label="{{ 'PLACEHOLDER.UNAVAILABLE_TEAMS' | translate }}"></lima-team-chooser>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                         @for( match of matchDay.matches; track $index ) {
                                             @if(match?.kickoff) {
                                                 <li>
-                                                    {{ match?.kickoff! | customDate:'short':'utc' }} {{ match?.pitch?.label }}
+                                                    {{ match?.kickoff! | customDate:'short' }} {{ match?.pitch?.label }}
                                                 </li>
                                             }
                                         }

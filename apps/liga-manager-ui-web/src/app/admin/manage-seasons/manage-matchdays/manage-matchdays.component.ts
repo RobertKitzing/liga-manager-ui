@@ -22,6 +22,7 @@ import { v4 } from 'uuid';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { add } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
+import { ApiDateFormControl } from '@liga-manager-ui/components';
 
 @Component({
     selector: 'lima-manage-matchdays',
@@ -45,7 +46,7 @@ import { UTCDate } from '@date-fns/utc';
 export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implements OnInit, OnChanges {
 
     formGroup = new FormGroup({
-        seasonStartDate: new FormControl<Date | undefined>(undefined, [Validators.required]),
+        seasonStartDate: new ApiDateFormControl(undefined, [Validators.required]),
         secondHalf: new FormControl(false),
         betweenMatchDaysOffset: new FormControl<number>(7, { nonNullable: true }),
         fromToOffset: new FormControl<number>(2, { nonNullable: true }),
@@ -62,6 +63,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     private destroyRef = inject(DestroyRef);
 
     calendarOptions: CalendarOptions = {
+        timeZone: 'UTC',
         headerToolbar: {
             start: 'dayGridMonth,dayGridYear',
             center: 'title',
@@ -119,20 +121,14 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
             }
             for (let i = 0; i < length - 1; i++) {
                 const betweenMatchDaysOffset = i * this.formGroup.controls.betweenMatchDaysOffset.value;
-                console.log(this.formGroup.controls.seasonStartDate.value.getFullYear(), this.formGroup.controls.seasonStartDate.value.getMonth(), this.formGroup.controls.seasonStartDate.value.getDate());
-                const chosenDate = new UTCDate(this.formGroup.controls.seasonStartDate.value.getFullYear(), this.formGroup.controls.seasonStartDate.value.getMonth(), this.formGroup.controls.seasonStartDate.value.getDate());
-                console.log('chosenDate', chosenDate.toString());
-                const startDate = add(chosenDate, { days: betweenMatchDaysOffset });
-                console.log('startDate', startDate.toString());
-                const endDate = add(startDate, { days: this.formGroup.controls.fromToOffset.value });
-                console.log('endDate', endDate.toString());
+                const startDate = add(this.formGroup.controls.seasonStartDate.value, { days: betweenMatchDaysOffset });
+                const endDate = add(startDate, { days: this.formGroup.controls.fromToOffset.value -1 });
                 const md = {} as MatchDay;
                 md.id = v4();
                 md.start_date = new ApiDate(startDate).toJSON();
                 md.end_date = new ApiDate(endDate).toJSON();
                 md.number = i + 1;
                 this.matchDays().push(md);
-                console.log(md);
             }
             this.matchDayTrigger.next(this.matchDays());
         }
@@ -140,7 +136,12 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
     async saveMatchDays(manageSeason: SeasonFragment, mode: 'create' | 'update') {
         try {
-            const dates = this.matchDays()?.map((m) => ({ from: new ApiDate(m?.start_date || ''), to: new ApiDate(m?.end_date || '') }));
+            const dates = this.matchDays()?.map(
+                (m) => ({
+                    from: new ApiDate(m?.start_date || ''),
+                    to: new ApiDate(m?.end_date || ''),
+                }),
+            );
             if (mode === 'create') {
                 await this.seasonService.createMatchesForSeason({
                     season_id: manageSeason.id,

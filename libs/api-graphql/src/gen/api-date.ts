@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export class ApiDate {
 
@@ -7,7 +7,11 @@ export class ApiDate {
     constructor(
         date: Date | string,
     ) {
-        this.date = new Date(date);
+        if (typeof date === 'string') {
+            this.date = parseISO(date);
+        } else {
+            this.date = date;
+        }
     }
 
     toJSON(): string {

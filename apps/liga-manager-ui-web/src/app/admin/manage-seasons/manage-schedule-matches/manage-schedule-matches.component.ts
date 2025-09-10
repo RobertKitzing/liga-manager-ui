@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatchAppointment, Team } from '@liga-manager-api/graphql';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { MatButtonModule } from '@angular/material/button';
-import { add, set } from 'date-fns';
+import { add, parseISO, set } from 'date-fns';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -45,14 +45,14 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     calcOffestFromStartDate(offset: number) {
-        return add(new Date(this.season?.match_days![0]?.start_date || ''), { days: offset });
+        return add(parseISO(this.season?.match_days![0]?.start_date || ''), { days: offset });
     }
 
     exampleMatchDays() {
         if (!this.season?.match_days) {
             return;
         }
-        return this.season?.match_days.map(
+        const t = this.season?.match_days.map(
             (matchDay) => ({
                 ...matchDay,
                 matches: matchDay?.matches?.map(
@@ -68,12 +68,13 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                 ),
             }),
         );
+        return t;
     }
 
     genKickoff(matchDayStartDate: string, offset: number, time: `${number}:${number}`) {
         const hours = +time.split(':')[0];
         const minutes = +time.split(':')[1];
-        return set(add(new Date(matchDayStartDate), { days: offset }), { hours, minutes });
+        return set(add(parseISO(matchDayStartDate), { days: offset }), { hours, minutes });
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
@@ -114,6 +115,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                 unavailable_team_ids: fg.controls['unavailableTeams'].value.map((t: Team) => t.id),
             }),
         ) || [];
+        console.log(match_appointments);
         await this.seasonService.scheduleAllMatchesForSeason({
             season_id: this.season?.id || '',
             match_appointments,
