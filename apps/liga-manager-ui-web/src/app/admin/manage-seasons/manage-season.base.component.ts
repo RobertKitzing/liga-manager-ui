@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Season, SeasonState } from '@liga-manager-api/graphql';
@@ -16,6 +16,8 @@ export class ManageSeasonBaseComponent {
     dialog = inject(MatDialog);
 
     router = inject(Router);
+
+    destroyRef = inject(DestroyRef);
 
     @Input({required: true}) season: Season | null | undefined;
 

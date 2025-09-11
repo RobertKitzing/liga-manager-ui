@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { ConfirmComponent, defaultDialogConfig, SeasonChooserComponent } from '@liga-manager-ui/components';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { map, switchMap, BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap, BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
 import { ManageTeamsComponent } from './manage-teams';
@@ -124,10 +124,10 @@ export class ManageSeasonsComponent implements OnInit {
             .afterClosed()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
-                (result) => {
+                async (result) => {
                     if (result) {
                         try {
-                            this.seasonService.endSeason(seasonId);
+                            await firstValueFrom(this.seasonService.endSeason(seasonId));
                             this.notificationService.showSuccessNotification(
                                 this.translateService.instant('END_SEASON_SUCCESS'),
                             );
@@ -143,7 +143,7 @@ export class ManageSeasonsComponent implements OnInit {
 
     async startSeason(seasonId: string) {
         try {
-            await this.seasonService.startSeason(seasonId);
+            await firstValueFrom(this.seasonService.startSeason(seasonId));
             this.notificationService.showSuccessNotification(
                 this.translateService.instant('START_SEASON_SUCCESS'),
             );
@@ -166,10 +166,10 @@ export class ManageSeasonsComponent implements OnInit {
             .afterClosed()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
-                (result) => {
+                async (result) => {
                     if (result) {
                         try {
-                            this.seasonService.deleteSeason(seasonId);
+                            await firstValueFrom(this.seasonService.deleteSeason(seasonId));
                             this.notificationService.showSuccessNotification(
                                 this.translateService.instant('DELETE_SEASON_SUCCESS'),
                             );

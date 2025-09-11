@@ -39,12 +39,9 @@
             </ng-container>
             <ng-container matColumnDef="action">
                 <th class="pt-4" mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let team">
-                    <button matIconButton>
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button matIconButton>
-                        <mat-icon> delete </mat-icon>
+                <td mat-cell *matCellDef="let penalty">
+                    <button matIconButton (click)="removePenalty(penalty.id)">
+                        <mat-icon>delete</mat-icon>
                     </button>
                 </td>
             </ng-container>

@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,11 +9,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import { defaultDialogConfig, EditPitchDialogComponent, PitchComponent } from '@liga-manager-ui/components';
+import { ConfirmComponent, defaultDialogConfig, EditPitchDialogComponent, PitchComponent } from '@liga-manager-ui/components';
+import { SortByPipe } from '@liga-manager-ui/pipes';
 import { PitchService } from '@liga-manager-ui/services';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import fuzzysearch from 'fuzzysearch-ts';
-import { map, startWith, switchMap } from 'rxjs';
+import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 
 @Component({
     selector: 'lima-manage-pitches',
@@ -30,6 +32,7 @@ import { map, startWith, switchMap } from 'rxjs';
         AsyncPipe,
         MatTableModule,
         PitchComponent,
+        SortByPipe,
     ],
 })
 export class ManagePitchesComponent {
@@ -37,6 +40,10 @@ export class ManagePitchesComponent {
     private pitchService = inject(PitchService);
 
     private dialog = inject(MatDialog);
+
+    private translateService = inject(TranslateService);
+
+    private destroyRef = inject(DestroyRef);
 
     searchPitch = new FormControl();
 
@@ -52,7 +59,7 @@ export class ManagePitchesComponent {
         ),
     );
 
-    displayedColumns = [ 'name', 'latitude', 'longitude' ];
+    displayedColumns = [ 'name', 'latitude', 'longitude', 'action' ];
 
     createPitch() {
         this.dialog.open(EditPitchDialogComponent,
@@ -60,6 +67,29 @@ export class ManagePitchesComponent {
                 ...defaultDialogConfig,
             },
         );
+    }
+
+    deletePitch(pitch_id: string) {
+        this.dialog.open(ConfirmComponent,
+            {
+                ...defaultDialogConfig,
+                data: {
+                    body: this.translateService.instant('ARE_YOU_SURE_TO_DELETE_THIS_PITCH'),
+                },
+            },
+        ).afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                async (result) => {
+                    if (result) {
+                        try {
+                            await firstValueFrom(this.pitchService.deletePitch({ pitch_id }));
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }
+                },
+            );
     }
 
 }

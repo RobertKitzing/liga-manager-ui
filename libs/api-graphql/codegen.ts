@@ -17,7 +17,7 @@ const config: CodegenConfig = {
                 flattenGeneratedTypesIncludeFragments: true,
                 skipTypeNameForRoot: true,
                 preResolveTypes: false,
-                strictScalars: false,
+                strictScalars: true,
                 defaultScalarType: 'unknown',
                 scalars: {
                     DateTime: 'ApiDateTime',

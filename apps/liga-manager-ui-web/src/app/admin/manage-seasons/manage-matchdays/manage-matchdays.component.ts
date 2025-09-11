@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,7 +15,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventDropArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { v4 } from 'uuid';
@@ -59,8 +59,6 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     private notificationService = inject(NotificationService);
 
     private calendarService = inject(CalendarService);
-
-    private destroyRef = inject(DestroyRef);
 
     calendarOptions: CalendarOptions = {
         headerToolbar: {
@@ -142,17 +140,17 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 }),
             );
             if (mode === 'create') {
-                await this.seasonService.createMatchesForSeason({
+                await firstValueFrom(this.seasonService.createMatchesForSeason({
                     season_id: manageSeason.id,
                     dates,
-                });
+                }));
             }
             if (mode === 'update') {
                 for (const md of this.matchDays()) {
-                    await this.seasonService.rescheduleMatchDay({
+                    await firstValueFrom(this.seasonService.rescheduleMatchDay({
                         match_day_id: md?.id || '',
                         date_period: { from: new ApiDate(md?.start_date || ''), to: new ApiDate(md?.end_date || '') },
-                    }, manageSeason.id);
+                    }, manageSeason.id));
                 }
             }
             this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));

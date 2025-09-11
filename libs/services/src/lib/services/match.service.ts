@@ -5,14 +5,11 @@ import {
     LocateMatchGQL,
     LocateMatchMutationVariables,
     MatchByIdGQL,
-    RankingByIdGQL,
     ScheduleMatchGQL,
     ScheduleMatchMutationVariables,
-    SeasonByIdGQL,
     SubmitResultGQL,
     SubmitResultMutationVariables,
 } from '@liga-manager-api/graphql';
-import { SeasonService } from './season.service';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -21,12 +18,6 @@ import { map } from 'rxjs';
 export class MatchService {
 
     private submitResultGQL = inject(SubmitResultGQL);
-
-    private seasonByIdGQL = inject(SeasonByIdGQL);
-
-    private seasonService = inject(SeasonService);
-
-    private rankingByIdGQL = inject(RankingByIdGQL);
 
     private locateMatchQGL = inject(LocateMatchGQL);
 

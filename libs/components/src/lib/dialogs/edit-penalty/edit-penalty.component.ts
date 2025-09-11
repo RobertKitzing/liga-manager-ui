@@ -10,11 +10,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SeasonService } from '@liga-manager-ui/services';
 import { v4 as uuidv4 } from 'uuid';
+import { firstValueFrom } from 'rxjs';
 
 export interface EditPenaltyDialogData {
     teams: Maybe<Team>[];
     seasonId: string | undefined,
-    penaltyId?: string,
 }
 
 @Component({
@@ -47,13 +47,13 @@ export class EditPenaltyComponent {
 
     async onSaveClicked() {
         try {
-            await this.seasonService.addPenalty({
+            await firstValueFrom(this.seasonService.addPenalty({
                 season_id: this.data.seasonId || '',
-                id: this.data.penaltyId || uuidv4(),
+                id: uuidv4(),
                 team_id: this.penaltyFormGroup.value.team?.id || '',
                 points: this.penaltyFormGroup.value.points!,
                 reason: this.penaltyFormGroup.value.reason!,
-            });
+            }));
         } catch(error) {
             console.error(error);
         }

@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
@@ -31,8 +31,6 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
     allTeams$ = this.teamService.allTeams$;
 
     seasonTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
-
-    destroyRef = inject(DestroyRef);
 
     async addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
         await firstValueFrom(this.seasonService.addTeamToSeason(variables));
