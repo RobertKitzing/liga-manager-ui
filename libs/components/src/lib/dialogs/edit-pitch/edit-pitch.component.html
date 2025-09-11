@@ -34,11 +34,11 @@
 </mat-dialog-content>
 <mat-dialog-actions align="center">
     <div class="flex justify-evenly p-2">
-        <button mat-stroked-button mat-dialog-close>
+        <button matButton="outlined" mat-dialog-close>
             {{ "BUTTON.CANCEL" | translate }}
         </button>
         <button
-            mat-stroked-button
+            matButton="outlined"
             (click)="onSaveClicked()"
             [disabled]="!formGroup.valid"
             cySelector="button-save-user"

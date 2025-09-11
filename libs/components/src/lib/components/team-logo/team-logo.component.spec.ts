@@ -24,5 +24,5 @@ describe('TeamLogoComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-  
+
 });

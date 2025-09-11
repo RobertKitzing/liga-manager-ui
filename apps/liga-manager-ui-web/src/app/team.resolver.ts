@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 
 export const teamResolver: ResolveFn<Observable<unknown>> = (route) => {
 
-    const teamid = route.paramMap.get('teamid')
+    const teamid = route.paramMap.get('teamid');
     return teamid ? inject(TeamService).getTeamById(teamid) : of(null);
 
 };

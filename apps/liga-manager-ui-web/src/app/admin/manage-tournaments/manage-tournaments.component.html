@@ -8,7 +8,7 @@
                     ></lima-tournament-chooser>
                 </div>
                 <button
-                    mat-icon-button
+                    matIconButton
                     (click)="createTournament()"
                     cySelector="button-create-tournament"
                 >
@@ -22,7 +22,7 @@
                         @case (TournamentState.Preparation) {
                             <button
                                 cySelector="button-start-tournament"
-                                mat-stroked-button
+                                matButton="outlined"
                                 (click)="startTournament(selectedTournament.id)"
                             >
                                 <mat-icon>play_arrow</mat-icon>
@@ -31,7 +31,7 @@
                         }
                         @case (TournamentState.Progress) {
                             <button
-                                mat-stroked-button
+                                matButton="outlined"
                                 (click)="endTournament(selectedTournament.id)"
                             >
                                 <mat-icon>stop</mat-icon>
@@ -40,7 +40,7 @@
                         }
                     }
                     <button
-                        mat-stroked-button
+                        matButton="outlined"
                         (click)="deleteTournament(selectedTournament.id)"
                     >
                         <mat-icon>delete</mat-icon>
@@ -70,7 +70,7 @@
                             </div>
                             <div>
                                 @if (editRound() !== round.number && !tournamentEnded(selectedTournament.state)) {
-                                    <button mat-icon-button (click)="editRound.set(round.number)">
+                                    <button matIconButton (click)="editRound.set(round.number)">
                                         <mat-icon>edit</mat-icon>
                                     </button>
                                 }
@@ -100,7 +100,7 @@
                     @if (!editRound() && round.number === selectedTournament.rounds?.length && !tournamentEnded(selectedTournament.state)) {
                         <mat-card-footer>
                             <div class="flex justify-center m-3">
-                                <button mat-stroked-button (click)="createNext(round.number)" cySelector="button-create-next-tournament-round">
+                                <button matButton="outlined" (click)="createNext(round.number)" cySelector="button-create-next-tournament-round">
                                     <mat-icon>add</mat-icon>
                                     <span translate>CREATE_NEXT_ROUND</span>
                                 </button>

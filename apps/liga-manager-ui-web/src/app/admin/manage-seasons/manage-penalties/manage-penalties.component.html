@@ -1,3 +1,52 @@
-@if (season) {
-    {{ season.name }}
-}
+<mat-card class="m-2">
+    <mat-card-title>
+        <div class="flex items-center m-4">
+            <lima-team-search [teams]="season?.teams" (filteredTeams)="teams.set($event)" class="grow pr-6"></lima-team-search>
+            <button
+                matIconButton
+                (click)="editPenalty()"
+                cySelector="button-create-team"
+            >
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-card-title>
+    <mat-card-content>
+        <table mat-table [dataSource]="(penalties$ | async) || []">
+            <ng-container matColumnDef="team">
+                <th class="pt-4" mat-header-cell *matHeaderCellDef>
+                    <span translate>TEAM_NAME</span>
+                </th>
+                <td mat-cell *matCellDef="let penalty">
+                    {{ penalty.team.name }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="penalty_reason">
+                <th class="pt-4" mat-header-cell *matHeaderCellDef>
+                    <span translate>PENALTY_REASON</span>
+                </th>
+                <td mat-cell *matCellDef="let penalty">
+                    {{ penalty.reason }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="penalty_points">
+                <th class="pt-4" mat-header-cell *matHeaderCellDef>
+                    <span translate>PENALTY_POINTS</span>
+                </th>
+                <td mat-cell *matCellDef="let penalty">
+                    {{ penalty.points }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th class="pt-4" mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let penalty">
+                    <button matIconButton (click)="removePenalty(penalty.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

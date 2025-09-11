@@ -36,6 +36,8 @@ export class TeamAutoCompleteComponent {
 
     teams = input<Maybe<Maybe<Team>[]> | undefined>();
 
+    disabledTeams = input<Maybe<Maybe<Team>[]> | undefined>([]);
+
     clearAfterSelected = input(false);
 
     teamSelected = output<Team>();
@@ -55,14 +57,14 @@ export class TeamAutoCompleteComponent {
                         (searchTerm) => this.filterTeams(searchTerm) || [],
                     ),
                 );
-                this.fromControl().setValue(this.fromControl()?.value)
+                this.fromControl().setValue(this.fromControl()?.value);
             },
         );
     }
 
     _teamSelected(option: MatAutocompleteSelectedEvent) {
         if (option.option.value) {
-            this.fromControl().setValue(option.option.value)
+            this.fromControl().setValue(option.option.value);
             this.teamSelected.emit(option.option.value);
             if (this.clearAfterSelected()) {
                 this.fromControl().reset();
@@ -78,12 +80,12 @@ export class TeamAutoCompleteComponent {
         if (typeof searchTerm !== 'string') {
             searchTerm = searchTerm?.name;
         }
-        let t = this.teams();
+        let t = this.teams()?.filter((t) => t && !this.disabledTeams()?.find((dt) => dt?.id === t.id));
         if (searchTerm) {
             t = this.teams()?.filter(
-                (y) => 
+                (y) =>
                     fuzzysearch(searchTerm.toLocaleLowerCase(), y?.name.toLowerCase() || ''),
-            )
+            );
         }
         return t;
     }

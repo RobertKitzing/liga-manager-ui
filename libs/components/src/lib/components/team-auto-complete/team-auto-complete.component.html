@@ -9,12 +9,12 @@
         (optionSelected)="_teamSelected($event)"
         [displayWith]="displayWith"
         >
-        @for (option of filteredTeams$ | async; track option) {
+        @for (option of filteredTeams$ | async; track option?.id) {
             <mat-option [value]="option">{{option?.name}}</mat-option>
         }
     </mat-autocomplete>
     @if (fromControl().value) {
-        <button matSuffix mat-icon-button aria-label="Clear" (click)="fromControl().reset()" class="mr-4">
+        <button matSuffix matIconButton aria-label="Clear" (click)="fromControl().reset()" class="mr-4">
             <mat-icon>close</mat-icon>
         </button>
     }

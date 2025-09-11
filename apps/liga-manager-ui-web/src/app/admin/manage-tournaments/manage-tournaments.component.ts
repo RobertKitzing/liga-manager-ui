@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,9 +43,13 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class ManageTournamentsComponent {
 
+    tournamentService = inject(TournamentService);
+
+    private dialog = inject(MatDialog);
+
     TournamentState = TournamentState;
 
-    manageTournament = fromStorage<AllTournamentsFragment>(StorageKeys.ADMIN_SELECTED_MANAGE_TOURNAMENT)
+    manageTournament = fromStorage<AllTournamentsFragment>(StorageKeys.ADMIN_SELECTED_MANAGE_TOURNAMENT);
 
     selectedTournamentFC = new FormControl(this.manageTournament());
 
@@ -67,13 +71,8 @@ export class ManageTournamentsComponent {
         ),
     );
 
-    constructor(
-        public tournamentService: TournamentService,
-        private dialog: MatDialog,
-    ) {}
-
     tournamentEnded(tournamentState: TournamentState) {
-        return tournamentState === TournamentState.Ended
+        return tournamentState === TournamentState.Ended;
     }
 
     createTournament() {
@@ -81,25 +80,25 @@ export class ManageTournamentsComponent {
     }
 
     createNext(round: number) {
-        this.editRound.set(undefined)
+        this.editRound.set(undefined);
         this.createRoundMode.set(round);
     }
 
     roundEdited() {
-        this.editRound.set(undefined)
+        this.editRound.set(undefined);
         this.createRoundMode.set(undefined);
     }
 
     startTournament(id: string) {
-        firstValueFrom(this.tournamentService.startTournament(id))
+        firstValueFrom(this.tournamentService.startTournament(id));
     }
 
     endTournament(id: string) {
-        firstValueFrom(this.tournamentService.endTournament(id))
+        firstValueFrom(this.tournamentService.endTournament(id));
     }
 
     deleteTournament(id: string) {
-        firstValueFrom(this.tournamentService.deleteTournament(id))
+        firstValueFrom(this.tournamentService.deleteTournament(id));
         this.selectedTournamentFC.reset();
     }
 

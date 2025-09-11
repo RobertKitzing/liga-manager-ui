@@ -2,8 +2,8 @@ import { Base64 } from 'js-base64';
 import { StorageKeys } from '@liga-manager-ui/common';
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
-    return cy.get(`[data-cy="${selector}"]`, ...args)
-})
+    return cy.get(`[data-cy="${selector}"]`, ...args);
+});
 
 const login = (username: string, password: string) => {
     const query = `
@@ -12,12 +12,12 @@ const login = (username: string, password: string) => {
           id
         }
     }
-    `
+    `;
     const body = {
         operationName: 'AuthenticatedUser',
         query,
         variables: {},
-    }
+    };
     cy.request({
         method: 'POST',
         url: '/api/graphql',
@@ -31,9 +31,9 @@ const login = (username: string, password: string) => {
         },
     }).then(
         (res) => {
-            localStorage.setItem(StorageKeys.ACCESS_TOKEN, `"${res.headers['x-token']}"`)
+            localStorage.setItem(StorageKeys.ACCESS_TOKEN, `"${res.headers['x-token']}"`);
         },
-    )
-}
+    );
+};
 
-Cypress.Commands.add('login', login )
+Cypress.Commands.add('login', login );

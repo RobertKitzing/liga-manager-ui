@@ -10,10 +10,10 @@ describe('TruncatePipe', () => {
 
     it('should init', () => {
         expect(pipe).toBeTruthy();
-    })
+    });
 
     it('should return only the first letter', () => {
         expect(pipe.transform('test')).toBe('t');
-    })
+    });
 
 });

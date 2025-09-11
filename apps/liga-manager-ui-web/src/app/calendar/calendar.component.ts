@@ -23,12 +23,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
 import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 import { Share } from '@capacitor/share';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-calendar',
     templateUrl: './calendar.component.html',
-    styles: [],
     imports: [
         AsyncPipe,
         FullCalendarModule,
@@ -40,19 +38,24 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         ReactiveFormsModule,
         TranslateModule,
         MatInputModule,
-        NgxPullToRefreshComponent,
     ],
     standalone: true,
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
 
+    private i18nService = inject(I18nService);
+
+    private calendarService = inject(CalendarService);
+
+    private translateService = inject(TranslateService);
+
     canShare = Share.canShare();
 
-    teamIdsLS = fromStorage<string>(StorageKeys.CALENDAR_TEAM_IDS)
+    teamIdsLS = fromStorage<string>(StorageKeys.CALENDAR_TEAM_IDS);
 
     team_ids = input<string>();
 
-    private appsettingsService = inject(AppsettingsService)
+    private appsettingsService = inject(AppsettingsService);
 
     private dialog = inject(MatDialog);
 
@@ -91,7 +94,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
                         ?
                         events.filter(
                             (event) => {
-                                return (event.team_ids?.filter((et) => this.options.controls.team_ids.value.includes(et)) || []).length > 0
+                                return (event.team_ids?.filter((et) => this.options.controls.team_ids.value.includes(et)) || []).length > 0;
                             },
                         )
                         :
@@ -104,17 +107,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     private destroyRef = inject(DestroyRef);
 
     constructor(
-        private i18nService: I18nService,
-        private calendarService: CalendarService,
-        private translateService: TranslateService,
     ) {
         effect(
             () => {
                 if (this.team_ids()) {
-                    this.options.controls.team_ids.setValue(this.team_ids()?.split(',') || [])
+                    this.options.controls.team_ids.setValue(this.team_ids()?.split(',') || []);
                 }
             },
-        )
+        );
     }
 
     ngOnInit() {
@@ -125,14 +125,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             (view) => {
-                this.calendarApi.changeView(view)
+                this.calendarApi.changeView(view);
             },
         );
         this.options.controls.duration.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             () => {
-                this.updateDuration()
+                this.updateDuration();
             },
         );
         this.options.controls.team_ids.valueChanges.pipe(
@@ -152,8 +152,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     triggerEvent() {
         this.eventTrigger.next({
-            min_date: this.calendarApi?.view.activeStart,
-            max_date: this.calendarApi?.view.activeEnd,
+            min_date: this.calendarApi?.view.activeStart.toJSON(),
+            max_date: this.calendarApi?.view.activeEnd.toJSON(),
         });
     }
 
@@ -191,13 +191,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             data: {
                 options: this.options,
             },
-        })
+        });
     }
 
     async share() {
         let url = `${this.appsettingsService.host}/${APP_ROUTES.CALENDAR}`;
         if (this.options.controls.team_ids.value) {
-            url += `?team_ids=${this.options.controls.team_ids.value.join(',')}`
+            url += `?team_ids=${this.options.controls.team_ids.value.join(',')}`;
         }
         await Share.share({
             url,

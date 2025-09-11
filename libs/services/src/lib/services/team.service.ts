@@ -14,7 +14,6 @@ import {
 } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '@liga-manager-ui/utils';
-import { HttpClient } from '@angular/common/http';
 import { AppsettingsService } from './appsettings.service';
 import { AuthenticationService } from './authentication.service';
 import { LogosService } from '@liga-manager-api/openapi';
@@ -26,22 +25,27 @@ export class TeamService {
 
     private logoService = inject(LogosService);
 
+    private teamByIdGQL = inject(TeamByIdGQL);
+
+    private allTeamsGQL = inject(AllTeamsGQL);
+
+    private createTeamQL = inject(CreateTeamGQL);
+
+    private deleteTeamGQL = inject(DeleteTeamGQL);
+
+    private renameTeamGQL = inject(RenameTeamGQL);
+
+    private updateTeamContactGQL = inject(UpdateTeamContactGQL);
+
+    private appsettingsService = inject(AppsettingsService);
+
+    private authenticationService = inject(AuthenticationService);
+
+
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
         map((teams) => sortArrayBy(teams as Team[], 'name')),
     );
-
-    constructor(
-        private teamByIdGQL: TeamByIdGQL,
-        private allTeamsGQL: AllTeamsGQL,
-        private createTeamQL: CreateTeamGQL,
-        private deleteTeamGQL: DeleteTeamGQL,
-        private renameTeamGQL: RenameTeamGQL,
-        private updateTeamContactGQL: UpdateTeamContactGQL,
-        private httpClient: HttpClient,
-        private appsettingsService: AppsettingsService,
-        private authenticationService: AuthenticationService,
-    ) {}
 
     refetchAllTeams() {
         this.allTeamsGQL.watch().refetch();
@@ -107,7 +111,7 @@ export class TeamService {
 
         const blob = await (await fetch(base64Url)).blob();
         const formData = new FormData();
-        formData.append('file', blob)
+        formData.append('file', blob);
         return fetch(
             `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${teamId}`, {
                 method: 'post',
@@ -116,7 +120,7 @@ export class TeamService {
                     'authorization': this.authenticationService.accessToken() || '',
                 },
             },
-        )
+        );
     }
 
     deleteTeamLogo(teamId: string) {

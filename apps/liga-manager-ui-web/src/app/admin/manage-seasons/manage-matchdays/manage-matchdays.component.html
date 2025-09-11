@@ -17,25 +17,25 @@
                     <mat-label translate>SECOND_HALF</mat-label>
                 </mat-checkbox>
             </div>
+            <div>
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label translate>BETWEEN_MATCHDAYS_OFFSET</mat-label>
+                    <input matInput type="number" formControlName="betweenMatchDaysOffset">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label translate>FROM_TO_OFFSET</mat-label>
+                    <input matInput type="number" formControlName="fromToOffset">
+                </mat-form-field>
+            </div>
         }
-        <div>
-            <mat-form-field subscriptSizing="dynamic">
-                <mat-label translate>BETWEEN_MATCHDAYS_OFFSET</mat-label>
-                <input matInput type="number" formControlName="betweenMatchDaysOffset">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field subscriptSizing="dynamic">
-                <mat-label translate>FROM_TO_OFFSET</mat-label>
-                <input matInput type="number" formControlName="fromToOffset">
-            </mat-form-field>
-        </div>
         @if (!season.match_days || season.match_days.length === 0) {
-            <button mat-stroked-button [disabled]="!formGroup.valid" (click)="saveMatchDays(season, 'create')" cySelector="button-save-match-days">
+            <button matButton="outlined" [disabled]="!formGroup.valid" (click)="saveMatchDays(season, 'create')" cySelector="button-save-match-days">
                 <span translate>BUTTON.CREATE_MATCHDAYS</span>
             </button>
         } @else {
-            <button mat-stroked-button (click)="saveMatchDays(season, 'update')" cySelector="button-save-match-days">
+            <button matButton="outlined" (click)="saveMatchDays(season, 'update')" cySelector="button-save-match-days">
                 <span translate>BUTTON.UPDATE_MATCHDAYS</span>
             </button>
         }

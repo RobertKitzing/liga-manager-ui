@@ -43,10 +43,13 @@ export class CancelMatchComponent {
 
     data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
 
+    private notificationService = inject(NotificationService);
+
+    private dialogRef = inject(MatDialogRef<CancelMatchComponent>);
+
+    private matchService = inject(MatchService);
+
     constructor(
-        private notificationService: NotificationService,
-        private dialogRef: MatDialogRef<CancelMatchComponent>,
-        private matchService: MatchService,
     ) {
         if (this.data.match.cancellation_reason) {
             this.cancelMatchReason.setValue(

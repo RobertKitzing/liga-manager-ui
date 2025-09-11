@@ -1,15 +1,15 @@
-import { Users } from '@cypress/fixtures'
+import { Users } from '@cypress/fixtures';
 
 describe('Admin - Edit Match Result', () => {
 
     beforeEach(
         () => {
-            cy.login(Users.admin.username, Users.admin.password)
+            cy.login(Users.admin.username, Users.admin.password);
         },
-    )
+    );
 
     it('should edit an Match result by click in result area', () => {
-        cy.visit('/')
+        cy.visit('/');
         cy.getBySel('route-schedule').first().click();
         // cy.getBySel('select-season').click();
         // cy.contains(Seasons[0].name).click();
@@ -19,7 +19,7 @@ describe('Admin - Edit Match Result', () => {
         // cy.getBySel('input-guest-score').clear()
         // cy.getBySel('input-guest-score').type('1', { force: true });
         // cy.getBySel('button-edit-match-result-submit').click();
-    })
+    });
 
-})
+});
 

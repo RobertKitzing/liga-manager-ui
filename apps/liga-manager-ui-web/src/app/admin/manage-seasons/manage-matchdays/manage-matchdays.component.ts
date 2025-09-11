@@ -1,12 +1,11 @@
-import { Component, DestroyRef, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { MatchDay, Maybe, SeasonFragment } from '@liga-manager-api/graphql';
-import dayjs from 'dayjs';
+import { ApiDate, MatchDay, Maybe, SeasonFragment } from '@liga-manager-api/graphql';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { CalendarService, NotificationService } from '@liga-manager-ui/services';
@@ -16,15 +15,14 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventDropArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { v4 } from 'uuid';
-
-import utc from 'dayjs/plugin/utc';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
-
-dayjs.extend(utc);
+import { add } from 'date-fns';
+import { UTCDate } from '@date-fns/utc';
+import { ApiDateFormControl } from '@liga-manager-ui/components';
 
 @Component({
     selector: 'lima-manage-matchdays',
@@ -48,11 +46,11 @@ dayjs.extend(utc);
 export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implements OnInit, OnChanges {
 
     formGroup = new FormGroup({
-        seasonStartDate: new FormControl<Date | undefined>(undefined, [Validators.required]),
+        seasonStartDate: new ApiDateFormControl(undefined, [Validators.required]),
         secondHalf: new FormControl(false),
         betweenMatchDaysOffset: new FormControl<number>(7, { nonNullable: true }),
         fromToOffset: new FormControl<number>(2, { nonNullable: true }),
-    })
+    });
 
     matchDays = signal<Maybe<MatchDay>[]>([]);
 
@@ -62,10 +60,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
     private calendarService = inject(CalendarService);
 
-    private destroyRef = inject(DestroyRef);
-
     calendarOptions: CalendarOptions = {
-        timeZone: 'UTC',
         headerToolbar: {
             start: 'dayGridMonth,dayGridYear',
             center: 'title',
@@ -80,9 +75,9 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         contentHeight: 'auto',
         editable: true,
         eventDrop: this.eventDrop.bind(this),
-    }
+    };
 
-    matchDayTrigger = new BehaviorSubject<Maybe<MatchDay>[]>([])
+    matchDayTrigger = new BehaviorSubject<Maybe<MatchDay>[]>([]);
 
     events$ = this.matchDayTrigger.pipe(
         switchMap(
@@ -103,7 +98,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['season']) {
             if (this.season?.match_days) {
-                this.matchDays.set(this.season?.match_days)
+                this.matchDays.set(this.season?.match_days);
             } else {
                 this.matchDays.set([]);
             }
@@ -112,7 +107,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     }
 
     createMatchDays() {
-        if (this.season?.teams) {
+        if (this.season?.teams && this.formGroup.controls.seasonStartDate.value) {
             this.matchDays.set([]);
             let length = this.season.teams.length;
             if (length % 2 !== 0) {
@@ -122,11 +117,13 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 length = (length * 2) - 1;
             }
             for (let i = 0; i < length - 1; i++) {
-
+                const betweenMatchDaysOffset = i * this.formGroup.controls.betweenMatchDaysOffset.value;
+                const startDate = add(this.formGroup.controls.seasonStartDate.value, { days: betweenMatchDaysOffset });
+                const endDate = add(startDate, { days: this.formGroup.controls.fromToOffset.value -1 });
                 const md = {} as MatchDay;
                 md.id = v4();
-                md.start_date = dayjs.utc(this.formGroup.controls.seasonStartDate.value).add(i * this.formGroup.controls.betweenMatchDaysOffset.value, 'day').toJSON();
-                md.end_date = dayjs.utc(md.start_date).add(this.formGroup.controls.fromToOffset.value, 'day').toJSON();
+                md.start_date = new ApiDate(startDate).toJSON();
+                md.end_date = new ApiDate(endDate).toJSON();
                 md.number = i + 1;
                 this.matchDays().push(md);
             }
@@ -136,19 +133,24 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
     async saveMatchDays(manageSeason: SeasonFragment, mode: 'create' | 'update') {
         try {
-            const dates = this.matchDays()?.map((m) => ({ from: dayjs.utc(m?.start_date).toDate(), to: dayjs.utc(m?.end_date).toDate() }));
+            const dates = this.matchDays()?.map(
+                (m) => ({
+                    from: new ApiDate(m?.start_date || ''),
+                    to: new ApiDate(m?.end_date || ''),
+                }),
+            );
             if (mode === 'create') {
-                await this.seasonService.createMatchesForSeason({
+                await firstValueFrom(this.seasonService.createMatchesForSeason({
                     season_id: manageSeason.id,
                     dates,
-                });
+                }));
             }
             if (mode === 'update') {
                 for (const md of this.matchDays()) {
-                    await this.seasonService.rescheduleMatchDay({
+                    await firstValueFrom(this.seasonService.rescheduleMatchDay({
                         match_day_id: md?.id || '',
-                        date_period: { from: dayjs.utc(md?.start_date).toDate(), to: dayjs.utc(md?.end_date).toDate() },
-                    }, manageSeason.id);
+                        date_period: { from: new ApiDate(md?.start_date || ''), to: new ApiDate(md?.end_date || '') },
+                    }, manageSeason.id));
                 }
             }
             this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
@@ -169,15 +171,15 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 }
                 const updatedDate = {
                     ...matchDay,
-                    start_date: dayjs.utc(matchDay?.start_date).add(event.delta.days, 'days').toJSON(),
-                    end_date: dayjs.utc(matchDay?.end_date).add(event.delta.days, 'days').toJSON(),
-                }
-                updatedDates.push(updatedDate)
+                    start_date: add(new UTCDate(matchDay?.start_date), { days: event.delta.days }).toJSON(),
+                    end_date: add(new UTCDate(matchDay?.end_date), { days: event.delta.days }).toJSON(),
+                };
+                updatedDates.push(updatedDate);
             }
         }
         this.matchDays.update(
             (old) => {
-                return old.slice(0, matchDayIndex).concat(updatedDates)
+                return old.slice(0, matchDayIndex).concat(updatedDates);
             },
         );
         this.matchDayTrigger.next(this.matchDays());

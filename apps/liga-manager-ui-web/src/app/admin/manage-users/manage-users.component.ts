@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
@@ -36,6 +36,10 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class ManageUsersComponent {
 
+    private userService = inject(UserService);
+
+    private dialog = inject(MatDialog);
+
     displayedColumns: string[] = ['email', 'action'];
 
     searchUser = new FormControl();
@@ -67,8 +71,6 @@ export class ManageUsersComponent {
                 ),
         ),
     );
-
-    constructor(private userService: UserService, private dialog: MatDialog) {}
 
     editUser(user?: User) {
         this.dialog.open(EditUserDialogComponent, {

@@ -17,7 +17,7 @@ export class AppsettingsService {
     appsettings?: AppsettingsModel;
 
     get host() {
-        return this.appsettings?.host || window.location.origin
+        return this.appsettings?.host || window.location.origin;
     }
 
     private httpClient = inject(HttpClient);

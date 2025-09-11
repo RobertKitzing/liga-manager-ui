@@ -32,9 +32,9 @@ export class TeamsManagementComponent {
 
     private authenticationService = inject(AuthenticationService);
 
-    private teamService = inject(TeamService)
+    private teamService = inject(TeamService);
 
-    private router = inject(Router)
+    private router = inject(Router);
 
     selectedTeamLS = fromStorage<Team>(StorageKeys.TEAMS_MANAGMENT_SELECTED_TEAM);
 

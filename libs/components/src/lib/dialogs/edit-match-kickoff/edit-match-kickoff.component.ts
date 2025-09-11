@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FormControl,
     FormGroup,
@@ -24,6 +24,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
+import { formatISO, set } from 'date-fns';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -52,27 +53,29 @@ export class EditMatchKickoffComponent {
         date: new FormControl<Date | null>(null, [Validators.required]),
     });
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA)
-        public data: { match: Match; matchDay: MatchDay },
-        private notificationService: NotificationService,
-        private dialogRef: MatDialogRef<EditMatchKickoffComponent>,
-        private matchService: MatchService,
-    ) {}
+    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
+
+    private notificationService = inject(NotificationService);
+
+    private dialogRef = inject(MatDialogRef<EditMatchKickoffComponent>);
+
+    private matchService = inject(MatchService);
 
     async onSaveClicked() {
-        const kickoff = this.newKickoff.value.date as Date;
+        let kickoff = this.newKickoff.value.date;
+        if (!kickoff) {
+            return;
+        }
         const time = this.newKickoff.value.time?.split(':');
         if (time) {
-            kickoff.setHours(+time[0]);
-            kickoff.setMinutes(+time[1]);
+            kickoff = set(kickoff, { hours: +time[0], minutes: +time[1]});
         }
 
         try {
             await firstValueFrom(
                 this.matchService.scheduleMatch({
                     match_id: this.data.match.id,
-                    kickoff,
+                    kickoff: formatISO(kickoff),
                 }),
             );
             this.notificationService.showSuccessNotification(

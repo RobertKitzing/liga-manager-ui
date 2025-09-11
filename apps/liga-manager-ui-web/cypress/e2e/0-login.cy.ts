@@ -3,7 +3,7 @@ import { Users } from '@cypress/fixtures';
 describe('Login', () => {
 
     it('Should Login and out', () => {
-        cy.visit('/')
+        cy.visit('/');
         cy.getBySel('button-login').click();
         cy.getBySel('input-username').type(Users.admin.username);
         cy.getBySel('input-password').type(Users.admin.password);
@@ -13,4 +13,4 @@ describe('Login', () => {
         cy.getBySel('button-login').should('exist');
     });
 
-})
+});

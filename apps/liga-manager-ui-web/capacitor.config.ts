@@ -12,14 +12,13 @@ const config: CapacitorConfig = {
         },
     },
     server: {
-        androidScheme: 'http',
-        cleartext: true,
+        androidScheme: 'https',
     },
-    plugins: {
-        CapacitorHttp: {
-            enabled: true,
-        },
-    },
+    // plugins: {
+    //     CapacitorHttp: {
+    //         enabled: true,
+    //     },
+    // },
 };
 
 export default config;

@@ -15,4 +15,4 @@ export const fromStorage = <TValue>(storageKey: string, defaultValue?: TValue): 
     });
 
     return fromStorageSignal;
-}
+};

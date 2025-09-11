@@ -6,10 +6,10 @@ describe('Admin - Create Season', () => {
         () => {
             cy.login(Users.admin.username, Users.admin.password);
         },
-    )
+    );
 
     it('Should create a season', () => {
-        cy.visit('/')
+        cy.visit('/');
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-seasons').first().click();
 
@@ -23,8 +23,8 @@ describe('Admin - Create Season', () => {
 
         for (const team of Teams) {
             // eslint-disable-next-line cypress/unsafe-to-chain-command
-            cy.getBySel('input-team-auto-complete').clear().type(team.name)
-            cy.get('mat-option').contains(team.name).click()
+            cy.getBySel('input-team-auto-complete').clear().type(team.name);
+            cy.get('mat-option').contains(team.name).click();
         }
 
         cy.getBySel('season-management-tab-create-matchdays').click();
@@ -34,6 +34,6 @@ describe('Admin - Create Season', () => {
         cy.getBySel('button-save-match-days').click();
 
         cy.getBySel('button-start-season').click();
-    })
+    });
 
-})
+});

@@ -8,10 +8,11 @@ import { AsyncPipe } from '@angular/common';
 import { PitchService } from '@liga-manager-ui/services';
 import { PitchAutoCompleteComponent, TeamChooserComponent } from '@liga-manager-ui/components';
 import { MatInputModule } from '@angular/material/input';
-import { MatchAppointment, Team } from '@liga-manager-api/graphql';
+import { Team } from '@liga-manager-api/graphql';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
-import dayjs from 'dayjs';
 import { MatButtonModule } from '@angular/material/button';
+import { add, formatISO, parseISO, set } from 'date-fns';
+import { firstValueFrom } from 'rxjs';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -21,7 +22,7 @@ class MatchAppointmentFormGroup extends FormGroup {
             time: new FormControl(null, [ Validators.required ]),
             unavailableTeams: new FormControl<Team[]>([]),
             daysOffset: new FormControl(0),
-        })
+        });
     }
 
 }
@@ -45,14 +46,14 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     calcOffestFromStartDate(offset: number) {
-        return dayjs.utc(this.season?.match_days![0]?.start_date).add(offset, 'days').format('dddd')
+        return add(parseISO(this.season?.match_days![0]?.start_date || ''), { days: offset });
     }
 
     exampleMatchDays() {
         if (!this.season?.match_days) {
             return;
         }
-        return this.season?.match_days.map(
+        const t = this.season?.match_days.map(
             (matchDay) => ({
                 ...matchDay,
                 matches: matchDay?.matches?.map(
@@ -63,62 +64,63 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                             matchDay.start_date,
                             this.matchAppointments?.controls[i].controls['daysOffset'].value,
                             this.matchAppointments?.controls[i].controls['time'].value,
-                        ).toDate(),
-
+                        ),
                     }),
                 ),
             }),
         );
+        return t;
     }
 
     genKickoff(matchDayStartDate: string, offset: number, time: `${number}:${number}`) {
-        const h = +time.split(':')[0];
-        const m = +time.split(':')[1];
-        return dayjs.utc(matchDayStartDate).add(offset, 'days').hour(h).minute(m);
+        const hours = +time.split(':')[0];
+        const minutes = +time.split(':')[1];
+        return formatISO(set(add(parseISO(matchDayStartDate), { days: offset }), { hours, minutes }));
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
         const matchDay = this.season?.match_days![matchDayIndex];
-        if (!matchDay) { 
+        if (!matchDay) {
             return;
         }
-        const match_appointments: MatchAppointment[] = this.matchAppointments?.controls.map(
+        const match_appointments = this.matchAppointments?.controls.map(
             (fg) => ({
                 kickoff: this.genKickoff(
                     matchDay.start_date,
                     fg.controls['daysOffset'].value,
                     fg.controls['time'].value,
-                ).toDate(),
+                ),
                 pitch_id: fg.controls['pitch'].value.id,
                 unavailable_team_ids: fg.controls['unavailableTeams'].value.map((t: Team) => t.id),
             }),
         ) || [];
-        await this.seasonService.scheduleAllMatchesForMatchDay({
+        await firstValueFrom(this.seasonService.scheduleAllMatchesForMatchDay({
             match_day_id: matchDay.id,
             match_appointments,
-        }, this.season?.id);
+        }, this.season?.id));
     }
 
     async scheduleAllMatchesForSeason() {
         const matchDay = this.season?.match_days![0];
-        if (!matchDay) { 
+        if (!matchDay) {
             return;
         }
-        const match_appointments: MatchAppointment[] = this.matchAppointments?.controls.map(
+        const match_appointments = this.matchAppointments?.controls.map(
             (fg) => ({
                 kickoff: this.genKickoff(
                     matchDay.start_date,
                     fg.controls['daysOffset'].value,
                     fg.controls['time'].value,
-                ).toDate(),
+                ),
                 pitch_id: fg.controls['pitch'].value.id,
                 unavailable_team_ids: fg.controls['unavailableTeams'].value.map((t: Team) => t.id),
             }),
         ) || [];
-        await this.seasonService.scheduleAllMatchesForSeason({
+
+        await firstValueFrom(this.seasonService.scheduleAllMatchesForSeason({
             season_id: this.season?.id || '',
             match_appointments,
-        });
+        }));
     }
 
 }

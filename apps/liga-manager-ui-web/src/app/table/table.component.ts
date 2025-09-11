@@ -16,12 +16,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TruncatePipe } from '@liga-manager-ui/pipes';
 import { FormControl } from '@angular/forms';
 import { SeasonChooserComponent, TeamLogoComponent } from '@liga-manager-ui/components';
-import { AllSeasonsFragment, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
+import { AllSeasonsFragment, RankingPenalty, RankingPosition, SeasonState } from '@liga-manager-api/graphql';
 import { BehaviorSubject, firstValueFrom, fromEvent, map, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'lima-table',
@@ -49,10 +50,15 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         MatSortModule,
         MatCardModule,
         TeamLogoComponent,
-        NgxPullToRefreshComponent,
+        MatIconModule,
+        MatButtonModule,
     ],
 })
 export class TableComponent implements OnInit {
+
+    private router = inject(Router);
+
+    private seasonService = inject(SeasonService);
 
     displayedColumns: string[] = [
         'position',
@@ -76,6 +82,8 @@ export class TableComponent implements OnInit {
 
     SeasonState = SeasonState;
 
+    penalties = signal<RankingPenalty[]>([]);
+
     ranking$ = this.sortRanking.pipe(
         switchMap((sort) =>
             this.selectedSeasonFC.valueChanges.pipe(
@@ -92,6 +100,8 @@ export class TableComponent implements OnInit {
                         : of(null),
                 ),
                 map((ranking) => {
+                    this.penalties.set(ranking?.penalties as RankingPenalty[]);
+
                     if (!sort.direction) {
                         return ranking?.positions;
                     }
@@ -99,33 +109,33 @@ export class TableComponent implements OnInit {
                     return [...(ranking?.positions || [])].sort((a, b) => {
                         const isAsc = sort.direction === 'asc';
                         switch (sort.active) {
-                        case 'sort_index':
-                            return this.compare(
-                                a?.sort_index || 0,
-                                b?.sort_index || 0,
-                                isAsc,
-                            );
-                        case 'team_name':
-                            return this.compare(
-                                a?.team.name || '',
-                                b?.team.name || '',
-                                isAsc,
-                            );
-                        case 'matches':
-                            return this.compare(
-                                a?.matches || 0,
-                                b?.matches || 0,
-                                isAsc,
-                            );
-                        case 'goaldiff': {
-                            const agd =
+                            case 'sort_index':
+                                return this.compare(
+                                    a?.sort_index || 0,
+                                    b?.sort_index || 0,
+                                    isAsc,
+                                );
+                            case 'team_name':
+                                return this.compare(
+                                    a?.team.name || '',
+                                    b?.team.name || '',
+                                    isAsc,
+                                );
+                            case 'matches':
+                                return this.compare(
+                                    a?.matches || 0,
+                                    b?.matches || 0,
+                                    isAsc,
+                                );
+                            case 'goaldiff': {
+                                const agd =
                                 a?.scored_goals! - a?.conceded_goals!;
-                            const bgd =
+                                const bgd =
                                 b?.scored_goals! - b?.conceded_goals!;
-                            return this.compare(agd, bgd, isAsc);
-                        }
-                        default:
-                            return 0;
+                                return this.compare(agd, bgd, isAsc);
+                            }
+                            default:
+                                return 0;
                         }
                     });
                 }),
@@ -134,8 +144,6 @@ export class TableComponent implements OnInit {
     );
 
     constructor(
-        private router: Router,
-        private seasonService: SeasonService,
     ) {
         fromEvent(window, 'resize')
             .pipe(
@@ -182,6 +190,10 @@ export class TableComponent implements OnInit {
 
     compare(a: number | string, b: number | string, isAsc?: boolean) {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+
+    getPenaltiesForTeam(teamId: string) {
+        return this.penalties()?.filter((t) => t?.team.id === teamId);
     }
 
 }

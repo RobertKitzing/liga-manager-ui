@@ -25,11 +25,11 @@
     </div>
 </lima-edit-match-base>
 <ng-template #actionsTemplate>
-    <button mat-stroked-button mat-dialog-close>
+    <button matButton="outlined" mat-dialog-close>
         {{ "BUTTON.CANCEL" | translate }}
     </button>
     <button
-        mat-stroked-button
+        matButton="outlined"
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!cancelMatchReason.valid"

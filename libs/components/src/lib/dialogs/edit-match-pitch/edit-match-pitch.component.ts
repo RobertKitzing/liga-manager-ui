@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     MatDialogRef,
@@ -58,14 +58,15 @@ export class EditMatchPitchComponent {
 
     private destroyRef = inject(DestroyRef);
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA)
-        public data: { match: Match; matchDay: MatchDay },
-        private notificationService: NotificationService,
-        private dialogRef: MatDialogRef<EditMatchPitchComponent>,
-        private matchService: MatchService,
-        public pitchService: PitchService,
-    ) {}
+    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
+
+    private notificationService = inject(NotificationService);
+
+    private dialogRef = inject(MatDialogRef<EditMatchPitchComponent>);
+
+    private matchService = inject(MatchService);
+
+    pitchService = inject(PitchService);
 
     async onSaveClicked() {
         if (!this.newMatchPitchFC.valid) {
@@ -101,7 +102,7 @@ export class EditMatchPitchComponent {
                     this.newMatchPitchFC.setValue(pitch);
                 }
             },
-        )
+        );
     }
 
 }

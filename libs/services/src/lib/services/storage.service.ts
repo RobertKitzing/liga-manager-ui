@@ -1,6 +1,6 @@
 import { EnvironmentProviders, Injectable, InjectionToken, inject, makeEnvironmentProviders } from '@angular/core';
 
-export const STORAGE = new InjectionToken<Storage>('Web Storage Injection Token')
+export const STORAGE = new InjectionToken<Storage>('Web Storage Injection Token');
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {

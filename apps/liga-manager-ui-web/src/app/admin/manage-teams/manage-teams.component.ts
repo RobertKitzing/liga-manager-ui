@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TeamService } from '@liga-manager-ui/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
@@ -34,6 +34,8 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class ManageTeamsComponent {
 
+    private teamService = inject(TeamService);
+
     displayedColumns: string[] = ['team', 'action'];
 
     newTeam = new FormControl('', [Validators.required]);
@@ -64,8 +66,6 @@ export class ManageTeamsComponent {
                 ),
         ),
     );
-
-    constructor(private teamService: TeamService) {}
 
     editTeam(team: Team) {
         this.editTeamId = team.id;

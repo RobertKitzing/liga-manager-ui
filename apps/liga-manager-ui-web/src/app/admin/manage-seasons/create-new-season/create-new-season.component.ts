@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-    MatDialog,
     MatDialogActions,
     MatDialogContent,
     MatDialogRef,
@@ -40,15 +39,13 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreateNewSeasonComponent {
 
+    private seasonService = inject(SeasonService);
+
+    private notificationService = inject(NotificationService);
+
     dialogRef = inject(MatDialogRef<CreateNewSeasonComponent>);
 
     newName = new FormControl('', [Validators.required]);
-
-    constructor(
-        private seasonService: SeasonService,
-        private dialog: MatDialog,
-        private notificationService: NotificationService,
-    ) {}
 
     async createSeason() {
         try {

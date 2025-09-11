@@ -1,1 +1,1 @@
-export const Teams = Array.from({ length: 10 }, (v, i) => ({ name: `team_${i}`}) )
+export const Teams = Array.from({ length: 10 }, (v, i) => ({ name: `team_${i}`}) );

@@ -38,7 +38,7 @@ export class TeamChooserComponent implements OnInit, ControlValueAccessor {
         const ngControl = this.injector.get(NgControl);
 
         if (ngControl instanceof FormControlName) {
-            this.selectedTeamFC = this.injector.get(FormGroupDirective).getControl(ngControl)
+            this.selectedTeamFC = this.injector.get(FormGroupDirective).getControl(ngControl);
         } else {
             this.selectedTeamFC = (ngControl as FormControlDirective).form;
         }

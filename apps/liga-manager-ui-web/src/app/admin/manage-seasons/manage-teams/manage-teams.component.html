@@ -2,8 +2,8 @@
     <div class="grid grid-cols-1">
         @if (season.state === SeasonState.Preparation) {
             <div class="m-8">
-                @if(teamService.allTeams$ | async; as allTeams) {
-                    <lima-team-auto-complete [teams]="allTeams" (teamSelected)="addTeamToSeason({ season_id: season.id, team_id: $event.id})" [clearAfterSelected]="true"></lima-team-auto-complete>
+                @if(allTeams$ | async; as allTeams) {
+                    <lima-team-auto-complete [teams]="allTeams" [disabledTeams]="season.teams" (teamSelected)="addTeamToSeason({ season_id: season.id, team_id: $event.id})" [clearAfterSelected]="true"></lima-team-auto-complete>
                 }
             </div>
         }
@@ -12,38 +12,44 @@
             <div class="m-8">
                 <lima-team-search [teams]="season.teams" (filteredTeams)="seasonTeams.set($event)"></lima-team-search>
             </div>
-            @for (team of seasonTeams(); track team) {
-                @if (team) {
-                    <div class="flex justify-center items-center m-3 space-x-3">
-                        <p>{{ team.name }}</p>
-                        @switch (season.state) {
-                            @case (SeasonState.Preparation) {
-                                <button
-                                    mat-icon-button
-                                    (click)="
-                                        removeTeamFromSeason({
-                                            team_id: team.id,
-                                            season_id: season.id
-                                        })
-                                    "
-                                >
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            }
-                            @case (SeasonState.Progress) {
-                                <div class="flex items-center">
-                                    <button
-                                        mat-icon-button
-                                        (click)="replaceTeamInSeason(team)"
-                                    >
-                                        <mat-icon>compare_arrows</mat-icon>
-                                    </button>
-                                </div>
-                            }
-                        }
-                    </div>
+            <div class="flex flex-wrap justify-center space-x-4">
+                @for (team of seasonTeams(); track team) {
+                    @if (team) {
+                        <mat-card appearance="outlined">
+                            <mat-card-content>
+                                {{ team.name }}
+                            </mat-card-content>
+                            <mat-card-footer class="flex justify-center">
+                                @switch (season.state) {
+                                    @case (SeasonState.Preparation) {
+                                        <button
+                                            matIconButton
+                                            (click)="
+                                                removeTeamFromSeason({
+                                                    team_id: team.id,
+                                                    season_id: season.id
+                                                })
+                                            "
+                                        >
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    }
+                                    @case (SeasonState.Progress) {
+                                        <div class="flex items-center">
+                                            <button
+                                                matIconButton
+                                                (click)="replaceTeamInSeason(team)"
+                                            >
+                                                <mat-icon>compare_arrows</mat-icon>
+                                            </button>
+                                        </div>
+                                    }
+                                }
+                            </mat-card-footer>
+                        </mat-card>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 }

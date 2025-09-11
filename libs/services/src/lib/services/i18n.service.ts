@@ -1,6 +1,6 @@
-import { DOCUMENT, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, DOCUMENT, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { fromStorage } from '../functions';
 import { StorageKeys } from '@liga-manager-ui/common';
@@ -20,6 +20,12 @@ export function httpLoaderFactory() {
 })
 export class I18nService {
 
+    private translateService = inject(TranslateService);
+
+    private document = inject(DOCUMENT);
+
+    private httpClient = inject(HttpClient);
+
     storedLang = fromStorage<StoredLang>(StorageKeys.LANGUAGE);
 
     availableLang$ = this.httpClient.get<
@@ -27,11 +33,8 @@ export class I18nService {
     >('/assets/languages.json');
 
     constructor(
-        private translateService: TranslateService,
-        @Inject(DOCUMENT) private document: Document,
-        private httpClient: HttpClient,
     ) {
-        this.translateService.setDefaultLang('en-GB')
+        this.translateService.setDefaultLang('en-GB');
         if (!this.storedLang()) {
             let code =
                 this.translateService.getBrowserLang() ||

@@ -70,7 +70,7 @@ export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
                 (searchTerm) => this.filterPitches(searchTerm) || [],
             ),
         );
-        this.fromControl.setValue(this.fromControl.value)
+        this.fromControl.setValue(this.fromControl.value);
     }
 
     writeValue(_obj: unknown): void {
@@ -87,7 +87,7 @@ export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
 
     _pitchSelected(option: MatAutocompleteSelectedEvent) {
         if (option.option.value) {
-            this.fromControl?.setValue(option.option.value)
+            this.fromControl?.setValue(option.option.value);
             this.pitchSelected.emit(option.option.value);
             if (this.clearAfterSelected()) {
                 this.fromControl?.reset();
@@ -106,9 +106,9 @@ export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
         let t = this.pitches();
         if (searchTerm) {
             t = this.pitches()?.filter(
-                (y) => 
+                (y) =>
                     fuzzysearch(searchTerm.toLocaleLowerCase(), y?.label.toLowerCase() || ''),
-            )
+            );
         }
         return t;
     }

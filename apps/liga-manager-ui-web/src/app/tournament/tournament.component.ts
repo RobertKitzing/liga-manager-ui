@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllTournamentsFragment, TournamentState } from '@liga-manager-api/graphql';
@@ -17,7 +17,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 
 @Component({
     selector: 'lima-tournament',
@@ -34,17 +33,21 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         ReactiveFormsModule,
         MatButtonModule,
         CypressSelectorDirective,
-        NgxPullToRefreshComponent,
     ],
     standalone: true,
 })
 export class TournamentComponent implements OnInit {
 
-    selectedRoundIdFC = fromStorage<string>(StorageKeys.TOURNAMENT_SELECTED_ROUND_ID)
+    animateEnter = signal<'slide-in-ltr' | 'slide-in-rtl' | undefined>(undefined);
+
+    animateLeave = signal<'slide-out-ltr' | 'slide-out-rtl' | undefined>(undefined);
+
+
+    selectedRoundIdFC = fromStorage<string>(StorageKeys.TOURNAMENT_SELECTED_ROUND_ID);
 
     storedSelectedTournament = fromStorage<AllTournamentsFragment>(StorageKeys.TOURNAMENT_SELECTED_TOURNAMENT);
 
-    tournamentService = inject(TournamentService)
+    tournamentService = inject(TournamentService);
 
     selectedTournamentFC = new FormControl(this.storedSelectedTournament());
 
@@ -61,7 +64,7 @@ export class TournamentComponent implements OnInit {
                     tap(
                         (tournament) => {
                             if (!this.selectedRoundIdFC() || !tournament?.rounds?.find((t) => t?.id === this.selectedRoundIdFC()) ) {
-                                this.selectedRoundIdFC.set(tournament?.rounds![0]?.id || null)
+                                this.selectedRoundIdFC.set(tournament?.rounds![0]?.id || null);
                             }
                         },
                     ),
@@ -91,10 +94,10 @@ export class TournamentComponent implements OnInit {
         this.gestureService.swiped.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (event) => {
                 if (event.direction === 'Left') {
-                    this.prevRound()
+                    this.nextRound();
                 }
                 if (event.direction === 'Right') {
-                    this.nextRound()
+                    this.prevRound();
                 }
             },
         );
@@ -113,13 +116,16 @@ export class TournamentComponent implements OnInit {
 
     nextRound() {
 
+        this.animateEnter.set('slide-in-rtl');
+        this.animateLeave.set('slide-out-rtl');
+
         if(!this.selectedTournament()?.rounds) {
             return;
         }
 
         const currentIndex = this.selectedTournament()?.rounds?.findIndex(
             (round) => round?.id === this.selectedRoundIdFC(),
-        ) || 0
+        ) || 0;
         const nextId = this.selectedTournament()?.rounds![currentIndex + 1]?.id;
         if(nextId) {
             this.selectedRoundIdFC.set(nextId);
@@ -129,13 +135,16 @@ export class TournamentComponent implements OnInit {
 
     prevRound() {
 
+        this.animateEnter.set('slide-in-ltr');
+        this.animateLeave.set('slide-out-ltr');
+
         if(!this.selectedTournament()?.rounds) {
             return;
         }
 
         const currentIndex = this.selectedTournament()?.rounds?.findIndex(
             (round) => round?.id === this.selectedRoundIdFC(),
-        ) || 0
+        ) || 0;
 
         const nextId = this.selectedTournament()?.rounds![currentIndex -1]?.id;
 

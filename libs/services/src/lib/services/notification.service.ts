@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent, SnackBarData } from '../snackbar';
 import { CySelectors } from '@liga-manager-ui/directives';
@@ -10,7 +10,7 @@ export class NotificationService {
 
     defaultDuration = 6000;
 
-    constructor(private snackBar: MatSnackBar) {}
+    private snackBar = inject(MatSnackBar);
 
     showSuccessNotification(title: string, messages?: string[], cySelector?: CySelectors) {
         this.showNotification(title, messages, 'success', cySelector, this.defaultDuration);

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
     FormControl,
     FormGroup,
@@ -51,6 +51,14 @@ import { CypressSelectorDirective, TrimDirective } from '@liga-manager-ui/direct
 })
 export class EditUserDialogComponent implements OnInit {
 
+    user = inject<User>(MAT_DIALOG_DATA);
+
+    private teamService = inject(TeamService);
+
+    private userService = inject(UserService);
+
+    private dialogRef = inject(MatDialogRef<EditUserDialogComponent>);
+
     UserRole = UserRole;
 
     searchTeam = new FormControl();
@@ -81,13 +89,6 @@ export class EditUserDialogComponent implements OnInit {
         }),
         team_ids: new FormControl<string[]>([]),
     });
-
-    constructor(
-        @Inject(MAT_DIALOG_DATA) public user: User,
-        private teamService: TeamService,
-        private userService: UserService,
-        private dialogRef: MatDialogRef<EditUserDialogComponent>,
-    ) {}
 
     ngOnInit(): void {
         if (this.user) {
