@@ -30,7 +30,7 @@ export class TeamContactComponent {
     @Input() showTitle = true;
 
     async share() {
-        const url = `${this.appsettingsService.host}/${APP_ROUTES.TEAM}/${this.team.id}`;
+        const url = `${this.appsettingsService.host}/${APP_ROUTES.TEAM}?teamid=${this.team.id}`;
         await Share.share({
             url,
         });

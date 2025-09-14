@@ -2,9 +2,7 @@
     <div class="flex h-full w-full items-center">
         <img ngSrc="assets/wildeliga_bremen_nobg.webp" [loaderParams]="{width: 60, height: 60}" width="60" height="60" />
         <div class="grow flex justify-center visible lg:hidden">
-            <a class="flex h-full items-center">{{
-                currentRoute | translate
-            }}</a>
+            <a class="flex h-full items-center">{{ title$ | async }}</a>
         </div>
         <div class="hidden h-full lg:flex lg:visible grow">
             <lima-nav-links></lima-nav-links>
