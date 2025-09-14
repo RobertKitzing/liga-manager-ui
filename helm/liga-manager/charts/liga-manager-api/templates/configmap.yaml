@@ -6,6 +6,8 @@ metadata:
   labels:
     {{- include "liga-manager-api.labels" . | nindent 4 }}
 data:
+  MYSQL_HOST: {{ .Values.env.MYSQL_HOST | default (printf "%s-mariadb" .Release.Name) }}
+  REDIS_HOST: {{ .Values.env.REDIS_HOST | default (printf "%s-redis-master" .Release.Name) }}
   {{- with .Values.env }}
     {{- toYaml . | nindent 2 }}
   {{- end }}

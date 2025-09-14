@@ -17,10 +17,8 @@ liga-manager-api:
       storageClassName: "longhorn"
       storage: 1Gi
   env:
-    MYSQL_HOST: "liga-manger-mariadb"
     MYSQL_DATABASE: dev
     MYSQL_USER: root
-    REDIS_HOST: "liga-manger-redis-master"
   secrets:
     MYSQL_PASSWORD: dev
     MYSQL_ROOT_PASSWORD: dev
