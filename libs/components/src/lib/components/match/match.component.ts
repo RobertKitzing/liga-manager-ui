@@ -124,7 +124,7 @@ export class MatchComponent {
     }
 
     async share() {
-        const url = `${this.appsettingsService.host}/${APP_ROUTES.MATCH}/${this.match.id}`;
+        const url = `${this.appsettingsService.host}/${APP_ROUTES.MATCH}?matchid=${this.match.id}`;
         await Share.share({
             url,
         });

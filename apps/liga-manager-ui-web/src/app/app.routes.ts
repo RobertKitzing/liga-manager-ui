@@ -10,6 +10,10 @@ import { matchResolver } from './match.resolver';
 import { AppComponent } from './app.component';
 import { teamResolver } from './team.resolver';
 import { MatchComponent, TeamContactComponent } from '@liga-manager-ui/components';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
+
+marker('NAVIGATION.MATCH');
+marker('NAVIGATION.TEAM');
 
 export const isLoggedInGuard = () => {
     return inject(UserService).loadUser();
@@ -44,7 +48,9 @@ export const routes: Routes = [
     {
         path: '',
         component: AppComponent,
-        resolve: { user: userResolver },
+        resolve: {
+            user: userResolver,
+        },
         children: [
             {
                 path: APP_ROUTES.TABLE,
@@ -114,13 +120,12 @@ export const routes: Routes = [
                 ],
             },
             {
-                path: `${APP_ROUTES.MATCH}/:matchid`,
+                path: `${APP_ROUTES.MATCH}`,
                 component: MatchComponent,
-                // loadComponent: () => import('@liga-manager-ui/components').then((m) => m.MatchComponent),
                 resolve: { match: matchResolver },
             },
             {
-                path: `${APP_ROUTES.TEAM}/:teamid`,
+                path: `${APP_ROUTES.TEAM}`,
                 component: TeamContactComponent,
                 // loadComponent: () => import('@liga-manager-ui/components').then((m) => m.TeamContactComponent),
                 resolve: { team: teamResolver },

@@ -152,6 +152,9 @@
       "options": {
         "cmd": "build android"
       }
+    },
+    "app:generate:assets": {
+      "command": "npx capacitor-assets generate --assetPath {projectRoot}/app-assets --androidProject {projectRoot}/android --android"
     }
   }
 }

@@ -18,7 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
@@ -82,9 +82,11 @@ export class AppComponent implements OnInit {
 
     private appsettingsService = inject(AppsettingsService);
 
-    get currentRoute() {
+    private translateService = inject(TranslateService);
+
+    get title$() {
         const url = this.router.url.split('/')[1].split('?')[0];
-        return `NAVIGATION.${url.toUpperCase()}`;
+        return this.translateService.get(`NAVIGATION.${url.toUpperCase()}`);
     }
 
     async ngOnInit() {
