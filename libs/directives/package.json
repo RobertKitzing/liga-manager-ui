@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-ui/directives",
-    "version": "5.7.1",
+    "version": "5.7.2",
     "peerDependencies": {
         "@angular/core": "^19.2.0"
     },
