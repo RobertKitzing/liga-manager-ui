@@ -326,21 +326,11 @@ jobs:
         working-directory: apps/liga-manager-ui-web
         run: npx cap build android --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --androidreleasetype APK
 
-      - name: Build App Apk
-        working-directory: apps/liga-manager-ui-web
-        run: npx cap build android --keystorepass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }} --keystorealiaspass ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-
       - name: Upload artifact APK
         uses: actions/upload-artifact@v4
         with:
           name: lima-app-release-signed
           path: apps/liga-manager-ui-web/android/app/build/outputs/apk/release/app-release-signed.apk
-
-      - name: Upload artifact AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: lima-app-release-signed
-          path: apps/liga-manager-ui-web/android/app/build/outputs/outputs/bundle/release/app-release.aab
 
   github-create-release:
     runs-on: ubuntu-latest
