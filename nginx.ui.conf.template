@@ -11,7 +11,7 @@ location / {
 
 location /appsettings.json {
     default_type application/json;
-    return 200 '{ "googleMapsApiKey": "${GOOGLE_MAPS_API_KEY}", "use_imgproxy": "${USE_IMGPROXY}", "use_local_assets": "${USE_LOCAL_ASSETS}" }';
+    return 200 '{ "googleMapsApiKey": "${GOOGLE_MAPS_API_KEY}", "use_imgproxy": "${USE_IMGPROXY}", "use_local_assets": "${USE_LOCAL_ASSETS}", "local_time_zone": "${TZ}" }';
 }
 
 location /imgproxy {

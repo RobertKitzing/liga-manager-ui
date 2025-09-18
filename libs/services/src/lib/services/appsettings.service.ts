@@ -7,6 +7,7 @@ export interface AppsettingsModel {
     googleMapsApiKey: string;
     use_imgproxy: string;
     use_local_assets: string;
+    local_time_zone: string;
 }
 
 @Injectable({
@@ -15,6 +16,10 @@ export interface AppsettingsModel {
 export class AppsettingsService {
 
     appsettings?: AppsettingsModel;
+
+    get localTimeZone() {
+        return this.appsettings?.local_time_zone || 'Europe/Berlin';
+    }
 
     get host() {
         return this.appsettings?.host || window.location.origin;

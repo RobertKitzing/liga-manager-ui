@@ -5,13 +5,11 @@
             @if (match.kickoff) {
                 <div class="flex justify-evenly">
                     <mat-icon>event</mat-icon>
-                    <span class="text-center ml-2">{{
-                        match.kickoff | customDate : "short"
-                    }}</span>
+                    <lima-date-time [date]="match.kickoff"></lima-date-time>
                 </div>
             }
             <h1 translate class="text-center text-xl">NEW_KICKOFF</h1>
-            <div>
+            <div class="mb-4">
                 <mat-form-field [formGroup]="newKickoff" class="w-full">
                     <mat-label translate>NEW_KICKOFF_TIME</mat-label>
                     <input
@@ -21,6 +19,7 @@
                         formControlName="time"
                         cySelector="input-time"
                     />
+                    <mat-hint class="w-full">{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettings.localTimeZone} }}</mat-hint>
                 </mat-form-field>
             </div>
             <div>
