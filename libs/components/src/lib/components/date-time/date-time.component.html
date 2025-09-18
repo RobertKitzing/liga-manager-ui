@@ -3,10 +3,10 @@
         @if(isTimeZoneDifferent(date()); as localTime) {
             @if(localTime) {
                 <div>
-                    {{ date() | customDate : "short" }} <span translate>YOUR_TIME</span>
+                    {{ date() | customDate : "short" }} <span>({{ currentTimeZone }})</span>
                 </div>
                 <div>
-                    {{ localTime | customDate : "short":appSettings.localTimeZone }} <span translate>LOCAL_TIME</span>
+                    {{ localTime | customDate : "short":appSettings.localTimeZone }} <span>({{appSettings.localTimeZone}})</span>
                 </div>
             }
         } @else {
