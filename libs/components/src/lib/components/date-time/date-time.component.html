@@ -6,7 +6,7 @@
                     {{ date() | customDate : "short" }} <span>({{ currentTimeZone }})</span>
                 </div>
                 <div>
-                    {{ localTime | customDate : "short":appSettings.localTimeZone }} <span>({{appSettings.localTimeZone}})</span>
+                    {{ localTime | customDate : "short":appSettingsService.localTimeZone }} <span>({{appSettingsService.localTimeZone}})</span>
                 </div>
             }
         } @else {

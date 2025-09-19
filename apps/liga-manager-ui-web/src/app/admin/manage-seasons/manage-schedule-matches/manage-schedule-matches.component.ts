@@ -5,14 +5,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { AsyncPipe } from '@angular/common';
-import { PitchService } from '@liga-manager-ui/services';
-import { PitchAutoCompleteComponent, TeamChooserComponent } from '@liga-manager-ui/components';
+import { AppsettingsService, PitchService } from '@liga-manager-ui/services';
+import { PitchAutoCompleteComponent, TeamChooserComponent, DateTimeComponent } from '@liga-manager-ui/components';
 import { MatInputModule } from '@angular/material/input';
 import { Team } from '@liga-manager-api/graphql';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { MatButtonModule } from '@angular/material/button';
 import { add, formatISO, parseISO, set } from 'date-fns';
 import { firstValueFrom } from 'rxjs';
+import { TZDate } from '@date-fns/tz';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -30,10 +31,25 @@ class MatchAppointmentFormGroup extends FormGroup {
 @Component({
     selector: 'lima-manage-schedule-matches',
     standalone: true,
-    imports: [MatButtonModule, CustomDatePipe, MatCardModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, TranslateModule, AsyncPipe, PitchAutoCompleteComponent, MatInputModule, TeamChooserComponent],
+    imports: [
+        MatButtonModule,
+        CustomDatePipe,
+        MatCardModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        FormsModule,
+        TranslateModule,
+        AsyncPipe,
+        PitchAutoCompleteComponent,
+        MatInputModule,
+        TeamChooserComponent,
+        DateTimeComponent,
+    ],
     templateUrl: './manage-schedule-matches.component.html',
 })
 export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent implements OnInit {
+
+    appSettingsService = inject(AppsettingsService);
 
     pitchService = inject(PitchService);
 
@@ -75,7 +91,9 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     genKickoff(matchDayStartDate: string, offset: number, time: `${number}:${number}`) {
         const hours = +time.split(':')[0];
         const minutes = +time.split(':')[1];
-        return formatISO(set(add(parseISO(matchDayStartDate), { days: offset }), { hours, minutes }));
+        const startDate = new TZDate(parseISO(matchDayStartDate), this.appSettingsService.localTimeZone);
+        const kickoffDate = new TZDate(set(add(startDate, { days: offset }), { hours, minutes }), this.appSettingsService.localTimeZone);
+        return formatISO(kickoffDate);
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {

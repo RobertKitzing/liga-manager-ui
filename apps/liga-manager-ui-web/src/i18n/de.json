@@ -84,7 +84,7 @@
 	"LATITUDE": "",
 	"LIGHT_MODE": "Heller Modus",
 	"LOCAL_TIME": "",
-	"LOCAL_TIME_ZONE_HINT": "Uhrzeit in {{ timeZone }}",
+	"LOCAL_TIME_ZONE_HINT": "Uhrzeit ({{ timeZone }})",
 	"LOGIN_TITLE": "",
 	"LONGITUDE": "",
 	"MAINTENANCE_ACTIVE_BODY": "",

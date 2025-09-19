@@ -16,14 +16,14 @@ export class DateTimeComponent {
 
     currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    appSettings = inject(AppsettingsService);
+    appSettingsService = inject(AppsettingsService);
 
     date = input<string | undefined>();
 
     isTimeZoneDifferent(date: string | undefined) {
         const givenDate = parseISO(date!);
-        const localTime = toZonedTime(givenDate, this.appSettings.localTimeZone);
-        return this.appSettings.localTimeZone !== this.currentTimeZone ? localTime : undefined;
+        const localTime = toZonedTime(givenDate, this.appSettingsService.localTimeZone);
+        return this.appSettingsService.localTimeZone !== this.currentTimeZone ? localTime : undefined;
     }
 
 }
