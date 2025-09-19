@@ -83,6 +83,8 @@
 	"LAST_NAME": "Last Name",
 	"LATITUDE": "Latitude",
 	"LIGHT_MODE": "Light Mode",
+	"LOCAL_TIME": "",
+	"LOCAL_TIME_ZONE_HINT": "Time ({{ timeZone }})",
 	"LOGIN_TITLE": "Login",
 	"LONGITUDE": "Longitude",
 	"MAINTENANCE_ACTIVE_BODY": "We are currently in Maintenance Mode - Please try again later",
@@ -183,5 +185,6 @@
 	"UserRole.Admin": "Admin",
 	"UserRole.TeamManager": "TeamManager",
 	"WINS_DRAWS_LOSSES": "W:D:L",
-	"YES": "Yes"
+	"YES": "Yes",
+	"YOUR_TIME": ""
 }

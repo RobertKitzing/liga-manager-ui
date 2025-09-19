@@ -17,7 +17,7 @@
                                         <lima-pitch-auto-complete [pitches]="allPitches" formControlName="pitch"></lima-pitch-auto-complete>
                                     }
                                     <mat-form-field class="w-full" subscriptSizing="dynamic">
-                                        <mat-label translate>NEW_KICKOFF_TIME</mat-label>
+                                        <mat-label>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettingsService.localTimeZone} }}</mat-label>
                                         <input
                                             class="text-center"
                                             matInput
@@ -68,7 +68,7 @@
                                         @for( match of matchDay.matches; track $index ) {
                                             @if(match?.kickoff) {
                                                 <li>
-                                                    {{ match?.kickoff | customDate:'short' }} {{ match?.pitch?.label }}
+                                                    <lima-date-time [date]="match?.kickoff"></lima-date-time>
                                                 </li>
                                             }
                                         }
@@ -107,7 +107,7 @@
                                             @if(match?.kickoff) {
                                                 <li>
                                                     {{ match?.home_team?.name }} - {{ match?.guest_team?.name }}
-                                                    {{ match?.kickoff | customDate:'short' }} {{ match?.pitch?.label }}
+                                                    <lima-date-time [date]="match?.kickoff!"></lima-date-time>
                                                 </li>
                                             }
                                         }

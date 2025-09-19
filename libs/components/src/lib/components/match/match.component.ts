@@ -16,6 +16,7 @@ import { TeamLogoComponent } from '../team-logo/team-logo.component';
 import { Share } from '@capacitor/share';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { PitchComponent } from '../pitch/pitch.component';
+import { DateTimeComponent } from '../date-time/date-time.component';
 
 @Component({
     selector: 'lima-match',
@@ -33,6 +34,7 @@ import { PitchComponent } from '../pitch/pitch.component';
         TeamLogoComponent,
         AsyncPipe,
         PitchComponent,
+        DateTimeComponent,
     ],
     templateUrl: './match.component.html',
 })

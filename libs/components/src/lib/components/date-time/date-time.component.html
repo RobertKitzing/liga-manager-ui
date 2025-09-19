@@ -1,0 +1,16 @@
+@if(date()) {
+    <div>
+        @if(isTimeZoneDifferent(date()); as localTime) {
+            @if(localTime) {
+                <div>
+                    {{ date() | customDate : "short" }} <span>({{ currentTimeZone }})</span>
+                </div>
+                <div>
+                    {{ localTime | customDate : "short":appSettingsService.localTimeZone }} <span>({{appSettingsService.localTimeZone}})</span>
+                </div>
+            }
+        } @else {
+            {{ date() | customDate : "short" }}
+        }
+    </div>
+}

@@ -32,11 +32,7 @@
                                     {{
                                         "MATCH_CANCELLED_ON"
                                             | translate
-                                                : {
-                                                    time:
-                                                        (match.cancelled_at
-                                                        | customDate : "short")
-                                                }
+                                                : { time: (match.cancelled_at | customDate : "short") }
                                     }}
                                 </h1>
                             </div>
@@ -100,7 +96,7 @@
                                             <span translate>NO_TIME_SET</span>
                                         } @else {
                                             <mat-icon>access_time</mat-icon>
-                                            <span class="line-clamp-5">{{ match.kickoff | customDate : "short"}}</span>
+                                            <lima-date-time [date]="match.kickoff"></lima-date-time>
                                         }
                                     </div>
                                 </div>

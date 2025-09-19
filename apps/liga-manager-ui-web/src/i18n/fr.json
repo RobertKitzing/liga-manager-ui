@@ -83,6 +83,8 @@
 	"LAST_NAME": "",
 	"LATITUDE": "",
 	"LIGHT_MODE": "",
+	"LOCAL_TIME": "",
+	"LOCAL_TIME_ZONE_HINT": "",
 	"LOGIN_TITLE": "",
 	"LONGITUDE": "",
 	"MAINTENANCE_ACTIVE_BODY": "",
@@ -183,5 +185,6 @@
 	"UserRole.Admin": "",
 	"UserRole.TeamManager": "",
 	"WINS_DRAWS_LOSSES": "V:D:L",
-	"YES": ""
+	"YES": "",
+	"YOUR_TIME": ""
 }

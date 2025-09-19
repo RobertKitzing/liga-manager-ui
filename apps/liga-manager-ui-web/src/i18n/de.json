@@ -83,6 +83,8 @@
 	"LAST_NAME": "",
 	"LATITUDE": "",
 	"LIGHT_MODE": "Heller Modus",
+	"LOCAL_TIME": "",
+	"LOCAL_TIME_ZONE_HINT": "Uhrzeit ({{ timeZone }})",
 	"LOGIN_TITLE": "",
 	"LONGITUDE": "",
 	"MAINTENANCE_ACTIVE_BODY": "",
@@ -183,5 +185,6 @@
 	"UserRole.Admin": "",
 	"UserRole.TeamManager": "",
 	"WINS_DRAWS_LOSSES": "S:U:N",
-	"YES": ""
+	"YES": "",
+	"YOUR_TIME": ""
 }

@@ -3,17 +3,15 @@
         <div class="grid grid-cols-1 gap-4">
             <div translate class="text-center">OLD_KICKOFF</div>
             @if (match.kickoff) {
-                <div class="flex justify-evenly">
+                <div class="flex justify-evenly items-center space-x-2">
                     <mat-icon>event</mat-icon>
-                    <span class="text-center ml-2">{{
-                        match.kickoff | customDate : "short"
-                    }}</span>
+                    <lima-date-time [date]="match.kickoff"></lima-date-time>
                 </div>
             }
             <h1 translate class="text-center text-xl">NEW_KICKOFF</h1>
-            <div>
+            <div class="mb-4">
                 <mat-form-field [formGroup]="newKickoff" class="w-full">
-                    <mat-label translate>NEW_KICKOFF_TIME</mat-label>
+                    <mat-label translate>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettingsService.localTimeZone} }}</mat-label>
                     <input
                         class="text-center"
                         matInput
