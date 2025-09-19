@@ -1,3 +1,7 @@
+## 5.7.4 (2025-09-19)
+
+This was a version bump only, there were no code changes.
+
 ## 5.7.3 (2025-09-18)
 
 This was a version bump only, there were no code changes.
