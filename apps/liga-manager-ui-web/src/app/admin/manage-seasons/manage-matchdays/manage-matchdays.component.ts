@@ -146,12 +146,18 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 }));
             }
             if (mode === 'update') {
-                for (const md of this.matchDays()) {
-                    await firstValueFrom(this.seasonService.rescheduleMatchDay({
-                        match_day_id: md?.id || '',
-                        date_period: { from: new ApiDate(md?.start_date || ''), to: new ApiDate(md?.end_date || '') },
-                    }, manageSeason.id));
-                }
+                await firstValueFrom(this.seasonService.rescheduleMatchDays(
+                    this.matchDays().map(
+                        (md) => ({
+                            match_day_id: md?.id || '',
+                            date_period: {
+                                from: new ApiDate(md?.start_date || ''),
+                                to: new ApiDate(md?.end_date || ''),
+                            },
+                        }),
+                    ),
+                    manageSeason.id,
+                ));
             }
             this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
         } catch (error) {

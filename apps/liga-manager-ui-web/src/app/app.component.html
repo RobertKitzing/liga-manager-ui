@@ -50,14 +50,14 @@
                 @if (!authService.user()) {
                 <button
                     class="mat-sys-primary"
-                    mat-button
+                    matButton="outlined"
                     (click)="openLoginDialog()"
                 >
                     <span translate>BUTTON.LOGIN</span>
                 </button>
                 } @else {
                 <button
-                    mat-button
+                    matButton="outlined"
                     class="mat-sys-primary"
                     [matMenuTriggerFor]="userMenu"
                 >

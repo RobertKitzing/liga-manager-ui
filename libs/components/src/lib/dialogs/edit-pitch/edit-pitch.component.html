@@ -4,7 +4,7 @@
 <mat-dialog-content>
     <div
         [formGroup]="formGroup"
-        class="flex flex-col justify-center w-full space-y-4 p-4"
+        class="grid grid-cols-1 h-full items-center"
     >
         <mat-form-field>
             <mat-label translate>PITCH_LABEL</mat-label>
@@ -38,7 +38,7 @@
             {{ "BUTTON.CANCEL" | translate }}
         </button>
         <button
-            matButton="outlined"
+            matButton="tonal"
             (click)="onSaveClicked()"
             [disabled]="!formGroup.valid"
             cySelector="button-save-user"

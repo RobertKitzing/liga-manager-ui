@@ -1,51 +1,61 @@
-<lima-edit-match-base [actionsTemplate]="actionsTemplate" [data]="data">
-    @if (data.match; as match) {
-        <div class="grid grid-cols-1 gap-4">
-            <div translate class="text-center">OLD_KICKOFF</div>
-            @if (match.kickoff) {
-                <div class="flex justify-evenly items-center space-x-2">
-                    <mat-icon>event</mat-icon>
-                    <lima-date-time [date]="match.kickoff"></lima-date-time>
+<h1 mat-dialog-title class="mat-sys-primary text-center">
+    {{ data.match.home_team.name }}&nbsp;-&nbsp;{{ data.match.guest_team.name }}
+</h1>
+<mat-dialog-content class="h-full">
+    <mat-card class="w-full h-full p-4">
+        <mat-card-title translate class="text-center">
+            EDIT_MATCH_KICKOFF_TITLE
+        </mat-card-title>
+        <mat-card-content class="h-full">
+            @if (data.match; as match) {
+                <div class="grid grid-cols-1 gap-4">
+                    @if (match.kickoff) {
+                        <div translate class="text-center text-xl">OLD_KICKOFF</div>
+                        <div class="flex justify-center items-center space-x-2">
+                            <mat-icon>event</mat-icon>
+                            <lima-date-time [date]="match.kickoff"></lima-date-time>
+                        </div>
+                    }
+                    <h1 translate class="text-center text-xl">NEW_KICKOFF</h1>
+                    <div class="mb-4">
+                        <mat-form-field [formGroup]="newKickoff" class="w-full">
+                            <mat-label translate>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettingsService.localTimeZone} }}</mat-label>
+                            <input
+                                class="text-center"
+                                matInput
+                                type="time"
+                                formControlName="time"
+                                cySelector="input-time"
+                            />
+                        </mat-form-field>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <mat-form-field [formGroup]="newKickoff">
+                            <mat-label translate>NEW_KICKOFF_DATE</mat-label>
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                formControlName="date"
+                                cySelector="input-kickoff-date"
+                            />
+                            <mat-datepicker-toggle
+                                matIconSuffix
+                                [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker touchUi #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
                 </div>
             }
-            <h1 translate class="text-center text-xl">NEW_KICKOFF</h1>
-            <div class="mb-4">
-                <mat-form-field [formGroup]="newKickoff" class="w-full">
-                    <mat-label translate>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettingsService.localTimeZone} }}</mat-label>
-                    <input
-                        class="text-center"
-                        matInput
-                        type="time"
-                        formControlName="time"
-                        cySelector="input-time"
-                    />
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field [formGroup]="newKickoff">
-                    <mat-label translate>NEW_KICKOFF_DATE</mat-label>
-                    <input
-                        matInput
-                        [matDatepicker]="picker"
-                        formControlName="date"
-                        cySelector="input-kickoff-date"
-                    />
-                    <mat-datepicker-toggle
-                        matIconSuffix
-                        [for]="picker"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-    }
-</lima-edit-match-base>
-<ng-template #actionsTemplate>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
     <button matButton="outlined" mat-dialog-close>
         {{ "BUTTON.CANCEL" | translate }}
     </button>
     <button
-        matButton="outlined"
+        matButton="tonal"
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!newKickoff.valid"
@@ -54,4 +64,4 @@
         <mat-icon>save</mat-icon>
         {{ "BUTTON.SAVE" | translate }}
     </button>
-</ng-template>
+</mat-dialog-actions>

@@ -26,34 +26,29 @@
                                 ></lima-team-logo>
                             </div>
                         </div>
-                        @if (match.cancelled_at) {
-                            <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
-                                <h1>
-                                    {{
-                                        "MATCH_CANCELLED_ON"
-                                            | translate
-                                                : { time: (match.cancelled_at | customDate : "short") }
-                                    }}
-                                </h1>
-                            </div>
-                        } @else {
-                            <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
-                                <div
-                                    class="self-center grid grid-cols-3 m-3 p-2 w-full lg:w-2/3 justify-items-center"
-                                    cySelector="button-edit-match-result"
-                                    (click)="canEditMatch(match) && openEditResultDialog()"
-                                    [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
-                                >
-                                    <div>
-                                        {{ match.home_score | number }}
-                                    </div>
-                                    <div>:</div>
-                                    <div>
-                                        {{ match.guest_score | number }}
-                                    </div>
+                        <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
+                            <div
+                                class="self-center grid grid-cols-3 m-3 p-2 w-full lg:w-2/3 justify-items-center"
+                                cySelector="button-edit-match-result"
+                                (click)="canEditMatch(match) && openEditResultDialog()"
+                                [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
+                            >
+                                <div>
+                                    {{ match.home_score | number }}
+                                </div>
+                                <div>:</div>
+                                <div>
+                                    {{ match.guest_score | number }}
                                 </div>
                             </div>
-                        }
+                            @if (match.cancelled_at) {
+                                <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
+                                    <h1>
+                                        ({{ "MATCH_CANCELLED_ON" | translate: { time: (match.cancelled_at | customDate : "short") } }})
+                                    </h1>
+                                </div>
+                            }
+                        </div>
                         <div
                             class="self-center pr-2 break-words line-clamp-3"
                             [ngClass]="{ 'opacity-10': isHomeWinner() }"
@@ -73,55 +68,52 @@
                         <span class="text-center">{{ match.guest_team.name }}</span>
                     </div>
                     @if (!resultOnly()) {
-                        @if (match.cancelled_at) {
-                            <div class="grid grid-cols-1">
-                                <div class="w-full break-words line-clamp-5 p-2 mat-sys-surface-container-highest mat-sys-corner-medium">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div
+                                [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
+                                (click)="canEditMatch(match) && openEditKickoffDialog()"
+                                cySelector="button-schedule-match"
+                                class="mat-sys-surface-container-highest mat-sys-corner-medium"
+                            >
+                                <div
+                                    class="flex items-center flex-col space-y-2 text-center p-2"
+                                >
+                                    @if (!match.kickoff) {
+                                        <mat-icon>access_time</mat-icon>
+                                        <span translate>NO_TIME_SET</span>
+                                    } @else {
+                                        <mat-icon>access_time</mat-icon>
+                                        <lima-date-time [date]="match.kickoff"></lima-date-time>
+                                    }
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-col text-center"
+                                (click)="canEditMatch(match) && openEditPitchDialog()"
+                                [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
+                                class="mat-sys-surface-container-highest mat-sys-corner-medium"
+                            >
+                                <div
+                                    class="flex items-center flex-col space-y-2 text-center p-2"
+                                >
+                                    @if (!match.pitch) {
+                                        <mat-icon>location_off</mat-icon>
+                                        <span translate>NO_PTICH_SET</span>
+                                    } @else {
+                                        <mat-icon>location_on</mat-icon>
+                                        <span class="line-clamp-5">
+                                            <lima-pitch [pitch]="match.pitch"></lima-pitch>
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                            @if (match.cancelled_at) {
+                                <div class="col-span-full w-full break-words line-clamp-5 p-2 mat-sys-surface-container-highest mat-sys-corner-medium">
                                     <h1 translate class="text-center">CANCELLATION_REASON</h1>
                                     <span class="text-center line-clamp-5">{{ match.cancellation_reason }}</span>
                                 </div>
-                            </div>
-                        } @else {
-                            <div class="grid grid-cols-2 gap-2">
-                                <div
-                                    [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
-                                    (click)="canEditMatch(match) && openEditKickoffDialog()"
-                                    cySelector="button-schedule-match"
-                                    class="mat-sys-surface-container-highest mat-sys-corner-medium"
-                                >
-                                    <div
-                                        class="flex items-center flex-col space-y-2 text-center p-2"
-                                    >
-                                        @if (!match.kickoff) {
-                                            <mat-icon>access_time</mat-icon>
-                                            <span translate>NO_TIME_SET</span>
-                                        } @else {
-                                            <mat-icon>access_time</mat-icon>
-                                            <lima-date-time [date]="match.kickoff"></lima-date-time>
-                                        }
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col text-center"
-                                    (click)="canEditMatch(match) && openEditPitchDialog()"
-                                    [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
-                                    class="mat-sys-surface-container-highest mat-sys-corner-medium"
-                                >
-                                    <div
-                                        class="flex items-center flex-col space-y-2 text-center p-2"
-                                    >
-                                        @if (!match.pitch) {
-                                            <mat-icon>location_off</mat-icon>
-                                            <span translate>NO_PTICH_SET</span>
-                                        } @else {
-                                            <mat-icon>location_on</mat-icon>
-                                            <span class="line-clamp-5">
-                                                <lima-pitch [pitch]="match.pitch"></lima-pitch>
-                                            </span>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                            }
+                        </div>
                         @if (authService.user()) {
                             <div class="grid grid-cols-3 gap-0">
                                 <div class="flex justify-center p-2">
@@ -152,7 +144,6 @@
                                             <mat-icon>scoreboard</mat-icon>
                                             <span translate>BUTTON.EDIT_RESULT</span>
                                         </button>
-                                        @if (!match.cancelled_at) {
                                         <button mat-menu-item (click)="openEditPitchDialog()">
                                             <mat-icon>location_on</mat-icon>
                                             <span translate>BUTTON.EDIT_PITCH</span>
@@ -161,14 +152,13 @@
                                             <mat-icon>event</mat-icon>
                                             <span translate>BUTTON.EDIT_KICKOFF</span>
                                         </button>
-                                        }
                                         <button mat-menu-item (click)="openCancelMatchDialog()">
                                             <mat-icon>close</mat-icon>
                                             <span translate>BUTTON.CANCEL_MATCH</span>
                                         </button>
                                     </mat-menu>
                                 } @else {
-                                <div></div>
+                                    <div></div>
                                 }
                                 <div class="flex justify-center p-2">
                                     <button

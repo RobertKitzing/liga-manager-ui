@@ -5,15 +5,9 @@ import {
     Validators,
     ReactiveFormsModule,
 } from '@angular/forms';
-import {
-    MatDialogRef,
-    MAT_DIALOG_DATA,
-    MatDialogClose,
-} from '@angular/material/dialog';
+import { MatDialogRef, MatDialogClose, MatDialogModule } from '@angular/material/dialog';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
-import { MatchService, NotificationService } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
-import { Match, MatchDay } from '@liga-manager-api/graphql';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EditMatchBaseComponent } from '../edit-match-base';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-edit-match-result',
@@ -35,19 +30,14 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         MatDialogClose,
         MatIconModule,
         TranslateModule,
-        EditMatchBaseComponent,
         CypressSelectorDirective,
+        MatDialogModule,
+        MatCardModule,
     ],
 })
-export class EditMatchResultComponent {
-
-    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
-
-    private notificationService = inject(NotificationService);
+export class EditMatchResultComponent  extends EditMatchBaseComponent {
 
     private dialogRef = inject(MatDialogRef<EditMatchResultComponent>);
-
-    private matchService = inject(MatchService);
 
     resultFormGroup = new FormGroup({
         home_score: new FormControl(this.data.match.home_score, [
