@@ -20,6 +20,7 @@ import { Base64 } from 'js-base64';
 import { MaintenanceModeComponent } from '@liga-manager-ui/components';
 
 export function apolloFactory() {
+
     const appsettingsService = inject(AppsettingsService);
     const authenticationService = inject(AuthenticationService);
     const notificationService = inject(NotificationService);
@@ -45,10 +46,9 @@ export function apolloFactory() {
 
     const errorHandler = onError(
         ({ graphQLErrors, networkError, operation }) => {
-            console.log(graphQLErrors);
             if (graphQLErrors) {
                 graphQLErrors.map(({ message }) =>
-                    console.log(`[GraphQL error]: Message: ${message}`),
+                    console.error(`[GraphQL error]: Message: ${message}`),
                 );
             }
             if (networkError) {
@@ -56,12 +56,13 @@ export function apolloFactory() {
                     case 401:
                         if (operation.operationName !== 'PasswordChange') {
                             authenticationService.logout();
+                        } else {
+                            notificationService.showErrorNotification(marker('ERROR.OLD_PASSWORD_WRONG'));
                         }
                         break;
                     case 400:
                     case 409: {
                         const messages = graphQLErrors?.map((x) => x.message);
-                        console.log(messages);
                         notificationService.showErrorNotification(
                             marker('ERROR.BAD_REQUEST'),
                             messages,

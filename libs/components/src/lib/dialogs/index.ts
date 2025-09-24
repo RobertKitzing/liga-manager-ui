@@ -9,3 +9,4 @@ export * from './default-dialog-config';
 export * from './confirm';
 export * from './edit-pitch';
 export * from './edit-penalty';
+export * from './change-password';

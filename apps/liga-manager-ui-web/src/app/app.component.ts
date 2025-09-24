@@ -24,7 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 import { MatSelectModule } from '@angular/material/select';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
+import { ChangePasswordComponent, LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
 import { SafeArea, SafeAreaInsets } from 'capacitor-plugin-safe-area';
 import { Device } from '@capacitor/device';
 
@@ -136,7 +136,7 @@ export class AppComponent implements OnInit {
     }
 
     openChangePasswordDialog() {
-        // TODO: Add
+        this.dialog.open(ChangePasswordComponent);
     }
 
     changeTheme(theme: string) {

@@ -3,67 +3,72 @@
 </h1>
 <div mat-dialog-content [formGroup]="loginForm" class="mt-2">
     <mat-card>
-        <mat-card-content>
-            <div>
-                <mat-form-field class="w-full">
-                    <mat-label translate>USERNAME</mat-label>
-                    <input
-                        #username
-                        type="text"
-                        matInput
-                        formControlName="username"
-                        cySelector="input-username"
-                    />
-                    @if (!loginForm.controls['username'].valid) {
-                    <mat-error>
-                        <span translate>USERNAME_REQUIRED</span>
-                    </mat-error>
-                    }
-                </mat-form-field>
-            </div>
-            <div class="mt-4">
-                <mat-form-field
-                    class="w-full"
-                    (click)="loginForm.controls['password'].enable()"
-                >
-                    <mat-label translate>PASSWORD</mat-label>
-                    <input
-                        #password
-                        type="password"
-                        matInput
-                        formControlName="password"
-                        cySelector="input-password"
-                    />
-                    @if (!loginForm.controls['password'].valid) {
-                    <mat-error>
-                        <span translate>PASSWORD_REQUIRED</span>
-                    </mat-error>
-                    } @if (password.value) {
-                    <button
-                        matIconButton
-                        matSuffix
-                        (click)="
-                            password.type === 'password'
-                                ? (password.type = 'text')
-                                : (password.type = 'password')
-                        "
-                    >   
-                        @if (password.type === 'password') {
-                            <mat-icon>visibility</mat-icon>
-                        } @else {
-                            <mat-icon>visibility_off</mat-icon>
+        <mat-card-content class="w-full">
+            <div class="flex flex-col justify-center items-center space-y-4">
+                <div class="w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label translate>USERNAME</mat-label>
+                        <input
+                            #username
+                            type="text"
+                            matInput
+                            formControlName="username"
+                            cySelector="input-username"
+                        />
+                        @if (!loginForm.controls['username'].valid) {
+                        <mat-error>
+                            <span translate>USERNAME_REQUIRED</span>
+                        </mat-error>
                         }
-                    </button>
-                    }
-                </mat-form-field>
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field
+                        class="w-full"
+                        (click)="loginForm.controls['password'].enable()"
+                    >
+                        <mat-label translate>PASSWORD</mat-label>
+                        <input
+                            #password
+                            type="password"
+                            matInput
+                            formControlName="password"
+                            cySelector="input-password"
+                        />
+                        @if (!loginForm.controls['password'].valid) {
+                        <mat-error>
+                            <span translate>PASSWORD_REQUIRED</span>
+                        </mat-error>
+                        } @if (password.value) {
+                        <button
+                            matIconButton
+                            matSuffix
+                            (click)="
+                                password.type === 'password'
+                                    ? (password.type = 'text')
+                                    : (password.type = 'password')
+                            "
+                        >   
+                            @if (password.type === 'password') {
+                                <mat-icon>visibility</mat-icon>
+                            } @else {
+                                <mat-icon>visibility_off</mat-icon>
+                            }
+                        </button>
+                        }
+                    </mat-form-field>
+                </div>
+                <button matButton="outlined" (click)="passwordForgot(username.value)">
+                    <span translate>FORGOT_PASSWORD</span>
+                </button>
             </div>
         </mat-card-content>
     </mat-card>
 </div>
 <mat-dialog-actions align="center">
     <div class="flex justify-evenly p-2">
-        <button matButton="outlined" (click)="passwordForgot(username.value)">
-            <span translate>FORGOT_PASSWORD</span>
+        <button matButton="outlined" (click)="dialogRef.close(true)">
+            <span translate>BUTTON.CANCEL</span>
         </button>
         <button
             matButton="tonal"

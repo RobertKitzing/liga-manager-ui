@@ -1,13 +1,11 @@
-<div mat-dialog-title class="flex mat-sys-primary p-4">
-    <div class="self-center text-center w-full grid grid-cols-1 gap-2 text-lg">
-        @if (user) {
+<h1 mat-dialog-title class="text-center mat-sys-primary" translate>
+    @if (user) {
         <span>EDIT_USER_TITLE</span>
-        } @if (!user) {
+    } @if (!user) {
         <span translate>ADD_USER_TITLE</span>
-        }
-    </div>
-</div>
-<div class="flex justify-center w-full mt-2 mb-2">
+    }
+</h1>
+<div mat-dialog-content class="flex justify-center w-full mt-2 mb-2">
     <div
         [formGroup]="userFormGroup"
         class="flex flex-col justify-center w-full p-2"
@@ -49,9 +47,9 @@
         }
     </div>
 </div>
-<div class="flex justify-evenly p-2">
+<mat-dialog-actions align="center">
     <button matButton="outlined" mat-dialog-close>
-        {{ "BUTTON.CANCEL" | translate }}
+        <span translate>BUTTON.CANCEL</span>
     </button>
     <button
         matButton="outlined"
@@ -60,6 +58,6 @@
         cySelector="button-save-user"
     >
         <mat-icon>save</mat-icon>
-        {{ "BUTTON.SAVE" | translate }}
+        <span translate>BUTTON.SAVE</span>
     </button>
-</div>
+</mat-dialog-actions>

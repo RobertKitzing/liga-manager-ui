@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { Base64 } from 'js-base64';
 import { map, of, tap } from 'rxjs';
 import {
     AllUsersGQL,
@@ -15,7 +14,6 @@ import {
     User,
 } from '@liga-manager-api/graphql';
 import { AuthenticationService, LoginContext } from './authentication.service';
-import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -128,23 +126,16 @@ export class UserService {
     }
 
     changePassword(newPassword: string, oldPassword: string) {
+        const loginContext: LoginContext = {
+            username: this.authenticationService.user()?.email || '',
+            password: oldPassword,
+        };
         return this.changePasswordQGL.mutate(
             {
                 new_password: newPassword,
             },
             {
-                context: {
-                    headers: new HttpHeaders().set(
-                        'Authorization',
-                        `Basic ${Base64.encode(
-                            this.authenticationService
-                                .user()
-                                ?.email.toLowerCase() +
-                                ':' +
-                                oldPassword,
-                        )}`,
-                    ),
-                },
+                context: { loginContext },
             },
         );
     }
