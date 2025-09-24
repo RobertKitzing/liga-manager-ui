@@ -78,6 +78,7 @@ export class EditMatchKickoffComponent extends EditMatchBaseComponent {
                 this.matchService.scheduleMatch({
                     match_id: this.data.match.id,
                     kickoff: formatISO(fromZonedTime(kickoff, this.appSettingsService.localTimeZone)),
+                    kickoff: formatISO(fromZonedTime(kickoff, this.appSettingsService.localTimeZone)),
                 }),
             );
             this.notificationService.showSuccessNotification(
