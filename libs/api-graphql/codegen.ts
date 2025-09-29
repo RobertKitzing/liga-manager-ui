@@ -40,7 +40,7 @@ const config: CodegenConfig = {
                     '/* GENERATED DO NOT EDIT */',
                     'import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator } from \'./generators\'',
                 ],
-                typesFile: 'libs/api-graphql/src/gen/graphql.ts',
+                typesFile: '../gen/graphql.ts',
                 scalars: {
                     DateTime: 'apiDateTimeGenerator()',
                     Date: 'apiDateGenerator()',

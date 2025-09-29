@@ -1,7 +1,7 @@
 /* eslint-disable */
 /* GENERATED DO NOT EDIT */
 import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator } from './generators'
-import { Contact, DatePeriod, Event, Match, MatchAppointment, MatchDay, Pitch, Ranking, RankingPenalty, RankingPosition, Season, Team, TeamIdPair, Tournament, User, Mutation, Query, SeasonState, TournamentState, UserLocale, UserRole } from 'libs/api-graphql/src/gen/graphql';
+import { Contact, DatePeriod, Event, Match, MatchAppointment, MatchDay, Pitch, Ranking, RankingPenalty, RankingPosition, Season, Team, TeamIdPair, Tournament, User, Mutation, Query, SeasonState, TournamentState, UserLocale, UserRole } from '../gen/graphql';
 
 export const aContact = (overrides?: Partial<Contact>): Contact => {
     return {
