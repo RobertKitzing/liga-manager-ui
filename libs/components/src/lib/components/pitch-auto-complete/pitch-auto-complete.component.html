@@ -3,7 +3,7 @@
     <input type="text"
         [cySelector]="cySelector()"
         matInput
-        [formControl]="fromControl!"
+        [formControl]="formControl!"
         [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete"
         (optionSelected)="_pitchSelected($event)"
@@ -13,8 +13,8 @@
             <mat-option [value]="option">{{option?.label}}</mat-option>
         }
     </mat-autocomplete>
-    @if (fromControl?.value) {
-        <button matSuffix matIconButton aria-label="Clear" (click)="fromControl!.reset()" class="mr-4">
+    @if (formControl?.value) {
+        <button matSuffix matIconButton aria-label="Clear" (click)="formControl!.reset()" class="mr-4">
             <mat-icon>close</mat-icon>
         </button>
     }
