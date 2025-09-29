@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 import { GetAuthenticatedUser, Login, Logout, SetToken } from './actions';
 import { AuthenticatedUserGQL, AuthenticatedUserQuery } from '@liga-manager-api/graphql';
-import { tap } from 'rxjs';
+import { of, tap } from 'rxjs';
 
 export interface AuthStateModel {
     token?: string | null;
@@ -16,15 +16,9 @@ export interface AuthStateModel {
     },
 })
 @Injectable()
-export class AuthState implements NgxsOnInit {
+export class AuthState  {
 
     private authenticatedUserGQL = inject(AuthenticatedUserGQL);
-
-    ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
-        if (ctx.getState().token) {
-            ctx.dispatch(GetAuthenticatedUser);
-        }
-    }
 
     @Action(Login)
     login({ patchState }: StateContext<AuthStateModel>, action: Login) {
@@ -54,7 +48,10 @@ export class AuthState implements NgxsOnInit {
     }
 
     @Action(GetAuthenticatedUser)
-    getAuthenticatedUser({ patchState }: StateContext<AuthStateModel>) {
+    getAuthenticatedUser({ getState, patchState }: StateContext<AuthStateModel>) {
+        if (!getState().token) {
+            return of();
+        }
         return this.authenticatedUserGQL.fetch().pipe(
             tap(
                 (result) => patchState({ user: result.data.authenticatedUser }),

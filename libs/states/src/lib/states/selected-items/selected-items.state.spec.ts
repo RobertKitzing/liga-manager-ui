@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideStore, Store } from '@ngxs/store';
 import { SelectedItemsState } from './selected-items.state';
 import { SelectedItemsSelectors } from './selected-items.selectors';
-import { SetSelectedCalendarTeamIds, SetSelectedDarkMode } from './actions';
+import { SetSelectedCalendarTeamIds, SetSelectedDarkMode, SetSelectedTheme } from './actions';
 import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 
 describe('SelectedItemsState', () => {
@@ -27,6 +27,21 @@ describe('SelectedItemsState', () => {
         store.dispatch(new SetSelectedDarkMode(expectedDarkMode));
         const darkMode = store.selectSnapshot(SelectedItemsSelectors.selectedDarkMode);
         expect(darkMode).toStrictEqual(expectedDarkMode);
+    });
+
+    it('it should get theme', () => {
+        const theme = store.selectSnapshot(SelectedItemsSelectors.selectedTheme);
+        expect(theme).toStrictEqual('default');
+    });
+
+    it('it should set theme', () => {
+        const expectedTheme = 'gondi';
+        store.dispatch(new SetSelectedTheme(expectedTheme));
+        let theme = store.selectSnapshot(SelectedItemsSelectors.selectedTheme);
+        expect(theme).toStrictEqual(expectedTheme);
+        store.dispatch(new SetSelectedTheme(undefined));
+        theme = store.selectSnapshot(SelectedItemsSelectors.selectedTheme);
+        expect(theme).toStrictEqual('default');
     });
 
     it('it should set calendarTeamIds', () => {

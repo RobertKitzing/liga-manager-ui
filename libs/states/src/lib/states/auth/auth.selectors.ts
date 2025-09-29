@@ -23,7 +23,7 @@ export class AuthStateSelectors {
                 AuthStateSelectors.properties.user,
             ],
             (isTeamAdmin, user) => {
-                return isTeamAdmin && user?.teams?.find((u) => u?.id === teamId);
+                return isTeamAdmin && !!user?.teams?.find((u) => u?.id === teamId);
             });
     }
 

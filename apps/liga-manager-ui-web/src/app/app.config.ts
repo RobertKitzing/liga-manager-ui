@@ -34,9 +34,10 @@ import { Base64 } from 'js-base64';
 import { provideStore, Store } from '@ngxs/store';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { environment } from '../env/env';
-import { AppSettingsSelectors, AppSettingsState, AuthState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode } from '@liga-manager-ui/states';
 import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
 import { withNgxsFormPlugin } from '@ngxs/form-plugin';
+import { firstValueFrom } from 'rxjs';
 
 function appInitFactory(
     store: Store,
@@ -50,6 +51,7 @@ function appInitFactory(
                     store.dispatch(new SetSelectedDarkMode(appearance));
                 },
             }),
+            firstValueFrom(store.dispatch(GetAuthenticatedUser)),
         ]);
     };
 }
