@@ -14,9 +14,9 @@ import {
 } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '@liga-manager-ui/utils';
-import { AppsettingsService } from './appsettings.service';
-import { AuthenticationService } from './authentication.service';
+import { select, Store } from '@ngxs/store';
 import { LogosService } from '@liga-manager-api/openapi';
+import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/states';
 
 @Injectable({
     providedIn: 'root',
@@ -37,10 +37,7 @@ export class TeamService {
 
     private updateTeamContactGQL = inject(UpdateTeamContactGQL);
 
-    private appsettingsService = inject(AppsettingsService);
-
-    private authenticationService = inject(AuthenticationService);
-
+    private store = inject(Store);
 
     allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allTeams),
@@ -113,11 +110,11 @@ export class TeamService {
         const formData = new FormData();
         formData.append('file', blob);
         return fetch(
-            `${this.appsettingsService.appsettings?.host || ''}/api/logos?teamId=${teamId}`, {
+            `${select(AppSettingsSelectors.host)()}/api/logos?teamId=${teamId}`, {
                 method: 'post',
                 body: formData,
                 headers: {
-                    'authorization': this.authenticationService.accessToken() || '',
+                    'authorization': this.store.selectSnapshot(AuthStateSelectors.properties.token) || '',
                 },
             },
         );

@@ -14,6 +14,8 @@ describe('Public - Select Tournament', () => {
         cy.getBySel('route-tournament').first().click();
 
         cy.getBySel('select-tournament').click();
+        cy.getBySel('select-tournament').click();
+
         cy.get('mat-option').contains(Tournaments[0].name).click();
 
         cy.get('lima-match').should('have.length', 2);
@@ -38,7 +40,8 @@ describe('Public - Select Tournament', () => {
         cy.getBySel('input-time').clear();
         cy.getBySel('input-time').type('09:00');
 
-        cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
+        cy.getBySel('input-kickoff-date').clear().type('07/21/2025', { force: true });
 
         cy.getBySel('button-schedule-match-submit').click();
     });

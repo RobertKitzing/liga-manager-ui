@@ -11,6 +11,7 @@ import {
     MAT_DIALOG_DATA,
     MatDialogTitle,
     MatDialogClose,
+    MatDialogModule,
 } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User, UserRole } from '@liga-manager-api/graphql';
@@ -47,6 +48,7 @@ import { CypressSelectorDirective, TrimDirective } from '@liga-manager-ui/direct
         KeyValuePipe,
         CypressSelectorDirective,
         TrimDirective,
+        MatDialogModule,
     ],
 })
 export class EditUserDialogComponent implements OnInit {

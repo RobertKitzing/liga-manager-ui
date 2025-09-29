@@ -1,20 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, TemplateRef } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Match, MatchDay } from '@liga-manager-api/graphql';
+import { MatchService, NotificationService } from '@liga-manager-ui/services';
+
+export interface EditMatchData { match: Match; matchDay: MatchDay }
 
 @Component({
-    selector: 'lima-edit-match-base',
-    templateUrl: './edit-match-base.component.html',
+    template: '',
     styleUrls: [],
     standalone: true,
-    imports: [TranslateModule, CommonModule, MatDialogModule],
 })
 export class EditMatchBaseComponent {
 
-    @Input() data!: { match: Match; matchDay: MatchDay };
+    data = inject<EditMatchData>(MAT_DIALOG_DATA);
 
-    @Input() actionsTemplate!: TemplateRef<unknown>;
+    protected notificationService = inject(NotificationService);
+
+    protected matchService = inject(MatchService);
 
 }

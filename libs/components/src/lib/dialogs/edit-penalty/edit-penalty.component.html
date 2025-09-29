@@ -20,16 +20,16 @@
 <mat-dialog-actions align="center">
     <div class="flex justify-evenly p-2">
         <button matButton="outlined" mat-dialog-close>
-            {{ "BUTTON.CANCEL" | translate }}
+            <span translate>BUTTON.CANCEL</span>
         </button>
         <button
-            matButton="outlined"
+            matButton="tonal"
             (click)="onSaveClicked()"
             [disabled]="!penaltyFormGroup.valid"
             cySelector="button-save-user"
         >
             <mat-icon>save</mat-icon>
-            {{ "BUTTON.SAVE" | translate }}
+            <span translate>BUTTON.SAVE</span>
         </button>
     </div>
 </mat-dialog-actions>

@@ -1,48 +1,55 @@
 <h1 mat-dialog-title class="mat-sys-primary text-center">
     {{ data.match.home_team.name }}&nbsp;-&nbsp;{{ data.match.guest_team.name }}
 </h1>
-<mat-dialog-content>
-    <div class="grid grid-cols-1 gap-4 p-4">
-        @if (data.match; as match) {
-            <div class="flex justify-center flex-col">
-                <div translate class="text-center">OLD_PITCH</div>
-                @if (!match.pitch) {
-                    <mat-icon class="self-center">location_off</mat-icon>
-                } @if (match.pitch) {
-                    <span class="text-center">{{ match.pitch.label }}</span>
+<mat-dialog-content class="h-full">
+    <mat-card class="w-full h-full p-4">
+        <mat-card-title translate class="text-center">
+            EDIT_MATCH_PITCH_TITLE
+        </mat-card-title>
+        <mat-card-content>
+            <div class="grid grid-cols-1 gap-4 h-full items-center">
+                @if (data.match; as match) {
+                    <div class="flex justify-center flex-col">
+                        <div translate class="text-center">OLD_PITCH</div>
+                        @if (!match.pitch) {
+                            <mat-icon class="self-center">location_off</mat-icon>
+                        } @if (match.pitch) {
+                            <span class="text-center">{{ match.pitch.label }}</span>
+                        }
+                    </div>
+                }
+                <div>
+                    @if(pitchService.allPitches$ | async; as allPitches) {
+                        <lima-pitch-auto-complete [pitches]="allPitches" [formControl]="newMatchPitchFC"></lima-pitch-auto-complete>
+                    }
+                </div>
+                <div class="flex justify-center items-center space-x-4">
+                    <div translate>PITCH_NOT_THERE_HINT</div>
+                    <button matButton="outlined" (click)="createPitch()" cySelector="button-create-pitch">
+                        {{ "BUTTON.CREATE_PITCH" | translate }}
+                    </button>
+                </div>
+                @if (newMatchPitchFC.value) {
+                    <div class="flex justify-center flex-col">
+                        <div translate class="text-center">NEW_PITCH</div>
+                        <span class="text-center">{{ newMatchPitchFC.value.label }}</span>
+                    </div>
                 }
             </div>
-        }
-        <div>
-            @if(pitchService.allPitches$ | async; as allPitches) {
-                <lima-pitch-auto-complete [pitches]="allPitches" [formControl]="newMatchPitchFC"></lima-pitch-auto-complete>
-            }
-        </div>
-        <div class="flex justify-center" translate>PITCH_NOT_THERE_HINT</div>
-        <div class="flex justify-center">
-            <button matButton="outlined" (click)="createPitch()" cySelector="button-create-pitch">
-                {{ "BUTTON.CREATE_PITCH" | translate }}
-            </button>
-        </div>
-        @if (newMatchPitchFC.value) {
-            <div class="flex justify-center flex-col">
-                <div translate class="text-center">NEW_PITCH</div>
-                <span class="text-center">{{ newMatchPitchFC.value.label }}</span>
-            </div>
-        }
-    </div>
+        </mat-card-content>
+    </mat-card>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
     <button matButton="outlined" mat-dialog-close>
-        {{ "BUTTON.CANCEL" | translate }}
+        <span translate>BUTTON.CANCEL</span>
     </button>
     <button
-        matButton="outlined"
+        matButton="tonal"
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!newMatchPitchFC.valid"
     >
         <mat-icon>save</mat-icon>
-        {{ "BUTTON.SAVE" | translate }}
+        <span translate>BUTTON.SAVE</span>
     </button>
 </mat-dialog-actions>

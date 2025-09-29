@@ -1,14 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import {
-    MatDialogRef,
-    MAT_DIALOG_DATA,
-    MatDialogClose,
-} from '@angular/material/dialog';
+import { MatDialogRef, MatDialogClose, MatDialogModule } from '@angular/material/dialog';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
-import { MatchService, NotificationService } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
-import { Match, MatchDay } from '@liga-manager-api/graphql';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -16,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditMatchBaseComponent } from '../edit-match-base';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-cancel-match',
@@ -23,7 +18,6 @@ import { EditMatchBaseComponent } from '../edit-match-base';
     styleUrls: [],
     standalone: true,
     imports: [
-        EditMatchBaseComponent,
         TranslateModule,
         MatFormFieldModule,
         MatInputModule,
@@ -32,25 +26,21 @@ import { EditMatchBaseComponent } from '../edit-match-base';
         MatButtonModule,
         MatDialogClose,
         MatIconModule,
+        MatDialogModule,
+        MatCardModule,
     ],
 })
-export class CancelMatchComponent {
+export class CancelMatchComponent extends EditMatchBaseComponent {
 
     cancelMatchReason = new FormControl('', [
-        Validators.required,
         Validators.maxLength(255),
     ]);
 
-    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
-
-    private notificationService = inject(NotificationService);
-
     private dialogRef = inject(MatDialogRef<CancelMatchComponent>);
-
-    private matchService = inject(MatchService);
 
     constructor(
     ) {
+        super();
         if (this.data.match.cancellation_reason) {
             this.cancelMatchReason.setValue(
                 this.data.match.cancellation_reason,
@@ -60,18 +50,16 @@ export class CancelMatchComponent {
 
     async onSaveClicked() {
         try {
-            if (this.cancelMatchReason.value) {
-                await firstValueFrom(
-                    this.matchService.cancelMatch({
-                        match_id: this.data.match.id,
-                        reason: this.cancelMatchReason.value,
-                    }),
-                );
-                this.notificationService.showSuccessNotification(
-                    marker('CANCEL_MATCH_SUCCESS'),
-                );
-                this.dialogRef.close(true);
-            }
+            await firstValueFrom(
+                this.matchService.cancelMatch({
+                    match_id: this.data.match.id,
+                    reason: this.cancelMatchReason.value || '',
+                }),
+            );
+            this.notificationService.showSuccessNotification(
+                marker('CANCEL_MATCH_SUCCESS'),
+            );
+            this.dialogRef.close(true);
         } catch (_error) {
             console.error(_error);
         }

@@ -2,19 +2,16 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     MatDialogRef,
-    MAT_DIALOG_DATA,
     MatDialogClose,
     MatDialog,
     MatDialogModule,
 } from '@angular/material/dialog';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import {
-    MatchService,
-    NotificationService,
     PitchService,
 } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
-import { Match, MatchDay, Pitch } from '@liga-manager-api/graphql';
+import { Pitch } from '@liga-manager-api/graphql';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -28,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
 import { EditPitchDialogComponent } from '../edit-pitch';
 import { defaultDialogConfig } from '../default-dialog-config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EditMatchBaseComponent } from '../edit-match-base';
 
 @Component({
     selector: 'lima-edit-match-pitch',
@@ -50,7 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         MatDialogModule,
     ],
 })
-export class EditMatchPitchComponent {
+export class EditMatchPitchComponent extends EditMatchBaseComponent {
 
     newMatchPitchFC = new FormControl<Pitch | undefined>(undefined, [ Validators.required ]);
 
@@ -58,13 +56,7 @@ export class EditMatchPitchComponent {
 
     private destroyRef = inject(DestroyRef);
 
-    data = inject<{ match: Match; matchDay: MatchDay }>(MAT_DIALOG_DATA);
-
-    private notificationService = inject(NotificationService);
-
     private dialogRef = inject(MatDialogRef<EditMatchPitchComponent>);
-
-    private matchService = inject(MatchService);
 
     pitchService = inject(PitchService);
 

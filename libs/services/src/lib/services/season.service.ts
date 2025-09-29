@@ -5,7 +5,6 @@ import {
     AddPenaltyMutationVariables,
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
-    AllSeasonsFragment,
     AllSeasonsListGQL,
     CreateMatchesForSeasonGQL,
     CreateMatchesForSeasonMutationVariables,
@@ -25,19 +24,19 @@ import {
     ScheduleAllMatchesForMatchDayMutationVariables,
     ScheduleAllMatchesForSeasonGQL,
     ScheduleAllMatchesForSeasonMutationVariables,
-    Season,
     SeasonByIdGQL,
     SeasonPenaltiesGQL,
     SeasonPenaltiesQueryVariables,
     StartSeasonGQL,
 } from '@liga-manager-api/graphql';
-import { StorageKeys } from '@liga-manager-ui/common';
-import { fromStorage } from '../functions';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SeasonService {
+
+    private apollo = inject(Apollo);
 
     private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
 
@@ -72,12 +71,6 @@ export class SeasonService {
     private addPenaltyGQL = inject(AddPenaltyGQL);
 
     private removePenaltyGQL = inject(RemovePenaltyGQL);
-
-    progressSeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_PROGRESS_SEASON);
-
-    historySeason = fromStorage<AllSeasonsFragment>(StorageKeys.SELECTED_HISTORY_SEASON);
-
-    manageSeason = fromStorage<Season>(StorageKeys.SELECTED_MANAGE_SEASON);
 
     seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
         map((seasons) =>
@@ -139,10 +132,6 @@ export class SeasonService {
 
     refetchSeasonById(id: string) {
         this.seasonByIdGQL.watch({ id }).refetch();
-    }
-
-    seasonCompare(c1: Season, c2: Season) {
-        return c1 && c2 && c1.id === c2.id;
     }
 
     addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
@@ -244,6 +233,26 @@ export class SeasonService {
         return this.rescheduleMatchDayGQL.mutate(
             params,
             {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    rescheduleMatchDays(params: RescheduleMatchDayMutationVariables[], season_id: string) {
+        let mutation = 'mutation RescheduleMatchDays {\n';
+        for (const i in params) {
+            const param = params[i];
+            mutation += `rescheduleMatchDay${i}: rescheduleMatchDay(match_day_id: "${param.match_day_id}", date_period: { from: "${param.date_period.from.toJSON()}", to: "${param.date_period.to.toJSON()}" }) \n`;
+        }
+        mutation += '}';
+        return this.apollo.mutate(
+            {
+                mutation: gql(mutation),
                 refetchQueries: [
                     {
                         query: this.seasonByIdGQL.document,

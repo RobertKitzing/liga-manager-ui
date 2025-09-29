@@ -28,8 +28,7 @@
         <mat-card-actions class="flex justify-center">
             <div>
                 <button
-                    mat-raised-button
-                    color="primary"
+                    matButton="outlined"
                     (click)="updateTeamContact(team.id)"
                     [disabled]="!teamContact.valid"
                 >

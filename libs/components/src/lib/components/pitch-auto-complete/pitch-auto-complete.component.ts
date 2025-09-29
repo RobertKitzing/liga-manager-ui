@@ -35,9 +35,9 @@ import { MatButtonModule } from '@angular/material/button';
         },
     ],
 })
-export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
+export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor {
 
-    fromControl?: FormControl;
+    formControl?: FormControl;
 
     cySelector = input<CySelectors>('input-pitch-auto-complete');
 
@@ -59,18 +59,18 @@ export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
         const ngControl = this.injector.get(NgControl);
 
         if (ngControl instanceof FormControlName) {
-            this.fromControl =  this.injector.get(FormGroupDirective).getControl(ngControl);
+            this.formControl =  this.injector.get(FormGroupDirective).getControl(ngControl);
         } else {
-            this.fromControl = (ngControl as FormControlDirective).form;
+            this.formControl = (ngControl as FormControlDirective).form;
         }
 
-        this.filteredPitches$ = this.fromControl.valueChanges.pipe(
+        this.filteredPitches$ = this.formControl.valueChanges.pipe(
             startWith(''),
             map(
                 (searchTerm) => this.filterPitches(searchTerm) || [],
             ),
         );
-        this.fromControl.setValue(this.fromControl.value);
+        this.formControl.setValue(this.formControl.value);
     }
 
     writeValue(_obj: unknown): void {
@@ -87,10 +87,10 @@ export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
 
     _pitchSelected(option: MatAutocompleteSelectedEvent) {
         if (option.option.value) {
-            this.fromControl?.setValue(option.option.value);
+            this.formControl?.setValue(option.option.value);
             this.pitchSelected.emit(option.option.value);
             if (this.clearAfterSelected()) {
-                this.fromControl?.reset();
+                this.formControl?.reset();
             }
         }
     }

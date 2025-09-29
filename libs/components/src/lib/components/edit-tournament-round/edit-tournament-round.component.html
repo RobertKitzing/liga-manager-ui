@@ -27,7 +27,7 @@
                         <lima-team-auto-complete
                             cySelector="input-team-auto-complete-home"
                             [teams]="teams"
-                            [fromControl]="newMatch.controls.home"
+                            [formControl]="newMatch.controls.home"
                             >
                         </lima-team-auto-complete>
                     }
@@ -40,7 +40,7 @@
                         <lima-team-auto-complete class="mb-2"
                             cySelector="input-team-auto-complete-guest"
                             [teams]="teams"
-                            [fromControl]="newMatch.controls.guest">
+                            [formControl]="newMatch.controls.guest">
                         </lima-team-auto-complete>
                     }
                 </div>
@@ -82,7 +82,7 @@
             </button>
             <button matButton="outlined" (click)="saveRound()" [disabled]="matches().length === 0 && roundDates.valid" cySelector="button-save-tournament-round">
                 <mat-icon>save</mat-icon>
-                <span translate>SAVE_ROUND</span>
+                <span translate>BUTTON.SAVE</span>
             </button>
         </div>
     </mat-card-footer>

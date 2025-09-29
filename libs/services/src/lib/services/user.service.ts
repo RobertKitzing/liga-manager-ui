@@ -1,21 +1,17 @@
 import { inject, Injectable } from '@angular/core';
-import { Base64 } from 'js-base64';
-import { map, of, tap } from 'rxjs';
+import { map } from 'rxjs';
 import {
     AllUsersGQL,
-    AuthenticatedUserGQL,
     CreateUserGQL,
     CreateUserMutationVariables,
-    Match,
     PasswordChangeGQL,
     PasswordResetGQL,
     PasswordResetMutationVariables,
     UpdateUserGQL,
     UpdateUserMutationVariables,
-    User,
 } from '@liga-manager-api/graphql';
-import { AuthenticationService, LoginContext } from './authentication.service';
-import { HttpHeaders } from '@angular/common/http';
+import { Store } from '@ngxs/store';
+import { AuthStateSelectors, LoginContext } from '@liga-manager-ui/states';
 
 @Injectable({
     providedIn: 'root',
@@ -28,13 +24,11 @@ export class UserService {
 
     private updateUserGQL = inject(UpdateUserGQL);
 
-    private authenticatedUserGQL = inject(AuthenticatedUserGQL);
+    private store = inject(Store);
 
     private changePasswordQGL = inject(PasswordChangeGQL);
 
     private resetPasswordQGL = inject(PasswordResetGQL);
-
-    private authenticationService = inject(AuthenticationService);
 
     allUsers$ = this.allUsersGQL.watch().valueChanges.pipe(
         map(({ data }) => data.allUsers),
@@ -80,71 +74,17 @@ export class UserService {
         });
     }
 
-    login(context: LoginContext) {
-        return this.authenticatedUserGQL
-            .fetch(undefined, {
-                fetchPolicy: 'network-only',
-                context: {
-                    loginContext: context,
-                },
-            })
-            .pipe(
-                tap((result) => {
-                    this.authenticationService.user.set(
-                        result.data.authenticatedUser as User,
-                    );
-                }),
-            );
-    }
-
-    loadUser() {
-        if (!this.authenticationService.accessToken()) {
-            return of();
-        }
-        return this.authenticatedUserGQL.fetch().pipe(
-            tap((result) => {
-                this.authenticationService.user.set(
-                    result.data.authenticatedUser as User,
-                );
-            }),
-        );
-    }
-
-    isTeamAdminForTeam(teamId: string) {
-        return (
-            this.authenticationService.isTeamAdmin &&
-            !!this.authenticationService
-                .user()
-                ?.teams?.find((t) => t?.id === teamId)
-        );
-    }
-
-    canEditMatch(match: Match) {
-        return (
-            this.authenticationService.isAdmin ||
-            this.isTeamAdminForTeam(match.home_team.id) ||
-            this.isTeamAdminForTeam(match.guest_team.id)
-        );
-    }
-
     changePassword(newPassword: string, oldPassword: string) {
+        const loginContext: LoginContext = {
+            username: this.store.selectSnapshot(AuthStateSelectors.properties.user)?.email || '',
+            password: oldPassword,
+        };
         return this.changePasswordQGL.mutate(
             {
                 new_password: newPassword,
             },
             {
-                context: {
-                    headers: new HttpHeaders().set(
-                        'Authorization',
-                        `Basic ${Base64.encode(
-                            this.authenticationService
-                                .user()
-                                ?.email.toLowerCase() +
-                                ':' +
-                                oldPassword,
-                        )}`,
-                    ),
-                },
+                context: { loginContext },
             },
         );
     }

@@ -1,48 +1,51 @@
-<lima-edit-match-base
-    [actionsTemplate]="actionsTemplate"
-    [data]="data"
-    class="h-full"
->
-    <div class="grid grid-cols-7 m-3 p-2" [formGroup]="resultFormGroup">
-        <div class="col-span-3">
-            <mat-form-field class="w-full" subscriptSizing="dynamic">
-                <mat-label>{{ data.match.home_team.name }}</mat-label>
-                <input
-                    class="text-center"
-                    matInput
-                    type="number"
-                    formControlName="home_score"
-                    cySelector="input-home-score"
-                />
-            </mat-form-field>
-        </div>
-        <div class="text-center self-center">:</div>
-        <div class="col-span-3">
-            <mat-form-field class="w-full" subscriptSizing="dynamic">
-                <mat-label>{{ data.match.guest_team.name }}</mat-label>
-                <input
-                    class="text-center"
-                    matInput
-                    type="number"
-                    formControlName="guest_score"
-                    cySelector="input-guest-score"
-                />
-            </mat-form-field>
-        </div>
-    </div>
-</lima-edit-match-base>
-<ng-template #actionsTemplate>
+<h1 mat-dialog-title class="mat-sys-primary text-center">
+    {{ data.match.home_team.name }}&nbsp;-&nbsp;{{ data.match.guest_team.name }}
+</h1>
+<mat-dialog-content class="h-full">
+    <mat-card class="w-full h-full p-4">
+        <mat-card-content>
+            <div class="grid grid-cols-7" [formGroup]="resultFormGroup">
+                <div class="col-span-3">
+                    <mat-form-field class="w-full" subscriptSizing="dynamic">
+                        <mat-label>{{ data.match.home_team.name }}</mat-label>
+                        <input
+                            class="text-center"
+                            matInput
+                            type="number"
+                            formControlName="home_score"
+                            cySelector="input-home-score"
+                        />
+                    </mat-form-field>
+                </div>
+                <div class="text-center self-center">:</div>
+                <div class="col-span-3">
+                    <mat-form-field class="w-full" subscriptSizing="dynamic">
+                        <mat-label>{{ data.match.guest_team.name }}</mat-label>
+                        <input
+                            class="text-center"
+                            matInput
+                            type="number"
+                            formControlName="guest_score"
+                            cySelector="input-guest-score"
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
     <button matButton="outlined" mat-dialog-close>
-        {{ "BUTTON.CANCEL" | translate }}
+        <span translate>BUTTON.CANCEL</span>
     </button>
     <button
-        matButton="outlined"
+        matButton="tonal"
         [mat-dialog-close]="true"
         (click)="onSaveClicked()"
         [disabled]="!resultFormGroup.valid"
         cySelector="button-edit-match-result-submit"
     >
         <mat-icon>save</mat-icon>
-        {{ "BUTTON.SAVE" | translate }}
+        <span translate>BUTTON.SAVE</span>
     </button>
-</ng-template>
+</mat-dialog-actions>

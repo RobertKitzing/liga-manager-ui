@@ -1,8 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
-    AppsettingsService,
-    AuthenticationService,
     NotificationService,
     TeamService,
 } from '@liga-manager-ui/services';
@@ -18,6 +16,9 @@ import { TeamLogoComponent } from '@liga-manager-ui/components';
 import { Configuration } from '@liga-manager-api/openapi';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { select, Store } from '@ngxs/store';
+import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/states';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'lima-edit--team-logo',
@@ -31,13 +32,12 @@ import { FilePicker } from '@capawesome/capacitor-file-picker';
         TeamLogoComponent,
         ReactiveFormsModule,
         CypressSelectorDirective,
+        AsyncPipe,
     ],
 })
 export class EditTeamLogoComponent {
 
-    authenticationService = inject(AuthenticationService);
-
-    private appsettingsService = inject(AppsettingsService);
+    private store = inject(Store);
 
     private activatedRoute = inject(ActivatedRoute);
 
@@ -46,6 +46,8 @@ export class EditTeamLogoComponent {
     private notificationService = inject(NotificationService);
 
     private configuration = inject(Configuration);
+
+    isAdmin$ = this.store.select(AuthStateSelectors.isAdmin);
 
     team$ = this.activatedRoute.parent?.paramMap.pipe(
         map((p) => {
@@ -64,8 +66,8 @@ export class EditTeamLogoComponent {
             return;
         }
         try {
-            this.configuration.basePath = this.appsettingsService.appsettings?.host || '';
-            this.configuration.credentials = { bearerAuth: this.authenticationService.accessToken() || '' };
+            this.configuration.basePath = select(AppSettingsSelectors.host)();
+            this.configuration.credentials = { bearerAuth: this.store.selectSnapshot(AuthStateSelectors.properties.token) || '' };
             await this.teamService.uploadTeamLogo(teamId, this.previewImage()!);
             this.reload(teamId);
             this.notificationService.showSuccessNotification(

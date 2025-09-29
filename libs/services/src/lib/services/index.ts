@@ -1,5 +1,3 @@
-export * from './authentication.service';
-export * from './appsettings.service';
 export * from './theme.service';
 export * from './loading-indicator.service';
 export * from './i18n.service';
@@ -14,3 +12,4 @@ export * from './public-holidays.service';
 export * from './calendar.service';
 export * from './storage.service';
 export * from './gesture.service';
+export * from './share.service';

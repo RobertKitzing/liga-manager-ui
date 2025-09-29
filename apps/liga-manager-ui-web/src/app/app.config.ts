@@ -9,13 +9,10 @@ import { routes } from './app.routes';
 import {
     TranslateLoader,
     TranslateModule,
-    TranslatePipe,
     TranslateService,
 } from '@ngx-translate/core';
 import {
-    AppsettingsService,
     I18nService,
-    ThemeService,
     httpLoaderFactory,
     provideStorage,
 } from '@liga-manager-ui/services';
@@ -32,24 +29,27 @@ import { provideApollo } from 'apollo-angular';
 import { apolloFactory } from './apllo.factory';
 import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
-import { firstValueFrom } from 'rxjs';
 import { provideApi } from '@liga-manager-api/openapi';
 import { Base64 } from 'js-base64';
+import { provideStore, Store } from '@ngxs/store';
+import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
+import { environment } from '../env/env';
+import { AppSettingsSelectors, AppSettingsState, AuthState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode } from '@liga-manager-ui/states';
+import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
+import { withNgxsFormPlugin } from '@ngxs/form-plugin';
 
 function appInitFactory(
-    appsettingsService: AppsettingsService,
-    themeService: ThemeService,
+    store: Store,
 ) {
     return () => {
         return Promise.all([
             DarkMode.init({
                 cssClass: 'dark',
-                getter: () => themeService.darkMode(),
+                getter: () => store.selectSnapshot(SelectedItemsSelectors.selectedDarkMode),
                 setter: (appearance) => {
-                    themeService.darkMode.set(appearance);
+                    store.dispatch(new SetSelectedDarkMode(appearance));
                 },
             }),
-            firstValueFrom(appsettingsService.loadAppsettings()),
         ]);
     };
 }
@@ -57,12 +57,10 @@ function appInitFactory(
 export const appConfig: ApplicationConfig = {
     providers: [
         DatePipe,
-        TranslatePipe,
         provideRouter(
             routes,
             withComponentInputBinding(),
         ),
-        provideApollo(apolloFactory),
         importProvidersFrom(
             MatNativeDateModule,
             TranslateModule.forRoot({
@@ -75,8 +73,7 @@ export const appConfig: ApplicationConfig = {
         ),
         provideAppInitializer(() => {
             const initializerFn = appInitFactory(
-                inject(AppsettingsService),
-                inject(ThemeService),
+                inject(Store),
             );
             return initializerFn();
         }),
@@ -96,13 +93,31 @@ export const appConfig: ApplicationConfig = {
         },
         provideStorage(localStorage),
         provideApi({}),
+        provideStore(
+            [
+                AuthState,
+                AppSettingsState,
+                SelectedItemsState,
+            ],
+            withNgxsReduxDevtoolsPlugin({
+                disabled: environment.production,
+            }),
+            withNgxsStoragePlugin({
+                keys: [
+                    SelectedItemsState,
+                    'auth.token',
+                ],
+            }),
+            withNgxsFormPlugin(),
+        ),
+        provideApollo(apolloFactory),
         {
             provide: IMAGE_LOADER,
-            useFactory: (appsettingsService: AppsettingsService) =>
+            useFactory: (store: Store) =>
                 (config: ImageLoaderConfig) => {
-                    const host = appsettingsService.host;
-                    const use_imgproxy = JSON.parse(appsettingsService.appsettings?.use_imgproxy || 'false');
-                    const use_local_assets = JSON.parse(appsettingsService.appsettings?.use_local_assets || 'false');
+                    const host = store.selectSnapshot(AppSettingsSelectors.host);
+                    const use_imgproxy = store.selectSnapshot(AppSettingsSelectors.useImgproxy);
+                    const use_local_assets = store.selectSnapshot(AppSettingsSelectors.useLocalAssets);
                     const src = config.src.replace(/^\/+/g, '');
                     const isTeamLogo = src.startsWith('logos');
                     if (use_local_assets && !isTeamLogo) {
@@ -117,7 +132,7 @@ export const appConfig: ApplicationConfig = {
                     }
                     return `${host}/imgproxy/_/rs:fit:${config.loaderParams!['width']}:${config.loaderParams!['height']}/${Base64.encode(`local:///${src}`)}`;
                 },
-            deps: [ AppsettingsService ],
+            deps: [ Store ],
         },
     ],
 };

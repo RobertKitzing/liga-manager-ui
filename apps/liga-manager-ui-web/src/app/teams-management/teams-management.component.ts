@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { iif, of, tap } from 'rxjs';
-import { AuthenticationService, fromStorage, TeamService } from '@liga-manager-ui/services';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { iif, map, tap } from 'rxjs';
+import { TeamService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import {
     RouterOutlet,
@@ -10,8 +10,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeamAutoCompleteComponent } from '@liga-manager-ui/components';
-import { Team } from '@liga-manager-api/graphql';
-import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
+import { APP_ROUTES } from '@liga-manager-ui/common';
+import { Store } from '@ngxs/store';
+import { AuthStateSelectors, SelectedItemsSelectors, SetSelectedTeam } from '@liga-manager-ui/states';
+import {MatTabsModule} from '@angular/material/tabs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-teams-managment',
@@ -26,46 +29,56 @@ import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
         ReactiveFormsModule,
         TeamAutoCompleteComponent,
         FormsModule,
+        MatTabsModule,
     ],
 })
-export class TeamsManagementComponent {
-
-    private authenticationService = inject(AuthenticationService);
+export class TeamsManagementComponent implements OnInit {
 
     private teamService = inject(TeamService);
 
     private router = inject(Router);
 
-    selectedTeamLS = fromStorage<Team>(StorageKeys.TEAMS_MANAGMENT_SELECTED_TEAM);
+    private store = inject(Store);
 
-    selectedTeamFC = new FormControl(this.selectedTeamLS());
+    private destroyRef = inject(DestroyRef);
 
-    selectedTeam$ = this.selectedTeamFC.valueChanges.pipe(
-        tap((team) => {
-            if (team?.id) {
+    selectedTeamFC = new FormControl();
+
+    selectedTeam$ = this.store.select(SelectedItemsSelectors.selectedTeamId('team-management')).pipe(
+        tap((teamId) => {
+            if (teamId) {
                 this.router.navigateByUrl(
-                    `${APP_ROUTES.TEAMS_MANAGEMENT}/${team.id}`,
+                    `${APP_ROUTES.TEAMS_MANAGEMENT}/${teamId}`,
                 );
             } else {
                 this.router.navigateByUrl(`${APP_ROUTES.TEAMS_MANAGEMENT}`);
             }
-            this.selectedTeamLS.set(team);
         }),
     );
 
     teams$ = iif(
-        () => this.authenticationService.isAdmin,
+        () => this.store.selectSnapshot(AuthStateSelectors.isAdmin),
         this.teamService.allTeams$,
-        of(this.authenticationService.user()?.teams),
+        this.store.select(AuthStateSelectors.properties.user).pipe(map((u) => u?.teams)),
     ).pipe(
         tap((teams) => {
-            if (!this.selectedTeamFC.value) {
-                this.selectedTeamFC.setValue(teams![0]);
+            const selectedTeamId = this.store.selectSnapshot(SelectedItemsSelectors.selectedTeamId('team-management'));
+            if (!selectedTeamId) {
+                this.selectedTeamFC.setValue(teams?.at(0), { emitEvent: false });
                 this.router.navigateByUrl(
-                    `${APP_ROUTES.TEAMS_MANAGEMENT}/${teams![0]?.id}`,
+                    `${APP_ROUTES.TEAMS_MANAGEMENT}/${teams?.at(0)?.id}`,
+                );
+            } else {
+                this.selectedTeamFC.setValue(teams?.find((t) => t?.id === selectedTeamId), { emitEvent: false });
+                this.router.navigateByUrl(
+                    `${APP_ROUTES.TEAMS_MANAGEMENT}/${selectedTeamId}`,
                 );
             }
         }),
     );
+
+    ngOnInit(): void {
+        this.selectedTeamFC.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((team) => team && this.store.dispatch(new SetSelectedTeam('team-management', team?.id)));
+    }
 
 }

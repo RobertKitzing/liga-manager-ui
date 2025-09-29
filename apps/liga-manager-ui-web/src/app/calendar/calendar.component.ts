@@ -8,7 +8,7 @@ import {
 import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
-import { AppsettingsService, CalendarService, fromStorage, I18nService } from '@liga-manager-ui/services';
+import { CalendarService, I18nService, ShareService } from '@liga-manager-ui/services';
 import { firstValueFrom, Subject, switchMap, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -21,8 +21,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
-import { APP_ROUTES, StorageKeys } from '@liga-manager-ui/common';
 import { Share } from '@capacitor/share';
+import { dispatch, select } from '@ngxs/store';
+import { SelectedItemsSelectors, SetSelectedCalendarTeamIds } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-calendar',
@@ -51,11 +52,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     canShare = Share.canShare();
 
-    teamIdsLS = fromStorage<string>(StorageKeys.CALENDAR_TEAM_IDS);
+    teamIdsLS = select(SelectedItemsSelectors.selectedCalendarTeamIds);
+
+    private dispatchTeamIds = dispatch(SetSelectedCalendarTeamIds);
+
+    private shareService = inject(ShareService);
 
     team_ids = input<string>();
-
-    private appsettingsService = inject(AppsettingsService);
 
     private dialog = inject(MatDialog);
 
@@ -65,7 +68,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     eventTrigger = new Subject<CalendarQueryVariables>();
 
-    options = new CalendarOptionsFormGroup(this.teamIdsLS() ? this.teamIdsLS()!.split(',') : undefined);
+    options = new CalendarOptionsFormGroup(this.teamIdsLS());
 
     calendarOptions: CalendarOptions = {
         contentHeight: 'auto',
@@ -140,7 +143,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         ).subscribe(
             () => {
                 this.triggerEvent();
-                this.teamIdsLS.set(this.options.controls.team_ids.value.join(','));
+                this.dispatchTeamIds(this.options.controls.team_ids.value.join(','));
             },
         );
     }
@@ -194,14 +197,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         });
     }
 
-    async share() {
-        let url = `${this.appsettingsService.host}/${APP_ROUTES.CALENDAR}`;
-        if (this.options.controls.team_ids.value) {
-            url += `?team_ids=${this.options.controls.team_ids.value.join(',')}`;
-        }
-        await Share.share({
-            url,
-        });
+    share() {
+        this.shareService.shareCalendar(this.options.controls.team_ids.value.join(','));
     }
 
 }

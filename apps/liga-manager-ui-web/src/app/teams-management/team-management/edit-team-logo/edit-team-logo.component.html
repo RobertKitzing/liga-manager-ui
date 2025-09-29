@@ -51,7 +51,7 @@
             </mat-card>
         }
     </mat-card-content>
-    @if (authenticationService.isAdmin) {
+    @if (isAdmin$ | async) {
         <mat-card-actions class="flex justify-center">
             <div>
                 <button type="button" matButton="outlined" (click)="chooseFile()"
