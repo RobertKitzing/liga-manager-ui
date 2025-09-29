@@ -60,7 +60,6 @@ export const appConfig: ApplicationConfig = {
         provideRouter(
             routes,
             withComponentInputBinding(),
-            // withDebugTracing(),
         ),
         importProvidersFrom(
             MatNativeDateModule,

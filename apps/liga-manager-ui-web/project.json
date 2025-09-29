@@ -79,8 +79,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "src/env/env.ts",
-              "with": "src/env/env.prod.ts"
+              "replace": "apps/liga-manager-ui-web/src/env/env.ts",
+              "with": "apps/liga-manager-ui-web/src/env/env.prod.ts"
             }
           ],
           "budgets": [
