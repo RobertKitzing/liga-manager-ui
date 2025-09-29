@@ -33,6 +33,29 @@ const config: CodegenConfig = {
                 'typescript-apollo-angular',
             ],
         },
+        'libs/api-graphql/src/mock/mock.ts': {
+            config: {
+                content: [
+                    '/* eslint-disable */',
+                    '/* GENERATED DO NOT EDIT */',
+                    'import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator } from \'./generators\'',
+                ],
+                typesFile: 'libs/api-graphql/src/gen/graphql.ts',
+                scalars: {
+                    DateTime: 'apiDateTimeGenerator()',
+                    Date: 'apiDateGenerator()',
+                },
+                fieldGeneration: {
+                    Match: {
+                        cancelled_at: 'dateStringGenerator()',
+                    },
+                },
+            },
+            plugins: [
+                'add',
+                'typescript-mock-data',
+            ],
+        },
     },
 };
 

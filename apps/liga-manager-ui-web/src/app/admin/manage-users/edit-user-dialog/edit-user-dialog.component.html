@@ -27,7 +27,7 @@
             <mat-select formControlName="role" name="userRole">
                 @for (userRole of UserRole | keyvalue; track userRole) {
                 <mat-option [value]="userRole.value">
-                    <span translate>UserRole.{{ userRole.key }}</span>
+                    <span translate>UserRole.{{ userRole.value }}</span>
                 </mat-option>
                 }
             </mat-select>

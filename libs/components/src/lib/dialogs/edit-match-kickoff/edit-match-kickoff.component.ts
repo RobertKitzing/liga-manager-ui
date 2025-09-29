@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MatDialogClose, MatDialogModule } from '@angular/material/dialog';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
-import { AppsettingsService } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -21,6 +20,8 @@ import { format, formatISO, parseISO, set } from 'date-fns';
 import { fromZonedTime } from 'date-fns-tz';
 import { DateTimeComponent } from '../../components';
 import { EditMatchBaseComponent } from '../edit-match-base';
+import { AppSettingsSelectors } from '@liga-manager-ui/states';
+import { select } from '@ngxs/store';
 
 @Component({
     selector: 'lima-edit-match-kickoff',
@@ -45,14 +46,14 @@ import { EditMatchBaseComponent } from '../edit-match-base';
 })
 export class EditMatchKickoffComponent extends EditMatchBaseComponent {
 
+    localTimeZone = select(AppSettingsSelectors.localTimeZone);
+
     newKickoff = new FormGroup({
         time: new FormControl<string>('', [Validators.required]),
         date: new FormControl<Date | null>(null, [Validators.required]),
     });
 
     private dialogRef = inject(MatDialogRef<EditMatchKickoffComponent>);
-
-    appSettingsService = inject(AppsettingsService);
 
     constructor() {
         super();
@@ -77,7 +78,7 @@ export class EditMatchKickoffComponent extends EditMatchBaseComponent {
             await firstValueFrom(
                 this.matchService.scheduleMatch({
                     match_id: this.data.match.id,
-                    kickoff: formatISO(fromZonedTime(kickoff, this.appSettingsService.localTimeZone)),
+                    kickoff: formatISO(fromZonedTime(kickoff, this.localTimeZone() )),
                 }),
             );
             this.notificationService.showSuccessNotification(

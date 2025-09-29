@@ -77,6 +77,12 @@
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "src/env/env.ts",
+              "with": "src/env/env.prod.ts"
+            }
+          ],
           "budgets": [
             {
               "type": "initial",
@@ -134,13 +140,19 @@
         "{workspaceRoot}/libs/pipes/src",
         "{workspaceRoot}/libs/services/src"
       ],
-      "outputs": ["{projectRoot}/src/i18n/en-GB.json"],
+      "outputs": [
+        "{projectRoot}/src/i18n/en-GB.json"
+      ],
       "command": "npx ngx-translate-extract --input {projectRoot}/src libs/components/src libs/pipes/src libs/directives/src libs/services/src --output {projectRoot}/src/i18n/{ar,en-GB,de,fr}.json --clean --sort --format json"
     },
     "i18n-languages": {
       "cache": true,
-      "inputs": ["{projectRoot}/src/i18n"],
-      "outputs": ["{projectRoot}/src/assets/languages.json"],
+      "inputs": [
+        "{projectRoot}/src/i18n"
+      ],
+      "outputs": [
+        "{projectRoot}/src/assets/languages.json"
+      ],
       "command": "node {projectRoot}/get-languages.mjs"
     },
     "app": {

@@ -1,6 +1,7 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
-import { AppsettingsService } from '@liga-manager-ui/services';
+import { AppSettingsSelectors } from '@liga-manager-ui/states';
+import { select } from '@ngxs/store';
 import { parseISO } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 
@@ -16,14 +17,14 @@ export class DateTimeComponent {
 
     currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    appSettingsService = inject(AppsettingsService);
+    localTimeZone = select(AppSettingsSelectors.localTimeZone);
 
     date = input<string | undefined>();
 
     isTimeZoneDifferent(date: string | undefined) {
         const givenDate = parseISO(date!);
-        const localTime = toZonedTime(givenDate, this.appSettingsService.localTimeZone);
-        return this.appSettingsService.localTimeZone !== this.currentTimeZone ? localTime : undefined;
+        const localTime = toZonedTime(givenDate, this.localTimeZone());
+        return this.localTimeZone() !== this.currentTimeZone ? localTime : undefined;
     }
 
 }

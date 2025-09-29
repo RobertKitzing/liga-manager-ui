@@ -1,3 +1,5 @@
+@let tournament = tournament$ | async;
+
 <div class="flex justify-center h-full mat-sys-surface-container-high">
     <div class="w-full lg:w-2/3">
         <div class="mt-2">
@@ -5,7 +7,7 @@
                 <mat-toolbar-row>
                     <div class="w-full">
                         <lima-tournament-chooser
-                            [selectedTournamentFC]="selectedTournamentFC"
+                            [formControl]="selectedTournamentFC"
                             [filterStates]="filterStates"
                         ></lima-tournament-chooser>
                     </div>
@@ -25,11 +27,11 @@
                             <div class="self-center w-full grow max-w-3/4">
                                 <mat-select
                                     class="text-center"
-                                    #matchDaySelect
-                                    [(value)]="selectedRoundIdFC"
+                                    #tournamenRoundSelect
+                                    [formControl]="selectedTournamentRoundIdFC"
                                     placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
                                 >
-                                    @for (round of selectedTournament()?.rounds || [] | sortBy:'number'; track $index) {
+                                    @for (round of tournament?.rounds || [] | sortBy:'number'; track $index) {
                                         <mat-option [value]="round?.id">
                                             @if (round) {
                                                 <div>
@@ -60,7 +62,7 @@
                 }
             </mat-toolbar>
         </div>
-        @if(selectedTournament()?.rounds) {
+        @if(tournament?.rounds) {
             @if(selectedTournamentRound(); as round) {
                 <div>
                     @for (match of round.matches; track match?.id) {

@@ -5,8 +5,9 @@
                 <div class="w-full flex items-center space-x-4 justify-evenly">
                     <div class="w-1/2">
                         <lima-season-chooser
-                            [selectedSeasonFC]="selectedSeasonFC"
+                            [formControl]="selectedSeasonFC"
                             [clearable]="true"
+                            [showState]="true"
                         ></lima-season-chooser>
                     </div>
                     <button

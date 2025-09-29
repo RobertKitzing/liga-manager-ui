@@ -1,3 +1,5 @@
+@let canEditMatch = !readOnly() && (canEditMatch$ | async);
+
 <mat-card class="mt-2 mb-2" appearance="outlined">
     @if (canShare | async) {
         <mat-card-header class="justify-end">
@@ -11,7 +13,7 @@
     }
     <mat-card-content>
         <div class="flex w-full mt-2 mb-2 items-center m-auto flex-col">
-            @if (match) {
+            @if (match()) {
                 <div class="w-full">
                     <div class="grid grid-cols-3 gap-0">
                         <div
@@ -22,7 +24,7 @@
                                 <lima-team-logo
                                     [width]="100"
                                     [height]="100"
-                                    [team]="match.home_team"
+                                    [team]="match().home_team"
                                 ></lima-team-logo>
                             </div>
                         </div>
@@ -30,21 +32,21 @@
                             <div
                                 class="self-center grid grid-cols-3 m-3 p-2 w-full lg:w-2/3 justify-items-center"
                                 cySelector="button-edit-match-result"
-                                (click)="canEditMatch(match) && openEditResultDialog()"
-                                [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
+                                (click)="canEditMatch && openEditResultDialog()"
+                                [ngClass]="{ 'cursor-pointer': canEditMatch }"
                             >
                                 <div>
-                                    {{ match.home_score | number }}
+                                    {{ match().home_score | number }}
                                 </div>
                                 <div>:</div>
                                 <div>
-                                    {{ match.guest_score | number }}
+                                    {{ match().guest_score | number }}
                                 </div>
                             </div>
-                            @if (match.cancelled_at) {
+                            @if (match().cancelled_at) {
                                 <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
                                     <h1>
-                                        ({{ "MATCH_CANCELLED_ON" | translate: { time: (match.cancelled_at | customDate : "short") } }})
+                                        ({{ "MATCH_CANCELLED_ON" | translate: { time: (match().cancelled_at | customDate : "short") } }})
                                     </h1>
                                 </div>
                             }
@@ -57,77 +59,77 @@
                                 <lima-team-logo
                                     [width]="100"
                                     [height]="100"
-                                    [team]="match.guest_team"
+                                    [team]="match().guest_team"
                                 ></lima-team-logo>
                             </div>
                         </div>
                     </div>
                     <div class="grid grid-cols-3 gap-0 pb-3">
-                        <span class="text-center">{{ match.home_team.name }}</span>
+                        <span class="text-center">{{ match().home_team.name }}</span>
                         <div></div>
-                        <span class="text-center">{{ match.guest_team.name }}</span>
+                        <span class="text-center">{{ match().guest_team.name }}</span>
                     </div>
                     @if (!resultOnly()) {
                         <div class="grid grid-cols-2 gap-2">
                             <div
-                                [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
-                                (click)="canEditMatch(match) && openEditKickoffDialog()"
+                                [ngClass]="{ 'cursor-pointer': canEditMatch }"
+                                (click)="canEditMatch && openEditKickoffDialog()"
                                 cySelector="button-schedule-match"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"
                             >
                                 <div
                                     class="flex items-center flex-col space-y-2 text-center p-2"
                                 >
-                                    @if (!match.kickoff) {
+                                    @if (!match().kickoff) {
                                         <mat-icon>access_time</mat-icon>
                                         <span translate>NO_TIME_SET</span>
                                     } @else {
                                         <mat-icon>access_time</mat-icon>
-                                        <lima-date-time [date]="match.kickoff"></lima-date-time>
+                                        <lima-date-time [date]="match().kickoff!"></lima-date-time>
                                     }
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col text-center"
-                                (click)="canEditMatch(match) && openEditPitchDialog()"
-                                [ngClass]="{ 'cursor-pointer': canEditMatch(match) }"
+                                (click)="canEditMatch && openEditPitchDialog()"
+                                [ngClass]="{ 'cursor-pointer': canEditMatch }"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"
                             >
                                 <div
                                     class="flex items-center flex-col space-y-2 text-center p-2"
                                 >
-                                    @if (!match.pitch) {
+                                    @if (!match().pitch) {
                                         <mat-icon>location_off</mat-icon>
                                         <span translate>NO_PTICH_SET</span>
                                     } @else {
                                         <mat-icon>location_on</mat-icon>
                                         <span class="line-clamp-5">
-                                            <lima-pitch [pitch]="match.pitch"></lima-pitch>
+                                            <lima-pitch [pitch]="match().pitch!"></lima-pitch>
                                         </span>
                                     }
                                 </div>
                             </div>
-                            @if (match.cancelled_at) {
+                            @if (match().cancelled_at) {
                                 <div class="col-span-full w-full break-words line-clamp-5 p-2 mat-sys-surface-container-highest mat-sys-corner-medium">
                                     <h1 translate class="text-center">CANCELLATION_REASON</h1>
-                                    <span class="text-center line-clamp-5">{{ match.cancellation_reason }}</span>
+                                    <span class="text-center line-clamp-5">{{ match().cancellation_reason }}</span>
                                 </div>
                             }
                         </div>
-                        @if (authService.user()) {
+                        @if (user$ | async) {
                             <div class="grid grid-cols-3 gap-0">
                                 <div class="flex justify-center p-2">
                                     <button
                                         matButton="outlined"
                                         color="primary"
                                         class="w-min"
-                                        (click)="openViewContactDialog(match.home_team)"
+                                        (click)="openViewContactDialog(match().home_team)"
                                     >
                                         <mat-icon>contacts</mat-icon>
                                         <span translate>BUTTON.CONTACT</span>
                                     </button>
                                 </div>
-                                @if (canEditMatch(match)) {
+                                @if (canEditMatch) {
                                     <div class="flex justify-center p-2">
                                         <button
                                             matButton="outlined"
@@ -164,7 +166,7 @@
                                     <button
                                         matButton="outlined"
                                         color="primary"
-                                        (click)="openViewContactDialog(match.guest_team)"
+                                        (click)="openViewContactDialog(match().guest_team)"
                                     >
                                         <mat-icon>contacts</mat-icon>
                                         <span translate>BUTTON.CONTACT</span>

@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { ConfirmComponent, defaultDialogConfig, SeasonChooserComponent } from '@liga-manager-ui/components';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { map, switchMap, BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { map, switchMap, Observable, firstValueFrom, tap } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
 import { ManageTeamsComponent } from './manage-teams';
@@ -24,6 +24,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { NotificationService, SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
+import { Store } from '@ngxs/store';
+import { SelectedItemsSelectors, SetSelectedSeason } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -47,6 +49,7 @@ import { MatCardModule } from '@angular/material/card';
         ManageScheduleMatchesComponent,
         ManagePenaltiesComponent,
         MatCardModule,
+        ReactiveFormsModule,
     ],
 })
 export class ManageSeasonsComponent implements OnInit {
@@ -61,21 +64,23 @@ export class ManageSeasonsComponent implements OnInit {
 
     private translateService = inject(TranslateService);
 
+    private store = inject(Store);
+
     MANAGE_SEASON_ROUTES = MANAGE_SEASON_ROUTES;
 
     SeasonState = SeasonState;
 
-    selectedSeasonFC = new FormControl(this.seasonService.manageSeason());
-
-    seasonTrigger$ = new BehaviorSubject(this.selectedSeasonFC.value?.id);
+    selectedSeasonFC = new FormControl<string | undefined>('');
 
     season$ =
-        this.seasonTrigger$.pipe(
+        this.store.select(SelectedItemsSelectors.selectedSeasonId('administration')).pipe(
+            tap(
+                (seasonId) => this.selectedSeasonFC.setValue(seasonId, { emitEvent: false }),
+            ),
             switchMap(
                 (id) => this.seasonService.getSeasonById$(id).pipe(
                     map((season) => {
                         if (season) {
-                            this.seasonService.manageSeason.set(season as Season);
                             return {
                                 ...season,
                                 teams: sortArrayBy(season?.teams as Team[], 'name'),
@@ -103,7 +108,7 @@ export class ManageSeasonsComponent implements OnInit {
 
     ngOnInit(): void {
         this.selectedSeasonFC.valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef)).subscribe((season) => this.seasonTrigger$.next(season?.id),
+            takeUntilDestroyed(this.destroyRef)).subscribe((seasonId) => this.store.dispatch( new SetSelectedSeason('administration', seasonId)),
         );
     }
 

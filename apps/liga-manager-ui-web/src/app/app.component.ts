@@ -4,11 +4,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import {
-    AppsettingsService,
-    AuthenticationService,
     I18nService,
     LoadingIndicatorService,
-    StoredLang,
     ThemeService,
 } from '@liga-manager-ui/services';
 import { MatListModule } from '@angular/material/list';
@@ -27,6 +24,8 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { ChangePasswordComponent, LoginComponent, NavLinksComponent } from '@liga-manager-ui/components';
 import { SafeArea, SafeAreaInsets } from 'capacitor-plugin-safe-area';
 import { Device } from '@capacitor/device';
+import { dispatch, select, Store } from '@ngxs/store';
+import { AppSettingsSelectors, AuthStateSelectors, Language, Logout, SelectedItemsSelectors, SetSelectedDarkMode, SetSelectedTheme } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-root',
@@ -60,9 +59,13 @@ export class AppComponent implements OnInit {
 
     loadingIndicatorService = inject(LoadingIndicatorService);
 
-    authService = inject(AuthenticationService);
-
     i18Service = inject(I18nService);
+
+    private store = inject(Store);
+
+    user$ = this.store.select(AuthStateSelectors.properties.user);
+
+    logout = dispatch(Logout);
 
     private dialog = inject(MatDialog);
 
@@ -70,17 +73,17 @@ export class AppComponent implements OnInit {
 
     private router = inject(Router);
 
+    private googleMapsApiKey = select(AppSettingsSelectors.googleMapsApiKey);
+
     DarkModeAppearance = DarkModeAppearance;
 
-    darkModeControl = new FormControl(this.themeService.darkMode() || DarkModeAppearance.system);
+    darkModeControl = new FormControl(this.store.selectSnapshot(SelectedItemsSelectors.selectedDarkMode) || DarkModeAppearance.system);
 
     languageControl = new FormControl(this.i18Service.storedLang());
 
-    themeControl = new FormControl(this.themeService.currentTheme$.getValue());
+    themeControl = new FormControl(this.store.selectSnapshot(SelectedItemsSelectors.selectedTheme));
 
     safeAreaInsets = signal<SafeAreaInsets>({ insets: { top: 0, bottom: 0, left: 0, right: 0 }});
-
-    private appsettingsService = inject(AppsettingsService);
 
     private translateService = inject(TranslateService);
 
@@ -105,7 +108,7 @@ export class AppComponent implements OnInit {
         });
 
         this.darkModeControl.valueChanges.subscribe((dark) => {
-            this.themeService.darkMode.set(dark || DarkModeAppearance.system);
+            this.store.dispatch(new SetSelectedDarkMode(dark));
             DarkMode.update();
         });
 
@@ -122,9 +125,9 @@ export class AppComponent implements OnInit {
 
     loadGoogleMapsScript() {
         const googleMapsJS = document.getElementById('googelmapsscript');
-        if (!googleMapsJS && this.appsettingsService.appsettings?.googleMapsApiKey) {
+        if (!googleMapsJS && this.googleMapsApiKey()) {
             const tag = document.createElement('script');
-            tag.src = `https://maps.googleapis.com/maps/api/js?key=${this.appsettingsService.appsettings.googleMapsApiKey}&libraries=places&loading=async`;
+            tag.src = `https://maps.googleapis.com/maps/api/js?key=${this.googleMapsApiKey()}&libraries=places&loading=async`;
             tag.type = 'text/javascript';
             tag.id = 'googelmapsscript';
             document.body.appendChild(tag);
@@ -140,14 +143,14 @@ export class AppComponent implements OnInit {
     }
 
     changeTheme(theme: string) {
-        this.themeService.currentTheme$.next(theme);
+        this.store.dispatch(new SetSelectedTheme(theme));
     }
 
     changeLang(param: { code: string; direction?: string }) {
         this.i18Service.changeLang(param);
     }
 
-    languageCompare(c1: StoredLang, c2: StoredLang) {
+    languageCompare(c1: Language, c2: Language) {
         return c1 && c2 && c1.code === c2.code;
     }
 

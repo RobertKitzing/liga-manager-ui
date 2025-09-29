@@ -4,9 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { Team } from '@liga-manager-api/graphql';
 import { TeamLogoComponent } from '../team-logo';
 import { Share } from '@capacitor/share';
-import { APP_ROUTES } from '@liga-manager-ui/common';
-import { AppsettingsService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
+import { ShareService } from '@liga-manager-ui/services';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'lima-team-contact',
@@ -16,24 +16,22 @@ import { AsyncPipe } from '@angular/common';
         MatCardModule,
         TeamLogoComponent,
         AsyncPipe,
+        MatButtonModule,
     ],
     templateUrl: './team-contact.component.html',
 })
 export class TeamContactComponent {
 
-    private appsettingsService = inject(AppsettingsService);
-
     canShare = Share.canShare();
+
+    private shareService = inject(ShareService);
 
     @Input() team!: Team;
 
     @Input() showTitle = true;
 
-    async share() {
-        const url = `${this.appsettingsService.host}/${APP_ROUTES.TEAM}?teamid=${this.team.id}`;
-        await Share.share({
-            url,
-        });
+    share() {
+        this.shareService.shareContact(this.team.id);
     }
 
 }

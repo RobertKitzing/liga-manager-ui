@@ -14,7 +14,6 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import {
-    LoginContext,
     NotificationService,
     UserService,
 } from '@liga-manager-ui/services';
@@ -26,6 +25,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
+import { dispatch } from '@ngxs/store';
+import { Login } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-login',
@@ -50,6 +51,8 @@ export class LoginComponent {
 
     private userService = inject(UserService);
 
+    private dispatchLogin = dispatch(Login);
+
     dialogRef = inject(MatDialogRef<LoginComponent>);
 
     private notificationService = inject(NotificationService);
@@ -67,9 +70,7 @@ export class LoginComponent {
 
     async login() {
         try {
-            await firstValueFrom(
-                this.userService.login(this.loginForm.value as LoginContext),
-            );
+            await firstValueFrom(this.dispatchLogin(this.loginForm.value));
             this.dialogRef.close();
         } catch (_error) {
             console.error(_error);

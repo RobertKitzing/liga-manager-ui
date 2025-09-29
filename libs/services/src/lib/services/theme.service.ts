@@ -1,34 +1,31 @@
-import { Injectable, DOCUMENT, inject } from '@angular/core';
-import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
-import { BehaviorSubject } from 'rxjs';
-import { fromStorage } from '../functions';
-import { StorageKeys } from '@liga-manager-ui/common';
+import { Injectable, DOCUMENT, inject, DestroyRef } from '@angular/core';
+import { SelectedItemsSelectors } from '@liga-manager-ui/states';
+import { Store } from '@ngxs/store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ThemeService {
 
-    darkMode = fromStorage<DarkModeAppearance>(StorageKeys.DARK_MODE_APPEARANCE);
-
-    private currentTheme = fromStorage<string>(StorageKeys.THEME);
-
     themes = ['default', 'gondi', 'werder'];
-
-    currentTheme$ = new BehaviorSubject(this.currentTheme() || 'default');
 
     private document = inject(DOCUMENT);
 
+    private store = inject(Store);
+
+    private destroyRef = inject(DestroyRef);
+
     constructor() {
-        this.currentTheme$.subscribe((theme) => {
+        this.store.select(SelectedItemsSelectors.selectedTheme).pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe((theme) => {
             this.loadStyle(theme);
         });
     }
 
-    private loadStyle(styleName: string) {
-        this.currentTheme.set(styleName);
+    loadStyle(styleName: string) {
         const head = this.document.getElementsByTagName('head')[0];
-
         const themeLink = this.document.getElementById(
             'client-theme',
         ) as HTMLLinkElement;

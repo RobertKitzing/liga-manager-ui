@@ -35,7 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
         },
     ],
 })
-export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor{
+export class PitchAutoCompleteComponent implements OnInit, ControlValueAccessor {
 
     fromControl?: FormControl;
 

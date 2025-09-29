@@ -10,7 +10,7 @@
             <mat-label translate>PITCH_LABEL</mat-label>
             <input matInput formControlName="label" cySelector="input-pitch-name"/>
         </mat-form-field>
-        @if (appsettingsService.appsettings?.googleMapsApiKey) {
+        @if (googleMapsApiKey()) {
             <div>
                 <span translate>ADDRESS_SEARCH</span>
                 <div #adressAutoComplete></div>

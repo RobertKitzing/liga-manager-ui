@@ -6,7 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NotificationService, TeamService, TournamentService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import { ApiDate, Match, MatchDay, Maybe, Team } from '@liga-manager-api/graphql';
-import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatchComponent } from '../match';
 import { TeamAutoCompleteComponent } from '../team-auto-complete/team-auto-complete.component';
@@ -38,6 +38,8 @@ function typeofTeamValidator(): ValidatorFn {
         CypressSelectorDirective,
         MatDatepickerModule,
         MatInputModule,
+        ReactiveFormsModule,
+        FormsModule,
     ],
     templateUrl: './edit-tournament-round.component.html',
 })

@@ -17,7 +17,7 @@
                                         <lima-pitch-auto-complete [pitches]="allPitches" formControlName="pitch"></lima-pitch-auto-complete>
                                     }
                                     <mat-form-field class="w-full" subscriptSizing="dynamic">
-                                        <mat-label>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettingsService.localTimeZone} }}</mat-label>
+                                        <mat-label>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: localTimeZone() } }}</mat-label>
                                         <input
                                             class="text-center"
                                             matInput

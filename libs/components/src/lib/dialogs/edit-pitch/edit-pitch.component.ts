@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
-import { AppsettingsService, PitchService } from '@liga-manager-ui/services';
+import { PitchService } from '@liga-manager-ui/services';
 import { v4 as uuidv4 } from 'uuid';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,8 @@ import { MatIcon } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
 import { PitchComponent } from '../../components';
 import { Pitch } from '@liga-manager-api/graphql';
+import { select } from '@ngxs/store';
+import { AppSettingsSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-edit-pitch',
@@ -36,7 +38,7 @@ export class EditPitchDialogComponent implements OnInit {
 
     private pitchService = inject(PitchService);
 
-    appsettingsService = inject(AppsettingsService);
+    googleMapsApiKey = select(AppSettingsSelectors.googleMapsApiKey);
 
     data = inject<{ body: string }>(MAT_DIALOG_DATA);
 

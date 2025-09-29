@@ -19,7 +19,7 @@
                     <h1 translate class="text-center text-xl">NEW_KICKOFF</h1>
                     <div class="mb-4">
                         <mat-form-field [formGroup]="newKickoff" class="w-full">
-                            <mat-label translate>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: appSettingsService.localTimeZone} }}</mat-label>
+                            <mat-label translate>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: this.localTimeZone() } }}</mat-label>
                             <input
                                 class="text-center"
                                 matInput

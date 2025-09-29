@@ -7,3 +7,4 @@ setupZoneTestEnv({
 });
 
 jest.mock('fuzzysearch-ts', () => ({ fuzzysearch: jest.fn() }));
+jest.spyOn(global.console, 'warn').mockImplementation(() => jest.fn());

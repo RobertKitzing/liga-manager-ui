@@ -28,6 +28,7 @@
             "@liga-manager-ui/directives": ["libs/directives/src/index.ts"],
             "@liga-manager-ui/pipes": ["libs/pipes/src/index.ts"],
             "@liga-manager-ui/services": ["libs/services/src/index.ts"],
+            "@liga-manager-ui/states": ["libs/states/src/index.ts"],
             "@liga-manager-ui/utils": ["libs/utils/src/index.ts"]
         },
         "rootDir": "."

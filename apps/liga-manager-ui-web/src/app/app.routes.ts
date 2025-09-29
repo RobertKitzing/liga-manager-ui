@@ -1,59 +1,57 @@
 import { Routes } from '@angular/router';
 import { AdminRoutes } from './admin';
 import { inject } from '@angular/core';
-import { TeamsManagementRoutes } from './teams-management';
-import { userResolver } from './user.resolver';
-import { map } from 'rxjs';
-import { AuthenticationService, UserService } from '@liga-manager-ui/services';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { matchResolver } from './match.resolver';
 import { AppComponent } from './app.component';
 import { teamResolver } from './team.resolver';
 import { MatchComponent, TeamContactComponent } from '@liga-manager-ui/components';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { Store } from '@ngxs/store';
+import { AuthStateSelectors, GetAuthenticatedUser } from '@liga-manager-ui/states';
+import { switchMap } from 'rxjs';
+import { TeamsManagementRoutes } from './teams-management';
 
 marker('NAVIGATION.MATCH');
 marker('NAVIGATION.TEAM');
 
 export const isLoggedInGuard = () => {
-    return inject(UserService).loadUser();
+    const store = inject(Store);
+    return store.dispatch(GetAuthenticatedUser).pipe(
+        switchMap(
+            () => store.select(AuthStateSelectors.properties.user),
+        ),
+    );
 };
 
 export const teamAdminGuard = () => {
-    const authenticationService = inject(AuthenticationService);
-    return inject(UserService)
-        .loadUser()
-        .pipe(
-            map(() => {
-                return (
-                    authenticationService.isTeamAdmin ||
-                    authenticationService.isAdmin
-                );
-            }),
-        );
+    const store = inject(Store);
+    return store.dispatch(GetAuthenticatedUser).pipe(
+        switchMap(
+            () => store.select(AuthStateSelectors.isTeamAdmin),
+        ),
+    );
 };
 
 export const adminGuard = () => {
-    const authenticationService = inject(AuthenticationService);
-    return inject(UserService)
-        .loadUser()
-        .pipe(
-            map(() => {
-                return authenticationService.isAdmin;
-            }),
-        );
+    const store = inject(Store);
+    return store.dispatch(GetAuthenticatedUser).pipe(
+        switchMap(
+            () => store.select(AuthStateSelectors.isAdmin),
+        ),
+    );
 };
 
 export const routes: Routes = [
     {
         path: '',
         component: AppComponent,
-        resolve: {
-            user: userResolver,
-        },
         children: [
             {
                 path: APP_ROUTES.TABLE,
+                data: {
+                    viewContext: 'progress',
+                },
                 loadComponent: () => import('./table').then((m) => m.TableComponent),
             },
             {
@@ -69,11 +67,17 @@ export const routes: Routes = [
             },
             {
                 path: APP_ROUTES.SCHEDULE,
+                data: {
+                    viewContext: 'progress',
+                },
                 loadComponent: () =>
                     import('./schedule').then((m) => m.ScheduleComponent),
             },
             {
                 path: APP_ROUTES.TOURNAMENT,
+                data: {
+                    viewContext: 'progress',
+                },
                 loadComponent: () =>
                     import('./tournament').then((m) => m.TournamentComponent),
             },
@@ -99,16 +103,25 @@ export const routes: Routes = [
                 children: [
                     {
                         path: APP_ROUTES.TABLE,
+                        data: {
+                            viewContext: 'history',
+                        },
                         loadComponent: () =>
                             import('./table').then((m) => m.TableComponent),
                     },
                     {
                         path: APP_ROUTES.SCHEDULE,
+                        data: {
+                            viewContext: 'history',
+                        },
                         loadComponent: () =>
                             import('./schedule').then((m) => m.ScheduleComponent),
                     },
                     {
                         path: APP_ROUTES.TOURNAMENT,
+                        data: {
+                            viewContext: 'history',
+                        },
                         loadComponent: () =>
                             import('./tournament').then((m) => m.TournamentComponent),
                     },

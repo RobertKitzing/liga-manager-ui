@@ -2,14 +2,9 @@ import { registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, DOCUMENT, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { fromStorage } from '../functions';
-import { StorageKeys } from '@liga-manager-ui/common';
 import { PruningTranslationLoader } from './pruning-translation-loader';
-
-export interface StoredLang {
-    code: string;
-    direction?: string;
-}
+import { dispatch, select } from '@ngxs/store';
+import { Language, SelectedItemsSelectors, SetSelectedLanguage } from '@liga-manager-ui/states';
 
 export function httpLoaderFactory() {
     return new PruningTranslationLoader('/i18n/', '.json');
@@ -26,7 +21,9 @@ export class I18nService {
 
     private httpClient = inject(HttpClient);
 
-    storedLang = fromStorage<StoredLang>(StorageKeys.LANGUAGE);
+    private dispatchSelectedLanguage = dispatch(SetSelectedLanguage);
+
+    storedLang = select(SelectedItemsSelectors.selectedLanguage);
 
     availableLang$ = this.httpClient.get<
         { code: string; direction: string; name: string; nativeName: string }[]
@@ -42,18 +39,18 @@ export class I18nService {
             if (code === 'en') {
                 code = 'en-GB';
             }
-            this.storedLang.set({ code });
+            this.dispatchSelectedLanguage({ code });
         }
-        this.changeLang(this.storedLang()!);
+        this.changeLang(this.storedLang());
     }
 
-    get currentLang(): string {
+    get currentLang() {
         return this.translateService.currentLang;
     }
 
-    changeLang({ code, direction }: StoredLang) {
+    changeLang({ code, direction }: Language) {
         this.setTextDir(direction);
-        this.storedLang.set({ code, direction });
+        this.dispatchSelectedLanguage({ code, direction });
         import(/* @vite-ignore */ `/assets/locales/${code}.js`).then((lang) => {
             registerLocaleData(lang.default);
             this.translateService.use(code);

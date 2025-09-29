@@ -38,17 +38,11 @@
                 "{workspaceRoot}/tsconfig.json",
                 "{workspaceRoot}/tsconfig.spec.json"
             ],
-            "dependsOn": [
-                "api-openapi:gen:api"
-            ],
+            "dependsOn": ["api-openapi:gen:api"],
             "options": {
                 "passWithNoTests": true,
                 "codeCoverage": true,
-                "coverageReporters": [
-                    "json",
-                    "json-summary",
-                    "html"
-                ]
+                "coverageReporters": ["json", "json-summary", "html"]
             },
             "cache": true,
             "configurations": {

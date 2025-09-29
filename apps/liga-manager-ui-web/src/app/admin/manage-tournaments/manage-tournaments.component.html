@@ -4,7 +4,8 @@
             <div class="w-full flex items-center space-x-4 justify-evenly">
                 <div class="w-1/2">
                     <lima-tournament-chooser
-                        [selectedTournamentFC]="selectedTournamentFC"
+                        [formControl]="selectedTournamentFC"
+                        [showState]="true"
                     ></lima-tournament-chooser>
                 </div>
                 <button

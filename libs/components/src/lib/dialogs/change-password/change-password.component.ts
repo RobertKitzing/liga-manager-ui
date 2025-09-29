@@ -7,8 +7,10 @@ import { MatCardModule } from '@angular/material/card';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthenticationService, NotificationService, UserService } from '@liga-manager-ui/services';
+import { NotificationService, UserService } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { Logout } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-change-password',
@@ -31,7 +33,7 @@ export class ChangePasswordComponent {
 
     private userService = inject(UserService);
 
-    private authService = inject(AuthenticationService);
+    private store = inject(Store);
 
     private notificationService = inject(NotificationService);
 
@@ -49,7 +51,7 @@ export class ChangePasswordComponent {
     async changePassword() {
         try {
             await firstValueFrom(this.userService.changePassword(this.passwordForm.value.new || '', this.passwordForm.value.old || ''));
-            this.authService.logout();
+            this.store.dispatch(Logout);
             this.notificationService.showSuccessNotification(this.translateService.instant('PASSWORD_CHANGED_SUCCESS'));
             this.dialogRef.close();
         } catch (error) {

@@ -7,9 +7,6 @@ import {
     ServerError,
 } from '@apollo/client/core';
 import {
-    AppsettingsService,
-    AuthenticationService,
-    LoginContext,
     NotificationService,
 } from '@liga-manager-ui/services';
 import { onError } from '@apollo/client/link/error';
@@ -18,16 +15,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { setContext } from '@apollo/client/link/context';
 import { Base64 } from 'js-base64';
 import { MaintenanceModeComponent } from '@liga-manager-ui/components';
+import { Store } from '@ngxs/store';
+import { AppSettingsSelectors, AuthStateSelectors, LoginContext, Logout, SetToken } from '@liga-manager-ui/states';
 
 export function apolloFactory() {
 
-    const appsettingsService = inject(AppsettingsService);
-    const authenticationService = inject(AuthenticationService);
     const notificationService = inject(NotificationService);
     const dialog = inject(MatDialog);
+    const store = inject(Store);
 
-    const uri = `${appsettingsService.appsettings?.host || ''}/api/graphql`;
-    const link = new HttpLink({ uri });
+    const link = new HttpLink({
+        uri: () => `${store.selectSnapshot(AppSettingsSelectors.host)}/api/graphql`,
+    });
 
     const afterwareLink = new ApolloLink((operation, forward) => {
         return forward(operation).map((response) => {
@@ -37,7 +36,7 @@ export function apolloFactory() {
             if (headers) {
                 const token = headers.get('x-token') as string;
                 if (token) {
-                    authenticationService.accessToken.set(token);
+                    store.dispatch(new SetToken(token));
                 }
             }
             return response;
@@ -55,7 +54,7 @@ export function apolloFactory() {
                 switch ((networkError as ServerError).statusCode) {
                     case 401:
                         if (operation.operationName !== 'PasswordChange') {
-                            authenticationService.logout();
+                            store.dispatch(Logout);
                         } else {
                             notificationService.showErrorNotification(marker('ERROR.OLD_PASSWORD_WRONG'));
                         }
@@ -92,7 +91,7 @@ export function apolloFactory() {
         if (lc) {
             const loginContext = lc as LoginContext;
             const base64 = Base64.encode(
-                `${loginContext.username.toLowerCase()}:${
+                `${loginContext.username?.toLowerCase()}:${
                     loginContext.password
                 }`,
             );
@@ -100,7 +99,7 @@ export function apolloFactory() {
                 headers: { Authorization: `Basic ${base64}` },
             };
         }
-        const token = authenticationService.accessToken();
+        const token = store.selectSnapshot(AuthStateSelectors.properties.token);
         if (token) {
             return {
                 headers: { Authorization: `Bearer ${token}` },

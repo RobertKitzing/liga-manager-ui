@@ -1,7 +1,6 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { firstValueFrom, fromEvent, of, startWith, Subject, switchMap, tap } from 'rxjs';
-import { AuthenticationService, fromStorage, GestureService, SeasonService } from '@liga-manager-ui/services';
+import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
+import { firstValueFrom, of, Subject, switchMap, tap } from 'rxjs';
+import { GestureService, SeasonService } from '@liga-manager-ui/services';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatOptionModule } from '@angular/material/core';
@@ -14,12 +13,13 @@ import {
     MatchComponent,
     SeasonChooserComponent,
 } from '@liga-manager-ui/components';
-import { AllSeasonsFragment, Match, MatchDay, SeasonState } from '@liga-manager-api/graphql';
-import { FormControl } from '@angular/forms';
-import { StorageKeys } from '@liga-manager-ui/common';
+import { Match, MatchDay, SeasonState } from '@liga-manager-api/graphql';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
+import { dispatch, Store } from '@ngxs/store';
+import { SetSelectedMatchDay, SetSelectedSeason, SelectedContextTypes, SetSelectedTeam, SelectedItemsSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-schedule',
@@ -39,9 +39,18 @@ import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
         MatCardModule,
         SortByPipe,
         NgxPullToRefreshComponent,
+        ReactiveFormsModule,
     ],
 })
 export class ScheduleComponent implements OnInit {
+
+    private dispatchSetSelectedMatchDay = dispatch(SetSelectedMatchDay);
+
+    private dispatchSetSelectedSeason = dispatch(SetSelectedSeason);
+
+    private dispatchSetSelectedTeam = dispatch(SetSelectedTeam);
+
+    viewContext = input<SelectedContextTypes>('progress');
 
     animateEnter = signal<'slide-in-ltr' | 'slide-in-rtl' | undefined>(undefined);
 
@@ -53,39 +62,43 @@ export class ScheduleComponent implements OnInit {
 
     private seasonService = inject(SeasonService);
 
-    private router = inject(Router);
+    private store = inject(Store);
 
-    authService = inject(AuthenticationService);
+    selectedMatchDayFC = new FormControl();
 
-    selectedMatchDay = fromStorage<MatchDay>(StorageKeys.SCHEDULE_SELECTED_MATCH_DAY);
+    selectedTeamIdFC = new FormControl('0');
 
-    selectedTeamId = fromStorage<string>(StorageKeys.SCHEDULE_SELECTED_TEAM_ID, '0');
+    selectedSeasonFC = new FormControl<string>('');
 
-    selectedSeasonFC = new FormControl(this.selectedSeason);
-
-    season$ = this.selectedSeasonFC.valueChanges.pipe(
-        startWith(this.selectedSeason),
-        tap((season) => {
-            if (season) {
-                this.seasonService.refetchSeasonById(season.id);
-                this.selectedSeason = season;
-            }
-        }),
-        switchMap((selectedSeason) =>
-            selectedSeason
-                ? this.seasonService.getSeasonById$(selectedSeason.id).pipe(
-                    tap(
-                        (season) => {
-                            if (!season) {
-                                return;
-                            }
-                            if (!this.selectedMatchDay() || !season?.match_days?.find((t) => t?.id === this.selectedMatchDay()?.id )) {
-                                this.selectedMatchDay.set(season!.match_days![0]);
-                            }
-                        },
-                    ),
-                )
-                : of(null),
+    season$ = toObservable(this.viewContext).pipe(
+        switchMap(
+            (viewContext) => this.store.select(SelectedItemsSelectors.selectedSeasonId(viewContext)).pipe(
+                tap((selectedSeasonId) => {
+                    if (selectedSeasonId) {
+                        this.seasonService.refetchRankingById(selectedSeasonId);
+                        this.selectedSeasonFC.setValue(selectedSeasonId, { emitEvent: false });
+                    }
+                }),
+                switchMap((selectedSeasonId) =>
+                    selectedSeasonId
+                        ? this.seasonService.getSeasonById$(selectedSeasonId).pipe(
+                            tap(
+                                (season) => {
+                                    if (!season) {
+                                        return;
+                                    }
+                                    const stateMatchDay = this.store.selectSnapshot(SelectedItemsSelectors.selectedMatchDayId(this.viewContext()));
+                                    let selectedMatchDay = season!.match_days![0]?.id;
+                                    if (stateMatchDay && season.match_days?.find((md) => md?.id === stateMatchDay)) {
+                                        selectedMatchDay = stateMatchDay;
+                                    }
+                                    this.selectedMatchDayFC.setValue(selectedMatchDay);
+                                },
+                            ),
+                        )
+                        : of(null),
+                ),
+            ),
         ),
     );
 
@@ -103,7 +116,29 @@ export class ScheduleComponent implements OnInit {
                 }
             },
         );
-        fromEvent(document, 'scroll').subscribe(console.log);
+        this.selectedSeasonFC.valueChanges.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            (selectedSeasonId) => {
+                this.dispatchSetSelectedSeason(this.viewContext(), selectedSeasonId);
+            },
+        );
+        this.selectedMatchDayFC.valueChanges.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            (selectedMatchDayId) => {
+                this.dispatchSetSelectedMatchDay(this.viewContext(), selectedMatchDayId);
+            },
+        );
+        this.selectedTeamIdFC.valueChanges.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            (selectedTeamId) => {
+                this.dispatchSetSelectedTeam(this.viewContext(), selectedTeamId);
+            },
+        );
+        const teamId = this.store.selectSnapshot(SelectedItemsSelectors.selectedTeamId(this.viewContext()));
+        this.selectedTeamIdFC.setValue(teamId || '0');
     }
 
     async refresh(event?: Subject<void>) {
@@ -112,41 +147,25 @@ export class ScheduleComponent implements OnInit {
     }
 
     get filterSeasonStates() {
-        if (this.router.url.includes('history')) {
+        if (this.viewContext() === 'history') {
             return [SeasonState.Ended];
         } else {
             return [SeasonState.Progress];
         }
     }
 
-    get selectedSeason() {
-        if (this.router.url.includes('history')) {
-            return this.seasonService.historySeason();
-        } else {
-            return this.seasonService.progressSeason();
-        }
-    }
-
-    set selectedSeason(season: AllSeasonsFragment | null) {
-        if (this.router.url.includes('history')) {
-            this.seasonService.historySeason.set(season);
-        } else {
-            this.seasonService.progressSeason.set(season);
-        }
-    }
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     findMatchDay(matchDays: any[]): MatchDay {
-        return matchDays.find((x) => x.id === this.selectedMatchDay()?.id );
+        return matchDays.find((x) => x.id === this.selectedMatchDayFC.value );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filterMatches(matches: any[]): Match[] {
-        return this.selectedTeamId() !== '0'
+        return this.selectedTeamIdFC.value !== '0'
             ? matches.filter(
                 (x) =>
-                    x.guest_team.id === this.selectedTeamId() ||
-                      x.home_team.id === this.selectedTeamId(),
+                    x.guest_team.id === this.selectedTeamIdFC.value ||
+                      x.home_team.id === this.selectedTeamIdFC.value,
             )
             : matches;
     }
@@ -162,12 +181,12 @@ export class ScheduleComponent implements OnInit {
 
         const matchDays = this.season()?.match_days || [];
 
-        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDay()?.id ) || 0;
+        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayFC.value ) || 0;
 
         const next = matchDays[currentIndex + 1];
 
         if(next) {
-            this.selectedMatchDay.set(next);
+            this.selectedMatchDayFC.setValue(next.id);
         }
     }
 
@@ -182,13 +201,17 @@ export class ScheduleComponent implements OnInit {
 
         const matchDays = this.season()?.match_days || [];
 
-        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDay()?.id) || 0;
+        const currentIndex = matchDays.findIndex((md) => md?.id === this.selectedMatchDayFC.value) || 0;
 
         const next = matchDays[currentIndex - 1];
 
         if(next) {
-            this.selectedMatchDay.set(next);
+            this.selectedMatchDayFC.setValue(next.id);
         }
+    }
+
+    setSelectedMatchDay(matchDayId?: string) {
+        this.dispatchSetSelectedMatchDay(this.viewContext(), matchDayId);
     }
 
     compareMatchDay(a: MatchDay, b: MatchDay) {

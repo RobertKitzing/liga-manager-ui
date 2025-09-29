@@ -3,18 +3,18 @@
     <input type="text"
         [cySelector]="cySelector()"
         matInput
-        [formControl]="fromControl()"
+        [formControl]="teamFormControl"
         [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete"
         (optionSelected)="_teamSelected($event)"
         [displayWith]="displayWith"
         >
-        @for (option of filteredTeams$ | async; track option?.id) {
-            <mat-option [value]="option">{{option?.name}}</mat-option>
+        @for (team of filteredTeams$ | async; track team?.id) {
+            <mat-option [value]="team">{{team?.name}}</mat-option>
         }
     </mat-autocomplete>
-    @if (fromControl().value) {
-        <button matSuffix matIconButton aria-label="Clear" (click)="fromControl().reset()" class="mr-4">
+    @if (teamFormControl.value) {
+        <button matSuffix matIconButton aria-label="Clear" (click)="teamFormControl.reset()" class="mr-4">
             <mat-icon>close</mat-icon>
         </button>
     }
