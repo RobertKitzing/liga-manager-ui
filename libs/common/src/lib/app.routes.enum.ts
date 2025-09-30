@@ -12,5 +12,7 @@ export enum APP_ROUTES {
     HALL_OF_FAME = 'hall_of_fame',
     MATCH = 'match',
     TEAM = 'team',
+    EDIT_PROFILE = 'edit-profile',
+    REGISTER = 'register'
 
 }

@@ -1,6 +1,7 @@
 volumes:
   team-logos:
   assets:
+  mysql-data:
 
 services:
   liga-manager-ui:
@@ -22,8 +23,17 @@ services:
   api:
     container_name: lima-api
     image: mklocke/liga-manager-api:${API_TAG}
-    env_file:
-      - ./env/api.env
+    environment:
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=123456
+      - APP_BASE_URL=http://localhost:4200
+      - DB_URL=pdo-mysql://lima:dev@mariadb/lima
+      - EMAIL_SENDER_ADDRESS=noreply@example.com
+      - EMAIL_SENDER_NAME=Wilde Liga Bremen
+      - EMAIL_URL=smtp://lima:foobar@maildev:1025?verify_peer=0
+      - JWT_SECRET=0123456789abcdef
+      - LOG_LEVEL=debug
+      - REDIS_HOST=redis
     volumes:
       - team-logos:/var/www/logos
     depends_on:
@@ -34,6 +44,31 @@ services:
     image: redis:alpine
 
   mariadb:
-    image: mariadb:10.11
-    env_file:
-      - ./env/api.env
+    image: mariadb:11.4
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MARIADB_DATABASE=lima
+      - MARIADB_USER=lima
+      - MARIADB_PASSWORD=dev
+      - MARIADB_ROOT_PASSWORD=dev
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s
+
+  maildev:
+    image: maildev/maildev:latest
+    ports:
+      - "1080:1080"
+    environment:
+      - MAILDEV_INCOMING_USER=lima
+      - MAILDEV_INCOMING_PASS=foobar
+    healthcheck:
+      test: [ "CMD", "wget", "-O", '-', 'http://127.0.0.1:1080/healthz' ]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s

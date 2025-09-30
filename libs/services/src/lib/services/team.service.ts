@@ -14,7 +14,7 @@ import {
 } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { sortArrayBy } from '@liga-manager-ui/utils';
-import { select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { LogosService } from '@liga-manager-api/openapi';
 import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/states';
 
@@ -110,7 +110,7 @@ export class TeamService {
         const formData = new FormData();
         formData.append('file', blob);
         return fetch(
-            `${select(AppSettingsSelectors.host)()}/api/logos?teamId=${teamId}`, {
+            `${this.store.selectSnapshot(AppSettingsSelectors.host)}/api/logos?teamId=${teamId}`, {
                 method: 'post',
                 body: formData,
                 headers: {

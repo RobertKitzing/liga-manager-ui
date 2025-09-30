@@ -12,7 +12,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { APP_ROUTES } from '@liga-manager-ui/common';
 import { defaultDialogConfig } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
@@ -79,12 +78,21 @@ export class ManageUsersComponent {
         });
     }
 
+    deleteUser(user?: User) {
+        // TODO: Confirm Dialog
+        firstValueFrom(this.userService.deleteUser({ user_id: user?.id || '' }));
+    }
+
     createUser() {
         this.editUser();
     }
 
-    async sendPasswordMail(email: string) {
-        await firstValueFrom(this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD}));
+    sendInviteMail(user_id: string) {
+        firstValueFrom(this.userService.sendInviteMail(user_id));
+    }
+
+    sendPasswordMail(user_id: string) {
+        firstValueFrom(this.userService.sendPasswordMail(user_id));
     }
 
 }

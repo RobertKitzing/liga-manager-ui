@@ -39,3 +39,7 @@ mutation UpdateUser(
 mutation DeleteUser($user_id: String!) {
     deleteUser(user_id: $user_id)
 }
+
+mutation InviteUser($user_id: String!, $target_path: String!) {
+    sendInviteMail(user_id: $user_id, target_path: $target_path)
+}

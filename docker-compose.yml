@@ -1,6 +1,7 @@
 volumes:
   team-logos:
   assets:
+  mysql-data:
 
 services:
   liga-manager-ui:
@@ -20,18 +21,10 @@ services:
       - api
 
   imgproxy:
-    #image: ghcr.io/imgproxy/imgproxy:latest
+    #image: robertkitzing/liga-manager-image:next
     build:
       context: .
       dockerfile: Dockerfile.imgproxy
-    # ports:
-    #   - "8080:8080"
-    # environment:
-    #   IMGPROXY_USE_ETAG: false
-    #   IMGPROXY_ALLOWED_SOURCES: local://
-    #   IMGPROXY_LOCAL_FILESYSTEM_ROOT: /lima
-    #   IMGPROXY_ENABLE_AVIF_DETECTION: true
-    #   IMGPROXY_ENABLE_WEBP_DETECTION: true
     depends_on:
       - api
       - liga-manager-ui
@@ -43,13 +36,25 @@ services:
     image: mklocke/liga-manager-api:latest
     ports:
       - "9000:9000"
-    env_file:
-      - ./env/api.env 
+    environment:
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=123456
+      - APP_BASE_URL=http://localhost:4200
+      - DB_URL=pdo-mysql://lima:dev@mariadb/lima
+      - EMAIL_SENDER_ADDRESS=noreply@example.com
+      - EMAIL_SENDER_NAME=Wilde Liga Bremen
+      - EMAIL_URL=smtp://lima:foobar@maildev:1025?verify_peer=0
+      - JWT_SECRET=0123456789abcdef
+      - LOG_LEVEL=warning
+      - REDIS_HOST=redis
     volumes:
       - team-logos:/var/www/logos
-    depends_on:
-      - mariadb
-      - redis
+    healthcheck:
+      test: [ "CMD", "docker-php-healthcheck" ]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s
 
   redis:
     image: redis:alpine
@@ -57,10 +62,31 @@ services:
       - "6379:6379"
 
   mariadb:
-    image: mariadb:10.4
-    ports:
-      - "3306:3306"
+    image: mariadb:11.4
     volumes:
-      - ./data/mariadb:/var/lib/mysql
-    env_file:
-      - ./env/api.env 
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MARIADB_DATABASE=lima
+      - MARIADB_USER=lima
+      - MARIADB_PASSWORD=dev
+      - MARIADB_ROOT_PASSWORD=dev
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s
+
+  maildev:
+    image: maildev/maildev:latest
+    ports:
+      - "1080:1080"
+    environment:
+      - MAILDEV_INCOMING_USER=lima
+      - MAILDEV_INCOMING_PASS=foobar
+    healthcheck:
+      test: [ "CMD", "wget", "-O", '-', 'http://127.0.0.1:1080/healthz' ]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s

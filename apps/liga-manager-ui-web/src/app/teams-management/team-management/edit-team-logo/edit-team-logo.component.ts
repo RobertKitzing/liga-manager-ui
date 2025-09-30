@@ -1,24 +1,23 @@
-import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, input, signal } from '@angular/core';
 import {
     NotificationService,
     TeamService,
 } from '@liga-manager-ui/services';
-import { firstValueFrom, map, switchMap } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TeamLogoComponent } from '@liga-manager-ui/components';
 import { Configuration } from '@liga-manager-api/openapi';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
-import { select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/states';
 import { AsyncPipe } from '@angular/common';
+import { Team } from '@liga-manager-api/graphql';
 
 @Component({
     selector: 'lima-edit--team-logo',
@@ -39,8 +38,6 @@ export class EditTeamLogoComponent {
 
     private store = inject(Store);
 
-    private activatedRoute = inject(ActivatedRoute);
-
     private teamService = inject(TeamService);
 
     private notificationService = inject(NotificationService);
@@ -49,15 +46,7 @@ export class EditTeamLogoComponent {
 
     isAdmin$ = this.store.select(AuthStateSelectors.isAdmin);
 
-    team$ = this.activatedRoute.parent?.paramMap.pipe(
-        map((p) => {
-            const teamId = p.get('teamId')!;
-            return teamId;
-        }),
-        switchMap((teamId) => this.teamService.getTeamById(teamId)),
-    );
-
-    team = toSignal(this.team$!);
+    team = input<Team>();
 
     previewImage = signal<string | null>(null);
 
@@ -66,7 +55,7 @@ export class EditTeamLogoComponent {
             return;
         }
         try {
-            this.configuration.basePath = select(AppSettingsSelectors.host)();
+            this.configuration.basePath = this.store.selectSnapshot(AppSettingsSelectors.host);
             this.configuration.credentials = { bearerAuth: this.store.selectSnapshot(AuthStateSelectors.properties.token) || '' };
             await this.teamService.uploadTeamLogo(teamId, this.previewImage()!);
             this.reload(teamId);

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import {
     I18nService,
     LoadingIndicatorService,
@@ -26,6 +26,7 @@ import { SafeArea, SafeAreaInsets } from 'capacitor-plugin-safe-area';
 import { Device } from '@capacitor/device';
 import { dispatch, select, Store } from '@ngxs/store';
 import { AppSettingsSelectors, AuthStateSelectors, Language, Logout, SelectedItemsSelectors, SetSelectedDarkMode, SetSelectedTheme } from '@liga-manager-ui/states';
+import { APP_ROUTES } from '@liga-manager-ui/common';
 
 @Component({
     selector: 'lima-root',
@@ -51,9 +52,12 @@ import { AppSettingsSelectors, AuthStateSelectors, Language, Logout, SelectedIte
         AsyncPipe,
         CypressSelectorDirective,
         NgOptimizedImage,
+        RouterLink,
     ],
 })
 export class AppComponent implements OnInit {
+
+    APP_ROUTES = APP_ROUTES;
 
     themeService = inject(ThemeService);
 

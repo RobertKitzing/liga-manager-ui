@@ -43,14 +43,28 @@
                             <th class="text-end" mat-header-cell *matHeaderCellDef>
                             </th>
                             <td class="text-end" mat-cell *matCellDef="let user">
-                                <button matIconButton (click)="editUser(user)">
+                                <button matButton="tonal" (click)="deleteUser(user)" class="mr-4">
+                                    <mat-icon>delete</mat-icon>
+                                    <span translate>BUTTON.DELETE</span>
+                                </button>
+                                <button matButton="tonal" (click)="editUser(user)" class="mr-4">
                                     <mat-icon>edit</mat-icon>
+                                    <span translate>BUTTON.EDIT</span>
                                 </button>
                                 <button
-                                    matIconButton
+                                    matButton="tonal"
+                                    class="mr-4"
+                                    (click)="sendInviteMail(user.id)"
+                                >
+                                    <mat-icon>mail</mat-icon>
+                                    <span translate>BUTTON.SEND_INVITE_MAIL</span>
+                                </button>
+                                <button
+                                    matButton="tonal"
                                     (click)="sendPasswordMail(user.email)"
                                 >
                                     <mat-icon>mail</mat-icon>
+                                    <span translate>BUTTON.SEND_PASSWORD_RESET_MAIL</span>
                                 </button>
                             </td>
                         </ng-container>

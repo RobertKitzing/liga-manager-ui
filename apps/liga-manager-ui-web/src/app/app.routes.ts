@@ -5,11 +5,11 @@ import { APP_ROUTES } from '@liga-manager-ui/common';
 import { matchResolver } from './match.resolver';
 import { AppComponent } from './app.component';
 import { teamResolver } from './team.resolver';
-import { MatchComponent, TeamContactComponent } from '@liga-manager-ui/components';
+import { EditProfileComponent, MatchComponent, TeamContactComponent } from '@liga-manager-ui/components';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { Store } from '@ngxs/store';
 import { AuthStateSelectors, GetAuthenticatedUser } from '@liga-manager-ui/states';
-import { switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { TeamsManagementRoutes } from './teams-management';
 
 marker('NAVIGATION.MATCH');
@@ -19,7 +19,7 @@ export const isLoggedInGuard = () => {
     const store = inject(Store);
     return store.dispatch(GetAuthenticatedUser).pipe(
         switchMap(
-            () => store.select(AuthStateSelectors.properties.user),
+            () => store.select(AuthStateSelectors.properties.user).pipe(map((user) => !!user)),
         ),
     );
 };
@@ -142,10 +142,23 @@ export const routes: Routes = [
                 component: TeamContactComponent,
                 resolve: { team: teamResolver },
             },
-            // {
-            //     // path: `${APP_ROUTES.NEW_PASSWORD}`,
-            //     // component: NewPasswordComponent
-            // },
+            {
+                path: `${APP_ROUTES.EDIT_PROFILE}`,
+                canActivate: [isLoggedInGuard],
+                component: EditProfileComponent,
+            },
+            {
+                path: `${APP_ROUTES.REGISTER}`,
+                data: {
+                    register: true,
+                },
+                component: EditProfileComponent,
+            },
+            {
+                path: `${APP_ROUTES.NEW_PASSWORD}`,
+                loadComponent: () =>
+                    import('./new-password').then((m) => m.NewPasswordComponent),
+            },
             {
                 path: '',
                 redirectTo: APP_ROUTES.SCHEDULE,

@@ -26,7 +26,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
-import { APP_ROUTES } from '@liga-manager-ui/common';
 import { CypressSelectorDirective, TrimDirective } from '@liga-manager-ui/directives';
 
 @Component({
@@ -84,8 +83,8 @@ export class EditUserDialogComponent implements OnInit {
 
     userFormGroup = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
-        first_name: new FormControl('', [Validators.required]),
-        last_name: new FormControl('', [Validators.required]),
+        first_name: new FormControl(),
+        last_name: new FormControl(),
         role: new FormControl<UserRole>(UserRole.TeamManager, {
             nonNullable: true,
         }),
@@ -108,16 +107,17 @@ export class EditUserDialogComponent implements OnInit {
                 this.userService.updateUser({
                     user_id: this.user.id,
                     ...this.userFormGroup.value,
-                }),
+                }, UserRole.Admin),
             );
             this.dialogRef.close();
         } else {
+            const user_id = uuidv4();
             await firstValueFrom(
                 this.userService.createUser({
-                    user_id: uuidv4(),
+                    user_id,
                     email: this.userFormGroup.value.email!.trim(),
-                    first_name: this.userFormGroup.value.first_name!.trim(),
-                    last_name: this.userFormGroup.value.last_name!.trim(),
+                    first_name: this.userFormGroup.value.first_name?.trim() || '',
+                    last_name: this.userFormGroup.value.last_name?.trim() || '',
                     role: this.userFormGroup.value.role!,
                     team_ids: this.userFormGroup.value.team_ids!,
                     password: generator({
@@ -126,7 +126,7 @@ export class EditUserDialogComponent implements OnInit {
                     }),
                 }),
             );
-            this.userService.sendPasswordMail({email: this.userFormGroup.value.email!, target_path: APP_ROUTES.NEW_PASSWORD});
+            await firstValueFrom(this.userService.sendInviteMail(user_id));
             this.dialogRef.close();
         }
     }

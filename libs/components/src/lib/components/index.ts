@@ -11,3 +11,4 @@ export * from './team-auto-complete/team-auto-complete.component';
 export * from './pitch-auto-complete/pitch-auto-complete.component';
 export * from './pitch/pitch.component';
 export * from './date-time/date-time.component';
+export * from './edit-profile';

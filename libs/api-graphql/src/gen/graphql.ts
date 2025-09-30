@@ -949,6 +949,14 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = Pick<Mutation, 'deleteUser'>;
 
+export type InviteUserMutationVariables = Exact<{
+  user_id: Scalars['String']['input'];
+  target_path: Scalars['String']['input'];
+}>;
+
+
+export type InviteUserMutation = Pick<Mutation, 'sendInviteMail'>;
+
 export type CalendarQueryVariables = Exact<{
   min_date?: InputMaybe<Scalars['DateTime']['input']>;
   max_date?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2003,6 +2011,22 @@ export const DeleteUserDocument = gql`
   })
   export class DeleteUserGQL extends Apollo.Mutation<DeleteUserMutation, DeleteUserMutationVariables> {
     document = DeleteUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const InviteUserDocument = gql`
+    mutation InviteUser($user_id: String!, $target_path: String!) {
+  sendInviteMail(user_id: $user_id, target_path: $target_path)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class InviteUserGQL extends Apollo.Mutation<InviteUserMutation, InviteUserMutationVariables> {
+    document = InviteUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -7,6 +7,11 @@ export class AuthStateSelectors {
     static properties = createPropertySelectors<AuthStateModel>(AuthState);
 
     @Selector([AuthStateSelectors.properties.user])
+    static userTeams(user: AuthenticatedUserQuery['authenticatedUser']) {
+        return user?.teams;
+    }
+
+    @Selector([AuthStateSelectors.properties.user])
     static isAdmin(user: AuthenticatedUserQuery['authenticatedUser']) {
         return user?.role === UserRole.Admin;
     }
