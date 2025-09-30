@@ -11,7 +11,7 @@ import {
     UpdateUserMutationVariables,
 } from '@liga-manager-api/graphql';
 import { Store } from '@ngxs/store';
-import { AuthStateSelectors, LoginContext } from '@liga-manager-ui/states';
+import { LoginContext } from '@liga-manager-ui/common';
 
 @Injectable({
     providedIn: 'root',
@@ -74,9 +74,9 @@ export class UserService {
         });
     }
 
-    changePassword(newPassword: string, oldPassword: string) {
+    changePassword(username: string, newPassword: string, oldPassword: string) {
         const loginContext: LoginContext = {
-            username: this.store.selectSnapshot(AuthStateSelectors.properties.user)?.email || '',
+            username,
             password: oldPassword,
         };
         return this.changePasswordQGL.mutate(

@@ -84,7 +84,7 @@ export class ManageUsersComponent {
     }
 
     async sendPasswordMail(email: string) {
-        await firstValueFrom(this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD_ROUTE}));
+        await firstValueFrom(this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD}));
     }
 
 }

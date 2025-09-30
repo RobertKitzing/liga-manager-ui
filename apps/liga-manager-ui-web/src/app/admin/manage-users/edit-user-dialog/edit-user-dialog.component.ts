@@ -126,7 +126,7 @@ export class EditUserDialogComponent implements OnInit {
                     }),
                 }),
             );
-            this.userService.sendPasswordMail({email: this.userFormGroup.value.email!, target_path: APP_ROUTES.NEW_PASSWORD_ROUTE});
+            this.userService.sendPasswordMail({email: this.userFormGroup.value.email!, target_path: APP_ROUTES.NEW_PASSWORD});
             this.dialogRef.close();
         }
     }

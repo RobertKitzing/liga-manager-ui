@@ -140,9 +140,12 @@ export const routes: Routes = [
             {
                 path: `${APP_ROUTES.TEAM}`,
                 component: TeamContactComponent,
-                // loadComponent: () => import('@liga-manager-ui/components').then((m) => m.TeamContactComponent),
                 resolve: { team: teamResolver },
             },
+            // {
+            //     // path: `${APP_ROUTES.NEW_PASSWORD}`,
+            //     // component: NewPasswordComponent
+            // },
             {
                 path: '',
                 redirectTo: APP_ROUTES.SCHEDULE,

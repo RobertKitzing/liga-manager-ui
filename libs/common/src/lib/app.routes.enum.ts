@@ -1,6 +1,6 @@
 export enum APP_ROUTES {
 
-    NEW_PASSWORD_ROUTE = 'newpassword',
+    NEW_PASSWORD = 'newpassword',
     TABLE = 'table',
     CALENDAR = 'calendar',
     CONTACTS = 'contacts',

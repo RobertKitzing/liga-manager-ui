@@ -83,7 +83,7 @@ export class LoginComponent {
     async passwordForgot(email: string) {
         if (email) {
             try {
-                await this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD_ROUTE});
+                await this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD});
                 this.notificationService.showSuccessNotification(
                     marker('SEND_NEW_PASSWORD_MAIL_SUCCESS'),
                 );
