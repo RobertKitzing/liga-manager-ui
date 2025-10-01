@@ -77,7 +77,7 @@ export class EditTeamContactComponent {
                 }),
             );
             this.notificationService.showSuccessNotification(
-                marker('TEAM_CONTACT_SAVED_SUCCESS'),
+                marker('SUCCESS.TEAM_CONTACT_SAVED'),
             );
         } catch (_error) {
             //Empty Catch

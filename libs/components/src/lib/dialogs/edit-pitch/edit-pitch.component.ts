@@ -89,7 +89,7 @@ export class EditPitchDialogComponent implements OnInit {
                 location_latitude: this.formGroup.value.location_latitude!,
             };
             await firstValueFrom(this.pitchService.createPitch(newPitch));
-            this.notificationService.showSuccessNotification(marker('SAVE_SUCCESS'), undefined, 'snackbar-success-create-pitch');
+            this.notificationService.showSuccessNotification(marker('SUCCESS.SAVE'), undefined, 'snackbar-success-create-pitch');
             this.dialogRef.close(newPitch);
         } catch(error) {
             console.error(error);

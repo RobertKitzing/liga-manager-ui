@@ -134,12 +134,10 @@ export class ManageSeasonsComponent implements OnInit {
                         try {
                             await firstValueFrom(this.seasonService.endSeason(seasonId));
                             this.notificationService.showSuccessNotification(
-                                this.translateService.instant('END_SEASON_SUCCESS'),
+                                this.translateService.instant('SUCCESS.END_SEASON'),
                             );
-                        } catch (_error) {
-                            this.notificationService.showErrorNotification(
-                                this.translateService.instant('END_SEASON_ERROR'),
-                            );
+                        } catch (error) {
+                            console.error(error);
                         }
                     }
                 },
@@ -150,7 +148,7 @@ export class ManageSeasonsComponent implements OnInit {
         try {
             await firstValueFrom(this.seasonService.startSeason(seasonId));
             this.notificationService.showSuccessNotification(
-                this.translateService.instant('START_SEASON_SUCCESS'),
+                this.translateService.instant('SUCCESS.START_SEASON'),
             );
         } catch (_error) {
             this.notificationService.showErrorNotification(
@@ -176,13 +174,11 @@ export class ManageSeasonsComponent implements OnInit {
                         try {
                             await firstValueFrom(this.seasonService.deleteSeason(seasonId));
                             this.notificationService.showSuccessNotification(
-                                this.translateService.instant('DELETE_SEASON_SUCCESS'),
+                                this.translateService.instant('SUCCESS.DELETE_SEASON'),
                             );
                             this.selectedSeasonFC.reset();
-                        } catch (_error) {
-                            this.notificationService.showErrorNotification(
-                                this.translateService.instant('DELETE_SEASON_ERROR'),
-                            );
+                        } catch (error) {
+                            console.error(error);
                         }
                     }
                 },

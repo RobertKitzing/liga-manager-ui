@@ -116,7 +116,7 @@ export class EditTournamentRoundComponent {
                     team_id_pairs: this.matches().map((t) => ({ home_team_id: t?.home_team.id!, guest_team_id: t?.guest_team.id! })),
                 }),
             );
-            this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_TOURNAMENT_ROUND_SUCCESS'));
+            this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.CREATE_TOURNAMENT_ROUND'));
             this.roundEdited.emit(true);
         } catch (_error) {
             console.error(_error);

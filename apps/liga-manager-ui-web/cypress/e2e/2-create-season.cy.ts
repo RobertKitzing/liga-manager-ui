@@ -15,7 +15,7 @@ describe('Admin - Create Season', () => {
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-seasons').first().click();
 
-        for (let i = 0; i<3;i++) {
+        for (let i = 0; i < 3 ;i++) {
             const name = faker.science.chemicalElement().name;
 
             cy.getBySel('button-create-season').click();
@@ -38,6 +38,7 @@ describe('Admin - Create Season', () => {
 
             cy.getBySel('season-management-tab-create-matchdays').click();
 
+            cy.getBySel('input-tournament-season-start-date').clear({ force: true });
             cy.getBySel('input-tournament-season-start-date').type(format(faker.date.future(), 'P'), { force: true });
 
             cy.getBySel('button-save-match-days').click();

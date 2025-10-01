@@ -53,7 +53,7 @@ export class ChangePasswordComponent {
             const username = this.store.selectSnapshot(AuthStateSelectors.properties.user)?.email || '';
             await firstValueFrom(this.userService.changePassword(username, this.passwordForm.value.new || '', this.passwordForm.value.old || ''));
             this.store.dispatch(Logout);
-            this.notificationService.showSuccessNotification(this.translateService.instant('PASSWORD_CHANGED_SUCCESS'));
+            this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.PASSWORD_CHANGED'));
             this.dialogRef.close();
         } catch (error) {
             console.error(error);

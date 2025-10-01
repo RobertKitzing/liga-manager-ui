@@ -53,7 +53,7 @@ export class CreateNewSeasonComponent {
                 this.seasonService.createSeason(this.newName.value!),
             );
             this.notificationService.showSuccessNotification(
-                marker('CREATE_SEASON_SUCCESS'),
+                marker('SUCCESS.CREATE_SEASON'),
                 [],
                 'snackbar-success-create-season',
             );

@@ -53,7 +53,7 @@ export class CreateNewTournamentComponent {
                 this.tournamentService.createTournament(this.newName.value!),
             );
             this.notificationService.showSuccessNotification(
-                marker('CREATE_TOURNAMENT_SUCCESS'),
+                marker('SUCCESS.CREATE_TOURNAMENT'),
                 [],
                 'snackbar-success-create-tournament',
             );

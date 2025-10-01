@@ -159,7 +159,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                     manageSeason.id,
                 ));
             }
-            this.notificationService.showSuccessNotification(this.translateService.instant('CREATE_MATCH_DAYS_SUCCESS'));
+            this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.CREATE_MATCH_DAYS'));
         } catch (error) {
             console.error(error);
         }

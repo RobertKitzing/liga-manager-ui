@@ -122,7 +122,7 @@ export class ManageTournamentsComponent implements OnInit {
                         try {
                             await firstValueFrom(this.tournamentService.endTournament(id));
                             this.notificationService.showSuccessNotification(
-                                this.translateService.instant('END_TOURNAMENT_SUCCESS'),
+                                this.translateService.instant('SUCCESS.END_TOURNAMENT'),
                             );
                         } catch (error) {
                             console.error(error);

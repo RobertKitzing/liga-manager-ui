@@ -67,7 +67,7 @@ export class NewPasswordComponent {
             try {
                 await firstValueFrom(this.userService.setPassword(this.passwordForm.controls.password.value));
                 this.store.dispatch(new Logout());
-                this.notificationService.showSuccessNotification(this.translateService.instant('PASSWORD_CHANGED_SUCCESS'));
+                this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.PASSWORD_CHANGED'));
                 this.router.navigate(['']);
             } catch (error) {
                 console.error(error);

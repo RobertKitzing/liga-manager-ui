@@ -74,7 +74,7 @@ export class EditMatchPitchComponent extends EditMatchBaseComponent {
                 }),
             );
             this.notificationService.showSuccessNotification(
-                marker('EDIT_PITCH_SUCCESS'),
+                marker('SUCCESS.EDIT_PITCH'),
             );
             this.dialogRef.close(true);
         } catch (_error) {

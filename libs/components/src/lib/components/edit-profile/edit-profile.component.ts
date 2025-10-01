@@ -79,7 +79,7 @@ export class EditProfileComponent {
                 ...this.userFormGroup.value,
             }, this.user()?.role ));
             this.store.dispatch(new GetAuthenticatedUser(true));
-            this.notificationService.showSuccessNotification(marker('SAVE_SUCCESS'), undefined, 'snackbar-success-edit-profile');
+            this.notificationService.showSuccessNotification(marker('SUCCESS.SAVE'), undefined, 'snackbar-success-edit-profile');
             if (this.register()) {
                 await firstValueFrom(this.userService.setPassword(this.passwordFC.value!));
                 this.router.navigate(['']);

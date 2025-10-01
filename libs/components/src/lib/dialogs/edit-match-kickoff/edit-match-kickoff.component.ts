@@ -82,7 +82,7 @@ export class EditMatchKickoffComponent extends EditMatchBaseComponent {
                 }),
             );
             this.notificationService.showSuccessNotification(
-                marker('EDIT_KICKOFF_SUCCESS'),
+                marker('SUCCESS.EDIT_KICKOFF'),
             );
             this.dialogRef.close(true);
         } catch (_error) {

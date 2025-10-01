@@ -60,7 +60,7 @@ export class EditTeamLogoComponent {
             await this.teamService.uploadTeamLogo(teamId, this.previewImage()!);
             this.reload(teamId);
             this.notificationService.showSuccessNotification(
-                marker('UPLOAD_TEAM_LOGO_SUCCESS'),
+                marker('SUCCESS.UPLOAD_TEAM_LOGO'),
             );
             this.previewImage.set(null);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,12 +79,10 @@ export class EditTeamLogoComponent {
             await firstValueFrom(this.teamService.deleteTeamLogo(teamId));
             this.reload(teamId);
             this.notificationService.showSuccessNotification(
-                marker('DELETE_TEAM_LOGO_SUCCESS'),
+                marker('SUCCESS.DELETE_TEAM_LOGO'),
             );
-        } catch (_error) {
-            this.notificationService.showErrorNotification(
-                marker('DELETE_TEAM_LOGO_ERROR'),
-            );
+        } catch (error) {
+            console.error(error);
         }
     }
 

@@ -59,7 +59,7 @@ export class EditMatchResultComponent  extends EditMatchBaseComponent {
                     }),
                 );
                 this.notificationService.showSuccessNotification(
-                    marker('EDIT_RESULT_SUCCESS'),
+                    marker('SUCCESS.EDIT_RESULT'),
                 );
                 this.dialogRef.close(true);
             }
