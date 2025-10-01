@@ -38,7 +38,7 @@ const config: CodegenConfig = {
                 content: [
                     '/* eslint-disable */',
                     '/* GENERATED DO NOT EDIT */',
-                    'import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator } from \'./generators\'',
+                    'import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator, fakeEmail } from \'./generators\'',
                 ],
                 typesFile: '../gen/graphql.ts',
                 scalars: {
@@ -48,6 +48,12 @@ const config: CodegenConfig = {
                 fieldGeneration: {
                     Match: {
                         cancelled_at: 'dateStringGenerator()',
+                    },
+                    User: {
+                        email: 'fakeEmail()',
+                    },
+                    Contact: {
+                        email: 'fakeEmail()',
                     },
                 },
             },

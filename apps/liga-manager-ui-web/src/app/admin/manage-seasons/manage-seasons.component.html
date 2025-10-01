@@ -22,7 +22,7 @@
             <mat-toolbar-row class="justify-evenly">
                 @if ((season$ | async); as season) {
                     @if ( season.state === SeasonState.Progress ) {
-                        <button matButton="outlined" (click)="endSeason(season.id, season.name)">
+                        <button matButton="outlined" (click)="endSeason(season.id, season.name)" cySelector="button-end-season">
                             <mat-icon>stop</mat-icon>
                             <span translate>BUTTON.END_SEASON</span>
                         </button>

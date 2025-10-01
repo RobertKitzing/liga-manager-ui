@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { RedirectCommand, Router, Routes } from '@angular/router';
 import { AdminRoutes } from './admin';
 import { inject } from '@angular/core';
 import { APP_ROUTES } from '@liga-manager-ui/common';
@@ -17,27 +17,39 @@ marker('NAVIGATION.TEAM');
 
 export const isLoggedInGuard = () => {
     const store = inject(Store);
+    const router = inject(Router);
     return store.dispatch(GetAuthenticatedUser).pipe(
         switchMap(
             () => store.select(AuthStateSelectors.properties.user).pipe(map((user) => !!user)),
+        ),
+        map(
+            (isTeamAdmin) => isTeamAdmin || new RedirectCommand(router.createUrlTree([''])),
         ),
     );
 };
 
 export const teamAdminGuard = () => {
     const store = inject(Store);
+    const router = inject(Router);
     return store.dispatch(GetAuthenticatedUser).pipe(
         switchMap(
             () => store.select(AuthStateSelectors.isTeamAdmin),
+        ),
+        map(
+            (isTeamAdmin) => isTeamAdmin || new RedirectCommand(router.createUrlTree([''])),
         ),
     );
 };
 
 export const adminGuard = () => {
     const store = inject(Store);
+    const router = inject(Router);
     return store.dispatch(GetAuthenticatedUser).pipe(
         switchMap(
             () => store.select(AuthStateSelectors.isAdmin),
+        ),
+        map(
+            (isTeamAdmin) => isTeamAdmin || new RedirectCommand(router.createUrlTree([''])),
         ),
     );
 };

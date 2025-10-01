@@ -1,4 +1,5 @@
-import { Teams, Users } from '@cypress/fixtures';
+import { Users } from '@cypress/fixtures';
+import { faker } from '@faker-js/faker';
 
 describe('Admin - Create Season', () => {
 
@@ -15,7 +16,8 @@ describe('Admin - Create Season', () => {
         cy.getBySel('route-admin-teams').first().click();
         cy.wait(['@graphql']);
 
-        for (const team of Teams) {
+        const teams = Array.from({ length: 10 }, () => ({ name: faker.person.firstName() }) ).concat([ { name: Users.teamAdmin.team } ]);
+        for (const team of teams) {
             cy.getBySel('button-create-team').click();
             cy.getBySel('input-create-team-name').clear();
             cy.getBySel('input-create-team-name').type(team.name);

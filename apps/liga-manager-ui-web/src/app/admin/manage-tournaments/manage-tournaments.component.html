@@ -32,8 +32,9 @@
                         }
                         @case (TournamentState.Progress) {
                             <button
+                                cySelector="button-end-tournament"
                                 matButton="outlined"
-                                (click)="endTournament(selectedTournament.id)"
+                                (click)="endTournament(selectedTournament.id, selectedTournament.name)"
                             >
                                 <mat-icon>stop</mat-icon>
                                 <span translate>BUTTON.STOP_TOURNAMENT</span>

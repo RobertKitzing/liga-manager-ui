@@ -1,4 +1,6 @@
-import { Users, Seasons, Teams } from '@cypress/fixtures';
+import { Users } from '@cypress/fixtures';
+import { faker } from '@faker-js/faker';
+import { format } from 'date-fns';
 
 describe('Admin - Create Season', () => {
 
@@ -13,27 +15,41 @@ describe('Admin - Create Season', () => {
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-seasons').first().click();
 
-        cy.getBySel('button-create-season').click();
-        cy.getBySel('input-create-season-name').type(Seasons[0].name);
-        cy.getBySel('button-create-season-submit').click();
-        cy.getBySel('snackbar-success-create-season').should('exist');
-        cy.getBySel('select-season').click();
-        cy.contains(Seasons[0].name).click();
-        cy.getBySel('season-management-tab-select-teams').click();
+        for (let i = 0; i<3;i++) {
+            const name = faker.science.chemicalElement().name;
 
-        for (const team of Teams) {
-            // eslint-disable-next-line cypress/unsafe-to-chain-command
-            cy.getBySel('input-team-auto-complete').clear().type(team.name);
-            cy.get('mat-option').contains(team.name).click();
+            cy.getBySel('button-create-season').click();
+            cy.getBySel('input-create-season-name').type(name);
+            cy.getBySel('button-create-season-submit').click();
+            cy.getBySel('snackbar-success-create-season').should('exist');
+            cy.getBySel('select-season').click();
+            cy.contains(name).click();
+            cy.getBySel('season-management-tab-select-teams').click();
+
+            cy.getBySel('input-team-auto-complete').clear();
+            cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
+            cy.contains(Users.teamAdmin.team).click();
+
+            for (let i = 0; i< 10; i++) {
+                cy.getBySel('input-team-auto-complete').clear();
+                cy.getBySel('input-team-auto-complete').click();
+                cy.getBySel(`team-${i}`).scrollIntoView();
+                cy.getBySel(`team-${i}`).click();
+            }
+
+            cy.getBySel('season-management-tab-create-matchdays').click();
+
+            cy.getBySel('input-tournament-season-start-date').type(format(faker.date.future(), 'P'), { force: true });
+
+            cy.getBySel('button-save-match-days').click();
+
+            cy.getBySel('button-start-season').click();
+
+            if (i % 2 === 0) {
+                cy.getBySel('button-end-season').click();
+                cy.getBySel('button-confirm-yes').click();
+            }
         }
-
-        cy.getBySel('season-management-tab-create-matchdays').click();
-
-        cy.getBySel('input-tournament-season-start-date').type('07/21/2025', { force: true });
-
-        cy.getBySel('button-save-match-days').click();
-
-        cy.getBySel('button-start-season').click();
     });
 
 });

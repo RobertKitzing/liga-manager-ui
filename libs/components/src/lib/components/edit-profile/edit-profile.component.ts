@@ -1,17 +1,19 @@
 import { Component, effect, inject, input } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { AuthStateSelectors, GetAuthenticatedUser, SetToken } from '@liga-manager-ui/states';
 import { select, Store } from '@ngxs/store';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserService } from '@liga-manager-ui/services';
+import { NotificationService, UserService } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Location } from '@angular/common';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { Router } from '@angular/router';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-edit-profile',
@@ -23,6 +25,8 @@ import { Router } from '@angular/router';
         TranslateModule,
         MatButtonModule,
         MatIconModule,
+        CypressSelectorDirective,
+        FormsModule,
     ],
 })
 export class EditProfileComponent {
@@ -34,6 +38,8 @@ export class EditProfileComponent {
     private store = inject(Store);
 
     private userService = inject(UserService);
+
+    private notificationService = inject(NotificationService);
 
     token = input<string>();
 
@@ -47,7 +53,7 @@ export class EditProfileComponent {
         last_name: new FormControl(this.user()?.last_name),
     });
 
-    passwordFC = new FormControl();
+    passwordFC = new FormControl('', [Validators.required, Validators.minLength(6)]);
 
     constructor() {
         effect(
@@ -73,7 +79,9 @@ export class EditProfileComponent {
                 ...this.userFormGroup.value,
             }, this.user()?.role ));
             this.store.dispatch(new GetAuthenticatedUser(true));
+            this.notificationService.showSuccessNotification(marker('SAVE_SUCCESS'), undefined, 'snackbar-success-edit-profile');
             if (this.register()) {
+                await firstValueFrom(this.userService.setPassword(this.passwordFC.value!));
                 this.router.navigate(['']);
             }
         } catch(error) {

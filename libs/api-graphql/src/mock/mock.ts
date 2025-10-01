@@ -1,11 +1,11 @@
 /* eslint-disable */
 /* GENERATED DO NOT EDIT */
-import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator } from './generators'
+import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator, fakeEmail } from './generators'
 import { Contact, DatePeriod, Event, Match, MatchAppointment, MatchDay, Pitch, Ranking, RankingPenalty, RankingPosition, Season, Team, TeamIdPair, Tournament, User, Mutation, Query, SeasonState, TournamentState, UserLocale, UserRole } from '../gen/graphql';
 
 export const aContact = (overrides?: Partial<Contact>): Contact => {
     return {
-        email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : 'calco',
+        email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : fakeEmail(),
         first_name: overrides && overrides.hasOwnProperty('first_name') ? overrides.first_name! : 'casus',
         last_name: overrides && overrides.hasOwnProperty('last_name') ? overrides.last_name! : 'auxilium',
         phone: overrides && overrides.hasOwnProperty('phone') ? overrides.phone! : 'turba',
@@ -145,7 +145,7 @@ export const aTournament = (overrides?: Partial<Tournament>): Tournament => {
 
 export const aUser = (overrides?: Partial<User>): User => {
     return {
-        email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : 'natus',
+        email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : fakeEmail(),
         first_name: overrides && overrides.hasOwnProperty('first_name') ? overrides.first_name! : 'comis',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'suscipio',
         last_name: overrides && overrides.hasOwnProperty('last_name') ? overrides.last_name! : 'sulum',

@@ -43,7 +43,7 @@
                             <th class="text-end" mat-header-cell *matHeaderCellDef>
                             </th>
                             <td class="text-end" mat-cell *matCellDef="let user">
-                                <button matButton="tonal" (click)="deleteUser(user)" class="mr-4">
+                                <button matButton="tonal" (click)="deleteUser(user)" class="mr-4" cySelector="button-delete-user-{{ user.email }}">
                                     <mat-icon>delete</mat-icon>
                                     <span translate>BUTTON.DELETE</span>
                                 </button>

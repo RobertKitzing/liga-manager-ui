@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { ConfirmComponent, defaultDialogConfig, EditPitchDialogComponent, PitchComponent } from '@liga-manager-ui/components';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { SortByPipe } from '@liga-manager-ui/pipes';
 import { PitchService } from '@liga-manager-ui/services';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -33,6 +34,7 @@ import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
         MatTableModule,
         PitchComponent,
         SortByPipe,
+        CypressSelectorDirective,
     ],
 })
 export class ManagePitchesComponent {

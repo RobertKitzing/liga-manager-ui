@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-confirm',
@@ -15,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
         MatDialogModule,
         MatButtonModule,
         MatCardModule,
+        CypressSelectorDirective,
     ],
 })
 export class ConfirmComponent {

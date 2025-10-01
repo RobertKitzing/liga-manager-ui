@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
-import { PitchService } from '@liga-manager-ui/services';
+import { NotificationService, PitchService } from '@liga-manager-ui/services';
 import { v4 as uuidv4 } from 'uuid';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,8 @@ import { PitchComponent } from '../../components';
 import { Pitch } from '@liga-manager-api/graphql';
 import { select } from '@ngxs/store';
 import { AppSettingsSelectors } from '@liga-manager-ui/states';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-edit-pitch',
@@ -32,11 +34,14 @@ import { AppSettingsSelectors } from '@liga-manager-ui/states';
         MatButtonModule,
         MatIcon,
         PitchComponent,
+        CypressSelectorDirective,
     ],
 })
 export class EditPitchDialogComponent implements OnInit {
 
     private pitchService = inject(PitchService);
+
+    private notificationService = inject(NotificationService);
 
     googleMapsApiKey = select(AppSettingsSelectors.googleMapsApiKey);
 
@@ -84,6 +89,7 @@ export class EditPitchDialogComponent implements OnInit {
                 location_latitude: this.formGroup.value.location_latitude!,
             };
             await firstValueFrom(this.pitchService.createPitch(newPitch));
+            this.notificationService.showSuccessNotification(marker('SAVE_SUCCESS'), undefined, 'snackbar-success-create-pitch');
             this.dialogRef.close(newPitch);
         } catch(error) {
             console.error(error);
