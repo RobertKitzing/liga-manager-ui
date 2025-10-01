@@ -2,11 +2,15 @@
     ARE_YOU_SURE
 </div>
 <mat-dialog-content>
-    <div class="m-8">
+    <div class="p-8">
         {{ data.body }}
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button matButton="outlined" translate (click)="dialogRef.close(false)" cySelector="button-confirm-no">BUTTON.NO</button>
-    <button matButton="tonal" translate (click)="dialogRef.close(true)" cySelector="button-confirm-yes">BUTTON.YES</button>
+    <button matButton="outlined" (click)="dialogRef.close(false)" cySelector="button-confirm-no">
+        <span translate>BUTTON.NO</span>
+    </button>
+    <button matButton="tonal" translate (click)="dialogRef.close(true)" cySelector="button-confirm-yes">
+        <span translate>BUTTON.YES</span>
+    </button>
 </mat-dialog-actions>
