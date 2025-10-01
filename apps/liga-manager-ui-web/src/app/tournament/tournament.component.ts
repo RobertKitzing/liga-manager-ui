@@ -16,7 +16,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { SelectedContextTypes, SelectedItemsSelectors, SetSelectedTournament, SetSelectedTournamentRound } from '@liga-manager-ui/states';
+import { GetTournaments, SelectedContextTypes, SelectedItemsSelectors, SetSelectedTournament, SetSelectedTournamentRound } from '@liga-manager-ui/states';
 import { dispatch, Store } from '@ngxs/store';
 import { AsyncPipe } from '@angular/common';
 
@@ -135,7 +135,7 @@ export class TournamentComponent implements OnInit {
     }
 
     async refresh(event?: Subject<void>) {
-        await firstValueFrom(this.tournamentService.reloadTournaments());
+        await firstValueFrom(this.store.dispatch( new GetTournaments(true)));
         event?.next();
     }
 

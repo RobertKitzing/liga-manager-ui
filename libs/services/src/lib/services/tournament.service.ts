@@ -1,24 +1,23 @@
 import { inject, Injectable } from '@angular/core';
 import {
-    AllTournamentListGQL,
     CreateTournamentGQL,
     CreateTournamentRoundGQL,
     CreateTournamentRoundMutationVariables,
     DeleteTournamentGQL,
     EndTournamentGQL,
     StartTournamentGQL,
-    Tournament,
     TournamentByIdGQL,
 } from '@liga-manager-api/graphql';
-import { map, take } from 'rxjs';
-import { sortArrayBy } from '@liga-manager-ui/utils';
+import { GetTournaments } from '@liga-manager-ui/states';
+import { Store } from '@ngxs/store';
+import { map, tap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class TournamentService {
 
-    private allTournamentListGQL = inject(AllTournamentListGQL);
+    private store = inject(Store);
 
     private createTournamentGQL = inject(CreateTournamentGQL);
 
@@ -32,29 +31,15 @@ export class TournamentService {
 
     private createTournamentRoundGQL = inject(CreateTournamentRoundGQL);
 
-    allTournaments$ = this.allTournamentListGQL.watch().valueChanges.pipe(
-        map(({ data }) => data.allTournaments),
-        map((tournaments) =>
-            sortArrayBy(tournaments as Tournament[], 'name', 'desc'),
-        ),
-    );
-
-    reloadTournaments() {
-        return this.allTournamentListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
-    }
-
     createTournament(name: string) {
         return this.createTournamentGQL.mutate(
             {
                 name,
             },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allTournamentListGQL.document,
-                    },
-                ],
-            },
+        ).pipe(
+            tap(
+                () => this.store.dispatch(new GetTournaments(true)),
+            ),
         );
     }
 
@@ -63,13 +48,10 @@ export class TournamentService {
             {
                 tournament_id,
             },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allTournamentListGQL.document,
-                    },
-                ],
-            },
+        ).pipe(
+            tap(
+                () => this.store.dispatch(new GetTournaments(true)),
+            ),
         );
     }
 
@@ -81,13 +63,14 @@ export class TournamentService {
             {
                 refetchQueries: [
                     {
-                        query: this.allTournamentListGQL.document,
-                    },
-                    {
                         query: this.tournamentByIdGQL.document, variables: { id: tournament_id },
                     },
                 ],
             },
+        ).pipe(
+            tap(
+                () => this.store.dispatch(new GetTournaments(true)),
+            ),
         );
     }
 
@@ -99,13 +82,14 @@ export class TournamentService {
             {
                 refetchQueries: [
                     {
-                        query: this.allTournamentListGQL.document,
-                    },
-                    {
                         query: this.tournamentByIdGQL.document, variables: { id: tournament_id },
                     },
                 ],
             },
+        ).pipe(
+            tap(
+                () => this.store.dispatch(new GetTournaments(true)),
+            ),
         );
     }
 
@@ -114,7 +98,6 @@ export class TournamentService {
             params,
             {
                 refetchQueries: [
-                    { query: this.allTournamentListGQL.document },
                     { query: this.tournamentByIdGQL.document, variables: { id: params.tournament_id } },
                 ],
             },

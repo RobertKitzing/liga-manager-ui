@@ -14,8 +14,6 @@ describe('Public - Select Tournament', () => {
         cy.getBySel('route-tournament').first().click();
 
         cy.getBySel('select-tournament').click();
-        cy.getBySel('select-tournament').click();
-
         cy.get('mat-option').first().click();
 
         cy.get('lima-match').should('have.length', 1);

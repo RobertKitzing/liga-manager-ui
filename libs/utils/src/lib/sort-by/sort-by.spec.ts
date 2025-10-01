@@ -4,7 +4,7 @@ describe('sortArrayBy', () => {
     it('should sort an array by key asc', () => {
         const array = [
             {
-                name: 'ZZZZZZ',
+                name: 'zZZZZZ',
             },
             {
                 name: 'BBBBBB',
@@ -13,19 +13,19 @@ describe('sortArrayBy', () => {
                 name: 'ZZZZZZ',
             },
             {
-                name: 'AAAAAA',
+                name: 'aAAAAA',
             },
         ];
         const sorted = sortArrayBy(array, 'name');
         expect(sorted).toStrictEqual([
             {
-                name: 'AAAAAA',
+                name: 'aAAAAA',
             },
             {
                 name: 'BBBBBB',
             },
             {
-                name: 'ZZZZZZ',
+                name: 'zZZZZZ',
             },
             {
                 name: 'ZZZZZZ',
@@ -64,4 +64,5 @@ describe('sortArrayBy', () => {
             },
         ]);
     });
+
 });

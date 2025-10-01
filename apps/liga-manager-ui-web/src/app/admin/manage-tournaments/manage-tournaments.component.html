@@ -19,35 +19,35 @@
         </mat-toolbar-row>
         @if (selectedTournament$ | async; as selectedTournament) {
             <mat-toolbar-row class="justify-evenly">
-                    @switch (selectedTournament.state) {
-                        @case (TournamentState.Preparation) {
-                            <button
-                                cySelector="button-start-tournament"
-                                matButton="outlined"
-                                (click)="startTournament(selectedTournament.id)"
-                            >
-                                <mat-icon>play_arrow</mat-icon>
-                                <span translate>BUTTON.START_TOURNAMENT</span>
-                            </button>
-                        }
-                        @case (TournamentState.Progress) {
-                            <button
-                                cySelector="button-end-tournament"
-                                matButton="outlined"
-                                (click)="endTournament(selectedTournament.id, selectedTournament.name)"
-                            >
-                                <mat-icon>stop</mat-icon>
-                                <span translate>BUTTON.STOP_TOURNAMENT</span>
-                            </button>
-                        }
+                @switch (selectedTournament.state) {
+                    @case (TournamentState.Preparation) {
+                        <button
+                            cySelector="button-start-tournament"
+                            matButton="outlined"
+                            (click)="startTournament(selectedTournament.id)"
+                        >
+                            <mat-icon>play_arrow</mat-icon>
+                            <span translate>BUTTON.START_TOURNAMENT</span>
+                        </button>
                     }
-                    <button
-                        matButton="outlined"
-                        (click)="deleteTournament(selectedTournament.id)"
-                    >
-                        <mat-icon>delete</mat-icon>
-                        <span translate>BUTTON.DELETE_TOURNAMENT</span>
-                    </button>
+                    @case (TournamentState.Progress) {
+                        <button
+                            cySelector="button-end-tournament"
+                            matButton="outlined"
+                            (click)="endTournament(selectedTournament.id, selectedTournament.name)"
+                        >
+                            <mat-icon>stop</mat-icon>
+                            <span translate>BUTTON.STOP_TOURNAMENT</span>
+                        </button>
+                    }
+                }
+                <button
+                    matButton="outlined"
+                    (click)="deleteTournament(selectedTournament.id)"
+                >
+                    <mat-icon>delete</mat-icon>
+                    <span translate>BUTTON.DELETE_TOURNAMENT</span>
+                </button>
             </mat-toolbar-row>
         }
     </mat-toolbar>
