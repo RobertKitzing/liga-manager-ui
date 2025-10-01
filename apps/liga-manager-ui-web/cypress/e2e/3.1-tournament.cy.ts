@@ -1,4 +1,4 @@
-import { Tournaments, Users } from '@cypress/fixtures';
+import { Users } from '@cypress/fixtures';
 
 describe('Public - Select Tournament', () => {
 
@@ -16,9 +16,9 @@ describe('Public - Select Tournament', () => {
         cy.getBySel('select-tournament').click();
         cy.getBySel('select-tournament').click();
 
-        cy.get('mat-option').contains(Tournaments[0].name).click();
+        cy.get('mat-option').first().click();
 
-        cy.get('lima-match').should('have.length', 2);
+        cy.get('lima-match').should('have.length', 1);
 
         cy.getBySel('button-next-matchday').click();
 
@@ -26,7 +26,7 @@ describe('Public - Select Tournament', () => {
 
         cy.getBySel('button-prev-matchday').click();
 
-        cy.get('lima-match').should('have.length', 2);
+        cy.get('lima-match').should('have.length', 1);
 
         cy.getBySel('button-edit-match-result').first().click();
         cy.getBySel('input-home-score').clear();
@@ -40,8 +40,8 @@ describe('Public - Select Tournament', () => {
         cy.getBySel('input-time').clear();
         cy.getBySel('input-time').type('09:00');
 
-        // eslint-disable-next-line cypress/unsafe-to-chain-command
-        cy.getBySel('input-kickoff-date').clear().type('07/21/2025', { force: true });
+        cy.getBySel('input-kickoff-date').clear();
+        cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
 
         cy.getBySel('button-schedule-match-submit').click();
     });

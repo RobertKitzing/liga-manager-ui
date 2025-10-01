@@ -30,11 +30,10 @@ describe('Admin - Create Season', () => {
             cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
             cy.contains(Users.teamAdmin.team).click();
 
-            for (let i = 0; i< 10; i++) {
+            for (let i = 0 ; i < 10; i++) {
                 cy.getBySel('input-team-auto-complete').clear();
                 cy.getBySel('input-team-auto-complete').click();
-                cy.getBySel(`team-${i}`).scrollIntoView();
-                cy.getBySel(`team-${i}`).click();
+                cy.get('mat-option').first().click();
             }
 
             cy.getBySel('season-management-tab-create-matchdays').click();

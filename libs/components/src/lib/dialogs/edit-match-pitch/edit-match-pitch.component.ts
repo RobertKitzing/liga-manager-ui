@@ -26,6 +26,7 @@ import { EditPitchDialogComponent } from '../edit-pitch';
 import { defaultDialogConfig } from '../default-dialog-config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EditMatchBaseComponent } from '../edit-match-base';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-edit-match-pitch',
@@ -46,6 +47,7 @@ import { EditMatchBaseComponent } from '../edit-match-base';
         AsyncPipe,
         MatCardModule,
         MatDialogModule,
+        CypressSelectorDirective,
     ],
 })
 export class EditMatchPitchComponent extends EditMatchBaseComponent {

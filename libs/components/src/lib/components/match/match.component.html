@@ -35,11 +35,11 @@
                                 (click)="canEditMatch && openEditResultDialog()"
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                             >
-                                <div>
+                                <div cySelector="match-home-score">
                                     {{ match().home_score | number }}
                                 </div>
                                 <div>:</div>
-                                <div>
+                                <div cySelector="match-guest-score">
                                     {{ match().guest_score | number }}
                                 </div>
                             </div>
@@ -91,6 +91,7 @@
                             </div>
                             <div
                                 class="flex flex-col text-center"
+                                cySelector="button-set-pitch"
                                 (click)="canEditMatch && openEditPitchDialog()"
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"
