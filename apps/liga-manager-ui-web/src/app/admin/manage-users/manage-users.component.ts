@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User } from '@liga-manager-api/graphql';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
-import { UserService } from '@liga-manager-ui/services';
+import { NotificationService, UserService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { defaultDialogConfig } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
     selector: 'lima-manage-users',
@@ -38,6 +39,8 @@ export class ManageUsersComponent {
     private userService = inject(UserService);
 
     private dialog = inject(MatDialog);
+
+    private notificationService = inject(NotificationService);
 
     displayedColumns: string[] = ['email', 'action'];
 
@@ -87,12 +90,14 @@ export class ManageUsersComponent {
         this.editUser();
     }
 
-    sendInviteMail(user_id: string) {
-        firstValueFrom(this.userService.sendInviteMail(user_id));
+    async sendInviteMail(user_id: string) {
+        await firstValueFrom(this.userService.sendInviteMail(user_id));
+        this.notificationService.showSuccessNotification(marker('SEND_MAIL_SUCCESS'), undefined, 'snackbar-success-send-mail');
     }
 
     sendPasswordMail(user_id: string) {
         firstValueFrom(this.userService.sendPasswordMail(user_id));
+        this.notificationService.showSuccessNotification(marker('SEND_MAIL_SUCCESS'), undefined, 'snackbar-success-send-mail');
     }
 
 }

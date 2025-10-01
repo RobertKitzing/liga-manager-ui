@@ -17,7 +17,7 @@ import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User, UserRole } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { generator } from 'ts-password-generator';
-import { TeamService, UserService } from '@liga-manager-ui/services';
+import { NotificationService, TeamService, UserService } from '@liga-manager-ui/services';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { CypressSelectorDirective, TrimDirective } from '@liga-manager-ui/directives';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
     selector: 'lima-edit-user-dialog',
@@ -59,6 +60,8 @@ export class EditUserDialogComponent implements OnInit {
     private userService = inject(UserService);
 
     private dialogRef = inject(MatDialogRef<EditUserDialogComponent>);
+
+    private notificationService = inject(NotificationService);
 
     UserRole = UserRole;
 
@@ -127,6 +130,7 @@ export class EditUserDialogComponent implements OnInit {
                 }),
             );
             await firstValueFrom(this.userService.sendInviteMail(user_id));
+            this.notificationService.showSuccessNotification(marker('SEND_MAIL_SUCCESS'), undefined, 'snackbar-success-send-mail');
             this.dialogRef.close();
         }
     }

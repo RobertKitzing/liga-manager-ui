@@ -15,6 +15,7 @@ describe('Create User', () => {
         cy.getBySel('select-team').click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-user').click({ force: true });
+        cy.getBySel('snackbar-success-send-mail').should('exist');
     });
 
     it('Should read an email', () => {

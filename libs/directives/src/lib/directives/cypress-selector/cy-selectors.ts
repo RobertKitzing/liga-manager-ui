@@ -71,4 +71,5 @@ export type CySelectors =
     | 'select-tournament'
     | 'snackbar-success-create-season'
     | 'snackbar-success-create-tournament'
+    | 'snackbar-success-send-mail'
 ;

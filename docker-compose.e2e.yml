@@ -26,7 +26,7 @@ services:
     environment:
       - ADMIN_EMAIL=admin@example.com
       - ADMIN_PASSWORD=123456
-      - APP_BASE_URL=http://localhost:4200
+      - APP_BASE_URL=http://localhost
       - DB_URL=pdo-mysql://lima:dev@mariadb/lima
       - EMAIL_SENDER_ADDRESS=noreply@example.com
       - EMAIL_SENDER_NAME=Wilde Liga Bremen
