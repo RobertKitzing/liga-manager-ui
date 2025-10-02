@@ -5,11 +5,13 @@ import { JSDOM } from 'jsdom';
 describe('Create User', () => {
 
     let email: string;
+    let password: string;
 
     before(
         () => {
             cy.maildevDeleteAllMessages();
-            email = Users.teamAdmin.username;
+            email = faker.internet.email({ provider: 'example.com'});
+            password = faker.internet.password({ length: 6});
         },
     );
 
@@ -24,9 +26,6 @@ describe('Create User', () => {
         cy.getBySel('input-last-name').type(faker.person.lastName());
         cy.getBySel('select-user-role').click();
         cy.getBySel('user-role-team_manager').click();
-        cy.getBySel('select-team').click();
-        cy.contains('mat-option', Users.teamAdmin.team).scrollIntoView();
-        cy.contains('mat-option', Users.teamAdmin.team).click();
         cy.getBySel('button-save-user').click({ force: true });
         cy.getBySel('snackbar-success-send-mail').should('exist');
     });
@@ -43,7 +42,7 @@ describe('Create User', () => {
                         cy.getBySel('input-first-name').type(faker.person.firstName());
                         cy.getBySel('input-last-name').clear();
                         cy.getBySel('input-last-name').type(faker.person.lastName());
-                        cy.getBySel('input-new-password').type(Users.teamAdmin.password);
+                        cy.getBySel('input-new-password').type(password);
                         cy.getBySel('button-save-user').click();
                         cy.getBySel('snackbar-success-edit-profile').should('exist');
                     },
@@ -52,14 +51,15 @@ describe('Create User', () => {
         );
     });
 
-    it('Should login as a TeamAdmin', () => {
+    it('Should login', () => {
         cy.visit('/');
         cy.getBySel('button-login').click();
-        cy.getBySel('input-username').type(Users.teamAdmin.username);
-        cy.getBySel('input-password').type(Users.teamAdmin.password);
+        cy.getBySel('input-username').type(email);
+        cy.getBySel('input-password').type(password);
         cy.getBySel('button-login-submit').click();
         cy.getBySel('button-user-menu').should('exist');
     });
+
     // it('Should change the password', () => {
     //     cy.visit('/');
     //     cy.getBySel('button-login').click();

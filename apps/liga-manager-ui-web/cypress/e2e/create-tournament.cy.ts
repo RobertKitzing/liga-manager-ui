@@ -6,6 +6,7 @@ describe('Admin - Create Tournament', () => {
     beforeEach(
         () => {
             cy.login(Users.admin.username, Users.admin.password);
+            cy.createTeams();
         },
     );
 
@@ -15,7 +16,8 @@ describe('Admin - Create Tournament', () => {
         cy.getBySel('route-admin-tournaments').first().click();
 
         for (let i = 0; i<3;i++) {
-            const name = faker.science.chemicalElement().name;
+            const name = faker.person.lastName();
+
             cy.getBySel('button-create-tournament').click();
             cy.getBySel('input-create-tournament-name').type(name);
 
@@ -33,10 +35,10 @@ describe('Admin - Create Tournament', () => {
 
             cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
 
-            cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
-            cy.get('mat-option').contains(Users.teamAdmin.team).click();
-            cy.getBySel('input-team-auto-complete-guest').first().click();
+            cy.getBySel('input-team-auto-complete-home').first().click();
             cy.getBySel('team-0').click();
+            cy.getBySel('input-team-auto-complete-guest').first().click();
+            cy.getBySel('team-1').click();
             cy.getBySel('button-add-match-to-tournament-round').click();
 
             cy.getBySel('button-save-tournament-round').click();
@@ -48,9 +50,9 @@ describe('Admin - Create Tournament', () => {
             cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
 
             cy.getBySel('input-team-auto-complete-home').first().click();
-            cy.getBySel('team-1').click();
-            cy.getBySel('input-team-auto-complete-guest').first().click();
             cy.getBySel('team-2').click();
+            cy.getBySel('input-team-auto-complete-guest').first().click();
+            cy.getBySel('team-3').click();
             cy.getBySel('button-add-match-to-tournament-round').click();
 
             cy.getBySel('button-save-tournament-round').click();

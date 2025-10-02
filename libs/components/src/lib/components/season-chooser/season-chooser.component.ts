@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SeasonState } from '@liga-manager-api/graphql';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { SeasonService } from '@liga-manager-ui/services';
+import { sortArrayBy } from '@liga-manager-ui/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { map } from 'rxjs';
 
@@ -49,12 +50,12 @@ export class SeasonChooserComponent implements ControlValueAccessor, OnInit {
     seasonList$ = this.seasonService.seasonList$.pipe(
         map(
             (seasonList) =>
-                seasonList.filter((season) =>
+                sortArrayBy(seasonList.filter((season) =>
                     this.filterSeasonStates.length > 0
                         ? season?.state &&
                           this.filterSeasonStates.includes(season?.state)
                         : true,
-                ) || [],
+                ) || [], 'name'),
         ),
     );
 

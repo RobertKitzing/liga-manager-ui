@@ -663,6 +663,14 @@ export type UserFragment = (
   )>>> }
 );
 
+export type CreateTeamMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateTeamMutation = Pick<Mutation, 'createTeam'>;
+
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
   home_score: Scalars['Int']['input'];
@@ -843,14 +851,6 @@ export type ReplaceTeamInSeasonMutationVariables = Exact<{
 
 
 export type ReplaceTeamInSeasonMutation = Pick<Mutation, 'replaceTeamInSeason'>;
-
-export type CreateTeamMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-}>;
-
-
-export type CreateTeamMutation = Pick<Mutation, 'createTeam'>;
 
 export type UpdateTeamContactMutationVariables = Exact<{
   team_id: Scalars['String']['input'];
@@ -1417,6 +1417,22 @@ export const RankingFragmentDoc = gql`
   }
 }
     `;
+export const CreateTeamDocument = gql`
+    mutation CreateTeam($id: String!, $name: String!) {
+  createTeam(id: $id, name: $name)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateTeamGQL extends Apollo.Mutation<CreateTeamMutation, CreateTeamMutationVariables> {
+    document = CreateTeamDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const SubmitResultDocument = gql`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
   submitMatchResult(
@@ -1798,22 +1814,6 @@ export const ReplaceTeamInSeasonDocument = gql`
   })
   export class ReplaceTeamInSeasonGQL extends Apollo.Mutation<ReplaceTeamInSeasonMutation, ReplaceTeamInSeasonMutationVariables> {
     document = ReplaceTeamInSeasonDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateTeamDocument = gql`
-    mutation CreateTeam($id: String!, $name: String!) {
-  createTeam(id: $id, name: $name)
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateTeamGQL extends Apollo.Mutation<CreateTeamMutation, CreateTeamMutationVariables> {
-    document = CreateTeamDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

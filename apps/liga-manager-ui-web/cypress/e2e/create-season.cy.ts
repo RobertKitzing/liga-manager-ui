@@ -7,6 +7,7 @@ describe('Admin - Create Season', () => {
     beforeEach(
         () => {
             cy.login(Users.admin.username, Users.admin.password);
+            cy.createTeams();
         },
     );
 
@@ -16,7 +17,7 @@ describe('Admin - Create Season', () => {
         cy.getBySel('route-admin-seasons').first().click();
 
         for (let i = 0; i < 3 ;i++) {
-            const name = faker.science.chemicalElement().name;
+            const name = faker.person.lastName();
 
             cy.getBySel('button-create-season').click();
             cy.getBySel('input-create-season-name').type(name);
@@ -25,10 +26,6 @@ describe('Admin - Create Season', () => {
             cy.getBySel('select-season').click();
             cy.contains(name).click();
             cy.getBySel('season-management-tab-select-teams').click();
-
-            cy.getBySel('input-team-auto-complete').clear();
-            cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
-            cy.contains(Users.teamAdmin.team).click();
 
             for (let i = 0 ; i < 10; i++) {
                 cy.getBySel('input-team-auto-complete').clear();

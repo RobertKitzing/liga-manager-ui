@@ -16,7 +16,7 @@ describe('Admin - Create Season', () => {
         cy.getBySel('route-admin-teams').first().click();
         cy.wait(['@graphql']);
 
-        const teams = Array.from({ length: 10 }, () => ({ name: faker.person.firstName() }) ).concat([ { name: Users.teamAdmin.team } ]);
+        const teams = Array.from({ length: 10 }, () => ({ name: faker.person.firstName() }) );
         for (const team of teams) {
             cy.getBySel('button-create-team').click();
             cy.getBySel('input-create-team-name').clear();

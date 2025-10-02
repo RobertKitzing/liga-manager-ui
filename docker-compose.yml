@@ -33,6 +33,7 @@ services:
       - assets:/lima/assets:ro
 
   api:
+    container_name: lima-api
     image: mklocke/liga-manager-api:latest
     ports:
       - "9000:9000"

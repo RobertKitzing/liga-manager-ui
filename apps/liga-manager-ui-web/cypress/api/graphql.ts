@@ -595,6 +595,14 @@ export type PenaltyFragment = { __typename?: 'RankingPenalty', id: string, reaso
     & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
   ) } & { ' $fragmentName'?: 'PenaltyFragment' };
 
+export type CreateTeamMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateTeamMutation = { __typename?: 'mutation', createTeam?: boolean | null };
+
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
   home_score: Scalars['Int']['input'];
@@ -775,14 +783,6 @@ export type ReplaceTeamInSeasonMutationVariables = Exact<{
 
 
 export type ReplaceTeamInSeasonMutation = { __typename?: 'mutation', replaceTeamInSeason?: boolean | null };
-
-export type CreateTeamMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-}>;
-
-
-export type CreateTeamMutation = { __typename?: 'mutation', createTeam?: boolean | null };
 
 export type UpdateTeamContactMutationVariables = Exact<{
   team_id: Scalars['String']['input'];
@@ -1671,6 +1671,11 @@ fragment Penalty on RankingPenalty {
   created_at
   points
 }`, {"fragmentName":"Ranking"}) as unknown as TypedDocumentString<RankingFragment, unknown>;
+export const CreateTeamDocument = new TypedDocumentString(`
+    mutation CreateTeam($id: String!, $name: String!) {
+  createTeam(id: $id, name: $name)
+}
+    `) as unknown as TypedDocumentString<CreateTeamMutation, CreateTeamMutationVariables>;
 export const SubmitResultDocument = new TypedDocumentString(`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
   submitMatchResult(
@@ -1815,11 +1820,6 @@ export const ReplaceTeamInSeasonDocument = new TypedDocumentString(`
   )
 }
     `) as unknown as TypedDocumentString<ReplaceTeamInSeasonMutation, ReplaceTeamInSeasonMutationVariables>;
-export const CreateTeamDocument = new TypedDocumentString(`
-    mutation CreateTeam($id: String!, $name: String!) {
-  createTeam(id: $id, name: $name)
-}
-    `) as unknown as TypedDocumentString<CreateTeamMutation, CreateTeamMutationVariables>;
 export const UpdateTeamContactDocument = new TypedDocumentString(`
     mutation UpdateTeamContact($team_id: String!, $first_name: String!, $last_name: String!, $phone: String!, $email: String!) {
   updateTeamContact(
