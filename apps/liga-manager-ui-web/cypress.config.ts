@@ -24,7 +24,7 @@ export default defineConfig({
         setupNodeEvents(on) {
             on('before:run', (details) => {
                 execSync(`docker exec lima-api lima app:user:create --email ${Users.admin.username} --password ${Users.admin.password} --role admin --first-name admin --last-name admin --locale en`);
-                prepareApi(details.config.e2e?.baseUrl || 'http://localhost:4200', 10).catch((e) => { throw e; });
+                prepareApi(details.config.e2e?.baseUrl || 'http://localhost', 10).catch((e) => { throw e; });
             });
         },
         experimentalInteractiveRunEvents: false,

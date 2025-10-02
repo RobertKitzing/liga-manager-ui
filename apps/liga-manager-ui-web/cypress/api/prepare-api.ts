@@ -40,14 +40,14 @@ function getAdminToken(baseUrl: string) {
     );
 }
 
-export function prepareApi(baseUrl: string, count: number = 10) {
+export function prepareApi(baseUrl: string, teamCount: number = 10) {
 
     return new Promise(
         (resolve, reject) => {
             getAdminToken(baseUrl).then(
                 async (token) => {
                     let query = 'mutation CreateTeams {\n';
-                    const teams = Array.from({ length: count }, () => ({ id: v4(), name: faker.person.firstName() }) ).concat([{ id: v4(), name: Users.teamAdmin.team }]);
+                    const teams = Array.from({ length: teamCount }, () => ({ id: v4(), name: faker.person.firstName() }) ).concat([{ id: v4(), name: Users.teamAdmin.team }]);
                     for (const i in teams) {
                         query += `createTeam${i}: createTeam(id: "${teams[i].id}", name: "${teams[i].name }")`;
                     }
