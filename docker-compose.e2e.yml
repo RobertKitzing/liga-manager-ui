@@ -36,9 +36,12 @@ services:
       - REDIS_HOST=redis
     volumes:
       - team-logos:/var/www/logos
-    depends_on:
-      - mariadb
-      - redis
+    healthcheck:
+      test: [ "CMD", "docker-php-healthcheck" ]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s
 
   redis:
     image: redis:alpine

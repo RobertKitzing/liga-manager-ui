@@ -18,9 +18,9 @@ describe('Create Pitch', () => {
 
         for (const pitch of pitches) {
             cy.getBySel('button-create-pitch').click();
-            cy.getBySel('input-pitch-name').type(pitch.name);
-            cy.getBySel('input-longitude').type(pitch.longitude);
-            cy.getBySel('input-latitude').type(pitch.latitude);
+            cy.getBySel('input-pitch-name').first().type(pitch.name);
+            cy.getBySel('input-longitude').first().type(pitch.longitude);
+            cy.getBySel('input-latitude').first().type(pitch.latitude);
             cy.getBySel('button-save-pitch').click();
             cy.getBySel('snackbar-success-create-pitch').should('exist');
         }

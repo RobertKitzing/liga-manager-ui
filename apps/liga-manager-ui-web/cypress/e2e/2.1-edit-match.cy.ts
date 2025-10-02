@@ -16,9 +16,9 @@ describe('Admin - Edit Match Result', () => {
 
     it('should edit an Match result', () => {
         cy.getBySel('button-edit-match-result').first().click();
-        cy.getBySel('input-home-score').clear();
+        cy.getBySel('input-home-score').clear({ force: true });
         cy.getBySel('input-home-score').type('10', { force: true });
-        cy.getBySel('input-guest-score').clear();
+        cy.getBySel('input-guest-score').clear({ force: true });
         cy.getBySel('input-guest-score').type('1', { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
         cy.getBySel('match-home-score').should('contain', 10);
@@ -27,9 +27,9 @@ describe('Admin - Edit Match Result', () => {
 
     it('should schedule an Match', () => {
         cy.getBySel('button-schedule-match').first().click();
-        cy.getBySel('input-time').clear();
+        cy.getBySel('input-time').clear({ force: true });
         cy.getBySel('input-time').type('09:00');
-        cy.getBySel('input-kickoff-date').clear();
+        cy.getBySel('input-kickoff-date').clear({ force: true });
         cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
         cy.getBySel('button-schedule-match-submit').click();
     });
