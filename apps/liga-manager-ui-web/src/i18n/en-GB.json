@@ -64,7 +64,11 @@
     "CREATE_TOURNAMENT_ERROR": "Tournament not creted",
     "CURRENT_TEAM_LOGO": "Current Team Logo",
     "Cancellation reason exceeds maximum length of 255": "Cancellation reason exceeds maximum length of 255",
-    "DARK_MODE": "Dark Mode",
+    "DARKMODE": {
+        "DARK_MODE": "dark",
+        "LIGHT_MODE": "light",
+        "SYSTEM_MODE": "system"
+    },
     "DESELECT_SEASON": "No Season",
     "DESELECT_TOURNAMENT": "",
     "EDITING_ROUND": "Edit Round {{ round }}",
@@ -90,7 +94,6 @@
     "GAMES": "Games",
     "LAST_NAME": "Last Name",
     "LATITUDE": "Latitude",
-    "LIGHT_MODE": "Light Mode",
     "LOCAL_TIME_ZONE_HINT": "Time ({{ timeZone }})",
     "LOGIN_TITLE": "Login",
     "LONGITUDE": "Longitude",
@@ -116,6 +119,17 @@
         "TEAM": "Contact",
         "TEAMS_MANAGEMENT": "Team Management",
         "TOURNAMENT": "Tournament"
+    },
+    "NAVIGATION_ADMIN": {
+        "PITCHES": "Pitch Management",
+        "SEASONS": "Season Management",
+        "TEAMS": "Team Management",
+        "TOURNAMENTS": "Tournament Management",
+        "USERS": "User Management"
+    },
+    "NAVIGATION_TEAMS_MANAGEMENT": {
+        "CONTACT": "Contact",
+        "TEAM_LOGOS": "Logo"
     },
     "NEW_KICKOFF": "New Kickoff",
     "NEW_KICKOFF_DATE": "Date",
@@ -184,7 +198,6 @@
         "TEAM_CONTACT_SAVED": "Team Contact saved",
         "UPLOAD_TEAM_LOGO": "Team Logo uploaded"
     },
-    "SYSTEM_MODE": "System",
     "SeasonState": {
         "ended": "ended",
         "preparation": "preparation",

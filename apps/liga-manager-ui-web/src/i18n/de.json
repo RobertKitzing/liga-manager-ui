@@ -64,7 +64,11 @@
     "CREATE_TOURNAMENT_ERROR": "",
     "CURRENT_TEAM_LOGO": "",
     "Cancellation reason exceeds maximum length of 255": "",
-    "DARK_MODE": "Dark mode",
+    "DARKMODE": {
+        "DARK_MODE": "",
+        "LIGHT_MODE": "",
+        "SYSTEM_MODE": ""
+    },
     "DESELECT_SEASON": "",
     "DESELECT_TOURNAMENT": "",
     "EDITING_ROUND": "",
@@ -90,7 +94,6 @@
     "GAMES": "Spiele",
     "LAST_NAME": "",
     "LATITUDE": "",
-    "LIGHT_MODE": "Heller Modus",
     "LOCAL_TIME_ZONE_HINT": "Uhrzeit ({{ timeZone }})",
     "LOGIN_TITLE": "",
     "LONGITUDE": "",
@@ -116,6 +119,17 @@
         "TEAM": "",
         "TEAMS_MANAGEMENT": "",
         "TOURNAMENT": "Pokal"
+    },
+    "NAVIGATION_ADMIN": {
+        "PITCHES": "",
+        "SEASONS": "",
+        "TEAMS": "",
+        "TOURNAMENTS": "",
+        "USERS": ""
+    },
+    "NAVIGATION_TEAMS_MANAGEMENT": {
+        "CONTACT": "",
+        "TEAM_LOGOS": ""
     },
     "NEW_KICKOFF": "",
     "NEW_KICKOFF_DATE": "",
@@ -184,7 +198,6 @@
         "TEAM_CONTACT_SAVED": "",
         "UPLOAD_TEAM_LOGO": ""
     },
-    "SYSTEM_MODE": "",
     "SeasonState": {
         "ended": "beendet",
         "preparation": "vorbereitung",
