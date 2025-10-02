@@ -134,9 +134,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Run copies of the current job in parallel. These need to be a
-        # continuous series of numbers, starting with `0`. If you change the
-        # number of containers, change TOTAL_RUNNERS below.
         containers: [0, 1]
 
     steps:
@@ -174,7 +171,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --parallel
+          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --parallel --group 2x-chrome
 
   build-app-staging:
     runs-on: ubuntu-latest

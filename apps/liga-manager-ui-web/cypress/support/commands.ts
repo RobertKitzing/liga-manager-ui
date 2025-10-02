@@ -1,3 +1,4 @@
+import { graphql } from '@cypress/api';
 import { Base64 } from 'js-base64';
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
@@ -5,15 +6,8 @@ Cypress.Commands.add('getBySel', (selector, ...args) => {
 });
 
 const login = (username: string, password: string) => {
-    const query = `
-    {
-        authenticatedUser {
-          id
-        }
-    }
-    `;
+    const query = graphql('query AuthenticatedUserId {\n  authenticatedUser {\n    id\n  }\n}');
     const body = {
-        operationName: 'AuthenticatedUser',
         query,
         variables: {},
     };

@@ -5,6 +5,12 @@ const config: CodegenConfig = {
     documents: 'libs/api-graphql/graphql/**/*.graphql',
     overwrite: true,
     generates: {
+        'apps/liga-manager-ui-web/cypress/api/': {
+            preset: 'client',
+            config: {
+                documentMode: 'string',
+            },
+        },
         'libs/api-graphql/src/gen/graphql.ts': {
             config: {
                 content: [

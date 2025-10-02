@@ -957,6 +957,11 @@ export type InviteUserMutationVariables = Exact<{
 
 export type InviteUserMutation = Pick<Mutation, 'sendInviteMail'>;
 
+export type AuthenticatedUserIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AuthenticatedUserIdQuery = { authenticatedUser?: Maybe<Pick<User, 'id'>> };
+
 export type CalendarQueryVariables = Exact<{
   min_date?: InputMaybe<Scalars['DateTime']['input']>;
   max_date?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2027,6 +2032,24 @@ export const InviteUserDocument = gql`
   })
   export class InviteUserGQL extends Apollo.Mutation<InviteUserMutation, InviteUserMutationVariables> {
     document = InviteUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AuthenticatedUserIdDocument = gql`
+    query AuthenticatedUserId {
+  authenticatedUser {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AuthenticatedUserIdGQL extends Apollo.Query<AuthenticatedUserIdQuery, AuthenticatedUserIdQueryVariables> {
+    document = AuthenticatedUserIdDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
