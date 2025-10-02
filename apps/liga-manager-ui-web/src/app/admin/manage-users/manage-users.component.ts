@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
@@ -10,12 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { defaultDialogConfig } from '@liga-manager-ui/components';
+import { ConfirmComponent, defaultDialogConfig } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-manage-users',
@@ -41,6 +42,10 @@ export class ManageUsersComponent {
     private dialog = inject(MatDialog);
 
     private notificationService = inject(NotificationService);
+
+    private translateService = inject(TranslateService);
+
+    private destroyRef = inject(DestroyRef);
 
     displayedColumns: string[] = ['email', 'action'];
 
@@ -82,8 +87,30 @@ export class ManageUsersComponent {
     }
 
     deleteUser(user?: User) {
-        // TODO: Confirm Dialog
-        firstValueFrom(this.userService.deleteUser({ user_id: user?.id || '' }));
+        this.dialog.open(ConfirmComponent,
+            {
+                ...defaultDialogConfig,
+                data: {
+                    body: this.translateService.instant('CONFIRM.ARE_YOU_SURE_TO_DELETE_USER', { user: user?.email }),
+                },
+            },
+        )
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                async (result) => {
+                    if (result) {
+                        try {
+                            await firstValueFrom(this.userService.deleteUser({ user_id: user?.id || '' }));
+                            this.notificationService.showSuccessNotification(
+                                this.translateService.instant('SUCCESS.DELETE_USER'),
+                            );
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }
+                },
+            );
     }
 
     createUser() {

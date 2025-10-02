@@ -15,8 +15,6 @@ export const teamResolver: ResolveFn<Observable<unknown>> = (route) => {
         teamid = route.parent.paramMap.get('teamid');
     }
 
-    console.log(teamid);
-
     return teamid ? inject(TeamService).getTeamById(teamid) : of(null);
 
 };

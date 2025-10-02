@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { iif, tap } from 'rxjs';
 import { TeamService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
@@ -39,8 +39,6 @@ export class TeamsManagementComponent {
 
     private store = inject(Store);
 
-    private destroyRef = inject(DestroyRef);
-
     selectedTeamFC = new FormControl();
 
     teams$ = iif(
@@ -49,7 +47,6 @@ export class TeamsManagementComponent {
         this.store.select(AuthStateSelectors.userTeams),
     ).pipe(
         tap((teams) => {
-            console.log(teams);
             const selectedTeamId = this.store.selectSnapshot(SelectedItemsSelectors.selectedTeamId('team-management'));
             if (!selectedTeamId) {
                 this.selectedTeamFC.setValue(teams?.at(0), { emitEvent: false });

@@ -1,5 +1,5 @@
 {
-    "ignorePatterns": ["!**/*", "node_modules/**/*", "cypress/api/**/*.ts"],
+    "ignorePatterns": ["!**/*", "node_modules/**/*", "cypress/api/gen/**/*.ts"],
     "overrides": [
         {
             "files": ["*.ts"],

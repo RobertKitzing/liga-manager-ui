@@ -1,3 +1,4 @@
+import { prepareApi } from '@cypress/api';
 import { Users } from '@cypress/fixtures';
 import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset';
 import { defineConfig } from 'cypress';
@@ -21,9 +22,9 @@ export default defineConfig({
             MAILDEV_API_PORT: '1080',
         },
         setupNodeEvents(on) {
-            on('before:run', () => {
+            on('before:run', (details) => {
                 execSync(`docker exec lima-api lima app:user:create --email ${Users.admin.username} --password ${Users.admin.password} --role admin --first-name admin --last-name admin --locale en`);
-                execSync(`docker exec lima-api lima app:user:create --email ${Users.teamAdmin.username} --password ${Users.teamAdmin.password} --role team_manager --first-name team --last-name admin --locale en`);
+                prepareApi(details.config.e2e?.baseUrl || 'http://localhost:4200', 10).catch((e) => { throw e; });
             });
         },
         experimentalInteractiveRunEvents: false,

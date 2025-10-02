@@ -671,6 +671,19 @@ export type CreateTeamMutationVariables = Exact<{
 
 export type CreateTeamMutation = Pick<Mutation, 'createTeam'>;
 
+export type CreateUserMutationVariables = Exact<{
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  first_name: Scalars['String']['input'];
+  last_name: Scalars['String']['input'];
+  role: Scalars['String']['input'];
+  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateUserMutation = Pick<Mutation, 'createUser'>;
+
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
   home_score: Scalars['Int']['input'];
@@ -916,19 +929,6 @@ export type EndTournamentMutationVariables = Exact<{
 
 
 export type EndTournamentMutation = Pick<Mutation, 'endTournament'>;
-
-export type CreateUserMutationVariables = Exact<{
-  user_id?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-  first_name: Scalars['String']['input'];
-  last_name: Scalars['String']['input'];
-  role: Scalars['String']['input'];
-  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type CreateUserMutation = Pick<Mutation, 'createUser'>;
 
 export type UpdateUserMutationVariables = Exact<{
   user_id: Scalars['String']['input'];
@@ -1428,6 +1428,30 @@ export const CreateTeamDocument = gql`
   })
   export class CreateTeamGQL extends Apollo.Mutation<CreateTeamMutation, CreateTeamMutationVariables> {
     document = CreateTeamDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateUserDocument = gql`
+    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
+  createUser(
+    id: $user_id
+    email: $email
+    password: $password
+    first_name: $first_name
+    last_name: $last_name
+    role: $role
+    team_ids: $team_ids
+  )
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
+    document = CreateUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1953,30 +1977,6 @@ export const EndTournamentDocument = gql`
   })
   export class EndTournamentGQL extends Apollo.Mutation<EndTournamentMutation, EndTournamentMutationVariables> {
     document = EndTournamentDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateUserDocument = gql`
-    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
-  createUser(
-    id: $user_id
-    email: $email
-    password: $password
-    first_name: $first_name
-    last_name: $last_name
-    role: $role
-    team_ids: $team_ids
-  )
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
-    document = CreateUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

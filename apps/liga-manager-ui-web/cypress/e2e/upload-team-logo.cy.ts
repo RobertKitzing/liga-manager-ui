@@ -1,6 +1,6 @@
 import { Users } from '@cypress/fixtures';
 
-describe('Admin - Create Season', () => {
+describe('Admin - Upload Team Logo', () => {
 
     beforeEach(
         () => {
@@ -14,7 +14,9 @@ describe('Admin - Create Season', () => {
 
         cy.getBySel('route-teams-management-logo').first().click();
 
-        cy.getBySel('button-upload-team-logo').click();
+        // cy.getBySel('button-upload-team-logo').click();
+        cy.get('input[type=file]').selectFile('file.json');
+
     });
 
 });

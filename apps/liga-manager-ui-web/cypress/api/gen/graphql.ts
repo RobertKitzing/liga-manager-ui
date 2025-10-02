@@ -603,6 +603,19 @@ export type CreateTeamMutationVariables = Exact<{
 
 export type CreateTeamMutation = { __typename?: 'mutation', createTeam?: boolean | null };
 
+export type CreateUserMutationVariables = Exact<{
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  first_name: Scalars['String']['input'];
+  last_name: Scalars['String']['input'];
+  role: Scalars['String']['input'];
+  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'mutation', createUser?: boolean | null };
+
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
   home_score: Scalars['Int']['input'];
@@ -848,19 +861,6 @@ export type EndTournamentMutationVariables = Exact<{
 
 
 export type EndTournamentMutation = { __typename?: 'mutation', endTournament?: boolean | null };
-
-export type CreateUserMutationVariables = Exact<{
-  user_id?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-  first_name: Scalars['String']['input'];
-  last_name: Scalars['String']['input'];
-  role: Scalars['String']['input'];
-  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type CreateUserMutation = { __typename?: 'mutation', createUser?: boolean | null };
 
 export type UpdateUserMutationVariables = Exact<{
   user_id: Scalars['String']['input'];
@@ -1676,6 +1676,19 @@ export const CreateTeamDocument = new TypedDocumentString(`
   createTeam(id: $id, name: $name)
 }
     `) as unknown as TypedDocumentString<CreateTeamMutation, CreateTeamMutationVariables>;
+export const CreateUserDocument = new TypedDocumentString(`
+    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
+  createUser(
+    id: $user_id
+    email: $email
+    password: $password
+    first_name: $first_name
+    last_name: $last_name
+    role: $role
+    team_ids: $team_ids
+  )
+}
+    `) as unknown as TypedDocumentString<CreateUserMutation, CreateUserMutationVariables>;
 export const SubmitResultDocument = new TypedDocumentString(`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
   submitMatchResult(
@@ -1871,19 +1884,6 @@ export const EndTournamentDocument = new TypedDocumentString(`
   endTournament(tournament_id: $tournament_id)
 }
     `) as unknown as TypedDocumentString<EndTournamentMutation, EndTournamentMutationVariables>;
-export const CreateUserDocument = new TypedDocumentString(`
-    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
-  createUser(
-    id: $user_id
-    email: $email
-    password: $password
-    first_name: $first_name
-    last_name: $last_name
-    role: $role
-    team_ids: $team_ids
-  )
-}
-    `) as unknown as TypedDocumentString<CreateUserMutation, CreateUserMutationVariables>;
 export const UpdateUserDocument = new TypedDocumentString(`
     mutation UpdateUser($user_id: String!, $email: String, $first_name: String, $last_name: String, $role: String, $team_ids: [String]) {
   updateUser(

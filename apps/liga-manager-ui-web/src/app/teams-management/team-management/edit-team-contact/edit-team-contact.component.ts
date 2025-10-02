@@ -49,7 +49,6 @@ export class EditTeamContactComponent {
     constructor() {
         effect(
             () => {
-                console.log(this.team());
                 if (this.team()?.contact) {
                     this.teamContact.patchValue(
                         {
