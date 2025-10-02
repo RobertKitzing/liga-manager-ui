@@ -41,6 +41,7 @@
                         <button
                             class="w-full mt-8"
                             matButton="outlined"
+                            cySelector="button-save-team-logo"
                             (click)="saveTeamLogo(team()?.id)"
                         >
                             <mat-icon>save</mat-icon>
@@ -60,7 +61,7 @@
                     <mat-icon>upload</mat-icon>
                     <span translate>UPLOAD_TEAM_LOGO</span>
                 </button>
-                <input type="file" hidden>
+                <input type="file" hidden (change)="handleFileInput($event.target.files)">
             </div>
         </mat-card-actions>
     }

@@ -61,6 +61,8 @@ export class EditTeamLogoComponent {
             this.reload(teamId);
             this.notificationService.showSuccessNotification(
                 marker('SUCCESS.UPLOAD_TEAM_LOGO'),
+                undefined,
+                'snackbar-success-save-team-logo',
             );
             this.previewImage.set(null);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,9 +94,22 @@ export class EditTeamLogoComponent {
     }
 
     async chooseFile() {
-        const result = await FilePicker.pickMedia({ readData: true, limit: 1  });
+        const result = await FilePicker.pickImages({ readData: true, limit: 1  });
         const file = result.files[0];
-        this.previewImage.set( `data:${file.mimeType};base64, ${file.data}` );
+        this.previewImage.set(`data:${file.mimeType};base64, ${file.data}`);
+    }
+
+    handleFileInput(files: FileList | null) {
+        console.log(files);
+        if (files) {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                if (reader.result && typeof reader.result === 'string') {
+                    this.previewImage.set(reader.result);
+                }
+            });
+            reader.readAsDataURL(files[0]);
+        }
     }
 
 }

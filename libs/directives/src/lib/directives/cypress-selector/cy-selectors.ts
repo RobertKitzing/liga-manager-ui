@@ -25,6 +25,7 @@ export type CySelectors =
     | 'button-prev-matchday'
     | 'button-save-match-days'
     | 'button-save-pitch'
+    | 'button-save-team-logo'
     | 'button-save-tournament-round'
     | 'button-save-user'
     | 'button-schedule-match'
@@ -89,5 +90,6 @@ export type CySelectors =
     | 'snackbar-success-create-tournament'
     | 'snackbar-success-edit-profile'
     | 'snackbar-success-send-mail'
+    | 'snackbar-success-save-team-logo'
     | string
 ;

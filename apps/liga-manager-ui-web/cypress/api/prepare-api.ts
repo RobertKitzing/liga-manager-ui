@@ -40,16 +40,25 @@ function getAdminToken(baseUrl: string) {
     );
 }
 
-export function prepareApi(baseUrl: string, teamCount: number = 10) {
+export function prepareApi(baseUrl: string, teamCount = 10, pitchCount = 10) {
 
     return new Promise(
         (resolve, reject) => {
             getAdminToken(baseUrl).then(
                 async (token) => {
-                    let query = 'mutation CreateTeams {\n';
+                    let query = 'mutation PrepareApi {\n';
                     const teams = Array.from({ length: teamCount }, () => ({ id: v4(), name: faker.person.firstName() }) ).concat([{ id: v4(), name: Users.teamAdmin.team }]);
                     for (const i in teams) {
-                        query += `createTeam${i}: createTeam(id: "${teams[i].id}", name: "${teams[i].name }")`;
+                        query += `createTeam${i}: createTeam(id: "${teams[i].id}", name: "${teams[i].name }") \n`;
+                    }
+                    const pitches = Array.from({ length: pitchCount }, () => ({
+                        id: v4(),
+                        label: faker.location.city(),
+                        longitude: faker.location.longitude(),
+                        latitude: faker.location.latitude(),
+                    }) );
+                    for (const i in pitches) {
+                        query += `createPitch${i}: createPitch(id: "${pitches[i].id}", label: "${pitches[i].label}", longitude: ${pitches[i].longitude}, latitude: ${pitches[i].latitude}) \n`;
                     }
                     query += '}';
                     const body = {
@@ -64,7 +73,8 @@ export function prepareApi(baseUrl: string, teamCount: number = 10) {
                             'Authorization': `Bearer ${token}`,
                         },
                     }).then(
-                        () => {
+                        (res) => {
+                            console.log(res);
                             const query = graphql('mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {\n  createUser(\n    id: $user_id\n    email: $email\n    password: $password\n    first_name: $first_name\n    last_name: $last_name\n    role: $role\n    team_ids: $team_ids\n  )\n}');
                             const variables: CreateUserMutationVariables = {
                                 email: Users.teamAdmin.username,
@@ -88,6 +98,7 @@ export function prepareApi(baseUrl: string, teamCount: number = 10) {
                                 },
                             }).then(
                                 (res) => {
+                                    console.log(res);
                                     resolve(res);
                                 },
                             ).catch(

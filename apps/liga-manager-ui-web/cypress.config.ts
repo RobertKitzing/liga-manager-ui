@@ -22,9 +22,10 @@ export default defineConfig({
             MAILDEV_API_PORT: '1080',
         },
         setupNodeEvents(on) {
-            on('before:run', (details) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            on('before:run', (details: any) => {
                 execSync(`docker exec lima-api lima app:user:create --email ${Users.admin.username} --password ${Users.admin.password} --role admin --first-name admin --last-name admin --locale en`);
-                prepareApi(details.config.e2e?.baseUrl || 'http://localhost', 10).catch((e) => { throw e; });
+                prepareApi(details.config.baseUrl || 'http://localhost', 10).catch((e) => { throw e; });
             });
         },
         experimentalInteractiveRunEvents: false,
