@@ -98,6 +98,11 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
 
         cy.getBySel('button-schedule-match-submit').click();
+
+        cy.getBySel('button-set-pitch').first().click();
+        cy.get('mat-option').first().click();
+        cy.getBySel('button-save-pitch').click();
+
     });
 
     it('Should select a Tournament and edit a match as a team-admnin', () => {
@@ -136,6 +141,11 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
 
         cy.getBySel('button-schedule-match-submit').click();
+
+        cy.getBySel('button-set-pitch').first().click();
+        cy.get('mat-option').first().click();
+        cy.getBySel('button-save-pitch').click();
+
     });
 
     it('Should go to Schedule', () => {

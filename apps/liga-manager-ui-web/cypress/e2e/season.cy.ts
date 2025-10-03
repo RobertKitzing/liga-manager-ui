@@ -64,8 +64,6 @@ describe('Admin - Season', () => {
         cy.getBySel('input-guest-score').clear({ force: true });
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
-        cy.getBySel('match-home-score').should('contain', 10);
-        cy.getBySel('match-guest-score').should('contain', 1);
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear({ force: true });
@@ -95,8 +93,6 @@ describe('Admin - Season', () => {
         cy.getBySel('input-guest-score').clear({ force: true });
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
-        cy.getBySel('match-home-score').should('contain', 10);
-        cy.getBySel('match-guest-score').should('contain', 1);
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear({ force: true });
