@@ -1,9 +1,9 @@
-import { Component, DestroyRef, effect, inject, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { NotificationService, TeamService, TournamentService } from '@liga-manager-ui/services';
+import { NotificationService, TeamService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import { ApiDate, Match, MatchDay, Maybe, Team } from '@liga-manager-api/graphql';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
@@ -15,6 +15,8 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { parseISO } from 'date-fns';
+import { Store } from '@ngxs/store';
+import { CreateTournamentRound } from '@liga-manager-ui/states';
 
 function typeofTeamValidator(): ValidatorFn {
     return (control) => {
@@ -59,7 +61,7 @@ export class EditTournamentRoundComponent {
 
     filteredGuestTeams = signal<Maybe<Team>[] | undefined | null>([]);
 
-    private tournamentService = inject(TournamentService);
+    private store = inject(Store);
 
     private notificationService = inject(NotificationService);
 
@@ -78,8 +80,6 @@ export class EditTournamentRoundComponent {
     });
 
     matches = signal<Maybe<Match>[]>([]);
-
-    destroyRef = inject(DestroyRef);
 
     constructor() {
         effect(() => {
@@ -105,7 +105,7 @@ export class EditTournamentRoundComponent {
                 return;
             }
             await firstValueFrom(
-                this.tournamentService.createRound({
+                this.store.dispatch(new CreateTournamentRound({
                     tournament_id: this.tournamentId(),
                     date_period: {
                         from: new ApiDate(this.roundDates.controls.from.value),
@@ -114,7 +114,7 @@ export class EditTournamentRoundComponent {
                     round,
                     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                     team_id_pairs: this.matches().map((t) => ({ home_team_id: t?.home_team.id!, guest_team_id: t?.guest_team.id! })),
-                }),
+                })),
             );
             this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.CREATE_TOURNAMENT_ROUND'));
             this.roundEdited.emit(true);

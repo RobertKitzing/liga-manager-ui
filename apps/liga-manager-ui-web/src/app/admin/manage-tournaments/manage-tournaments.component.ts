@@ -18,7 +18,7 @@ import { firstValueFrom, of, switchMap, tap } from 'rxjs';
 import { CreateNewTournamentComponent } from './create-new-tournament';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
-import { SelectedItemsSelectors, SetSelectedTournament } from '@liga-manager-ui/states';
+import { DeleteTournament, EndTournament, SelectedItemsSelectors, SetSelectedTournament, StartTournament } from '@liga-manager-ui/states';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -70,6 +70,8 @@ export class ManageTournamentsComponent implements OnInit {
         tap((tournamentId) => {
             if (tournamentId) {
                 this.selectedTournamentFC.setValue(tournamentId, { emitEvent: false });
+            } else {
+                this.selectedTournamentFC.reset();
             }
         }),
         switchMap((tournamentId) =>
@@ -101,9 +103,9 @@ export class ManageTournamentsComponent implements OnInit {
         this.createRoundMode.set(undefined);
     }
 
-    async startTournament(id: string) {
+    async startTournament(tournament_id: string) {
         try {
-            await firstValueFrom(this.tournamentService.startTournament(id));
+            await firstValueFrom(this.store.dispatch(new StartTournament({ tournament_id })));
             this.notificationService.showSuccessNotification(
                 this.translateService.instant('SUCCESS.START_TOURNAMENT'),
             );
@@ -112,7 +114,7 @@ export class ManageTournamentsComponent implements OnInit {
         }
     }
 
-    endTournament(id: string, name: string) {
+    endTournament(tournament_id: string, name: string) {
         this.dialog.open(ConfirmComponent,
             {
                 ...defaultDialogConfig,
@@ -127,7 +129,7 @@ export class ManageTournamentsComponent implements OnInit {
                 async (result) => {
                     if (result) {
                         try {
-                            await firstValueFrom(this.tournamentService.endTournament(id));
+                            await firstValueFrom(this.store.dispatch(new EndTournament({ tournament_id })));
                             this.notificationService.showSuccessNotification(
                                 this.translateService.instant('SUCCESS.END_TOURNAMENT'),
                             );
@@ -139,9 +141,32 @@ export class ManageTournamentsComponent implements OnInit {
             );
     }
 
-    deleteTournament(id: string) {
-        firstValueFrom(this.tournamentService.deleteTournament(id));
-        this.selectedTournamentFC.reset();
+    deleteTournament(tournament_id: string, name: string) {
+        this.dialog.open(ConfirmComponent,
+            {
+                ...defaultDialogConfig,
+                data: {
+                    body: this.translateService.instant('ARE_YOU_SURE_TO_DELETE_THIS_TOURNAMENT', { tournament: name }),
+                },
+            },
+        )
+            .afterClosed()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                async (result) => {
+                    if (result) {
+                        try {
+                            firstValueFrom(this.store.dispatch(new DeleteTournament({ tournament_id }) ));
+                            this.notificationService.showSuccessNotification(
+                                this.translateService.instant('SUCCESS.DELETE_TOURNAMENT'),
+                            );
+                            this.selectedTournamentFC.reset();
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }
+                },
+            );
     }
 
 }

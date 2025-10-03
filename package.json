@@ -100,7 +100,7 @@
         "@angular-eslint/eslint-plugin": "20.2.0",
         "@angular-eslint/eslint-plugin-template": "20.2.0",
         "@angular-eslint/template-parser": "20.2.0",
-        "@angular/build": "20.2.2",
+        "@angular/build": "20.3.4",
         "@angular/cli": "20.2.2",
         "@angular/compiler-cli": "20.2.4",
         "@capacitor/assets": "^3.0.5",

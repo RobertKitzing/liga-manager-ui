@@ -8,7 +8,7 @@ import {
 } from '@liga-manager-ui/components';
 import { CustomDatePipe, SortByPipe } from '@liga-manager-ui/pipes';
 import { TranslateModule } from '@ngx-translate/core';
-import { firstValueFrom, of, Subject, switchMap, tap } from 'rxjs';
+import { of, Subject, switchMap, tap } from 'rxjs';
 import { GestureService, TournamentService } from '@liga-manager-ui/services';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatSelectModule } from '@angular/material/select';
@@ -16,7 +16,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { GetTournaments, SelectedContextTypes, SelectedItemsSelectors, SetSelectedTournament, SetSelectedTournamentRound } from '@liga-manager-ui/states';
+import { SelectedContextTypes, SelectedItemsSelectors, SetSelectedTournament, SetSelectedTournamentRound } from '@liga-manager-ui/states';
 import { dispatch, Store } from '@ngxs/store';
 import { AsyncPipe } from '@angular/common';
 
@@ -61,32 +61,33 @@ export class TournamentComponent implements OnInit {
 
     tournament$ = toObservable(this.viewContext).pipe(
         switchMap(
-            (viewContext) => this.store.select(SelectedItemsSelectors.selectedTournamentId(viewContext)).pipe(
-                tap(
-                    (selectedTournamentId) => {
-                        if (selectedTournamentId) {
-                            this.selectedTournamentFC.setValue(selectedTournamentId);
-                        }
-                    },
+            (viewContext) =>
+                this.store.select(SelectedItemsSelectors.selectedTournamentId(viewContext)).pipe(
+                    tap(
+                        (selectedTournamentId) => {
+                            if (selectedTournamentId) {
+                                this.selectedTournamentFC.setValue(selectedTournamentId);
+                            }
+                        },
+                    ),
+                    switchMap(
+                        (selectedTournamentId) =>
+                            selectedTournamentId ?
+                                this.tournamentService.getTournamentById$(selectedTournamentId).pipe(
+                                    tap(
+                                        (tournament) => {
+                                            const stateTournamentRound = this.store.selectSnapshot(SelectedItemsSelectors.selectedTournamentRoundId(this.viewContext()));
+                                            let selectedTournamentRound = tournament?.rounds![0]?.id;
+                                            if (stateTournamentRound && tournament?.rounds?.find((t) => t?.id === stateTournamentRound) ) {
+                                                selectedTournamentRound = stateTournamentRound;
+                                            }
+                                            this.selectedTournamentRoundIdFC.setValue(selectedTournamentRound);
+                                        },
+                                    ),
+                                ) :
+                                of(null),
+                    ),
                 ),
-                switchMap(
-                    (selectedTournamentId) =>
-                        selectedTournamentId ?
-                            this.tournamentService.getTournamentById$(selectedTournamentId).pipe(
-                                tap(
-                                    (tournament) => {
-                                        const stateTournamentRound = this.store.selectSnapshot(SelectedItemsSelectors.selectedTournamentRoundId(this.viewContext()));
-                                        let selectedTournamentRound = tournament?.rounds![0]?.id;
-                                        if (stateTournamentRound && tournament?.rounds?.find((t) => t?.id === stateTournamentRound) ) {
-                                            selectedTournamentRound = stateTournamentRound;
-                                        }
-                                        this.selectedTournamentRoundIdFC.setValue(selectedTournamentRound);
-                                    },
-                                ),
-                            ) :
-                            of(null),
-                ),
-            ),
         ),
     );
 
@@ -135,7 +136,7 @@ export class TournamentComponent implements OnInit {
     }
 
     async refresh(event?: Subject<void>) {
-        await firstValueFrom(this.store.dispatch( new GetTournaments(true)));
+        // await firstValueFrom(this.store.dispatch( new GetTournaments(true)));
         event?.next();
     }
 
