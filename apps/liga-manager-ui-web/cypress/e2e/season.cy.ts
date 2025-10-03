@@ -4,13 +4,10 @@ import { format } from 'date-fns';
 
 describe('Admin - Season', () => {
 
-    beforeEach(
-        () => {
-            cy.login(Users.admin.username, Users.admin.password);
-        },
-    );
-
     it('Should create a season', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
         cy.visit('/');
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-seasons').first().click();
@@ -52,7 +49,10 @@ describe('Admin - Season', () => {
         }
     });
 
-    it('should edit an Match', () => {
+    it('should edit an Match as a admin', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
         cy.visit('/');
         cy.getBySel('route-schedule').first().click();
         cy.getBySel('select-season').click();
@@ -60,9 +60,9 @@ describe('Admin - Season', () => {
 
         cy.getBySel('button-edit-match-result').first().click();
         cy.getBySel('input-home-score').clear({ force: true });
-        cy.getBySel('input-home-score').type('10', { force: true });
+        cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('input-guest-score').clear({ force: true });
-        cy.getBySel('input-guest-score').type('1', { force: true });
+        cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
         cy.getBySel('match-home-score').should('contain', 10);
         cy.getBySel('match-guest-score').should('contain', 1);
@@ -74,9 +74,63 @@ describe('Admin - Season', () => {
         cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
         cy.getBySel('button-schedule-match-submit').click();
 
-        // cy.getBySel('button-set-pitch').first().click();
-        // cy.get('mat-option').first().click();
-        // cy.getBySel('button-save-pitch').click();
+        cy.getBySel('button-set-pitch').first().click();
+        cy.get('mat-option').first().click();
+        cy.getBySel('button-save-pitch').click();
+
+    });
+
+    it('should edit an Match as a team-admin', () => {
+
+        cy.login(Users.teamAdmin.username, Users.teamAdmin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-schedule').first().click();
+        cy.getBySel('select-season').click();
+        cy.get('mat-option').first().click();
+
+        cy.getBySel('button-edit-match-result').first().click();
+        cy.getBySel('input-home-score').clear({ force: true });
+        cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        cy.getBySel('input-guest-score').clear({ force: true });
+        cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        cy.getBySel('button-edit-match-result-submit').click();
+        cy.getBySel('match-home-score').should('contain', 10);
+        cy.getBySel('match-guest-score').should('contain', 1);
+
+        cy.getBySel('button-schedule-match').first().click();
+        cy.getBySel('input-time').clear({ force: true });
+        cy.getBySel('input-time').type('09:00');
+        cy.getBySel('input-kickoff-date').clear({ force: true });
+        cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
+        cy.getBySel('button-schedule-match-submit').click();
+
+        cy.getBySel('button-set-pitch').first().click();
+        cy.get('mat-option').first().click();
+        cy.getBySel('button-save-pitch').click();
+
+    });
+
+    it('Should go to Table', () => {
+        cy.visit('/');
+        cy.getBySel('route-table').first().click();
+        cy.getBySel('select-season').click();
+        cy.getBySel('select-season');
+        cy.get('mat-option').first().click();
+        cy.get('lima-table').should('exist');
+    });
+
+    it('Should go to Schedule', () => {
+        cy.visit('/');
+        cy.getBySel('route-schedule').first().click();
+        cy.getBySel('select-season').click();
+        cy.getBySel('select-season');
+        cy.get('mat-option').first().click();
+        cy.get('lima-schedule').should('exist');
+
+        cy.getBySel('button-edit-match-result').should('not.exist');
+        cy.getBySel('button-schedule-match').should('not.exist');
+        cy.getBySel('button-set-pitch').should('not.exist');
 
     });
 

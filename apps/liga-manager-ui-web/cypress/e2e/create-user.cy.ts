@@ -30,7 +30,7 @@ describe('Create User', () => {
         cy.getBySel('snackbar-success-send-mail').should('exist');
     });
 
-    it('Should read an email', () => {
+    it('Should get an inventation email', () => {
         cy.maildevGetLastMessage().then(
             (message) => {
                 expect(message.to[0].address).to.equal(email);
@@ -60,25 +60,36 @@ describe('Create User', () => {
         cy.getBySel('button-user-menu').should('exist');
     });
 
-    // it('Should change the password', () => {
-    //     cy.visit('/');
-    //     cy.getBySel('button-login').click();
-    //     cy.getBySel('input-username').type(Users.teamAdmin.username);
-    //     cy.getBySel('button-password-reset').click();
-    //     cy.maildevGetLastMessage().then(
-    //         (message) => {
-    //             expect(message.to[0].address).to.equal(Users.teamAdmin.username);
-    //             const jsDom = new JSDOM(message.html);
-    //             const href = jsDom.window.document.getElementsByTagName('a')[0].getAttribute('href');
-    //             cy.visit(href!).then(
-    //                 () => {
-    //                     cy.getBySel('input-new-password').clear();
-    //                     cy.getBySel('input-new-password').type(Users.teamAdmin.password);
-    //                     cy.getBySel('button-change-password-submit').click();
-    //                 },
-    //             );
-    //         },
-    //     );
-    // });
+    it('Should change the password', () => {
+        cy.visit('/');
+        cy.getBySel('button-login').click();
+        cy.getBySel('input-username').type(email);
+        cy.getBySel('button-password-reset').click();
+        cy.getBySel('snackbar-success-send-mail').should('exist');
+        cy.maildevGetLastMessage().then(
+            (message) => {
+                expect(message.to[0].address).to.equal(email);
+                const jsDom = new JSDOM(message.html);
+                const href = jsDom.window.document.getElementsByTagName('a')[0].getAttribute('href');
+                cy.visit(href!).then(
+                    () => {
+                        password = faker.internet.password({ length: 6});
+                        cy.getBySel('input-new-password').clear({ force: true });
+                        cy.getBySel('input-new-password').type(password);
+                        cy.getBySel('button-change-password-submit').click();
+                    },
+                );
+            },
+        );
+    });
+
+    it('Should login again with changed password', () => {
+        cy.visit('/');
+        cy.getBySel('button-login').click();
+        cy.getBySel('input-username').type(email);
+        cy.getBySel('input-password').type(password);
+        cy.getBySel('button-login-submit').click();
+        cy.getBySel('button-user-menu').should('exist');
+    });
 
 });
