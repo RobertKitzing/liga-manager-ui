@@ -17,7 +17,7 @@ describe('Admin - Upload Team Logo', () => {
 
         cy.getBySel('button-save-team-logo').click();
 
-        cy.getBySel('snackbar-success-save-team-logo').should('exist');
+        cy.getBySel('snackbar-success').should('exist');
 
         cy.get('.team-logo').should('exist');
 

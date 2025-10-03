@@ -27,7 +27,7 @@ describe('Create User', () => {
         cy.getBySel('select-user-role').click();
         cy.getBySel('user-role-team_manager').click();
         cy.getBySel('button-save-user').click({ force: true });
-        cy.getBySel('snackbar-success-send-mail').should('exist');
+        cy.getBySel('snackbar-success').should('exist');
     });
 
     it('Should get an inventation email', () => {
@@ -42,9 +42,9 @@ describe('Create User', () => {
                         cy.getBySel('input-first-name').type(faker.person.firstName());
                         cy.getBySel('input-last-name').clear();
                         cy.getBySel('input-last-name').type(faker.person.lastName());
-                        cy.getBySel('input-new-password').type(password);
+                        cy.getBySel('input-password').type(password);
                         cy.getBySel('button-save-user').click();
-                        cy.getBySel('snackbar-success-edit-profile').should('exist');
+                        cy.getBySel('snackbar-success').should('exist');
                     },
                 );
             },
@@ -65,7 +65,7 @@ describe('Create User', () => {
         cy.getBySel('button-login').click();
         cy.getBySel('input-username').type(email);
         cy.getBySel('button-password-reset').click();
-        cy.getBySel('snackbar-success-send-mail').should('exist');
+        cy.getBySel('snackbar-success').should('exist');
         cy.maildevGetLastMessage().then(
             (message) => {
                 expect(message.to[0].address).to.equal(email);
@@ -74,8 +74,8 @@ describe('Create User', () => {
                 cy.visit(href!).then(
                     () => {
                         password = faker.internet.password({ length: 6});
-                        cy.getBySel('input-new-password').clear({ force: true });
-                        cy.getBySel('input-new-password').type(password);
+                        cy.getBySel('input-password').clear({ force: true });
+                        cy.getBySel('input-password').type(password);
                         cy.getBySel('button-change-password-submit').click();
                     },
                 );

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { TeamService } from '@liga-manager-ui/services';
+import { NotificationService, TeamService } from '@liga-manager-ui/services';
 import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { Maybe, Team } from '@liga-manager-api/graphql';
 import { AsyncPipe } from '@angular/common';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { TeamSearchComponent } from '@liga-manager-ui/components';
@@ -35,6 +35,10 @@ import { MatCardModule } from '@angular/material/card';
 export class ManageTeamsComponent {
 
     private teamService = inject(TeamService);
+
+    private notificationService = inject(NotificationService);
+
+    private translateService = inject(TranslateService);
 
     displayedColumns: string[] = ['team', 'action'];
 
@@ -75,10 +79,12 @@ export class ManageTeamsComponent {
     async addNewTeam(name: string) {
         await firstValueFrom(this.teamService.createTeam(name));
         this.addTeamMode = false;
+        this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.TEAM_CREATED'));
     }
 
     async deleteTeam(team_id: string) {
         await firstValueFrom(this.teamService.deleteTeam({ team_id }));
+        this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.TEAM_DELETED'));
     }
 
     async renameTeam(team_id: string, new_name: string) {
@@ -86,6 +92,7 @@ export class ManageTeamsComponent {
             this.teamService.renameTeam({ team_id, new_name }),
         );
         this.editTeamId = '';
+        this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.TEAM_RENAMED'));
     }
 
 }

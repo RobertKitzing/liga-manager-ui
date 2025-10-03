@@ -101,8 +101,15 @@ export class ManageTournamentsComponent implements OnInit {
         this.createRoundMode.set(undefined);
     }
 
-    startTournament(id: string) {
-        firstValueFrom(this.tournamentService.startTournament(id));
+    async startTournament(id: string) {
+        try {
+            await firstValueFrom(this.tournamentService.startTournament(id));
+            this.notificationService.showSuccessNotification(
+                this.translateService.instant('SUCCESS.START_TOURNAMENT'),
+            );
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     endTournament(id: string, name: string) {

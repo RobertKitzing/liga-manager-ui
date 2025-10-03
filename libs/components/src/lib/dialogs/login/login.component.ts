@@ -85,8 +85,6 @@ export class LoginComponent {
                 await firstValueFrom(this.userService.sendPasswordMail(email));
                 this.notificationService.showSuccessNotification(
                     marker('SUCCESS.SEND_MAIL'),
-                    undefined,
-                    'snackbar-success-send-mail',
                 );
                 this.dialogRef.close();
             } catch (_error) {

@@ -69,6 +69,9 @@ export type CySelectors =
     | 'route-contacts'
     | 'route-hall_of_fame'
     | 'route-history'
+    | 'route-history-schedule'
+    | 'route-history-table'
+    | 'route-history-tournament'
     | 'route-schedule'
     | 'route-table'
     | 'route-teams-management'
@@ -85,11 +88,7 @@ export type CySelectors =
     | 'select-team'
     | 'select-tournament'
     | 'select-user-role'
-    | 'snackbar-success-create-pitch'
-    | 'snackbar-success-create-season'
-    | 'snackbar-success-create-tournament'
-    | 'snackbar-success-edit-profile'
-    | 'snackbar-success-send-mail'
-    | 'snackbar-success-save-team-logo'
+    | 'snackbar-error'
+    | 'snackbar-success'
     | string
 ;

@@ -31,7 +31,7 @@
                         <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
                             <div
                                 class="self-center grid grid-cols-3 m-3 p-2 w-full lg:w-2/3 justify-items-center"
-                                [cySelector]="canEditMatch ? 'button-edit-match-result' : ''"
+                                [cySelector]="canEditMatch ? 'button-edit-match-result' : 'cant-edit-match-result'"
                                 (click)="canEditMatch && openEditResultDialog()"
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                             >
@@ -74,7 +74,7 @@
                             <div
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                                 (click)="canEditMatch && openEditKickoffDialog()"
-                                [cySelector]="canEditMatch ? 'button-schedule-match': ''"
+                                [cySelector]="canEditMatch ? 'button-schedule-match': 'cant-schedule-match'"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"
                             >
                                 <div
@@ -91,7 +91,7 @@
                             </div>
                             <div
                                 class="flex flex-col text-center"
-                                [cySelector]="canEditMatch ? 'button-set-pitch' : ''"
+                                [cySelector]="canEditMatch ? 'button-set-pitch' : 'cant-set-pitch'"
                                 (click)="canEditMatch && openEditPitchDialog()"
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"

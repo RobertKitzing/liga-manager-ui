@@ -12,16 +12,16 @@ export class NotificationService {
 
     private snackBar = inject(MatSnackBar);
 
-    showSuccessNotification(title: string, messages?: string[], cySelector?: CySelectors) {
-        this.showNotification(title, messages, 'success', cySelector, this.defaultDuration);
+    showSuccessNotification(title: string, messages?: string[]) {
+        this.showNotification(title, messages, 'success', 'snackbar-success', this.defaultDuration);
     }
 
-    showErrorNotification(title: string, messages?: string[], cySelector?: CySelectors) {
+    showErrorNotification(title: string, messages?: string[]) {
         this.showNotification(
             title,
             messages,
             'error',
-            cySelector,
+            'snackbar-error',
             this.defaultDuration * 200,
         );
     }

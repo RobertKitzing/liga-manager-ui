@@ -61,8 +61,6 @@ export class EditTeamLogoComponent {
             this.reload(teamId);
             this.notificationService.showSuccessNotification(
                 marker('SUCCESS.UPLOAD_TEAM_LOGO'),
-                undefined,
-                'snackbar-success-save-team-logo',
             );
             this.previewImage.set(null);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

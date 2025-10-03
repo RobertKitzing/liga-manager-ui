@@ -22,7 +22,7 @@ describe('Admin - Create Season', () => {
             cy.getBySel('input-create-team-name').clear();
             cy.getBySel('input-create-team-name').type(team.name);
             cy.getBySel('button-create-team-submit').click();
-            cy.getBySel('button-create-team-submit').should('not.exist');
+            cy.getBySel('snackbar-success').should('exist');
         }
     });
 

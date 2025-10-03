@@ -22,7 +22,7 @@ describe('Create Pitch', () => {
             cy.getBySel('input-longitude').first().type(pitch.longitude);
             cy.getBySel('input-latitude').first().type(pitch.latitude);
             cy.getBySel('button-save-pitch').click();
-            cy.getBySel('snackbar-success-create-pitch').should('exist');
+            cy.getBySel('snackbar-success').should('exist');
         }
 
     });

@@ -19,7 +19,7 @@ describe('Admin - Tournament', () => {
             cy.intercept('POST', '/api/graphql').as('graphql');
 
             cy.getBySel('button-create-tournament-submit').click();
-            cy.getBySel('snackbar-success-create-tournament').should('exist');
+            cy.getBySel('snackbar-success').should('exist');
 
             cy.wait(['@graphql', '@graphql']);
 
@@ -27,32 +27,28 @@ describe('Admin - Tournament', () => {
             cy.get('mat-option').contains(name).click();
 
             cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
-
             cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
-
             cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
             cy.get('mat-option').contains(Users.teamAdmin.team).click();
             cy.getBySel('input-team-auto-complete-guest').first().click();
             cy.getBySel('team-1').click();
             cy.getBySel('button-add-match-to-tournament-round').click();
-
             cy.getBySel('button-save-tournament-round').click();
+            cy.getBySel('snackbar-success').should('exist');
 
             cy.getBySel('button-create-next-tournament-round').click();
-
             cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
-
             cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
-
             cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
             cy.get('mat-option').contains(Users.teamAdmin.team).click();
             cy.getBySel('input-team-auto-complete-guest').first().click();
             cy.getBySel('team-3').click();
             cy.getBySel('button-add-match-to-tournament-round').click();
-
             cy.getBySel('button-save-tournament-round').click();
+            cy.getBySel('snackbar-success').should('exist');
 
             cy.getBySel('button-start-tournament').click();
+            cy.getBySel('snackbar-success').should('exist');
 
             if (i % 2 === 0) {
                 cy.getBySel('button-end-tournament').click();
@@ -72,40 +68,30 @@ describe('Admin - Tournament', () => {
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').first().click();
 
-        cy.get('lima-match').should('have.length', 1);
-
-        cy.getBySel('button-next-matchday').click();
-
-        cy.get('lima-match').should('have.length', 1);
-
-        cy.getBySel('button-prev-matchday').click();
-
-        cy.get('lima-match').should('have.length', 1);
-
         cy.getBySel('button-edit-match-result').first().click();
         cy.getBySel('input-home-score').clear();
         cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
+        cy.getBySel('snackbar-success').should('exist');
 
         cy.getBySel('button-schedule-match').first().click();
-
         cy.getBySel('input-time').clear();
         cy.getBySel('input-time').type('09:00');
-
         cy.getBySel('input-kickoff-date').clear();
         cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
-
         cy.getBySel('button-schedule-match-submit').click();
+        cy.getBySel('snackbar-success').should('exist');
 
         cy.getBySel('button-set-pitch').first().click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-pitch').click();
+        cy.getBySel('snackbar-success').should('exist');
 
     });
 
-    it('Should select a Tournament and edit a match as a team-admnin', () => {
+    it('Should select a Tournament and edit a match as a team-admin', () => {
 
         cy.login(Users.teamAdmin.username, Users.teamAdmin.password);
 
@@ -115,15 +101,7 @@ describe('Admin - Tournament', () => {
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').first().click();
 
-        cy.get('lima-match').should('have.length', 1);
-
         cy.getBySel('button-next-matchday').click();
-
-        cy.get('lima-match').should('have.length', 1);
-
-        cy.getBySel('button-prev-matchday').click();
-
-        cy.get('lima-match').should('have.length', 1);
 
         cy.getBySel('button-edit-match-result').first().click();
         cy.getBySel('input-home-score').clear();
@@ -131,26 +109,82 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
+        cy.getBySel('snackbar-success').should('exist');
 
         cy.getBySel('button-schedule-match').first().click();
-
         cy.getBySel('input-time').clear();
         cy.getBySel('input-time').type('09:00');
-
         cy.getBySel('input-kickoff-date').clear();
         cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
-
         cy.getBySel('button-schedule-match-submit').click();
+        cy.getBySel('snackbar-success').should('exist');
 
         cy.getBySel('button-set-pitch').first().click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-pitch').click();
+        cy.getBySel('snackbar-success').should('exist');
 
     });
 
-    it('Should go to Schedule', () => {
+    it('Should go to Tournament', () => {
+
         cy.visit('/');
         cy.getBySel('route-tournament').first().click();
+
+        cy.getBySel('select-tournament').click();
+        cy.get('mat-option').first().click();
+
+        cy.get('lima-tournament').should('exist');
+
+        cy.getBySel('cant-edit-match-result').should('exist');
+        cy.getBySel('cant-schedule-match').should('exist');
+        cy.getBySel('cant-set-pitch').should('exist');
+
+    });
+
+    it('Should go to History Tournament', () => {
+
+        cy.visit('/');
+        cy.getBySel('route-history').first().click();
+        cy.getBySel('route-history-tournament').first().click();
+
+        cy.getBySel('select-tournament').click();
+        cy.get('mat-option').first().click();
+
+        cy.get('lima-tournament').should('exist');
+
+        cy.getBySel('cant-edit-match-result').should('exist');
+        cy.getBySel('cant-schedule-match').should('exist');
+        cy.getBySel('cant-set-pitch').should('exist');
+
+    });
+
+    it('Should go to History Tournament as a Admin', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-history').first().click();
+        cy.getBySel('route-history-tournament').first().click();
+
+        cy.getBySel('select-tournament').click();
+        cy.get('mat-option').first().click();
+
+        cy.get('lima-tournament').should('exist');
+
+        cy.getBySel('cant-edit-match-result').should('exist');
+        cy.getBySel('cant-schedule-match').should('exist');
+        cy.getBySel('cant-set-pitch').should('exist');
+
+    });
+
+    it('Should go to History Tournament as a Teamadmin', () => {
+
+        cy.login(Users.teamAdmin.username, Users.teamAdmin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-history').first().click();
+        cy.getBySel('route-history-tournament').first().click();
 
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').first().click();

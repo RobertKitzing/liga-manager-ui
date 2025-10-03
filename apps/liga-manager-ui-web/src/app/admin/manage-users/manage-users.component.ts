@@ -119,12 +119,12 @@ export class ManageUsersComponent {
 
     async sendInviteMail(user_id: string) {
         await firstValueFrom(this.userService.sendInviteMail(user_id));
-        this.notificationService.showSuccessNotification(marker('SUCCESS.SEND_MAIL'), undefined, 'snackbar-success-send-mail');
+        this.notificationService.showSuccessNotification(marker('SUCCESS.SEND_MAIL'));
     }
 
     sendPasswordMail(user_id: string) {
         firstValueFrom(this.userService.sendPasswordMail(user_id));
-        this.notificationService.showSuccessNotification(marker('SUCCESS.SEND_MAIL'), undefined, 'snackbar-success-send-mail');
+        this.notificationService.showSuccessNotification(marker('SUCCESS.SEND_MAIL'));
     }
 
 }
