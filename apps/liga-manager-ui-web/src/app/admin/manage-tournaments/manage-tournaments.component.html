@@ -24,7 +24,7 @@
                         <button
                             cySelector="button-start-tournament"
                             matButton="outlined"
-                            (click)="startTournament(selectedTournament.id)"
+                            (click)="startTournament(selectedTournament.id, selectedTournament.name)"
                         >
                             <mat-icon>play_arrow</mat-icon>
                             <span translate>BUTTON.START_TOURNAMENT</span>
@@ -37,7 +37,7 @@
                             (click)="endTournament(selectedTournament.id, selectedTournament.name)"
                         >
                             <mat-icon>stop</mat-icon>
-                            <span translate>BUTTON.STOP_TOURNAMENT</span>
+                            <span translate>BUTTON.END_TOURNAMENT</span>
                         </button>
                     }
                 }

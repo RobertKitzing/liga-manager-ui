@@ -7,7 +7,7 @@
         placeholder="{{ 'PLACEHOLDER.SELECT_SEASON' | translate }}"
         class="text-center"
     >
-        @if (clearable) {
+        @if (clearable()) {
             <mat-option>
                 <span translate>DESELECT_SEASON</span>
             </mat-option>

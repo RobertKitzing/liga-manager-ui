@@ -138,12 +138,13 @@
         "{workspaceRoot}/libs/components/src",
         "{workspaceRoot}/libs/directives/src",
         "{workspaceRoot}/libs/pipes/src",
-        "{workspaceRoot}/libs/services/src"
+        "{workspaceRoot}/libs/services/src",
+        "{workspaceRoot}/libs/states/src"
       ],
       "outputs": [
         "{projectRoot}/src/i18n/en-GB.json"
       ],
-      "command": "npx ngx-translate-extract --input {projectRoot}/src libs/components/src libs/pipes/src libs/directives/src libs/services/src --output {projectRoot}/src/i18n/{ar,en-GB,de,fr}.json --clean --sort --format namespaced-json --format-indentation '    ' --clean"
+      "command": "npx ngx-translate-extract --input {projectRoot}/src libs/components/src libs/pipes/src libs/directives/src libs/services/src libs/states/src --output {projectRoot}/src/i18n/{ar,en-GB,de,fr}.json --clean --sort --format namespaced-json --format-indentation '    ' --clean"
     },
     "i18n-languages": {
       "cache": true,

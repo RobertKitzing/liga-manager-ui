@@ -13,6 +13,7 @@ import {
 } from '@ngx-translate/core';
 import {
     I18nService,
+    NotificationService,
     httpLoaderFactory,
     provideStorage,
 } from '@liga-manager-ui/services';
@@ -31,13 +32,15 @@ import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { provideApi } from '@liga-manager-api/openapi';
 import { Base64 } from 'js-base64';
-import { provideStore, Store } from '@ngxs/store';
+import { NgxsNextPluginFn, provideStore, Store, withNgxsPlugin } from '@ngxs/store';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { environment } from '../env/env';
-import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TournamentState } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TournamentState } from '@liga-manager-ui/states';
 import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
 import { withNgxsFormPlugin } from '@ngxs/form-plugin';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of, switchMap, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '@liga-manager-ui/components';
 
 function appInitFactory(
     store: Store,
@@ -54,6 +57,44 @@ function appInitFactory(
             firstValueFrom(store.dispatch(GetAuthenticatedUser)),
         ]);
     };
+}
+
+function confirmPlugin(state: unknown, action: unknown, next: NgxsNextPluginFn) {
+
+    const dialog = inject(MatDialog);
+
+    const { confirm } = action as IConfirm;
+
+    if( confirm ) {
+        return dialog.open(ConfirmComponent, { data: { body: confirm.message, translateParams: confirm.translateParams }}).afterClosed().pipe(
+            switchMap(
+                (result) => {
+                    if (result) {
+                        return next(state, action);
+                    }
+                    return of();
+                },
+            ),
+        );
+    } else {
+        return next(state, action);
+    }
+}
+
+function notificationPlugin(state: unknown, action: unknown, next: NgxsNextPluginFn) {
+
+    const notificationService = inject(NotificationService);
+
+    return next(state, action).pipe(
+        tap(
+            () => {
+                const { notification } = action as INotification;
+                if (notification?.message) {
+                    notificationService.showSuccessNotification(notification.message, undefined, notification.translateParams);
+                }
+            },
+        ),
+    );
 }
 
 export const appConfig: ApplicationConfig = {
@@ -101,6 +142,7 @@ export const appConfig: ApplicationConfig = {
                 AppSettingsState,
                 SelectedItemsState,
                 TournamentState,
+                SeasonState,
             ],
             withNgxsReduxDevtoolsPlugin({
                 disabled: environment.production,
@@ -112,6 +154,8 @@ export const appConfig: ApplicationConfig = {
                 ],
             }),
             withNgxsFormPlugin(),
+            withNgxsPlugin(confirmPlugin),
+            withNgxsPlugin(notificationPlugin),
         ),
         provideApollo(apolloFactory),
         {

@@ -9,11 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TournamentState } from '@liga-manager-api/graphql';
-import { TournamentChooserComponent, MatchComponent, EditTournamentRoundComponent, ConfirmComponent, defaultDialogConfig } from '@liga-manager-ui/components';
+import { TournamentChooserComponent, MatchComponent, EditTournamentRoundComponent } from '@liga-manager-ui/components';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
-import { NotificationService, TournamentService } from '@liga-manager-ui/services';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TournamentService } from '@liga-manager-ui/services';
+import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom, of, switchMap, tap } from 'rxjs';
 import { CreateNewTournamentComponent } from './create-new-tournament';
 import { MatCardModule } from '@angular/material/card';
@@ -48,15 +48,11 @@ export class ManageTournamentsComponent implements OnInit {
 
     tournamentService = inject(TournamentService);
 
-    private translateService = inject(TranslateService);
-
     private dialog = inject(MatDialog);
 
     private store = inject(Store);
 
     private destroyRef = inject(DestroyRef);
-
-    private notificationService = inject(NotificationService);
 
     TournamentState = TournamentState;
 
@@ -103,70 +99,17 @@ export class ManageTournamentsComponent implements OnInit {
         this.createRoundMode.set(undefined);
     }
 
-    async startTournament(tournament_id: string) {
-        try {
-            await firstValueFrom(this.store.dispatch(new StartTournament({ tournament_id })));
-            this.notificationService.showSuccessNotification(
-                this.translateService.instant('SUCCESS.START_TOURNAMENT'),
-            );
-        } catch (error) {
-            console.error(error);
-        }
+    startTournament(tournament_id: string, name: string) {
+        this.store.dispatch(new StartTournament({ tournament_id }, name));
     }
 
     endTournament(tournament_id: string, name: string) {
-        this.dialog.open(ConfirmComponent,
-            {
-                ...defaultDialogConfig,
-                data: {
-                    body: this.translateService.instant('ARE_YOU_SURE_TO_END_THIS_TOURNAMENT', { tournament: name }),
-                },
-            },
-        )
-            .afterClosed()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                async (result) => {
-                    if (result) {
-                        try {
-                            await firstValueFrom(this.store.dispatch(new EndTournament({ tournament_id })));
-                            this.notificationService.showSuccessNotification(
-                                this.translateService.instant('SUCCESS.END_TOURNAMENT'),
-                            );
-                        } catch (error) {
-                            console.error(error);
-                        }
-                    }
-                },
-            );
+        this.store.dispatch(new EndTournament({ tournament_id }, name));
     }
 
-    deleteTournament(tournament_id: string, name: string) {
-        this.dialog.open(ConfirmComponent,
-            {
-                ...defaultDialogConfig,
-                data: {
-                    body: this.translateService.instant('ARE_YOU_SURE_TO_DELETE_THIS_TOURNAMENT', { tournament: name }),
-                },
-            },
-        )
-            .afterClosed()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                async (result) => {
-                    if (result) {
-                        try {
-                            firstValueFrom(this.store.dispatch(new DeleteTournament({ tournament_id }) ));
-                            this.notificationService.showSuccessNotification(
-                                this.translateService.instant('SUCCESS.DELETE_TOURNAMENT'),
-                            );
-                            this.selectedTournamentFC.reset();
-                        } catch (error) {
-                            console.error(error);
-                        }
-                    }
-                },
-            );
+    async deleteTournament(tournament_id: string, name: string) {
+        await firstValueFrom(this.store.dispatch(new DeleteTournament({ tournament_id }, name)));
+        this.selectedTournamentFC.reset();
     }
 
 }

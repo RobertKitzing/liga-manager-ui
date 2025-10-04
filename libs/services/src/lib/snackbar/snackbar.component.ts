@@ -13,6 +13,7 @@ export interface SnackBarData {
     messages: string[];
     type: 'warn' | 'success';
     cySelector: CySelectors;
+    translateParams?: { title?: unknown, message?: unknown };
 }
 
 @Component({

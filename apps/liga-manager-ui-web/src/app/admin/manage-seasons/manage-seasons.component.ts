@@ -26,6 +26,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
 import { SelectedItemsSelectors, SetSelectedSeason } from '@liga-manager-ui/states';
+import { marker } from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -134,7 +135,7 @@ export class ManageSeasonsComponent implements OnInit {
                         try {
                             await firstValueFrom(this.seasonService.endSeason(seasonId));
                             this.notificationService.showSuccessNotification(
-                                this.translateService.instant('SUCCESS.END_SEASON'),
+                                marker('SUCCESS.END_SEASON'),
                             );
                         } catch (error) {
                             console.error(error);

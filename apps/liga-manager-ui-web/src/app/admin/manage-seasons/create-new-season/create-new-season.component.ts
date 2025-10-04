@@ -14,10 +14,10 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { NotificationService, SeasonService } from '@liga-manager-ui/services';
+import { CreateSeason } from '@liga-manager-ui/states';
 import { TranslateModule } from '@ngx-translate/core';
+import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -39,28 +39,17 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreateNewSeasonComponent {
 
-    private seasonService = inject(SeasonService);
-
-    private notificationService = inject(NotificationService);
+    private store = inject(Store);
 
     dialogRef = inject(MatDialogRef<CreateNewSeasonComponent>);
 
     newName = new FormControl('', [Validators.required]);
 
     async createSeason() {
-        try {
-            await firstValueFrom(
-                this.seasonService.createSeason(this.newName.value!),
-            );
-            this.notificationService.showSuccessNotification(
-                marker('SUCCESS.CREATE_SEASON'),
-            );
-            this.dialogRef.close();
-        } catch (_error) {
-            this.notificationService.showErrorNotification(
-                marker('CREATE_SEASON_ERROR'),
-            );
-        }
+        await firstValueFrom(
+            this.store.dispatch(new CreateSeason({ name: this.newName.value! })),
+        );
+        this.dialogRef.close();
     }
 
 }

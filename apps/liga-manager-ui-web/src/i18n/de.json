@@ -7,7 +7,6 @@
     "ARE_YOU_SURE_TO_DELETE_THIS_PITCH": "",
     "ARE_YOU_SURE_TO_DELETE_THIS_SEASON": "",
     "ARE_YOU_SURE_TO_END_THIS_SEASON": "",
-    "ARE_YOU_SURE_TO_END_THIS_TOURNAMENT": "",
     "BETWEEN_MATCHDAYS_OFFSET": "",
     "BUTTON": {
         "ADD_MATCH": "",
@@ -30,6 +29,7 @@
         "EDIT_PROFILE": "",
         "EDIT_RESULT": "Ergebnis",
         "END_SEASON": "",
+        "END_TOURNAMENT": "",
         "LOGIN": "anmelden",
         "LOGOUT": "abmelden",
         "NO": "",
@@ -41,7 +41,6 @@
         "SEND_PASSWORD_RESET_MAIL": "",
         "START_SEASON": "",
         "START_TOURNAMENT": "",
-        "STOP_TOURNAMENT": "",
         "UPDATE_MATCHDAYS": "",
         "YES": ""
     },
@@ -57,11 +56,15 @@
     "CANCEL_MATCH_TITLE": "",
     "CHAMPIONSHIP_COUNT": "Meistertitel",
     "CHANGE_PASSWORD_TITLE": "",
+    "CONFIRM": {
+        "ARE_YOU_SURE_TO_DELETE_TOURNAMENT": "",
+        "ARE_YOU_SURE_TO_DELETE_USER": "",
+        "ARE_YOU_SURE_TO_END_TOURNAMENT": ""
+    },
     "CREATE_NEW_SEASON_TITLE": "",
     "CREATE_NEW_TOURNAMENT_TITLE": "",
     "CREATE_NEXT_ROUND": "",
     "CREATE_SEASON_ERROR": "",
-    "CREATE_TOURNAMENT_ERROR": "",
     "CURRENT_TEAM_LOGO": "",
     "Cancellation reason exceeds maximum length of 255": "",
     "DARKMODE": {
@@ -186,6 +189,8 @@
         "CREATE_TOURNAMENT_ROUND": "",
         "DELETE_SEASON": "",
         "DELETE_TEAM_LOGO": "",
+        "DELETE_TOURNAMENT": "",
+        "DELETE_USER": "",
         "EDIT_KICKOFF": "",
         "EDIT_PITCH": "",
         "EDIT_RESULT": "",
@@ -195,7 +200,11 @@
         "SAVE": "",
         "SEND_MAIL": "",
         "START_SEASON": "",
+        "START_TOURNAMENT": "",
         "TEAM_CONTACT_SAVED": "",
+        "TEAM_CREATED": "",
+        "TEAM_DELETED": "",
+        "TEAM_RENAMED": "",
         "UPLOAD_TEAM_LOGO": ""
     },
     "SeasonState": {

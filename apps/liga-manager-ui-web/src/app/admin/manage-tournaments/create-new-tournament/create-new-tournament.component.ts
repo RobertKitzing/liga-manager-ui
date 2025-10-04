@@ -14,7 +14,6 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { NotificationService } from '@liga-manager-ui/services';
 import { CreateTournament } from '@liga-manager-ui/states';
@@ -54,14 +53,9 @@ export class CreateNewTournamentComponent {
             await firstValueFrom(
                 this.store.dispatch(new CreateTournament({ name: this.newName.value })),
             );
-            this.notificationService.showSuccessNotification(
-                marker('SUCCESS.CREATE_TOURNAMENT'),
-            );
             this.dialog.closeAll();
         } catch (_error) {
-            this.notificationService.showErrorNotification(
-                marker('CREATE_TOURNAMENT_ERROR'),
-            );
+            console.error(_error);
         }
     }
 

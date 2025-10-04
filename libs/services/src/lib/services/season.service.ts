@@ -8,7 +8,6 @@ import {
     AllSeasonsListGQL,
     CreateMatchesForSeasonGQL,
     CreateMatchesForSeasonMutationVariables,
-    CreateSeasonGQL,
     DeleteSeasonGQL,
     EndSeasonGQL,
     RankingByIdGQL,
@@ -36,17 +35,15 @@ import { Apollo, gql } from 'apollo-angular';
 })
 export class SeasonService {
 
+    private allSeasonlistGQL = inject(AllSeasonsListGQL);
+
     private apollo = inject(Apollo);
 
     private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
 
-    private allSeasonlistGQL = inject(AllSeasonsListGQL);
-
     private seasonByIdGQL = inject(SeasonByIdGQL);
 
     private rankingGQL = inject(RankingByIdGQL);
-
-    private createSeasonGQL = inject(CreateSeasonGQL);
 
     private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
 
@@ -72,43 +69,8 @@ export class SeasonService {
 
     private removePenaltyGQL = inject(RemovePenaltyGQL);
 
-    seasonList$ = this.allSeasonlistGQL.watch().valueChanges.pipe(
-        map((seasons) =>
-            [...(seasons.data?.allSeasons || [])]?.sort((a, b) => {
-                const aStartDate =
-                    a?.match_days?.find((x) => x?.number === 1)?.start_date ||
-                    '';
-                const bStartDate =
-                    b?.match_days?.find((x) => x?.number === 1)?.start_date ||
-                    '';
-                if (aStartDate < bStartDate) {
-                    return 1;
-                }
-                if (aStartDate > bStartDate) {
-                    return -1;
-                }
-                return 0;
-            }),
-        ),
-    );
-
     reloadSeasons() {
         return this.allSeasonlistGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
-    }
-
-    createSeason(name: string) {
-        return this.createSeasonGQL.mutate(
-            {
-                name,
-            },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allSeasonlistGQL.document,
-                    },
-                ],
-            },
-        );
     }
 
     getSeasonById$(id: string | undefined) {

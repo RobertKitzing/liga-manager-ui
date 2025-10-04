@@ -12,8 +12,8 @@ export class NotificationService {
 
     private snackBar = inject(MatSnackBar);
 
-    showSuccessNotification(title: string, messages?: string[]) {
-        this.showNotification(title, messages, 'success', 'snackbar-success', this.defaultDuration);
+    showSuccessNotification(title: string, messages?: string[], translateParams?: { title?: unknown, message?: unknown }) {
+        this.showNotification(title, messages, 'success', 'snackbar-success', this.defaultDuration, translateParams);
     }
 
     showErrorNotification(title: string, messages?: string[]) {
@@ -32,6 +32,7 @@ export class NotificationService {
         type?: 'error' | 'success',
         cySelector?: CySelectors,
         duration?: number,
+        translateParams?: { title?: unknown, message?: unknown },
     ) {
         this.snackBar.openFromComponent(SnackbarComponent, {
             data: {
@@ -39,6 +40,7 @@ export class NotificationService {
                 messages,
                 type,
                 cySelector,
+                translateParams,
             } as SnackBarData,
             duration: duration || this.defaultDuration,
             panelClass: [
