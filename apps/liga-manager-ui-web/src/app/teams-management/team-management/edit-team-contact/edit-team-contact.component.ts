@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { Team } from '@liga-manager-api/graphql';
-import { TrimDirective } from '@liga-manager-ui/directives';
+import { TrimDirective, CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { NotificationService, TeamService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
@@ -26,6 +26,7 @@ import { firstValueFrom } from 'rxjs';
         TranslateModule,
         MatCardModule,
         TrimDirective,
+        CypressSelectorDirective,
     ],
     templateUrl: './edit-team-contact.component.html',
 })

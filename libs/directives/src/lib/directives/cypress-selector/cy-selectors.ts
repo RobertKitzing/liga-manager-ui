@@ -62,6 +62,7 @@ export type CySelectors =
     | 'input-password'
     | 'input-penalty-points'
     | 'input-penalty-reason'
+    | 'input-phone'
     | 'input-pitch-auto-complete'
     | 'input-pitch-name'
     | 'input-search-pitch'

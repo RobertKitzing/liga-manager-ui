@@ -66,9 +66,9 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="action">
-                            <th class="text-end" mat-header-cell *matHeaderCellDef>
+                            <th class="!text-end" mat-header-cell *matHeaderCellDef>
                             </th>
-                            <td class="text-end" mat-cell *matCellDef="let team">
+                            <td class="!text-end" mat-cell *matCellDef="let team">
                                 @if (editTeamId !== team.id) {
                                     <button matIconButton (click)="editTeam(team)" cySelector="button-edit-team">
                                         <mat-icon>edit</mat-icon>

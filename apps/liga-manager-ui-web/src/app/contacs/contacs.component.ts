@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AllSeasonsFragment, Maybe, SeasonState, Team } from '@liga-manager-api/graphql';
+import { Maybe, SeasonState, Team } from '@liga-manager-api/graphql';
 import { SortByPipe } from '@liga-manager-ui/pipes';
 import { Store } from '@ngxs/store';
 import { TeamSelectors } from '@liga-manager-ui/states';
@@ -44,20 +44,20 @@ export class ContacsComponent {
 
     private seasonService = inject(SeasonService);
 
-    selectedSeasonFC = new FormControl<AllSeasonsFragment | null>(null);
+    selectedSeasonFC = new FormControl<string>('');
 
     SeasonState = SeasonState;
 
     teams$ = combineLatest([
         this.selectedSeasonFC.valueChanges.pipe(startWith(null)),
     ]).pipe(
-        switchMap(([selectedSeason]) => {
+        switchMap(([selectedSeasonId]) => {
             let teams$;
-            if (!selectedSeason) {
+            if (!selectedSeasonId) {
                 teams$ = this.store.select(TeamSelectors.teams);
             } else {
                 teams$ = this.seasonService
-                    .getSeasonById$(selectedSeason.id)
+                    .getSeasonById$(selectedSeasonId)
                     .pipe(map((season) => season?.teams));
             }
             return teams$;
@@ -67,13 +67,11 @@ export class ContacsComponent {
     teams = signal<Maybe<Maybe<Team>[]> | undefined>( []);
 
     season$ = this.selectedSeasonFC.valueChanges.pipe(
-        switchMap((selectedSeason) =>
-            selectedSeason
-                ? this.seasonService.getSeasonById$(selectedSeason.id)
+        switchMap((selectedSeasonId) =>
+            selectedSeasonId
+                ? this.seasonService.getSeasonById$(selectedSeasonId)
                 : of(null),
         ),
     );
-
-    onlyCurrentSeason = false;
 
 }

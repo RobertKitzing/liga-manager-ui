@@ -40,9 +40,9 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="action">
-                                <th mat-header-cell *matHeaderCellDef>
+                                <th class="!text-end" mat-header-cell *matHeaderCellDef>
                                 </th>
-                                <td mat-cell *matCellDef="let pitch">
+                                <td class="!text-end" mat-cell *matCellDef="let pitch">
                                     <button matIconButton (click)="deletePitch(pitch.id, pitch.label)" cySelector="button-delete-pitch">
                                         <mat-icon>delete</mat-icon>
                                     </button>

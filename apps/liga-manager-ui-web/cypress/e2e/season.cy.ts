@@ -2,7 +2,7 @@ import { Users } from '@cypress/fixtures';
 import { faker } from '@faker-js/faker';
 import { format } from 'date-fns';
 
-describe('Admin - Season', () => {
+describe('Season', () => {
 
     it('Should create a season', () => {
 

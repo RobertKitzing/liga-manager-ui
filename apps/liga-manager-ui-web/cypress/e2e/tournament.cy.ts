@@ -1,7 +1,7 @@
 import { Users } from '@cypress/fixtures';
 import { faker } from '@faker-js/faker';
 
-describe('Admin - Tournament', () => {
+describe('Tournament', () => {
 
     it('Should create a Tournament', () => {
 

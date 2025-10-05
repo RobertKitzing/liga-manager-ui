@@ -2,7 +2,7 @@ import { Pitch } from '@cypress/api/gen/graphql';
 import { Users } from '@cypress/fixtures';
 import { faker } from '@faker-js/faker';
 
-describe('Create Pitch', () => {
+describe('Admin - Create Pitch', () => {
 
     let pitch: Omit<Pitch, 'id'>;
 

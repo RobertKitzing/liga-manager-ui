@@ -4,19 +4,19 @@
             <div>
                 <mat-form-field class="w-full">
                     <mat-label translate>EMAIL</mat-label>
-                    <input matInput formControlName="email" trim/>
+                    <input matInput formControlName="email" trim cySelector="input-email"/>
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label translate>FIRST_NAME</mat-label>
-                    <input matInput formControlName="first_name" />
+                    <input matInput formControlName="first_name" cySelector="input-first-name"/>
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label translate>LAST_NAME</mat-label>
-                    <input matInput formControlName="last_name" />
+                    <input matInput formControlName="last_name" cySelector="input-last-name"/>
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label translate>PHONE</mat-label>
-                    <input matInput formControlName="phone" />
+                    <input matInput formControlName="phone" cySelector="input-phone"/>
                 </mat-form-field>
             </div>
         </div>
@@ -30,6 +30,7 @@
                 matButton="outlined"
                 (click)="updateTeamContact()"
                 [disabled]="!teamContact.valid"
+                cySelector="button-save"
             >
                 <span translate>BUTTON.SAVE</span>
             </button>

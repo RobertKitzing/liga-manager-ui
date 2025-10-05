@@ -1,6 +1,6 @@
 import { Users } from '@cypress/fixtures';
 
-describe('Team Admin Login', () => {
+describe('Team Admin - Login', () => {
 
     it('Should Login and out', () => {
         cy.visit('/');

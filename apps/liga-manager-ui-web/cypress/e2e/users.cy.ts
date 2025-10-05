@@ -2,7 +2,7 @@ import { Users } from '@cypress/fixtures';
 import { faker } from '@faker-js/faker';
 import { JSDOM } from 'jsdom';
 
-describe('Create User', () => {
+describe('Admin - Create User', () => {
 
     let email: string;
     let password: string;
