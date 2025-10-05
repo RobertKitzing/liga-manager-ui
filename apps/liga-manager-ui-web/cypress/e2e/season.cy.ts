@@ -12,66 +12,68 @@ describe('Admin - Season', () => {
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-seasons').first().click();
 
-        for (let i = 0; i < 3 ;i++) {
-            const name = faker.person.lastName();
+        const names = faker.helpers.uniqueArray(faker.person.lastName, 4);
 
-            cy.getBySel('button-create-season').click();
-            cy.getBySel('input-create-season-name').type(name);
-            cy.getBySel('button-create-season-submit').click();
-            cy.successSnackbar();
+        names.forEach(
+            (name, i) => {
+                cy.getBySel('button-create-season').click();
+                cy.getBySel('input-create-season-name').type(name);
+                cy.getBySel('button-create-season-submit').click();
+                cy.successSnackbar();
 
-            cy.getBySel('select-season').click();
-            cy.get('mat-option').contains(name).click();
+                cy.getBySel('select-season').click();
+                cy.get('mat-option').contains(name).click();
 
-            cy.getBySel('season-management-tab-select-teams').click();
+                cy.getBySel('season-management-tab-select-teams').click();
 
-            cy.getBySel('input-team-auto-complete').clear();
-            cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
-            cy.contains(Users.teamAdmin.team).click();
-            cy.successSnackbar();
+                cy.getBySel('input-team-auto-complete').clear();
+                cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
+                cy.contains(Users.teamAdmin.team).click();
+                cy.successSnackbar();
 
-            for (let i = 0 ; i < 10; i++) {
+                for (let i = 0 ; i < 10; i++) {
+                    cy.getBySel('input-team-auto-complete').clear();
+                    cy.getBySel('input-team-auto-complete').click();
+                    cy.get('mat-option').first().click();
+                    cy.successSnackbar();
+                }
+
+                cy.getBySel('season-management-tab-create-matchdays').click();
+
+                cy.getBySel('input-tournament-season-start-date').clear({ force: true });
+                cy.getBySel('input-tournament-season-start-date').type(format(faker.date.future(), 'P'), { force: true });
+
+                cy.getBySel('button-save-match-days').click();
+
+                cy.getBySel('button-start-season').click();
+
+                cy.getBySel('season-management-tab-penalties').first().click();
+
+                cy.getBySel('button-create-penalty').click();
+
                 cy.getBySel('input-team-auto-complete').clear();
                 cy.getBySel('input-team-auto-complete').click();
                 cy.get('mat-option').first().click();
+
+                cy.getBySel('input-penalty-points').clear();
+                cy.getBySel('input-penalty-points').type('3');
+
+                cy.getBySel('input-penalty-reason').clear();
+                cy.getBySel('input-penalty-reason').type(faker.word.words(10));
+
+                cy.getBySel('button-save').click();
                 cy.successSnackbar();
-            }
 
-            cy.getBySel('season-management-tab-create-matchdays').click();
-
-            cy.getBySel('input-tournament-season-start-date').clear({ force: true });
-            cy.getBySel('input-tournament-season-start-date').type(format(faker.date.future(), 'P'), { force: true });
-
-            cy.getBySel('button-save-match-days').click();
-
-            cy.getBySel('button-start-season').click();
-
-            cy.getBySel('season-management-tab-penalties').first().click();
-
-            cy.getBySel('button-create-penalty').click();
-
-            cy.getBySel('input-team-auto-complete').clear();
-            cy.getBySel('input-team-auto-complete').click();
-            cy.get('mat-option').first().click();
-
-            cy.getBySel('input-penalty-points').clear();
-            cy.getBySel('input-penalty-points').type('3');
-
-            cy.getBySel('input-penalty-reason').clear();
-            cy.getBySel('input-penalty-reason').type(faker.word.words(10));
-
-            cy.getBySel('button-save').click();
-            cy.successSnackbar();
-
-            cy.getBySel('button-delete-penalty').click();
-            cy.getBySel('button-confirm-yes').click();
-            cy.successSnackbar();
-
-            if (i % 2 === 0) {
-                cy.getBySel('button-end-season').click();
+                cy.getBySel('button-delete-penalty').click();
                 cy.getBySel('button-confirm-yes').click();
-            }
-        }
+                cy.successSnackbar();
+
+                if (i % 2 === 0) {
+                    cy.getBySel('button-end-season').click();
+                    cy.getBySel('button-confirm-yes').click();
+                }
+            },
+        );
     });
 
     it('should edit an Match as a admin', () => {

@@ -10,47 +10,49 @@ describe('Admin - Tournament', () => {
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-tournaments').first().click();
 
-        for (let i = 0; i<3;i++) {
-            const name = faker.person.lastName();
+        const names = faker.helpers.uniqueArray(faker.person.lastName, 4);
 
-            cy.getBySel('button-create-tournament').click();
-            cy.getBySel('input-create-tournament-name').type(name);
-            cy.getBySel('button-create-tournament-submit').click();
-            cy.successSnackbar();
+        names.forEach(
+            (name, i) => {
+                cy.getBySel('button-create-tournament').click();
+                cy.getBySel('input-create-tournament-name').type(name);
+                cy.getBySel('button-create-tournament-submit').click();
+                cy.successSnackbar();
 
-            cy.getBySel('select-tournament').click();
-            cy.get('mat-option').contains(name).click();
+                cy.getBySel('select-tournament').click();
+                cy.get('mat-option').contains(name).click();
 
-            cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
-            cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
-            cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
-            cy.get('mat-option').contains(Users.teamAdmin.team).click();
-            cy.getBySel('input-team-auto-complete-guest').first().click();
-            cy.get('mat-option').first().click();
-            cy.getBySel('button-add-match-to-tournament-round').click();
-            cy.getBySel('button-save-tournament-round').click();
-            cy.successSnackbar();
+                cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
+                cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
+                cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
+                cy.get('mat-option').contains(Users.teamAdmin.team).click();
+                cy.getBySel('input-team-auto-complete-guest').first().click();
+                cy.get('mat-option').first().click();
+                cy.getBySel('button-add-match-to-tournament-round').click();
+                cy.getBySel('button-save-tournament-round').click();
+                cy.successSnackbar();
 
-            cy.getBySel('button-create-next-tournament-round').click();
-            cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
-            cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
-            cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
-            cy.get('mat-option').contains(Users.teamAdmin.team).click();
-            cy.getBySel('input-team-auto-complete-guest').first().click();
-            cy.get('mat-option').first().click();
-            cy.getBySel('button-add-match-to-tournament-round').click();
-            cy.getBySel('button-save-tournament-round').click();
-            cy.successSnackbar();
+                cy.getBySel('button-create-next-tournament-round').click();
+                cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
+                cy.getBySel('input-tournament-round-to-date').type('07/22/2025', { force: true });
+                cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
+                cy.get('mat-option').contains(Users.teamAdmin.team).click();
+                cy.getBySel('input-team-auto-complete-guest').first().click();
+                cy.get('mat-option').first().click();
+                cy.getBySel('button-add-match-to-tournament-round').click();
+                cy.getBySel('button-save-tournament-round').click();
+                cy.successSnackbar();
 
-            cy.getBySel('button-start-tournament').click();
-            cy.successSnackbar();
+                cy.getBySel('button-start-tournament').click();
+                cy.successSnackbar();
 
-            if (i % 2 === 0) {
-                cy.getBySel('button-end-tournament').click();
-                cy.getBySel('button-confirm-yes').click();
-            }
+                if (i % 2 === 0) {
+                    cy.getBySel('button-end-tournament').click();
+                    cy.getBySel('button-confirm-yes').click();
+                }
 
-        }
+            },
+        );
     });
 
     it('Should select a Tournament and edit a match as a admnin', () => {

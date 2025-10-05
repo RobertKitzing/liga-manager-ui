@@ -48,20 +48,23 @@ export function prepareApi(baseUrl: string, teamCount = 10, pitchCount = 10) {
                 async (token) => {
                     let query = 'mutation PrepareApi {\n';
                     const teams = Array.from(faker.helpers.uniqueArray(faker.person.firstName, teamCount), (name) => ({ id: v4(), name }) ).concat([{ id: v4(), name: Users.teamAdmin.team }]);
-                    for (const i in teams) {
-                        query += `createTeam${i}: createTeam(id: "${teams[i].id}", name: "${teams[i].name }") \n`;
-                    }
+                    teams.forEach(
+                        (team, i) => {
+                            query += `createTeam${i}: createTeam(id: "${team.id}", name: "${team.name }") \n`;
+                        },
+                    );
                     const pitches = Array.from(faker.helpers.uniqueArray(faker.location.city, pitchCount), (label) => ({
                         id: v4(),
                         label,
                         longitude: faker.location.longitude(),
                         latitude: faker.location.latitude(),
                     }) );
-                    for (const i in pitches) {
-                        query += `createPitch${i}: createPitch(id: "${pitches[i].id}", label: "${pitches[i].label}", longitude: ${pitches[i].longitude}, latitude: ${pitches[i].latitude}) \n`;
-                    }
+                    pitches.forEach(
+                        (pitch, i) => {
+                            query += `createPitch${i}: createPitch(id: "${pitch.id}", label: "${pitch.label}", longitude: ${pitch.longitude}, latitude: ${pitch.latitude}) \n`;
+                        },
+                    );
                     query += '}';
-
                     console.log(query);
                     const body = {
                         query,
