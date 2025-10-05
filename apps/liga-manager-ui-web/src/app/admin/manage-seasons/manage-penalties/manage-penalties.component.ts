@@ -5,11 +5,12 @@ import { EditPenaltyComponent, EditPenaltyDialogData, TeamSearchComponent } from
 import { MatIconModule } from '@angular/material/icon';
 import { Maybe, Team } from '@liga-manager-api/graphql';
 import { MatTableModule } from '@angular/material/table';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { RemovePenalty } from '@liga-manager-ui/states';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-manage-penalties',
@@ -32,11 +33,14 @@ export class ManagePenaltiesComponent extends ManageSeasonBaseComponent {
 
     displayedColumns = [ 'team', 'penalty_reason', 'penalty_points', 'action' ];
 
-    penaltyTrigger = new BehaviorSubject(this.teams());
-
-    penalties$ = this.penaltyTrigger.pipe(
+    penalties$ = toObservable(this.season).pipe(
         switchMap(
-            () => this.seasonService.getSeasonPenalties({ id: this.season?.id || '' }),
+            (season) => {
+                if (season) {
+                    return this.seasonService.getSeasonPenalties({ id: season.id });
+                }
+                return of([]);
+            },
         ),
     );
 
@@ -44,7 +48,7 @@ export class ManagePenaltiesComponent extends ManageSeasonBaseComponent {
 
         const data: EditPenaltyDialogData = {
             teams: this.teams() || [],
-            seasonId: this.season?.id,
+            seasonId: this.season()?.id,
         };
 
         this.dialog.open(EditPenaltyComponent, {
@@ -53,7 +57,7 @@ export class ManagePenaltiesComponent extends ManageSeasonBaseComponent {
     }
 
     removePenalty(ranking_penalty_id: string) {
-        this.store.dispatch(new RemovePenalty({ ranking_penalty_id, season_id: this.season?.id || ''}));
+        this.store.dispatch(new RemovePenalty({ ranking_penalty_id, season_id: this.season()?.id || ''}));
     }
 
 }

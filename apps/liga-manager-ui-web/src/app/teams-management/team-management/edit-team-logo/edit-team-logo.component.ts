@@ -98,7 +98,6 @@ export class EditTeamLogoComponent {
     }
 
     handleFileInput(files: FileList | null) {
-        console.log(files);
         if (files) {
             const reader = new FileReader();
             reader.addEventListener('load', () => {

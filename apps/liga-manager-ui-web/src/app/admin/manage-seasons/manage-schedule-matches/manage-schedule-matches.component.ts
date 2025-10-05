@@ -58,19 +58,19 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
 
     ngOnInit(): void {
         this.matchAppointments = new FormArray(
-            Array.from({ length: this.season?.match_days![0]?.matches?.length || 0 }, () => new MatchAppointmentFormGroup()),
+            Array.from({ length: this.season()?.match_days![0]?.matches?.length || 0 }, () => new MatchAppointmentFormGroup()),
         );
     }
 
     calcOffestFromStartDate(offset: number) {
-        return add(parseISO(this.season?.match_days![0]?.start_date || ''), { days: offset });
+        return add(parseISO(this.season()?.match_days![0]?.start_date || ''), { days: offset });
     }
 
     exampleMatchDays() {
-        if (!this.season?.match_days) {
+        if (!this.season()?.match_days) {
             return;
         }
-        const t = this.season?.match_days.map(
+        const t = this.season()?.match_days?.map(
             (matchDay) => ({
                 ...matchDay,
                 matches: matchDay?.matches?.map(
@@ -98,7 +98,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
-        const matchDay = this.season?.match_days![matchDayIndex];
+        const matchDay = this.season()?.match_days![matchDayIndex];
         if (!matchDay) {
             return;
         }
@@ -116,11 +116,11 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         await firstValueFrom(this.seasonService.scheduleAllMatchesForMatchDay({
             match_day_id: matchDay.id,
             match_appointments,
-        }, this.season?.id));
+        }, this.season()?.id));
     }
 
     async scheduleAllMatchesForSeason() {
-        const matchDay = this.season?.match_days![0];
+        const matchDay = this.season()?.match_days![0];
         if (!matchDay) {
             return;
         }
@@ -137,7 +137,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         ) || [];
 
         await firstValueFrom(this.seasonService.scheduleAllMatchesForSeason({
-            season_id: this.season?.id || '',
+            season_id: this.season()?.id || '',
             match_appointments,
         }));
     }

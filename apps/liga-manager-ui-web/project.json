@@ -54,6 +54,11 @@
             "glob": "**/*.js",
             "input": "{workspaceRoot}/node_modules/@angular/common/locales",
             "output": "/assets/locales"
+          },
+          {
+            "glob": "**/*.js",
+            "input": "{workspaceRoot}/node_modules/date-fns/locale",
+            "output": "/assets/date-fns-locales"
           }
         ],
         "styles": [

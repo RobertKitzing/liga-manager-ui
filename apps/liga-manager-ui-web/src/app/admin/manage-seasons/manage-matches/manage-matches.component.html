@@ -1,6 +1,6 @@
-@if (season) {
+@if (season()) {
     <div class="flex flex-wrap w-full gap-4 justify-center">
-        @for (matchDay of season.match_days; track matchDay) {
+        @for (matchDay of season()?.match_days; track matchDay) {
             <mat-card appearance="outlined" class="m-4">
                 <mat-card-title>
                     <h3 class="text-center">

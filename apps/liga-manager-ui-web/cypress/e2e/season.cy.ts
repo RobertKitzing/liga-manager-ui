@@ -1,10 +1,18 @@
 import { Users } from '@cypress/fixtures';
+import { futureDate, time } from '@cypress/helper';
 import { faker } from '@faker-js/faker';
-import { format } from 'date-fns';
 
 describe('Season', () => {
 
-    it('Should create a season', () => {
+    let names: string[];
+
+    before(
+        () => {
+            names = faker.helpers.uniqueArray(faker.person.lastName, 2);
+        },
+    );
+
+    it('Should create Seasons', () => {
 
         cy.login(Users.admin.username, Users.admin.password);
 
@@ -12,43 +20,100 @@ describe('Season', () => {
         cy.getBySel('route-admin').first().click();
         cy.getBySel('route-admin-seasons').first().click();
 
-        const names = faker.helpers.uniqueArray(faker.person.lastName, 4);
-
         names.forEach(
-            (name, i) => {
+            (name) => {
                 cy.getBySel('button-create-season').click();
                 cy.getBySel('input-create-season-name').type(name);
                 cy.getBySel('button-create-season-submit').click();
                 cy.successSnackbar();
+            },
+        );
+    });
 
+    it('Should add teams to seasons', () => {
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
+        names.forEach(
+            (name) => {
                 cy.getBySel('select-season').click();
                 cy.get('mat-option').contains(name).click();
 
                 cy.getBySel('season-management-tab-select-teams').click();
-
                 cy.getBySel('input-team-auto-complete').clear();
                 cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
                 cy.contains(Users.teamAdmin.team).click();
                 cy.successSnackbar();
 
-                for (let i = 0 ; i < 10; i++) {
+                for (let i = 0 ; i < 5; i++) {
                     cy.getBySel('input-team-auto-complete').clear();
                     cy.getBySel('input-team-auto-complete').click();
                     cy.get('mat-option').first().click();
                     cy.successSnackbar();
                 }
+            },
+        );
+    });
+
+    it('Should create matchdays seasons', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
+        names.forEach(
+            (name) => {
+                cy.getBySel('select-season').click();
+                cy.get('mat-option').contains(name).click();
 
                 cy.getBySel('season-management-tab-create-matchdays').click();
 
                 cy.getBySel('input-tournament-season-start-date').clear({ force: true });
-                cy.getBySel('input-tournament-season-start-date').type(format(faker.date.future(), 'P'), { force: true });
+                cy.getBySel('input-tournament-season-start-date').type(futureDate(), { force: true });
 
                 cy.getBySel('button-save-match-days').click();
+                cy.successSnackbar();
+            },
+        );
+    });
 
+    it('Should start all seasons', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
+        names.forEach(
+            (name) => {
+                cy.getBySel('select-season').click();
+                cy.get('mat-option').contains(name).click();
                 cy.getBySel('button-start-season').click();
+                cy.successSnackbar();
+            },
+        );
 
+    });
+
+    it('Should add a penalty', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
+        names.forEach(
+            (name) => {
+                cy.getBySel('select-season').click();
+                cy.get('mat-option').contains(name).click();
                 cy.getBySel('season-management-tab-penalties').first().click();
-
                 cy.getBySel('button-create-penalty').click();
 
                 cy.getBySel('input-team-auto-complete').clear();
@@ -67,13 +132,25 @@ describe('Season', () => {
                 cy.getBySel('button-delete-penalty').click();
                 cy.getBySel('button-confirm-yes').click();
                 cy.successSnackbar();
-
-                if (i % 2 === 0) {
-                    cy.getBySel('button-end-season').click();
-                    cy.getBySel('button-confirm-yes').click();
-                }
             },
         );
+
+    });
+
+    it('Should end a Season', () => {
+
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
+        cy.getBySel('select-season').click();
+        cy.get('mat-option').contains(names[1]).click();
+
+        cy.getBySel('button-end-season').click();
+        cy.getBySel('button-confirm-yes').click();
+        cy.successSnackbar();
     });
 
     it('should edit an Match as a admin', () => {
@@ -83,7 +160,7 @@ describe('Season', () => {
         cy.visit('/');
         cy.getBySel('route-schedule').first().click();
         cy.getBySel('select-season').click();
-        cy.get('mat-option').first().click();
+        cy.get('mat-option').contains(names[0]).click();
 
         cy.getBySel('button-edit-match-result').first().click();
         cy.getBySel('input-home-score').clear({ force: true });
@@ -95,9 +172,9 @@ describe('Season', () => {
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear({ force: true });
-        cy.getBySel('input-time').type('09:00');
+        cy.getBySel('input-time').type(time());
         cy.getBySel('input-kickoff-date').clear({ force: true });
-        cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
+        cy.getBySel('input-kickoff-date').type(futureDate(), { force: true });
         cy.getBySel('button-schedule-match-submit').click();
         cy.successSnackbar();
 
@@ -115,7 +192,7 @@ describe('Season', () => {
         cy.visit('/');
         cy.getBySel('route-schedule').first().click();
         cy.getBySel('select-season').click();
-        cy.get('mat-option').first().click();
+        cy.get('mat-option').contains(names[0]).click();
 
         cy.getBySel('button-edit-match-result').first().click();
         cy.getBySel('input-home-score').clear({ force: true });
@@ -127,9 +204,9 @@ describe('Season', () => {
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear({ force: true });
-        cy.getBySel('input-time').type('09:00');
+        cy.getBySel('input-time').type(time());
         cy.getBySel('input-kickoff-date').clear({ force: true });
-        cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
+        cy.getBySel('input-kickoff-date').type(futureDate(), { force: true });
         cy.getBySel('button-schedule-match-submit').click();
         cy.successSnackbar();
 
@@ -145,7 +222,7 @@ describe('Season', () => {
         cy.getBySel('route-table').first().click();
         cy.getBySel('select-season').click();
         cy.getBySel('select-season');
-        cy.get('mat-option').first().click();
+        cy.get('mat-option').contains(names[0]).click();
         cy.get('lima-table').should('exist');
     });
 
@@ -154,7 +231,7 @@ describe('Season', () => {
         cy.getBySel('route-schedule').first().click();
         cy.getBySel('select-season').click();
         cy.getBySel('select-season');
-        cy.get('mat-option').first().click();
+        cy.get('mat-option').contains(names[0]).click();
         cy.get('lima-schedule').should('exist');
 
         cy.getBySel('cant-edit-match-result').should('exist');
@@ -170,7 +247,7 @@ describe('Season', () => {
 
         cy.getBySel('select-season').click();
         cy.getBySel('select-season');
-        cy.get('mat-option').first().click();
+        cy.get('mat-option').contains(names[1]).click();
 
         cy.get('lima-table').should('exist');
     });
@@ -182,7 +259,7 @@ describe('Season', () => {
 
         cy.getBySel('select-season').click();
         cy.getBySel('select-season');
-        cy.get('mat-option').first().click();
+        cy.get('mat-option').contains(names[1]).click();
         cy.get('lima-schedule').should('exist');
 
         cy.getBySel('cant-edit-match-result').should('exist');

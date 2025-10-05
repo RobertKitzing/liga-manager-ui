@@ -17,3 +17,8 @@
 import './commands';
 
 import 'cypress-maildev';
+
+Cypress.on('window:before:load', (window) => {
+    Object.defineProperty(window.navigator, 'language', { value: Cypress.env('CYPRESS_LANG') });
+    Object.defineProperty(window.navigator, 'languages', { value: [Cypress.env('CYPRESS_LANG')] });
+});

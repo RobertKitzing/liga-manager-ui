@@ -1,7 +1,7 @@
 <mat-card class="m-2">
     <mat-card-title>
         <div class="flex items-center m-4">
-            <lima-team-search [teams]="season?.teams" (filteredTeams)="teams.set($event)" class="grow pr-6"></lima-team-search>
+            <lima-team-search [teams]="season()?.teams" (filteredTeams)="teams.set($event)" class="grow pr-6"></lima-team-search>
             <button
                 matIconButton
                 (click)="editPenalty()"

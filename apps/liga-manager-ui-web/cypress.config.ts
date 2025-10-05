@@ -20,6 +20,7 @@ export default defineConfig({
             MAILDEV_HOST: 'localhost',
             MAILDEV_SMTP_PORT: '1025',
             MAILDEV_API_PORT: '1080',
+            CYPRESS_LANG: 'de',
         },
         setupNodeEvents(on) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

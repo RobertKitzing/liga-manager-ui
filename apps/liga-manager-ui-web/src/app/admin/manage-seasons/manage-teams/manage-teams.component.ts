@@ -51,7 +51,7 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
         this.dialog.open(ReplaceTeamComponent, {
             ...defaultDialogConfig,
             data: {
-                seasonId: this.season?.id,
+                seasonId: this.season()?.id,
                 teamToBeReplaced,
             },
         });

@@ -65,7 +65,6 @@ export class EditTeamContactComponent {
     }
 
     async updateTeamContact() {
-        console.log(this.team());
         try {
             await firstValueFrom(
                 this.teamService.updateTeamContact({

@@ -97,8 +97,8 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['season']) {
-            if (this.season?.match_days) {
-                this.matchDays.set(this.season?.match_days);
+            if (this.season()?.match_days) {
+                this.matchDays.set(this.season()?.match_days || []);
             } else {
                 this.matchDays.set([]);
             }
@@ -107,9 +107,9 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     }
 
     createMatchDays() {
-        if (this.season?.teams && this.formGroup.controls.seasonStartDate.value) {
+        if (this.season()?.teams && this.formGroup.controls.seasonStartDate.value) {
             this.matchDays.set([]);
-            let length = this.season.teams.length;
+            let length = this.season()?.teams?.length || 0;
             if (length % 2 !== 0) {
                 length += 1;
             }
