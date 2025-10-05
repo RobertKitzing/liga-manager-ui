@@ -1,9 +1,3 @@
-query AllTournamentList {
-    allTournaments {
-        ...AllTournaments
-    }
-}
-
 query TournamentById($id: String!) {
     tournament(id: $id) {
         ...Tournament

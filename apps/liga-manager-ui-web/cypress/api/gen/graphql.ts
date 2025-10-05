@@ -982,14 +982,6 @@ export type RankingByIdQuery = { __typename?: 'query', season?: (
     & { ' $fragmentRefs'?: { 'RankingFragment': RankingFragment } }
   ) | null };
 
-export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllSeasonsListQuery = { __typename?: 'query', allSeasons?: Array<(
-    { __typename?: 'Season' }
-    & { ' $fragmentRefs'?: { 'AllSeasonsFragment': AllSeasonsFragment } }
-  ) | null> | null };
-
 export type SeasonByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1000,12 +992,12 @@ export type SeasonByIdQuery = { __typename?: 'query', season?: (
     & { ' $fragmentRefs'?: { 'SeasonFragment': SeasonFragment } }
   ) | null };
 
-export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
+export type SeasonListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTeamsQuery = { __typename?: 'query', allTeams?: Array<(
-    { __typename?: 'Team' }
-    & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
+export type SeasonListQuery = { __typename?: 'query', allSeasons?: Array<(
+    { __typename?: 'Season' }
+    & { ' $fragmentRefs'?: { 'AllSeasonsFragment': AllSeasonsFragment } }
   ) | null> | null };
 
 export type TeamByIdQueryVariables = Exact<{
@@ -1018,12 +1010,12 @@ export type TeamByIdQuery = { __typename?: 'query', team?: (
     & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
   ) | null };
 
-export type AllTournamentListQueryVariables = Exact<{ [key: string]: never; }>;
+export type TeamListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTournamentListQuery = { __typename?: 'query', allTournaments?: Array<(
-    { __typename?: 'Tournament' }
-    & { ' $fragmentRefs'?: { 'AllTournamentsFragment': AllTournamentsFragment } }
+export type TeamListQuery = { __typename?: 'query', allTeams?: Array<(
+    { __typename?: 'Team' }
+    & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
   ) | null> | null };
 
 export type TournamentByIdQueryVariables = Exact<{
@@ -1035,6 +1027,14 @@ export type TournamentByIdQuery = { __typename?: 'query', tournament?: (
     { __typename?: 'Tournament' }
     & { ' $fragmentRefs'?: { 'TournamentFragment': TournamentFragment } }
   ) | null };
+
+export type TournamentListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TournamentListQuery = { __typename?: 'query', allTournaments?: Array<(
+    { __typename?: 'Tournament' }
+    & { ' $fragmentRefs'?: { 'AllTournamentsFragment': AllTournamentsFragment } }
+  ) | null> | null };
 
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2244,22 +2244,6 @@ fragment Penalty on RankingPenalty {
   created_at
   points
 }`) as unknown as TypedDocumentString<RankingByIdQuery, RankingByIdQueryVariables>;
-export const AllSeasonsListDocument = new TypedDocumentString(`
-    query AllSeasonsList {
-  allSeasons {
-    ...AllSeasons
-  }
-}
-    fragment AllSeasons on Season {
-  id
-  name
-  state
-  match_days {
-    number
-    start_date
-    end_date
-  }
-}`) as unknown as TypedDocumentString<AllSeasonsListQuery, AllSeasonsListQueryVariables>;
 export const SeasonByIdDocument = new TypedDocumentString(`
     query SeasonById($id: String!) {
   season(id: $id) {
@@ -2328,28 +2312,22 @@ fragment Season on Season {
     ...MatchDay
   }
 }`) as unknown as TypedDocumentString<SeasonByIdQuery, SeasonByIdQueryVariables>;
-export const AllTeamsDocument = new TypedDocumentString(`
-    query AllTeams {
-  allTeams {
-    ...Team
+export const SeasonListDocument = new TypedDocumentString(`
+    query SeasonList {
+  allSeasons {
+    ...AllSeasons
   }
 }
-    fragment Team on Team {
+    fragment AllSeasons on Season {
   id
   name
-  logo_id
-  logo_path
-  created_at
-  contact {
-    ...Contact
+  state
+  match_days {
+    number
+    start_date
+    end_date
   }
-}
-fragment Contact on Contact {
-  first_name
-  last_name
-  phone
-  email
-}`) as unknown as TypedDocumentString<AllTeamsQuery, AllTeamsQueryVariables>;
+}`) as unknown as TypedDocumentString<SeasonListQuery, SeasonListQueryVariables>;
 export const TeamByIdDocument = new TypedDocumentString(`
     query TeamById($id: String!) {
   team(id: $id) {
@@ -2372,17 +2350,28 @@ fragment Contact on Contact {
   phone
   email
 }`) as unknown as TypedDocumentString<TeamByIdQuery, TeamByIdQueryVariables>;
-export const AllTournamentListDocument = new TypedDocumentString(`
-    query AllTournamentList {
-  allTournaments {
-    ...AllTournaments
+export const TeamListDocument = new TypedDocumentString(`
+    query TeamList {
+  allTeams {
+    ...Team
   }
 }
-    fragment AllTournaments on Tournament {
+    fragment Team on Team {
   id
   name
-  state
-}`) as unknown as TypedDocumentString<AllTournamentListQuery, AllTournamentListQueryVariables>;
+  logo_id
+  logo_path
+  created_at
+  contact {
+    ...Contact
+  }
+}
+fragment Contact on Contact {
+  first_name
+  last_name
+  phone
+  email
+}`) as unknown as TypedDocumentString<TeamListQuery, TeamListQueryVariables>;
 export const TournamentByIdDocument = new TypedDocumentString(`
     query TournamentById($id: String!) {
   tournament(id: $id) {
@@ -2448,6 +2437,17 @@ fragment Tournament on Tournament {
   }
   state
 }`) as unknown as TypedDocumentString<TournamentByIdQuery, TournamentByIdQueryVariables>;
+export const TournamentListDocument = new TypedDocumentString(`
+    query TournamentList {
+  allTournaments {
+    ...AllTournaments
+  }
+}
+    fragment AllTournaments on Tournament {
+  id
+  name
+  state
+}`) as unknown as TypedDocumentString<TournamentListQuery, TournamentListQueryVariables>;
 export const AuthenticatedUserDocument = new TypedDocumentString(`
     query AuthenticatedUser {
   authenticatedUser {

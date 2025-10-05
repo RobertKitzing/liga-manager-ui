@@ -1,9 +1,3 @@
-query AllSeasonsList {
-    allSeasons {
-        ...AllSeasons
-    }
-}
-
 query SeasonById($id: String!) {
     season(id: $id) {
         ...Season

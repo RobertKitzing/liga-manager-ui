@@ -47,13 +47,13 @@ export function prepareApi(baseUrl: string, teamCount = 10, pitchCount = 10) {
             getAdminToken(baseUrl).then(
                 async (token) => {
                     let query = 'mutation PrepareApi {\n';
-                    const teams = Array.from({ length: teamCount }, () => ({ id: v4(), name: faker.person.firstName() }) ).concat([{ id: v4(), name: Users.teamAdmin.team }]);
+                    const teams = Array.from(faker.helpers.uniqueArray(faker.person.firstName, teamCount), (name) => ({ id: v4(), name }) ).concat([{ id: v4(), name: Users.teamAdmin.team }]);
                     for (const i in teams) {
                         query += `createTeam${i}: createTeam(id: "${teams[i].id}", name: "${teams[i].name }") \n`;
                     }
-                    const pitches = Array.from({ length: pitchCount }, () => ({
+                    const pitches = Array.from(faker.helpers.uniqueArray(faker.location.city, pitchCount), (label) => ({
                         id: v4(),
-                        label: faker.location.city(),
+                        label,
                         longitude: faker.location.longitude(),
                         latitude: faker.location.latitude(),
                     }) );
@@ -61,6 +61,8 @@ export function prepareApi(baseUrl: string, teamCount = 10, pitchCount = 10) {
                         query += `createPitch${i}: createPitch(id: "${pitches[i].id}", label: "${pitches[i].label}", longitude: ${pitches[i].longitude}, latitude: ${pitches[i].latitude}) \n`;
                     }
                     query += '}';
+
+                    console.log(query);
                     const body = {
                         query,
                         variables: {},

@@ -1,9 +1,3 @@
-query AllTeams {
-    allTeams {
-        ...Team
-    }
-}
-
 query TeamById($id: String!) {
     team(id: $id) {
         ...Team

@@ -17,7 +17,7 @@ import { firstValueFrom, map, startWith, switchMap } from 'rxjs';
 import { User, UserRole } from '@liga-manager-api/graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { generator } from 'ts-password-generator';
-import { NotificationService, TeamService, UserService } from '@liga-manager-ui/services';
+import { NotificationService, UserService } from '@liga-manager-ui/services';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +28,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { CypressSelectorDirective, TrimDirective } from '@liga-manager-ui/directives';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
+import { Store } from '@ngxs/store';
+import { TeamSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-edit-user-dialog',
@@ -55,7 +57,7 @@ export class EditUserDialogComponent implements OnInit {
 
     user = inject<User>(MAT_DIALOG_DATA);
 
-    private teamService = inject(TeamService);
+    private store = inject(Store);
 
     private userService = inject(UserService);
 
@@ -71,8 +73,8 @@ export class EditUserDialogComponent implements OnInit {
         startWith(null),
         switchMap((searchTerm) =>
             !searchTerm
-                ? this.teamService.allTeams$
-                : this.teamService.allTeams$.pipe(
+                ? this.store.select(TeamSelectors.teams)
+                : this.store.select(TeamSelectors.teams).pipe(
                     map((t) =>
                         t?.filter((x) =>
                             x?.name

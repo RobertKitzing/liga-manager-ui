@@ -605,11 +605,6 @@ export type RankingFragment = (
   )> }
 );
 
-export type AllSeasonsFragment = (
-  Pick<Season, 'id' | 'name' | 'state'>
-  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
-);
-
 export type SeasonFragment = (
   Pick<Season, 'id' | 'name' | 'state'>
   & { teams?: Maybe<Array<Maybe<(
@@ -633,7 +628,10 @@ export type SeasonFragment = (
   )>>> }
 );
 
-export type AllTournamentsFragment = Pick<Tournament, 'id' | 'name' | 'state'>;
+export type AllSeasonsFragment = (
+  Pick<Season, 'id' | 'name' | 'state'>
+  & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
+);
 
 export type TournamentFragment = (
   Pick<Tournament, 'id' | 'name' | 'state'>
@@ -654,6 +652,8 @@ export type TournamentFragment = (
     )>>> }
   )>>> }
 );
+
+export type AllTournamentsFragment = Pick<Tournament, 'id' | 'name' | 'state'>;
 
 export type UserFragment = (
   Pick<User, 'id' | 'email' | 'role' | 'first_name' | 'last_name'>
@@ -1104,14 +1104,6 @@ export type RankingByIdQuery = { season?: Maybe<(
     )> }
   )> };
 
-export type AllSeasonsListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllSeasonsListQuery = { allSeasons?: Maybe<Array<Maybe<(
-    Pick<Season, 'id' | 'name' | 'state'>
-    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
-  )>>> };
-
 export type SeasonByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -1140,12 +1132,12 @@ export type SeasonByIdQuery = { season?: Maybe<(
     )>>> }
   )> };
 
-export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
+export type SeasonListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTeamsQuery = { allTeams?: Maybe<Array<Maybe<(
-    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
-    & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+export type SeasonListQuery = { allSeasons?: Maybe<Array<Maybe<(
+    Pick<Season, 'id' | 'name' | 'state'>
+    & { match_days?: Maybe<Array<Maybe<Pick<MatchDay, 'number' | 'start_date' | 'end_date'>>>> }
   )>>> };
 
 export type TeamByIdQueryVariables = Exact<{
@@ -1158,10 +1150,13 @@ export type TeamByIdQuery = { team?: Maybe<(
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   )> };
 
-export type AllTournamentListQueryVariables = Exact<{ [key: string]: never; }>;
+export type TeamListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTournamentListQuery = { allTournaments?: Maybe<Array<Maybe<Pick<Tournament, 'id' | 'name' | 'state'>>>> };
+export type TeamListQuery = { allTeams?: Maybe<Array<Maybe<(
+    Pick<Team, 'id' | 'name' | 'logo_id' | 'logo_path' | 'created_at'>
+    & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
+  )>>> };
 
 export type TournamentByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1187,6 +1182,11 @@ export type TournamentByIdQuery = { tournament?: Maybe<(
       )>>> }
     )>>> }
   )> };
+
+export type TournamentListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TournamentListQuery = { allTournaments?: Maybe<Array<Maybe<Pick<Tournament, 'id' | 'name' | 'state'>>>> };
 
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2258,24 +2258,6 @@ ${PenaltyFragmentDoc}`;
       super(apollo);
     }
   }
-export const AllSeasonsListDocument = gql`
-    query AllSeasonsList {
-  allSeasons {
-    ...AllSeasons
-  }
-}
-    ${AllSeasonsFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllSeasonsListGQL extends Apollo.Query<AllSeasonsListQuery, AllSeasonsListQueryVariables> {
-    document = AllSeasonsListDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const SeasonByIdDocument = gql`
     query SeasonById($id: String!) {
   season(id: $id) {
@@ -2299,20 +2281,19 @@ ${PitchFragmentDoc}`;
       super(apollo);
     }
   }
-export const AllTeamsDocument = gql`
-    query AllTeams {
-  allTeams {
-    ...Team
+export const SeasonListDocument = gql`
+    query SeasonList {
+  allSeasons {
+    ...AllSeasons
   }
 }
-    ${TeamFragmentDoc}
-${ContactFragmentDoc}`;
+    ${AllSeasonsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class AllTeamsGQL extends Apollo.Query<AllTeamsQuery, AllTeamsQueryVariables> {
-    document = AllTeamsDocument;
+  export class SeasonListGQL extends Apollo.Query<SeasonListQuery, SeasonListQueryVariables> {
+    document = SeasonListDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -2337,19 +2318,20 @@ ${ContactFragmentDoc}`;
       super(apollo);
     }
   }
-export const AllTournamentListDocument = gql`
-    query AllTournamentList {
-  allTournaments {
-    ...AllTournaments
+export const TeamListDocument = gql`
+    query TeamList {
+  allTeams {
+    ...Team
   }
 }
-    ${AllTournamentsFragmentDoc}`;
+    ${TeamFragmentDoc}
+${ContactFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class AllTournamentListGQL extends Apollo.Query<AllTournamentListQuery, AllTournamentListQueryVariables> {
-    document = AllTournamentListDocument;
+  export class TeamListGQL extends Apollo.Query<TeamListQuery, TeamListQueryVariables> {
+    document = TeamListDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -2373,6 +2355,24 @@ ${PitchFragmentDoc}`;
   })
   export class TournamentByIdGQL extends Apollo.Query<TournamentByIdQuery, TournamentByIdQueryVariables> {
     document = TournamentByIdDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const TournamentListDocument = gql`
+    query TournamentList {
+  allTournaments {
+    ...AllTournaments
+  }
+}
+    ${AllTournamentsFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class TournamentListGQL extends Apollo.Query<TournamentListQuery, TournamentListQueryVariables> {
+    document = TournamentListDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -10,7 +10,6 @@ import {
 } from '@liga-manager-ui/components';
 import {
     SeasonService,
-    TeamService,
 } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
@@ -18,6 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AllSeasonsFragment, Maybe, SeasonState, Team } from '@liga-manager-api/graphql';
 import { SortByPipe } from '@liga-manager-ui/pipes';
+import { Store } from '@ngxs/store';
+import { TeamSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-contacs',
@@ -39,7 +40,7 @@ import { SortByPipe } from '@liga-manager-ui/pipes';
 })
 export class ContacsComponent {
 
-    private teamService = inject(TeamService);
+    private store = inject(Store);
 
     private seasonService = inject(SeasonService);
 
@@ -53,7 +54,7 @@ export class ContacsComponent {
         switchMap(([selectedSeason]) => {
             let teams$;
             if (!selectedSeason) {
-                teams$ = this.teamService.allTeams$;
+                teams$ = this.store.select(TeamSelectors.teams);
             } else {
                 teams$ = this.seasonService
                     .getSeasonById$(selectedSeason.id)

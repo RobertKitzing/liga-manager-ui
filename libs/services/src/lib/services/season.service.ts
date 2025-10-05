@@ -5,11 +5,8 @@ import {
     AddPenaltyMutationVariables,
     AddTeamToSeasonGQL,
     AddTeamToSeasonMutationVariables,
-    AllSeasonsListGQL,
     CreateMatchesForSeasonGQL,
     CreateMatchesForSeasonMutationVariables,
-    DeleteSeasonGQL,
-    EndSeasonGQL,
     RankingByIdGQL,
     RemovePenaltyGQL,
     RemovePenaltyMutationVariables,
@@ -24,9 +21,9 @@ import {
     ScheduleAllMatchesForSeasonGQL,
     ScheduleAllMatchesForSeasonMutationVariables,
     SeasonByIdGQL,
+    SeasonListGQL,
     SeasonPenaltiesGQL,
     SeasonPenaltiesQueryVariables,
-    StartSeasonGQL,
 } from '@liga-manager-api/graphql';
 import { Apollo, gql } from 'apollo-angular';
 
@@ -35,7 +32,7 @@ import { Apollo, gql } from 'apollo-angular';
 })
 export class SeasonService {
 
-    private allSeasonlistGQL = inject(AllSeasonsListGQL);
+    private seasonListGQL = inject(SeasonListGQL);
 
     private apollo = inject(Apollo);
 
@@ -48,12 +45,6 @@ export class SeasonService {
     private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
 
     private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
-
-    private startSeasonGQL = inject(StartSeasonGQL);
-
-    private deleteSeasonGQL = inject(DeleteSeasonGQL);
-
-    private endSeasonGQL = inject(EndSeasonGQL);
 
     private createMatchesForSeasonGQL = inject(CreateMatchesForSeasonGQL);
 
@@ -70,7 +61,7 @@ export class SeasonService {
     private removePenaltyGQL = inject(RemovePenaltyGQL);
 
     reloadSeasons() {
-        return this.allSeasonlistGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
+        return this.seasonListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
     }
 
     getSeasonById$(id: string | undefined) {
@@ -116,51 +107,6 @@ export class SeasonService {
                 },
             ],
         });
-    }
-
-    startSeason(seasonId: string) {
-        return this.startSeasonGQL.mutate(
-            {
-                id: seasonId,
-            },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allSeasonlistGQL.document,
-                    },
-                ],
-            },
-        );
-    }
-
-    endSeason(season_id: string) {
-        return this.endSeasonGQL.mutate(
-            {
-                season_id,
-            },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allSeasonlistGQL.document,
-                    },
-                ],
-            },
-        );
-    }
-
-    deleteSeason(season_id: string) {
-        return this.deleteSeasonGQL.mutate(
-            {
-                season_id,
-            },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allSeasonlistGQL.document,
-                    },
-                ],
-            },
-        );
     }
 
     createMatchesForSeason(params: CreateMatchesForSeasonMutationVariables) {

@@ -14,7 +14,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { TournamentService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
-import { firstValueFrom, of, switchMap, tap } from 'rxjs';
+import { of, switchMap, tap } from 'rxjs';
 import { CreateNewTournamentComponent } from './create-new-tournament';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
@@ -107,9 +107,8 @@ export class ManageTournamentsComponent implements OnInit {
         this.store.dispatch(new EndTournament({ tournament_id }, name));
     }
 
-    async deleteTournament(tournament_id: string, name: string) {
-        await firstValueFrom(this.store.dispatch(new DeleteTournament({ tournament_id }, name)));
-        this.selectedTournamentFC.reset();
+    deleteTournament(tournament_id: string, name: string) {
+        this.store.dispatch(new DeleteTournament({ tournament_id }, name));
     }
 
 }

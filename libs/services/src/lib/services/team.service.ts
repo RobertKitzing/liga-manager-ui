@@ -1,19 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import {
-    AllTeamsGQL,
-    CreateTeamGQL,
-    DeleteTeamGQL,
-    DeleteTeamMutationVariables,
-    RenameTeamGQL,
-    RenameTeamMutationVariables,
     Team,
     TeamByIdGQL,
+    TeamListGQL,
     UpdateTeamContactGQL,
     UpdateTeamContactMutationVariables,
 } from '@liga-manager-api/graphql';
-import { v4 as uuidv4 } from 'uuid';
-import { sortArrayBy } from '@liga-manager-ui/utils';
 import { Store } from '@ngxs/store';
 import { LogosService } from '@liga-manager-api/openapi';
 import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/states';
@@ -23,29 +16,18 @@ import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/state
 })
 export class TeamService {
 
+    private teamListGQL = inject(TeamListGQL);
+
     private logoService = inject(LogosService);
 
     private teamByIdGQL = inject(TeamByIdGQL);
-
-    private allTeamsGQL = inject(AllTeamsGQL);
-
-    private createTeamQL = inject(CreateTeamGQL);
-
-    private deleteTeamGQL = inject(DeleteTeamGQL);
-
-    private renameTeamGQL = inject(RenameTeamGQL);
 
     private updateTeamContactGQL = inject(UpdateTeamContactGQL);
 
     private store = inject(Store);
 
-    allTeams$ = this.allTeamsGQL.watch().valueChanges.pipe(
-        map(({ data }) => data.allTeams),
-        map((teams) => sortArrayBy(teams as Team[], 'name')),
-    );
-
     refetchAllTeams() {
-        this.allTeamsGQL.watch().refetch();
+        this.teamListGQL.watch().refetch();
     }
 
     refetchTeamById(id: string) {
@@ -62,43 +44,7 @@ export class TeamService {
         return this.updateTeamContactGQL.mutate(variables, {
             refetchQueries: [
                 {
-                    query: this.allTeamsGQL.document,
-                },
-            ],
-        });
-    }
-
-    createTeam(name: string) {
-        return this.createTeamQL.mutate(
-            {
-                id: uuidv4(),
-                name,
-            },
-            {
-                refetchQueries: [
-                    {
-                        query: this.allTeamsGQL.document,
-                    },
-                ],
-            },
-        );
-    }
-
-    deleteTeam(variables: DeleteTeamMutationVariables) {
-        return this.deleteTeamGQL.mutate(variables, {
-            refetchQueries: [
-                {
-                    query: this.allTeamsGQL.document,
-                },
-            ],
-        });
-    }
-
-    renameTeam(variables: RenameTeamMutationVariables) {
-        return this.renameTeamGQL.mutate(variables, {
-            refetchQueries: [
-                {
-                    query: this.allTeamsGQL.document,
+                    query: this.teamListGQL.document,
                 },
             ],
         });

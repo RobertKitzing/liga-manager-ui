@@ -26,9 +26,9 @@
             <mat-label translate>USER_ROLE</mat-label>
             <mat-select formControlName="role" name="userRole" cySelector="select-user-role">
                 @for (userRole of UserRole | keyvalue; track userRole) {
-                <mat-option cySelector="user-role-{{ userRole.value }}" [value]="userRole.value">
-                    <span translate>UserRole.{{ userRole.value }}</span>
-                </mat-option>
+                    <mat-option cySelector="user-role-{{ userRole.value }}" [value]="userRole.value">
+                        <span translate>UserRole.{{ userRole.value }}</span>
+                    </mat-option>
                 }
             </mat-select>
         </mat-form-field>

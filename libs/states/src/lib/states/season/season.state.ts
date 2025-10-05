@@ -1,11 +1,13 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AllSeasonsListGQL, AllSeasonsListQuery, CreateSeasonGQL } from '@liga-manager-api/graphql';
+import { CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, SeasonListGQL, SeasonListQuery, StartSeasonGQL } from '@liga-manager-api/graphql';
 import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
-import { CreateSeason } from './actions';
+import { CreateSeason, DeleteSeason, EndSeason, StartSeason } from './actions';
+import { tap } from 'rxjs';
+import { SetSelectedSeason } from '../selected-items';
 
 export interface SeasonStateModel {
-    seasons: AllSeasonsListQuery['allSeasons'];
+    seasons: SeasonListQuery['allSeasons'];
 }
 
 @State<SeasonStateModel>({
@@ -17,14 +19,20 @@ export interface SeasonStateModel {
 @Injectable()
 export class SeasonState implements NgxsOnInit {
 
-    private allSeasonlistGQL = inject(AllSeasonsListGQL);
+    private seasonListGQL = inject(SeasonListGQL);
 
     private createSeasonGQL = inject(CreateSeasonGQL);
+
+    private startSeasonGQL = inject(StartSeasonGQL);
+
+    private endSeasonGQL = inject(EndSeasonGQL);
+
+    private deleteSeasonGQL = inject(DeleteSeasonGQL);
 
     private destroyRef = inject(DestroyRef);
 
     ngxsOnInit(ctx: StateContext<SeasonStateModel>): void {
-        this.allSeasonlistGQL.watch().valueChanges.pipe(
+        this.seasonListGQL.watch().valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             (result) => {
@@ -34,16 +42,66 @@ export class SeasonState implements NgxsOnInit {
     }
 
     @Action(CreateSeason)
-    createTournament(_: StateContext<SeasonStateModel>, action: CreateSeason) {
+    createSeason(_: StateContext<SeasonStateModel>, action: CreateSeason) {
         return this.createSeasonGQL.mutate(
             action.payload,
             {
                 refetchQueries: [
                     {
-                        query: this.allSeasonlistGQL.document,
+                        query: this.seasonListGQL.document,
                     },
                 ],
             },
+        );
+    }
+
+    @Action(StartSeason)
+    startSeason(_: StateContext<SeasonStateModel>, action: StartSeason) {
+        return this.startSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonListGQL.document,
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(EndSeason)
+    endSeason(ctx: StateContext<SeasonStateModel>, action: EndSeason) {
+        return this.endSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonListGQL.document,
+                    },
+                ],
+            },
+        ).pipe(
+            tap(
+                () => ctx.dispatch(new SetSelectedSeason('administration', undefined)),
+            ),
+        );
+    }
+
+    @Action(DeleteSeason)
+    deleteSeason(ctx: StateContext<SeasonStateModel>, action: DeleteSeason) {
+        return this.deleteSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonListGQL.document,
+                    },
+                ],
+            },
+        ).pipe(
+            tap(
+                () => ctx.dispatch(new SetSelectedSeason('administration', undefined)),
+            ),
         );
     }
 

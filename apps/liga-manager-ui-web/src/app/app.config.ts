@@ -35,7 +35,7 @@ import { Base64 } from 'js-base64';
 import { NgxsNextPluginFn, provideStore, Store, withNgxsPlugin } from '@ngxs/store';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { environment } from '../env/env';
-import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TournamentState } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TeamState, TournamentState } from '@liga-manager-ui/states';
 import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
 import { withNgxsFormPlugin } from '@ngxs/form-plugin';
 import { firstValueFrom, of, switchMap, tap } from 'rxjs';
@@ -90,7 +90,7 @@ function notificationPlugin(state: unknown, action: unknown, next: NgxsNextPlugi
             () => {
                 const { notification } = action as INotification;
                 if (notification?.message) {
-                    notificationService.showSuccessNotification(notification.message, undefined, notification.translateParams);
+                    notificationService.showSuccessNotification('', [notification.message], notification.translateParams);
                 }
             },
         ),
@@ -143,6 +143,7 @@ export const appConfig: ApplicationConfig = {
                 SelectedItemsState,
                 TournamentState,
                 SeasonState,
+                TeamState,
             ],
             withNgxsReduxDevtoolsPlugin({
                 disabled: environment.production,

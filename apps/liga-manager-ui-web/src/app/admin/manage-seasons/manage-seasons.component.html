@@ -28,7 +28,7 @@
                         </button>
                     }
                     @if ( season.state === SeasonState.Preparation ) {
-                        <button matButton="outlined" (click)="startSeason(season.id)"
+                        <button matButton="outlined" (click)="startSeason(season.id, season.name)"
                             cySelector="button-start-season">
                             <mat-icon>play_arrow</mat-icon>
                             <span translate>BUTTON.START_SEASON</span>

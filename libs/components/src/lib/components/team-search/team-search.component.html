@@ -1,6 +1,6 @@
 <mat-form-field class="w-full" subscriptSizing="dynamic">
     <mat-label translate>SEARCH_TEAM</mat-label>
-    <input matInput [formControl]="searchTeam" />
+    <input matInput [formControl]="searchTeam" cySelector="input-team-search"/>
     @if (searchTeam.value) {
         <button matSuffix matIconButton aria-label="Clear" (click)="searchTeam.reset()" class="mr-4">
             <mat-icon>close</mat-icon>

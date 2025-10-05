@@ -1,11 +1,13 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { AllTournamentListGQL, AllTournamentListQuery, CreateTournamentGQL, CreateTournamentRoundGQL, DeleteTournamentGQL, EndTournamentGQL, StartTournamentGQL, TournamentByIdGQL } from '@liga-manager-api/graphql';
+import { CreateTournamentGQL, CreateTournamentRoundGQL, DeleteTournamentGQL, EndTournamentGQL, StartTournamentGQL, TournamentByIdGQL, TournamentListGQL, TournamentListQuery } from '@liga-manager-api/graphql';
 import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreateTournament, CreateTournamentRound, DeleteTournament, EndTournament, StartTournament } from './actions';
+import { tap } from 'rxjs';
+import { SetSelectedTournament } from '../selected-items';
 
 export interface TournamentStateModel {
-    tournaments: AllTournamentListQuery['allTournaments'];
+    tournaments: TournamentListQuery['allTournaments'];
 }
 
 @State<TournamentStateModel>({
@@ -19,7 +21,7 @@ export class TournamentState implements NgxsOnInit {
 
     private destroyRef = inject(DestroyRef);
 
-    private allTournamentListGQL = inject(AllTournamentListGQL);
+    private tournamentListGQL = inject(TournamentListGQL);
 
     private createTournamentGQL = inject(CreateTournamentGQL);
 
@@ -34,7 +36,7 @@ export class TournamentState implements NgxsOnInit {
     private createTournamentRoundGQL = inject(CreateTournamentRoundGQL);
 
     ngxsOnInit(ctx: StateContext<TournamentStateModel>): void {
-        this.allTournamentListGQL.watch().valueChanges.pipe(
+        this.tournamentListGQL.watch().valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             (result) => {
@@ -50,7 +52,7 @@ export class TournamentState implements NgxsOnInit {
             {
                 refetchQueries: [
                     {
-                        query: this.allTournamentListGQL.document,
+                        query: this.tournamentListGQL.document,
                     },
                 ],
             },
@@ -58,16 +60,20 @@ export class TournamentState implements NgxsOnInit {
     }
 
     @Action(DeleteTournament)
-    deleteTournament(_: StateContext<TournamentStateModel>, action: DeleteTournament) {
+    deleteTournament(ctx: StateContext<TournamentStateModel>, action: DeleteTournament) {
         return this.deleteTournamentGQL.mutate(
             action.payload,
             {
                 refetchQueries: [
                     {
-                        query: this.allTournamentListGQL.document,
+                        query: this.tournamentListGQL.document,
                     },
                 ],
             },
+        ).pipe(
+            tap(
+                () => ctx.dispatch(new SetSelectedTournament('administration', undefined)),
+            ),
         );
     }
 
@@ -78,7 +84,7 @@ export class TournamentState implements NgxsOnInit {
             {
                 refetchQueries: [
                     {
-                        query: this.allTournamentListGQL.document,
+                        query: this.tournamentListGQL.document,
                     },
                     {
                         query: this.tournamentByIdGQL.document, variables: { id: action.payload.tournament_id },
@@ -95,7 +101,7 @@ export class TournamentState implements NgxsOnInit {
             {
                 refetchQueries: [
                     {
-                        query: this.allTournamentListGQL.document,
+                        query: this.tournamentListGQL.document,
                     },
                     {
                         query: this.tournamentByIdGQL.document, variables: { id: action.payload.tournament_id },

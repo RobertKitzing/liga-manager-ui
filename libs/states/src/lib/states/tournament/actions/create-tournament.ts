@@ -9,7 +9,7 @@ export class CreateTournament implements INotification {
     notification = {
         message: marker('SUCCESS.CREATE_TOURNAMENT'),
         translateParams: {
-            title: { name: this.payload.name },
+            message: { name: this.payload.name },
         },
     };
 

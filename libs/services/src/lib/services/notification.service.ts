@@ -22,7 +22,7 @@ export class NotificationService {
             messages,
             'error',
             'snackbar-error',
-            this.defaultDuration * 200,
+            this.defaultDuration * 2,
         );
     }
 

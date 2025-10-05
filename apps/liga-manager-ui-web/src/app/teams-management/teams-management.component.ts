@@ -12,7 +12,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeamAutoCompleteComponent } from '@liga-manager-ui/components';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { Store } from '@ngxs/store';
-import { AuthStateSelectors, SelectedItemsSelectors } from '@liga-manager-ui/states';
+import { AuthStateSelectors, SelectedItemsSelectors, TeamSelectors } from '@liga-manager-ui/states';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
@@ -43,7 +43,7 @@ export class TeamsManagementComponent {
 
     teams$ = iif(
         () => this.store.selectSnapshot(AuthStateSelectors.isAdmin),
-        this.teamService.allTeams$,
+        this.store.select(TeamSelectors.teams),
         this.store.select(AuthStateSelectors.userTeams),
     ).pipe(
         tap((teams) => {

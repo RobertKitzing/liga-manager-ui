@@ -8,7 +8,7 @@ export class StartTournament {
     notification = {
         message: marker('SUCCESS.START_TOURNAMENT'),
         translateParams: {
-            title: { name: this.name },
+            message: { name: this.name },
         },
     };
 

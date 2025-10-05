@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
@@ -10,6 +10,8 @@ import { defaultDialogConfig, TeamAutoCompleteComponent, TeamSearchComponent } f
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReplaceTeamComponent } from './replace-team/replace-team.component';
 import { MatCardModule } from '@angular/material/card';
+import { Store } from '@ngxs/store';
+import { TeamSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -28,7 +30,9 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class ManageTeamsComponent extends ManageSeasonBaseComponent {
 
-    allTeams$ = this.teamService.allTeams$;
+    private store = inject(Store);
+
+    allTeams$ = this.store.select(TeamSelectors.teams);
 
     seasonTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
 

@@ -14,7 +14,7 @@ export class DeleteTournament implements INotification, IConfirm {
     notification = {
         message: marker('SUCCESS.DELETE_TOURNAMENT'),
         translateParams: {
-            title: { name: this.name },
+            message: { name: this.name },
         },
     };
 

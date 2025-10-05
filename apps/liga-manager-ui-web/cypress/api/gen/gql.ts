@@ -34,9 +34,12 @@ type Documents = {
     "query SeasonPenalties($id: String!) {\n  season(id: $id) {\n    id\n    ranking {\n      penalties {\n        ...Penalty\n      }\n    }\n  }\n}": typeof types.SeasonPenaltiesDocument,
     "query Pitches {\n  allPitches {\n    ...Pitch\n  }\n}": typeof types.PitchesDocument,
     "query RankingById($id: String!) {\n  season(id: $id) {\n    ...Ranking\n  }\n}": typeof types.RankingByIdDocument,
-    "query AllSeasonsList {\n  allSeasons {\n    ...AllSeasons\n  }\n}\n\nquery SeasonById($id: String!) {\n  season(id: $id) {\n    ...Season\n  }\n}": typeof types.AllSeasonsListDocument,
-    "query AllTeams {\n  allTeams {\n    ...Team\n  }\n}\n\nquery TeamById($id: String!) {\n  team(id: $id) {\n    ...Team\n  }\n}": typeof types.AllTeamsDocument,
-    "query AllTournamentList {\n  allTournaments {\n    ...AllTournaments\n  }\n}\n\nquery TournamentById($id: String!) {\n  tournament(id: $id) {\n    ...Tournament\n  }\n}": typeof types.AllTournamentListDocument,
+    "query SeasonById($id: String!) {\n  season(id: $id) {\n    ...Season\n  }\n}": typeof types.SeasonByIdDocument,
+    "query SeasonList {\n  allSeasons {\n    ...AllSeasons\n  }\n}": typeof types.SeasonListDocument,
+    "query TeamById($id: String!) {\n  team(id: $id) {\n    ...Team\n  }\n}": typeof types.TeamByIdDocument,
+    "query TeamList {\n  allTeams {\n    ...Team\n  }\n}": typeof types.TeamListDocument,
+    "query TournamentById($id: String!) {\n  tournament(id: $id) {\n    ...Tournament\n  }\n}": typeof types.TournamentByIdDocument,
+    "query TournamentList {\n  allTournaments {\n    ...AllTournaments\n  }\n}": typeof types.TournamentListDocument,
     "query AuthenticatedUser {\n  authenticatedUser {\n    ...User\n  }\n}\n\nquery AllUsers {\n  allUsers {\n    ...User\n  }\n}": typeof types.AuthenticatedUserDocument,
 };
 const documents: Documents = {
@@ -59,9 +62,12 @@ const documents: Documents = {
     "query SeasonPenalties($id: String!) {\n  season(id: $id) {\n    id\n    ranking {\n      penalties {\n        ...Penalty\n      }\n    }\n  }\n}": types.SeasonPenaltiesDocument,
     "query Pitches {\n  allPitches {\n    ...Pitch\n  }\n}": types.PitchesDocument,
     "query RankingById($id: String!) {\n  season(id: $id) {\n    ...Ranking\n  }\n}": types.RankingByIdDocument,
-    "query AllSeasonsList {\n  allSeasons {\n    ...AllSeasons\n  }\n}\n\nquery SeasonById($id: String!) {\n  season(id: $id) {\n    ...Season\n  }\n}": types.AllSeasonsListDocument,
-    "query AllTeams {\n  allTeams {\n    ...Team\n  }\n}\n\nquery TeamById($id: String!) {\n  team(id: $id) {\n    ...Team\n  }\n}": types.AllTeamsDocument,
-    "query AllTournamentList {\n  allTournaments {\n    ...AllTournaments\n  }\n}\n\nquery TournamentById($id: String!) {\n  tournament(id: $id) {\n    ...Tournament\n  }\n}": types.AllTournamentListDocument,
+    "query SeasonById($id: String!) {\n  season(id: $id) {\n    ...Season\n  }\n}": types.SeasonByIdDocument,
+    "query SeasonList {\n  allSeasons {\n    ...AllSeasons\n  }\n}": types.SeasonListDocument,
+    "query TeamById($id: String!) {\n  team(id: $id) {\n    ...Team\n  }\n}": types.TeamByIdDocument,
+    "query TeamList {\n  allTeams {\n    ...Team\n  }\n}": types.TeamListDocument,
+    "query TournamentById($id: String!) {\n  tournament(id: $id) {\n    ...Tournament\n  }\n}": types.TournamentByIdDocument,
+    "query TournamentList {\n  allTournaments {\n    ...AllTournaments\n  }\n}": types.TournamentListDocument,
     "query AuthenticatedUser {\n  authenticatedUser {\n    ...User\n  }\n}\n\nquery AllUsers {\n  allUsers {\n    ...User\n  }\n}": types.AuthenticatedUserDocument,
 };
 
@@ -144,15 +150,27 @@ export function graphql(source: "query RankingById($id: String!) {\n  season(id:
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query AllSeasonsList {\n  allSeasons {\n    ...AllSeasons\n  }\n}\n\nquery SeasonById($id: String!) {\n  season(id: $id) {\n    ...Season\n  }\n}"): typeof import('./graphql').AllSeasonsListDocument;
+export function graphql(source: "query SeasonById($id: String!) {\n  season(id: $id) {\n    ...Season\n  }\n}"): typeof import('./graphql').SeasonByIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query AllTeams {\n  allTeams {\n    ...Team\n  }\n}\n\nquery TeamById($id: String!) {\n  team(id: $id) {\n    ...Team\n  }\n}"): typeof import('./graphql').AllTeamsDocument;
+export function graphql(source: "query SeasonList {\n  allSeasons {\n    ...AllSeasons\n  }\n}"): typeof import('./graphql').SeasonListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query AllTournamentList {\n  allTournaments {\n    ...AllTournaments\n  }\n}\n\nquery TournamentById($id: String!) {\n  tournament(id: $id) {\n    ...Tournament\n  }\n}"): typeof import('./graphql').AllTournamentListDocument;
+export function graphql(source: "query TeamById($id: String!) {\n  team(id: $id) {\n    ...Team\n  }\n}"): typeof import('./graphql').TeamByIdDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query TeamList {\n  allTeams {\n    ...Team\n  }\n}"): typeof import('./graphql').TeamListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query TournamentById($id: String!) {\n  tournament(id: $id) {\n    ...Tournament\n  }\n}"): typeof import('./graphql').TournamentByIdDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query TournamentList {\n  allTournaments {\n    ...AllTournaments\n  }\n}"): typeof import('./graphql').TournamentListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
