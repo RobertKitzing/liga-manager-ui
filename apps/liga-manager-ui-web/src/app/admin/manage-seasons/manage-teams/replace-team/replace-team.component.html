@@ -6,7 +6,7 @@
         <span translate>REPLACE_TEAM</span>
         <span>{{ data.teamToBeReplaced.name }}</span>
         <span translate>REPLACE_TEAM_WITH</span>
-        @if(teamService.allTeams$ | async; as allTeams) {
+        @if(allTeams$ | async; as allTeams) {
             <lima-team-auto-complete [teams]="allTeams" (teamSelected)="replaceWithTeamId.set($event.id)"></lima-team-auto-complete>
         }
     </div>

@@ -5,7 +5,9 @@ import { ControlValueAccessor, FormControl, FormControlDirective, FormControlNam
 import { MatSelectModule } from '@angular/material/select';
 import { Maybe, Team } from '@liga-manager-api/graphql';
 import { TeamService } from '@liga-manager-ui/services';
+import { TeamSelectors } from '@liga-manager-ui/states';
 import { TranslateModule } from '@ngx-translate/core';
+import { Store } from '@ngxs/store';
 
 @Component({
     selector: 'lima-team-chooser',
@@ -24,15 +26,19 @@ export class TeamChooserComponent implements OnInit, ControlValueAccessor {
 
     label = input<string | undefined>(undefined);
 
-    @Input() selectedTeamFC!: FormControl<Team | Team[] | null>;
+    selectedTeamFC!: FormControl<Team | Team[] | null>;
 
     @Input() teams!: Maybe<Team>[];
 
     multiple = input(false);
 
+    private store = inject(Store);
+
+    private injector = inject(Injector);
+
     teamService = inject(TeamService);
 
-    injector = inject(Injector);
+    allTeams$ = this.store.select(TeamSelectors.teams);
 
     ngOnInit(): void {
         const ngControl = this.injector.get(NgControl);

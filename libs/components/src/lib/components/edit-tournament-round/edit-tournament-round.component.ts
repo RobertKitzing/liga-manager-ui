@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { NotificationService, TeamService } from '@liga-manager-ui/services';
+import { NotificationService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import { ApiDate, Match, MatchDay, Maybe, Team } from '@liga-manager-api/graphql';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
@@ -16,7 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { parseISO } from 'date-fns';
 import { Store } from '@ngxs/store';
-import { CreateTournamentRound } from '@liga-manager-ui/states';
+import { CreateTournamentRound, TeamSelectors } from '@liga-manager-ui/states';
 
 function typeofTeamValidator(): ValidatorFn {
     return (control) => {
@@ -47,6 +47,12 @@ function typeofTeamValidator(): ValidatorFn {
 })
 export class EditTournamentRoundComponent {
 
+    private store = inject(Store);
+
+    private notificationService = inject(NotificationService);
+
+    private translateService  = inject(TranslateService);
+
     round = input<MatchDay | undefined>(undefined);
 
     tournamentId = input.required<string>();
@@ -55,17 +61,11 @@ export class EditTournamentRoundComponent {
 
     roundEdited = output<boolean>();
 
-    teamService = inject(TeamService);
+    allTeams$ = this.store.select(TeamSelectors.teams);
 
     filteredHomeTeams = signal<Maybe<Team>[] | undefined | null>([]);
 
     filteredGuestTeams = signal<Maybe<Team>[] | undefined | null>([]);
-
-    private store = inject(Store);
-
-    private notificationService = inject(NotificationService);
-
-    private translateService  = inject(TranslateService);
 
     newMatch = new FormGroup(
         {
