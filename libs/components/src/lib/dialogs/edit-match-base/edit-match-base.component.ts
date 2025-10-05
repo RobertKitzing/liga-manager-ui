@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Match, MatchDay } from '@liga-manager-api/graphql';
 import { MatchService, NotificationService } from '@liga-manager-ui/services';
+import { Store } from '@ngxs/store';
 
 export interface EditMatchData { match: Match; matchDay: MatchDay }
 
@@ -17,5 +18,7 @@ export class EditMatchBaseComponent {
     protected notificationService = inject(NotificationService);
 
     protected matchService = inject(MatchService);
+
+    protected store = inject(Store);
 
 }

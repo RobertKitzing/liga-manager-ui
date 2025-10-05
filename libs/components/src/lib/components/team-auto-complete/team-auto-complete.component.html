@@ -10,7 +10,7 @@
         [displayWith]="displayWith"
         >
         @for (team of filteredTeams$ | async; track team?.id; let index = $index) {
-            <mat-option cySelector="team-{{ index }}" [value]="team">{{team?.name}}</mat-option>
+            <mat-option [value]="team">{{team?.name}}</mat-option>
         }
     </mat-autocomplete>
     @if (teamFormControl.value) {

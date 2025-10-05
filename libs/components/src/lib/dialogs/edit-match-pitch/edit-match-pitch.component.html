@@ -19,7 +19,7 @@
                     </div>
                 }
                 <div>
-                    @if(pitchService.allPitches$ | async; as allPitches) {
+                    @if(allPitches$ | async; as allPitches) {
                         <lima-pitch-auto-complete [pitches]="allPitches" [formControl]="newMatchPitchFC"></lima-pitch-auto-complete>
                     }
                 </div>

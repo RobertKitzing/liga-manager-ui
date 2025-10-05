@@ -1,8 +1,8 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, SeasonListGQL, SeasonListQuery, StartSeasonGQL } from '@liga-manager-api/graphql';
+import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
 import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
-import { CreateSeason, DeleteSeason, EndSeason, StartSeason } from './actions';
+import { AddPenalty, AddTeamToSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, StartSeason } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedSeason } from '../selected-items';
 
@@ -19,6 +19,8 @@ export interface SeasonStateModel {
 @Injectable()
 export class SeasonState implements NgxsOnInit {
 
+    private seasonByIdGQL = inject(SeasonByIdGQL);
+
     private seasonListGQL = inject(SeasonListGQL);
 
     private createSeasonGQL = inject(CreateSeasonGQL);
@@ -28,6 +30,16 @@ export class SeasonState implements NgxsOnInit {
     private endSeasonGQL = inject(EndSeasonGQL);
 
     private deleteSeasonGQL = inject(DeleteSeasonGQL);
+
+    private rankingGQL = inject(RankingByIdGQL);
+
+    private addPenaltyGQL = inject(AddPenaltyGQL);
+
+    private removePenaltyGQL = inject(RemovePenaltyGQL);
+
+    private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
+
+    private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
 
     private destroyRef = inject(DestroyRef);
 
@@ -102,6 +114,59 @@ export class SeasonState implements NgxsOnInit {
             tap(
                 () => ctx.dispatch(new SetSelectedSeason('administration', undefined)),
             ),
+        );
+    }
+
+    @Action(AddPenalty)
+    addPenalty(_: StateContext<SeasonStateModel>, action: AddPenalty) {
+        return this.addPenaltyGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.rankingGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                    {
+                        query: this.seasonPenaltiesGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(RemovePenalty)
+    removePenalty(_: StateContext<SeasonStateModel>, action: RemovePenalty) {
+        return this.removePenaltyGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.rankingGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                    {
+                        query: this.seasonPenaltiesGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(AddTeamToSeason)
+    addTeamToSeason(_: StateContext<SeasonStateModel>, action: AddTeamToSeason) {
+        return this.addTeamToSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
         );
     }
 

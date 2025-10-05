@@ -1,16 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { TeamChooserComponent } from '../../components';
+import { TeamAutoCompleteComponent } from '../../components';
 import { Maybe, Team } from '@liga-manager-api/graphql';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SeasonService } from '@liga-manager-ui/services';
 import { v4 as uuidv4 } from 'uuid';
 import { firstValueFrom } from 'rxjs';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { Store } from '@ngxs/store';
+import { AddPenalty } from '@liga-manager-ui/states';
 
 export interface EditPenaltyDialogData {
     teams: Maybe<Team>[];
@@ -27,7 +29,8 @@ export interface EditPenaltyDialogData {
         MatFormFieldModule,
         MatIconModule,
         MatButtonModule,
-        TeamChooserComponent,
+        TeamAutoCompleteComponent,
+        CypressSelectorDirective,
     ],
     templateUrl: './edit-penalty.component.html',
 })
@@ -35,7 +38,9 @@ export class EditPenaltyComponent {
 
     data = inject<EditPenaltyDialogData>(MAT_DIALOG_DATA);
 
-    private seasonService = inject(SeasonService);
+    private store = inject(Store);
+
+    private dialogRef = inject(MatDialogRef<EditPenaltyComponent>);
 
     penaltyFormGroup = new FormGroup(
         {
@@ -47,13 +52,14 @@ export class EditPenaltyComponent {
 
     async onSaveClicked() {
         try {
-            await firstValueFrom(this.seasonService.addPenalty({
+            await firstValueFrom(this.store.dispatch(new AddPenalty({
                 season_id: this.data.seasonId || '',
                 id: uuidv4(),
                 team_id: this.penaltyFormGroup.value.team?.id || '',
                 points: this.penaltyFormGroup.value.points!,
                 reason: this.penaltyFormGroup.value.reason!,
-            }));
+            })));
+            this.dialogRef.close();
         } catch(error) {
             console.error(error);
         }

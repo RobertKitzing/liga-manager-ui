@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
@@ -10,8 +10,7 @@ import { defaultDialogConfig, TeamAutoCompleteComponent, TeamSearchComponent } f
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReplaceTeamComponent } from './replace-team/replace-team.component';
 import { MatCardModule } from '@angular/material/card';
-import { Store } from '@ngxs/store';
-import { TeamSelectors } from '@liga-manager-ui/states';
+import { AddTeamToSeason, TeamSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-teams',
@@ -30,14 +29,12 @@ import { TeamSelectors } from '@liga-manager-ui/states';
 })
 export class ManageTeamsComponent extends ManageSeasonBaseComponent {
 
-    private store = inject(Store);
-
     allTeams$ = this.store.select(TeamSelectors.teams);
 
     seasonTeams = signal<Maybe<Maybe<Team>[]> | undefined>([]);
 
-    async addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
-        await firstValueFrom(this.seasonService.addTeamToSeason(variables));
+    addTeamToSeason(variables: AddTeamToSeasonMutationVariables, teamName: string, seasonName: string) {
+        this.store.dispatch(new AddTeamToSeason(variables, teamName, seasonName));
     }
 
     async removeTeamFromSeason(variables: AddTeamToSeasonMutationVariables) {

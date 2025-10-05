@@ -1,11 +1,9 @@
-<div class="notification relative" [cySelector]="data.cySelector">
-    @if(data.type !== 'success') {
-        <div class="absolute top-0 right-0">
-            <button matIconButton (click)="snackBarRef.dismiss()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </div>
-    }
+<div [cySelector]="data.cySelector">
+    <div class="absolute top-0 right-0">
+        <button matIconButton (click)="snackBarRef.dismiss()" cySelector="button-close-snackbar">
+            <mat-icon class="text-mat-sys-on-primary">close</mat-icon>
+        </button>
+    </div>
     @if(data.title) {
         <h1 class="mb-3 text-center">
             {{ data.title | translate: data.translateParams?.title }}

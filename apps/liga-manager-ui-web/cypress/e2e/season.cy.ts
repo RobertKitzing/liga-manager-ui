@@ -18,20 +18,23 @@ describe('Admin - Season', () => {
             cy.getBySel('button-create-season').click();
             cy.getBySel('input-create-season-name').type(name);
             cy.getBySel('button-create-season-submit').click();
-            cy.getBySel('snackbar-success').should('exist');
+            cy.successSnackbar();
 
             cy.getBySel('select-season').click();
-            cy.contains(name).click();
+            cy.get('mat-option').contains(name).click();
 
             cy.getBySel('season-management-tab-select-teams').click();
+
             cy.getBySel('input-team-auto-complete').clear();
             cy.getBySel('input-team-auto-complete').type(Users.teamAdmin.team);
             cy.contains(Users.teamAdmin.team).click();
+            cy.successSnackbar();
 
             for (let i = 0 ; i < 10; i++) {
                 cy.getBySel('input-team-auto-complete').clear();
                 cy.getBySel('input-team-auto-complete').click();
                 cy.get('mat-option').first().click();
+                cy.successSnackbar();
             }
 
             cy.getBySel('season-management-tab-create-matchdays').click();
@@ -42,6 +45,27 @@ describe('Admin - Season', () => {
             cy.getBySel('button-save-match-days').click();
 
             cy.getBySel('button-start-season').click();
+
+            cy.getBySel('season-management-tab-penalties').first().click();
+
+            cy.getBySel('button-create-penalty').click();
+
+            cy.getBySel('input-team-auto-complete').clear();
+            cy.getBySel('input-team-auto-complete').click();
+            cy.get('mat-option').first().click();
+
+            cy.getBySel('input-penalty-points').clear();
+            cy.getBySel('input-penalty-points').type('3');
+
+            cy.getBySel('input-penalty-reason').clear();
+            cy.getBySel('input-penalty-reason').type(faker.word.words(10));
+
+            cy.getBySel('button-save').click();
+            cy.successSnackbar();
+
+            cy.getBySel('button-delete-penalty').click();
+            cy.getBySel('button-confirm-yes').click();
+            cy.successSnackbar();
 
             if (i % 2 === 0) {
                 cy.getBySel('button-end-season').click();
@@ -65,7 +89,7 @@ describe('Admin - Season', () => {
         cy.getBySel('input-guest-score').clear({ force: true });
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear({ force: true });
@@ -73,12 +97,12 @@ describe('Admin - Season', () => {
         cy.getBySel('input-kickoff-date').clear({ force: true });
         cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
         cy.getBySel('button-schedule-match-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-set-pitch').first().click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-pitch').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 
@@ -97,7 +121,7 @@ describe('Admin - Season', () => {
         cy.getBySel('input-guest-score').clear({ force: true });
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear({ force: true });
@@ -105,12 +129,12 @@ describe('Admin - Season', () => {
         cy.getBySel('input-kickoff-date').clear({ force: true });
         cy.getBySel('input-kickoff-date').type(format(faker.date.future(), 'P'), { force: true });
         cy.getBySel('button-schedule-match-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-set-pitch').first().click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-pitch').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 

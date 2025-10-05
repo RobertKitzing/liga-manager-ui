@@ -15,13 +15,8 @@ describe('Admin - Tournament', () => {
 
             cy.getBySel('button-create-tournament').click();
             cy.getBySel('input-create-tournament-name').type(name);
-
-            cy.intercept('POST', '/api/graphql').as('graphql');
-
             cy.getBySel('button-create-tournament-submit').click();
-            cy.getBySel('snackbar-success').should('exist');
-
-            cy.wait(['@graphql', '@graphql']);
+            cy.successSnackbar();
 
             cy.getBySel('select-tournament').click();
             cy.get('mat-option').contains(name).click();
@@ -31,10 +26,10 @@ describe('Admin - Tournament', () => {
             cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
             cy.get('mat-option').contains(Users.teamAdmin.team).click();
             cy.getBySel('input-team-auto-complete-guest').first().click();
-            cy.getBySel('team-1').click();
+            cy.get('mat-option').first().click();
             cy.getBySel('button-add-match-to-tournament-round').click();
             cy.getBySel('button-save-tournament-round').click();
-            cy.getBySel('snackbar-success').should('exist');
+            cy.successSnackbar();
 
             cy.getBySel('button-create-next-tournament-round').click();
             cy.getBySel('input-tournament-round-from-date').type('07/21/2025', { force: true });
@@ -42,13 +37,13 @@ describe('Admin - Tournament', () => {
             cy.getBySel('input-team-auto-complete-home').first().type(Users.teamAdmin.team);
             cy.get('mat-option').contains(Users.teamAdmin.team).click();
             cy.getBySel('input-team-auto-complete-guest').first().click();
-            cy.getBySel('team-3').click();
+            cy.get('mat-option').first().click();
             cy.getBySel('button-add-match-to-tournament-round').click();
             cy.getBySel('button-save-tournament-round').click();
-            cy.getBySel('snackbar-success').should('exist');
+            cy.successSnackbar();
 
             cy.getBySel('button-start-tournament').click();
-            cy.getBySel('snackbar-success').should('exist');
+            cy.successSnackbar();
 
             if (i % 2 === 0) {
                 cy.getBySel('button-end-tournament').click();
@@ -74,7 +69,7 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear();
@@ -82,12 +77,12 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-kickoff-date').clear();
         cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
         cy.getBySel('button-schedule-match-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-set-pitch').first().click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-pitch').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 
@@ -109,7 +104,7 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-schedule-match').first().click();
         cy.getBySel('input-time').clear();
@@ -117,12 +112,12 @@ describe('Admin - Tournament', () => {
         cy.getBySel('input-kickoff-date').clear();
         cy.getBySel('input-kickoff-date').type('07/21/2025', { force: true });
         cy.getBySel('button-schedule-match-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
         cy.getBySel('button-set-pitch').first().click();
         cy.get('mat-option').first().click();
         cy.getBySel('button-save-pitch').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 

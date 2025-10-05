@@ -7,9 +7,6 @@ import {
     MatDialogModule,
 } from '@angular/material/dialog';
 import { marker } from '@colsen1991/ngx-translate-extract-marker';
-import {
-    PitchService,
-} from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
 import { Pitch } from '@liga-manager-api/graphql';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +24,7 @@ import { defaultDialogConfig } from '../default-dialog-config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EditMatchBaseComponent } from '../edit-match-base';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { PitchSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-edit-match-pitch',
@@ -60,7 +58,7 @@ export class EditMatchPitchComponent extends EditMatchBaseComponent {
 
     private dialogRef = inject(MatDialogRef<EditMatchPitchComponent>);
 
-    pitchService = inject(PitchService);
+    allPitches$ = this.store.select(PitchSelectors.pitches);
 
     async onSaveClicked() {
         if (!this.newMatchPitchFC.valid) {

@@ -1,6 +1,6 @@
 export interface INotification {
 
-    notification?: {
+    notification: {
         message: string,
         translateParams?: { title?: unknown, message?: unknown }
     };

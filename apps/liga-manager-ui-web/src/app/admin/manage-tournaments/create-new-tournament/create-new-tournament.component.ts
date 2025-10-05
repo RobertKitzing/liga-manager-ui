@@ -10,12 +10,12 @@ import {
     MatDialog,
     MatDialogActions,
     MatDialogContent,
+    MatDialogRef,
     MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { NotificationService } from '@liga-manager-ui/services';
 import { CreateTournament } from '@liga-manager-ui/states';
 import { TranslateModule } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
@@ -44,7 +44,7 @@ export class CreateNewTournamentComponent {
 
     private dialog = inject(MatDialog);
 
-    private notificationService = inject(NotificationService);
+    private dialogRef = inject(MatDialogRef<CreateNewTournamentComponent>);
 
     newName = new FormControl('', { validators: [ Validators.required ], nonNullable: true });
 
@@ -53,7 +53,7 @@ export class CreateNewTournamentComponent {
             await firstValueFrom(
                 this.store.dispatch(new CreateTournament({ name: this.newName.value })),
             );
-            this.dialog.closeAll();
+            this.dialogRef.close();
         } catch (_error) {
             console.error(_error);
         }

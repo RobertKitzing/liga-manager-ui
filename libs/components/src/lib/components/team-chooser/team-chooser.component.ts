@@ -12,7 +12,12 @@ import { Store } from '@ngxs/store';
 @Component({
     selector: 'lima-team-chooser',
     standalone: true,
-    imports: [AsyncPipe, ReactiveFormsModule, MatSelectModule, TranslateModule],
+    imports: [
+        AsyncPipe,
+        ReactiveFormsModule,
+        MatSelectModule,
+        TranslateModule,
+    ],
     templateUrl: './team-chooser.component.html',
     providers: [
         {

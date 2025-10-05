@@ -27,7 +27,7 @@ describe('Admin - Team', () => {
         cy.getBySel('input-create-team-name').clear();
         cy.getBySel('input-create-team-name').type(team);
         cy.getBySel('button-create-team-submit').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 
@@ -44,7 +44,7 @@ describe('Admin - Team', () => {
         cy.getBySel('input-new-team-name').clear();
         cy.getBySel('input-new-team-name').type(team);
         cy.getBySel('button-rename-team').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 
@@ -58,7 +58,7 @@ describe('Admin - Team', () => {
         cy.getBySel('input-team-search').type(team);
         cy.getBySel('button-delete-team').click();
         cy.getBySel('button-confirm-yes').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
     });
 

@@ -27,7 +27,7 @@ describe('Create User', () => {
         cy.getBySel('select-user-role').click();
         cy.getBySel('user-role-team_manager').click();
         cy.getBySel('button-save-user').click({ force: true });
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
     });
 
     it('Should get an inventation email', () => {
@@ -44,7 +44,7 @@ describe('Create User', () => {
                         cy.getBySel('input-last-name').type(faker.person.lastName());
                         cy.getBySel('input-password').type(password);
                         cy.getBySel('button-save-user').click();
-                        cy.getBySel('snackbar-success').should('exist');
+                        cy.successSnackbar();
                     },
                 );
             },
@@ -65,7 +65,7 @@ describe('Create User', () => {
         cy.getBySel('button-login').click();
         cy.getBySel('input-username').type(email);
         cy.getBySel('button-password-reset').click();
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
         cy.maildevGetLastMessage().then(
             (message) => {
                 expect(message.to[0].address).to.equal(email);

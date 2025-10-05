@@ -1,15 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { map, of, take } from 'rxjs';
 import {
-    AddPenaltyGQL,
-    AddPenaltyMutationVariables,
-    AddTeamToSeasonGQL,
-    AddTeamToSeasonMutationVariables,
     CreateMatchesForSeasonGQL,
     CreateMatchesForSeasonMutationVariables,
     RankingByIdGQL,
-    RemovePenaltyGQL,
-    RemovePenaltyMutationVariables,
     RemoveTeamFromSeasonGQL,
     RemoveTeamFromSeasonMutationVariables,
     ReplaceTeamInSeasonGQL,
@@ -36,13 +30,9 @@ export class SeasonService {
 
     private apollo = inject(Apollo);
 
-    private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
-
     private seasonByIdGQL = inject(SeasonByIdGQL);
 
     private rankingGQL = inject(RankingByIdGQL);
-
-    private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
 
     private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
 
@@ -56,9 +46,7 @@ export class SeasonService {
 
     private scheduleAllMatchesForMatchDayGQL = inject(ScheduleAllMatchesForMatchDayGQL);
 
-    private addPenaltyGQL = inject(AddPenaltyGQL);
-
-    private removePenaltyGQL = inject(RemovePenaltyGQL);
+    private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
 
     reloadSeasons() {
         return this.seasonListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));
@@ -85,17 +73,6 @@ export class SeasonService {
 
     refetchSeasonById(id: string) {
         this.seasonByIdGQL.watch({ id }).refetch();
-    }
-
-    addTeamToSeason(variables: AddTeamToSeasonMutationVariables) {
-        return this.addTeamToSeasonGQL.mutate(variables, {
-            refetchQueries: [
-                {
-                    query: this.seasonByIdGQL.document,
-                    variables: { id: variables.season_id },
-                },
-            ],
-        });
     }
 
     removeTeamFromSeason(variables: RemoveTeamFromSeasonMutationVariables) {
@@ -203,41 +180,6 @@ export class SeasonService {
         return this.seasonPenaltiesGQL.watch(params).valueChanges.pipe(
             map(({ data }) => data.season?.ranking?.penalties),
         );
-    }
-
-    addPenalty(params: AddPenaltyMutationVariables) {
-        return this.addPenaltyGQL.mutate(
-            params,
-            {
-                refetchQueries: [
-                    {
-                        query: this.rankingGQL.document,
-                        variables: { id: params.season_id },
-                    },
-                    {
-                        query: this.seasonPenaltiesGQL.document,
-                        variables: { id: params.season_id },
-                    },
-                ],
-            },
-        );
-    }
-
-    removePenalty(params: RemovePenaltyMutationVariables) {
-        return this.removePenaltyGQL.mutate(
-            params,
-            {
-                refetchQueries: [
-                    {
-                        query: this.rankingGQL.document,
-                        variables: { id: params.season_id },
-                    },
-                    {
-                        query: this.seasonPenaltiesGQL.document,
-                        variables: { id: params.season_id },
-                    },
-                ],
-            });
     }
 
 }

@@ -17,10 +17,12 @@ describe('Admin - Upload Team Logo', () => {
 
         cy.getBySel('button-save-team-logo').click();
 
-        cy.getBySel('snackbar-success').should('exist');
+        cy.successSnackbar();
 
+    });
+
+    it('should has the logo', ()=> {
         cy.get('.team-logo').should('exist');
-
     });
 
 });

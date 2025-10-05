@@ -1,6 +1,6 @@
 export interface IConfirm {
 
-    confirm?: {
+    confirm: {
         message: string,
         translateParams?: unknown,
     };

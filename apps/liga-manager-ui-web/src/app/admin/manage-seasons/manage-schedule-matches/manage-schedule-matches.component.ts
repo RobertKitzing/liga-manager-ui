@@ -1,11 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { AsyncPipe } from '@angular/common';
-import { PitchService } from '@liga-manager-ui/services';
 import { PitchAutoCompleteComponent, TeamChooserComponent, DateTimeComponent } from '@liga-manager-ui/components';
 import { MatInputModule } from '@angular/material/input';
 import { Team } from '@liga-manager-api/graphql';
@@ -15,7 +14,7 @@ import { add, formatISO, parseISO, set } from 'date-fns';
 import { firstValueFrom } from 'rxjs';
 import { TZDate } from '@date-fns/tz';
 import { select } from '@ngxs/store';
-import { AppSettingsSelectors } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, PitchSelectors } from '@liga-manager-ui/states';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -53,9 +52,9 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
 
     localTimeZone = select(AppSettingsSelectors.localTimeZone);
 
-    pitchService = inject(PitchService);
-
     matchAppointments?: FormArray<MatchAppointmentFormGroup>;
+
+    allPitches$ = this.store.select(PitchSelectors.pitches);
 
     ngOnInit(): void {
         this.matchAppointments = new FormArray(

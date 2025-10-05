@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -20,7 +21,7 @@ export interface SnackBarData {
     selector: 'lima-snackbar',
     templateUrl: './snackbar.component.html',
     styleUrls: [],
-    imports: [TranslateModule, MatDividerModule, MatIconModule, CypressSelectorDirective],
+    imports: [TranslateModule, MatDividerModule, MatIconModule, CypressSelectorDirective, MatButtonModule],
     standalone: true,
 })
 export class SnackbarComponent {
