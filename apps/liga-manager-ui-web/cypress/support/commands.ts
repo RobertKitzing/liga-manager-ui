@@ -43,7 +43,7 @@ const login = (username: string, password: string) => {
 
 const successSnackbar = () => {
     cy.getBySel('snackbar-success').should('exist');
-    cy.getBySel('button-close-snackbar').click();
+    cy.getBySel('button-close-snackbar').click({ multiple: true });
 };
 
 Cypress.Commands.add('login', login );
