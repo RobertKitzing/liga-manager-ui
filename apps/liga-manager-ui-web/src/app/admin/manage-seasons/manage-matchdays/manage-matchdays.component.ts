@@ -5,7 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { ApiDate, MatchDay, Maybe, SeasonFragment } from '@liga-manager-api/graphql';
+import { ApiDate, MatchDay, Maybe } from '@liga-manager-api/graphql';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { CalendarService, NotificationService } from '@liga-manager-ui/services';
@@ -23,6 +23,7 @@ import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { add } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
 import { ApiDateFormControl } from '@liga-manager-ui/components';
+import { CreateMatchesForSeason } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-matchdays',
@@ -131,7 +132,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         }
     }
 
-    async saveMatchDays(manageSeason: SeasonFragment, mode: 'create' | 'update') {
+    async saveMatchDays(mode: 'create' | 'update') {
         try {
             const dates = this.matchDays()?.map(
                 (m) => ({
@@ -140,10 +141,12 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 }),
             );
             if (mode === 'create') {
-                await firstValueFrom(this.seasonService.createMatchesForSeason({
-                    season_id: manageSeason.id,
-                    dates,
-                }));
+                this.store.dispatch(new CreateMatchesForSeason(
+                    {
+                        season_id: this.season()?.id || '',
+                        dates,
+                    },
+                ));
             }
             if (mode === 'update') {
                 await firstValueFrom(this.seasonService.rescheduleMatchDays(
@@ -156,7 +159,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                             },
                         }),
                     ),
-                    manageSeason.id,
+                    this.season()?.id || '',
                 ));
             }
             this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.CREATE_MATCH_DAYS'));

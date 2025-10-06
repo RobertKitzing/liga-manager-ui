@@ -1,8 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { map, of, take } from 'rxjs';
 import {
-    CreateMatchesForSeasonGQL,
-    CreateMatchesForSeasonMutationVariables,
     RankingByIdGQL,
     RemoveTeamFromSeasonGQL,
     RemoveTeamFromSeasonMutationVariables,
@@ -35,8 +33,6 @@ export class SeasonService {
     private rankingGQL = inject(RankingByIdGQL);
 
     private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
-
-    private createMatchesForSeasonGQL = inject(CreateMatchesForSeasonGQL);
 
     private replaceTeamInSeasonGQL = inject(ReplaceTeamInSeasonGQL);
 
@@ -84,20 +80,6 @@ export class SeasonService {
                 },
             ],
         });
-    }
-
-    createMatchesForSeason(params: CreateMatchesForSeasonMutationVariables) {
-        return this.createMatchesForSeasonGQL.mutate(
-            params,
-            {
-                refetchQueries: [
-                    {
-                        query: this.seasonByIdGQL.document,
-                        variables: { id: params.season_id },
-                    },
-                ],
-            },
-        );
     }
 
     replaceTeamInSeason(params: ReplaceTeamInSeasonMutationVariables) {

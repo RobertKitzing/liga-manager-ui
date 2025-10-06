@@ -1,8 +1,8 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
+import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
 import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
-import { AddPenalty, AddTeamToSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, StartSeason } from './actions';
+import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, StartSeason } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedSeason } from '../selected-items';
 
@@ -40,6 +40,8 @@ export class SeasonState implements NgxsOnInit {
     private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
 
     private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
+
+    private createMatchesForSeasonGQL = inject(CreateMatchesForSeasonGQL);
 
     private destroyRef = inject(DestroyRef);
 
@@ -158,6 +160,21 @@ export class SeasonState implements NgxsOnInit {
     @Action(AddTeamToSeason)
     addTeamToSeason(_: StateContext<SeasonStateModel>, action: AddTeamToSeason) {
         return this.addTeamToSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(CreateMatchesForSeason)
+    createMatchesForSeason(_: StateContext<SeasonStateModel>, action: CreateMatchesForSeason) {
+        return this.createMatchesForSeasonGQL.mutate(
             action.payload,
             {
                 refetchQueries: [

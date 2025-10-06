@@ -5,3 +5,4 @@ export * from './delete-season';
 export * from './add-penalty';
 export * from './add-team-to-season';
 export * from './remove-penalty';
+export * from './create-matches-for-season';

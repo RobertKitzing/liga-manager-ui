@@ -25,8 +25,12 @@ export default defineConfig({
         setupNodeEvents(on) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             on('before:run', (details: any) => {
-                execSync(`docker exec lima-api lima app:user:create --email ${Users.admin.username} --password ${Users.admin.password} --role admin --first-name admin --last-name admin --locale en`);
-                prepareApi(details.config.baseUrl || 'http://localhost', 10).catch((e) => { throw e; });
+                try {
+                    execSync(`docker exec lima-api lima app:user:create --email ${Users.admin.username} --password ${Users.admin.password} --role admin --first-name admin --last-name admin --locale en`);
+                    prepareApi(details.config.baseUrl || 'http://localhost', 10).catch((e) => { throw e; });
+                } catch(_err) {
+                    console.log('prepare skipped');
+                }
             });
         },
         experimentalInteractiveRunEvents: false,
