@@ -38,11 +38,11 @@ export class PitchState implements NgxsOnInit {
 
     @Action(CreatePitch)
     createPitch(_: StateContext<PitchStateModel>, action: CreatePitch) {
+        if (!action.payload.id) {
+            action.payload.id = uuidv4();
+        }
         return this.createPitchGQL.mutate(
-            {
-                id: uuidv4(),
-                ...action.payload,
-            },
+            action.payload,
             {
                 refetchQueries: [
                     {

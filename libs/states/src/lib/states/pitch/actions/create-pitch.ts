@@ -14,7 +14,7 @@ export class CreatePitch implements INotification {
     };
 
     constructor(
-        public payload: Omit<CreatePitchMutationVariables, 'id'>,
+        public payload: CreatePitchMutationVariables,
     ) {
 
     }

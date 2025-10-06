@@ -184,6 +184,7 @@
         "ADD_PENALTY": "Penalty added",
         "ADD_TEAM_TO_SEASON": "Team {{ teamName }} added to Season {{ seasonName }}",
         "CANCEL_MATCH": "Match cancelled",
+        "CREATE_MATCHES_FOR_SEASON": "Matches created",
         "CREATE_MATCH_DAYS": "Matchdays created",
         "CREATE_PITCH": "Pitch {{ name }} created",
         "CREATE_SEASON": "Season {{ name }} created",

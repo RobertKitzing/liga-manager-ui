@@ -184,6 +184,7 @@
         "ADD_PENALTY": "",
         "ADD_TEAM_TO_SEASON": "",
         "CANCEL_MATCH": "",
+        "CREATE_MATCHES_FOR_SEASON": "",
         "CREATE_MATCH_DAYS": "",
         "CREATE_PITCH": "",
         "CREATE_SEASON": "",
