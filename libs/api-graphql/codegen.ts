@@ -62,6 +62,7 @@ const config: CodegenConfig = {
                         email: 'fakeEmail()',
                     },
                 },
+                addTypename: true,
             },
             plugins: [
                 'add',

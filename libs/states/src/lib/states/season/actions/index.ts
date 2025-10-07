@@ -6,3 +6,6 @@ export * from './add-penalty';
 export * from './add-team-to-season';
 export * from './remove-penalty';
 export * from './create-matches-for-season';
+export * from './remove-team-from-season';
+export * from './replace-team-in-season';
+export * from './reschedule-match-days';

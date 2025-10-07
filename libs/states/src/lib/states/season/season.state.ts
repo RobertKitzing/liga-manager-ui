@@ -1,10 +1,11 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
+import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, RemoveTeamFromSeasonGQL, ReplaceTeamInSeasonGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
 import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
-import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, StartSeason } from './actions';
+import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, StartSeason } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedSeason } from '../selected-items';
+import { Apollo, gql } from 'apollo-angular';
 
 export interface SeasonStateModel {
     seasons: SeasonListQuery['allSeasons'];
@@ -42,6 +43,12 @@ export class SeasonState implements NgxsOnInit {
     private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
 
     private createMatchesForSeasonGQL = inject(CreateMatchesForSeasonGQL);
+
+    private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
+
+    private replaceTeamInSeasonGQL = inject(ReplaceTeamInSeasonGQL);
+
+    private apollo = inject(Apollo);
 
     private destroyRef = inject(DestroyRef);
 
@@ -172,6 +179,36 @@ export class SeasonState implements NgxsOnInit {
         );
     }
 
+    @Action(RemoveTeamFromSeason)
+    removeTeamFromSeason(_: StateContext<SeasonStateModel>, action: RemoveTeamFromSeason) {
+        return this.removeTeamFromSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(ReplaceTeamInSeason)
+    replaceTeamInSeason(_: StateContext<SeasonStateModel>, action: ReplaceTeamInSeason) {
+        return this.replaceTeamInSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
     @Action(CreateMatchesForSeason)
     createMatchesForSeason(_: StateContext<SeasonStateModel>, action: CreateMatchesForSeason) {
         return this.createMatchesForSeasonGQL.mutate(
@@ -181,6 +218,28 @@ export class SeasonState implements NgxsOnInit {
                     {
                         query: this.seasonByIdGQL.document,
                         variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(RescheduleMatchDays)
+    rescheduleMatchDays(_: StateContext<SeasonStateModel>, action: RescheduleMatchDays) {
+        let mutation = 'mutation RescheduleMatchDays {\n';
+        action.payload.forEach(
+            (param, i) => {
+                mutation += `rescheduleMatchDay${i}: rescheduleMatchDay(match_day_id: "${param.match_day_id}", date_period: { from: "${param.date_period.from.toJSON()}", to: "${param.date_period.to.toJSON()}" }) \n`;
+            },
+        );
+        mutation += '}';
+        return this.apollo.mutate(
+            {
+                mutation: gql(mutation),
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.season_id },
                     },
                 ],
             },

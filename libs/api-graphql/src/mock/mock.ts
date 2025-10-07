@@ -3,8 +3,9 @@
 import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator, fakeEmail } from './generators'
 import { Contact, DatePeriod, Event, Match, MatchAppointment, MatchDay, Pitch, Ranking, RankingPenalty, RankingPosition, Season, Team, TeamIdPair, Tournament, User, Mutation, Query, SeasonState, TournamentState, UserLocale, UserRole } from '../gen/graphql';
 
-export const aContact = (overrides?: Partial<Contact>): Contact => {
+export const aContact = (overrides?: Partial<Contact>): { __typename: 'Contact' } & Contact => {
     return {
+        __typename: 'Contact',
         email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : fakeEmail(),
         first_name: overrides && overrides.hasOwnProperty('first_name') ? overrides.first_name! : 'casus',
         last_name: overrides && overrides.hasOwnProperty('last_name') ? overrides.last_name! : 'auxilium',
@@ -19,16 +20,18 @@ export const aDatePeriod = (overrides?: Partial<DatePeriod>): DatePeriod => {
     };
 };
 
-export const anEvent = (overrides?: Partial<Event>): Event => {
+export const anEvent = (overrides?: Partial<Event>): { __typename: 'Event' } & Event => {
     return {
+        __typename: 'Event',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'temeritas',
         occurred_at: overrides && overrides.hasOwnProperty('occurred_at') ? overrides.occurred_at! : 'adfectus',
         type: overrides && overrides.hasOwnProperty('type') ? overrides.type! : 'copiose',
     };
 };
 
-export const aMatch = (overrides?: Partial<Match>): Match => {
+export const aMatch = (overrides?: Partial<Match>): { __typename: 'Match' } & Match => {
     return {
+        __typename: 'Match',
         cancellation_reason: overrides && overrides.hasOwnProperty('cancellation_reason') ? overrides.cancellation_reason! : 'desino',
         cancelled_at: overrides && overrides.hasOwnProperty('cancelled_at') ? overrides.cancelled_at! : dateStringGenerator(),
         guest_score: overrides && overrides.hasOwnProperty('guest_score') ? overrides.guest_score! : 6016,
@@ -49,8 +52,9 @@ export const aMatchAppointment = (overrides?: Partial<MatchAppointment>): MatchA
     };
 };
 
-export const aMatchDay = (overrides?: Partial<MatchDay>): MatchDay => {
+export const aMatchDay = (overrides?: Partial<MatchDay>): { __typename: 'MatchDay' } & MatchDay => {
     return {
+        __typename: 'MatchDay',
         end_date: overrides && overrides.hasOwnProperty('end_date') ? overrides.end_date! : 'volutabrum',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'timor',
         matches: overrides && overrides.hasOwnProperty('matches') ? overrides.matches! : [aMatch()],
@@ -59,8 +63,9 @@ export const aMatchDay = (overrides?: Partial<MatchDay>): MatchDay => {
     };
 };
 
-export const aPitch = (overrides?: Partial<Pitch>): Pitch => {
+export const aPitch = (overrides?: Partial<Pitch>): { __typename: 'Pitch' } & Pitch => {
     return {
+        __typename: 'Pitch',
         contact: overrides && overrides.hasOwnProperty('contact') ? overrides.contact! : aContact(),
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'deleo',
         label: overrides && overrides.hasOwnProperty('label') ? overrides.label! : 'vulariter',
@@ -69,16 +74,18 @@ export const aPitch = (overrides?: Partial<Pitch>): Pitch => {
     };
 };
 
-export const aRanking = (overrides?: Partial<Ranking>): Ranking => {
+export const aRanking = (overrides?: Partial<Ranking>): { __typename: 'Ranking' } & Ranking => {
     return {
+        __typename: 'Ranking',
         penalties: overrides && overrides.hasOwnProperty('penalties') ? overrides.penalties! : [aRankingPenalty()],
         positions: overrides && overrides.hasOwnProperty('positions') ? overrides.positions! : [aRankingPosition()],
         updated_at: overrides && overrides.hasOwnProperty('updated_at') ? overrides.updated_at! : 'virgo',
     };
 };
 
-export const aRankingPenalty = (overrides?: Partial<RankingPenalty>): RankingPenalty => {
+export const aRankingPenalty = (overrides?: Partial<RankingPenalty>): { __typename: 'RankingPenalty' } & RankingPenalty => {
     return {
+        __typename: 'RankingPenalty',
         created_at: overrides && overrides.hasOwnProperty('created_at') ? overrides.created_at! : 'delectus',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'commodo',
         points: overrides && overrides.hasOwnProperty('points') ? overrides.points! : 2510,
@@ -87,8 +94,9 @@ export const aRankingPenalty = (overrides?: Partial<RankingPenalty>): RankingPen
     };
 };
 
-export const aRankingPosition = (overrides?: Partial<RankingPosition>): RankingPosition => {
+export const aRankingPosition = (overrides?: Partial<RankingPosition>): { __typename: 'RankingPosition' } & RankingPosition => {
     return {
+        __typename: 'RankingPosition',
         conceded_goals: overrides && overrides.hasOwnProperty('conceded_goals') ? overrides.conceded_goals! : 7103,
         draws: overrides && overrides.hasOwnProperty('draws') ? overrides.draws! : 1680,
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'colligo',
@@ -103,8 +111,9 @@ export const aRankingPosition = (overrides?: Partial<RankingPosition>): RankingP
     };
 };
 
-export const aSeason = (overrides?: Partial<Season>): Season => {
+export const aSeason = (overrides?: Partial<Season>): { __typename: 'Season' } & Season => {
     return {
+        __typename: 'Season',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'attonbitus',
         match_day_count: overrides && overrides.hasOwnProperty('match_day_count') ? overrides.match_day_count! : 9448,
         match_days: overrides && overrides.hasOwnProperty('match_days') ? overrides.match_days! : [aMatchDay()],
@@ -116,8 +125,9 @@ export const aSeason = (overrides?: Partial<Season>): Season => {
     };
 };
 
-export const aTeam = (overrides?: Partial<Team>): Team => {
+export const aTeam = (overrides?: Partial<Team>): { __typename: 'Team' } & Team => {
     return {
+        __typename: 'Team',
         contact: overrides && overrides.hasOwnProperty('contact') ? overrides.contact! : aContact(),
         created_at: overrides && overrides.hasOwnProperty('created_at') ? overrides.created_at! : 'terra',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'molestiae',
@@ -134,8 +144,9 @@ export const aTeamIdPair = (overrides?: Partial<TeamIdPair>): TeamIdPair => {
     };
 };
 
-export const aTournament = (overrides?: Partial<Tournament>): Tournament => {
+export const aTournament = (overrides?: Partial<Tournament>): { __typename: 'Tournament' } & Tournament => {
     return {
+        __typename: 'Tournament',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'saepe',
         name: overrides && overrides.hasOwnProperty('name') ? overrides.name! : 'volubilis',
         rounds: overrides && overrides.hasOwnProperty('rounds') ? overrides.rounds! : [aMatchDay()],
@@ -143,8 +154,9 @@ export const aTournament = (overrides?: Partial<Tournament>): Tournament => {
     };
 };
 
-export const aUser = (overrides?: Partial<User>): User => {
+export const aUser = (overrides?: Partial<User>): { __typename: 'User' } & User => {
     return {
+        __typename: 'User',
         email: overrides && overrides.hasOwnProperty('email') ? overrides.email! : fakeEmail(),
         first_name: overrides && overrides.hasOwnProperty('first_name') ? overrides.first_name! : 'comis',
         id: overrides && overrides.hasOwnProperty('id') ? overrides.id! : 'suscipio',
@@ -155,8 +167,9 @@ export const aUser = (overrides?: Partial<User>): User => {
     };
 };
 
-export const aMutation = (overrides?: Partial<Mutation>): Mutation => {
+export const aMutation = (overrides?: Partial<Mutation>): { __typename: 'mutation' } & Mutation => {
     return {
+        __typename: 'mutation',
         addRankingPenalty: overrides && overrides.hasOwnProperty('addRankingPenalty') ? overrides.addRankingPenalty! : true,
         addTeamToSeason: overrides && overrides.hasOwnProperty('addTeamToSeason') ? overrides.addTeamToSeason! : true,
         cancelMatch: overrides && overrides.hasOwnProperty('cancelMatch') ? overrides.cancelMatch! : false,
@@ -196,8 +209,9 @@ export const aMutation = (overrides?: Partial<Mutation>): Mutation => {
     };
 };
 
-export const aQuery = (overrides?: Partial<Query>): Query => {
+export const aQuery = (overrides?: Partial<Query>): { __typename: 'query' } & Query => {
     return {
+        __typename: 'query',
         allPitches: overrides && overrides.hasOwnProperty('allPitches') ? overrides.allPitches! : [aPitch()],
         allSeasons: overrides && overrides.hasOwnProperty('allSeasons') ? overrides.allSeasons! : [aSeason()],
         allTeams: overrides && overrides.hasOwnProperty('allTeams') ? overrides.allTeams! : [aTeam()],

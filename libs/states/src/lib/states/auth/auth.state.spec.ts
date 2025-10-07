@@ -4,34 +4,32 @@ import { AuthState } from './auth.state';
 import { AuthStateSelectors } from './auth.selectors';
 import { GetAuthenticatedUser, Login, Logout, SetToken } from './actions';
 import { aMatch, aTeam, aUser, AuthenticatedUserGQL, UserRole } from '@liga-manager-api/graphql';
-import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-
-@Injectable()
-class AuthenticatedUserGQLMock {
-
-    fetch = () => jest.fn();
-
-}
+import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('AuthState', () => {
 
+    let controller: ApolloTestingController;
     let store: Store;
     let authenticatedUserGQL: AuthenticatedUserGQL;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [ ApolloTestingModule ],
             providers: [
                 provideStore([AuthState]),
-                {
-                    provide: AuthenticatedUserGQL,
-                    useClass: AuthenticatedUserGQLMock,
-                },
+                AuthenticatedUserGQL,
             ],
         });
 
+        controller = TestBed.inject(ApolloTestingController);
         store = TestBed.inject(Store);
         authenticatedUserGQL = TestBed.inject(AuthenticatedUserGQL);
+
+    });
+
+    afterEach(() => {
+        controller.verify();
     });
 
     it('it should get the token', () => {
@@ -42,6 +40,7 @@ describe('AuthState', () => {
     it('it should set the token', () => {
         const expectedToken = 'test';
         store.dispatch(new SetToken(expectedToken));
+        controller.expectOne(authenticatedUserGQL.document);
         const token = store.selectSnapshot(AuthStateSelectors.properties.token);
         expect(token).toBe(expectedToken);
     });
@@ -49,6 +48,7 @@ describe('AuthState', () => {
     it('it should logout correctly', () => {
         const expectedToken = 'test';
         store.dispatch(new SetToken(expectedToken));
+        controller.expectOne(authenticatedUserGQL.document);
         store.dispatch(new Logout());
         const token = store.selectSnapshot(AuthStateSelectors.properties.token);
         expect(token).toBe(undefined);
@@ -56,15 +56,16 @@ describe('AuthState', () => {
 
     it('it should get the authenticated user', () => {
         store.dispatch(new SetToken('test'));
-        const expectedUser = aUser();
+        const authenticatedUser = aUser();
         jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
             loading: false,
             networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
+            data: { authenticatedUser },
         }));
+        controller.expectOne(authenticatedUserGQL.document);
         store.dispatch(new GetAuthenticatedUser());
         const user = store.selectSnapshot(AuthStateSelectors.properties.user);
-        expect(user).toBe(expectedUser);
+        expect(user).toBe(authenticatedUser);
     });
 
     it('it should login', () => {
@@ -77,6 +78,7 @@ describe('AuthState', () => {
         }));
         const loginContext = { username: 'user', password: 'pass' };
         store.dispatch(new Login(loginContext));
+        controller.expectOne(authenticatedUserGQL.document);
         const user = store.selectSnapshot(AuthStateSelectors.properties.user);
         expect(user).toBe(expectedUser);
         expect(spy).toHaveBeenCalledWith(
@@ -99,6 +101,7 @@ describe('AuthState', () => {
             data: { authenticatedUser: expectedUser },
         }));
         store.dispatch(new GetAuthenticatedUser());
+        controller.expectOne(authenticatedUserGQL.document);
         const result = store.selectSnapshot(AuthStateSelectors.isAdmin);
         expect(result).toBe(true);
     });
@@ -112,6 +115,7 @@ describe('AuthState', () => {
             data: { authenticatedUser: expectedUser },
         }));
         store.dispatch(new GetAuthenticatedUser());
+        controller.expectOne(authenticatedUserGQL.document);
         const result = store.selectSnapshot(AuthStateSelectors.isTeamAdmin);
         expect(result).toBe(true);
     });
@@ -126,6 +130,7 @@ describe('AuthState', () => {
             data: { authenticatedUser: expectedUser },
         }));
         store.dispatch(new GetAuthenticatedUser());
+        controller.expectOne(authenticatedUserGQL.document);
         const result = store.selectSnapshot(AuthStateSelectors.isTeamAdminForTeam(team.id));
         expect(result).toBe(true);
     });
@@ -142,6 +147,7 @@ describe('AuthState', () => {
             data: { authenticatedUser: expectedUser },
         }));
         store.dispatch(new GetAuthenticatedUser());
+        controller.expectOne(authenticatedUserGQL.document);
         const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
         expect(result).toBe(true);
     });
@@ -158,6 +164,7 @@ describe('AuthState', () => {
             data: { authenticatedUser: expectedUser },
         }));
         store.dispatch(new GetAuthenticatedUser());
+        controller.expectOne(authenticatedUserGQL.document);
         const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
         expect(result).toBe(true);
     });
@@ -174,6 +181,7 @@ describe('AuthState', () => {
             data: { authenticatedUser: expectedUser },
         }));
         store.dispatch(new GetAuthenticatedUser());
+        controller.expectOne(authenticatedUserGQL.document);
         const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
         expect(result).toBe(true);
     });

@@ -60,7 +60,9 @@ export class AuthState  {
             },
         ).pipe(
             tap(
-                (result) => patchState({ user: result.data.authenticatedUser }),
+                (result) => {
+                    patchState({ user: result.data.authenticatedUser });
+                },
             ),
             catchError(
                 () => {

@@ -2,7 +2,6 @@
     "ADDRESS_SEARCH": "",
     "ADD_USER_TITLE": "",
     "ALL_TEAMS": "",
-    "ARE_YOU_SURE": "",
     "BETWEEN_MATCHDAYS_OFFSET": "",
     "BUTTON": {
         "ADD_MATCH": "",
@@ -60,7 +59,8 @@
         "ARE_YOU_SURE_TO_DELETE_TOURNAMENT": "",
         "ARE_YOU_SURE_TO_DELETE_USER": "",
         "ARE_YOU_SURE_TO_END_SEASON": "",
-        "ARE_YOU_SURE_TO_END_TOURNAMENT": ""
+        "ARE_YOU_SURE_TO_END_TOURNAMENT": "",
+        "TITLE": ""
     },
     "CREATE_NEW_SEASON_TITLE": "",
     "CREATE_NEW_TOURNAMENT_TITLE": "",
@@ -185,7 +185,6 @@
         "ADD_TEAM_TO_SEASON": "",
         "CANCEL_MATCH": "",
         "CREATE_MATCHES_FOR_SEASON": "",
-        "CREATE_MATCH_DAYS": "",
         "CREATE_PITCH": "",
         "CREATE_SEASON": "",
         "CREATE_TEAM": "",
@@ -204,7 +203,10 @@
         "END_TOURNAMENT": "",
         "PASSWORD_CHANGED": "",
         "REMOVE_PENALTY": "",
+        "REMOVE_TEAM_FROM_SEASON": "",
         "RENAME_TEAM": "",
+        "REPLACE_TEAM_IN_SEASON": "",
+        "RESCHEDULE_MATCH_DAYS": "",
         "SAVE": "",
         "SEND_MAIL": "",
         "START_SEASON": "",

@@ -30,6 +30,7 @@ export type CySelectors =
     | 'button-next-matchday'
     | 'button-password-reset'
     | 'button-prev-matchday'
+    | 'button-remove-team-from-season'
     | 'button-rename-team'
     | 'button-save'
     | 'button-save-match-days'

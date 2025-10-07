@@ -3,33 +3,16 @@ import { provideStore, Store } from '@ngxs/store';
 import { PitchState } from './pitch.state';
 import { PitchSelectors } from './pitch.selector';
 import { aPitch, CreatePitchGQL, DeletePitchGQL, PitchesGQL } from '@liga-manager-api/graphql';
-import { Injectable } from '@angular/core';
 import { CreatePitch, DeletePitch } from './actions';
-
-@Injectable()
-class PitchesGQLMock {
-
-    watch = () => jest.fn();
-
-}
-
-@Injectable()
-class CreatePitchGQLMock {
-
-    mutate = () => jest.fn();
-
-}
-
-@Injectable()
-class DeletePitchGQLMock {
-
-    mutate = () => jest.fn();
-
-}
+import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('PitchState', () => {
 
+    let controller: ApolloTestingController;
+
     let store: Store;
+
+    let pitchesGQL: PitchesGQL;
 
     let createPitchGQL: CreatePitchGQL;
 
@@ -37,59 +20,60 @@ describe('PitchState', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [ ApolloTestingModule ],
             providers: [
                 provideStore(
                     [PitchState],
                 ),
-                {
-                    provide: PitchesGQL,
-                    useClass: PitchesGQLMock,
-                },
-                {
-                    provide: CreatePitchGQL,
-                    useClass: CreatePitchGQLMock,
-                },
-                {
-                    provide: DeletePitchGQL,
-                    useClass: DeletePitchGQLMock,
-                },
+                PitchesGQL,
+                CreatePitchGQL,
+                DeletePitchGQL,
             ],
         });
 
+        controller = TestBed.inject(ApolloTestingController);
+
         store = TestBed.inject(Store);
+
+        pitchesGQL = TestBed.inject(PitchesGQL);
 
         createPitchGQL = TestBed.inject(CreatePitchGQL);
 
         deletePitchGQL = TestBed.inject(DeletePitchGQL);
 
+        controller.expectOne(pitchesGQL.document);
+    });
+
+    afterEach(() => {
+        controller.verify();
     });
 
     it('should have no pitches', () => {
-        expect(store.selectSnapshot(PitchSelectors.pitches)).toStrictEqual([]);
+        const pitches = store.selectSnapshot(PitchSelectors.pitches);
+        expect(pitches).toStrictEqual([]);
     });
 
     it('should create a pitch', () => {
 
         const pitch = aPitch({ label: 'new', contact: undefined });
 
-        const spy = jest.spyOn(createPitchGQL, 'mutate');
-
         store.dispatch(new CreatePitch(pitch));
+        const op = controller.expectOne(createPitchGQL.document);
 
-        expect(spy.mock.calls[0][0]).toEqual(pitch);
+        expect(op.operation.variables).toStrictEqual(pitch);
     });
 
     it('should delete a pitch', () => {
 
         const pitch = aPitch({ label: 'new', contact: undefined });
 
-        const spy = jest.spyOn(deletePitchGQL, 'mutate');
-
         const payload = { pitch_id: pitch.id };
 
         store.dispatch(new DeletePitch(payload, pitch.label));
 
-        expect(spy.mock.calls[0][0]).toEqual(payload);
+        const op = controller.expectOne(deletePitchGQL.document);
+
+        expect(op.operation.variables).toStrictEqual(payload);
     });
 
 });

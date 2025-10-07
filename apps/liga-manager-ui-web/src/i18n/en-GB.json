@@ -2,7 +2,6 @@
     "ADDRESS_SEARCH": "Address",
     "ADD_USER_TITLE": "Add User",
     "ALL_TEAMS": "All Teams",
-    "ARE_YOU_SURE": "Are you sure ?",
     "BETWEEN_MATCHDAYS_OFFSET": "Days between Matchdays",
     "BUTTON": {
         "ADD_MATCH": "Add Match",
@@ -60,7 +59,8 @@
         "ARE_YOU_SURE_TO_DELETE_TOURNAMENT": "Really delete Tournament {{ name }} ?",
         "ARE_YOU_SURE_TO_DELETE_USER": "",
         "ARE_YOU_SURE_TO_END_SEASON": "Really end Season {{ name }} ?",
-        "ARE_YOU_SURE_TO_END_TOURNAMENT": "Really end Tournament {{ name }} ?"
+        "ARE_YOU_SURE_TO_END_TOURNAMENT": "Really end Tournament {{ name }} ?",
+        "TITLE": "Are you sure ?"
     },
     "CREATE_NEW_SEASON_TITLE": "New Season",
     "CREATE_NEW_TOURNAMENT_TITLE": "New Tournament",
@@ -185,7 +185,6 @@
         "ADD_TEAM_TO_SEASON": "Team {{ teamName }} added to Season {{ seasonName }}",
         "CANCEL_MATCH": "Match cancelled",
         "CREATE_MATCHES_FOR_SEASON": "Matches created",
-        "CREATE_MATCH_DAYS": "Matchdays created",
         "CREATE_PITCH": "Pitch {{ name }} created",
         "CREATE_SEASON": "Season {{ name }} created",
         "CREATE_TEAM": "Team {{ name }} created",
@@ -204,7 +203,10 @@
         "END_TOURNAMENT": "Tournament {{ name }} ended",
         "PASSWORD_CHANGED": "Password changed",
         "REMOVE_PENALTY": "Penalty removed",
+        "REMOVE_TEAM_FROM_SEASON": "",
         "RENAME_TEAM": "Team {{ oldName }} renamed to {{ newName }}",
+        "REPLACE_TEAM_IN_SEASON": "",
+        "RESCHEDULE_MATCH_DAYS": "",
         "SAVE": "Saved",
         "SEND_MAIL": "Email is on the way",
         "START_SEASON": "Season {{ name }} started",

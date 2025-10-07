@@ -58,6 +58,21 @@ describe('Season', () => {
         );
     });
 
+    it('Should remove a team from a season', () => {
+        cy.login(Users.admin.username, Users.admin.password);
+
+        cy.visit('/');
+        cy.getBySel('route-admin').first().click();
+        cy.getBySel('route-admin-seasons').first().click();
+
+        cy.getBySel('select-season').click();
+        cy.get('mat-option').contains(names[1]).click();
+
+        cy.getBySel('button-remove-team-from-season').first().click();
+        cy.successSnackbar();
+
+    });
+
     it('Should create matchdays seasons', () => {
 
         cy.login(Users.admin.username, Users.admin.password);

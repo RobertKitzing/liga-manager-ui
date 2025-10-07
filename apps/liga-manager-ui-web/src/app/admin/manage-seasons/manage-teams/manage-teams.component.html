@@ -24,12 +24,17 @@
                                 @switch (season()?.state) {
                                     @case (SeasonState.Preparation) {
                                         <button
+                                            cySelector="button-remove-team-from-season"
                                             matIconButton
                                             (click)="
-                                                removeTeamFromSeason({
+                                                removeTeamFromSeason(
+                                                    {
                                                     team_id: team.id,
                                                     season_id: season()?.id!
-                                                })
+                                                    },
+                                                    team.name,
+                                                    season()?.name!
+                                                )
                                             "
                                         >
                                             <mat-icon>delete</mat-icon>

@@ -1,6 +1,6 @@
 import { Component, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -8,14 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { ApiDate, MatchDay, Maybe } from '@liga-manager-api/graphql';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { CalendarService, NotificationService } from '@liga-manager-ui/services';
+import { CalendarService } from '@liga-manager-ui/services';
 import { MatButtonModule } from '@angular/material/button';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventDropArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { BehaviorSubject, firstValueFrom, switchMap } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { v4 } from 'uuid';
@@ -23,7 +23,7 @@ import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { add } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
 import { ApiDateFormControl } from '@liga-manager-ui/components';
-import { CreateMatchesForSeason } from '@liga-manager-ui/states';
+import { CreateMatchesForSeason, RescheduleMatchDays } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-matchdays',
@@ -54,10 +54,6 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
     });
 
     matchDays = signal<Maybe<MatchDay>[]>([]);
-
-    private translateService = inject(TranslateService);
-
-    private notificationService = inject(NotificationService);
 
     private calendarService = inject(CalendarService);
 
@@ -149,7 +145,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 ));
             }
             if (mode === 'update') {
-                await firstValueFrom(this.seasonService.rescheduleMatchDays(
+                this.store.dispatch(new RescheduleMatchDays(
                     this.matchDays().map(
                         (md) => ({
                             match_day_id: md?.id || '',
@@ -162,7 +158,6 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                     this.season()?.id || '',
                 ));
             }
-            this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.CREATE_MATCH_DAYS'));
         } catch (error) {
             console.error(error);
         }
