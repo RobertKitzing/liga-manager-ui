@@ -120,8 +120,8 @@ export class ManageSeasonsComponent implements OnInit {
         this.store.dispatch(new EndSeason({ season_id }, name));
     }
 
-    startSeason(id: string, name: string) {
-        this.store.dispatch(new StartSeason({ id }, name));
+    startSeason(season_id: string, name: string) {
+        this.store.dispatch(new StartSeason({ season_id }, name));
     }
 
     deleteSeason(season_id: string, name: string) {

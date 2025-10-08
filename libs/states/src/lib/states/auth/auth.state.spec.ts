@@ -3,7 +3,7 @@ import { Actions, ofActionSuccessful, provideStore, Store } from '@ngxs/store';
 import { AuthState } from './auth.state';
 import { AuthStateSelectors } from './auth.selectors';
 import { GetAuthenticatedUser, Login, Logout, SetToken } from './actions';
-import { aMatch, aTeam, aUser, AuthenticatedUserGQL, UserRole } from '@liga-manager-api/graphql';
+import { aMatch, aTeam, aUser, AuthenticatedUserDocument, AuthenticatedUserGQL, UserRole } from '@liga-manager-api/graphql';
 import { firstValueFrom, of, tap } from 'rxjs';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
@@ -12,6 +12,7 @@ describe('AuthState', () => {
     let controller: ApolloTestingController;
     let store: Store;
     let authenticatedUserGQL: AuthenticatedUserGQL;
+
     let actions: Actions;
 
     beforeEach(() => {
@@ -19,7 +20,6 @@ describe('AuthState', () => {
             imports: [ ApolloTestingModule ],
             providers: [
                 provideStore([AuthState]),
-                AuthenticatedUserGQL,
             ],
         });
 
@@ -41,7 +41,7 @@ describe('AuthState', () => {
     it('it should set the token', () => {
         const expectedToken = 'test';
         store.dispatch(new SetToken(expectedToken));
-        controller.expectOne(authenticatedUserGQL.document);
+        controller.expectOne(AuthenticatedUserDocument);
         const token = store.selectSnapshot(AuthStateSelectors.properties.token);
         expect(token).toBe(expectedToken);
     });
@@ -49,7 +49,7 @@ describe('AuthState', () => {
     it('it should logout correctly', () => {
         const expectedToken = 'test';
         store.dispatch(new SetToken(expectedToken));
-        controller.expectOne(authenticatedUserGQL.document);
+        controller.expectOne(AuthenticatedUserDocument);
         store.dispatch(new Logout());
         const token = store.selectSnapshot(AuthStateSelectors.properties.token);
         expect(token).toBe(undefined);
@@ -58,7 +58,7 @@ describe('AuthState', () => {
     it('it should get the authenticated user', () => {
         store.dispatch(new SetToken('test'));
         const authenticatedUser = aUser();
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(
@@ -84,7 +84,7 @@ describe('AuthState', () => {
         }));
         const loginContext = { username: 'user', password: 'pass' };
         store.dispatch(new Login(loginContext));
-        controller.expectOne(authenticatedUserGQL.document);
+        controller.expectOne(AuthenticatedUserDocument);
         const user = store.selectSnapshot(AuthStateSelectors.properties.user);
         expect(user).toBe(expectedUser);
         expect(spy).toHaveBeenCalledWith(
@@ -101,7 +101,7 @@ describe('AuthState', () => {
     it('it check if the user is a admin', () => {
         store.dispatch(new SetToken('test'));
         const authenticatedUser = aUser({ role: UserRole.Admin });
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(
@@ -119,7 +119,7 @@ describe('AuthState', () => {
     it('it check if the user is a team admin', () => {
         store.dispatch(new SetToken('test'));
         const authenticatedUser = aUser({ role: UserRole.TeamManager });
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(
@@ -138,7 +138,7 @@ describe('AuthState', () => {
         store.dispatch(new SetToken('test'));
         const team = aTeam();
         const authenticatedUser = aUser({ role: UserRole.TeamManager, teams: [ team ] });
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(
@@ -159,7 +159,7 @@ describe('AuthState', () => {
         const guest_team = aTeam({ id: 'guest' });
         const match = aMatch({ home_team, guest_team });
         const authenticatedUser = aUser({ role: UserRole.Admin });
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(
@@ -180,7 +180,7 @@ describe('AuthState', () => {
         const guest_team = aTeam({ id: 'guest' });
         const match = aMatch({ home_team, guest_team });
         const authenticatedUser = aUser({ role: UserRole.TeamManager, teams: [ home_team ] });
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(
@@ -201,7 +201,7 @@ describe('AuthState', () => {
         const guest_team = aTeam({ id: 'guest' });
         const match = aMatch({ home_team, guest_team });
         const authenticatedUser = aUser({ role: UserRole.TeamManager, teams: [ guest_team ] });
-        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
+        controller.expectOne(AuthenticatedUserDocument).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
         return firstValueFrom(
             actions.pipe(

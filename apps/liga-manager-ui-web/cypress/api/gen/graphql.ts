@@ -595,27 +595,6 @@ export type PenaltyFragment = { __typename?: 'RankingPenalty', id: string, reaso
     & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
   ) } & { ' $fragmentName'?: 'PenaltyFragment' };
 
-export type CreateTeamMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-}>;
-
-
-export type CreateTeamMutation = { __typename?: 'mutation', createTeam?: boolean | null };
-
-export type CreateUserMutationVariables = Exact<{
-  user_id?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-  first_name: Scalars['String']['input'];
-  last_name: Scalars['String']['input'];
-  role: Scalars['String']['input'];
-  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type CreateUserMutation = { __typename?: 'mutation', createUser?: boolean | null };
-
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
   home_score: Scalars['Int']['input'];
@@ -728,12 +707,33 @@ export type CreatePitchMutationVariables = Exact<{
 export type CreatePitchMutation = { __typename?: 'mutation', createPitch?: boolean | null };
 
 export type CreateSeasonMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['String']['input']>;
+  season_id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
 }>;
 
 
 export type CreateSeasonMutation = { __typename?: 'mutation', createSeason?: boolean | null };
+
+export type DeleteSeasonMutationVariables = Exact<{
+  season_id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteSeasonMutation = { __typename?: 'mutation', deleteSeason?: boolean | null };
+
+export type EndSeasonMutationVariables = Exact<{
+  season_id: Scalars['String']['input'];
+}>;
+
+
+export type EndSeasonMutation = { __typename?: 'mutation', endSeason?: boolean | null };
+
+export type StartSeasonMutationVariables = Exact<{
+  season_id: Scalars['String']['input'];
+}>;
+
+
+export type StartSeasonMutation = { __typename?: 'mutation', startSeason?: boolean | null };
 
 export type AddTeamToSeasonMutationVariables = Exact<{
   season_id: Scalars['String']['input'];
@@ -767,27 +767,6 @@ export type RescheduleMatchDayMutationVariables = Exact<{
 
 export type RescheduleMatchDayMutation = { __typename?: 'mutation', rescheduleMatchDay?: boolean | null };
 
-export type StartSeasonMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-
-export type StartSeasonMutation = { __typename?: 'mutation', startSeason?: boolean | null };
-
-export type EndSeasonMutationVariables = Exact<{
-  season_id: Scalars['String']['input'];
-}>;
-
-
-export type EndSeasonMutation = { __typename?: 'mutation', endSeason?: boolean | null };
-
-export type DeleteSeasonMutationVariables = Exact<{
-  season_id: Scalars['String']['input'];
-}>;
-
-
-export type DeleteSeasonMutation = { __typename?: 'mutation', deleteSeason?: boolean | null };
-
 export type ReplaceTeamInSeasonMutationVariables = Exact<{
   season_id: Scalars['String']['input'];
   current_team_id: Scalars['String']['input'];
@@ -796,6 +775,14 @@ export type ReplaceTeamInSeasonMutationVariables = Exact<{
 
 
 export type ReplaceTeamInSeasonMutation = { __typename?: 'mutation', replaceTeamInSeason?: boolean | null };
+
+export type CreateTeamMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateTeamMutation = { __typename?: 'mutation', createTeam?: boolean | null };
 
 export type UpdateTeamContactMutationVariables = Exact<{
   team_id: Scalars['String']['input'];
@@ -861,6 +848,19 @@ export type EndTournamentMutationVariables = Exact<{
 
 
 export type EndTournamentMutation = { __typename?: 'mutation', endTournament?: boolean | null };
+
+export type CreateUserMutationVariables = Exact<{
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  first_name: Scalars['String']['input'];
+  last_name: Scalars['String']['input'];
+  role: Scalars['String']['input'];
+  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'mutation', createUser?: boolean | null };
 
 export type UpdateUserMutationVariables = Exact<{
   user_id: Scalars['String']['input'];
@@ -1671,24 +1671,6 @@ fragment Penalty on RankingPenalty {
   created_at
   points
 }`, {"fragmentName":"Ranking"}) as unknown as TypedDocumentString<RankingFragment, unknown>;
-export const CreateTeamDocument = new TypedDocumentString(`
-    mutation CreateTeam($id: String!, $name: String!) {
-  createTeam(id: $id, name: $name)
-}
-    `) as unknown as TypedDocumentString<CreateTeamMutation, CreateTeamMutationVariables>;
-export const CreateUserDocument = new TypedDocumentString(`
-    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
-  createUser(
-    id: $user_id
-    email: $email
-    password: $password
-    first_name: $first_name
-    last_name: $last_name
-    role: $role
-    team_ids: $team_ids
-  )
-}
-    `) as unknown as TypedDocumentString<CreateUserMutation, CreateUserMutationVariables>;
 export const SubmitResultDocument = new TypedDocumentString(`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
   submitMatchResult(
@@ -1785,10 +1767,25 @@ export const CreatePitchDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<CreatePitchMutation, CreatePitchMutationVariables>;
 export const CreateSeasonDocument = new TypedDocumentString(`
-    mutation CreateSeason($id: String, $name: String!) {
-  createSeason(id: $id, name: $name)
+    mutation CreateSeason($season_id: String, $name: String!) {
+  createSeason(id: $season_id, name: $name)
 }
     `) as unknown as TypedDocumentString<CreateSeasonMutation, CreateSeasonMutationVariables>;
+export const DeleteSeasonDocument = new TypedDocumentString(`
+    mutation DeleteSeason($season_id: String!) {
+  deleteSeason(season_id: $season_id)
+}
+    `) as unknown as TypedDocumentString<DeleteSeasonMutation, DeleteSeasonMutationVariables>;
+export const EndSeasonDocument = new TypedDocumentString(`
+    mutation EndSeason($season_id: String!) {
+  endSeason(season_id: $season_id)
+}
+    `) as unknown as TypedDocumentString<EndSeasonMutation, EndSeasonMutationVariables>;
+export const StartSeasonDocument = new TypedDocumentString(`
+    mutation StartSeason($season_id: String!) {
+  startSeason(season_id: $season_id)
+}
+    `) as unknown as TypedDocumentString<StartSeasonMutation, StartSeasonMutationVariables>;
 export const AddTeamToSeasonDocument = new TypedDocumentString(`
     mutation AddTeamToSeason($season_id: String!, $team_id: String!) {
   addTeamToSeason(season_id: $season_id, team_id: $team_id)
@@ -1809,21 +1806,6 @@ export const RescheduleMatchDayDocument = new TypedDocumentString(`
   rescheduleMatchDay(match_day_id: $match_day_id, date_period: $date_period)
 }
     `) as unknown as TypedDocumentString<RescheduleMatchDayMutation, RescheduleMatchDayMutationVariables>;
-export const StartSeasonDocument = new TypedDocumentString(`
-    mutation StartSeason($id: String!) {
-  startSeason(season_id: $id)
-}
-    `) as unknown as TypedDocumentString<StartSeasonMutation, StartSeasonMutationVariables>;
-export const EndSeasonDocument = new TypedDocumentString(`
-    mutation EndSeason($season_id: String!) {
-  endSeason(season_id: $season_id)
-}
-    `) as unknown as TypedDocumentString<EndSeasonMutation, EndSeasonMutationVariables>;
-export const DeleteSeasonDocument = new TypedDocumentString(`
-    mutation DeleteSeason($season_id: String!) {
-  deleteSeason(season_id: $season_id)
-}
-    `) as unknown as TypedDocumentString<DeleteSeasonMutation, DeleteSeasonMutationVariables>;
 export const ReplaceTeamInSeasonDocument = new TypedDocumentString(`
     mutation ReplaceTeamInSeason($season_id: String!, $current_team_id: String!, $replacement_team_id: String!) {
   replaceTeamInSeason(
@@ -1833,6 +1815,11 @@ export const ReplaceTeamInSeasonDocument = new TypedDocumentString(`
   )
 }
     `) as unknown as TypedDocumentString<ReplaceTeamInSeasonMutation, ReplaceTeamInSeasonMutationVariables>;
+export const CreateTeamDocument = new TypedDocumentString(`
+    mutation CreateTeam($id: String!, $name: String!) {
+  createTeam(id: $id, name: $name)
+}
+    `) as unknown as TypedDocumentString<CreateTeamMutation, CreateTeamMutationVariables>;
 export const UpdateTeamContactDocument = new TypedDocumentString(`
     mutation UpdateTeamContact($team_id: String!, $first_name: String!, $last_name: String!, $phone: String!, $email: String!) {
   updateTeamContact(
@@ -1884,6 +1871,19 @@ export const EndTournamentDocument = new TypedDocumentString(`
   endTournament(tournament_id: $tournament_id)
 }
     `) as unknown as TypedDocumentString<EndTournamentMutation, EndTournamentMutationVariables>;
+export const CreateUserDocument = new TypedDocumentString(`
+    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
+  createUser(
+    id: $user_id
+    email: $email
+    password: $password
+    first_name: $first_name
+    last_name: $last_name
+    role: $role
+    team_ids: $team_ids
+  )
+}
+    `) as unknown as TypedDocumentString<CreateUserMutation, CreateUserMutationVariables>;
 export const UpdateUserDocument = new TypedDocumentString(`
     mutation UpdateUser($user_id: String!, $email: String, $first_name: String, $last_name: String, $role: String, $team_ids: [String]) {
   updateUser(

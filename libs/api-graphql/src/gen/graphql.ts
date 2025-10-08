@@ -663,27 +663,6 @@ export type UserFragment = (
   )>>> }
 );
 
-export type CreateTeamMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-}>;
-
-
-export type CreateTeamMutation = Pick<Mutation, 'createTeam'>;
-
-export type CreateUserMutationVariables = Exact<{
-  user_id?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-  first_name: Scalars['String']['input'];
-  last_name: Scalars['String']['input'];
-  role: Scalars['String']['input'];
-  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type CreateUserMutation = Pick<Mutation, 'createUser'>;
-
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
   home_score: Scalars['Int']['input'];
@@ -796,12 +775,33 @@ export type CreatePitchMutationVariables = Exact<{
 export type CreatePitchMutation = Pick<Mutation, 'createPitch'>;
 
 export type CreateSeasonMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['String']['input']>;
+  season_id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
 }>;
 
 
 export type CreateSeasonMutation = Pick<Mutation, 'createSeason'>;
+
+export type DeleteSeasonMutationVariables = Exact<{
+  season_id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteSeasonMutation = Pick<Mutation, 'deleteSeason'>;
+
+export type EndSeasonMutationVariables = Exact<{
+  season_id: Scalars['String']['input'];
+}>;
+
+
+export type EndSeasonMutation = Pick<Mutation, 'endSeason'>;
+
+export type StartSeasonMutationVariables = Exact<{
+  season_id: Scalars['String']['input'];
+}>;
+
+
+export type StartSeasonMutation = Pick<Mutation, 'startSeason'>;
 
 export type AddTeamToSeasonMutationVariables = Exact<{
   season_id: Scalars['String']['input'];
@@ -835,27 +835,6 @@ export type RescheduleMatchDayMutationVariables = Exact<{
 
 export type RescheduleMatchDayMutation = Pick<Mutation, 'rescheduleMatchDay'>;
 
-export type StartSeasonMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-
-export type StartSeasonMutation = Pick<Mutation, 'startSeason'>;
-
-export type EndSeasonMutationVariables = Exact<{
-  season_id: Scalars['String']['input'];
-}>;
-
-
-export type EndSeasonMutation = Pick<Mutation, 'endSeason'>;
-
-export type DeleteSeasonMutationVariables = Exact<{
-  season_id: Scalars['String']['input'];
-}>;
-
-
-export type DeleteSeasonMutation = Pick<Mutation, 'deleteSeason'>;
-
 export type ReplaceTeamInSeasonMutationVariables = Exact<{
   season_id: Scalars['String']['input'];
   current_team_id: Scalars['String']['input'];
@@ -864,6 +843,14 @@ export type ReplaceTeamInSeasonMutationVariables = Exact<{
 
 
 export type ReplaceTeamInSeasonMutation = Pick<Mutation, 'replaceTeamInSeason'>;
+
+export type CreateTeamMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateTeamMutation = Pick<Mutation, 'createTeam'>;
 
 export type UpdateTeamContactMutationVariables = Exact<{
   team_id: Scalars['String']['input'];
@@ -929,6 +916,19 @@ export type EndTournamentMutationVariables = Exact<{
 
 
 export type EndTournamentMutation = Pick<Mutation, 'endTournament'>;
+
+export type CreateUserMutationVariables = Exact<{
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  first_name: Scalars['String']['input'];
+  last_name: Scalars['String']['input'];
+  role: Scalars['String']['input'];
+  team_ids: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateUserMutation = Pick<Mutation, 'createUser'>;
 
 export type UpdateUserMutationVariables = Exact<{
   user_id: Scalars['String']['input'];
@@ -1417,46 +1417,6 @@ export const RankingFragmentDoc = gql`
   }
 }
     `;
-export const CreateTeamDocument = gql`
-    mutation CreateTeam($id: String!, $name: String!) {
-  createTeam(id: $id, name: $name)
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateTeamGQL extends Apollo.Mutation<CreateTeamMutation, CreateTeamMutationVariables> {
-    document = CreateTeamDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateUserDocument = gql`
-    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
-  createUser(
-    id: $user_id
-    email: $email
-    password: $password
-    first_name: $first_name
-    last_name: $last_name
-    role: $role
-    team_ids: $team_ids
-  )
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
-    document = CreateUserDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const SubmitResultDocument = gql`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
   submitMatchResult(
@@ -1696,8 +1656,8 @@ export const CreatePitchDocument = gql`
     }
   }
 export const CreateSeasonDocument = gql`
-    mutation CreateSeason($id: String, $name: String!) {
-  createSeason(id: $id, name: $name)
+    mutation CreateSeason($season_id: String, $name: String!) {
+  createSeason(id: $season_id, name: $name)
 }
     `;
 
@@ -1706,6 +1666,54 @@ export const CreateSeasonDocument = gql`
   })
   export class CreateSeasonGQL extends Apollo.Mutation<CreateSeasonMutation, CreateSeasonMutationVariables> {
     document = CreateSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteSeasonDocument = gql`
+    mutation DeleteSeason($season_id: String!) {
+  deleteSeason(season_id: $season_id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSeasonGQL extends Apollo.Mutation<DeleteSeasonMutation, DeleteSeasonMutationVariables> {
+    document = DeleteSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EndSeasonDocument = gql`
+    mutation EndSeason($season_id: String!) {
+  endSeason(season_id: $season_id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EndSeasonGQL extends Apollo.Mutation<EndSeasonMutation, EndSeasonMutationVariables> {
+    document = EndSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const StartSeasonDocument = gql`
+    mutation StartSeason($season_id: String!) {
+  startSeason(season_id: $season_id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class StartSeasonGQL extends Apollo.Mutation<StartSeasonMutation, StartSeasonMutationVariables> {
+    document = StartSeasonDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1775,54 +1783,6 @@ export const RescheduleMatchDayDocument = gql`
       super(apollo);
     }
   }
-export const StartSeasonDocument = gql`
-    mutation StartSeason($id: String!) {
-  startSeason(season_id: $id)
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class StartSeasonGQL extends Apollo.Mutation<StartSeasonMutation, StartSeasonMutationVariables> {
-    document = StartSeasonDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const EndSeasonDocument = gql`
-    mutation EndSeason($season_id: String!) {
-  endSeason(season_id: $season_id)
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class EndSeasonGQL extends Apollo.Mutation<EndSeasonMutation, EndSeasonMutationVariables> {
-    document = EndSeasonDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteSeasonDocument = gql`
-    mutation DeleteSeason($season_id: String!) {
-  deleteSeason(season_id: $season_id)
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteSeasonGQL extends Apollo.Mutation<DeleteSeasonMutation, DeleteSeasonMutationVariables> {
-    document = DeleteSeasonDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const ReplaceTeamInSeasonDocument = gql`
     mutation ReplaceTeamInSeason($season_id: String!, $current_team_id: String!, $replacement_team_id: String!) {
   replaceTeamInSeason(
@@ -1838,6 +1798,22 @@ export const ReplaceTeamInSeasonDocument = gql`
   })
   export class ReplaceTeamInSeasonGQL extends Apollo.Mutation<ReplaceTeamInSeasonMutation, ReplaceTeamInSeasonMutationVariables> {
     document = ReplaceTeamInSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateTeamDocument = gql`
+    mutation CreateTeam($id: String!, $name: String!) {
+  createTeam(id: $id, name: $name)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateTeamGQL extends Apollo.Mutation<CreateTeamMutation, CreateTeamMutationVariables> {
+    document = CreateTeamDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1977,6 +1953,30 @@ export const EndTournamentDocument = gql`
   })
   export class EndTournamentGQL extends Apollo.Mutation<EndTournamentMutation, EndTournamentMutationVariables> {
     document = EndTournamentDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateUserDocument = gql`
+    mutation CreateUser($user_id: String, $email: String!, $password: String!, $first_name: String!, $last_name: String!, $role: String!, $team_ids: [String]!) {
+  createUser(
+    id: $user_id
+    email: $email
+    password: $password
+    first_name: $first_name
+    last_name: $last_name
+    role: $role
+    team_ids: $team_ids
+  )
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
+    document = CreateUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
