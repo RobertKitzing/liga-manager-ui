@@ -21,7 +21,7 @@ export class TournamentService {
 
     private store = inject(Store);
 
-    constructor() {
+    init() {
         this.tournamentListGQL.watch().valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(

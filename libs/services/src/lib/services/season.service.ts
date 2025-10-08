@@ -36,7 +36,7 @@ export class SeasonService {
 
     private destroyRef = inject(DestroyRef);
 
-    constructor() {
+    init() {
         this.seasonListGQL.watch().valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(

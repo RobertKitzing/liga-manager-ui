@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { iif, tap } from 'rxjs';
-import { TeamService } from '@liga-manager-ui/services';
 import { AsyncPipe } from '@angular/common';
 import {
     RouterOutlet,
@@ -32,8 +31,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     ],
 })
 export class TeamsManagementComponent {
-
-    private teamService = inject(TeamService);
 
     private router = inject(Router);
 

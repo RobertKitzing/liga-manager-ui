@@ -29,7 +29,7 @@ export class TeamService {
 
     private destroyRef = inject(DestroyRef);
 
-    constructor() {
+    init() {
         this.teamListGQL.watch().valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(

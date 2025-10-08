@@ -14,6 +14,9 @@ import {
 import {
     I18nService,
     NotificationService,
+    SeasonService,
+    TeamService,
+    TournamentService,
     httpLoaderFactory,
     provideStorage,
 } from '@liga-manager-ui/services';
@@ -44,6 +47,9 @@ import { ConfirmComponent } from '@liga-manager-ui/components';
 
 function appInitFactory(
     store: Store,
+    teamService: TeamService,
+    tournamentService: TournamentService,
+    seasonService: SeasonService,
 ) {
     return () => {
         return Promise.all([
@@ -55,6 +61,9 @@ function appInitFactory(
                 },
             }),
             firstValueFrom(store.dispatch(GetAuthenticatedUser)),
+            teamService.init(),
+            tournamentService.init(),
+            seasonService.init(),
         ]);
     };
 }
@@ -117,6 +126,9 @@ export const appConfig: ApplicationConfig = {
         provideAppInitializer(() => {
             const initializerFn = appInitFactory(
                 inject(Store),
+                inject(TeamService),
+                inject(TournamentService),
+                inject(SeasonService),
             );
             return initializerFn();
         }),
