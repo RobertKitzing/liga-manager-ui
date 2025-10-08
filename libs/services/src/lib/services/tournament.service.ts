@@ -1,11 +1,7 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { inject, Injectable } from '@angular/core';
 import {
     TournamentByIdGQL,
-    TournamentListGQL,
 } from '@liga-manager-api/graphql';
-import { SetTournaments } from '@liga-manager-ui/states';
-import { Store } from '@ngxs/store';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -13,23 +9,7 @@ import { map } from 'rxjs';
 })
 export class TournamentService {
 
-    private tournamentListGQL = inject(TournamentListGQL);
-
     private tournamentByIdGQL = inject(TournamentByIdGQL);
-
-    private destroyRef = inject(DestroyRef);
-
-    private store = inject(Store);
-
-    init() {
-        this.tournamentListGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                this.store.dispatch(new SetTournaments(result.data.allTournaments));
-            },
-        );
-    }
 
     getTournamentById$(id: string) {
         return this.tournamentByIdGQL

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideStore, Store } from '@ngxs/store';
 import { PitchState } from './pitch.state';
 import { PitchSelectors } from './pitch.selector';
-import { aPitch, CreatePitchDocument, DeletePitchDocument, PitchesDocument } from '@liga-manager-api/graphql';
+import { aPitch, CreatePitchDocument, DeletePitchDocument } from '@liga-manager-api/graphql';
 import { CreatePitch, DeletePitch } from './actions';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
@@ -33,7 +33,6 @@ describe('PitchState', () => {
     });
 
     it('should have no pitches', () => {
-        controller.expectOne(PitchesDocument);
         const pitches = store.selectSnapshot(PitchSelectors.pitches);
         expect(pitches).toStrictEqual([]);
     });
@@ -43,8 +42,6 @@ describe('PitchState', () => {
         const pitch = aPitch({ label: 'new', contact: undefined });
 
         store.dispatch(new CreatePitch(pitch));
-
-        controller.expectOne(PitchesDocument);
         const op = controller.expectOne(CreatePitchDocument);
         expect(op.operation.variables).toStrictEqual(pitch);
 
@@ -57,8 +54,6 @@ describe('PitchState', () => {
         const payload = { pitch_id: pitch.id };
 
         store.dispatch(new DeletePitch(payload, pitch.label));
-
-        controller.expectOne(PitchesDocument);
         const op = controller.expectOne(DeletePitchDocument);
         expect(op.operation.variables).toStrictEqual(payload);
     });

@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map, of, take } from 'rxjs';
 import {
     RankingByIdGQL,
@@ -11,9 +11,6 @@ import {
     SeasonPenaltiesGQL,
     SeasonPenaltiesQueryVariables,
 } from '@liga-manager-api/graphql';
-import { Store } from '@ngxs/store';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SetSeasons } from '@liga-manager-ui/states';
 
 @Injectable({
     providedIn: 'root',
@@ -31,20 +28,6 @@ export class SeasonService {
     private scheduleAllMatchesForMatchDayGQL = inject(ScheduleAllMatchesForMatchDayGQL);
 
     private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
-
-    private store = inject(Store);
-
-    private destroyRef = inject(DestroyRef);
-
-    init() {
-        this.seasonListGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                this.store.dispatch(new SetSeasons(result.data.allSeasons));
-            },
-        );
-    }
 
     reloadSeasons() {
         return this.seasonListGQL.fetch(undefined, { fetchPolicy: 'network-only' }).pipe(take(1));

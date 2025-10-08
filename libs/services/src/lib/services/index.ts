@@ -12,3 +12,4 @@ export * from './calendar.service';
 export * from './storage.service';
 export * from './gesture.service';
 export * from './share.service';
+export * from './watch.service';

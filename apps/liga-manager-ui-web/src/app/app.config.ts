@@ -14,9 +14,7 @@ import {
 import {
     I18nService,
     NotificationService,
-    SeasonService,
-    TeamService,
-    TournamentService,
+    WatchService,
     httpLoaderFactory,
     provideStorage,
 } from '@liga-manager-ui/services';
@@ -35,26 +33,21 @@ import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { provideApi } from '@liga-manager-api/openapi';
 import { Base64 } from 'js-base64';
-import { NgxsNextPluginFn, provideStore, Store, withNgxsPlugin } from '@ngxs/store';
+import { Actions, NgxsNextPluginFn, ofActionSuccessful, provideStore, Store, withNgxsPlugin } from '@ngxs/store';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { environment } from '../env/env';
-import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, PitchState, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TeamState, TournamentState } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, LoadAppSettings, PitchState, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TeamState, TournamentState } from '@liga-manager-ui/states';
 import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
-import { withNgxsFormPlugin } from '@ngxs/form-plugin';
 import { firstValueFrom, of, switchMap, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '@liga-manager-ui/components';
 
 function appInitFactory(
     store: Store,
-    teamService: TeamService,
-    tournamentService: TournamentService,
-    seasonService: SeasonService,
+    actions: Actions,
+    watchService: WatchService,
 ) {
     return () => {
-        teamService.init();
-        tournamentService.init();
-        seasonService.init();
         return Promise.all([
             DarkMode.init({
                 cssClass: 'dark',
@@ -63,7 +56,18 @@ function appInitFactory(
                     store.dispatch(new SetSelectedDarkMode(appearance));
                 },
             }),
-            firstValueFrom(store.dispatch(GetAuthenticatedUser)),
+            firstValueFrom(store.dispatch(LoadAppSettings)),
+            firstValueFrom(
+                actions.pipe(
+                    ofActionSuccessful(LoadAppSettings),
+                    tap(
+                        () => {
+                            store.dispatch(GetAuthenticatedUser);
+                            watchService.init();
+                        },
+                    ),
+                ),
+            ),
         ]);
     };
 }
@@ -126,9 +130,8 @@ export const appConfig: ApplicationConfig = {
         provideAppInitializer(() => {
             const initializerFn = appInitFactory(
                 inject(Store),
-                inject(TeamService),
-                inject(TournamentService),
-                inject(SeasonService),
+                inject(Actions),
+                inject(WatchService),
             );
             return initializerFn();
         }),
@@ -167,7 +170,6 @@ export const appConfig: ApplicationConfig = {
                     'auth.token',
                 ],
             }),
-            withNgxsFormPlugin(),
             withNgxsPlugin(confirmPlugin),
             withNgxsPlugin(notificationPlugin),
         ),

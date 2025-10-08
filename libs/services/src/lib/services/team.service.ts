@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import {
     Team,
@@ -9,8 +9,7 @@ import {
 } from '@liga-manager-api/graphql';
 import { Store } from '@ngxs/store';
 import { LogosService } from '@liga-manager-api/openapi';
-import { AppSettingsSelectors, AuthStateSelectors, SetTeams } from '@liga-manager-ui/states';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AppSettingsSelectors, AuthStateSelectors } from '@liga-manager-ui/states';
 
 @Injectable({
     providedIn: 'root',
@@ -26,18 +25,6 @@ export class TeamService {
     private updateTeamContactGQL = inject(UpdateTeamContactGQL);
 
     private store = inject(Store);
-
-    private destroyRef = inject(DestroyRef);
-
-    init() {
-        this.teamListGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                this.store.dispatch(new SetTeams(result.data.allTeams));
-            },
-        );
-    }
 
     refetchAllTeams() {
         this.teamListGQL.watch().refetch();

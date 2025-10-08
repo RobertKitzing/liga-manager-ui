@@ -1,9 +1,8 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { inject, Injectable } from '@angular/core';
 import { CreatePitchGQL, DeletePitchGQL, PitchesGQL, PitchesQuery } from '@liga-manager-api/graphql';
-import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 import { v4 as uuidv4 } from 'uuid';
-import { CreatePitch, DeletePitch } from './actions';
+import { CreatePitch, DeletePitch, SetPitches } from './actions';
 
 export interface PitchStateModel {
     pitches: PitchesQuery['allPitches'];
@@ -16,7 +15,7 @@ export interface PitchStateModel {
     },
 })
 @Injectable()
-export class PitchState implements NgxsOnInit {
+export class PitchState {
 
     private pitchesGQL = inject(PitchesGQL);
 
@@ -24,16 +23,9 @@ export class PitchState implements NgxsOnInit {
 
     private deletePitchGQL = inject(DeletePitchGQL);
 
-    private destroyRef = inject(DestroyRef);
-
-    ngxsOnInit(ctx: StateContext<PitchStateModel>): void {
-        this.pitchesGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                ctx.patchState({ pitches: result.data.allPitches });
-            },
-        );
+    @Action(SetPitches)
+    setPitches({ patchState }: StateContext<PitchStateModel>, action: SetPitches) {
+        patchState({ pitches: action.pitches });
     }
 
     @Action(CreatePitch)
