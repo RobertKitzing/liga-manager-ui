@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { provideStore, Store } from '@ngxs/store';
+import { Actions, ofActionSuccessful, provideStore, Store } from '@ngxs/store';
 import { AuthState } from './auth.state';
 import { AuthStateSelectors } from './auth.selectors';
 import { GetAuthenticatedUser, Login, Logout, SetToken } from './actions';
 import { aMatch, aTeam, aUser, AuthenticatedUserGQL, UserRole } from '@liga-manager-api/graphql';
-import { of } from 'rxjs';
+import { firstValueFrom, of, tap } from 'rxjs';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('AuthState', () => {
@@ -12,6 +12,7 @@ describe('AuthState', () => {
     let controller: ApolloTestingController;
     let store: Store;
     let authenticatedUserGQL: AuthenticatedUserGQL;
+    let actions: Actions;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -25,7 +26,7 @@ describe('AuthState', () => {
         controller = TestBed.inject(ApolloTestingController);
         store = TestBed.inject(Store);
         authenticatedUserGQL = TestBed.inject(AuthenticatedUserGQL);
-
+        actions = TestBed.inject(Actions);
     });
 
     afterEach(() => {
@@ -57,15 +58,20 @@ describe('AuthState', () => {
     it('it should get the authenticated user', () => {
         store.dispatch(new SetToken('test'));
         const authenticatedUser = aUser();
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser },
-        }));
-        controller.expectOne(authenticatedUserGQL.document);
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        const user = store.selectSnapshot(AuthStateSelectors.properties.user);
-        expect(user).toBe(authenticatedUser);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const user = store.selectSnapshot(AuthStateSelectors.properties.user);
+                        expect(user?.email).toBe(authenticatedUser.email);
+                        expect(user?.id).toBe(authenticatedUser.id);
+                    },
+                ),
+            ),
+        );
     });
 
     it('it should login', () => {
@@ -94,96 +100,120 @@ describe('AuthState', () => {
 
     it('it check if the user is a admin', () => {
         store.dispatch(new SetToken('test'));
-        const expectedUser = aUser({ role: UserRole.Admin });
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
-        }));
+        const authenticatedUser = aUser({ role: UserRole.Admin });
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        controller.expectOne(authenticatedUserGQL.document);
-        const result = store.selectSnapshot(AuthStateSelectors.isAdmin);
-        expect(result).toBe(true);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const result = store.selectSnapshot(AuthStateSelectors.isAdmin);
+                        expect(result).toBe(true);
+                    },
+                ),
+            ),
+        );
     });
 
     it('it check if the user is a team admin', () => {
         store.dispatch(new SetToken('test'));
-        const expectedUser = aUser({ role: UserRole.TeamManager });
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
-        }));
+        const authenticatedUser = aUser({ role: UserRole.TeamManager });
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        controller.expectOne(authenticatedUserGQL.document);
-        const result = store.selectSnapshot(AuthStateSelectors.isTeamAdmin);
-        expect(result).toBe(true);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const result = store.selectSnapshot(AuthStateSelectors.isTeamAdmin);
+                        expect(result).toBe(true);
+                    },
+                ),
+            ),
+        );
     });
 
     it('it check if the user is a team admin for a team', () => {
         store.dispatch(new SetToken('test'));
         const team = aTeam();
-        const expectedUser = aUser({ role: UserRole.TeamManager, teams: [ team ] });
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
-        }));
+        const authenticatedUser = aUser({ role: UserRole.TeamManager, teams: [ team ] });
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        controller.expectOne(authenticatedUserGQL.document);
-        const result = store.selectSnapshot(AuthStateSelectors.isTeamAdminForTeam(team.id));
-        expect(result).toBe(true);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const result = store.selectSnapshot(AuthStateSelectors.isTeamAdminForTeam(team.id));
+                        expect(result).toBe(true);
+                    },
+                ),
+            ),
+        );
     });
 
     it('it check if the user can edit a match as admin', () => {
         store.dispatch(new SetToken('test'));
         const home_team = aTeam({ id: 'home' });
         const guest_team = aTeam({ id: 'guest' });
-        const expectedUser = aUser({ role: UserRole.Admin });
         const match = aMatch({ home_team, guest_team });
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
-        }));
+        const authenticatedUser = aUser({ role: UserRole.Admin });
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        controller.expectOne(authenticatedUserGQL.document);
-        const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
-        expect(result).toBe(true);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
+                        expect(result).toBe(true);
+                    },
+                ),
+            ),
+        );
     });
 
     it('it check if the user can edit a match for home_team', () => {
         store.dispatch(new SetToken('test'));
         const home_team = aTeam({ id: 'home' });
         const guest_team = aTeam({ id: 'guest' });
-        const expectedUser = aUser({ role: UserRole.TeamManager, teams: [ home_team ] });
         const match = aMatch({ home_team, guest_team });
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
-        }));
+        const authenticatedUser = aUser({ role: UserRole.TeamManager, teams: [ home_team ] });
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        controller.expectOne(authenticatedUserGQL.document);
-        const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
-        expect(result).toBe(true);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
+                        expect(result).toBe(true);
+                    },
+                ),
+            ),
+        );
     });
 
     it('it check if the user can edit a match for guest_team', () => {
         store.dispatch(new SetToken('test'));
         const home_team = aTeam({ id: 'home' });
         const guest_team = aTeam({ id: 'guest' });
-        const expectedUser = aUser({ role: UserRole.TeamManager, teams: [ guest_team ] });
         const match = aMatch({ home_team, guest_team });
-        jest.spyOn(authenticatedUserGQL, 'fetch').mockReturnValue(of({
-            loading: false,
-            networkStatus: 1,
-            data: { authenticatedUser: expectedUser },
-        }));
+        const authenticatedUser = aUser({ role: UserRole.TeamManager, teams: [ guest_team ] });
+        controller.expectOne(authenticatedUserGQL.document).flushData({ authenticatedUser });
         store.dispatch(new GetAuthenticatedUser());
-        controller.expectOne(authenticatedUserGQL.document);
-        const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
-        expect(result).toBe(true);
+        return firstValueFrom(
+            actions.pipe(
+                ofActionSuccessful(GetAuthenticatedUser),
+                tap(
+                    () => {
+                        const result = store.selectSnapshot(AuthStateSelectors.canEditMatch(match));
+                        expect(result).toBe(true);
+                    },
+                ),
+            ),
+        );
     });
 
 });
