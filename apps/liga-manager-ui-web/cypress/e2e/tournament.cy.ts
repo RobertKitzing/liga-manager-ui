@@ -108,8 +108,10 @@ describe('Tournament', () => {
         cy.get('mat-option').contains(names[0]).click();
 
         cy.getBySel('button-edit-match-result').first().click();
+        cy.getBySel('input-home-score').click();
         cy.getBySel('input-home-score').clear();
         cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        cy.getBySel('input-guest-score').click();
         cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();
@@ -141,10 +143,11 @@ describe('Tournament', () => {
         cy.get('mat-option').contains(names[0]).click();
 
         cy.getBySel('button-next-matchday').click();
-
         cy.getBySel('button-edit-match-result').first().click();
+        cy.getBySel('input-home-score').click();
         cy.getBySel('input-home-score').clear();
         cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        cy.getBySel('input-guest-score').click();
         cy.getBySel('input-guest-score').clear();
         cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
         cy.getBySel('button-edit-match-result-submit').click();

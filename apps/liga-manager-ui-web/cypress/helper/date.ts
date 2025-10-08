@@ -17,7 +17,7 @@ export function futureDate() {
 export function futureDateSpan() {
 
     const start = faker.date.soon();
-    const end = faker.date.soon({ refDate: start });
+    const end = faker.date.soon({ refDate: start, days: 2 });
     return {
         from: formatDate(start),
         to: formatDate(end),
