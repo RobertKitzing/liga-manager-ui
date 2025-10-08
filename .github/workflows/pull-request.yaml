@@ -171,10 +171,11 @@ jobs:
         with:
           command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --args="--parallel" --group chrome
       - name: Upload artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: e2e-videos
-          path: dist/cypress/apps/liga-manager-ui-web/videos
+          path: dist/cypress/apps/liga-manager-ui-web
 
   build-app-staging:
     runs-on: ubuntu-latest
