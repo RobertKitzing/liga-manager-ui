@@ -1,5 +1,6 @@
 import { Users } from '@cypress/fixtures';
 import { futureDate, time } from '@cypress/helper';
+import { editMatchResult } from '@cypress/helper/edit-match-result';
 import { faker } from '@faker-js/faker';
 
 describe('Season', () => {
@@ -177,11 +178,7 @@ describe('Season', () => {
         cy.getBySel('select-season').click();
         cy.get('mat-option').contains(names[0]).click();
 
-        cy.getBySel('button-edit-match-result').first().click();
-        cy.getBySel('input-home-score').clear({ force: true });
-        cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
-        cy.getBySel('input-guest-score').clear({ force: true });
-        cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        editMatchResult();
         cy.getBySel('button-edit-match-result-submit').click();
         cy.successSnackbar();
 
@@ -209,11 +206,7 @@ describe('Season', () => {
         cy.getBySel('select-season').click();
         cy.get('mat-option').contains(names[0]).click();
 
-        cy.getBySel('button-edit-match-result').first().click();
-        cy.getBySel('input-home-score').clear({ force: true });
-        cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
-        cy.getBySel('input-guest-score').clear({ force: true });
-        cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        editMatchResult();
         cy.getBySel('button-edit-match-result-submit').click();
         cy.successSnackbar();
 

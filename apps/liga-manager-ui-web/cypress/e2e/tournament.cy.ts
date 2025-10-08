@@ -1,5 +1,6 @@
 import { Users } from '@cypress/fixtures';
 import { futureDate, futureDateSpan, time } from '@cypress/helper';
+import { editMatchResult } from '@cypress/helper/edit-match-result';
 import { faker } from '@faker-js/faker';
 
 describe('Tournament', () => {
@@ -107,13 +108,7 @@ describe('Tournament', () => {
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').contains(names[0]).click();
 
-        cy.getBySel('button-edit-match-result').first().click();
-        cy.getBySel('input-home-score').click();
-        cy.getBySel('input-home-score').clear();
-        cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
-        cy.getBySel('input-guest-score').click();
-        cy.getBySel('input-guest-score').clear();
-        cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+        editMatchResult();
         cy.getBySel('button-edit-match-result-submit').click();
         cy.successSnackbar();
 
@@ -143,13 +138,8 @@ describe('Tournament', () => {
         cy.get('mat-option').contains(names[0]).click();
 
         cy.getBySel('button-next-matchday').click();
-        cy.getBySel('button-edit-match-result').first().click();
-        cy.getBySel('input-home-score').click();
-        cy.getBySel('input-home-score').clear();
-        cy.getBySel('input-home-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
-        cy.getBySel('input-guest-score').click();
-        cy.getBySel('input-guest-score').clear();
-        cy.getBySel('input-guest-score').type(faker.number.int({ min: 0, max: 99}).toString(), { force: true });
+
+        editMatchResult();
         cy.getBySel('button-edit-match-result-submit').click();
         cy.successSnackbar();
 
