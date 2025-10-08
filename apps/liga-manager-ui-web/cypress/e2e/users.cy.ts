@@ -1,6 +1,5 @@
 import { Users } from '@cypress/fixtures';
 import { faker } from '@faker-js/faker';
-import { JSDOM } from 'jsdom';
 
 describe('Admin - Create User', () => {
 
@@ -34,19 +33,17 @@ describe('Admin - Create User', () => {
         cy.maildevGetLastMessage().then(
             (message) => {
                 expect(message.to[0].address).to.equal(email);
-                const jsDom = new JSDOM(message.html);
-                const href = jsDom.window.document.getElementsByTagName('a')[0].getAttribute('href');
-                cy.visit(href!).then(
-                    () => {
-                        cy.getBySel('input-first-name').clear();
-                        cy.getBySel('input-first-name').type(faker.person.firstName());
-                        cy.getBySel('input-last-name').clear();
-                        cy.getBySel('input-last-name').type(faker.person.lastName());
-                        cy.getBySel('input-password').type(password);
-                        cy.getBySel('button-save-user').click();
-                        cy.successSnackbar();
-                    },
+                cy.document().then(
+                    (document) => { document.documentElement.innerHTML = message.html; },
                 );
+                cy.get('a').click();
+                cy.getBySel('input-first-name').clear();
+                cy.getBySel('input-first-name').type(faker.person.firstName());
+                cy.getBySel('input-last-name').clear();
+                cy.getBySel('input-last-name').type(faker.person.lastName());
+                cy.getBySel('input-password').type(password);
+                cy.getBySel('button-save-user').click();
+                cy.successSnackbar();
             },
         );
     });
@@ -69,16 +66,14 @@ describe('Admin - Create User', () => {
         cy.maildevGetLastMessage().then(
             (message) => {
                 expect(message.to[0].address).to.equal(email);
-                const jsDom = new JSDOM(message.html);
-                const href = jsDom.window.document.getElementsByTagName('a')[0].getAttribute('href');
-                cy.visit(href!).then(
-                    () => {
-                        password = faker.internet.password({ length: 6});
-                        cy.getBySel('input-password').clear({ force: true });
-                        cy.getBySel('input-password').type(password);
-                        cy.getBySel('button-change-password-submit').click();
-                    },
+                cy.document().then(
+                    (document) => { document.documentElement.innerHTML = message.html; },
                 );
+                cy.get('a').click();
+                password = faker.internet.password({ length: 6});
+                cy.getBySel('input-password').clear({ force: true });
+                cy.getBySel('input-password').type(password);
+                cy.getBySel('button-change-password-submit').click();
             },
         );
     });

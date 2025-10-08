@@ -81,7 +81,6 @@
         "graphql": "^16.11.0",
         "hammerjs": "^2.0.8",
         "js-base64": "^3.7.3",
-        "jsdom": "^27.0.0",
         "languages": "^0.1.3",
         "ngx-pull-to-refresh": "^20.0.0",
         "postcss": "^8.5.6",
