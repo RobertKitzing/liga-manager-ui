@@ -52,6 +52,9 @@ function appInitFactory(
     seasonService: SeasonService,
 ) {
     return () => {
+        teamService.init();
+        tournamentService.init();
+        seasonService.init();
         return Promise.all([
             DarkMode.init({
                 cssClass: 'dark',
@@ -61,9 +64,6 @@ function appInitFactory(
                 },
             }),
             firstValueFrom(store.dispatch(GetAuthenticatedUser)),
-            teamService.init(),
-            tournamentService.init(),
-            seasonService.init(),
         ]);
     };
 }
