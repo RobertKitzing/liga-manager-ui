@@ -1,8 +1,7 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CreateTournamentGQL, CreateTournamentRoundGQL, DeleteTournamentGQL, EndTournamentGQL, StartTournamentGQL, TournamentByIdGQL, TournamentListGQL, TournamentListQuery } from '@liga-manager-api/graphql';
-import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CreateTournament, CreateTournamentRound, DeleteTournament, EndTournament, StartTournament } from './actions';
+import { Action, State, StateContext } from '@ngxs/store';
+import { CreateTournament, CreateTournamentRound, DeleteTournament, EndTournament, SetTournaments, StartTournament } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedTournament } from '../selected-items';
 
@@ -17,9 +16,7 @@ export interface TournamentStateModel {
     },
 })
 @Injectable()
-export class TournamentState implements NgxsOnInit {
-
-    private destroyRef = inject(DestroyRef);
+export class TournamentState {
 
     private tournamentListGQL = inject(TournamentListGQL);
 
@@ -35,14 +32,9 @@ export class TournamentState implements NgxsOnInit {
 
     private createTournamentRoundGQL = inject(CreateTournamentRoundGQL);
 
-    ngxsOnInit(ctx: StateContext<TournamentStateModel>): void {
-        this.tournamentListGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                ctx.patchState({ tournaments: result.data.allTournaments });
-            },
-        );
+    @Action(SetTournaments)
+    setSeason({ patchState }: StateContext<TournamentStateModel>, action: SetTournaments) {
+        patchState({ tournaments: action.tournaments });
     }
 
     @Action(CreateTournament)

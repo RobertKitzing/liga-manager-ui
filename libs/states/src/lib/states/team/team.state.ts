@@ -1,8 +1,7 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
+import { inject, Injectable } from '@angular/core';
+import { Action, State, StateContext } from '@ngxs/store';
 import { CreateTeamGQL, DeleteTeamGQL, RenameTeamGQL, TeamListGQL, TeamListQuery } from '@liga-manager-api/graphql';
-import { CreateTeam, DeleteTeam, RenameTeam } from './actions';
+import { CreateTeam, DeleteTeam, RenameTeam, SetTeams } from './actions';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface TeamStateModel {
@@ -16,7 +15,7 @@ export interface TeamStateModel {
     },
 })
 @Injectable()
-export class TeamState implements NgxsOnInit {
+export class TeamState {
 
     private teamListGQL = inject(TeamListGQL);
 
@@ -26,16 +25,9 @@ export class TeamState implements NgxsOnInit {
 
     private renameTeamGQL = inject(RenameTeamGQL);
 
-    private destroyRef = inject(DestroyRef);
-
-    ngxsOnInit(ctx: StateContext<TeamStateModel>): void {
-        this.teamListGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                ctx.patchState({ teams: result.data.allTeams });
-            },
-        );
+    @Action(SetTeams)
+    setSeason({ patchState }: StateContext<TeamStateModel>, action: SetTeams) {
+        patchState({ teams: action.teams });
     }
 
     @Action(CreateTeam)

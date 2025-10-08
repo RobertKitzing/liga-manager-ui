@@ -3,8 +3,8 @@ import { Actions, ofActionDispatched, provideStore, Store } from '@ngxs/store';
 import { SeasonState } from './season.state';
 import { SeasonSelectors } from './season.selectors';
 import { aDatePeriod, AddPenaltyDocument, AddTeamToSeasonDocument, aRankingPenalty, aSeason, CreateMatchesForSeasonDocument, CreateSeasonDocument, DeleteSeasonDocument, EndSeasonDocument, RemovePenaltyDocument, RemoveTeamFromSeasonDocument, ReplaceTeamInSeasonDocument, SeasonListDocument, SeasonState as SeasonStateEnum, StartSeasonDocument } from '@liga-manager-api/graphql';
-import { ApolloTestingController, ApolloTestingModule, TestOperation } from 'apollo-angular/testing';
-import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, StartSeason } from './actions';
+import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
+import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, SetSeasons, StartSeason } from './actions';
 import { SetSelectedSeason } from '../selected-items';
 import { firstValueFrom, tap } from 'rxjs';
 
@@ -13,7 +13,6 @@ describe('SeasonState', () => {
     let controller: ApolloTestingController;
     let actions: Actions;
     let store: Store;
-    let op: TestOperation<unknown>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -27,7 +26,6 @@ describe('SeasonState', () => {
 
         store = TestBed.inject(Store);
         controller = TestBed.inject(ApolloTestingController);
-        op = controller.expectOne(SeasonListDocument);
         actions = TestBed.inject(Actions);
     });
 
@@ -36,8 +34,14 @@ describe('SeasonState', () => {
     });
 
     it('should have seasons', () => {
-        op.flushData({ allSeasons: [] });
         expect(store.selectSnapshot(SeasonSelectors.seasons())).toStrictEqual([]);
+    });
+
+    it('should set seasons', () => {
+        const seasons = [ aSeason() ];
+        store.dispatch(new SetSeasons(seasons));
+
+        expect(store.selectSnapshot(SeasonSelectors.seasons())).toStrictEqual(seasons);
     });
 
     it('should have a seasons', () => {
@@ -102,6 +106,7 @@ describe('SeasonState', () => {
                 ofActionDispatched(SetSelectedSeason),
                 tap(
                     (action) => {
+                        controller.expectOne(SeasonListDocument);
                         expect(action.context).toBe('administration');
                         expect(action.id).toBeUndefined();
                     },
@@ -126,6 +131,7 @@ describe('SeasonState', () => {
                 ofActionDispatched(SetSelectedSeason),
                 tap(
                     (action) => {
+                        controller.expectOne(SeasonListDocument);
                         expect(action.context).toBe('administration');
                         expect(action.id).toBeUndefined();
                     },

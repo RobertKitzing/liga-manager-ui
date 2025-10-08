@@ -1,8 +1,7 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { inject, Injectable } from '@angular/core';
 import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, RemoveTeamFromSeasonGQL, ReplaceTeamInSeasonGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
-import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
-import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, StartSeason } from './actions';
+import { Action, State, StateContext } from '@ngxs/store';
+import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, SetSeasons, StartSeason } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedSeason } from '../selected-items';
 import { Apollo, gql } from 'apollo-angular';
@@ -18,7 +17,7 @@ export interface SeasonStateModel {
     },
 })
 @Injectable()
-export class SeasonState implements NgxsOnInit {
+export class SeasonState {
 
     private seasonByIdGQL = inject(SeasonByIdGQL);
 
@@ -50,16 +49,9 @@ export class SeasonState implements NgxsOnInit {
 
     private apollo = inject(Apollo);
 
-    private destroyRef = inject(DestroyRef);
-
-    ngxsOnInit(ctx: StateContext<SeasonStateModel>): void {
-        this.seasonListGQL.watch().valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (result) => {
-                ctx.patchState({ seasons: result.data.allSeasons });
-            },
-        );
+    @Action(SetSeasons)
+    setSeason({ patchState }: StateContext<SeasonStateModel>, action: SetSeasons) {
+        patchState({ seasons: action.seasons });
     }
 
     @Action(CreateSeason)

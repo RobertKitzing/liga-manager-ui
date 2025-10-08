@@ -9,3 +9,4 @@ export * from './create-matches-for-season';
 export * from './remove-team-from-season';
 export * from './replace-team-in-season';
 export * from './reschedule-match-days';
+export * from './set-seasons';

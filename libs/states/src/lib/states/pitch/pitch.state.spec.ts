@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideStore, Store } from '@ngxs/store';
 import { PitchState } from './pitch.state';
 import { PitchSelectors } from './pitch.selector';
-import { aPitch, CreatePitchGQL, DeletePitchGQL, PitchesGQL } from '@liga-manager-api/graphql';
+import { aPitch, CreatePitchDocument, DeletePitchDocument, PitchesDocument } from '@liga-manager-api/graphql';
 import { CreatePitch, DeletePitch } from './actions';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
@@ -12,12 +12,6 @@ describe('PitchState', () => {
 
     let store: Store;
 
-    let pitchesGQL: PitchesGQL;
-
-    let createPitchGQL: CreatePitchGQL;
-
-    let deletePitchGQL: DeletePitchGQL;
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ ApolloTestingModule ],
@@ -25,9 +19,6 @@ describe('PitchState', () => {
                 provideStore(
                     [PitchState],
                 ),
-                PitchesGQL,
-                CreatePitchGQL,
-                DeletePitchGQL,
             ],
         });
 
@@ -35,13 +26,6 @@ describe('PitchState', () => {
 
         store = TestBed.inject(Store);
 
-        pitchesGQL = TestBed.inject(PitchesGQL);
-
-        createPitchGQL = TestBed.inject(CreatePitchGQL);
-
-        deletePitchGQL = TestBed.inject(DeletePitchGQL);
-
-        controller.expectOne(pitchesGQL.document);
     });
 
     afterEach(() => {
@@ -49,6 +33,7 @@ describe('PitchState', () => {
     });
 
     it('should have no pitches', () => {
+        controller.expectOne(PitchesDocument);
         const pitches = store.selectSnapshot(PitchSelectors.pitches);
         expect(pitches).toStrictEqual([]);
     });
@@ -58,9 +43,11 @@ describe('PitchState', () => {
         const pitch = aPitch({ label: 'new', contact: undefined });
 
         store.dispatch(new CreatePitch(pitch));
-        const op = controller.expectOne(createPitchGQL.document);
 
+        controller.expectOne(PitchesDocument);
+        const op = controller.expectOne(CreatePitchDocument);
         expect(op.operation.variables).toStrictEqual(pitch);
+
     });
 
     it('should delete a pitch', () => {
@@ -71,8 +58,8 @@ describe('PitchState', () => {
 
         store.dispatch(new DeletePitch(payload, pitch.label));
 
-        const op = controller.expectOne(deletePitchGQL.document);
-
+        controller.expectOne(PitchesDocument);
+        const op = controller.expectOne(DeletePitchDocument);
         expect(op.operation.variables).toStrictEqual(payload);
     });
 
