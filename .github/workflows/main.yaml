@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - 'main'
+      - main
 
 env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
