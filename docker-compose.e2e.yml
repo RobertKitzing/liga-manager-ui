@@ -8,7 +8,7 @@ services:
     image: ${UI_IMAGE}:${UI_TAG}
     environment:
       GOOGLE_MAPS_API_KEY: ""
-      USE_IMGPROXY: false
+      USE_IMGPROXY: true
     ports:
       - "80:80"
     volumes:
@@ -19,7 +19,14 @@ services:
       - api
       - mariadb
       - redis
-
+  imgproxy:
+    image: ${IMGPROXY_IMAGE}:${UI_TAG}
+    depends_on:
+      - api
+      - liga-manager-ui
+    volumes:
+      - team-logos:/lima/logos:ro
+      - assets:/lima/assets:ro
   api:
     container_name: lima-api
     image: mklocke/liga-manager-api:${API_TAG}

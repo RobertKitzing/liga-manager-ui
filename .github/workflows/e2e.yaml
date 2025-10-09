@@ -3,11 +3,15 @@ on:
   workflow_dispatch:
     inputs:
       ui-image:
-        description: 'UI Image'
+        description: 'ui Image'
+        required: true
+        default: robertkitzing/liga-manager-ui
+      imgproxy-image:
+        description: 'imgproxy Image'
         required: true
         default: robertkitzing/liga-manager-ui
       ui-image-tag:
-        description: 'Tag for the UI Image'
+        description: 'Tag for the ui Image'
         required: true
         default: 'latest'
       api-image-tag:
@@ -27,6 +31,7 @@ jobs:
         uses: hoverkraft-tech/compose-action@v2.2.0
         env:
           UI_IMAGE: ${{ github.event.inputs.ui-image }}
+          IMGPROXY_IMAGE: ${{ github.event.inputs.imgproxy-image }}
           UI_TAG: ${{ github.event.inputs.ui-image-tag }}
           API_TAG: ${{ github.event.inputs.api-image-tag }}
         with:
