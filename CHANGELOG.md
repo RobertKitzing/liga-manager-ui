@@ -1,3 +1,13 @@
+## 5.8.0 (2025-10-09)
+
+### 🚀 Features
+
+- Change Password added ([794e6ff3](https://github.com/RobertKitzing/liga-manager-ui/commit/794e6ff3))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.7.6 (2025-09-29)
 
 This was a version bump only, there were no code changes.
