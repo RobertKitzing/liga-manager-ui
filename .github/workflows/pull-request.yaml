@@ -77,7 +77,7 @@ jobs:
       - run: npx nx-cloud record -- nx affected -t test
 
       - name: Download Artifact (base code coverage results)
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         id: restoreCodeCoverage
         with:
           workflow: main.yaml
