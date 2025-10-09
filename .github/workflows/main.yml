@@ -10,6 +10,12 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
+  npm-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm audit --audit-level "high"
   npm-install:
     runs-on: ubuntu-latest
     steps:
@@ -115,7 +121,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [0, 1, 2, 3, 4 ,5]
+        container: [0, 1, 2, 3, 4 ,5]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -148,7 +154,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-videos
+          name: e2e-videos-${{ matrix.container }}
           path: dist/cypress/apps/liga-manager-ui-web
   nx-release:
     runs-on: ubuntu-latest
@@ -291,6 +297,7 @@ jobs:
     needs:
       - build-app
       - publish-docker-image
+      - build-imgproxy
     steps:
       - name: Checkout
         uses: actions/checkout@v4
