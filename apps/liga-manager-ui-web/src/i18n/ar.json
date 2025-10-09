@@ -208,6 +208,8 @@
         "REPLACE_TEAM_IN_SEASON": "",
         "RESCHEDULE_MATCH_DAYS": "",
         "SAVE": "",
+        "SCHEDULE_ALL_MATCHES_FOR_MATCHDAY": "",
+        "SCHEDULE_ALL_MATCHES_FOR_SEASON": "",
         "SEND_MAIL": "",
         "START_SEASON": "",
         "START_TOURNAMENT": "",

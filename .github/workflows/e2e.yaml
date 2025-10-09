@@ -39,7 +39,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --args="--parallel" --group chrome
+          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --skip-nx-cache --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --args="--parallel" --group chrome
       - name: Upload artifact
         if: always()
         uses: actions/upload-artifact@v4

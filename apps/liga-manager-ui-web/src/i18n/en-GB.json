@@ -208,6 +208,8 @@
         "REPLACE_TEAM_IN_SEASON": "",
         "RESCHEDULE_MATCH_DAYS": "",
         "SAVE": "Saved",
+        "SCHEDULE_ALL_MATCHES_FOR_MATCHDAY": "",
+        "SCHEDULE_ALL_MATCHES_FOR_SEASON": "",
         "SEND_MAIL": "Email is on the way",
         "START_SEASON": "Season {{ name }} started",
         "START_TOURNAMENT": "Tournament {{ name }} started",

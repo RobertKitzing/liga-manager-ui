@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { Actions, ofActionDispatched, provideStore, Store } from '@ngxs/store';
 import { SeasonState } from './season.state';
 import { SeasonSelectors } from './season.selectors';
-import { aDatePeriod, AddPenaltyDocument, AddTeamToSeasonDocument, aRankingPenalty, aSeason, CreateMatchesForSeasonDocument, CreateSeasonDocument, DeleteSeasonDocument, EndSeasonDocument, RemovePenaltyDocument, RemoveTeamFromSeasonDocument, ReplaceTeamInSeasonDocument, SeasonListDocument, SeasonState as SeasonStateEnum, StartSeasonDocument } from '@liga-manager-api/graphql';
+import { aDatePeriod, AddPenaltyDocument, AddTeamToSeasonDocument, aMatchAppointment, aRankingPenalty, aSeason, CreateMatchesForSeasonDocument, CreateSeasonDocument, DeleteSeasonDocument, EndSeasonDocument, RemovePenaltyDocument, RemoveTeamFromSeasonDocument, ReplaceTeamInSeasonDocument, ScheduleAllMatchesForMatchDayDocument, ScheduleAllMatchesForSeasonDocument, SeasonListDocument, SeasonState as SeasonStateEnum, StartSeasonDocument } from '@liga-manager-api/graphql';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, SetSeasons, StartSeason } from './actions';
+import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, ScheduleAllMatchesForMatchDay, ScheduleAllMatchesForSeason, SetSeasons, StartSeason } from './actions';
 import { SetSelectedSeason } from '../selected-items';
 import { firstValueFrom, tap } from 'rxjs';
 
@@ -249,6 +249,37 @@ describe('SeasonState', () => {
 
         const op = controller.expectOne('RescheduleMatchDays');
         expect(op.operation.operationName).toStrictEqual('RescheduleMatchDays');
+    });
+
+    it('should schedule all matches for a matchday of a season', () => {
+
+        const match_appointments = aMatchAppointment();
+        const action = new ScheduleAllMatchesForMatchDay(
+            {
+                match_day_id: 'test',
+                match_appointments,
+            },
+            'season',
+        );
+        store.dispatch(action);
+
+        const op = controller.expectOne(ScheduleAllMatchesForMatchDayDocument);
+        expect(op.operation.variables).toStrictEqual(action.payload);
+    });
+
+    it('should schedule all matches of a season', () => {
+
+        const match_appointments = aMatchAppointment();
+        const action = new ScheduleAllMatchesForSeason(
+            {
+                season_id: 'test',
+                match_appointments,
+            },
+        );
+        store.dispatch(action);
+
+        const op = controller.expectOne(ScheduleAllMatchesForSeasonDocument);
+        expect(op.operation.variables).toStrictEqual(action.payload);
     });
 
 });
