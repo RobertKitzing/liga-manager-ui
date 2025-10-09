@@ -9,7 +9,7 @@
             <span translate>DESELECT_TOURNAMENT</span>
         </mat-option>
     }
-    @for (tournament of tournamentList$ | async; track tournament) {
+    @for (tournament of tournamentList$ | async; track tournament?.id) {
         @if (tournament) {
             <mat-option [value]="tournament.id">
                 {{ tournament.name }} @if(showState()) { ({{ `TournamentState.${tournament.state}` | translate }}) }

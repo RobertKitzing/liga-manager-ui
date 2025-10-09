@@ -14,11 +14,11 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { TournamentService } from '@liga-manager-ui/services';
 import { TranslateModule } from '@ngx-translate/core';
-import { firstValueFrom, of, switchMap, tap } from 'rxjs';
+import { of, switchMap, tap } from 'rxjs';
 import { CreateNewTournamentComponent } from './create-new-tournament';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
-import { SelectedItemsSelectors, SetSelectedTournament } from '@liga-manager-ui/states';
+import { DeleteTournament, EndTournament, SelectedItemsSelectors, SetSelectedTournament, StartTournament } from '@liga-manager-ui/states';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -66,6 +66,8 @@ export class ManageTournamentsComponent implements OnInit {
         tap((tournamentId) => {
             if (tournamentId) {
                 this.selectedTournamentFC.setValue(tournamentId, { emitEvent: false });
+            } else {
+                this.selectedTournamentFC.reset();
             }
         }),
         switchMap((tournamentId) =>
@@ -97,17 +99,16 @@ export class ManageTournamentsComponent implements OnInit {
         this.createRoundMode.set(undefined);
     }
 
-    startTournament(id: string) {
-        firstValueFrom(this.tournamentService.startTournament(id));
+    startTournament(tournament_id: string, name: string) {
+        this.store.dispatch(new StartTournament({ tournament_id }, name));
     }
 
-    endTournament(id: string) {
-        firstValueFrom(this.tournamentService.endTournament(id));
+    endTournament(tournament_id: string, name: string) {
+        this.store.dispatch(new EndTournament({ tournament_id }, name));
     }
 
-    deleteTournament(id: string) {
-        firstValueFrom(this.tournamentService.deleteTournament(id));
-        this.selectedTournamentFC.reset();
+    deleteTournament(tournament_id: string, name: string) {
+        this.store.dispatch(new DeleteTournament({ tournament_id }, name));
     }
 
 }

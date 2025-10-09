@@ -1,7 +1,4 @@
-export interface LoginContext {
-    username?: string;
-    password?: string;
-}
+import { LoginContext } from '@liga-manager-ui/common';
 
 export class Login {
 

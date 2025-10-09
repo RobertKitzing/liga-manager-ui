@@ -54,37 +54,39 @@
                                         matInput
                                         [formControl]="newTeamName"
                                         (keyup.enter)="
-                                            renameTeam(team.id, newTeamName.value!)
+                                            renameTeam(team.id, newTeamName.value!, team.name)
                                         "
                                         [value]="team.name"
+                                        cySelector="input-new-team-name"
                                     />
                                 </mat-form-field>
                                 } @if (editTeamId !== team.id) {
-                                {{ team.name }}
+                                    {{ team.name }}
                                 }
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="action">
-                            <th class="text-end" mat-header-cell *matHeaderCellDef>
+                            <th class="!text-end" mat-header-cell *matHeaderCellDef>
                             </th>
-                            <td class="text-end" mat-cell *matCellDef="let team">
+                            <td class="!text-end" mat-cell *matCellDef="let team">
                                 @if (editTeamId !== team.id) {
-                                    <button matIconButton (click)="editTeam(team)">
+                                    <button matIconButton (click)="editTeam(team)" cySelector="button-edit-team">
                                         <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button matIconButton (click)="deleteTeam(team.id, team.name)" cySelector="button-delete-team">
+                                        <mat-icon>delete</mat-icon>
                                     </button>
                                 } @if (editTeamId === team.id) {
                                     <button
                                         matIconButton
-                                        (click)="renameTeam(team.id, newTeamName.value!)"
+                                        (click)="renameTeam(team.id, newTeamName.value!, team.name)"
                                         [disabled]="!newTeamName.valid"
+                                        cySelector="button-rename-team"
                                     >
                                         <mat-icon>save</mat-icon>
                                     </button>
-                                    <button matIconButton (click)="deleteTeam(team.id)">
-                                        <mat-icon> delete </mat-icon>
-                                    </button>
                                     <button matIconButton (click)="editTeamId = ''">
-                                        <mat-icon> cancel </mat-icon>
+                                        <mat-icon>cancel</mat-icon>
                                     </button>
                                 }
                             </td>

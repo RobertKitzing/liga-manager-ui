@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { startWith, tap } from 'rxjs';
 import fuzzysearch from 'fuzzysearch-ts';
 import { MatIcon } from '@angular/material/icon';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-team-search',
@@ -17,6 +18,7 @@ import { MatIcon } from '@angular/material/icon';
         MatInputModule,
         TranslateModule,
         MatIcon,
+        CypressSelectorDirective,
     ],
     templateUrl: './team-search.component.html',
 })

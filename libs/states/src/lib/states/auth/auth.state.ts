@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { GetAuthenticatedUser, Login, Logout, SetToken } from './actions';
 import { AuthenticatedUserGQL, AuthenticatedUserQuery } from '@liga-manager-api/graphql';
-import { of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 export interface AuthStateModel {
     token?: string | null;
@@ -43,18 +43,32 @@ export class AuthState  {
     }
 
     @Action(SetToken)
-    setToken({ patchState }: StateContext<AuthStateModel>, action: SetToken) {
+    setToken({ patchState, dispatch }: StateContext<AuthStateModel>, action: SetToken) {
         patchState({ token: action.token });
+        dispatch(GetAuthenticatedUser);
     }
 
     @Action(GetAuthenticatedUser)
-    getAuthenticatedUser({ getState, patchState }: StateContext<AuthStateModel>) {
+    getAuthenticatedUser({ getState, patchState }: StateContext<AuthStateModel>, action: GetAuthenticatedUser) {
         if (!getState().token) {
             return of();
         }
-        return this.authenticatedUserGQL.fetch().pipe(
+        return this.authenticatedUserGQL.fetch(
+            undefined,
+            {
+                fetchPolicy: action.forceRefresh ? 'network-only' : 'cache-first',
+            },
+        ).pipe(
             tap(
-                (result) => patchState({ user: result.data.authenticatedUser }),
+                (result) => {
+                    patchState({ user: result.data.authenticatedUser });
+                },
+            ),
+            catchError(
+                () => {
+                    patchState({ user: undefined });
+                    return of();
+                },
             ),
         );
     }

@@ -1,13 +1,13 @@
 <div class="w-full mat-sys-surface-container-high">
     <mat-toolbar class="secondary">
-        <div class="flex h-full justify-center text-lg m-auto">
+        <div class="flex justify-center text-lg m-auto h-full">
             <a
                 class="flex h-full items-center p-2"
                 cySelector="route-teams-management-contact"
                 routerLink="{{ TEAM_MANAGEMENT_ROUTES.CONTACT }}"
                 routerLinkActive="mat-sys-primary-container"
                 translate
-                >NAVIGATION.TEAMS_MANAGEMENT.CONTACT</a
+                >NAVIGATION_TEAMS_MANAGEMENT.CONTACT</a
             >
             <a
                 class="flex h-full items-center p-2"
@@ -15,11 +15,11 @@
                 routerLink="{{ TEAM_MANAGEMENT_ROUTES.LOGO }}"
                 routerLinkActive="mat-sys-primary-container"
                 translate
-                >NAVIGATION.TEAMS_MANAGEMENT.TEAM_LOGOS</a
+                >NAVIGATION_TEAMS_MANAGEMENT.TEAM_LOGOS</a
             >
         </div>
     </mat-toolbar>
 </div>
-<div class="mat-sys-surface-container-high h-full">
+<div class="mat-sys-surface-container-high">
     <router-outlet></router-outlet>
 </div>

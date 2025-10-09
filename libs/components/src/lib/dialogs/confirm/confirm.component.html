@@ -1,12 +1,16 @@
 <div mat-dialog-title class="mat-sys-primary text-center" translate>
-    ARE_YOU_SURE
+    CONFIRM.TITLE
 </div>
 <mat-dialog-content>
-    <div class="m-8">
-        {{ data.body }}
+    <div class="p-8">
+        {{ data.body | translate:data.translateParams }}
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button matButton="outlined" translate (click)="dialogRef.close(false)">NO</button>
-    <button matButton="tonal" translate (click)="dialogRef.close(true)">YES</button>
+    <button matButton="outlined" (click)="dialogRef.close(false)" cySelector="button-confirm-no">
+        <span translate>BUTTON.NO</span>
+    </button>
+    <button matButton="tonal" translate (click)="dialogRef.close(true)" cySelector="button-confirm-yes">
+        <span translate>BUTTON.YES</span>
+    </button>
 </mat-dialog-actions>

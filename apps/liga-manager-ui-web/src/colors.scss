@@ -2,6 +2,10 @@
     @apply bg-(--mat-sys-primary) text-(--mat-sys-on-primary);
 }
 
+.text-mat-sys-on-primary {
+    @apply text-(--mat-sys-on-primary);
+}
+
 .mat-sys-primary-fixed {
     @apply bg-(--mat-sys-primary-fixed) text-(--mat-sys-on-primary-fixed);
 }

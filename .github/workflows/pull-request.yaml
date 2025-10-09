@@ -130,6 +130,12 @@ jobs:
       - test
       - lint
       - build
+
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [0, 1, 2, 3, 4 ,5]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -160,12 +166,16 @@ jobs:
           API_TAG: 'latest'
         with:
           compose-file: "./docker-compose.e2e.yml"
-      - name: Add Admin user
-        run: docker exec lima-api lima app:user:create --email admin@example.com --password 123456 --role admin --first-name admin --last-name admin --locale en
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}"
+          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --args="--parallel" --group chrome
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-videos
+          path: dist/cypress/apps/liga-manager-ui-web
 
   build-app-staging:
     runs-on: ubuntu-latest

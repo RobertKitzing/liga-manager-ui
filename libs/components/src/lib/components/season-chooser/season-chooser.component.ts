@@ -1,12 +1,14 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, forwardRef, inject, Injector, input, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, inject, Injector, input, OnInit } from '@angular/core';
 import { ControlContainer, ControlValueAccessor, FormControl, FormControlDirective, FormControlName, FormGroup, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { SeasonState } from '@liga-manager-api/graphql';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { SeasonService } from '@liga-manager-ui/services';
+import { SeasonSelectors, SeasonStateModel } from '@liga-manager-ui/states';
 import { TranslateModule } from '@ngx-translate/core';
-import { map } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'lima-season-chooser',
@@ -32,33 +34,28 @@ export class SeasonChooserComponent implements ControlValueAccessor, OnInit {
 
     private injector = inject(Injector);
 
+    private store = inject(Store);
+
     showState = input<boolean>(false);
 
     multiple = input(false);
 
-    seasonFormControl!: FormControl<string>;
+    filterStates = input<SeasonState[] | null>(null);
 
-    @Input() filterSeasonStates: SeasonState[] = [];
-
-    @Input() clearable = false;
+    clearable = input<boolean>(false);
 
     seasonService = inject(SeasonService);
 
+    seasonFormControl!: FormControl<string>;
+
     SeasonState = SeasonState;
 
-    seasonList$ = this.seasonService.seasonList$.pipe(
-        map(
-            (seasonList) =>
-                seasonList.filter((season) =>
-                    this.filterSeasonStates.length > 0
-                        ? season?.state &&
-                          this.filterSeasonStates.includes(season?.state)
-                        : true,
-                ) || [],
-        ),
-    );
+    seasonList$!: Observable<SeasonStateModel['seasons']>;
 
     ngOnInit() {
+
+        this.seasonList$ = this.store.select(SeasonSelectors.seasons(this.filterStates()));
+
         const ngControl = this.injector.get(NgControl, null, { self: true, optional: true });
 
         if (ngControl instanceof FormControlDirective) {

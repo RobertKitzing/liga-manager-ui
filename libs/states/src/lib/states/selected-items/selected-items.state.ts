@@ -18,7 +18,7 @@ export interface SelectedItemsStateModel {
     teamId: {[ context in SelectedContextTypes ]?: string }
     tournamentId: {[ context in SelectedContextTypes ]?: string }
     tournamentRoundId: {[ context in SelectedContextTypes ]?: string }
-    language: Language;
+    language?: Language;
     calendarTeamIds: string;
     theme: string;
     darkMode: DarkModeAppearance | null;
@@ -32,9 +32,7 @@ export interface SelectedItemsStateModel {
         teamId: {},
         tournamentId: {},
         tournamentRoundId: {},
-        language: {
-            code: 'en-GB',
-        },
+        language: undefined,
         calendarTeamIds: '',
         theme: 'default',
         darkMode: DarkModeAppearance.system,

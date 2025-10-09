@@ -34,6 +34,7 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_baseUrl: http://localhost
+          MAILDEV_HOST: 'maildev'
         with:
           record: true
           browser: chrome

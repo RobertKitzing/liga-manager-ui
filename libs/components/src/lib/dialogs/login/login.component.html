@@ -36,29 +36,30 @@
                             cySelector="input-password"
                         />
                         @if (!loginForm.controls['password'].valid) {
-                        <mat-error>
-                            <span translate>PASSWORD_REQUIRED</span>
-                        </mat-error>
-                        } @if (password.value) {
-                        <button
-                            matIconButton
-                            matSuffix
-                            (click)="
-                                password.type === 'password'
-                                    ? (password.type = 'text')
-                                    : (password.type = 'password')
-                            "
-                        >   
-                            @if (password.type === 'password') {
-                                <mat-icon>visibility</mat-icon>
-                            } @else {
-                                <mat-icon>visibility_off</mat-icon>
-                            }
-                        </button>
+                            <mat-error>
+                                <span translate>PASSWORD_REQUIRED</span>
+                            </mat-error>
+                        }
+                        @if (password.value) {
+                            <button
+                                matIconButton
+                                matSuffix
+                                (click)="
+                                    password.type === 'password'
+                                        ? (password.type = 'text')
+                                        : (password.type = 'password')
+                                "
+                            >   
+                                @if (password.type === 'password') {
+                                    <mat-icon>visibility</mat-icon>
+                                } @else {
+                                    <mat-icon>visibility_off</mat-icon>
+                                }
+                            </button>
                         }
                     </mat-form-field>
                 </div>
-                <button matButton="outlined" (click)="passwordForgot(username.value)">
+                <button matButton="outlined" (click)="passwordForgot(username.value)" cySelector="button-password-reset">
                     <span translate>FORGOT_PASSWORD</span>
                 </button>
             </div>

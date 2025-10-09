@@ -1,4 +1,4 @@
-@if (season) {
+@if (season()) {
     <mat-card appearance="outlined">
         <mat-card-title class="text-center p-4">
             {{ "MATCH_SCHEDULING.MATCH_KICKOFF_APPOINTMENTS" | translate}}
@@ -13,7 +13,7 @@
                                     {{ $index + 1 }}
                                 </div>
                                 <div class="grow grid grid-cols-2 gap-4 items-center" [formGroup]="matchAppointmentsFromGroup">
-                                    @if(pitchService.allPitches$ | async; as allPitches) {
+                                    @if(allPitches$ | async; as allPitches) {
                                         <lima-pitch-auto-complete [pitches]="allPitches" formControlName="pitch"></lima-pitch-auto-complete>
                                     }
                                     <mat-form-field class="w-full" subscriptSizing="dynamic">
@@ -37,7 +37,7 @@
                                         />
                                     </mat-form-field>
                                     <span class="italic">{{ calcOffestFromStartDate(matchAppointmentsFromGroup.controls['daysOffset'].value) | customDate:'cccc' }}</span>
-                                    <lima-team-chooser class="col-span-full" [teams]="season.teams || []" formControlName="unavailableTeams" [multiple]="true" label="{{ 'PLACEHOLDER.UNAVAILABLE_TEAMS' | translate }}"></lima-team-chooser>
+                                    <lima-team-chooser class="col-span-full" [teams]="season()?.teams || []" formControlName="unavailableTeams" [multiple]="true" label="{{ 'PLACEHOLDER.UNAVAILABLE_TEAMS' | translate }}"></lima-team-chooser>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -94,7 +94,7 @@
             </mat-card-title>
             <mat-card-content class="justify-center">
                 <div class="flex flex-wrap justify-center gap-4">
-                    @for (matchDay of season.match_days; track $index) {
+                    @for (matchDay of season()?.match_days; track $index) {
                         <mat-card appearance="outlined">
                             <mat-card-title class="text-center p-4">
                                 <p>{{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}</p>

@@ -24,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { dispatch, Store } from '@ngxs/store';
 import { SetSelectedSeason, SelectedItemsSelectors, SelectedContextTypes } from '@liga-manager-ui/states';
-import { NgxsFormDirective } from '@ngxs/form-plugin';
 
 @Component({
     selector: 'lima-table',
@@ -55,7 +54,6 @@ import { NgxsFormDirective } from '@ngxs/form-plugin';
         MatIconModule,
         MatButtonModule,
         ReactiveFormsModule,
-        NgxsFormDirective,
     ],
 })
 export class TableComponent implements OnInit {

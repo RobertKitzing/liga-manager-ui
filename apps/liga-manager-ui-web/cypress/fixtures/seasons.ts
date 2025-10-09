@@ -1,1 +1,0 @@
-export const Seasons = Array.from({ length: 10 }, (v, i) => ({ name: `season_${i}`}) );

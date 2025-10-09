@@ -16,7 +16,8 @@ import { setContext } from '@apollo/client/link/context';
 import { Base64 } from 'js-base64';
 import { MaintenanceModeComponent } from '@liga-manager-ui/components';
 import { Store } from '@ngxs/store';
-import { AppSettingsSelectors, AuthStateSelectors, LoginContext, Logout, SetToken } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AuthStateSelectors, Logout, SetToken } from '@liga-manager-ui/states';
+import { LoginContext } from '@liga-manager-ui/common';
 
 export function apolloFactory() {
 

@@ -41,7 +41,7 @@ export class I18nService {
             }
             this.dispatchSelectedLanguage({ code });
         }
-        this.changeLang(this.storedLang());
+        this.changeLang(this.storedLang()!);
     }
 
     get currentLang() {
@@ -53,8 +53,8 @@ export class I18nService {
         this.dispatchSelectedLanguage({ code, direction });
         import(/* @vite-ignore */ `/assets/locales/${code}.js`).then((lang) => {
             registerLocaleData(lang.default);
-            this.translateService.use(code);
         });
+        this.translateService.use(code);
     }
 
     setTextDir(direction?: string) {

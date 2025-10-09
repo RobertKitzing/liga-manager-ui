@@ -13,3 +13,7 @@ export function apiDateTimeGenerator() {
 export function dateStringGenerator() {
     return faker.date.anytime().toJSON();
 }
+
+export function fakeEmail() {
+    return faker.internet.email({ provider: 'example.com'});
+}

@@ -4,7 +4,7 @@
 <mat-dialog-content>
     <div
         [formGroup]="formGroup"
-        class="grid grid-cols-1 h-full items-center"
+        class="grid grid-cols-1 h-full items-center pt-4"
     >
         <mat-form-field>
             <mat-label translate>PITCH_LABEL</mat-label>
@@ -41,7 +41,7 @@
             matButton="tonal"
             (click)="onSaveClicked()"
             [disabled]="!formGroup.valid"
-            cySelector="button-save-user"
+            cySelector="button-save-pitch"
         >
             <mat-icon>save</mat-icon>
             <span translate>BUTTON.SAVE</span>

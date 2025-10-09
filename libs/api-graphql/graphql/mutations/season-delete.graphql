@@ -1,0 +1,3 @@
+mutation DeleteSeason($season_id: String!) {
+    deleteSeason(season_id: $season_id)
+}

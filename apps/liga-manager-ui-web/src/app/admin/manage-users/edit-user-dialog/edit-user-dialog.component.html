@@ -24,12 +24,13 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label translate>USER_ROLE</mat-label>
-            <mat-select formControlName="role" name="userRole">
-                @for (userRole of UserRole | keyvalue; track userRole) {
-                <mat-option [value]="userRole.value">
-                    <span translate>UserRole.{{ userRole.value }}</span>
+            <mat-select formControlName="role" name="userRole" cySelector="select-user-role">
+                <mat-option cySelector="user-role-admin" value="admin">
+                    <span translate>UserRole.admin</span>
                 </mat-option>
-                }
+                <mat-option cySelector="user-role-team_manager" value="team_manager">
+                    <span translate>UserRole.team_manager</span>
+                </mat-option>
             </mat-select>
         </mat-form-field>
         @if (userFormGroup.value.role === UserRole.TeamManager) {
@@ -52,7 +53,7 @@
         <span translate>BUTTON.CANCEL</span>
     </button>
     <button
-        matButton="outlined"
+        matButton="tonal"
         (click)="onSaveClicked()"
         [disabled]="!userFormGroup.valid"
         cySelector="button-save-user"

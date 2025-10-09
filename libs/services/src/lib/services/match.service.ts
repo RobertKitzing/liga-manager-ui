@@ -27,7 +27,6 @@ export class MatchService {
 
     private matchByIdGQL = inject(MatchByIdGQL);
 
-
     getMatchById$(id: string) {
         return this.matchByIdGQL
             .watch({ id })

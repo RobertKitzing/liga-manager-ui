@@ -10,14 +10,15 @@ import {
     MatDialog,
     MatDialogActions,
     MatDialogContent,
+    MatDialogRef,
     MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { marker } from '@colsen1991/ngx-translate-extract-marker';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { NotificationService, TournamentService } from '@liga-manager-ui/services';
+import { CreateTournament } from '@liga-manager-ui/states';
 import { TranslateModule } from '@ngx-translate/core';
+import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -39,29 +40,22 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreateNewTournamentComponent {
 
-    private tournamentService = inject(TournamentService);
+    private store = inject(Store);
 
     private dialog = inject(MatDialog);
 
-    private notificationService = inject(NotificationService);
+    private dialogRef = inject(MatDialogRef<CreateNewTournamentComponent>);
 
-    newName = new FormControl('', [Validators.required]);
+    newName = new FormControl('', { validators: [ Validators.required ], nonNullable: true });
 
     async createTournament() {
         try {
             await firstValueFrom(
-                this.tournamentService.createTournament(this.newName.value!),
+                this.store.dispatch(new CreateTournament({ name: this.newName.value })),
             );
-            this.notificationService.showSuccessNotification(
-                marker('CREATE_TOURNAMENT_SUCCESS'),
-                [],
-                'snackbar-success-create-tournament',
-            );
-            this.dialog.closeAll();
+            this.dialogRef.close();
         } catch (_error) {
-            this.notificationService.showErrorNotification(
-                marker('CREATE_TOURNAMENT_ERROR'),
-            );
+            console.error(_error);
         }
     }
 

@@ -8,9 +8,9 @@ import { MatStepperModule, StepperOrientation } from '@angular/material/stepper'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
-import { ConfirmComponent, defaultDialogConfig, SeasonChooserComponent } from '@liga-manager-ui/components';
+import { SeasonChooserComponent } from '@liga-manager-ui/components';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { map, switchMap, Observable, firstValueFrom, tap } from 'rxjs';
+import { map, switchMap, Observable, tap } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
 import { ManageTeamsComponent } from './manage-teams';
@@ -25,7 +25,7 @@ import { NotificationService, SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
-import { SelectedItemsSelectors, SetSelectedSeason } from '@liga-manager-ui/states';
+import { DeleteSeason, EndSeason, SelectedItemsSelectors, SetSelectedSeason, StartSeason } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -116,77 +116,16 @@ export class ManageSeasonsComponent implements OnInit {
         this.dialog.open(CreateNewSeasonComponent);
     }
 
-    endSeason(seasonId: string, name: string) {
-
-        this.dialog.open(ConfirmComponent,
-            {
-                ...defaultDialogConfig,
-                data: {
-                    body: this.translateService.instant('ARE_YOU_SURE_TO_END_THIS_SEASON', { season: name }),
-                },
-            },
-        )
-            .afterClosed()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                async (result) => {
-                    if (result) {
-                        try {
-                            await firstValueFrom(this.seasonService.endSeason(seasonId));
-                            this.notificationService.showSuccessNotification(
-                                this.translateService.instant('END_SEASON_SUCCESS'),
-                            );
-                        } catch (_error) {
-                            this.notificationService.showErrorNotification(
-                                this.translateService.instant('END_SEASON_ERROR'),
-                            );
-                        }
-                    }
-                },
-            );
+    endSeason(season_id: string, name: string) {
+        this.store.dispatch(new EndSeason({ season_id }, name));
     }
 
-    async startSeason(seasonId: string) {
-        try {
-            await firstValueFrom(this.seasonService.startSeason(seasonId));
-            this.notificationService.showSuccessNotification(
-                this.translateService.instant('START_SEASON_SUCCESS'),
-            );
-        } catch (_error) {
-            this.notificationService.showErrorNotification(
-                this.translateService.instant('START_SEASON_ERROR'),
-            );
-        }
+    startSeason(season_id: string, name: string) {
+        this.store.dispatch(new StartSeason({ season_id }, name));
     }
 
-    deleteSeason(seasonId: string, name: string) {
-        this.dialog.open(
-            ConfirmComponent, {
-                ...defaultDialogConfig,
-                data: {
-                    body: this.translateService.instant('ARE_YOU_SURE_TO_DELETE_THIS_SEASON', { season: name }),
-                },
-            },
-        )
-            .afterClosed()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(
-                async (result) => {
-                    if (result) {
-                        try {
-                            await firstValueFrom(this.seasonService.deleteSeason(seasonId));
-                            this.notificationService.showSuccessNotification(
-                                this.translateService.instant('DELETE_SEASON_SUCCESS'),
-                            );
-                            this.selectedSeasonFC.reset();
-                        } catch (_error) {
-                            this.notificationService.showErrorNotification(
-                                this.translateService.instant('DELETE_SEASON_ERROR'),
-                            );
-                        }
-                    }
-                },
-            );
+    deleteSeason(season_id: string, name: string) {
+        this.store.dispatch(new DeleteSeason({ season_id }, name));
     }
 
 }

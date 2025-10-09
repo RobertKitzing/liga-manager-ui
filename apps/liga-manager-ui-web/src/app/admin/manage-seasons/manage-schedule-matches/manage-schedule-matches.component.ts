@@ -1,11 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { AsyncPipe } from '@angular/common';
-import { PitchService } from '@liga-manager-ui/services';
 import { PitchAutoCompleteComponent, TeamChooserComponent, DateTimeComponent } from '@liga-manager-ui/components';
 import { MatInputModule } from '@angular/material/input';
 import { Team } from '@liga-manager-api/graphql';
@@ -15,7 +14,7 @@ import { add, formatISO, parseISO, set } from 'date-fns';
 import { firstValueFrom } from 'rxjs';
 import { TZDate } from '@date-fns/tz';
 import { select } from '@ngxs/store';
-import { AppSettingsSelectors } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, PitchSelectors } from '@liga-manager-ui/states';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -53,25 +52,25 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
 
     localTimeZone = select(AppSettingsSelectors.localTimeZone);
 
-    pitchService = inject(PitchService);
-
     matchAppointments?: FormArray<MatchAppointmentFormGroup>;
+
+    allPitches$ = this.store.select(PitchSelectors.pitches);
 
     ngOnInit(): void {
         this.matchAppointments = new FormArray(
-            Array.from({ length: this.season?.match_days![0]?.matches?.length || 0 }, () => new MatchAppointmentFormGroup()),
+            Array.from({ length: this.season()?.match_days![0]?.matches?.length || 0 }, () => new MatchAppointmentFormGroup()),
         );
     }
 
     calcOffestFromStartDate(offset: number) {
-        return add(parseISO(this.season?.match_days![0]?.start_date || ''), { days: offset });
+        return add(parseISO(this.season()?.match_days![0]?.start_date || ''), { days: offset });
     }
 
     exampleMatchDays() {
-        if (!this.season?.match_days) {
+        if (!this.season()?.match_days) {
             return;
         }
-        const t = this.season?.match_days.map(
+        const t = this.season()?.match_days?.map(
             (matchDay) => ({
                 ...matchDay,
                 matches: matchDay?.matches?.map(
@@ -99,7 +98,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
     }
 
     async scheduleAllMatchesForMatchDay(matchDayIndex: number) {
-        const matchDay = this.season?.match_days![matchDayIndex];
+        const matchDay = this.season()?.match_days![matchDayIndex];
         if (!matchDay) {
             return;
         }
@@ -117,11 +116,11 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         await firstValueFrom(this.seasonService.scheduleAllMatchesForMatchDay({
             match_day_id: matchDay.id,
             match_appointments,
-        }, this.season?.id));
+        }, this.season()?.id));
     }
 
     async scheduleAllMatchesForSeason() {
-        const matchDay = this.season?.match_days![0];
+        const matchDay = this.season()?.match_days![0];
         if (!matchDay) {
             return;
         }
@@ -138,7 +137,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
         ) || [];
 
         await firstValueFrom(this.seasonService.scheduleAllMatchesForSeason({
-            season_id: this.season?.id || '',
+            season_id: this.season()?.id || '',
             match_appointments,
         }));
     }

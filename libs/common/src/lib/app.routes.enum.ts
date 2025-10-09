@@ -1,6 +1,6 @@
 export enum APP_ROUTES {
 
-    NEW_PASSWORD_ROUTE = 'newpassword',
+    NEW_PASSWORD = 'newpassword',
     TABLE = 'table',
     CALENDAR = 'calendar',
     CONTACTS = 'contacts',
@@ -12,5 +12,7 @@ export enum APP_ROUTES {
     HALL_OF_FAME = 'hall_of_fame',
     MATCH = 'match',
     TEAM = 'team',
+    EDIT_PROFILE = 'edit-profile',
+    REGISTER = 'register'
 
 }

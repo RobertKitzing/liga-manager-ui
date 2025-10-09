@@ -31,15 +31,15 @@
                         <div class="flex flex-col text-center items-center justify-center mat-sys-surface-container-highest mat-sys-corner-medium">
                             <div
                                 class="self-center grid grid-cols-3 m-3 p-2 w-full lg:w-2/3 justify-items-center"
-                                cySelector="button-edit-match-result"
+                                [cySelector]="canEditMatch ? 'button-edit-match-result' : 'cant-edit-match-result'"
                                 (click)="canEditMatch && openEditResultDialog()"
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                             >
-                                <div>
+                                <div cySelector="match-home-score">
                                     {{ match().home_score | number }}
                                 </div>
                                 <div>:</div>
-                                <div>
+                                <div cySelector="match-guest-score">
                                     {{ match().guest_score | number }}
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             <div
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                                 (click)="canEditMatch && openEditKickoffDialog()"
-                                cySelector="button-schedule-match"
+                                [cySelector]="canEditMatch ? 'button-schedule-match': 'cant-schedule-match'"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"
                             >
                                 <div
@@ -91,6 +91,7 @@
                             </div>
                             <div
                                 class="flex flex-col text-center"
+                                [cySelector]="canEditMatch ? 'button-set-pitch' : 'cant-set-pitch'"
                                 (click)="canEditMatch && openEditPitchDialog()"
                                 [ngClass]="{ 'cursor-pointer': canEditMatch }"
                                 class="mat-sys-surface-container-highest mat-sys-corner-medium"
@@ -150,7 +151,7 @@
                                             <mat-icon>location_on</mat-icon>
                                             <span translate>BUTTON.EDIT_PITCH</span>
                                         </button>
-                                        <button mat-menu-item (click)="openEditKickoffDialog()" cySelector="button-schedule-match">
+                                        <button mat-menu-item (click)="openEditKickoffDialog()">
                                             <mat-icon>event</mat-icon>
                                             <span translate>BUTTON.EDIT_KICKOFF</span>
                                         </button>

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Action, NgxsOnInit, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 import { LoadAppSettings } from './actions';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
@@ -17,11 +17,7 @@ export interface AppSettingsStateModel {
     defaults: {},
 })
 @Injectable()
-export class AppSettingsState implements NgxsOnInit {
-
-    ngxsOnInit(ctx: StateContext<AppSettingsStateModel>): void {
-        ctx.dispatch(LoadAppSettings);
-    }
+export class AppSettingsState {
 
     @Action(LoadAppSettings)
     loadAppsettings({ setState }: StateContext<AppSettingsStateModel>) {

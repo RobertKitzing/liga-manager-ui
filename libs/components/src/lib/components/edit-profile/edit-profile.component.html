@@ -1,0 +1,86 @@
+<div class="flex justify-center">
+    <mat-card class="mt-2">
+        <mat-card-title>
+            <div class="flex justify-center m-4 hidden lg:flex lg:visible" translate>
+                @if (register()) {
+                    NAVIGATION.REGISTER
+                } @else {
+                    NAVIGATION.EDIT_PROFILE
+                }
+            </div>
+        </mat-card-title>
+        <mat-card-content>
+            @if (user(); as user ) {
+                <div
+                    [formGroup]="userFormGroup"
+                    class="flex flex-col justify-center w-full p-2"
+                >
+                    <mat-form-field>
+                        <mat-label translate>EMAIL</mat-label>
+                        <input matInput formControlName="email" cySelector="input-email" trim/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label translate>FIRST_NAME</mat-label>
+                        <input matInput formControlName="first_name" cySelector="input-first-name"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label translate>LAST_NAME</mat-label>
+                        <input matInput formControlName="last_name" cySelector="input-last-name"/>
+                    </mat-form-field>
+                    @if (register()) {
+                        <mat-form-field>
+                            <mat-label translate>
+                                PASSWORD
+                            </mat-label>
+                            <input #password matInput [formControl]="passwordFC" cySelector="input-password" type="password">
+                            @if (password.value) {
+                                <button
+                                    matIconButton
+                                    matSuffix
+                                    (click)="
+                                        password.type === 'password'
+                                            ? (password.type = 'text')
+                                            : (password.type = 'password')
+                                    "
+                                >   
+                                    @if (password.type === 'password') {
+                                        <mat-icon>visibility</mat-icon>
+                                    } @else {
+                                        <mat-icon>visibility_off</mat-icon>
+                                    }
+                                </button>
+                            }
+                        </mat-form-field>
+                    }
+                </div>
+            } @else {
+                <mat-card-content class="flex justify-center p-4">
+                    <span translate>ERRORS.PASSWORD_TOKEN_INVALID</span>
+                </mat-card-content>
+            }
+        </mat-card-content>
+        <mat-card-actions class="flex justify-center">
+            @if (register()) {
+                <button
+                    matButton="tonal"
+                    (click)="onSaveClicked()"
+                    [disabled]="!userFormGroup.valid || !passwordFC.valid"
+                    cySelector="button-save-user"
+                >
+                    <mat-icon>save</mat-icon>
+                    <span translate>BUTTON.SAVE</span>
+                </button>
+            } @else {
+                <button
+                    matButton="tonal"
+                    (click)="onSaveClicked()"
+                    [disabled]="!userFormGroup.valid"
+                    cySelector="button-save-user"
+                >
+                    <mat-icon>save</mat-icon>
+                    <span translate>BUTTON.SAVE</span>
+                </button>
+            }
+        </mat-card-actions>
+    </mat-card>
+</div>

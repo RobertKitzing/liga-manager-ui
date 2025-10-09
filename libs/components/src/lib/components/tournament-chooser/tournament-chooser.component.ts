@@ -5,8 +5,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { TournamentState } from '@liga-manager-api/graphql';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { TournamentService } from '@liga-manager-ui/services';
+import { TournamentSelectors, TournamentStateModel } from '@liga-manager-ui/states';
 import { TranslateModule } from '@ngx-translate/core';
-import { map } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'lima-tournament-chooser',
@@ -31,6 +33,8 @@ export class TournamentChooserComponent implements ControlValueAccessor, OnInit 
 
     private injector = inject(Injector);
 
+    private store = inject(Store);
+
     selectedTournamentFC!: FormControl<string>;
 
     TournamentState = TournamentState;
@@ -43,21 +47,11 @@ export class TournamentChooserComponent implements ControlValueAccessor, OnInit 
 
     tournamentService = inject(TournamentService);
 
-    tournamentList$ = this.tournamentService.allTournaments$.pipe(
-        map(
-            (tournamentList) =>
-                tournamentList.filter(
-                    (tournament) => {
-                        if (!this.filterStates()) {
-                            return true;
-                        }
-                        return this.filterStates()?.includes(tournament.state);
-                    },
-                ),
-        ),
-    );
+    tournamentList$!: Observable<TournamentStateModel['tournaments']>;
 
     ngOnInit() {
+        this.tournamentList$ = this.store.select(TournamentSelectors.tournaments(this.filterStates()));
+
         const ngControl = this.injector.get(NgControl, null, { self: true, optional: true });
 
         if (ngControl instanceof FormControlDirective) {

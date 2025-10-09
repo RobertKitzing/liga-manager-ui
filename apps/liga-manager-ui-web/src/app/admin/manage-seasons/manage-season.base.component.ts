@@ -1,8 +1,9 @@
-import { Component, DestroyRef, inject, Input } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Season, SeasonState } from '@liga-manager-api/graphql';
 import { SeasonService, TeamService } from '@liga-manager-ui/services';
+import { Store } from '@ngxs/store';
 
 @Component({template: ''})
 export class ManageSeasonBaseComponent {
@@ -19,6 +20,8 @@ export class ManageSeasonBaseComponent {
 
     destroyRef = inject(DestroyRef);
 
-    @Input({required: true}) season: Season | null | undefined;
+    protected store = inject(Store);
+
+    season = input<Season | null | undefined>();
 
 }

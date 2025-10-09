@@ -1,16 +1,17 @@
-@if (season) {
+
+@if (season()) {
     <div class="grid grid-cols-1">
-        @if (season.state === SeasonState.Preparation) {
+        @if (season()?.state === SeasonState.Preparation) {
             <div class="m-8">
                 @if(allTeams$ | async; as allTeams) {
-                    <lima-team-auto-complete [teams]="allTeams" [disabledTeams]="season.teams" (teamSelected)="addTeamToSeason({ season_id: season.id, team_id: $event.id})" [clearAfterSelected]="true"></lima-team-auto-complete>
+                    <lima-team-auto-complete [teams]="allTeams" [disabledTeams]="season()?.teams" (teamSelected)="addTeamToSeason({ season_id: season()?.id!, team_id: $event.id}, $event.name, season()?.name!)" [clearAfterSelected]="true"></lima-team-auto-complete>
                 }
             </div>
         }
         <div>
             <h1 translate class="text-center">TEAMS_IN_SEASON</h1>
             <div class="m-8">
-                <lima-team-search [teams]="season.teams" (filteredTeams)="seasonTeams.set($event)"></lima-team-search>
+                <lima-team-search [teams]="season()?.teams" (filteredTeams)="seasonTeams.set($event)"></lima-team-search>
             </div>
             <div class="flex flex-wrap justify-center space-x-4">
                 @for (team of seasonTeams(); track team) {
@@ -20,15 +21,20 @@
                                 {{ team.name }}
                             </mat-card-content>
                             <mat-card-footer class="flex justify-center">
-                                @switch (season.state) {
+                                @switch (season()?.state) {
                                     @case (SeasonState.Preparation) {
                                         <button
+                                            cySelector="button-remove-team-from-season"
                                             matIconButton
                                             (click)="
-                                                removeTeamFromSeason({
+                                                removeTeamFromSeason(
+                                                    {
                                                     team_id: team.id,
-                                                    season_id: season.id
-                                                })
+                                                    season_id: season()?.id!
+                                                    },
+                                                    team.name,
+                                                    season()?.name!
+                                                )
                                             "
                                         >
                                             <mat-icon>delete</mat-icon>

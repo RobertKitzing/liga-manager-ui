@@ -3,6 +3,7 @@
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
+    successSnackbar()
     login(email: string, password: string)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getBySel(selector: CySelectors): Chainable<any>

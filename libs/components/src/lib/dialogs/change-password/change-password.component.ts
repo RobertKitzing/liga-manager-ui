@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NotificationService, UserService } from '@liga-manager-ui/services';
 import { firstValueFrom } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { Logout } from '@liga-manager-ui/states';
+import { AuthStateSelectors, Logout } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-change-password',
@@ -50,9 +50,10 @@ export class ChangePasswordComponent {
 
     async changePassword() {
         try {
-            await firstValueFrom(this.userService.changePassword(this.passwordForm.value.new || '', this.passwordForm.value.old || ''));
+            const username = this.store.selectSnapshot(AuthStateSelectors.properties.user)?.email || '';
+            await firstValueFrom(this.userService.changePassword(username, this.passwordForm.value.new || '', this.passwordForm.value.old || ''));
             this.store.dispatch(Logout);
-            this.notificationService.showSuccessNotification(this.translateService.instant('PASSWORD_CHANGED_SUCCESS'));
+            this.notificationService.showSuccessNotification(this.translateService.instant('SUCCESS.PASSWORD_CHANGED'));
             this.dialogRef.close();
         } catch (error) {
             console.error(error);

@@ -5,6 +5,12 @@ const config: CodegenConfig = {
     documents: 'libs/api-graphql/graphql/**/*.graphql',
     overwrite: true,
     generates: {
+        'apps/liga-manager-ui-web/cypress/api/gen/': {
+            preset: 'client',
+            config: {
+                documentMode: 'string',
+            },
+        },
         'libs/api-graphql/src/gen/graphql.ts': {
             config: {
                 content: [
@@ -38,7 +44,7 @@ const config: CodegenConfig = {
                 content: [
                     '/* eslint-disable */',
                     '/* GENERATED DO NOT EDIT */',
-                    'import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator } from \'./generators\'',
+                    'import { apiDateGenerator, apiDateTimeGenerator, dateStringGenerator, fakeEmail } from \'./generators\'',
                 ],
                 typesFile: '../gen/graphql.ts',
                 scalars: {
@@ -49,7 +55,14 @@ const config: CodegenConfig = {
                     Match: {
                         cancelled_at: 'dateStringGenerator()',
                     },
+                    User: {
+                        email: 'fakeEmail()',
+                    },
+                    Contact: {
+                        email: 'fakeEmail()',
+                    },
                 },
+                addTypename: true,
             },
             plugins: [
                 'add',

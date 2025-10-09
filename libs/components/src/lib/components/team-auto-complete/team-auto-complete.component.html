@@ -9,7 +9,7 @@
         (optionSelected)="_teamSelected($event)"
         [displayWith]="displayWith"
         >
-        @for (team of filteredTeams$ | async; track team?.id) {
+        @for (team of filteredTeams$ | async; track team?.id; let index = $index) {
             <mat-option [value]="team">{{team?.name}}</mat-option>
         }
     </mat-autocomplete>

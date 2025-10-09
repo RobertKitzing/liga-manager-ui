@@ -1,6 +1,7 @@
 @if (width()! > 0 && height()! > 0) {
     @if (team()?.logo_path) {
         <img
+            class="team-logo"
             [ngSrc]="team()!.logo_path!"
             [width]="width()"
             [height]="height()"

@@ -23,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
-import { APP_ROUTES } from '@liga-manager-ui/common';
 import { MatCardModule } from '@angular/material/card';
 import { dispatch } from '@ngxs/store';
 import { Login } from '@liga-manager-ui/states';
@@ -83,9 +82,9 @@ export class LoginComponent {
     async passwordForgot(email: string) {
         if (email) {
             try {
-                await this.userService.sendPasswordMail({email, target_path: APP_ROUTES.NEW_PASSWORD_ROUTE});
+                await firstValueFrom(this.userService.sendPasswordMail(email));
                 this.notificationService.showSuccessNotification(
-                    marker('SEND_NEW_PASSWORD_MAIL_SUCCESS'),
+                    marker('SUCCESS.SEND_MAIL'),
                 );
                 this.dialogRef.close();
             } catch (_error) {

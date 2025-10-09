@@ -1,16 +1,18 @@
-<div class="notification relative" [cySelector]="data.cySelector">
+<div [cySelector]="data.cySelector">
     <div class="absolute top-0 right-0">
-        <button matIconButton (click)="snackBarRef.dismiss()">
-            <mat-icon>close</mat-icon>
+        <button matIconButton (click)="snackBarRef.dismiss()" cySelector="button-close-snackbar">
+            <mat-icon class="text-mat-sys-on-primary">close</mat-icon>
         </button>
     </div>
-    <h1 class="mb-3 text-center">
-        {{ data.title | translate }}
-    </h1>
+    @if(data.title) {
+        <h1 class="mb-3 text-center">
+            {{ data.title | translate: data.translateParams?.title }}
+        </h1>
+    }
     <div>
         @for (message of data.messages; track message) {
             <div class="text-center">
-                {{ message | translate }}
+                {{ message | translate: data.translateParams?.message }}
             </div>
         }
     </div>

@@ -13,6 +13,8 @@ import {
 } from '@ngx-translate/core';
 import {
     I18nService,
+    NotificationService,
+    WatchService,
     httpLoaderFactory,
     provideStorage,
 } from '@liga-manager-ui/services';
@@ -31,16 +33,19 @@ import { DatePipe, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { CustomDateAdapter } from './shared/utils';
 import { provideApi } from '@liga-manager-api/openapi';
 import { Base64 } from 'js-base64';
-import { provideStore, Store } from '@ngxs/store';
+import { Actions, NgxsNextPluginFn, ofActionSuccessful, provideStore, Store, withNgxsPlugin } from '@ngxs/store';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { environment } from '../env/env';
-import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, LoadAppSettings, PitchState, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TeamState, TournamentState } from '@liga-manager-ui/states';
 import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
-import { withNgxsFormPlugin } from '@ngxs/form-plugin';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of, switchMap, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '@liga-manager-ui/components';
 
 function appInitFactory(
     store: Store,
+    actions: Actions,
+    watchService: WatchService,
 ) {
     return () => {
         return Promise.all([
@@ -51,9 +56,58 @@ function appInitFactory(
                     store.dispatch(new SetSelectedDarkMode(appearance));
                 },
             }),
-            firstValueFrom(store.dispatch(GetAuthenticatedUser)),
+            firstValueFrom(store.dispatch(LoadAppSettings)),
+            firstValueFrom(
+                actions.pipe(
+                    ofActionSuccessful(LoadAppSettings),
+                    tap(
+                        () => {
+                            store.dispatch(GetAuthenticatedUser);
+                            watchService.init();
+                        },
+                    ),
+                ),
+            ),
         ]);
     };
+}
+
+function confirmPlugin(state: unknown, action: unknown, next: NgxsNextPluginFn) {
+
+    const dialog = inject(MatDialog);
+
+    const { confirm } = action as IConfirm;
+
+    if( confirm ) {
+        return dialog.open(ConfirmComponent, { data: { body: confirm.message, translateParams: confirm.translateParams }}).afterClosed().pipe(
+            switchMap(
+                (result) => {
+                    if (result) {
+                        return next(state, action);
+                    }
+                    return of();
+                },
+            ),
+        );
+    } else {
+        return next(state, action);
+    }
+}
+
+function notificationPlugin(state: unknown, action: unknown, next: NgxsNextPluginFn) {
+
+    const notificationService = inject(NotificationService);
+
+    return next(state, action).pipe(
+        tap(
+            () => {
+                const { notification } = action as INotification;
+                if (notification?.message) {
+                    notificationService.showSuccessNotification('', [notification.message], notification.translateParams);
+                }
+            },
+        ),
+    );
 }
 
 export const appConfig: ApplicationConfig = {
@@ -76,6 +130,8 @@ export const appConfig: ApplicationConfig = {
         provideAppInitializer(() => {
             const initializerFn = appInitFactory(
                 inject(Store),
+                inject(Actions),
+                inject(WatchService),
             );
             return initializerFn();
         }),
@@ -100,6 +156,10 @@ export const appConfig: ApplicationConfig = {
                 AuthState,
                 AppSettingsState,
                 SelectedItemsState,
+                TournamentState,
+                SeasonState,
+                TeamState,
+                PitchState,
             ],
             withNgxsReduxDevtoolsPlugin({
                 disabled: environment.production,
@@ -110,7 +170,8 @@ export const appConfig: ApplicationConfig = {
                     'auth.token',
                 ],
             }),
-            withNgxsFormPlugin(),
+            withNgxsPlugin(confirmPlugin),
+            withNgxsPlugin(notificationPlugin),
         ),
         provideApollo(apolloFactory),
         {

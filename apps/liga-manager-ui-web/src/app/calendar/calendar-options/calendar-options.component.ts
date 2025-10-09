@@ -10,8 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { map, startWith, switchMap } from 'rxjs';
-import { TeamService } from '@liga-manager-ui/services';
 import { MatIcon } from '@angular/material/icon';
+import { Store } from '@ngxs/store';
+import { TeamSelectors } from '@liga-manager-ui/states';
 
 export class CalendarOptionsFormGroup extends FormGroup<{
         selectedView: FormControl,
@@ -58,7 +59,7 @@ export class CalendarOptionsFormGroup extends FormGroup<{
 })
 export class CalendarOptionsComponent {
 
-    private teamService = inject(TeamService);
+    private store = inject(Store);
 
     data = inject<{ options: CalendarOptionsFormGroup }>(MAT_DIALOG_DATA);
 
@@ -70,8 +71,8 @@ export class CalendarOptionsComponent {
         startWith(null),
         switchMap((searchTerm) =>
             !searchTerm
-                ? this.teamService.allTeams$
-                : this.teamService.allTeams$.pipe(
+                ? this.store.select(TeamSelectors.teams)
+                : this.store.select(TeamSelectors.teams).pipe(
                     map((t) =>
                         t?.filter((x) =>
                             x?.name

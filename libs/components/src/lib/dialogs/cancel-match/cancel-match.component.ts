@@ -57,7 +57,7 @@ export class CancelMatchComponent extends EditMatchBaseComponent {
                 }),
             );
             this.notificationService.showSuccessNotification(
-                marker('CANCEL_MATCH_SUCCESS'),
+                marker('SUCCESS.CANCEL_MATCH'),
             );
             this.dialogRef.close(true);
         } catch (_error) {

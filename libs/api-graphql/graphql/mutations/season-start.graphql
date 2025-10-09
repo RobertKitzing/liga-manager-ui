@@ -1,0 +1,3 @@
+mutation StartSeason($season_id: String!) {
+    startSeason(season_id: $season_id)
+}
