@@ -3,7 +3,7 @@ name: liga-manager
 description: A Helm chart for Kubernetes
 type: application
 version: 0.1.0
-icon: https://raw.githubusercontent.com/RobertKitzing/liga-manager-ui/refs/heads/next_nx/apps/liga-manager-ui-web/src/assets/wildeliga_bremen_nobg.webp
+icon: https://raw.githubusercontent.com/RobertKitzing/liga-manager-ui/refs/heads/main/apps/liga-manager-ui-web/src/assets/wildeliga_bremen_nobg.webp
 
 dependencies:
   - name: liga-manager-ui

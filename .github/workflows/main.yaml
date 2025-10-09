@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - 'next_nx'
+      - 'main'
 
 env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
@@ -46,8 +46,6 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: next_nx
       - run: |
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
@@ -66,8 +64,6 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: next_nx
       - run: |
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
@@ -87,8 +83,6 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: next_nx
       - run: |
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
@@ -130,9 +124,6 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: next_nx
-
       - run: npx nx-cloud record -- nx run liga-manager-ui-web:build:production
       - name: Build
         uses: docker/build-push-action@v5
@@ -181,8 +172,6 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
 
       - uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: next_nx
 
       - uses: fregante/setup-git-user@v2
 
@@ -227,7 +216,7 @@ jobs:
           file: Dockerfile.imgproxy
           push: true
           tags: ${{ env.DOCKER_REPO_IMGPROXY }}:next,${{ env.DOCKER_REPO_IMGPROXY }}:${{ steps.package-version.outputs.current-version}}
-      
+
   build-web:
     runs-on: ubuntu-latest
     needs:
@@ -263,11 +252,9 @@ jobs:
           docker push ${{ env.DOCKER_REPO_UI }}:${{ steps.package-version.outputs.current-version}}
   
       - name: Tag image with latest
-  #       if: github.ref == 'refs/heads/main'
-  #       # TODO: replace next with latest
         run: |
-          docker tag ${{ env.DOCKER_REPO_UI }}:e2e ${{ env.DOCKER_REPO_UI }}:next
-          docker push ${{ env.DOCKER_REPO_UI }}:next
+          docker tag ${{ env.DOCKER_REPO_UI }}:e2e ${{ env.DOCKER_REPO_UI }}:latest
+          docker push ${{ env.DOCKER_REPO_UI }}:latest
 
   build-app:
     runs-on: ubuntu-latest
@@ -283,8 +270,6 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: next_nx
       - name: Setup java
         uses: actions/setup-java@v4
         with:
