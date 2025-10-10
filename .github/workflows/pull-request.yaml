@@ -93,7 +93,7 @@ jobs:
         uses: dkhunt27/nx-code-coverage@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          no-coverage-ran: steps.check_files.outputs.files_exists
+          no-coverage-ran: "${{ !steps.check_files.outputs.files_exists }}"
           coverage-folder: ./coverage
           coverage-base-folder: ./coverage-base
           gist-processing: false
