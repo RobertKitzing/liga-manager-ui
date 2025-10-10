@@ -68,7 +68,7 @@ export class EditTeamLogoComponent {
             console.error(error);
             const message = error.error.errors[0].message || '';
             this.notificationService.showErrorNotification(
-                marker('UPLOAD_TEAM_LOGO_ERROR'),
+                marker('ERROR.UPLOAD_TEAM_LOGO'),
                 [message],
             );
         }

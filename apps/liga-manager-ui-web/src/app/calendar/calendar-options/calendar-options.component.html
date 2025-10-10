@@ -1,5 +1,5 @@
 <div mat-dialog-title class="mat-sys-primary text-center" translate>
-    CALENDAR_SETTINGS_OPTIONS
+    TITLE.CALENDAR_SETTINGS
 </div>
 <mat-dialog-content>
     <div class="flex justify-center flex-col space-y-4" [formGroup]="data.options">
@@ -35,7 +35,7 @@
         }
         <div>
             <mat-form-field class="w-full">
-                <mat-label translate>TEAMS</mat-label>
+                <mat-label translate>LABEL.TEAMS</mat-label>
                 <mat-select formControlName="team_ids" name="teams" multiple cySelector="select-team">
                     @for (team of allTeams$ | async; track team) {
                     <mat-option [value]="team?.id">

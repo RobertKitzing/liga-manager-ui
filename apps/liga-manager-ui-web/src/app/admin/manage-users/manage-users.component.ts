@@ -91,7 +91,7 @@ export class ManageUsersComponent {
             {
                 ...defaultDialogConfig,
                 data: {
-                    body: this.translateService.instant('CONFIRM.ARE_YOU_SURE_TO_DELETE_USER', { user: user?.email }),
+                    body: this.translateService.instant('CONFIRM.ARE_YOU_SURE_TO_DELETE_USER', { name: user?.email }),
                 },
             },
         )
@@ -103,7 +103,7 @@ export class ManageUsersComponent {
                         try {
                             await firstValueFrom(this.userService.deleteUser({ user_id: user?.id || '' }));
                             this.notificationService.showSuccessNotification(
-                                this.translateService.instant('SUCCESS.DELETE_USER'),
+                                this.translateService.instant('SUCCESS.DELETE_USER', { name: user?.email }),
                             );
                         } catch (error) {
                             console.error(error);

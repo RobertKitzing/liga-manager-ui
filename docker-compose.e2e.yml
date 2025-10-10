@@ -1,6 +1,5 @@
 volumes:
   team-logos:
-  assets:
   mysql-data:
 
 services:
@@ -8,18 +7,15 @@ services:
     image: ${UI_IMAGE}:${UI_TAG}
     environment:
       GOOGLE_MAPS_API_KEY: ""
-      USE_IMGPROXY: false
+      USE_IMGPROXY: true
     ports:
       - "80:80"
     volumes:
       - ./nginx.e2e.conf:/etc/nginx/conf.d/default.conf
-      - assets:/ui/browser/assets
-      - team-logos:/ui/browser/logos
-    depends_on:
-      - api
-      - mariadb
-      - redis
-
+  imgproxy:
+    image: ${UI_IMAGE}:${UI_TAG}
+    volumes:
+      - team-logos:/lima/logos:ro
   api:
     container_name: lima-api
     image: mklocke/liga-manager-api:${API_TAG}

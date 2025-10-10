@@ -4,12 +4,12 @@
 <mat-dialog-content class="h-full">
     <mat-card class="w-full h-full p-4">
         <mat-card-title translate class="text-center">
-            CANCEL_MATCH_TITLE
+            TITLE.CANCEL_MATCH
         </mat-card-title>
         <mat-card-content class="h-full">
             <div class="p-4 h-full">
                 <mat-form-field class="h-full w-full" subscriptSizing="dynamic">
-                    <mat-label translate>CANCEL_MATCH_REASON</mat-label>
+                    <mat-label translate>LABEL.CANCEL_MATCH_REASON</mat-label>
                     <textarea
                         matInput
                         #reason
@@ -20,9 +20,9 @@
                     ></textarea>
                     <mat-hint align="end">{{ reason.value.length }} / 255</mat-hint>
                     @if (cancelMatchReason.hasError('maxlength')) {
-                    <mat-error class="text-center" translate>
-                        Cancellation reason exceeds maximum length of 255
-                    </mat-error>
+                        <mat-error class="text-center">
+                            {{ 'ERROR.FORM.MAX_LENGTH' | translate: { maxLength: 255 } }}
+                        </mat-error>
                     }
                 </mat-form-field>
             </div>

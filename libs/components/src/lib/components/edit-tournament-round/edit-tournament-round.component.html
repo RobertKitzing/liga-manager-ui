@@ -5,7 +5,7 @@
         <div class="flex justify-between">
             <div class="text-center m-2 grow">
                 @if (createNext()) {
-                    <span>{{'EDITING_ROUND' | translate: { round: round()?.number! + 1 } }}</span>
+                    <span>{{ 'TITLE.EDITING_ROUND' | translate: { round: round()?.number! + 1 } }}</span>
                 }
             </div>
         </div>
@@ -13,7 +13,7 @@
     <mat-card-content>
         <div class="flex justify-evenly items-center flex-col md:flex-row space-x-0 md:space-x-4">
             <mat-form-field class="w-full" subscriptSizing="dynamic">
-                <mat-label translate>TOURNAMENT_ROUND_FROM_DATE</mat-label>
+                <mat-label translate>LABEL.TOURNAMENT_ROUND_PLAN_DATE</mat-label>
                 <mat-date-range-input [formGroup]="roundDates" [rangePicker]="roundDatesPicker">
                     <input matStartDate formControlName="from" cySelector="input-tournament-round-from-date">
                     <input matEndDate formControlName="to" cySelector="input-tournament-round-to-date">

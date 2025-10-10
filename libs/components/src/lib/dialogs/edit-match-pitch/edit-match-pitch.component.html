@@ -4,7 +4,7 @@
 <mat-dialog-content class="h-full">
     <mat-card class="w-full h-full p-4">
         <mat-card-title translate class="text-center">
-            EDIT_MATCH_PITCH_TITLE
+            TITLE.EDIT_MATCH_PITCH
         </mat-card-title>
         <mat-card-content>
             <div class="grid grid-cols-1 gap-4 h-full items-center">
@@ -24,14 +24,14 @@
                     }
                 </div>
                 <div class="flex justify-center items-center space-x-4">
-                    <div translate>PITCH_NOT_THERE_HINT</div>
+                    <div translate>HINT.PITCH_NOT_THERE</div>
                     <button matButton="outlined" (click)="createPitch()" cySelector="button-create-pitch">
                         {{ "BUTTON.CREATE_PITCH" | translate }}
                     </button>
                 </div>
                 @if (newMatchPitchFC.value) {
                     <div class="flex justify-center flex-col">
-                        <div translate class="text-center">NEW_PITCH</div>
+                        <div translate class="text-center">LABEL.NEW_PITCH</div>
                         <span class="text-center">{{ newMatchPitchFC.value.label }}</span>
                     </div>
                 }

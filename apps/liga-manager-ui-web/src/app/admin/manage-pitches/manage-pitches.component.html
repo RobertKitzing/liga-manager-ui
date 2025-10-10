@@ -3,7 +3,7 @@
         <mat-card-title>
             <div class="flex items-center m-4">
                 <mat-form-field class="grow pr-6" subscriptSizing="dynamic">
-                    <mat-label translate>PLACEHOLDER.SEARCH_PITCH</mat-label>
+                    <mat-label translate>LABEL.SEARCH_PITCH</mat-label>
                     <input matInput [formControl]="searchPitch" cySelector="input-search-pitch"/>
                 </mat-form-field>
                 <button matIconButton (click)="createPitch()" cySelector="button-create-pitch">
@@ -25,7 +25,7 @@
                             </ng-container>
                             <ng-container matColumnDef="latitude">
                                 <th mat-header-cell *matHeaderCellDef>
-                                    <span translate>LATITUDE</span>
+                                    <span translate>TABLE_HEADER.LATITUDE</span>
                                 </th>
                                 <td mat-cell *matCellDef="let pitch">
                                     {{ pitch.location_latitude }}
@@ -33,7 +33,7 @@
                             </ng-container>
                             <ng-container matColumnDef="longitude">
                                 <th mat-header-cell *matHeaderCellDef>
-                                    <span translate>LONGITUDE</span>
+                                    <span translate>TABLE_HEADER.LONGITUDE</span>
                                 </th>
                                 <td mat-cell *matCellDef="let pitch">
                                     {{ pitch.location_longitude }}

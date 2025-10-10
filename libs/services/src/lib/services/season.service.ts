@@ -2,10 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { map, of, take } from 'rxjs';
 import {
     RankingByIdGQL,
-    ScheduleAllMatchesForMatchDayGQL,
-    ScheduleAllMatchesForMatchDayMutationVariables,
-    ScheduleAllMatchesForSeasonGQL,
-    ScheduleAllMatchesForSeasonMutationVariables,
     SeasonByIdGQL,
     SeasonListGQL,
     SeasonPenaltiesGQL,
@@ -22,10 +18,6 @@ export class SeasonService {
     private seasonByIdGQL = inject(SeasonByIdGQL);
 
     private rankingGQL = inject(RankingByIdGQL);
-
-    private scheduleAllMatchesForSeasonGQL = inject(ScheduleAllMatchesForSeasonGQL);
-
-    private scheduleAllMatchesForMatchDayGQL = inject(ScheduleAllMatchesForMatchDayGQL);
 
     private seasonPenaltiesGQL = inject(SeasonPenaltiesGQL);
 
@@ -59,34 +51,6 @@ export class SeasonService {
     getSeasonPenalties(params: SeasonPenaltiesQueryVariables) {
         return this.seasonPenaltiesGQL.watch(params).valueChanges.pipe(
             map(({ data }) => data.season?.ranking?.penalties),
-        );
-    }
-
-    scheduleAllMatchesForMatchDay(params: ScheduleAllMatchesForMatchDayMutationVariables, seasonId?: string) {
-        return this.scheduleAllMatchesForMatchDayGQL.mutate(
-            params,
-            {
-                refetchQueries: [
-                    {
-                        query: this.seasonByIdGQL.document,
-                        variables: { id: seasonId },
-                    },
-                ],
-            },
-        );
-    }
-
-    scheduleAllMatchesForSeason(params: ScheduleAllMatchesForSeasonMutationVariables) {
-        return this.scheduleAllMatchesForSeasonGQL.mutate(
-            params,
-            {
-                refetchQueries: [
-                    {
-                        query: this.seasonByIdGQL.document,
-                        variables: { id: params.season_id },
-                    },
-                ],
-            },
         );
     }
 

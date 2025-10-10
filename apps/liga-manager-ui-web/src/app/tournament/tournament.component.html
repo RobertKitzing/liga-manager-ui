@@ -29,7 +29,7 @@
                                     class="text-center"
                                     #tournamenRoundSelect
                                     [formControl]="selectedTournamentRoundIdFC"
-                                    placeholder="{{ 'PLACEHOLDER.SELECT_TOURNAMENT_ROUND' | translate }}"
+                                    placeholder="{{ 'LABEL.SELECT_TOURNAMENT_ROUND' | translate }}"
                                 >
                                     @for (round of tournament?.rounds || [] | sortBy:'number'; track $index) {
                                         <mat-option [value]="round?.id">

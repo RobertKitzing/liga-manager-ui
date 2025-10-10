@@ -60,7 +60,7 @@
                                 *matHeaderCellDef
                                 mat-sort-header="team_name"
                             >
-                                <span translate>TEAM_NAME</span>
+                                <span translate>TABLE_HEADER.TEAM_NAME</span>
                             </th>
                             <td
                                 mat-cell
@@ -78,9 +78,9 @@
                                 mat-sort-header="matches"
                             >
                                 <span class="sm:hidden">{{
-                                    "GAMES" | translate | truncate
+                                    "TABLE_HEADER.GAMES" | translate | truncate
                                 }}</span>
-                                <span class="hidden sm:flex" translate>GAMES</span>
+                                <span class="hidden sm:flex" translate>TABLE_HEADER.GAMES</span>
                             </th>
                             <td
                                 class="w-1"
@@ -97,7 +97,7 @@
                                 mat-header-cell
                                 *matHeaderCellDef
                             >
-                                <span translate>WINS_DRAWS_LOSSES</span>
+                                <span translate>TABLE_HEADER.WINS_DRAWS_LOSSES</span>
                             </th>
                             <td
                                 class="w-1 hidden sm:table-cell"
@@ -118,7 +118,7 @@
                                 mat-header-cell
                                 *matHeaderCellDef
                             >
-                                <span translate>SCORED_CONCEDED</span>
+                                <span translate>TABLE_HEADER.SCORED_CONCEDED</span>
                             </th>
                             <td
                                 class="w-1 hidden sm:table-cell"
@@ -140,7 +140,7 @@
                                 *matHeaderCellDef
                                 mat-sort-header="goaldiff"
                             >
-                                <span translate>SCORED_CONCEDED_DIFF</span>
+                                <span translate>TABLE_HEADER.SCORED_CONCEDED_DIFF</span>
                             </th>
                             <td
                                 class="w-1 hidden sm:table-cell"
@@ -156,9 +156,9 @@
                         <ng-container matColumnDef="points">
                             <th class="w-1" mat-header-cell *matHeaderCellDef>
                                 <span class="sm:hidden">
-                                    {{ "POINTS" | translate | truncate }}
+                                    {{ "TABLE_HEADER.POINTS" | translate | truncate }}
                                 </span>
-                                <span class="hidden sm:flex" translate>POINTS</span>
+                                <span class="hidden sm:flex" translate>TABLE_HEADER.POINTS</span>
                             </th>
                             <td
                                 class="w-1"
@@ -189,7 +189,7 @@
                                 >
                                     <div class="flex justify-evenly">
                                         <div class="flex flex-col">
-                                            <span translate>WINS_DRAWS_LOSSES</span>
+                                            <span translate>TABLE_HEADER.WINS_DRAWS_LOSSES</span>
                                             <span>
                                                 {{ element.wins }}:{{ element.draws }}:{{ element.losses }}
                                             </span>

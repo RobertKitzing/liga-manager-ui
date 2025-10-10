@@ -1,8 +1,8 @@
 <h1 mat-dialog-title class="text-center mat-sys-primary" translate>
     @if (user) {
-        <span>EDIT_USER_TITLE</span>
+        <span translate>TITLE.EDIT_USER</span>
     } @if (!user) {
-        <span translate>ADD_USER_TITLE</span>
+        <span translate>TITLE.ADD_USER</span>
     }
 </h1>
 <div mat-dialog-content class="flex justify-center w-full mt-2 mb-2">
@@ -11,19 +11,19 @@
         class="flex flex-col justify-center w-full p-2"
     >
         <mat-form-field>
-            <mat-label translate>EMAIL</mat-label>
+            <mat-label translate>LABEL.EMAIL</mat-label>
             <input matInput formControlName="email" cySelector="input-email" trim/>
         </mat-form-field>
         <mat-form-field>
-            <mat-label translate>FIRST_NAME</mat-label>
+            <mat-label translate>LABEL.FIRST_NAME</mat-label>
             <input matInput formControlName="first_name" cySelector="input-first-name"/>
         </mat-form-field>
         <mat-form-field>
-            <mat-label translate>LAST_NAME</mat-label>
+            <mat-label translate>LABEL.LAST_NAME</mat-label>
             <input matInput formControlName="last_name" cySelector="input-last-name"/>
         </mat-form-field>
         <mat-form-field>
-            <mat-label translate>USER_ROLE</mat-label>
+            <mat-label translate>LABEL.USER_ROLE</mat-label>
             <mat-select formControlName="role" name="userRole" cySelector="select-user-role">
                 <mat-option cySelector="user-role-admin" value="admin">
                     <span translate>UserRole.admin</span>
@@ -35,7 +35,7 @@
         </mat-form-field>
         @if (userFormGroup.value.role === UserRole.TeamManager) {
             <mat-form-field>
-                <mat-label translate>TEAMS</mat-label>
+                <mat-label translate>LABEL.TEAMS</mat-label>
                 <input matInput [formControl]="searchTeam" />
                 <mat-select formControlName="team_ids" name="teams" multiple cySelector="select-team">
                     @for (team of allTeams$ | async; track team) {

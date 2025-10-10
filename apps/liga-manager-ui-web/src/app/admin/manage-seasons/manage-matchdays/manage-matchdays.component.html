@@ -3,7 +3,7 @@
         @if (!season()?.match_days || season()?.match_days?.length === 0) {
             <div>
                 <mat-form-field subscriptSizing="dynamic">
-                    <mat-label translate>START_SEASON_DATE</mat-label>
+                    <mat-label translate>LABEL.START_SEASON_DATE</mat-label>
                     <input matInput [matDatepicker]="startSeasonDatePicker"
                         cySelector="input-tournament-season-start-date"
                         formControlName="seasonStartDate"
@@ -14,12 +14,12 @@
             </div>
             <div>
                 <mat-checkbox formControlName="secondHalf">
-                    <mat-label translate>SECOND_HALF</mat-label>
+                    <mat-label translate>LABEL.SECOND_HALF</mat-label>
                 </mat-checkbox>
             </div>
             <div>
                 <mat-form-field subscriptSizing="dynamic">
-                    <mat-label translate>BETWEEN_MATCHDAYS_OFFSET</mat-label>
+                    <mat-label translate>LABEL.BETWEEN_MATCHDAYS_OFFSET</mat-label>
                     <input matInput type="number" formControlName="betweenMatchDaysOffset">
                 </mat-form-field>
             </div>

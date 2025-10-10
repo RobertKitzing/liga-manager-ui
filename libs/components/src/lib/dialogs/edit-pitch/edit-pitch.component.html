@@ -1,5 +1,5 @@
 <div mat-dialog-title class="mat-sys-primary text-center" translate>
-    EDIT_PITCH_DIALOG_TITLE
+    TITLE.EDIT_PITCH_DIALOG
 </div>
 <mat-dialog-content>
     <div
@@ -7,21 +7,21 @@
         class="grid grid-cols-1 h-full items-center pt-4"
     >
         <mat-form-field>
-            <mat-label translate>PITCH_LABEL</mat-label>
+            <mat-label translate>LABEL.PITCH</mat-label>
             <input matInput formControlName="label" cySelector="input-pitch-name"/>
         </mat-form-field>
         @if (googleMapsApiKey()) {
             <div>
-                <span translate>ADDRESS_SEARCH</span>
+                <span translate>LABEL.ADDRESS_SEARCH</span>
                 <div #adressAutoComplete></div>
             </div>
         }
         <mat-form-field>
-            <mat-label translate>LONGITUDE</mat-label>
+            <mat-label translate>LABEL.LONGITUDE</mat-label>
             <input matInput formControlName="location_longitude" type="number" cySelector="input-longitude"/>
         </mat-form-field>
         <mat-form-field>
-            <mat-label translate>LATITUDE</mat-label>
+            <mat-label translate>LABEL.LATITUDE</mat-label>
             <input matInput formControlName="location_latitude" type="number" cySelector="input-latitude"/>
         </mat-form-field>
         @if (newPitch) {

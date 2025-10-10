@@ -40,7 +40,7 @@ export class AdminComponent {
 
     get currentRoute() {
         const url = this.router.url.split('/')[2].split('?')[0];
-        return `NAVIGATION.ADMIN.${url?.toUpperCase()}`;
+        return `NAVIGATION_ADMIN.${url?.toUpperCase()}`;
     }
 
 }

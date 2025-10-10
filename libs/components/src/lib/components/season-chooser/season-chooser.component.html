@@ -9,7 +9,7 @@
     >
         @if (clearable()) {
             <mat-option>
-                <span translate>DESELECT_SEASON</span>
+                <span translate>SELECT_OPTION.DESELECT_SEASON</span>
             </mat-option>
         }
         @for (season of seasonList$ | async; track season) {

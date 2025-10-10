@@ -11,10 +11,9 @@ import { Team } from '@liga-manager-api/graphql';
 import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { MatButtonModule } from '@angular/material/button';
 import { add, formatISO, parseISO, set } from 'date-fns';
-import { firstValueFrom } from 'rxjs';
 import { TZDate } from '@date-fns/tz';
 import { select } from '@ngxs/store';
-import { AppSettingsSelectors, PitchSelectors } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, PitchSelectors, ScheduleAllMatchesForMatchDay, ScheduleAllMatchesForSeason } from '@liga-manager-ui/states';
 
 class MatchAppointmentFormGroup extends FormGroup {
 
@@ -113,10 +112,13 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
                 unavailable_team_ids: fg.controls['unavailableTeams'].value.map((t: Team) => t.id),
             }),
         ) || [];
-        await firstValueFrom(this.seasonService.scheduleAllMatchesForMatchDay({
-            match_day_id: matchDay.id,
-            match_appointments,
-        }, this.season()?.id));
+        this.store.dispatch(new ScheduleAllMatchesForMatchDay(
+            {
+                match_day_id: matchDay.id,
+                match_appointments,
+            },
+            this.season()?.id || '',
+        ));
     }
 
     async scheduleAllMatchesForSeason() {
@@ -136,7 +138,7 @@ export class ManageScheduleMatchesComponent extends ManageSeasonBaseComponent im
             }),
         ) || [];
 
-        await firstValueFrom(this.seasonService.scheduleAllMatchesForSeason({
+        this.store.dispatch(new ScheduleAllMatchesForSeason({
             season_id: this.season()?.id || '',
             match_appointments,
         }));

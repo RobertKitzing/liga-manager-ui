@@ -18,7 +18,7 @@
                                 placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
                             >
                                 <mat-option [value]="'0'">
-                                    {{ "ALL_TEAMS" | translate }}
+                                    <span translate>SELECT_OPTION.ALL_TEAMS</span>
                                 </mat-option>
                                 @for (team of season()?.teams || [] | sortBy:'name'; track team) {
                                     <mat-option [value]="team?.id">

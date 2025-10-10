@@ -3,9 +3,9 @@
 </div>
 <mat-dialog-content>
     <div class="flex justify-center items-center flex-col space-y-4">
-        <span translate>REPLACE_TEAM</span>
+        <span translate>LABEL.REPLACE_TEAM</span>
         <span>{{ data.teamToBeReplaced.name }}</span>
-        <span translate>REPLACE_TEAM_WITH</span>
+        <span translate>LABEL.REPLACE_TEAM_WITH</span>
         @if(allTeams$ | async; as allTeams) {
             <lima-team-auto-complete [teams]="allTeams" (teamSelected)="replaceWithTeamId.set($event.id)"></lima-team-auto-complete>
         }

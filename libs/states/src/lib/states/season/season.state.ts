@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, RemoveTeamFromSeasonGQL, ReplaceTeamInSeasonGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
+import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, RemoveTeamFromSeasonGQL, ReplaceTeamInSeasonGQL, ScheduleAllMatchesForMatchDayGQL, ScheduleAllMatchesForSeasonGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
 import { Action, State, StateContext } from '@ngxs/store';
-import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, SetSeasons, StartSeason } from './actions';
+import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, ScheduleAllMatchesForMatchDay, ScheduleAllMatchesForSeason, SetSeasons, StartSeason } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedSeason } from '../selected-items';
 import { Apollo, gql } from 'apollo-angular';
@@ -46,6 +46,10 @@ export class SeasonState {
     private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
 
     private replaceTeamInSeasonGQL = inject(ReplaceTeamInSeasonGQL);
+
+    private scheduleAllMatchesForMatchDayGQL = inject(ScheduleAllMatchesForMatchDayGQL);
+
+    private scheduleAllMatchesForSeasonGQL = inject(ScheduleAllMatchesForSeasonGQL);
 
     private apollo = inject(Apollo);
 
@@ -232,6 +236,36 @@ export class SeasonState {
                     {
                         query: this.seasonByIdGQL.document,
                         variables: { id: action.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(ScheduleAllMatchesForMatchDay)
+    scheduleAllMatchesForMatchDay(_: StateContext<SeasonStateModel>, action: ScheduleAllMatchesForMatchDay) {
+        return this.scheduleAllMatchesForMatchDayGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(ScheduleAllMatchesForSeason)
+    scheduleAllMatchesForSeason(_: StateContext<SeasonStateModel>, action: ScheduleAllMatchesForSeason) {
+        return this.scheduleAllMatchesForSeasonGQL.mutate(
+            action.payload,
+            {
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.payload.season_id },
                     },
                 ],
             },

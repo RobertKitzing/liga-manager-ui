@@ -3,7 +3,7 @@
         <mat-card-title>
             <div class="flex items-center m-4">
                 <mat-form-field class="grow pr-6" subscriptSizing="dynamic">
-                    <mat-label translate>SEARCH</mat-label>
+                    <mat-label translate>LABEL.SEARCH</mat-label>
                     <input matInput [formControl]="searchUser" />
                 </mat-form-field>
                 <button matIconButton (click)="createUser()" cySelector="button-create-user">
@@ -24,13 +24,13 @@
                                 <div class="grid grid-cols-2 mt-2 mb-2 gap-2">
                                     <div translate>EMAIL</div>
                                     <div>{{ user.email }}</div>
-                                    <div translate>FIRST_NAME</div>
+                                    <div translate>LABEL.FIRST_NAME</div>
                                     <div>{{ user.first_name }}</div>
                                     <div translate>LAST_NAME</div>
                                     <div>{{ user.last_name }}</div>
-                                    <div translate>TEAMS</div>
+                                    <div translate>LABEL.TEAMS</div>
                                     <div class="flex flex-col">
-                                        @for (team of user.teams; track team) {
+                                        @for (team of user.teams; track team?.id) {
                                         <div>
                                             <p>{{ team.name }}</p>
                                         </div>

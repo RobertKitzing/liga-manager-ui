@@ -1,8 +1,4 @@
 {
-    "ADDRESS_SEARCH": "",
-    "ADD_USER_TITLE": "Neuer User",
-    "ALL_TEAMS": "Alle Teams",
-    "BETWEEN_MATCHDAYS_OFFSET": "",
     "BUTTON": {
         "ADD_MATCH": "",
         "CANCEL": "abbrechen",
@@ -11,6 +7,7 @@
         "CLOSE": "schließen",
         "CONTACT": "Kontakt",
         "CREATE_MATCHDAYS": "",
+        "CREATE_NEXT_ROUND": "",
         "CREATE_PITCH": "",
         "CREATE_SEASON": "",
         "CREATE_TOURNAMENT": "",
@@ -25,6 +22,7 @@
         "EDIT_RESULT": "Ergebnis",
         "END_SEASON": "",
         "END_TOURNAMENT": "",
+        "FORGOT_PASSWORD": "",
         "LOGIN": "anmelden",
         "LOGOUT": "abmelden",
         "NO": "",
@@ -37,6 +35,7 @@
         "START_SEASON": "",
         "START_TOURNAMENT": "",
         "UPDATE_MATCHDAYS": "",
+        "UPLOAD_TEAM_LOGO": "",
         "YES": ""
     },
     "CALENDAR": {
@@ -45,12 +44,6 @@
         "dayGridYear": "",
         "list": ""
     },
-    "CALENDAR_SETTINGS_OPTIONS": "",
-    "CANCELLATION_REASON": "",
-    "CANCEL_MATCH_REASON": "",
-    "CANCEL_MATCH_TITLE": "",
-    "CHAMPIONSHIP_COUNT": "Meistertitel",
-    "CHANGE_PASSWORD_TITLE": "",
     "CONFIRM": {
         "ARE_YOU_SURE_TO_DELETE_PENALTY": "",
         "ARE_YOU_SURE_TO_DELETE_PITCH": "",
@@ -62,44 +55,64 @@
         "ARE_YOU_SURE_TO_END_TOURNAMENT": "",
         "TITLE": ""
     },
-    "CREATE_NEW_SEASON_TITLE": "",
-    "CREATE_NEW_TOURNAMENT_TITLE": "",
-    "CREATE_NEXT_ROUND": "",
-    "CURRENT_TEAM_LOGO": "",
-    "Cancellation reason exceeds maximum length of 255": "",
     "DARKMODE": {
         "DARK_MODE": "",
         "LIGHT_MODE": "",
         "SYSTEM_MODE": ""
     },
-    "DESELECT_SEASON": "",
-    "DESELECT_TOURNAMENT": "",
-    "EDITING_ROUND": "",
-    "EDIT_MATCH_KICKOFF_TITLE": "",
-    "EDIT_MATCH_PITCH_TITLE": "",
-    "EDIT_PENALTY_DIALOG_TITLE": "",
-    "EDIT_PITCH_DIALOG_TITLE": "",
     "EMAIL": "",
     "ERROR": {
         "BAD_REQUEST": "",
         "FORM": {
-            "EMAIL-INVALID": ""
+            "EMAIL_INVALID": "",
+            "MAX_LENGTH": "",
+            "USERNAME_REQUIRED": ""
         },
         "OLD_PASSWORD_WRONG": "",
-        "UNKNOWN_NETWORK_ERROR": ""
+        "PASSWORD_TOKEN_INVALID": "",
+        "UNKNOWN_NETWORK_ERROR": "",
+        "UPLOAD_TEAM_LOGO": ""
     },
-    "ERRORS": {
-        "PASSWORD_TOKEN_INVALID": ""
-    },
-    "FIRST_NAME": "",
-    "FORGOT_PASSWORD": "Passwort vergessen",
     "FROM_TO_OFFSET": "",
-    "GAMES": "Spiele",
+    "HINT": {
+        "NEW_PASSWORD": "",
+        "PITCH_NOT_THERE": ""
+    },
+    "HOF": {
+        "CHAMPIONSHIP_COUNT": "",
+        "TOURNAMENT_COUNT": ""
+    },
+    "LABEL": {
+        "ADDRESS_SEARCH": "",
+        "BETWEEN_MATCHDAYS_OFFSET": "",
+        "CANCEL_MATCH_REASON": "",
+        "EMAIL": "",
+        "FIRST_NAME": "",
+        "LAST_NAME": "",
+        "LATITUDE": "",
+        "LONGITUDE": "",
+        "NEW_KICKOFF_DATE": "",
+        "NEW_PASSWORD": "",
+        "NEW_PITCH": "",
+        "NEW_SEASON_NAME": "",
+        "PHONE": "",
+        "PITCH": "",
+        "REPLACE_TEAM": "",
+        "REPLACE_TEAM_WITH": "",
+        "SEARCH": "",
+        "SEARCH_PITCH": "",
+        "SECOND_HALF": "",
+        "SELECT_TOURNAMENT_ROUND": "",
+        "START_SEASON_DATE": "",
+        "TEAMS": "",
+        "TEAM_NAME": "",
+        "TOURNAMENT_ROUND_PLAN_DATE": "",
+        "USERNAME": "",
+        "USER_ROLE": ""
+    },
     "LAST_NAME": "",
-    "LATITUDE": "",
     "LOCAL_TIME_ZONE_HINT": "Uhrzeit ({{ timeZone }})",
     "LOGIN_TITLE": "",
-    "LONGITUDE": "",
     "MAINTENANCE_ACTIVE_BODY": "",
     "MAINTENANCE_ACTIVE_TITLE": "",
     "MATCHDAY": "{{ matchDay }}. Spieltag",
@@ -134,52 +147,36 @@
         "CONTACT": "",
         "TEAM_LOGOS": ""
     },
-    "NEW_KICKOFF": "",
-    "NEW_KICKOFF_DATE": "",
-    "NEW_PASSWORD": "",
-    "NEW_PASSWORD_HINT": "",
-    "NEW_PASSWORD_TITLE": "",
-    "NEW_PITCH": "",
     "NEW_TEAM": "",
     "NEW_TEAM_LOGO": "",
     "NO_EVENTS": "",
     "NO_PTICH_SET": "wo?",
     "NO_TIME_SET": "wann?",
-    "OLD_KICKOFF": "",
     "OLD_PASSWORD": "",
     "OLD_PITCH": "",
     "PASSWORD": "Passwort",
     "PASSWORD_REQUIRED": "Passwort erforderlich",
     "PENALTIES": "",
-    "PENALTY_POINTS": "",
-    "PENALTY_REASON": "",
-    "PHONE": "",
-    "PITCH_LABEL": "",
-    "PITCH_NOT_THERE_HINT": "",
     "PLACEHOLDER": {
-        "NEW_SEASON_NAME": "",
         "NEW_TOURNAMENT_NAME": "",
         "PENALTY_POINTS": "",
         "PENALTY_REASON": "",
-        "SEARCH_PITCH": "",
         "SELECT_MATCHDAY": "Spieltag",
         "SELECT_PITCH": "",
         "SELECT_SEASON": "",
         "SELECT_TEAM": "Team auswählen",
         "SELECT_TOURNAMENT": "",
-        "SELECT_TOURNAMENT_ROUND": "",
         "UNAVAILABLE_TEAMS": ""
     },
-    "POINTS": "Punkte",
-    "REPLACE_TEAM": "",
-    "REPLACE_TEAM_WITH": "",
     "SCORED_CONCEDED": "Tore",
     "SCORED_CONCEDED_DIFF": "",
-    "SEARCH": "",
     "SEARCH_TEAM": "",
-    "SECOND_HALF": "",
+    "SELECT_OPTION": {
+        "ALL_TEAMS": "",
+        "DESELECT_SEASON": "",
+        "DESELECT_TOURNAMENT": ""
+    },
     "SETTINGS": "",
-    "START_SEASON_DATE": "",
     "SUCCESS": {
         "ADD_PENALTY": "",
         "ADD_TEAM_TO_SEASON": "",
@@ -208,6 +205,8 @@
         "REPLACE_TEAM_IN_SEASON": "",
         "RESCHEDULE_MATCH_DAYS": "",
         "SAVE": "",
+        "SCHEDULE_ALL_MATCHES_FOR_MATCHDAY": "",
+        "SCHEDULE_ALL_MATCHES_FOR_SEASON": "",
         "SEND_MAIL": "",
         "START_SEASON": "",
         "START_TOURNAMENT": "",
@@ -230,28 +229,47 @@
             }
         }
     },
-    "TEAMS": "",
-    "TEAMS_IN_SEASON": "",
-    "TEAM_NAME": "Team",
-    "TITLE": {
-        "REPLACE_TEAM_IN_SEASON": ""
+    "TABLE_HEADER": {
+        "GAMES": "",
+        "LATITUDE": "",
+        "LONGITUDE": "",
+        "PENALTY_POINTS": "",
+        "PENALTY_REASON": "",
+        "POINTS": "",
+        "SCORED_CONCEDED": "",
+        "SCORED_CONCEDED_DIFF": "",
+        "TEAM_NAME": "",
+        "WINS_DRAWS_LOSSES": ""
     },
-    "TOURNAMENT_COUNT": "Pokalsiege",
+    "TITLE": {
+        "ADD_USER": "",
+        "CALENDAR_SETTINGS": "",
+        "CANCELLATION_REASON": "",
+        "CANCEL_MATCH": "",
+        "CHANGE_PASSWORD": "",
+        "CREATE_NEW_SEASON": "",
+        "CREATE_NEW_TOURNAMENT": "",
+        "CURRENT_TEAM_LOGO": "",
+        "EDITING_ROUND": "",
+        "EDIT_MATCH_KICKOFF": "",
+        "EDIT_MATCH_PITCH": "",
+        "EDIT_PENALTY_DIALOG": "",
+        "EDIT_PITCH_DIALOG": "",
+        "EDIT_USER": "",
+        "NEW_KICKOFF": "",
+        "NEW_PASSWORD": "",
+        "OLD_KICKOFF": "",
+        "REPLACE_TEAM_IN_SEASON": "",
+        "TEAMS_IN_SEASON": ""
+    },
     "TOURNAMENT_ROUND": "{{ round }}. Runde",
-    "TOURNAMENT_ROUND_FROM_DATE": "",
     "TournamentState": {
         "ended": "beendet",
         "preparation": "vorbereitung",
         "progress": "läuft"
     },
-    "UPLOAD_TEAM_LOGO": "",
-    "UPLOAD_TEAM_LOGO_ERROR": "",
-    "USERNAME": "User",
-    "USERNAME_REQUIRED": "Name erforderlich",
-    "USER_ROLE": "",
     "UserRole": {
         "admin": "Admin",
         "team_manager": "TeamManager"
-    },
-    "WINS_DRAWS_LOSSES": "S:U:N"
+    }
 }

@@ -1,6 +1,7 @@
 import { Users } from '@cypress/fixtures';
 import { futureDate, futureDateSpan, time } from '@cypress/helper';
 import { editMatchResult } from '@cypress/helper/edit-match-result';
+import { type } from '@cypress/helper/type';
 import { faker } from '@faker-js/faker';
 
 describe('Tournament', () => {
@@ -113,10 +114,8 @@ describe('Tournament', () => {
         cy.successSnackbar();
 
         cy.getBySel('button-schedule-match').first().click();
-        cy.getBySel('input-time').clear();
-        cy.getBySel('input-time').type(time());
-        cy.getBySel('input-kickoff-date').clear();
-        cy.getBySel('input-kickoff-date').type(futureDate(), { force: true });
+        type('input-time', time());
+        type('input-kickoff-date', futureDate());
         cy.getBySel('button-schedule-match-submit').click();
         cy.successSnackbar();
 
@@ -144,10 +143,8 @@ describe('Tournament', () => {
         cy.successSnackbar();
 
         cy.getBySel('button-schedule-match').first().click();
-        cy.getBySel('input-time').clear();
-        cy.getBySel('input-time').type(time());
-        cy.getBySel('input-kickoff-date').clear();
-        cy.getBySel('input-kickoff-date').type(futureDate(), { force: true });
+        type('input-time', time());
+        type('input-kickoff-date', futureDate());
         cy.getBySel('button-schedule-match-submit').click();
         cy.successSnackbar();
 
