@@ -1,7 +1,6 @@
 import { Users } from '@cypress/fixtures';
-import { futureDate, futureDateSpan, time } from '@cypress/helper';
-import { editMatchResult } from '@cypress/helper/edit-match-result';
-import { type } from '@cypress/helper/type';
+import { futureDateSpan } from '@cypress/helper';
+import { verifyEditMatchResult, verifyScheduleMatch, verifySetPitch } from '@cypress/helper/edit-match-result';
 import { faker } from '@faker-js/faker';
 
 describe('Tournament', () => {
@@ -109,20 +108,11 @@ describe('Tournament', () => {
         cy.getBySel('select-tournament').click();
         cy.get('mat-option').contains(names[0]).click();
 
-        editMatchResult();
-        cy.getBySel('button-edit-match-result-submit').click();
-        cy.successSnackbar();
+        verifyEditMatchResult();
 
-        cy.getBySel('button-schedule-match').first().click();
-        type('input-time', time());
-        type('input-kickoff-date', futureDate());
-        cy.getBySel('button-schedule-match-submit').click();
-        cy.successSnackbar();
+        verifyScheduleMatch();
 
-        cy.getBySel('button-set-pitch').first().click();
-        cy.get('mat-option').first().click();
-        cy.getBySel('button-save-pitch').click();
-        cy.successSnackbar();
+        verifySetPitch();
 
     });
 
@@ -138,20 +128,11 @@ describe('Tournament', () => {
 
         cy.getBySel('button-next-matchday').click();
 
-        editMatchResult();
-        cy.getBySel('button-edit-match-result-submit').click();
-        cy.successSnackbar();
+        verifyEditMatchResult();
 
-        cy.getBySel('button-schedule-match').first().click();
-        type('input-time', time());
-        type('input-kickoff-date', futureDate());
-        cy.getBySel('button-schedule-match-submit').click();
-        cy.successSnackbar();
+        verifyScheduleMatch();
 
-        cy.getBySel('button-set-pitch').first().click();
-        cy.get('mat-option').first().click();
-        cy.getBySel('button-save-pitch').click();
-        cy.successSnackbar();
+        verifySetPitch();
 
     });
 

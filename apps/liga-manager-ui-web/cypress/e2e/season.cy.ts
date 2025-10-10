@@ -1,6 +1,5 @@
 import { Users } from '@cypress/fixtures';
-import { futureDate, time } from '@cypress/helper';
-import { editMatchResult } from '@cypress/helper/edit-match-result';
+import { futureDate, verifyEditMatchResult, verifyScheduleMatch, verifySetPitch } from '@cypress/helper';
 import { faker } from '@faker-js/faker';
 
 describe('Season', () => {
@@ -178,22 +177,11 @@ describe('Season', () => {
         cy.getBySel('select-season').click();
         cy.get('mat-option').contains(names[0]).click();
 
-        editMatchResult();
-        cy.getBySel('button-edit-match-result-submit').click();
-        cy.successSnackbar();
+        verifyEditMatchResult();
 
-        cy.getBySel('button-schedule-match').first().click();
-        cy.getBySel('input-time').clear({ force: true });
-        cy.getBySel('input-time').type(time());
-        cy.getBySel('input-kickoff-date').clear({ force: true });
-        cy.getBySel('input-kickoff-date').type(futureDate(), { force: true });
-        cy.getBySel('button-schedule-match-submit').click();
-        cy.successSnackbar();
+        verifyScheduleMatch();
 
-        cy.getBySel('button-set-pitch').first().click();
-        cy.get('mat-option').first().click();
-        cy.getBySel('button-save-pitch').click();
-        cy.successSnackbar();
+        verifySetPitch();
 
     });
 
@@ -206,22 +194,11 @@ describe('Season', () => {
         cy.getBySel('select-season').click();
         cy.get('mat-option').contains(names[0]).click();
 
-        editMatchResult();
-        cy.getBySel('button-edit-match-result-submit').click();
-        cy.successSnackbar();
+        verifyEditMatchResult();
 
-        cy.getBySel('button-schedule-match').first().click();
-        cy.getBySel('input-time').clear({ force: true });
-        cy.getBySel('input-time').type(time());
-        cy.getBySel('input-kickoff-date').clear({ force: true });
-        cy.getBySel('input-kickoff-date').type(futureDate(), { force: true });
-        cy.getBySel('button-schedule-match-submit').click();
-        cy.successSnackbar();
+        verifyScheduleMatch();
 
-        cy.getBySel('button-set-pitch').first().click();
-        cy.get('mat-option').first().click();
-        cy.getBySel('button-save-pitch').click();
-        cy.successSnackbar();
+        verifySetPitch();
 
     });
 

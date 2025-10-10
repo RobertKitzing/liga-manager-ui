@@ -12,12 +12,23 @@ services:
       - "80:80"
     volumes:
       - ./nginx.dev.conf:/etc/nginx/conf.d/default.conf
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O /dev/null http://localhost/health || exit 1"]
+      start_period: 1m
+      start_interval: 5s
+      interval: 1m
+      timeout: 5s
   imgproxy:
     build:
       context: .
       dockerfile: Dockerfile.imgproxy
     volumes:
       - team-logos:/lima/logos:ro
+    healthcheck:
+      test: [ "CMD", "imgproxy", "health" ]
+      timeout: "10s"
+      interval: "10s"
+      retries: 3
   api:
     container_name: lima-api
     image: mklocke/liga-manager-api:latest
