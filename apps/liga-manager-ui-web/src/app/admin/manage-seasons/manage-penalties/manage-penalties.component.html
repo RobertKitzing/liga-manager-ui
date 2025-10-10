@@ -15,7 +15,7 @@
         <table mat-table [dataSource]="(penalties$ | async) || []">
             <ng-container matColumnDef="team">
                 <th class="pt-4" mat-header-cell *matHeaderCellDef>
-                    <span translate>TEAM_NAME</span>
+                    <span translate>TABLE_HEADER.TEAM_NAME</span>
                 </th>
                 <td mat-cell *matCellDef="let penalty">
                     {{ penalty.team.name }}
@@ -23,7 +23,7 @@
             </ng-container>
             <ng-container matColumnDef="penalty_reason">
                 <th class="pt-4" mat-header-cell *matHeaderCellDef>
-                    <span translate>PENALTY_REASON</span>
+                    <span translate>TABLE_HEADER.PENALTY_REASON</span>
                 </th>
                 <td mat-cell *matCellDef="let penalty">
                     {{ penalty.reason }}
@@ -31,7 +31,7 @@
             </ng-container>
             <ng-container matColumnDef="penalty_points">
                 <th class="pt-4" mat-header-cell *matHeaderCellDef>
-                    <span translate>PENALTY_POINTS</span>
+                    <span translate>TABLE_HEADER.PENALTY_POINTS</span>
                 </th>
                 <td mat-cell *matCellDef="let penalty">
                     {{ penalty.points }}

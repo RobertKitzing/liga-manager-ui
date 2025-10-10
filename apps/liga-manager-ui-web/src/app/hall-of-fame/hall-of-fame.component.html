@@ -17,7 +17,7 @@
                             </ng-container>
                             <ng-container matColumnDef="team">
                                 <th mat-header-cell *matHeaderCellDef>
-                                    <span translate>TEAM_NAME</span>
+                                    <span translate>TABLE_HEADER.TEAM_NAME</span>
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="flex items-center flex-row">
@@ -27,7 +27,7 @@
                             </ng-container>
                             <ng-container matColumnDef="championshipCount">
                                 <th class="w-1 text-center" mat-header-cell *matHeaderCellDef mat-sort-header="championshipCount">
-                                    <span translate>CHAMPIONSHIP_COUNT</span>
+                                    <span translate>HOF.CHAMPIONSHIP_COUNT</span>
                                 </th>
                                 <td class="w-1 text-center" mat-cell *matCellDef="let element">
                                     {{ element.championshipCount }}
@@ -35,7 +35,7 @@
                             </ng-container>
                             <ng-container matColumnDef="tournamentCount">
                                 <th class="w-1 text-center" mat-header-cell *matHeaderCellDef mat-sort-header="tournamentCount">
-                                    <span translate>TOURNAMENT_COUNT</span>
+                                    <span translate>HOF.TOURNAMENT_COUNT</span>
                                 </th>
                                 <td class="w-1 text-center" mat-cell *matCellDef="let element">
                                     {{ element.tournamentCount }}

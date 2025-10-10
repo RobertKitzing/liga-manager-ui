@@ -6,7 +6,7 @@
 >
     @if (clearable()) {
         <mat-option>
-            <span translate>DESELECT_TOURNAMENT</span>
+            <span translate>SELECT_OPTION.DESELECT_TOURNAMENT</span>
         </mat-option>
     }
     @for (tournament of tournamentList$ | async; track tournament?.id) {
