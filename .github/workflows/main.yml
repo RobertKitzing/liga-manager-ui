@@ -110,7 +110,7 @@ jobs:
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          context: .
+          context: Dockerfile.imgproxy
           load: true
           tags: ${{ env.DOCKER_REPO_IMGPROXY }}:e2e
       - name: Save ui docker image
