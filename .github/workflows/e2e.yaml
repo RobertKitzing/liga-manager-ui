@@ -18,6 +18,10 @@ on:
         description: 'Tag for the API Image'
         required: true
         default: 'latest'
+
+env:
+  HUSKY: 0
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
