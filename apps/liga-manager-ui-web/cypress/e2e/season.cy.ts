@@ -194,6 +194,8 @@ describe('Season', () => {
         cy.getBySel('select-season').click();
         cy.get('mat-option').contains(names[0]).click();
 
+        cy.getBySel('button-next-matchday').click();
+
         verifyEditMatchResult();
 
         verifyScheduleMatch();

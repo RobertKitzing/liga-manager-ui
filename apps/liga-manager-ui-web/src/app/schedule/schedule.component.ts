@@ -20,6 +20,7 @@ import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-i
 import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 import { dispatch, Store } from '@ngxs/store';
 import { SetSelectedMatchDay, SetSelectedSeason, SelectedContextTypes, SetSelectedTeam, SelectedItemsSelectors } from '@liga-manager-ui/states';
+import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 
 @Component({
     selector: 'lima-schedule',
@@ -40,6 +41,7 @@ import { SetSelectedMatchDay, SetSelectedSeason, SelectedContextTypes, SetSelect
         SortByPipe,
         NgxPullToRefreshComponent,
         ReactiveFormsModule,
+        CypressSelectorDirective,
     ],
 })
 export class ScheduleComponent implements OnInit {
