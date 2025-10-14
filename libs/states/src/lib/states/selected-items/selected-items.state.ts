@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { SetSelectedCalendarTeamIds, SetSelectedDarkMode, SetSelectedMatchDay, SetSelectedSeason, SetSelectedTeam, SetSelectedTheme, SetSelectedTournament, SetSelectedTournamentRound } from './actions';
+import { SetSelectedCalendarOptions, SetSelectedDarkMode, SetSelectedMatchDay, SetSelectedSeason, SetSelectedTeam, SetSelectedTheme, SetSelectedTournament, SetSelectedTournamentRound } from './actions';
 import { patch } from '@ngxs/store/operators';
 import { SetSelectedLanguage } from './actions/set-selected-language';
 import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
+
+export interface CalendarOptions {
+    teamIds: string;
+    selectedView: string;
+    duration: {
+        value: number,
+        type?: 'week' | 'month' | 'year',
+    }
+}
 
 export interface Language {
     code: string;
@@ -19,7 +28,7 @@ export interface SelectedItemsStateModel {
     tournamentId: {[ context in SelectedContextTypes ]?: string }
     tournamentRoundId: {[ context in SelectedContextTypes ]?: string }
     language?: Language;
-    calendarTeamIds: string;
+    calendar: Partial<CalendarOptions>;
     theme: string;
     darkMode: DarkModeAppearance | null;
 }
@@ -33,7 +42,14 @@ export interface SelectedItemsStateModel {
         tournamentId: {},
         tournamentRoundId: {},
         language: undefined,
-        calendarTeamIds: '',
+        calendar: {
+            teamIds: '',
+            selectedView: 'list',
+            duration: {
+                value: 1,
+                type: 'month',
+            },
+        },
         theme: 'default',
         darkMode: DarkModeAppearance.system,
     },
@@ -51,9 +67,9 @@ export class SelectedItemsState {
         patchState({ theme: action.theme });
     }
 
-    @Action(SetSelectedCalendarTeamIds)
-    setSelectedCalendarTeamIds({ patchState }: StateContext<SelectedItemsStateModel>, action: SetSelectedCalendarTeamIds) {
-        patchState({ calendarTeamIds: action.payload });
+    @Action(SetSelectedCalendarOptions)
+    setSelectedCalendarTeamIds({ patchState }: StateContext<SelectedItemsStateModel>, action: SetSelectedCalendarOptions) {
+        patchState({ calendar: action.payload });
     }
 
     @Action(SetSelectedLanguage)

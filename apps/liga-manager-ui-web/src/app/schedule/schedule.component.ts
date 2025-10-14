@@ -14,19 +14,21 @@ import {
     SeasonChooserComponent,
 } from '@liga-manager-ui/components';
 import { Match, MatchDay, SeasonState } from '@liga-manager-api/graphql';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NgxPullToRefreshComponent } from 'ngx-pull-to-refresh';
 import { dispatch, Store } from '@ngxs/store';
 import { SetSelectedMatchDay, SetSelectedSeason, SelectedContextTypes, SetSelectedTeam, SelectedItemsSelectors } from '@liga-manager-ui/states';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'lima-schedule',
     templateUrl: './schedule.component.html',
     standalone: true,
     imports: [
+        FormsModule,
         MatToolbarModule,
         SeasonChooserComponent,
         MatButtonModule,
@@ -42,6 +44,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
         NgxPullToRefreshComponent,
         ReactiveFormsModule,
         CypressSelectorDirective,
+        MatSlideToggleModule,
     ],
 })
 export class ScheduleComponent implements OnInit {
@@ -65,6 +68,8 @@ export class ScheduleComponent implements OnInit {
     private seasonService = inject(SeasonService);
 
     private store = inject(Store);
+
+    showCanceledMatches = false;
 
     selectedMatchDayFC = new FormControl();
 

@@ -70,7 +70,6 @@
         "@nx/eslint-plugin": "^21.2.1",
         "@tailwindcss/postcss": "^4.1.10",
         "@types/node": "^20.10.0",
-        "@types/uuid": "^9.0.0",
         "alloyfinger-typescript": "^0.1.19",
         "apollo-angular": "^11.0.0",
         "capacitor-plugin-safe-area": "^4.0.0",
@@ -90,7 +89,7 @@
         "ts-cacheable": "^1.0.10",
         "ts-password-generator": "^1.0.6",
         "tslib": "^2.3.0",
-        "uuid": "^9.0.0",
+        "uuid": "^13.0.0",
         "zone.js": "~0.15.1"
     },
     "devDependencies": {
