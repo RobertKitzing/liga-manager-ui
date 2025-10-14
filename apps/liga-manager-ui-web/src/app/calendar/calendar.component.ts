@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, effect, inject, input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { CalendarQueryVariables } from '@liga-manager-api/graphql';
 import {
     FullCalendarComponent,
@@ -8,7 +8,7 @@ import {
 import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
-import { CalendarService, I18nService, ShareService } from '@liga-manager-ui/services';
+import { CalendarService, I18nService } from '@liga-manager-ui/services';
 import { firstValueFrom, Subject, switchMap, tap } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -20,10 +20,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
-import { CalendarOptionsComponent, CalendarOptionsFormGroup } from './calendar-options/calendar-options.component';
+import { CalendarOptionsComponent } from './calendar-options/calendar-options.component';
 import { Share } from '@capacitor/share';
-import { dispatch, select } from '@ngxs/store';
-import { SelectedItemsSelectors, SetSelectedCalendarTeamIds } from '@liga-manager-ui/states';
+import { Store } from '@ngxs/store';
+import { SelectedItemsSelectors } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-calendar',
@@ -52,23 +52,16 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     canShare = Share.canShare();
 
-    teamIdsLS = select(SelectedItemsSelectors.selectedCalendarTeamIds);
-
-    private dispatchTeamIds = dispatch(SetSelectedCalendarTeamIds);
-
-    private shareService = inject(ShareService);
-
-    team_ids = input<string>();
-
     private dialog = inject(MatDialog);
 
     @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
     selectedSeasonFC = new FormControl();
 
-    eventTrigger = new Subject<CalendarQueryVariables>();
+    eventTrigger = new Subject<{ dates: CalendarQueryVariables, teamIds: string[]}>();
 
-    options = new CalendarOptionsFormGroup(this.teamIdsLS());
+    private store = inject(Store);
+
 
     calendarOptions: CalendarOptions = {
         contentHeight: 'auto',
@@ -77,27 +70,23 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             center: 'title',
             end: '',
         },
-        initialView: this.options.controls['selectedView'].value,
+        initialView: this.store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).selectedView,
         plugins: [dayGridPlugin, listPlugin],
-        duration: {
-            [this.options.controls['duration'].controls.type.value]: this.options.controls.duration.controls.value.value,
-        },
         firstDay: 1,
         editable: false,
-        datesSet: this.viewChanged.bind(this),
     };
 
     calendarApi!: Calendar;
 
     events$ = this.eventTrigger.pipe(
         switchMap((params) =>
-            this.calendarService.getCalendarEvents(params).pipe(
+            this.calendarService.getCalendarEvents(params.dates).pipe(
                 tap((events) => {
-                    this.calendarOptions.events = this.options.controls.team_ids.value?.length > 0
+                    this.calendarOptions.events = params.teamIds.length > 0
                         ?
                         events.filter(
                             (event) => {
-                                return (event.team_ids?.filter((et) => this.options.controls.team_ids.value.includes(et)) || []).length > 0;
+                                return (event.team_ids?.filter((et) => params.teamIds.includes(et)) || []).length > 0;
                             },
                         )
                         :
@@ -109,43 +98,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     private destroyRef = inject(DestroyRef);
 
-    constructor(
-    ) {
-        effect(
-            () => {
-                if (this.team_ids()) {
-                    this.options.controls.team_ids.setValue(this.team_ids()?.split(',') || []);
-                }
-            },
-        );
-    }
-
     ngOnInit() {
         this.refresh();
         this.calendarOptions.locale = this.i18nService.currentLang;
         this.translateService.onLangChange.subscribe((lang) => this.calendarOptions.locale = lang.lang);
-        this.options.controls.selectedView.valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            (view) => {
-                this.calendarApi.changeView(view);
-            },
-        );
-        this.options.controls.duration.valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            () => {
-                this.updateDuration();
-            },
-        );
-        this.options.controls.team_ids.valueChanges.pipe(
-            takeUntilDestroyed(this.destroyRef),
-        ).subscribe(
-            () => {
-                this.triggerEvent();
-                this.dispatchTeamIds(this.options.controls.team_ids.value.join(','));
-            },
-        );
     }
 
     async refresh(event?: Subject<void>) {
@@ -153,31 +109,38 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         event?.next();
     }
 
-    triggerEvent() {
+    triggerEvent(teamIds?: string[]) {
         this.eventTrigger.next({
-            min_date: this.calendarApi?.view.activeStart.toJSON(),
-            max_date: this.calendarApi?.view.activeEnd.toJSON(),
+            dates: {
+                min_date: this.calendarApi?.view.activeStart.toJSON(),
+                max_date: this.calendarApi?.view.activeEnd.toJSON(),
+            },
+            teamIds: teamIds || [],
         });
     }
 
     ngAfterViewInit() {
         this.calendarApi = this.calendarComponent.getApi();
-        this.triggerEvent();
-    }
-
-    viewChanged() {
-        this.calendarApi = this.calendarComponent.getApi();
-        this.triggerEvent();
+        this.store.select(SelectedItemsSelectors.selectedCalendarOptions).pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            (options) => {
+                console.log(options);
+                if (options.selectedView) {
+                    this.calendarApi?.changeView(options.selectedView);
+                }
+                if (options.duration) {
+                    this.calendarApi.setOption('duration', {
+                        [options.duration.type!]: options.duration.value,
+                    });
+                }
+                this.triggerEvent(options.teamIds);
+            },
+        );
     }
 
     prev() {
         this.calendarApi.prev();
-    }
-
-    updateDuration() {
-        this.calendarApi.setOption('duration', {
-            [this.options.controls.duration.controls.type.value]: this.options.controls.duration.controls.value.value,
-        });
     }
 
     next() {
@@ -191,14 +154,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     openSettings() {
         this.dialog.open(CalendarOptionsComponent, {
             ...defaultDialogConfig,
-            data: {
-                options: this.options,
-            },
         });
-    }
-
-    share() {
-        this.shareService.shareCalendar(this.options.controls.team_ids.value.join(','));
     }
 
 }

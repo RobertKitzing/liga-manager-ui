@@ -2,7 +2,7 @@
     TITLE.CALENDAR_SETTINGS
 </div>
 <mat-dialog-content>
-    <div class="flex justify-center flex-col space-y-4" [formGroup]="data.options">
+    <div class="flex justify-center flex-col space-y-4" [formGroup]="options">
         <div class="self-center mt-2">
             <mat-button-toggle-group formControlName="selectedView">
                 <mat-button-toggle value="list">
@@ -19,8 +19,8 @@
                 </mat-button-toggle>
             </mat-button-toggle-group>
         </div>
-        @if (data.options.controls['selectedView'].value === 'list') {
-            <div class="flex justify-center w-full space-x-4" [formGroup]="data.options.controls['duration']">
+        @if (options.controls['selectedView'].value === 'list') {
+            <div class="flex justify-center w-full space-x-4" [formGroup]="options.controls['duration']">
                 <mat-form-field subscriptSizing="dynamic">
                     <input matInput type="number" formControlName="value">
                 </mat-form-field>
@@ -36,15 +36,15 @@
         <div>
             <mat-form-field class="w-full">
                 <mat-label translate>LABEL.TEAMS</mat-label>
-                <mat-select formControlName="team_ids" name="teams" multiple cySelector="select-team">
+                <mat-select formControlName="teamIds" name="teams" multiple cySelector="select-team">
                     @for (team of allTeams$ | async; track team) {
                     <mat-option [value]="team?.id">
                         {{ team?.name }}
                     </mat-option>
                     }
                 </mat-select>
-                @if (data.options.controls.team_ids.value.length > 0) {
-                    <button matSuffix matIconButton aria-label="Clear" (click)="data.options.controls.team_ids.setValue([])" class="mr-4">
+                @if (options.controls.teamIds.value.length > 0) {
+                    <button matSuffix matIconButton aria-label="Clear" (click)="options.controls.teamIds.setValue([])" class="mr-4">
                         <mat-icon>close</mat-icon>
                     </button>
                 }

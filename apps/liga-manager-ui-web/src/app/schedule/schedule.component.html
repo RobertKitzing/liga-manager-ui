@@ -3,14 +3,14 @@
         <div class="flex justify-center mt-2">
             <mat-toolbar class="secondary">
                 <mat-toolbar-row>
-                    <div class="w-full grid grid-cols-2">
-                        <div class="self-center">
+                    <div class="flex w-full">
+                        <div class="grow self-center">
                             <lima-season-chooser
                                 [formControl]="selectedSeasonFC"
                                 [filterStates]="filterSeasonStates"
                             ></lima-season-chooser>
                         </div>
-                        <div class="w-full">
+                        <div class="grow">
                             <mat-select
                                 class="text-center"
                                 #teamSelect
@@ -26,6 +26,18 @@
                                     </mat-option>
                                 }
                             </mat-select>
+                        </div>
+                        <div class="ml-4">
+                            <button matIconButton [matMenuTriggerFor]="filterMenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #filterMenu="matMenu">
+                                <div mat-menu-item>
+                                    <mat-slide-toggle [(ngModel)]="showCanceledMatches">
+                                        <span translate>LABEL.SHOW_CANCELED_MATCHES</span>
+                                    </mat-slide-toggle>
+                                </div>
+                            </mat-menu>
                         </div>
                     </div>
                 </mat-toolbar-row>
@@ -83,7 +95,10 @@
                     <div class="w-full overflow-x-hidden">
                         @for (match of filterMatches(matchDay?.matches || []); track match.id) {
                             <div class="w-full" [animate.enter]="animateEnter()">
-                                <lima-match [match]="match" [matchDay]="matchDay" [readOnly]="viewContext() === 'history'"></lima-match>
+                                @if ( !showCanceledMatches && match.cancelled_at ) {
+                                } @else {
+                                    <lima-match [match]="match" [matchDay]="matchDay" [readOnly]="viewContext() === 'history'"></lima-match>
+                                }
                             </div>
                         }
                     </div>

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideStore, Store } from '@ngxs/store';
 import { SelectedItemsState } from './selected-items.state';
 import { SelectedItemsSelectors } from './selected-items.selectors';
-import { SetSelectedCalendarTeamIds, SetSelectedDarkMode, SetSelectedTheme } from './actions';
+import { SetSelectedCalendarOptions, SetSelectedDarkMode, SetSelectedTheme } from './actions';
 import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode';
 
 describe('SelectedItemsState', () => {
@@ -45,28 +45,18 @@ describe('SelectedItemsState', () => {
     });
 
     it('it should set calendarTeamIds', () => {
-        store.dispatch(new SetSelectedCalendarTeamIds('test'));
-        let calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarTeamIds);
+        store.dispatch(new SetSelectedCalendarOptions({ teamIds: 'test' }));
+        let calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).teamIds;
         expect(calendarTeamIds).toStrictEqual(['test']);
 
-        store.dispatch(new SetSelectedCalendarTeamIds('test,test2'));
-        calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarTeamIds);
+        store.dispatch(new SetSelectedCalendarOptions({ teamIds: 'test,test2' }));
+        calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).teamIds;
         expect(calendarTeamIds).toStrictEqual(['test', 'test2']);
     });
 
     it('it should get calendarTeamIds', () => {
-        const calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarTeamIds);
-        expect(calendarTeamIds).toStrictEqual(['']);
-    });
-
-    it('it should set calendarTeamIds', () => {
-        store.dispatch(new SetSelectedCalendarTeamIds('test'));
-        let calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarTeamIds);
-        expect(calendarTeamIds).toStrictEqual(['test']);
-
-        store.dispatch(new SetSelectedCalendarTeamIds('test,test2'));
-        calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarTeamIds);
-        expect(calendarTeamIds).toStrictEqual(['test', 'test2']);
+        const calendarTeamIds = store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).teamIds;
+        expect(calendarTeamIds).toStrictEqual([]);
     });
 
 });

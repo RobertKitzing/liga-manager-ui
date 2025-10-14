@@ -15,9 +15,14 @@ export class SelectedItemsSelectors {
         return theme || 'default';
     }
 
-    @Selector([SelectedItemsSelectors.properties.calendarTeamIds])
-    static selectedCalendarTeamIds(calendarTeamIds: SelectedItemsStateModel['calendarTeamIds']) {
-        return calendarTeamIds.split(',');
+    @Selector([SelectedItemsSelectors.properties.calendar])
+    static selectedCalendarOptions(calendar: SelectedItemsStateModel['calendar']) {
+        const teamIds = calendar?.teamIds?.split(',') || [];
+        return {
+            teamIds: !teamIds[0] ? [] : teamIds,
+            selectedView: calendar.selectedView,
+            duration: calendar.duration,
+        };
     }
 
     @Selector([SelectedItemsSelectors.properties.language])
