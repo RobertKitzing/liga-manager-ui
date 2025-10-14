@@ -1,3 +1,7 @@
+## 5.8.2 (2025-10-14)
+
+This was a version bump only, there were no code changes.
+
 ## 5.8.1 (2025-10-10)
 
 This was a version bump only, there were no code changes.
