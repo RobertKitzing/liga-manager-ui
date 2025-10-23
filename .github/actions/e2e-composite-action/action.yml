@@ -1,0 +1,53 @@
+name: 'E2E'
+inputs:
+  docker-repo-ui:
+    required: true
+  docker-repo-imgproxy:
+    required: true
+  cypress-record-key:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/cache/restore@v4
+      id: cache
+      with:
+        path: ./node_modules
+        key: modules-${{ hashFiles('package-lock.json') }}
+    - name: Download artifact
+      uses: actions/download-artifact@v4.3.0
+      with:
+        name: lima-img
+        path: /tmp
+    - name: Load image
+      shell: bash
+      run: |
+        docker load --input /tmp/lima.tar
+    - name: Download artifact
+      uses: actions/download-artifact@v4.3.0
+      with:
+        name: imgproxy-img
+        path: /tmp
+    - name: Load image
+      shell: bash
+      run: |
+        docker load --input /tmp/imgproxy.tar
+    - name: Start Services
+      uses: hoverkraft-tech/compose-action@v2.2.0
+      env:
+        UI_IMAGE: ${{ inputs.docker-repo-ui }}
+        IMGPROXY_IMAGE: ${{ inputs.docker-repo-imgproxy }}
+        UI_TAG: 'e2e'
+        API_TAG: 'latest'
+      with:
+        compose-file: "./docker-compose.e2e.yml"
+    - name: Cypress run
+      uses: cypress-io/github-action@v6
+      with:
+        command: npx nx-cloud record -- nx e2e liga-manager-ui-web --skip-nx-cache --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ inputs.cypress-record-key }}" --args="--parallel" --group chrome
+    - name: Upload artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-videos-${{ matrix.container }}
+        path: dist/cypress/apps/liga-manager-ui-web

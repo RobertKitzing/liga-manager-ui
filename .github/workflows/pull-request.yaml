@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      - run: npm audit --audit-level "high"
+      - uses: ./.github/actions/audit-composite-action
   npm-install:
     runs-on: ubuntu-latest
     steps:
@@ -27,18 +27,7 @@ jobs:
         node-version: 22
         cache: 'npm'
         cache-dependency-path: package-lock.json
-    - uses: actions/cache/restore@v4
-      id: cache_restore
-      with:
-        path: ./node_modules
-        key: modules-${{ hashFiles('package-lock.json') }}
-    - run: npm ci
-    - name: Cache dependencies
-      id: cache
-      uses: actions/cache@v4
-      with:
-        path: ./node_modules
-        key: modules-${{ hashFiles('package-lock.json') }}
+    - uses: ./.github/actions/npm-install-composite-action
   lint:
     runs-on: ubuntu-latest
     needs: 
@@ -107,45 +96,10 @@ jobs:
       - npm-install
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - uses: actions/cache/restore@v4
-        id: cache
+      - uses: ./.github/actions/build-composite-action
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-      - run: npx nx-cloud record -- nx run-many --target=build
-      - name: Build ui
-        uses: docker/build-push-action@v5
-        with:
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          context: .
-          load: true
-          tags: ${{ env.DOCKER_REPO_UI }}:e2e
-      - name: Build imgproxy
-        uses: docker/build-push-action@v5
-        with:
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          context: .
-          file: Dockerfile.imgproxy
-          load: true
-          tags: ${{ env.DOCKER_REPO_IMGPROXY }}:e2e
-      - name: Save ui docker image
-        run: docker save ${{ env.DOCKER_REPO_UI }}:e2e | gzip > /tmp/lima.tar
-      - name: Save imgproxy docker image
-        run: docker save ${{ env.DOCKER_REPO_IMGPROXY }}:e2e | gzip > /tmp/imgproxy.tar
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lima-img
-          path: /tmp/lima.tar
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: imgproxy-img
-          path: /tmp/imgproxy.tar
+          docker-repo-ui: ${{ env.DOCKER_REPO_UI }}
+          docker-repo-imgproxy: ${{ env.DOCKER_REPO_IMGPROXY }}
   e2e:
     runs-on: ubuntu-latest
     needs: 
@@ -159,46 +113,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/cache/restore@v4
-        id: cache
+      - uses: ./.github/actions/e2e-composite-action
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-      - name: Download artifact
-        uses: actions/download-artifact@v4.3.0
-        with:
-          name: lima-img
-          path: /tmp
-      - name: Load image
-        run: |
-          docker load --input /tmp/lima.tar
-      - name: Download artifact
-        uses: actions/download-artifact@v4.3.0
-        with:
-          name: imgproxy-img
-          path: /tmp
-      - name: Load image
-        run: |
-          docker load --input /tmp/imgproxy.tar
-      - name: Start Services
-        uses: hoverkraft-tech/compose-action@v2.2.0
-        env:
-          UI_IMAGE: ${{ env.DOCKER_REPO_UI }}
-          IMGPROXY_IMAGE: ${{ env.DOCKER_REPO_IMGPROXY }}
-          UI_TAG: 'e2e'
-          API_TAG: 'latest'
-        with:
-          compose-file: "./docker-compose.e2e.yml"
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          command: npx nx-cloud record -- nx e2e liga-manager-ui-web --skip-nx-cache --config="baseUrl=http://localhost" --browser="chrome" --record --env.CYPRESS_RECORD_KEY="${{ secrets.CYPRESS_RECORD_KEY }}" --args="--parallel" --group chrome
-      - name: Upload artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-videos-${{ matrix.container }}
-          path: dist/cypress/apps/liga-manager-ui-web
+          docker-repo-ui: ${{ env.DOCKER_REPO_UI }}
+          docker-repo-imgproxy: ${{ env.DOCKER_REPO_IMGPROXY }}
+          cypress-record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
   publish-docker-images:
     runs-on: ubuntu-latest
     needs:
