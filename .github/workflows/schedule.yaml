@@ -50,3 +50,20 @@ jobs:
         with:
           docker-repo-ui: ${{ env.DOCKER_REPO_UI }}
           docker-repo-imgproxy: ${{ env.DOCKER_REPO_IMGPROXY }}
+  e2e:
+    runs-on: ubuntu-latest
+    needs: 
+      - test
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        container: [0, 1, 2, 3, 4 ,5]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: ./.github/actions/e2e-composite-action
+        with:
+          docker-repo-ui: ${{ env.DOCKER_REPO_UI }}
+          docker-repo-imgproxy: ${{ env.DOCKER_REPO_IMGPROXY }}
+          cypress-record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
