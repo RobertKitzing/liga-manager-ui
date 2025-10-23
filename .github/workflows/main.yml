@@ -26,18 +26,7 @@ jobs:
           node-version: 22
           cache: 'npm'
           cache-dependency-path: package-lock.json
-      - uses: actions/cache/restore@v4
-        id: cache_restore
-        with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-      - run: npm ci
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+      - uses: ./.github/actions/npm-install-composite-action
   lint:
     runs-on: ubuntu-latest
     needs: 

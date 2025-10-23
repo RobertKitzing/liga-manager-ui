@@ -21,21 +21,9 @@ jobs:
         node-version: 22
         cache: 'npm'
         cache-dependency-path: package-lock.json
-    - uses: actions/cache/restore@v4
-      id: cache_restore
+    - uses: ./.github/actions/npm-install-composite-action
       with:
-        path: ./node_modules
-        key: modules-${{ hashFiles('package-lock.json') }}
-    - run: npm install
-    # - uses: stefanzweifel/git-auto-commit-action@v7
-    #   with:
-    #     commit_message: 'chore: automated npm dependencies updates'
-    - name: Cache dependencies
-      id: cache
-      uses: actions/cache@v4
-      with:
-        path: ./node_modules
-        key: modules-${{ hashFiles('package-lock.json') }}
+        mode: install
   test:
     runs-on: ubuntu-latest
     needs: 
