@@ -173,6 +173,8 @@
     "SCORED_CONCEDED_DIFF": "GD",
     "SEARCH_TEAM": "Filter Teams",
     "SELECT_OPTION": {
+        "ALL_MATCHDAYS": "All Matchdays",
+        "ALL_ROUNDS": "All Rounds",
         "ALL_TEAMS": "All Teams",
         "DESELECT_SEASON": "No Season",
         "DESELECT_TOURNAMENT": "No Tournament"

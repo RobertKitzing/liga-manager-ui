@@ -173,6 +173,8 @@
     "SCORED_CONCEDED_DIFF": "",
     "SEARCH_TEAM": "",
     "SELECT_OPTION": {
+        "ALL_MATCHDAYS": "",
+        "ALL_ROUNDS": "",
         "ALL_TEAMS": "",
         "DESELECT_SEASON": "",
         "DESELECT_TOURNAMENT": ""

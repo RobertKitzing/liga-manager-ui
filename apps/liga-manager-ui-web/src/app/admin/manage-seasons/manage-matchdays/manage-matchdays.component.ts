@@ -137,6 +137,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                 }),
             );
             if (mode === 'create') {
+                // TODO Replace mit Create MatchDays + move Create Matches to matches tab
                 this.store.dispatch(new CreateMatchesForSeason(
                     {
                         season_id: this.season()?.id || '',

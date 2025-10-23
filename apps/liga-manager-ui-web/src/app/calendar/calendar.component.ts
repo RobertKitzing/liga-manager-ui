@@ -109,13 +109,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         event?.next();
     }
 
-    triggerEvent(teamIds?: string[]) {
+    triggerEvent() {
+        const teamIds = this.store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).teamIds || [];
         this.eventTrigger.next({
             dates: {
                 min_date: this.calendarApi?.view.activeStart.toJSON(),
                 max_date: this.calendarApi?.view.activeEnd.toJSON(),
             },
-            teamIds: teamIds || [],
+            teamIds,
         });
     }
 
@@ -125,7 +126,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             (options) => {
-                console.log(options);
                 if (options.selectedView) {
                     this.calendarApi?.changeView(options.selectedView);
                 }
@@ -134,21 +134,24 @@ export class CalendarComponent implements OnInit, AfterViewInit {
                         [options.duration.type!]: options.duration.value,
                     });
                 }
-                this.triggerEvent(options.teamIds);
+                this.triggerEvent();
             },
         );
     }
 
     prev() {
         this.calendarApi.prev();
+        this.triggerEvent();
     }
 
     next() {
         this.calendarApi.next();
+        this.triggerEvent();
     }
 
     today() {
         this.calendarApi.today();
+        this.triggerEvent();
     }
 
     openSettings() {

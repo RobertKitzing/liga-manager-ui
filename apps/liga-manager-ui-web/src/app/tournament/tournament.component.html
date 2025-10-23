@@ -31,6 +31,9 @@
                                     [formControl]="selectedTournamentRoundIdFC"
                                     placeholder="{{ 'LABEL.SELECT_TOURNAMENT_ROUND' | translate }}"
                                 >
+                                    <mat-option value="ALL">
+                                        <span translate>SELECT_OPTION.ALL_ROUNDS</span>
+                                    </mat-option>
                                     @for (round of tournament?.rounds || [] | sortBy:'number'; track $index) {
                                         <mat-option [value]="round?.id">
                                             @if (round) {
@@ -63,14 +66,21 @@
             </mat-toolbar>
         </div>
         @if(tournament?.rounds) {
-            @if(selectedTournamentRound(); as round) {
+            @for(round of selectedTournamentRounds(); track round?.id) {
                 <div>
-                    @for (match of round.matches; track match?.id) {
+                    @if(selectedTournamentRoundIdFC.value === 'ALL') {
+                        <mat-card class="mt-2 mb-2" appearance="outlined">
+                            <div class="w-full flex justify-center m-4">
+                                <span>{{ "TOURNAMENT_ROUND" | translate : { round: round?.number } }}</span>
+                            </div>
+                        </mat-card>
+                    }
+                    @for (match of round?.matches || []; track match?.id) {
                         @if(match) {
                             <div [animate.enter]="animateEnter()">
                                 <lima-match
                                     [match]="match"
-                                    [matchDay]="round"
+                                    [matchDay]="round!"
                                     [markLooser]="true"
                                     [readOnly]="viewContext() === 'history'"
                                 ></lima-match>

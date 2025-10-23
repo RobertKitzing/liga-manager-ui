@@ -49,7 +49,7 @@ export class CalendarService {
     getCalendarEvents(
         params: CalendarQueryVariables,
     ): Observable<IMatchDayEvent[]> {
-        return this.calendarGQL.watch(params).valueChanges.pipe(
+        return this.calendarGQL.watch(params, { fetchPolicy: 'network-only' } ).valueChanges.pipe(
             map(({ data }) => {
                 let events = new Array<IMatchDayEvent>();
                 const seasons = [...data.allSeasons!].filter(
