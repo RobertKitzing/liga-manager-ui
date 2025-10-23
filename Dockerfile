@@ -14,4 +14,6 @@ ENV USE_IMGPROXY=false
 ENV USE_LOCAL_ASSETS=false
 ENV TZ="Europe/Berlin"
 
+CMD [ "nginx", "-g", "daemon off;" ]
+
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
