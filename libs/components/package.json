@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-ui/components",
-    "version": "5.8.3",
+    "version": "5.8.4",
     "peerDependencies": {
         "@angular/cdk": "^19.2.18",
         "@angular/common": "^19.2.14",
@@ -9,12 +9,12 @@
         "@angular/material": "^19.2.18",
         "@angular/router": "^19.2.14",
         "@colsen1991/ngx-translate-extract-marker": "^2.0.8",
-        "@liga-manager-api/graphql": "^5.8.3",
-        "@liga-manager-api/openapi": "^5.8.3",
-        "@liga-manager-ui/common": "^5.8.3",
-        "@liga-manager-ui/directives": "^5.8.3",
-        "@liga-manager-ui/pipes": "^5.8.3",
-        "@liga-manager-ui/services": "^5.8.3",
+        "@liga-manager-api/graphql": "^5.8.4",
+        "@liga-manager-api/openapi": "^5.8.4",
+        "@liga-manager-ui/common": "^5.8.4",
+        "@liga-manager-ui/directives": "^5.8.4",
+        "@liga-manager-ui/pipes": "^5.8.4",
+        "@liga-manager-ui/services": "^5.8.4",
         "@ngx-translate/core": "^14.0.0",
         "fuzzysearch-ts": "^1.0.3",
         "rxjs": "~7.5.0"
