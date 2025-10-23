@@ -1,0 +1,13 @@
+mutation CreateMatch(
+    $id: String!
+    $match_day_id: String!
+    $home_team_id: String!
+    $guest_team_id: String!
+) {
+    createMatch(
+        id: $id
+        match_day_id: $match_day_id
+        home_team_id: $home_team_id
+        guest_team_id: $guest_team_id
+    )
+}

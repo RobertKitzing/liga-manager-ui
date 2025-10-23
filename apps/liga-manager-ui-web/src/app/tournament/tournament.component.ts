@@ -19,6 +19,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { SelectedContextTypes, SelectedItemsSelectors, SetSelectedTournament, SetSelectedTournamentRound } from '@liga-manager-ui/states';
 import { dispatch, Store } from '@ngxs/store';
 import { AsyncPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'lima-tournament',
@@ -36,6 +37,7 @@ import { AsyncPipe } from '@angular/common';
         MatButtonModule,
         CypressSelectorDirective,
         AsyncPipe,
+        MatCardModule,
     ],
     standalone: true,
 })
@@ -78,8 +80,12 @@ export class TournamentComponent implements OnInit {
                                         (tournament) => {
                                             const stateTournamentRound = this.store.selectSnapshot(SelectedItemsSelectors.selectedTournamentRoundId(this.viewContext()));
                                             let selectedTournamentRound = tournament?.rounds![0]?.id;
-                                            if (stateTournamentRound && tournament?.rounds?.find((t) => t?.id === stateTournamentRound) ) {
+                                            if (stateTournamentRound === 'ALL') {
                                                 selectedTournamentRound = stateTournamentRound;
+                                            } else {
+                                                if (stateTournamentRound && tournament?.rounds?.find((t) => t?.id === stateTournamentRound) ) {
+                                                    selectedTournamentRound = stateTournamentRound;
+                                                }
                                             }
                                             this.selectedTournamentRoundIdFC.setValue(selectedTournamentRound);
                                         },
@@ -140,10 +146,12 @@ export class TournamentComponent implements OnInit {
         event?.next();
     }
 
-    selectedTournamentRound() {
-        return this.selectedTournament()?.rounds?.find(
-            (round) => round?.id === this.selectedTournamentRoundIdFC.value,
-        );
+    selectedTournamentRounds() {
+        return this.selectedTournamentRoundIdFC.value !== 'ALL' ?
+            this.selectedTournament()?.rounds?.filter(
+                (round) => round?.id === this.selectedTournamentRoundIdFC.value,
+            ):
+            this.selectedTournament()?.rounds;
     }
 
     nextRound() {

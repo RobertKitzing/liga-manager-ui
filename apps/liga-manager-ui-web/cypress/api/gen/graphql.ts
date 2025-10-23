@@ -180,6 +180,7 @@ export type Mutation = {
   addTeamToSeason?: Maybe<Scalars['Boolean']['output']>;
   cancelMatch?: Maybe<Scalars['Boolean']['output']>;
   changeUserPassword?: Maybe<Scalars['Boolean']['output']>;
+  createMatch?: Maybe<Scalars['Boolean']['output']>;
   createMatchesForSeason?: Maybe<Scalars['Boolean']['output']>;
   createPitch?: Maybe<Scalars['Boolean']['output']>;
   createSeason?: Maybe<Scalars['Boolean']['output']>;
@@ -238,6 +239,14 @@ export type MutationCancelMatchArgs = {
 
 export type MutationChangeUserPasswordArgs = {
   new_password: Scalars['String']['input'];
+};
+
+
+export type MutationCreateMatchArgs = {
+  guest_team_id: Scalars['String']['input'];
+  home_team_id: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  match_day_id: Scalars['String']['input'];
 };
 
 
@@ -594,6 +603,16 @@ export type PenaltyFragment = { __typename?: 'RankingPenalty', id: string, reaso
     { __typename?: 'Team' }
     & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
   ) } & { ' $fragmentName'?: 'PenaltyFragment' };
+
+export type CreateMatchMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  match_day_id: Scalars['String']['input'];
+  home_team_id: Scalars['String']['input'];
+  guest_team_id: Scalars['String']['input'];
+}>;
+
+
+export type CreateMatchMutation = { __typename?: 'mutation', createMatch?: boolean | null };
 
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
@@ -1671,6 +1690,16 @@ fragment Penalty on RankingPenalty {
   created_at
   points
 }`, {"fragmentName":"Ranking"}) as unknown as TypedDocumentString<RankingFragment, unknown>;
+export const CreateMatchDocument = new TypedDocumentString(`
+    mutation CreateMatch($id: String!, $match_day_id: String!, $home_team_id: String!, $guest_team_id: String!) {
+  createMatch(
+    id: $id
+    match_day_id: $match_day_id
+    home_team_id: $home_team_id
+    guest_team_id: $guest_team_id
+  )
+}
+    `) as unknown as TypedDocumentString<CreateMatchMutation, CreateMatchMutationVariables>;
 export const SubmitResultDocument = new TypedDocumentString(`
     mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
   submitMatchResult(

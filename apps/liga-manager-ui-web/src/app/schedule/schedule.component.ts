@@ -22,6 +22,7 @@ import { dispatch, Store } from '@ngxs/store';
 import { SetSelectedMatchDay, SetSelectedSeason, SelectedContextTypes, SetSelectedTeam, SelectedItemsSelectors } from '@liga-manager-ui/states';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
     selector: 'lima-schedule',
@@ -45,6 +46,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         ReactiveFormsModule,
         CypressSelectorDirective,
         MatSlideToggleModule,
+        MatCheckboxModule,
     ],
 })
 export class ScheduleComponent implements OnInit {
@@ -73,7 +75,7 @@ export class ScheduleComponent implements OnInit {
 
     selectedMatchDayFC = new FormControl();
 
-    selectedTeamIdFC = new FormControl('0');
+    selectedTeamIdFC = new FormControl('ALL');
 
     selectedSeasonFC = new FormControl<string>('');
 
@@ -96,8 +98,12 @@ export class ScheduleComponent implements OnInit {
                                     }
                                     const stateMatchDay = this.store.selectSnapshot(SelectedItemsSelectors.selectedMatchDayId(this.viewContext()));
                                     let selectedMatchDay = season!.match_days![0]?.id;
-                                    if (stateMatchDay && season.match_days?.find((md) => md?.id === stateMatchDay)) {
+                                    if (stateMatchDay === 'ALL') {
                                         selectedMatchDay = stateMatchDay;
+                                    } else {
+                                        if (stateMatchDay && season.match_days?.find((md) => md?.id === stateMatchDay)) {
+                                            selectedMatchDay = stateMatchDay;
+                                        }
                                     }
                                     this.selectedMatchDayFC.setValue(selectedMatchDay);
                                 },
@@ -145,7 +151,7 @@ export class ScheduleComponent implements OnInit {
             },
         );
         const teamId = this.store.selectSnapshot(SelectedItemsSelectors.selectedTeamId(this.viewContext()));
-        this.selectedTeamIdFC.setValue(teamId || '0');
+        this.selectedTeamIdFC.setValue(teamId || 'ALL');
     }
 
     async refresh(event?: Subject<void>) {
@@ -162,13 +168,15 @@ export class ScheduleComponent implements OnInit {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    findMatchDay(matchDays: any[]): MatchDay {
-        return matchDays.find((x) => x.id === this.selectedMatchDayFC.value );
+    filterMatchDay(matchDays: any[]): MatchDay[] {
+        return this.selectedMatchDayFC.value !== 'ALL' ?
+            matchDays.filter((x) => x.id === this.selectedMatchDayFC.value ) :
+            matchDays;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filterMatches(matches: any[]): Match[] {
-        return this.selectedTeamIdFC.value !== '0'
+        return this.selectedTeamIdFC.value !== 'ALL'
             ? matches.filter(
                 (x) =>
                     x.guest_team.id === this.selectedTeamIdFC.value ||
