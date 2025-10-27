@@ -6,8 +6,7 @@
                     <mat-label translate>LABEL.START_SEASON_DATE</mat-label>
                     <input matInput [matDatepicker]="startSeasonDatePicker"
                         cySelector="input-tournament-season-start-date"
-                        formControlName="seasonStartDate"
-                        (dateChange)="createMatchDays()">
+                        formControlName="seasonStartDate">
                     <mat-datepicker-toggle matSuffix [for]="startSeasonDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #startSeasonDatePicker></mat-datepicker>
                 </mat-form-field>

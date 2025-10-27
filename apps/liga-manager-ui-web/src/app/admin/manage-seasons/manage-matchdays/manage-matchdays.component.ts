@@ -88,7 +88,18 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
             (value) => {
-                this.createMatchDays(value.matchDayCount);
+                if (value.matchDayCount) {
+                    this.createMatchDays(value.matchDayCount);
+                } else {
+                    let length = this.season()?.teams?.length || 0;
+                    if (length % 2 !== 0) {
+                        length += 1;
+                    }
+                    if (this.formGroup.controls.secondHalf.value) {
+                        length = (length * 2) - 1;
+                    }
+                    this.createMatchDays(length);
+                }
             },
         );
     }
@@ -104,19 +115,10 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         }
     }
 
-    createMatchDays(length?: number | null) {
+    createMatchDays(length: number) {
         if (this.season()?.teams && this.formGroup.controls.seasonStartDate.value) {
             this.matchDays.set([]);
-            if (!length) {
-                let length = this.season()?.teams?.length || 0;
-                if (length % 2 !== 0) {
-                    length += 1;
-                }
-                if (this.formGroup.controls.secondHalf.value) {
-                    length = (length * 2) - 1;
-                }
-            }
-            for (let i = 0; i < length!; i++) {
+            for (let i = 0; i < length; i++) {
                 const betweenMatchDaysOffset = i * this.formGroup.controls.betweenMatchDaysOffset.value;
                 const startDate = add(this.formGroup.controls.seasonStartDate.value, { days: betweenMatchDaysOffset });
                 const endDate = add(startDate, { days: this.formGroup.controls.fromToOffset.value -1 });
