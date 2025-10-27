@@ -1,0 +1,7 @@
+name: 'NPM audit'
+description: 'just runs npm audit'
+runs:
+  using: "composite"
+  steps:
+    - run: npm audit --audit-level "high"
+      shell: bash

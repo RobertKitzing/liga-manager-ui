@@ -1,0 +1,69 @@
+name: Scheduled
+on:
+  workflow_dispatch:
+env:
+  HUSKY: 0
+  DOCKER_REPO_UI: robertkitzing/liga-manager-ui
+  DOCKER_REPO_IMGPROXY: robertkitzing/liga-manager-imgproxy
+
+jobs:
+  npm-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/audit-composite-action
+  npm-install:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: fregante/setup-git-user@v2
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+    - uses: ./.github/actions/npm-install-composite-action
+      with:
+        mode: install
+  test:
+    runs-on: ubuntu-latest
+    needs: 
+      - npm-install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/cache/restore@v4
+        id: cache
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npx nx-cloud record -- nx run-many -t test
+  build:
+    runs-on: ubuntu-latest
+    needs: 
+      - npm-install
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/build-composite-action
+        with:
+          docker-repo-ui: ${{ env.DOCKER_REPO_UI }}
+          docker-repo-imgproxy: ${{ env.DOCKER_REPO_IMGPROXY }}
+  e2e:
+    runs-on: ubuntu-latest
+    needs: 
+      - test
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        container: [0, 1, 2, 3, 4 ,5]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: ./.github/actions/e2e-composite-action
+        with:
+          docker-repo-ui: ${{ env.DOCKER_REPO_UI }}
+          docker-repo-imgproxy: ${{ env.DOCKER_REPO_IMGPROXY }}
+          cypress-record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
