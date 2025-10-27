@@ -30,23 +30,12 @@
                 <span translate>TEAMS</span>
             </mat-card-header>
             <mat-card-content>
-                <div>
-                    <mat-select [formControl]="selectedSheetForTeams">
-                        @for (sheet of sheets(); track sheet) {
-                            <mat-option [value]="sheet">{{ sheet }}</mat-option>
-                        }
-                    </mat-select>
-                    <mat-form-field>
-                        <mat-label>COL</mat-label>
-                        <input matInput [formControl]="selectedCol">
-                    </mat-form-field>
-                </div>
                 <div class="flex flex-col">
                     @for (teamFromSheet of teamsFromSheet(); track teamFromSheet; let index = $index) {
                         <div class="flex justify-evenly items-center">
-                            <div>{{ teamFromSheet }}</div>
+                            <div class="w-1/2">{{ teamFromSheet }}</div>
                             @if(allTeams$ | async; as allTeams) {
-                                <lima-team-auto-complete [teams]="allTeams" [formControl]="teamMappingFC.controls[index]"></lima-team-auto-complete>
+                                <lima-team-auto-complete class="w-1/2" [teams]="allTeams" [formControl]="teamMappingFC.controls[index]"></lima-team-auto-complete>
                             }
                         </div>
                     }
@@ -60,19 +49,33 @@
         </mat-card>
         <mat-card class="m-2">
             <mat-card-header>
+                <span translate>PITCHES</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex flex-col">
+                    @for (pitchFromSheet of pitchesFromSheet(); track pitchFromSheet; let index = $index) {
+                        <div class="flex justify-evenly items-center">
+                            <div class="w-1/2">{{ pitchFromSheet }}</div>
+                            @if(allPitches$ | async; as allPitches) {
+                                <lima-pitch-auto-complete [pitches]="allPitches" [formControl]="pitchMappingFC.controls[index]"></lima-pitch-auto-complete>
+                            }
+                        </div>
+                    }
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="m-2">
+            <mat-card-header>
                 <span translate>MATCHES</span>
             </mat-card-header>
             <mat-card-content>
-                <div>
-                    <mat-select [formControl]="selectedSheetForMatches">
-                        @for (sheet of sheets(); track sheet) {
-                            <mat-option [value]="sheet">{{ sheet }}</mat-option>
-                        }
-                    </mat-select>
-                </div>
                 <button matButton="outlined" (click)="createMatches()">
                     <span translate>BUTTON.CREATE_MATCHES</span>
                 </button>
+                @for (match of matches(); track match) {
+                    <p>{{ match.matchDay.number }}</p>
+                    <lima-match [match]="match.match"></lima-match>
+                }
             </mat-card-content>
         </mat-card>
     </div>

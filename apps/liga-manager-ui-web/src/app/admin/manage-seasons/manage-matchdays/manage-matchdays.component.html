@@ -37,7 +37,7 @@
             </div>
         }
         @if (!season()?.match_days || season()?.match_days?.length === 0) {
-            <button matButton="outlined" [disabled]="!formGroup.valid" (click)="createOnlyMatchDays()" cySelector="button-save-match-days">
+            <button matButton="outlined" [disabled]="!formGroup.valid" (click)="createOnlyMatchDays()">
                 <span translate>BUTTON.CREATE_ONLY_MATCHDAYS</span>
             </button>
             <button matButton="outlined" [disabled]="!formGroup.valid" (click)="saveMatchDays('create')" cySelector="button-save-match-days">

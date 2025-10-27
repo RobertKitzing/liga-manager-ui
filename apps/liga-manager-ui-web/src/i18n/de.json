@@ -164,6 +164,7 @@
     "PASSWORD": "Passwort",
     "PASSWORD_REQUIRED": "Passwort erforderlich",
     "PENALTIES": "",
+    "PITCHES": "",
     "PLACEHOLDER": {
         "NEW_TOURNAMENT_NAME": "",
         "PENALTY_POINTS": "",
@@ -272,7 +273,6 @@
         "NEW_PASSWORD": "",
         "OLD_KICKOFF": "",
         "REPLACE_TEAM_IN_SEASON": "",
-        "SEASON_TEAM_IMPORT": "",
         "TEAMS_IN_SEASON": ""
     },
     "TOURNAMENT_ROUND": "{{ round }}. Runde",

@@ -10,4 +10,3 @@ export * from './confirm';
 export * from './edit-pitch';
 export * from './edit-penalty';
 export * from './change-password';
-export * from './team-import-dialog';

@@ -8,9 +8,6 @@
                         <lima-team-auto-complete [teams]="allTeams" [disabledTeams]="season()?.teams" (teamSelected)="addTeamToSeason({ season_id: season()?.id!, team_id: $event.id}, $event.name, season()?.name!)" [clearAfterSelected]="true"></lima-team-auto-complete>
                     }
                 </div>
-                <button matButton="outlined">
-                    <span translate (click)="openTeamImportDialog()">BUTTON.IMPORT</span>
-                </button>
             </div>
         }
         <div>
