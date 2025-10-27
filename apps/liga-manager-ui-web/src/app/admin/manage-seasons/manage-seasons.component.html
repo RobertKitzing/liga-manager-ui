@@ -77,7 +77,7 @@
                                 <lima-manage-matches [season]="season"></lima-manage-matches>
                             </ng-template>
                         </mat-step>
-                        <mat-step>
+                        <mat-step [optional]="true">
                             <ng-template matStepLabel>
                                 <a translate cySelector="season-management-tab-schedule-matches">TAB.ADMIN.SEASON.SCHEDULE_MATCHES</a>
                             </ng-template>
@@ -85,6 +85,16 @@
                                 <!-- <button matButton matStepperPrevious>Back</button>
                                 <button mat-button matStepperNext>Next</button> -->
                                 <lima-manage-schedule-matches [season]="season"></lima-manage-schedule-matches>
+                            </ng-template>
+                        </mat-step>
+                        <mat-step [optional]="true">
+                            <ng-template matStepLabel>
+                                <a translate cySelector="season-management-tab-penalties">TAB.ADMIN.SEASON.IMPORT_PLAN</a>
+                            </ng-template>
+                            <ng-template matStepContent>
+                                <!-- <button matButton matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button> -->
+                                <lima-import-season-plan [season]="season"></lima-import-season-plan>
                             </ng-template>
                         </mat-step>
                         <mat-step [optional]="true">

@@ -6,25 +6,13 @@
                     <button type="button" matButton="outlined" (click)="chooseFile()"
                     >
                         <mat-icon>upload</mat-icon>
-                        <span translate>BUTTON.UPLOAD_XLSX</span>
+                        <span translate>BUTTON.UPLOAD_CSV</span>
                     </button>
                 </div>
             </mat-toolbar-row>
         </mat-toolbar>
     </div>
     <div>
-        <mat-card class="m-2">
-            <mat-card-header>
-                <span translate>SEASON</span>
-            </mat-card-header>
-            <mat-card-content>
-                <lima-season-chooser
-                    [formControl]="selectedSeasonFC"
-                    [clearable]="true"
-                    [showState]="true"
-                ></lima-season-chooser>
-            </mat-card-content>
-        </mat-card>
         <mat-card class="m-2">
             <mat-card-header>
                 <span translate>TEAMS</span>
@@ -41,11 +29,6 @@
                     }
                 </div>
             </mat-card-content>
-            <mat-card-actions>
-                <button matButton="outlined" (click)="addTeamsToSeason()" [disabled]="!teamMappingFC.valid">
-                    <span translate>BUTTON.ADD_TEAMS_TO_SEASON</span>
-                </button>
-            </mat-card-actions>
         </mat-card>
         <mat-card class="m-2">
             <mat-card-header>
@@ -69,12 +52,17 @@
                 <span translate>MATCHES</span>
             </mat-card-header>
             <mat-card-content>
-                <button matButton="outlined" (click)="createMatches()">
-                    <span translate>BUTTON.CREATE_MATCHES</span>
+                <button matButton="outlined" (click)="previewMatches()">
+                    <span translate>BUTTON.PREVIEW_MATCHES</span>
                 </button>
                 @for (match of matches(); track match) {
                     <p>{{ match.matchDay.number }}</p>
                     <lima-match [match]="match.match"></lima-match>
+                }
+                @if(matches().length > 0) {
+                    <button matButton="outlined" (click)="submit()">
+                        <span translate>BUTTON.SAVE</span>
+                    </button>
                 }
             </mat-card-content>
         </mat-card>

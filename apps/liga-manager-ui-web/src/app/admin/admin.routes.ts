@@ -32,11 +32,6 @@ export const AdminRoutes: Routes = [
         children: ManageSeasonsRoutes,
     },
     {
-        path: ADMIN_ROUTES.IMPORT_SEASON_PLAN,
-        loadComponent: () =>
-            import('./import-season-plan').then((m) => m.ImportSeasonPlanComponent),
-    },
-    {
         path: '',
         redirectTo: ADMIN_ROUTES.SEASONS,
         pathMatch: 'full',

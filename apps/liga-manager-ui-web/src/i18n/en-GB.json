@@ -1,16 +1,14 @@
 {
     "BUTTON": {
         "ADD_MATCH": "Add Match",
-        "ADD_TEAMS_TO_SEASON": "",
         "CANCEL": "Cancel",
         "CANCEL_MATCH": "Cancel Match",
         "CHANGE_PASSWORD": "Change Password",
         "CLOSE": "Close",
         "CONTACT": "Contact",
-        "CREATE_MATCHDAYS_WITH_MATCHES": "",
-        "CREATE_MATCHES": "",
+        "CREATE_MATCHDAYS_WITH_MATCHES": "Create Matchdays with Matches",
         "CREATE_NEXT_ROUND": "Create next Round",
-        "CREATE_ONLY_MATCHDAYS": "",
+        "CREATE_ONLY_MATCHDAYS": "Create Empty Matchdays",
         "CREATE_PITCH": "Create Pitch",
         "CREATE_SEASON": "Create new Season",
         "CREATE_TOURNAMENT": "Create new Tournament",
@@ -26,21 +24,20 @@
         "END_SEASON": "End Season",
         "END_TOURNAMENT": "End Tournament",
         "FORGOT_PASSWORD": "forgot password",
-        "IMPORT": "",
         "LOGIN": "Login",
         "LOGOUT": "Logout",
         "NO": "No",
+        "PREVIEW_MATCHES": "",
         "RELOAD_PAGE": "Reload Page",
         "REPLACE_TEAM": "Replace Team",
         "SAVE": "Save",
-        "SAVE_TEAM_LOGO": "Save Teamlogo",
         "SEND_INVITE_MAIL": "Send Invitation mail",
         "SEND_PASSWORD_RESET_MAIL": "Send Password reset mail",
         "START_SEASON": "Start Season",
         "START_TOURNAMENT": "Start Tournament",
         "UPDATE_MATCHDAYS": "Update Matchdays",
+        "UPLOAD_CSV": "Choose CSV File",
         "UPLOAD_TEAM_LOGO": "Upload Team Logo",
-        "UPLOAD_XLSX": "",
         "YES": "Yes"
     },
     "CALENDAR": {
@@ -143,7 +140,6 @@
         "TOURNAMENT": "Tournament"
     },
     "NAVIGATION_ADMIN": {
-        "IMPORT_SEASON_PLAN": "",
         "PITCHES": "Pitch Management",
         "SEASONS": "Season Management",
         "TEAMS": "Team Management",
@@ -179,7 +175,6 @@
     "SCORED_CONCEDED": "GF:GA",
     "SCORED_CONCEDED_DIFF": "GD",
     "SEARCH_TEAM": "Filter Teams",
-    "SEASON": "",
     "SELECT_OPTION": {
         "ALL_MATCHDAYS": "All Matchdays",
         "ALL_ROUNDS": "All Rounds",
@@ -232,6 +227,7 @@
     "TAB": {
         "ADMIN": {
             "SEASON": {
+                "IMPORT_PLAN": "Import CSV",
                 "MATCHES": "Matches",
                 "MATCH_DAYS": "Matchdays",
                 "PENALTIES": "Penalties",
@@ -269,9 +265,7 @@
         "EDIT_PITCH_DIALOG": "Edit Pitch",
         "EDIT_USER": "Edit User",
         "MAINTENANCE_ACTIVE": "",
-        "NEW_KICKOFF": "New Kickoff",
         "NEW_PASSWORD": "New Password",
-        "OLD_KICKOFF": "Old Kickoff",
         "REPLACE_TEAM_IN_SEASON": "Replace Team",
         "TEAMS_IN_SEASON": "Teams in Season"
     },

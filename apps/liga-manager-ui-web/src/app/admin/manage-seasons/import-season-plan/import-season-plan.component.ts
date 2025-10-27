@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,19 +10,19 @@ import { FormArray, FormControl, FormsModule, ReactiveFormsModule, Validators } 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
 import { AsyncPipe } from '@angular/common';
-import { Store } from '@ngxs/store';
 import { AddTeamToSeason, PitchSelectors, TeamSelectors } from '@liga-manager-ui/states';
-import { MatchComponent, PitchAutoCompleteComponent, SeasonChooserComponent, TeamAutoCompleteComponent } from '@liga-manager-ui/components';
+import { MatchComponent, PitchAutoCompleteComponent, TeamAutoCompleteComponent } from '@liga-manager-ui/components';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { fuzzySearchTeam } from '@liga-manager-ui/utils';
-import { Match, Season, SeasonByIdGQL, Team } from '@liga-manager-api/graphql';
+import { Match, SeasonByIdGQL, Team } from '@liga-manager-api/graphql';
 import { v4 } from 'uuid';
-import { SeasonService } from '@liga-manager-ui/services';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import Papa from 'papaparse';
 import { parse } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { ManageSeasonBaseComponent } from '../manage-season.base.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'lima-import-season-plan',
@@ -40,21 +40,16 @@ import { de } from 'date-fns/locale';
         TeamAutoCompleteComponent,
         MatToolbarModule,
         MatCardModule,
-        SeasonChooserComponent,
         PitchAutoCompleteComponent,
         MatchComponent,
     ],
     templateUrl: './import-season-plan.component.html',
 })
-export class ImportSeasonPlanComponent {
+export class ImportSeasonPlanComponent extends ManageSeasonBaseComponent {
 
     private apollo = inject(Apollo);
 
     private seasonByIdGQL = inject(SeasonByIdGQL);
-
-    private store = inject(Store);
-
-    private seasonService = inject(SeasonService);
 
     allTeams$ = this.store.select(TeamSelectors.teams);
 
@@ -76,8 +71,6 @@ export class ImportSeasonPlanComponent {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     matchData = signal<any[]>([]);
 
-    destroyRef = inject(DestroyRef);
-
     teamsFromSheet = signal<string[]>([]);
 
     pitchesFromSheet = signal<string[]>([]);
@@ -90,8 +83,6 @@ export class ImportSeasonPlanComponent {
 
     pitchMapping = signal<{ import?: string, pitch_id?: string}[]>([]);
 
-    season?: Season | null;
-
     pitchMappingFC = new FormArray<FormControl>([]);
 
     rawData: any[] = [];
@@ -99,7 +90,7 @@ export class ImportSeasonPlanComponent {
     matches = signal<{match: Match, matchDay: { id: string, number: number }}[]>([]);
 
     constructor() {
-
+        super();
         this.teamMappingFC.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
@@ -163,7 +154,7 @@ export class ImportSeasonPlanComponent {
         }
     }
 
-    createMatches() {
+    previewMatches() {
 
         const teams = this.store.selectSnapshot(TeamSelectors.teams);
 
@@ -179,7 +170,7 @@ export class ImportSeasonPlanComponent {
                 const kickoff = parse(`${row['Datum']} ${row['Start']}`, 'P HH:mm:ss', new Date(), { locale: de }).toJSON();
                 m.push({
                     matchDay: {
-                        id: v4(),
+                        id: this.season()?.match_days?.find((md) => md?.number === +row['Spieltag'])?.id || '',
                         number: row['Spieltag'],
                     },
                     match: {
@@ -193,7 +184,54 @@ export class ImportSeasonPlanComponent {
             },
         );
         this.matches.set(m);
-        console.log(m);
+    }
+
+    async submit() {
+        let createMatchesMutation = 'mutation CreateMatches {\n';
+        this.matches().forEach(
+            (param, i) => {
+                createMatchesMutation += `createMatch${i}: createMatch(id: "${param.match.id}", match_day_id: "${param.matchDay.id}", guest_team_id: "${param.match.guest_team.id}", home_team_id: "${param.match.home_team.id}") \n`;
+            },
+        );
+        createMatchesMutation += '}';
+
+        await firstValueFrom(
+            this.apollo.mutate(
+                {
+                    mutation: gql(createMatchesMutation),
+                    refetchQueries: [
+                        {
+                            query: this.seasonByIdGQL.document,
+                            variables: { id: this.season()?.id },
+                        },
+                    ],
+                },
+            ),
+        );
+
+        let editMatchMutation = 'mutation EditMatches {\n';
+        this.matches().forEach(
+            (param, i) => {
+                editMatchMutation += `scheduleMatch${i}: scheduleMatch(match_id: "${param.match.id}", kickoff: "${param.match.kickoff}") \n`;
+                editMatchMutation += `locateMatch${i}: locateMatch(match_id: "${param.match.id}", pitch_id: "${param.match.pitch?.id}") \n`;
+            },
+        );
+        editMatchMutation += '}';
+
+        await firstValueFrom(
+            this.apollo.mutate(
+                {
+                    mutation: gql(editMatchMutation),
+                    refetchQueries: [
+                        {
+                            query: this.seasonByIdGQL.document,
+                            variables: { id: this.season()?.id },
+                        },
+                    ],
+                },
+            ),
+        );
+
     }
 
 }

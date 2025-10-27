@@ -26,6 +26,7 @@ import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
 import { DeleteSeason, EndSeason, SelectedItemsSelectors, SetSelectedSeason, StartSeason } from '@liga-manager-ui/states';
+import { ImportSeasonPlanComponent } from './import-season-plan';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -50,6 +51,7 @@ import { DeleteSeason, EndSeason, SelectedItemsSelectors, SetSelectedSeason, Sta
         ManagePenaltiesComponent,
         MatCardModule,
         ReactiveFormsModule,
+        ImportSeasonPlanComponent,
     ],
 })
 export class ManageSeasonsComponent implements OnInit {
