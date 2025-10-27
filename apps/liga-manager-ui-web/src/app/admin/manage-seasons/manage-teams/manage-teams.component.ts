@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddTeamToSeasonMutationVariables, Maybe, Team } from '@liga-manager-api/graphql';
 import { TranslateModule } from '@ngx-translate/core';
 import { ManageSeasonBaseComponent } from '../manage-season.base.component';
-import { defaultDialogConfig, TeamAutoCompleteComponent, TeamSearchComponent } from '@liga-manager-ui/components';
+import { defaultDialogConfig, TeamAutoCompleteComponent, TeamImportDialogComponent, TeamSearchComponent } from '@liga-manager-ui/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReplaceTeamComponent } from './replace-team/replace-team.component';
 import { MatCardModule } from '@angular/material/card';
@@ -49,6 +49,14 @@ export class ManageTeamsComponent extends ManageSeasonBaseComponent {
                 seasonId: this.season()?.id,
                 teamToBeReplaced,
             },
+        });
+    }
+
+    openTeamImportDialog() {
+
+        this.dialog.open(TeamImportDialogComponent, {
+            width: '90vw',
+            height: '90vh',
         });
     }
 

@@ -12,3 +12,4 @@ export * from './reschedule-match-days';
 export * from './set-seasons';
 export * from './schedule-all-matches-for-match-day';
 export * from './schedule-all-matches-for-season';
+export * from './create-matchdays-for-season';

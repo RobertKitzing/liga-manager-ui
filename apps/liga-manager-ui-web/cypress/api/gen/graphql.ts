@@ -181,6 +181,7 @@ export type Mutation = {
   cancelMatch?: Maybe<Scalars['Boolean']['output']>;
   changeUserPassword?: Maybe<Scalars['Boolean']['output']>;
   createMatch?: Maybe<Scalars['Boolean']['output']>;
+  createMatchDayForSeason?: Maybe<Scalars['Boolean']['output']>;
   createMatchesForSeason?: Maybe<Scalars['Boolean']['output']>;
   createPitch?: Maybe<Scalars['Boolean']['output']>;
   createSeason?: Maybe<Scalars['Boolean']['output']>;
@@ -247,6 +248,14 @@ export type MutationCreateMatchArgs = {
   home_team_id: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
   match_day_id: Scalars['String']['input'];
+};
+
+
+export type MutationCreateMatchDayForSeasonArgs = {
+  date_period: DatePeriod;
+  id?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['Int']['input'];
+  season_id: Scalars['String']['input'];
 };
 
 
@@ -603,6 +612,16 @@ export type PenaltyFragment = { __typename?: 'RankingPenalty', id: string, reaso
     { __typename?: 'Team' }
     & { ' $fragmentRefs'?: { 'TeamFragment': TeamFragment } }
   ) } & { ' $fragmentName'?: 'PenaltyFragment' };
+
+export type CreateMatchDayForSeasonMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  season_id: Scalars['String']['input'];
+  number: Scalars['Int']['input'];
+  date_period: DatePeriod;
+}>;
+
+
+export type CreateMatchDayForSeasonMutation = { __typename?: 'mutation', createMatchDayForSeason?: boolean | null };
 
 export type CreateMatchMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1690,6 +1709,16 @@ fragment Penalty on RankingPenalty {
   created_at
   points
 }`, {"fragmentName":"Ranking"}) as unknown as TypedDocumentString<RankingFragment, unknown>;
+export const CreateMatchDayForSeasonDocument = new TypedDocumentString(`
+    mutation CreateMatchDayForSeason($id: String!, $season_id: String!, $number: Int!, $date_period: DatePeriod!) {
+  createMatchDayForSeason(
+    id: $id
+    season_id: $season_id
+    number: $number
+    date_period: $date_period
+  )
+}
+    `) as unknown as TypedDocumentString<CreateMatchDayForSeasonMutation, CreateMatchDayForSeasonMutationVariables>;
 export const CreateMatchDocument = new TypedDocumentString(`
     mutation CreateMatch($id: String!, $match_day_id: String!, $home_team_id: String!, $guest_team_id: String!) {
   createMatch(

@@ -173,6 +173,7 @@ export type Mutation = {
   cancelMatch?: Maybe<Scalars['Boolean']['output']>;
   changeUserPassword?: Maybe<Scalars['Boolean']['output']>;
   createMatch?: Maybe<Scalars['Boolean']['output']>;
+  createMatchDayForSeason?: Maybe<Scalars['Boolean']['output']>;
   createMatchesForSeason?: Maybe<Scalars['Boolean']['output']>;
   createPitch?: Maybe<Scalars['Boolean']['output']>;
   createSeason?: Maybe<Scalars['Boolean']['output']>;
@@ -239,6 +240,14 @@ export type MutationCreateMatchArgs = {
   home_team_id: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
   match_day_id: Scalars['String']['input'];
+};
+
+
+export type MutationCreateMatchDayForSeasonArgs = {
+  date_period: DatePeriod;
+  id?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['Int']['input'];
+  season_id: Scalars['String']['input'];
 };
 
 
@@ -671,6 +680,16 @@ export type UserFragment = (
     & { contact?: Maybe<Pick<Contact, 'first_name' | 'last_name' | 'phone' | 'email'>> }
   )>>> }
 );
+
+export type CreateMatchDayForSeasonMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  season_id: Scalars['String']['input'];
+  number: Scalars['Int']['input'];
+  date_period: DatePeriod;
+}>;
+
+
+export type CreateMatchDayForSeasonMutation = Pick<Mutation, 'createMatchDayForSeason'>;
 
 export type CreateMatchMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1436,6 +1455,27 @@ export const RankingFragmentDoc = gql`
   }
 }
     `;
+export const CreateMatchDayForSeasonDocument = gql`
+    mutation CreateMatchDayForSeason($id: String!, $season_id: String!, $number: Int!, $date_period: DatePeriod!) {
+  createMatchDayForSeason(
+    id: $id
+    season_id: $season_id
+    number: $number
+    date_period: $date_period
+  )
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateMatchDayForSeasonGQL extends Apollo.Mutation<CreateMatchDayForSeasonMutation, CreateMatchDayForSeasonMutationVariables> {
+    document = CreateMatchDayForSeasonDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreateMatchDocument = gql`
     mutation CreateMatch($id: String!, $match_day_id: String!, $home_team_id: String!, $guest_team_id: String!) {
   createMatch(

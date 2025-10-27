@@ -175,6 +175,7 @@ export const aMutation = (overrides?: Partial<Mutation>): { __typename: 'mutatio
         cancelMatch: overrides && overrides.hasOwnProperty('cancelMatch') ? overrides.cancelMatch! : false,
         changeUserPassword: overrides && overrides.hasOwnProperty('changeUserPassword') ? overrides.changeUserPassword! : false,
         createMatch: overrides && overrides.hasOwnProperty('createMatch') ? overrides.createMatch! : false,
+        createMatchDayForSeason: overrides && overrides.hasOwnProperty('createMatchDayForSeason') ? overrides.createMatchDayForSeason! : true,
         createMatchesForSeason: overrides && overrides.hasOwnProperty('createMatchesForSeason') ? overrides.createMatchesForSeason! : true,
         createPitch: overrides && overrides.hasOwnProperty('createPitch') ? overrides.createPitch! : false,
         createSeason: overrides && overrides.hasOwnProperty('createSeason') ? overrides.createSeason! : true,

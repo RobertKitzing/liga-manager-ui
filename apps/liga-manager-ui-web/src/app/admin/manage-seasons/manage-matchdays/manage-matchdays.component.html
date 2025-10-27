@@ -29,10 +29,19 @@
                     <input matInput type="number" formControlName="fromToOffset">
                 </mat-form-field>
             </div>
+            <div>
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label translate>FROM_TO_OFFSET</mat-label>
+                    <input matInput type="number" formControlName="matchDayCount">
+                </mat-form-field>
+            </div>
         }
         @if (!season()?.match_days || season()?.match_days?.length === 0) {
+            <button matButton="outlined" [disabled]="!formGroup.valid" (click)="createOnlyMatchDays()" cySelector="button-save-match-days">
+                <span translate>BUTTON.CREATE_ONLY_MATCHDAYS</span>
+            </button>
             <button matButton="outlined" [disabled]="!formGroup.valid" (click)="saveMatchDays('create')" cySelector="button-save-match-days">
-                <span translate>BUTTON.CREATE_MATCHDAYS</span>
+                <span translate>BUTTON.CREATE_MATCHDAYS_WITH_MATCHES</span>
             </button>
         } @else {
             <button matButton="outlined" (click)="saveMatchDays('update')" cySelector="button-save-match-days">

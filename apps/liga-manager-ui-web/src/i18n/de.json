@@ -1,13 +1,16 @@
 {
     "BUTTON": {
         "ADD_MATCH": "",
+        "ADD_TEAMS_TO_SEASON": "",
         "CANCEL": "abbrechen",
         "CANCEL_MATCH": "Spiel absagen",
         "CHANGE_PASSWORD": "Password ändern",
         "CLOSE": "schließen",
         "CONTACT": "Kontakt",
-        "CREATE_MATCHDAYS": "",
+        "CREATE_MATCHDAYS_WITH_MATCHES": "",
+        "CREATE_MATCHES": "",
         "CREATE_NEXT_ROUND": "",
+        "CREATE_ONLY_MATCHDAYS": "",
         "CREATE_PITCH": "",
         "CREATE_SEASON": "",
         "CREATE_TOURNAMENT": "",
@@ -23,6 +26,7 @@
         "END_SEASON": "",
         "END_TOURNAMENT": "",
         "FORGOT_PASSWORD": "",
+        "IMPORT": "",
         "LOGIN": "anmelden",
         "LOGOUT": "abmelden",
         "NO": "",
@@ -36,6 +40,7 @@
         "START_TOURNAMENT": "",
         "UPDATE_MATCHDAYS": "",
         "UPLOAD_TEAM_LOGO": "",
+        "UPLOAD_XLSX": "",
         "YES": ""
     },
     "CALENDAR": {
@@ -115,8 +120,8 @@
     "LOCAL_TIME_ZONE_HINT": "Uhrzeit ({{ timeZone }})",
     "LOGIN_TITLE": "",
     "MAINTENANCE_ACTIVE_BODY": "",
-    "MAINTENANCE_ACTIVE_TITLE": "",
     "MATCHDAY": "{{ matchDay }}. Spieltag",
+    "MATCHES": "",
     "MATCH_CANCELLED_ON": "",
     "MATCH_SCHEDULING": {
         "DAYS_OFFSET_FROM_MATCH_DAY_START_DATE": "",
@@ -138,6 +143,7 @@
         "TOURNAMENT": "Pokal"
     },
     "NAVIGATION_ADMIN": {
+        "IMPORT_SEASON_PLAN": "",
         "PITCHES": "",
         "SEASONS": "",
         "TEAMS": "",
@@ -172,6 +178,7 @@
     "SCORED_CONCEDED": "Tore",
     "SCORED_CONCEDED_DIFF": "",
     "SEARCH_TEAM": "",
+    "SEASON": "",
     "SELECT_OPTION": {
         "ALL_MATCHDAYS": "Alle Spieltage",
         "ALL_ROUNDS": "Alle Runden",
@@ -244,6 +251,7 @@
         "TEAM_NAME": "",
         "WINS_DRAWS_LOSSES": ""
     },
+    "TEAMS": "",
     "TITLE": {
         "ADD_USER": "",
         "CALENDAR_SETTINGS": "",
@@ -259,10 +267,12 @@
         "EDIT_PENALTY_DIALOG": "",
         "EDIT_PITCH_DIALOG": "",
         "EDIT_USER": "",
+        "MAINTENANCE_ACTIVE": "",
         "NEW_KICKOFF": "",
         "NEW_PASSWORD": "",
         "OLD_KICKOFF": "",
         "REPLACE_TEAM_IN_SEASON": "",
+        "SEASON_TEAM_IMPORT": "",
         "TEAMS_IN_SEASON": ""
     },
     "TOURNAMENT_ROUND": "{{ round }}. Runde",

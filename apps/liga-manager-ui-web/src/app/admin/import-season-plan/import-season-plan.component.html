@@ -1,0 +1,121 @@
+<div class="w-full h-full flex flex-col">
+    <div class="m-2 mt-0">
+        <mat-toolbar class="secondary">
+            <mat-toolbar-row>
+                <div class="w-full flex justify-evenly items-center">
+                    <button type="button" matButton="outlined" (click)="chooseFile()"
+                    >
+                        <mat-icon>upload</mat-icon>
+                        <span translate>BUTTON.UPLOAD_XLSX</span>
+                    </button>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+    <div>
+        <mat-card class="m-2">
+            <mat-card-header>
+                <span translate>SEASON</span>
+            </mat-card-header>
+            <mat-card-content>
+                <lima-season-chooser
+                    [formControl]="selectedSeasonFC"
+                    [clearable]="true"
+                    [showState]="true"
+                ></lima-season-chooser>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="m-2">
+            <mat-card-header>
+                <span translate>TEAMS</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div>
+                    <mat-select [formControl]="selectedSheetForTeams">
+                        @for (sheet of sheets(); track sheet) {
+                            <mat-option [value]="sheet">{{ sheet }}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-form-field>
+                        <mat-label>COL</mat-label>
+                        <input matInput [formControl]="selectedCol">
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col">
+                    @for (teamFromSheet of teamsFromSheet(); track teamFromSheet; let index = $index) {
+                        <div class="flex justify-evenly items-center">
+                            <div>{{ teamFromSheet }}</div>
+                            @if(allTeams$ | async; as allTeams) {
+                                <lima-team-auto-complete [teams]="allTeams" [formControl]="teamMappingFC.controls[index]"></lima-team-auto-complete>
+                            }
+                        </div>
+                    }
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button matButton="outlined" (click)="addTeamsToSeason()" [disabled]="!teamMappingFC.valid">
+                    <span translate>BUTTON.ADD_TEAMS_TO_SEASON</span>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card class="m-2">
+            <mat-card-header>
+                <span translate>MATCHES</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div>
+                    <mat-select [formControl]="selectedSheetForMatches">
+                        @for (sheet of sheets(); track sheet) {
+                            <mat-option [value]="sheet">{{ sheet }}</mat-option>
+                        }
+                    </mat-select>
+                </div>
+                <button matButton="outlined" (click)="createMatches()">
+                    <span translate>BUTTON.CREATE_MATCHES</span>
+                </button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- <h1 mat-dialog-title class="mat-sys-primary text-center">
+    <span translate>TITLE.SEASON_TEAM_IMPORT</span>
+</h1>
+<mat-dialog-content class="h-full w-full">
+    <div>
+        <button type="button" matButton="outlined" (click)="chooseFile()"
+            cySelector="button-upload-team-logo"
+        >
+            <mat-icon>upload</mat-icon>
+            <span translate>BUTTON.UPLOAD_XLSX</span>
+        </button>
+    </div>
+    <div>
+        <mat-select [formControl]="selectedSheet">
+            @for (sheet of sheets(); track sheet) {
+                <mat-option [value]="sheet">{{ sheet }}</mat-option>
+            }
+        </mat-select>
+        <mat-form-field>
+            <mat-label>COL</mat-label>
+            <input matInput [formControl]="selectedCol">
+        </mat-form-field>
+    </div>
+    <div class="flex flex-col">
+        @for (teamFromSheet of teamsFromSheet(); track teamFromSheet; let index = $index) {
+            <div class="flex justify-evenly items-center">
+                <div>{{ teamFromSheet }}</div>
+                @if(allTeams$ | async; as allTeams) {
+                    <lima-team-auto-complete [teams]="allTeams" [formControl]="teamMapping.controls[index]"></lima-team-auto-complete>
+                }
+            </div>
+        }
+    </div>
+</mat-dialog-content> -->
+<!-- <mat-dialog-actions align="center"> -->
+    <!-- <div class="flex justify-evenly p-2">
+        <button matButton="outlined" (click)="reload()">
+            <span translate>BUTTON.RELOAD_PAGE</span>
+        </button>
+    </div> -->
+<!-- </mat-dialog-actions> -->

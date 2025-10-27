@@ -1,13 +1,16 @@
 {
     "BUTTON": {
         "ADD_MATCH": "Add Match",
+        "ADD_TEAMS_TO_SEASON": "",
         "CANCEL": "Cancel",
         "CANCEL_MATCH": "Cancel Match",
         "CHANGE_PASSWORD": "Change Password",
         "CLOSE": "Close",
         "CONTACT": "Contact",
-        "CREATE_MATCHDAYS": "Create Matchdays",
+        "CREATE_MATCHDAYS_WITH_MATCHES": "",
+        "CREATE_MATCHES": "",
         "CREATE_NEXT_ROUND": "Create next Round",
+        "CREATE_ONLY_MATCHDAYS": "",
         "CREATE_PITCH": "Create Pitch",
         "CREATE_SEASON": "Create new Season",
         "CREATE_TOURNAMENT": "Create new Tournament",
@@ -23,6 +26,7 @@
         "END_SEASON": "End Season",
         "END_TOURNAMENT": "End Tournament",
         "FORGOT_PASSWORD": "forgot password",
+        "IMPORT": "",
         "LOGIN": "Login",
         "LOGOUT": "Logout",
         "NO": "No",
@@ -36,6 +40,7 @@
         "START_TOURNAMENT": "Start Tournament",
         "UPDATE_MATCHDAYS": "Update Matchdays",
         "UPLOAD_TEAM_LOGO": "Upload Team Logo",
+        "UPLOAD_XLSX": "",
         "YES": "Yes"
     },
     "CALENDAR": {
@@ -115,8 +120,8 @@
     "LOCAL_TIME_ZONE_HINT": "Time ({{ timeZone }})",
     "LOGIN_TITLE": "Login",
     "MAINTENANCE_ACTIVE_BODY": "We are currently in Maintenance Mode - Please try again later",
-    "MAINTENANCE_ACTIVE_TITLE": "Maintenance Mode",
     "MATCHDAY": "Matchday {{ matchDay }}",
+    "MATCHES": "",
     "MATCH_CANCELLED_ON": "Match cancelled on the {{ time }}",
     "MATCH_SCHEDULING": {
         "DAYS_OFFSET_FROM_MATCH_DAY_START_DATE": "Offset in Days from StartDate",
@@ -138,6 +143,7 @@
         "TOURNAMENT": "Tournament"
     },
     "NAVIGATION_ADMIN": {
+        "IMPORT_SEASON_PLAN": "",
         "PITCHES": "Pitch Management",
         "SEASONS": "Season Management",
         "TEAMS": "Team Management",
@@ -172,6 +178,7 @@
     "SCORED_CONCEDED": "GF:GA",
     "SCORED_CONCEDED_DIFF": "GD",
     "SEARCH_TEAM": "Filter Teams",
+    "SEASON": "",
     "SELECT_OPTION": {
         "ALL_MATCHDAYS": "All Matchdays",
         "ALL_ROUNDS": "All Rounds",
@@ -244,6 +251,7 @@
         "TEAM_NAME": "Team",
         "WINS_DRAWS_LOSSES": "W:D:L"
     },
+    "TEAMS": "",
     "TITLE": {
         "ADD_USER": "Add User",
         "CALENDAR_SETTINGS": "Settings",
@@ -259,10 +267,12 @@
         "EDIT_PENALTY_DIALOG": "Edit Penalty",
         "EDIT_PITCH_DIALOG": "Edit Pitch",
         "EDIT_USER": "Edit User",
+        "MAINTENANCE_ACTIVE": "",
         "NEW_KICKOFF": "New Kickoff",
         "NEW_PASSWORD": "New Password",
         "OLD_KICKOFF": "Old Kickoff",
         "REPLACE_TEAM_IN_SEASON": "Replace Team",
+        "SEASON_TEAM_IMPORT": "",
         "TEAMS_IN_SEASON": "Teams in Season"
     },
     "TOURNAMENT_ROUND": "{{ round }}. Round",
