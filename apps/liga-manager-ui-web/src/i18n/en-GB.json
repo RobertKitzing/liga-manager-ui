@@ -118,7 +118,6 @@
     "LOGIN_TITLE": "Login",
     "MAINTENANCE_ACTIVE_BODY": "We are currently in Maintenance Mode - Please try again later",
     "MATCHDAY": "Matchday {{ matchDay }}",
-    "MATCHES": "",
     "MATCH_CANCELLED_ON": "Match cancelled on the {{ time }}",
     "MATCH_SCHEDULING": {
         "DAYS_OFFSET_FROM_MATCH_DAY_START_DATE": "Offset in Days from StartDate",
@@ -160,7 +159,6 @@
     "PASSWORD": "Password",
     "PASSWORD_REQUIRED": "Password required",
     "PENALTIES": "Penalties",
-    "PITCHES": "",
     "PLACEHOLDER": {
         "NEW_TOURNAMENT_NAME": "Tournament Name",
         "PENALTY_POINTS": "Points",
@@ -248,7 +246,6 @@
         "TEAM_NAME": "Team",
         "WINS_DRAWS_LOSSES": "W:D:L"
     },
-    "TEAMS": "",
     "TITLE": {
         "ADD_USER": "Add User",
         "CALENDAR_SETTINGS": "Settings",

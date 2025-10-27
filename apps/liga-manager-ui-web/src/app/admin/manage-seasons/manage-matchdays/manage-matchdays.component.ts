@@ -98,7 +98,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
                     if (this.formGroup.controls.secondHalf.value) {
                         length = (length * 2) - 1;
                     }
-                    this.createMatchDays(length);
+                    this.createMatchDays(length - 1);
                 }
             },
         );

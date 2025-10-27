@@ -118,7 +118,6 @@
     "LOGIN_TITLE": "",
     "MAINTENANCE_ACTIVE_BODY": "",
     "MATCHDAY": "{{ matchDay }}. Spieltag",
-    "MATCHES": "",
     "MATCH_CANCELLED_ON": "",
     "MATCH_SCHEDULING": {
         "DAYS_OFFSET_FROM_MATCH_DAY_START_DATE": "",
@@ -160,7 +159,6 @@
     "PASSWORD": "Passwort",
     "PASSWORD_REQUIRED": "Passwort erforderlich",
     "PENALTIES": "",
-    "PITCHES": "",
     "PLACEHOLDER": {
         "NEW_TOURNAMENT_NAME": "",
         "PENALTY_POINTS": "",
@@ -248,7 +246,6 @@
         "TEAM_NAME": "",
         "WINS_DRAWS_LOSSES": ""
     },
-    "TEAMS": "",
     "TITLE": {
         "ADD_USER": "",
         "CALENDAR_SETTINGS": "",
