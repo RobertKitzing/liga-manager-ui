@@ -1,6 +1,6 @@
 {
     "name": "@liga-manager-ui/utils",
-    "version": "5.8.4",
+    "version": "5.8.5",
     "peerDependencies": {},
     "sideEffects": false
 }
