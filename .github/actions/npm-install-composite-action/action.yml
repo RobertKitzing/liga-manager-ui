@@ -1,0 +1,22 @@
+name: 'NPM install'
+description: 'Installs npm dependencies'
+inputs:
+  mode:
+    description: "install or ci"
+    default: "ci"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/cache/restore@v4
+      id: cache_restore
+      with:
+        path: ./node_modules
+        key: modules-${{ hashFiles('package-lock.json') }}
+    - run: npm ${{ inputs.mode }}
+      shell: bash
+    - name: Cache dependencies
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: ./node_modules
+        key: modules-${{ hashFiles('package-lock.json') }}
