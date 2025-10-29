@@ -1,3 +1,13 @@
+## 5.9.0 (2025-10-29)
+
+### 🚀 Features
+
+- Select all things ([#129](https://github.com/RobertKitzing/liga-manager-ui/pull/129))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.8.5 (2025-10-27)
 
 This was a version bump only, there were no code changes.
