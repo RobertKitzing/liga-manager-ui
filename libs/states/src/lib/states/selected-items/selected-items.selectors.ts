@@ -33,13 +33,10 @@ export class SelectedItemsSelectors {
     static selectedTeamId(context: SelectedContextTypes) {
         return createSelector([SelectedItemsSelectors.properties.teamId],
             (teamId: SelectedItemsStateModel['teamId']) => {
-                if (teamId && teamId[context]) {
-                    if (teamId[context] === '0') {
-                        return 'ALL';
-                    }
-                    return teamId[context];
+                if (teamId[context] === '0') {
+                    return 'ALL';
                 }
-                return 'ALL';
+                return teamId && teamId[context];
             });
     }
 
