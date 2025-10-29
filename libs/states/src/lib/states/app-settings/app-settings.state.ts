@@ -3,16 +3,9 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { LoadAppSettings } from './actions';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
+import { AppSettings } from './app-settings';
 
-export interface AppSettingsStateModel {
-    host?: string;
-    googleMapsApiKey?: string;
-    use_imgproxy?: string;
-    use_local_assets?: string;
-    local_time_zone?: string;
-}
-
-@State<AppSettingsStateModel>({
+@State<AppSettings>({
     name: 'app_settings',
     defaults: {},
 })
@@ -20,8 +13,8 @@ export interface AppSettingsStateModel {
 export class AppSettingsState {
 
     @Action(LoadAppSettings)
-    loadAppsettings({ setState }: StateContext<AppSettingsStateModel>) {
-        return inject(HttpClient).get<AppSettingsStateModel>('/appsettings.json').pipe(
+    loadAppsettings({ setState }: StateContext<AppSettings>) {
+        return inject(HttpClient).get<AppSettings>('/appsettings.json').pipe(
             tap(
                 (res) => {
                     setState(res);

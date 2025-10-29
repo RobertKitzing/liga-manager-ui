@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { provideStore, Store } from '@ngxs/store';
-import { AppSettingsState, AppSettingsStateModel } from './app-settings.state';
+import { AppSettingsState } from './app-settings.state';
 import { AppSettingsSelectors } from './app-settings.selectors';
 import { LoadAppSettings } from './actions';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { AppSettings } from './app-settings';
 
 
 describe('AppSettingsState', () => {
@@ -30,7 +31,7 @@ describe('AppSettingsState', () => {
 
     it('should store Appsettings', () => {
 
-        const appSettings: AppSettingsStateModel = {
+        const appSettings: AppSettings = {
             host: 'test',
             googleMapsApiKey: 'test',
             use_imgproxy: 'true',

@@ -70,7 +70,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             center: 'title',
             end: '',
         },
-        initialView: this.store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).selectedView,
+        initialView: this.store.selectSnapshot(SelectedItemsSelectors.selectedCalendarOptions).selectedView || 'list',
         plugins: [dayGridPlugin, listPlugin],
         firstDay: 1,
         editable: false,

@@ -20,8 +20,8 @@ export class SelectedItemsSelectors {
         const teamIds = calendar?.teamIds?.split(',') || [];
         return {
             teamIds: !teamIds[0] ? [] : teamIds,
-            selectedView: calendar.selectedView,
-            duration: calendar.duration,
+            selectedView: calendar?.selectedView || 'list',
+            duration: calendar?.duration || { value: 1, type: 'week' },
         };
     }
 
@@ -33,7 +33,13 @@ export class SelectedItemsSelectors {
     static selectedTeamId(context: SelectedContextTypes) {
         return createSelector([SelectedItemsSelectors.properties.teamId],
             (teamId: SelectedItemsStateModel['teamId']) => {
-                return teamId && teamId[context];
+                if (teamId && teamId[context]) {
+                    if (teamId[context] === '0') {
+                        return 'ALL';
+                    }
+                    return teamId[context];
+                }
+                return 'ALL';
             });
     }
 
