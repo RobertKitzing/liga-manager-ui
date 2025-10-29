@@ -23,7 +23,7 @@ import { CustomDatePipe } from '@liga-manager-ui/pipes';
 import { add } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
 import { ApiDateFormControl } from '@liga-manager-ui/components';
-import { CreateMatchesForSeason, RescheduleMatchDays } from '@liga-manager-ui/states';
+import { CreateMatchDaysForSeason, CreateMatchesForSeason, RescheduleMatchDays } from '@liga-manager-ui/states';
 
 @Component({
     selector: 'lima-manage-matchdays',
@@ -51,6 +51,7 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         secondHalf: new FormControl(false),
         betweenMatchDaysOffset: new FormControl<number>(7, { nonNullable: true }),
         fromToOffset: new FormControl<number>(2, { nonNullable: true }),
+        matchDayCount: new FormControl<number>(0),
     });
 
     matchDays = signal<Maybe<MatchDay>[]>([]);
@@ -86,8 +87,19 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         this.formGroup.valueChanges.pipe(
             takeUntilDestroyed(this.destroyRef),
         ).subscribe(
-            () => {
-                this.createMatchDays();
+            (value) => {
+                if (value.matchDayCount) {
+                    this.createMatchDays(value.matchDayCount);
+                } else {
+                    let length = this.season()?.teams?.length || 0;
+                    if (length % 2 !== 0) {
+                        length += 1;
+                    }
+                    if (this.formGroup.controls.secondHalf.value) {
+                        length = (length * 2) - 1;
+                    }
+                    this.createMatchDays(length - 1);
+                }
             },
         );
     }
@@ -103,17 +115,10 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
         }
     }
 
-    createMatchDays() {
+    createMatchDays(length: number) {
         if (this.season()?.teams && this.formGroup.controls.seasonStartDate.value) {
             this.matchDays.set([]);
-            let length = this.season()?.teams?.length || 0;
-            if (length % 2 !== 0) {
-                length += 1;
-            }
-            if (this.formGroup.controls.secondHalf.value) {
-                length = (length * 2) - 1;
-            }
-            for (let i = 0; i < length - 1; i++) {
+            for (let i = 0; i < length; i++) {
                 const betweenMatchDaysOffset = i * this.formGroup.controls.betweenMatchDaysOffset.value;
                 const startDate = add(this.formGroup.controls.seasonStartDate.value, { days: betweenMatchDaysOffset });
                 const endDate = add(startDate, { days: this.formGroup.controls.fromToOffset.value -1 });
@@ -126,6 +131,19 @@ export class ManageMatchdaysComponent extends ManageSeasonBaseComponent implemen
             }
             this.matchDayTrigger.next(this.matchDays());
         }
+    }
+
+    createOnlyMatchDays() {
+        const dates = this.matchDays()?.map(
+            (m) => ({
+                from: new ApiDate(m?.start_date || ''),
+                to: new ApiDate(m?.end_date || ''),
+            }),
+        );
+        this.store.dispatch(new CreateMatchDaysForSeason(
+            this.season()?.id || '',
+            dates,
+        ));
     }
 
     async saveMatchDays(mode: 'create' | 'update') {

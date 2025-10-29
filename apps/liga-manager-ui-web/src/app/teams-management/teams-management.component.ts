@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { iif, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import {
@@ -11,8 +11,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeamAutoCompleteComponent } from '@liga-manager-ui/components';
 import { APP_ROUTES } from '@liga-manager-ui/common';
 import { Store } from '@ngxs/store';
-import { AuthStateSelectors, SelectedItemsSelectors, TeamSelectors } from '@liga-manager-ui/states';
+import { AuthStateSelectors, SelectedItemsSelectors, SetSelectedTeam, TeamSelectors } from '@liga-manager-ui/states';
 import { MatTabsModule } from '@angular/material/tabs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'lima-teams-managment',
@@ -36,6 +37,8 @@ export class TeamsManagementComponent {
 
     private store = inject(Store);
 
+    private destroyRef = inject(DestroyRef);
+
     selectedTeamFC = new FormControl();
 
     teams$ = iif(
@@ -54,5 +57,19 @@ export class TeamsManagementComponent {
             }
         }),
     );
+
+    constructor() {
+
+        this.selectedTeamFC.valueChanges.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe(
+            (team) => {
+                if (team) {
+                    this.router.navigate([ APP_ROUTES.TEAMS_MANAGEMENT, team?.id ]);
+                }
+                this.store.dispatch(new SetSelectedTeam('team-management', team?.id));
+            },
+        );
+    }
 
 }

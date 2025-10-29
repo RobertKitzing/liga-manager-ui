@@ -5,6 +5,7 @@ env:
   HUSKY: 0
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
   DOCKER_REPO_IMGPROXY: robertkitzing/liga-manager-imgproxy
+  NX_NO_CLOUD: false
 
 jobs:
   npm-audit:

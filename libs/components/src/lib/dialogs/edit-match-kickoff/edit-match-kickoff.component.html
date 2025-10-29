@@ -2,21 +2,13 @@
     {{ data.match.home_team.name }}&nbsp;-&nbsp;{{ data.match.guest_team.name }}
 </h1>
 <mat-dialog-content class="h-full">
-    <mat-card class="w-full h-full p-4">
-        <mat-card-title translate class="text-center">
+    <mat-card class="w-full h-full">
+        <mat-card-title translate class="text-center p-4">
             TITLE.EDIT_MATCH_KICKOFF
         </mat-card-title>
         <mat-card-content class="h-full">
             @if (data.match; as match) {
                 <div class="grid grid-cols-1 gap-4">
-                    @if (match.kickoff) {
-                        <div translate class="text-center text-xl">TITLE.OLD_KICKOFF</div>
-                        <div class="flex justify-center items-center space-x-2">
-                            <mat-icon>event</mat-icon>
-                            <lima-date-time [date]="match.kickoff"></lima-date-time>
-                        </div>
-                    }
-                    <h1 translate class="text-center text-xl">TITLE.NEW_KICKOFF</h1>
                     <div class="mb-4">
                         <mat-form-field [formGroup]="newKickoff" class="w-full">
                             <mat-label translate>{{ 'LOCAL_TIME_ZONE_HINT' | translate:{ timeZone: this.localTimeZone() } }}</mat-label>

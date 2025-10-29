@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, RemoveTeamFromSeasonGQL, ReplaceTeamInSeasonGQL, ScheduleAllMatchesForMatchDayGQL, ScheduleAllMatchesForSeasonGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
+import { AddPenaltyGQL, AddTeamToSeasonGQL, CreateMatchDayForSeasonGQL, CreateMatchesForSeasonGQL, CreateSeasonGQL, DeleteSeasonGQL, EndSeasonGQL, RankingByIdGQL, RemovePenaltyGQL, RemoveTeamFromSeasonGQL, ReplaceTeamInSeasonGQL, ScheduleAllMatchesForMatchDayGQL, ScheduleAllMatchesForSeasonGQL, SeasonByIdGQL, SeasonListGQL, SeasonListQuery, SeasonPenaltiesGQL, StartSeasonGQL } from '@liga-manager-api/graphql';
 import { Action, State, StateContext } from '@ngxs/store';
-import { AddPenalty, AddTeamToSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, ScheduleAllMatchesForMatchDay, ScheduleAllMatchesForSeason, SetSeasons, StartSeason } from './actions';
+import { AddPenalty, AddTeamToSeason, CreateMatchDaysForSeason, CreateMatchesForSeason, CreateSeason, DeleteSeason, EndSeason, RemovePenalty, RemoveTeamFromSeason, ReplaceTeamInSeason, RescheduleMatchDays, ScheduleAllMatchesForMatchDay, ScheduleAllMatchesForSeason, SetSeasons, StartSeason } from './actions';
 import { tap } from 'rxjs';
 import { SetSelectedSeason } from '../selected-items';
 import { Apollo, gql } from 'apollo-angular';
+import { v4 } from 'uuid';
 
 export interface SeasonStateModel {
     seasons: SeasonListQuery['allSeasons'];
@@ -42,6 +43,8 @@ export class SeasonState {
     private addTeamToSeasonGQL = inject(AddTeamToSeasonGQL);
 
     private createMatchesForSeasonGQL = inject(CreateMatchesForSeasonGQL);
+
+    private createMatchDayForSeasonGQL = inject(CreateMatchDayForSeasonGQL);
 
     private removeTeamFromSeasonGQL = inject(RemoveTeamFromSeasonGQL);
 
@@ -214,6 +217,28 @@ export class SeasonState {
                     {
                         query: this.seasonByIdGQL.document,
                         variables: { id: action.payload.season_id },
+                    },
+                ],
+            },
+        );
+    }
+
+    @Action(CreateMatchDaysForSeason)
+    createMatchDayForSeason(_: StateContext<SeasonStateModel>, action: CreateMatchDaysForSeason) {
+        let mutation = 'mutation CreateMatchDaysForSeason {\n';
+        action.dates.forEach(
+            (date, i) => {
+                mutation += `createMatchDayForSeason${i}: createMatchDayForSeason(id: "${v4()}", season_id: "${action.season_id}", number: ${i + 1}, date_period: { from: "${date.from.toJSON()}", to: "${date.to.toJSON()}" }) \n`;
+            },
+        );
+        mutation += '}';
+        return this.apollo.mutate(
+            {
+                mutation: gql(mutation),
+                refetchQueries: [
+                    {
+                        query: this.seasonByIdGQL.document,
+                        variables: { id: action.season_id },
                     },
                 ],
             },

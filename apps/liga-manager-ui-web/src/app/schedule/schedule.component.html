@@ -17,7 +17,7 @@
                                 [formControl]="selectedTeamIdFC"
                                 placeholder="{{ 'PLACEHOLDER.SELECT_TEAM' | translate }}"
                             >
-                                <mat-option [value]="'0'">
+                                <mat-option value="ALL">
                                     <span translate>SELECT_OPTION.ALL_TEAMS</span>
                                 </mat-option>
                                 @for (team of season()?.teams || [] | sortBy:'name'; track team) {
@@ -33,9 +33,9 @@
                             </button>
                             <mat-menu #filterMenu="matMenu">
                                 <div mat-menu-item>
-                                    <mat-slide-toggle [(ngModel)]="showCanceledMatches">
+                                    <mat-checkbox [(ngModel)]="showCanceledMatches">
                                         <span translate>LABEL.SHOW_CANCELED_MATCHES</span>
-                                    </mat-slide-toggle>
+                                    </mat-checkbox>
                                 </div>
                             </mat-menu>
                         </div>
@@ -59,7 +59,9 @@
                                 [formControl]="selectedMatchDayFC"
                                 placeholder="{{ 'PLACEHOLDER.SELECT_MATCHDAY' | translate }}"
                             >
-                                
+                                <mat-option value="ALL">
+                                    <span translate>SELECT_OPTION.ALL_MATCHDAYS</span>
+                                </mat-option>
                                 @for (matchDay of season()?.match_days; track matchDay) {
                                     <mat-option [value]="matchDay?.id">
                                         @if (matchDay) {
@@ -90,9 +92,16 @@
             </mat-toolbar>
         </div>
         <div>
-            @if (findMatchDay(season()?.match_days || []); as matchDay) {
+            @for (matchDay of filterMatchDay(season()?.match_days || []); track matchDay.id) {
                 <div class="flex justify-center z-0 overflow-x-hidden">
                     <div class="w-full overflow-x-hidden">
+                        @if(selectedMatchDayFC.value === 'ALL') {
+                            <mat-card class="mt-2 mb-2" appearance="outlined">
+                                <div class="w-full flex justify-center m-4">
+                                    <span>{{ "MATCHDAY" | translate : { matchDay: matchDay?.number } }}</span>
+                                </div>
+                            </mat-card>
+                        }
                         @for (match of filterMatches(matchDay?.matches || []); track match.id) {
                             <div class="w-full" [animate.enter]="animateEnter()">
                                 @if ( !showCanceledMatches && match.cancelled_at ) {

@@ -5,6 +5,7 @@ env:
   DOCKER_REPO_UI: robertkitzing/liga-manager-ui
   DOCKER_REPO_IMGPROXY: robertkitzing/liga-manager-imgproxy
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+  NX_NO_CLOUD: false
 
 on:
   pull_request:

@@ -1,0 +1,13 @@
+mutation CreateMatchDayForSeason(
+    $id: String!
+    $season_id: String!
+    $number: Int!
+    $date_period: DatePeriod!
+) {
+    createMatchDayForSeason(
+    id: $id
+    season_id: $season_id
+    number: $number
+    date_period: $date_period
+  )
+}

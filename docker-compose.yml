@@ -5,6 +5,7 @@ volumes:
 services:
   liga-manager-ui:
     build: .
+    #image: robertkitzing/liga-manager-ui:5.8.5-pre
     environment:
       GOOGLE_MAPS_API_KEY: ""
       USE_IMGPROXY: true

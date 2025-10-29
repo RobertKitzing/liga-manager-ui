@@ -6,8 +6,9 @@
         "CHANGE_PASSWORD": "Change Password",
         "CLOSE": "Close",
         "CONTACT": "Contact",
-        "CREATE_MATCHDAYS": "Create Matchdays",
+        "CREATE_MATCHDAYS_WITH_MATCHES": "Create Matchdays with Matches",
         "CREATE_NEXT_ROUND": "Create next Round",
+        "CREATE_ONLY_MATCHDAYS": "Create Empty Matchdays",
         "CREATE_PITCH": "Create Pitch",
         "CREATE_SEASON": "Create new Season",
         "CREATE_TOURNAMENT": "Create new Tournament",
@@ -26,15 +27,16 @@
         "LOGIN": "Login",
         "LOGOUT": "Logout",
         "NO": "No",
+        "PREVIEW_MATCHES": "",
         "RELOAD_PAGE": "Reload Page",
         "REPLACE_TEAM": "Replace Team",
         "SAVE": "Save",
-        "SAVE_TEAM_LOGO": "Save Teamlogo",
         "SEND_INVITE_MAIL": "Send Invitation mail",
         "SEND_PASSWORD_RESET_MAIL": "Send Password reset mail",
         "START_SEASON": "Start Season",
         "START_TOURNAMENT": "Start Tournament",
         "UPDATE_MATCHDAYS": "Update Matchdays",
+        "UPLOAD_CSV": "Choose CSV File",
         "UPLOAD_TEAM_LOGO": "Upload Team Logo",
         "YES": "Yes"
     },
@@ -115,7 +117,6 @@
     "LOCAL_TIME_ZONE_HINT": "Time ({{ timeZone }})",
     "LOGIN_TITLE": "Login",
     "MAINTENANCE_ACTIVE_BODY": "We are currently in Maintenance Mode - Please try again later",
-    "MAINTENANCE_ACTIVE_TITLE": "Maintenance Mode",
     "MATCHDAY": "Matchday {{ matchDay }}",
     "MATCH_CANCELLED_ON": "Match cancelled on the {{ time }}",
     "MATCH_SCHEDULING": {
@@ -173,6 +174,8 @@
     "SCORED_CONCEDED_DIFF": "GD",
     "SEARCH_TEAM": "Filter Teams",
     "SELECT_OPTION": {
+        "ALL_MATCHDAYS": "All Matchdays",
+        "ALL_ROUNDS": "All Rounds",
         "ALL_TEAMS": "All Teams",
         "DESELECT_SEASON": "No Season",
         "DESELECT_TOURNAMENT": "No Tournament"
@@ -222,6 +225,7 @@
     "TAB": {
         "ADMIN": {
             "SEASON": {
+                "IMPORT_PLAN": "Import CSV",
                 "MATCHES": "Matches",
                 "MATCH_DAYS": "Matchdays",
                 "PENALTIES": "Penalties",
@@ -257,9 +261,8 @@
         "EDIT_PENALTY_DIALOG": "Edit Penalty",
         "EDIT_PITCH_DIALOG": "Edit Pitch",
         "EDIT_USER": "Edit User",
-        "NEW_KICKOFF": "New Kickoff",
+        "MAINTENANCE_ACTIVE": "",
         "NEW_PASSWORD": "New Password",
-        "OLD_KICKOFF": "Old Kickoff",
         "REPLACE_TEAM_IN_SEASON": "Replace Team",
         "TEAMS_IN_SEASON": "Teams in Season"
     },

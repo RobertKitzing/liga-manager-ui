@@ -2,10 +2,12 @@
 @if (season()) {
     <div class="grid grid-cols-1">
         @if (season()?.state === SeasonState.Preparation) {
-            <div class="m-8">
-                @if(allTeams$ | async; as allTeams) {
-                    <lima-team-auto-complete [teams]="allTeams" [disabledTeams]="season()?.teams" (teamSelected)="addTeamToSeason({ season_id: season()?.id!, team_id: $event.id}, $event.name, season()?.name!)" [clearAfterSelected]="true"></lima-team-auto-complete>
-                }
+            <div class="flex justify-center items-center">
+                <div class="w-full m-8">
+                    @if(allTeams$ | async; as allTeams) {
+                        <lima-team-auto-complete [teams]="allTeams" [disabledTeams]="season()?.teams" (teamSelected)="addTeamToSeason({ season_id: season()?.id!, team_id: $event.id}, $event.name, season()?.name!)" [clearAfterSelected]="true"></lima-team-auto-complete>
+                    }
+                </div>
             </div>
         }
         <div>

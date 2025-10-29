@@ -4,4 +4,5 @@ export enum ADMIN_ROUTES {
     TEAMS = 'teams',
     PITCHES = 'pitches',
     SEASONS = 'seasons',
+    IMPORT_SEASON_PLAN = 'import-season-plan',
 }

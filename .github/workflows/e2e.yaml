@@ -21,6 +21,7 @@ on:
 
 env:
   HUSKY: 0
+  NX_NO_CLOUD: false
 
 jobs:
   e2e:

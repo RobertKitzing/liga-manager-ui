@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { Season, SeasonState, Team } from '@liga-manager-api/graphql';
 import { SeasonChooserComponent } from '@liga-manager-ui/components';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { map, switchMap, Observable, tap } from 'rxjs';
 import { CreateNewSeasonComponent } from './create-new-season';
 import { MANAGE_SEASON_ROUTES } from './manage-seasons.routes.enum';
@@ -21,11 +21,12 @@ import { ManageMatchesComponent } from './manage-matches/manage-matches.componen
 import { ManageScheduleMatchesComponent } from './manage-schedule-matches/manage-schedule-matches.component';
 import { ManagePenaltiesComponent } from './manage-penalties/manage-penalties.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NotificationService, SeasonService } from '@liga-manager-ui/services';
+import { SeasonService } from '@liga-manager-ui/services';
 import { CypressSelectorDirective } from '@liga-manager-ui/directives';
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngxs/store';
 import { DeleteSeason, EndSeason, SelectedItemsSelectors, SetSelectedSeason, StartSeason } from '@liga-manager-ui/states';
+import { ImportSeasonPlanComponent } from './import-season-plan';
 
 @Component({
     selector: 'lima-manage-seasons',
@@ -50,6 +51,7 @@ import { DeleteSeason, EndSeason, SelectedItemsSelectors, SetSelectedSeason, Sta
         ManagePenaltiesComponent,
         MatCardModule,
         ReactiveFormsModule,
+        ImportSeasonPlanComponent,
     ],
 })
 export class ManageSeasonsComponent implements OnInit {
@@ -59,10 +61,6 @@ export class ManageSeasonsComponent implements OnInit {
     private dialog = inject(MatDialog);
 
     private seasonService = inject(SeasonService);
-
-    private notificationService = inject(NotificationService);
-
-    private translateService = inject(TranslateService);
 
     private store = inject(Store);
 

@@ -59,6 +59,8 @@ export class EditTeamContactComponent {
                             phone: this.team()?.contact?.phone,
                         },
                     );
+                } else {
+                    this.teamContact.reset();
                 }
             },
         );

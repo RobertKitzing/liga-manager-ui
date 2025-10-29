@@ -47,7 +47,7 @@ export interface SelectedItemsStateModel {
             selectedView: 'list',
             duration: {
                 value: 1,
-                type: 'month',
+                type: 'week',
             },
         },
         theme: 'default',

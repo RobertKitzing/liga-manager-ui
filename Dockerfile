@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine-slim
+FROM nginx:1.28.0-alpine3.21-slim
 RUN apk add certbot certbot-nginx --no-cache
 
 COPY ./dist/apps/liga-manager-ui-web /ui
@@ -13,5 +13,8 @@ ENV IMG_PROXY_HOST="imgproxy"
 ENV USE_IMGPROXY=false
 ENV USE_LOCAL_ASSETS=false
 ENV TZ="Europe/Berlin"
+ENV LANGUAGES="en-GB,de"
+
+CMD [ "nginx", "-g", "daemon off;" ]
 
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]

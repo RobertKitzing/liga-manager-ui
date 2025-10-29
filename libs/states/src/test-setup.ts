@@ -4,3 +4,5 @@ setupZoneTestEnv({
     errorOnUnknownElements: true,
     errorOnUnknownProperties: true,
 });
+
+jest.mock('fuzzysearch-ts', () => ({ fuzzysearch: jest.fn() }));

@@ -6,8 +6,9 @@
         "CHANGE_PASSWORD": "Change Password",
         "CLOSE": "",
         "CONTACT": "",
-        "CREATE_MATCHDAYS": "",
+        "CREATE_MATCHDAYS_WITH_MATCHES": "",
         "CREATE_NEXT_ROUND": "",
+        "CREATE_ONLY_MATCHDAYS": "",
         "CREATE_PITCH": "",
         "CREATE_SEASON": "",
         "CREATE_TOURNAMENT": "",
@@ -26,15 +27,16 @@
         "LOGIN": "Login",
         "LOGOUT": "Logout",
         "NO": "",
+        "PREVIEW_MATCHES": "",
         "RELOAD_PAGE": "",
         "REPLACE_TEAM": "",
         "SAVE": "",
-        "SAVE_TEAM_LOGO": "",
         "SEND_INVITE_MAIL": "",
         "SEND_PASSWORD_RESET_MAIL": "",
         "START_SEASON": "",
         "START_TOURNAMENT": "",
         "UPDATE_MATCHDAYS": "",
+        "UPLOAD_CSV": "",
         "UPLOAD_TEAM_LOGO": "",
         "YES": ""
     },
@@ -115,7 +117,6 @@
     "LOCAL_TIME_ZONE_HINT": "",
     "LOGIN_TITLE": "",
     "MAINTENANCE_ACTIVE_BODY": "",
-    "MAINTENANCE_ACTIVE_TITLE": "",
     "MATCHDAY": "Matchday {{ matchDay }}",
     "MATCH_CANCELLED_ON": "",
     "MATCH_SCHEDULING": {
@@ -173,6 +174,8 @@
     "SCORED_CONCEDED_DIFF": "",
     "SEARCH_TEAM": "",
     "SELECT_OPTION": {
+        "ALL_MATCHDAYS": "",
+        "ALL_ROUNDS": "",
         "ALL_TEAMS": "",
         "DESELECT_SEASON": "",
         "DESELECT_TOURNAMENT": ""
@@ -222,6 +225,7 @@
     "TAB": {
         "ADMIN": {
             "SEASON": {
+                "IMPORT_PLAN": "",
                 "MATCHES": "",
                 "MATCH_DAYS": "",
                 "PENALTIES": "",
@@ -257,9 +261,8 @@
         "EDIT_PENALTY_DIALOG": "",
         "EDIT_PITCH_DIALOG": "",
         "EDIT_USER": "",
-        "NEW_KICKOFF": "",
+        "MAINTENANCE_ACTIVE": "",
         "NEW_PASSWORD": "",
-        "OLD_KICKOFF": "",
         "REPLACE_TEAM_IN_SEASON": "",
         "TEAMS_IN_SEASON": ""
     },
