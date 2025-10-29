@@ -6,6 +6,11 @@ export class AppSettingsSelectors {
 
     static properties = createPropertySelectors<AppSettings>(AppSettingsState);
 
+    @Selector([AppSettingsSelectors.properties.languages])
+    static showLanguages(languages?: AppSettings['languages']) {
+        return languages?.split(',');
+    }
+
     @Selector([AppSettingsSelectors.properties.host])
     static host(host?: AppSettings['host']) {
         return host || window.location.origin;

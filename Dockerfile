@@ -13,6 +13,7 @@ ENV IMG_PROXY_HOST="imgproxy"
 ENV USE_IMGPROXY=false
 ENV USE_LOCAL_ASSETS=false
 ENV TZ="Europe/Berlin"
+ENV LANGUAGES="en-GB,de"
 
 CMD [ "nginx", "-g", "daemon off;" ]
 
