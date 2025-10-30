@@ -8,10 +8,10 @@ metadata:
 data:
   default.conf: |
     upstream imgproxy {
-      server {{ .Values.env.IMG_PROXY_HOST | default (printf "%s-imgproxy" .Release.Name) }} }}:{{ .Values.env.IMG_PROXY_PORT | default 8080 }};
+      server {{ .Values.env.IMG_PROXY_HOST | default (printf "%s-imgproxy" .Release.Name) }}:{{ .Values.env.IMG_PROXY_PORT | default 8080 }};
     }
     upstream api {
-      server {{ .Values.env.API_HOST | default (printf "%s-liga-manager-api" .Release.Name) }}:{{ .Values.env.API_PORT | default 9000 }};
+      server {{ .Values.env.API_HOST | default (printf "%s-liga-manager-api" .Release.Name) }}:{{ .Values.env.API_PORT | default 8080 }} max_fails=0 fail_timeout=30s;
     }
     server {
         listen {{ .Values.service.port }};
@@ -42,10 +42,11 @@ data:
           add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
           add_header 'Access-Control-Expose-Headers' 'Content-Encoding,X-Token';
 
-          include fastcgi_params;
-          fastcgi_pass api;
-          fastcgi_param DOCUMENT_ROOT /var/www/api/public;
-          fastcgi_param SCRIPT_NAME index.php;
-          fastcgi_param SCRIPT_FILENAME /var/www/api/public/index.php;
+          proxy_pass http://api;
+          proxy_set_header Host $host;
+          proxy_set_header X-Forwarded-For $remote_addr;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-Forwarded-Proto $scheme;
         }
     }

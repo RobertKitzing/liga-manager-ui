@@ -131,8 +131,7 @@ export class EditUserDialogComponent implements OnInit {
                     }),
                 }),
             );
-            await firstValueFrom(this.userService.sendInviteMail(user_id));
-            this.notificationService.showSuccessNotification(marker('SUCCESS.SEND_MAIL'));
+            this.notificationService.showSuccessNotification(marker('SUCCESS.CREATE_USER'));
             this.dialogRef.close();
         }
     }

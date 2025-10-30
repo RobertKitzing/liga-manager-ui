@@ -1,11 +1,11 @@
 <div class="flex justify-center">
     <mat-card class="mt-2">
         <mat-card-title>
-            <div class="flex justify-center m-4 hidden lg:flex lg:visible" translate>
+            <div class="flex justify-center m-4 hidden lg:flex lg:visible">
                 @if (register()) {
-                    NAVIGATION.REGISTER
+                    <span translate>NAVIGATION.REGISTER</span>
                 } @else {
-                    NAVIGATION.EDIT_PROFILE
+                    <span translate>NAVIGATION.EDIT_PROFILE</span>
                 }
             </div>
         </mat-card-title>
