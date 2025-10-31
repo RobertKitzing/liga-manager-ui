@@ -1,3 +1,7 @@
+## 5.9.1 (2025-10-31)
+
+This was a version bump only, there were no code changes.
+
 ## 5.9.0 (2025-10-29)
 
 ### 🚀 Features
