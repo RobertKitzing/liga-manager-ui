@@ -27,6 +27,8 @@ describe('Admin - Create User', () => {
         cy.getBySel('user-role-team_manager').click();
         cy.getBySel('button-save-user').click({ force: true });
         cy.successSnackbar();
+        cy.get(`[name="${email}"][data-cy="button-send-invite-mail"]`).click({ force: true });
+        cy.successSnackbar();
     });
 
     it('Should get an inventation email', () => {

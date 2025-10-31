@@ -40,6 +40,7 @@ export type CySelectors =
     | 'button-save-user'
     | 'button-schedule-match'
     | 'button-schedule-match-submit'
+    | 'button-send-invite-mail'
     | 'button-set-pitch'
     | 'button-start-season'
     | 'button-start-tournament'
