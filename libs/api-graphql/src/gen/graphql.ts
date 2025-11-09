@@ -417,8 +417,8 @@ export type MutationStartTournamentArgs = {
 
 
 export type MutationSubmitMatchResultArgs = {
-  guest_score: Scalars['Int']['input'];
-  home_score: Scalars['Int']['input'];
+  guest_score?: InputMaybe<Scalars['Int']['input']>;
+  home_score?: InputMaybe<Scalars['Int']['input']>;
   match_id: Scalars['String']['input'];
 };
 
@@ -703,8 +703,8 @@ export type CreateMatchMutation = Pick<Mutation, 'createMatch'>;
 
 export type SubmitResultMutationVariables = Exact<{
   match_id: Scalars['String']['input'];
-  home_score: Scalars['Int']['input'];
-  guest_score: Scalars['Int']['input'];
+  home_score?: InputMaybe<Scalars['Int']['input']>;
+  guest_score?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -1498,7 +1498,7 @@ export const CreateMatchDocument = gql`
     }
   }
 export const SubmitResultDocument = gql`
-    mutation SubmitResult($match_id: String!, $home_score: Int!, $guest_score: Int!) {
+    mutation SubmitResult($match_id: String!, $home_score: Int, $guest_score: Int) {
   submitMatchResult(
     match_id: $match_id
     home_score: $home_score

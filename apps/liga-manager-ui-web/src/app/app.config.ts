@@ -36,7 +36,7 @@ import { Base64 } from 'js-base64';
 import { Actions, NgxsNextPluginFn, ofActionSuccessful, provideStore, Store, withNgxsPlugin } from '@ngxs/store';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { environment } from '../env/env';
-import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, LoadAppSettings, PitchState, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TeamState, TournamentState } from '@liga-manager-ui/states';
+import { AppSettingsSelectors, AppSettingsState, AuthState, GetAuthenticatedUser, IConfirm, INotification, LoadAppSettings, MatchState, PitchState, SeasonState, SelectedItemsSelectors, SelectedItemsState, SetSelectedDarkMode, TeamState, TournamentState } from '@liga-manager-ui/states';
 import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
 import { firstValueFrom, of, switchMap, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -160,6 +160,7 @@ export const appConfig: ApplicationConfig = {
                 SeasonState,
                 TeamState,
                 PitchState,
+                MatchState,
             ],
             withNgxsReduxDevtoolsPlugin({
                 disabled: environment.production,

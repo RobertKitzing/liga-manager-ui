@@ -29,6 +29,7 @@
         "NO": "",
         "PREVIEW_MATCHES": "",
         "RELOAD_PAGE": "",
+        "REMOVE_RESULT": "",
         "REPLACE_TEAM": "",
         "SAVE": "",
         "SEND_INVITE_MAIL": "",
@@ -55,6 +56,7 @@
         "ARE_YOU_SURE_TO_DELETE_USER": "",
         "ARE_YOU_SURE_TO_END_SEASON": "",
         "ARE_YOU_SURE_TO_END_TOURNAMENT": "",
+        "ARE_YOU_SURE_TO_REMOVE_RESULT": "",
         "TITLE": ""
     },
     "DARKMODE": {
@@ -207,6 +209,7 @@
         "END_TOURNAMENT": "",
         "PASSWORD_CHANGED": "",
         "REMOVE_PENALTY": "",
+        "REMOVE_RESULT": "",
         "REMOVE_TEAM_FROM_SEASON": "",
         "RENAME_TEAM": "",
         "REPLACE_TEAM_IN_SEASON": "",
