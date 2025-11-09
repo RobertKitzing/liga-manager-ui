@@ -1,7 +1,7 @@
 mutation SubmitResult(
     $match_id: String!
-    $home_score: Int!
-    $guest_score: Int!
+    $home_score: Int
+    $guest_score: Int
 ) {
     submitMatchResult(
         match_id: $match_id

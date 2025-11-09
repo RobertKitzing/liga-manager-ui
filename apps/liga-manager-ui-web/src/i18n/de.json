@@ -26,9 +26,10 @@
         "FORGOT_PASSWORD": "",
         "LOGIN": "anmelden",
         "LOGOUT": "abmelden",
-        "NO": "",
+        "NO": "Nein",
         "PREVIEW_MATCHES": "",
         "RELOAD_PAGE": "",
+        "REMOVE_RESULT": "Ergebnis löschen",
         "REPLACE_TEAM": "",
         "SAVE": "speichern",
         "SEND_INVITE_MAIL": "",
@@ -38,7 +39,7 @@
         "UPDATE_MATCHDAYS": "",
         "UPLOAD_CSV": "",
         "UPLOAD_TEAM_LOGO": "",
-        "YES": ""
+        "YES": "Ja"
     },
     "CALENDAR": {
         "dayGridMonth": "",
@@ -55,7 +56,8 @@
         "ARE_YOU_SURE_TO_DELETE_USER": "",
         "ARE_YOU_SURE_TO_END_SEASON": "",
         "ARE_YOU_SURE_TO_END_TOURNAMENT": "",
-        "TITLE": ""
+        "ARE_YOU_SURE_TO_REMOVE_RESULT": "Willst du wirklich das Ergebnis löschen ?",
+        "TITLE": "Wirklich ?"
     },
     "DARKMODE": {
         "DARK_MODE": "",
@@ -207,6 +209,7 @@
         "END_TOURNAMENT": "",
         "PASSWORD_CHANGED": "",
         "REMOVE_PENALTY": "",
+        "REMOVE_RESULT": "Ergebnis gelöscht",
         "REMOVE_TEAM_FROM_SEASON": "",
         "RENAME_TEAM": "",
         "REPLACE_TEAM_IN_SEASON": "",

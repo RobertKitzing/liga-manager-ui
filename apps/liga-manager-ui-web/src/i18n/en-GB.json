@@ -29,6 +29,7 @@
         "NO": "No",
         "PREVIEW_MATCHES": "",
         "RELOAD_PAGE": "Reload Page",
+        "REMOVE_RESULT": "Remove Result",
         "REPLACE_TEAM": "Replace Team",
         "SAVE": "Save",
         "SEND_INVITE_MAIL": "Send Invitation mail",
@@ -55,6 +56,7 @@
         "ARE_YOU_SURE_TO_DELETE_USER": "Really delete user {{ name }} ?",
         "ARE_YOU_SURE_TO_END_SEASON": "Really end Season {{ name }} ?",
         "ARE_YOU_SURE_TO_END_TOURNAMENT": "Really end Tournament {{ name }} ?",
+        "ARE_YOU_SURE_TO_REMOVE_RESULT": "",
         "TITLE": "Are you sure ?"
     },
     "DARKMODE": {
@@ -207,6 +209,7 @@
         "END_TOURNAMENT": "Tournament {{ name }} ended",
         "PASSWORD_CHANGED": "Password changed",
         "REMOVE_PENALTY": "Penalty removed",
+        "REMOVE_RESULT": "",
         "REMOVE_TEAM_FROM_SEASON": "Team {{ teamName }} removed from Season {{ seasonName }}",
         "RENAME_TEAM": "Team {{ oldName }} renamed to {{ newName }}",
         "REPLACE_TEAM_IN_SEASON": "Team {{ oldName }} replaced",

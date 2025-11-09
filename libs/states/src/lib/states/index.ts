@@ -5,3 +5,4 @@ export * from './tournament';
 export * from './season';
 export * from './team';
 export * from './pitch';
+export * from './match';

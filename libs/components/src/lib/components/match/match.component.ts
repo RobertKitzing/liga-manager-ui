@@ -15,7 +15,7 @@ import { Share } from '@capacitor/share';
 import { PitchComponent } from '../pitch/pitch.component';
 import { DateTimeComponent } from '../date-time/date-time.component';
 import { Store } from '@ngxs/store';
-import { AuthStateSelectors } from '@liga-manager-ui/states';
+import { AuthStateSelectors, RemoveResult } from '@liga-manager-ui/states';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { ShareService } from '@liga-manager-ui/services';
@@ -110,6 +110,10 @@ export class MatchComponent {
             ...defaultDialogConfig,
             data: this.dialogData,
         });
+    }
+
+    removeResult() {
+        this.store.dispatch(new RemoveResult(this.match().id));
     }
 
     isHomeWinner() {
