@@ -1,3 +1,13 @@
+## 5.10.0 (2025-11-09)
+
+### 🚀 Features
+
+- added remove result option ([#136](https://github.com/RobertKitzing/liga-manager-ui/pull/136))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.9.1 (2025-10-31)
 
 This was a version bump only, there were no code changes.
