@@ -24,6 +24,9 @@ services:
   api:
     container_name: lima-api
     image: mklocke/liga-manager-api:${API_TAG}
+    depends_on:
+      mariadb:
+        condition: service_healthy
     environment:
       - ADMIN_EMAIL=admin@example.com
       - ADMIN_PASSWORD=123456

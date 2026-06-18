@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Start Services
-        uses: hoverkraft-tech/compose-action@v2.2.0
+        uses: hoverkraft-tech/compose-action@v2.6.0
         env:
           UI_IMAGE: ${{ github.event.inputs.ui-image }}
           IMGPROXY_IMAGE: ${{ github.event.inputs.imgproxy-image }}
@@ -41,6 +41,20 @@ jobs:
           API_TAG: ${{ github.event.inputs.api-image-tag }}
         with:
           compose-file: "./docker-compose.e2e.yml"
+      - name: Debug - Dump Container Logs
+        if: always()
+        run: |
+          echo "=== Container Status ==="
+          docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.State}}"
+          
+          # Only dump logs for containers that are not running healthy
+          docker ps -a --format "{{.Names}}\t{{.State}}\t{{.Status}}" | while IFS=$'\t' read -r name state status; do
+            if [[ "$state" != "running" ]] || echo "$status" | grep -qi "unhealthy\|restarting"; then
+              echo ""
+              echo "=== Logs for $name (State: $state, Status: $status) ==="
+              docker logs "$name" --tail 100 2>&1
+            fi
+          done
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
