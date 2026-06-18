@@ -1,3 +1,21 @@
+## 5.10.1 (2026-06-18)
+
+### 🩹 Fixes
+
+- updated nginx image to 1.31.2-alpine3.23-slim ([fad0187a](https://github.com/RobertKitzing/liga-manager-ui/commit/fad0187a))
+- updated lock file ([26f67b03](https://github.com/RobertKitzing/liga-manager-ui/commit/26f67b03))
+- fixed await in prepare api ([293d8240](https://github.com/RobertKitzing/liga-manager-ui/commit/293d8240))
+- more logs in prepare api ([0f0582c0](https://github.com/RobertKitzing/liga-manager-ui/commit/0f0582c0))
+- dump container logs ([a2275eea](https://github.com/RobertKitzing/liga-manager-ui/commit/a2275eea))
+- added dump to action ([d0af250b](https://github.com/RobertKitzing/liga-manager-ui/commit/d0af250b))
+- added network to e2e compose file ([85ed47d3](https://github.com/RobertKitzing/liga-manager-ui/commit/85ed47d3))
+- added depends on ([8d1da5c3](https://github.com/RobertKitzing/liga-manager-ui/commit/8d1da5c3))
+- changed jwt secret ([3b117067](https://github.com/RobertKitzing/liga-manager-ui/commit/3b117067))
+
+### ❤️ Thank You
+
+- Robert Kitzing @RobertKitzing
+
 ## 5.10.0 (2025-11-09)
 
 ### 🚀 Features
