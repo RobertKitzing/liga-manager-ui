@@ -12,18 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
       - uses: ./.github/actions/audit-composite-action
   npm-install:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: fregante/setup-git-user@v2
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
-        node-version: 22
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
+        node-version: 24
     - uses: ./.github/actions/npm-install-composite-action
       with:
         mode: install
