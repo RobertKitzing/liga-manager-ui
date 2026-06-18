@@ -34,10 +34,14 @@ export default defineConfig({
                         --first-name admin \
                         --last-name admin \
                         --locale en`,
+                        { stdio: 'pipe' },
                     );
                     await prepareApi(details.config.baseUrl || 'http://localhost', 10);
-                } catch (_err) {
-                    console.log('prepare skipped');
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                } catch (err: any) {
+                    console.log('docker exec failed:', err.message);
+                    console.log('stdout:', err.stdout?.toString());
+                    console.log('stderr:', err.stderr?.toString());
                 }
             });
         },
