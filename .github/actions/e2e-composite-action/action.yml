@@ -42,22 +42,6 @@ runs:
         API_TAG: 'latest'
       with:
         compose-file: "./docker-compose.e2e.yml"
-    - name: Create Admin User
-      shell: bash
-      run: |
-        echo "Waiting for lima-api to be healthy..."
-        until [ "$(docker inspect -f '{{.State.Health.Status}}' lima-api)" = "healthy" ]; do
-          echo "Still waiting..."
-          sleep 3
-        done
-        echo "API is healthy, creating admin user..."
-        docker exec lima-api lima app:user:create \
-          --email admin2@example.com \
-          --password 123456 \
-          --role admin \
-          --first-name admin \
-          --last-name admin \
-          --locale en
     - name: Debug - Dump Container Logs
       shell: bash
       if: always()
@@ -85,3 +69,18 @@ runs:
       with:
         name: e2e-videos-${{ matrix.container }}
         path: dist/cypress/apps/liga-manager-ui-web
+    - name: Collect Container Logs
+      shell: bash
+      if: failure()
+      run: |
+        mkdir -p /tmp/container-logs
+        docker ps -a --format "{{.Names}}" | while read -r name; do
+          docker logs "$name" > "/tmp/container-logs/$name.log" 2>&1
+        done
+    - name: Upload Container Logs
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: container-logs
+        path: /tmp/container-logs/
+        retention-days: 7
