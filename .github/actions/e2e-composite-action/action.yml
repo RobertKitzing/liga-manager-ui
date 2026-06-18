@@ -42,6 +42,22 @@ runs:
         API_TAG: 'latest'
       with:
         compose-file: "./docker-compose.e2e.yml"
+    - name: Create Admin User
+      shell: bash
+      run: |
+        echo "Waiting for lima-api to be healthy..."
+        until [ "$(docker inspect -f '{{.State.Health.Status}}' lima-api)" = "healthy" ]; do
+          echo "Still waiting..."
+          sleep 3
+        done
+        echo "API is healthy, creating admin user..."
+        docker exec lima-api lima app:user:create \
+          --email admin2@example.com \
+          --password 123456 \
+          --role admin \
+          --first-name admin \
+          --last-name admin \
+          --locale en
     - name: Debug - Dump Container Logs
       shell: bash
       if: always()
