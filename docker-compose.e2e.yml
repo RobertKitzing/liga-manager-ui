@@ -38,7 +38,7 @@ services:
       - EMAIL_SENDER_ADDRESS=noreply@example.com
       - EMAIL_SENDER_NAME=Wilde Liga Bremen
       - EMAIL_URL=smtp://lima:foobar@maildev:1025?verify_peer=0
-      - JWT_SECRET=0123456789abcdef
+      - JWT_SECRET=7c32d31dbdd39f2111da0b1dea59e94f3ed715fd8cdf0ca3ecf354ca1a2e3e30
       - LOG_LEVEL=warning
       - REDIS_HOST=redis
     volumes:
