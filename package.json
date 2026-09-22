@@ -107,7 +107,7 @@
         "@capacitor/cli": "^7.0.0",
         "@nx-tools/nx-container": "^6.8.0",
         "@nx-tools/nx-graphql-codegen": "^6.8.0",
-        "@nx/angular": "21.6.9",
+        "@nx/angular": "23.2.1",
         "@nx/cypress": "21.6.9",
         "@nx/eslint": "21.6.9",
         "@nx/jest": "21.6.9",
