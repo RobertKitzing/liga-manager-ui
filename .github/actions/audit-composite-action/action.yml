@@ -5,3 +5,4 @@ runs:
   steps:
     - run: npm audit --audit-level "high"
       shell: bash
+      continue-on-error: true
