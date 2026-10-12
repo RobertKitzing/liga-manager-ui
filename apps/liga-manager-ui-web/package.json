@@ -8,7 +8,7 @@
         "@capacitor/core": "^7.0.0",
         "@capacitor/device": "^7.0.1",
         "@capacitor/file-transfer": "^1.0.1",
-        "@capacitor/ios": "^7.0.0",
+        "@capacitor/ios": "^7.6.9",
         "@capacitor/share": "^7.0.2",
         "@capawesome/capacitor-file-picker": "^7.2.0",
         "capacitor-plugin-safe-area": "^4.0.0",
