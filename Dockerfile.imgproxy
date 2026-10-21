@@ -1,4 +1,4 @@
-FROM ghcr.io/imgproxy/imgproxy:v4.0.15
+FROM ghcr.io/imgproxy/imgproxy:v4.0.19
 
 WORKDIR /lima
 
