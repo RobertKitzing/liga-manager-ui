@@ -1,4 +1,4 @@
-FROM docker.io/nginx:1.31.6-alpine3.24-slim
+FROM docker.io/nginx:1.31.8-alpine3.24-slim
 RUN apk add certbot certbot-nginx --no-cache
 
 COPY ./dist/apps/liga-manager-ui-web /ui
