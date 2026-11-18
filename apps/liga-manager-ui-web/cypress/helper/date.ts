@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { format } from 'date-fns';
 import * as locales from 'date-fns/locale';
 
-function formatDate(date: Date, formatString = 'P', locale: keyof typeof locales = Cypress.env('CYPRESS_LANG')) {
+function formatDate(date: Date, formatString = 'P', locale: keyof typeof locales = Cypress.expose('CYPRESS_LANG')) {
     return format(date, formatString, { locale: locales[locale] });
 }
 

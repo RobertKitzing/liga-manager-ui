@@ -15,7 +15,7 @@ export default defineConfig({
             cypressDir: 'cypress',
         }),
         retries: 3,
-        env: {
+        expose: {
             MAILDEV_PROTOCOL: 'http',
             MAILDEV_HOST: 'localhost',
             MAILDEV_SMTP_PORT: '1025',
