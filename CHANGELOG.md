@@ -1,3 +1,7 @@
+## 5.10.2 (2026-11-18)
+
+This was a version bump only, there were no code changes.
+
 ## 5.10.1 (2026-06-18)
 
 ### 🩹 Fixes
