@@ -74,14 +74,14 @@ services:
       interval: 1m
       timeout: 5s
   maildev:
-    image: maildev/maildev:latest
+    image: maildev/maildev:3.0.0
     ports:
       - "1080:1080"
     environment:
       - MAILDEV_INCOMING_USER=lima
       - MAILDEV_INCOMING_PASS=foobar
     healthcheck:
-      test: [ "CMD", "wget", "-O", '-', 'http://127.0.0.1:1080/healthz' ]
+      test: [ "CMD", "wget", "-O", '-', 'http://127.0.0.1:1080/api/healthz' ]
       start_period: 1m
       start_interval: 5s
       interval: 1m
